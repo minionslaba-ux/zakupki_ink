@@ -606,7 +606,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="desc">Автоматическая загрузка из опубликованного HTTP-сервиса 1С по кнопке или по расписанию (раз в день). Требует настройки на стороне 1С (HTTP-сервис + CORS) — см. «Инструкцию для 1С». Кнопка «Получить данные из 1С» доступна и в левом меню.</div>
 <div class="uform">
 <div class="fg full"><label>Адрес HTTP-сервиса 1С (URL)</label><input class="inp" value="{{ oneCUrl }}" onInput="{{ onOneCUrl }}" placeholder="https://host/base/hs/shtark/data"></div>
-<div class="fg full"><label>Токен / авторизация (заголовок Authorization; хранится только в этом браузере)</label><input class="inp" value="{{ oneCToken }}" onInput="{{ onOneCToken }}" onBlur="{{ saveOneCToken }}" placeholder="Basic base64(логин:пароль)  или  Bearer токен"></div>
+<div class="fg full"><label>Логин и пароль 1С (или готовый заголовок Authorization; хранится только в этом браузере)</label><input class="inp" value="{{ oneCToken }}" onInput="{{ onOneCToken }}" onBlur="{{ saveOneCToken }}" placeholder="логин:пароль   (или  Basic …  /  Bearer …)"></div>
 <div class="fg"><label>Сопоставлять позиции</label><select class="sel" value="{{ oneCMatch }}" onChange="{{ onOneCMatch }}"><sc-for list="{{ oneCMatchOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></div>
 <div class="fg"><label>Авто-загрузка раз в день</label><button class="{{ oneCAutoCls }}" onClick="{{ toggleOneCAuto }}"><span class="pcbox"></span>Включить авто-синхронизацию</button></div>
 </div>
@@ -2580,12 +2580,19 @@ class Component extends DCLogic {
   async oneCSync(apply) {
     const url = (this.state.oneCUrl || '').trim();
     if (!url) { this.setState({ oneCErr: 'Укажите адрес HTTP-сервиса 1С во вкладке «Интеграция 1С».', tab: 'onec' }); return; }
+    if (!/^https?:\/\//i.test(url)) { this.setState({ oneCErr: 'Адрес должен начинаться с http:// или https://. Пример: https://host/base/hs/shtark/data' }); return; }
+    if (location.protocol === 'https:' && /^http:\/\//i.test(url)) { this.setState({ oneCErr: 'Сайт работает по HTTPS, а адрес 1С — по HTTP. Браузер блокирует такой запрос (mixed content). Опубликуйте 1С по HTTPS либо используйте Вариант 1 (загрузка файла Excel).' }); return; }
     this.setState({ oneCBusy: true, oneCErr: '', oneCStatus: 'Запрос к 1С…' });
     try {
       const headers = { 'Accept': 'application/json' };
-      const tok = (this.state.oneCToken || '').trim();
-      if (tok) headers['Authorization'] = /\s/.test(tok) ? tok : ('Bearer ' + tok);
+      let tok = (this.state.oneCToken || '').trim();
+      if (tok) {
+        if (/^basic\s|^bearer\s/i.test(tok)) headers['Authorization'] = tok;
+        else if (tok.includes(':')) { try { headers['Authorization'] = 'Basic ' + btoa(unescape(encodeURIComponent(tok))); } catch (e) { headers['Authorization'] = 'Basic ' + btoa(tok); } }
+        else headers['Authorization'] = 'Bearer ' + tok;
+      }
       const r = await fetch(url, { headers, cache: 'no-store' });
+      if (r.status === 401 || r.status === 403) throw new Error('доступ запрещён (' + r.status + '). Проверьте логин/пароль в поле «Токен/авторизация» (можно ввести просто логин:пароль).');
       if (!r.ok) throw new Error('1С ответила HTTP ' + r.status + ' ' + (r.statusText || ''));
       const d = await r.json();
       const arr = (a) => Array.isArray(a) ? a : [];
@@ -2594,7 +2601,7 @@ class Component extends DCLogic {
       if (apply) this.oneCApply(pv);
     } catch (e) {
       let msg = e.message || String(e);
-      if (/Failed to fetch|NetworkError|load failed|ERR_/i.test(msg)) msg = 'нет ответа. Проверьте адрес, доступность 1С и настройку CORS на веб-сервере (см. инструкцию ниже).';
+      if (/Failed to fetch|NetworkError|load failed|ERR_/i.test(msg)) msg = 'нет ответа от 1С. Откройте этот же адрес в новой вкладке браузера: если JSON открывается, а здесь ошибка — значит на веб-сервере 1С не настроен CORS (заголовок Access-Control-Allow-Origin для домена приложения). Если адрес не открывается и в новой вкладке — проверьте сам адрес/доступность 1С. Самый простой обход — Вариант 1 (загрузка файла Excel).';
       this.setState({ oneCBusy: false, oneCErr: 'Ошибка связи с 1С: ' + msg, oneCStatus: '' });
     }
   }
@@ -2642,13 +2649,17 @@ class Component extends DCLogic {
       '2) Метод GET, шаблон "/data" -> обработчик формирует JSON по контракту (ЗаписатьJSON).',
       '3) Остатки - запрос к регистру накопления запасов на дату; цены - регистр сведений «Цены номенклатуры» (последний срез).',
       '4) Публикация на веб-сервере (Администрирование -> Публикация на веб-сервере), включить HTTP-сервисы.',
-      'Авторизация: пользователь 1С только на чтение. В приложении в поле «Токен/авторизация» укажите "Basic <base64(логин:пароль)>" или "Bearer <токен>" - оно подставляется в заголовок Authorization как есть.', '',
+      'Авторизация: пользователь 1С только на чтение. В приложении в поле «Логин и пароль» укажите просто "логин:пароль" (приложение само закодирует в Basic) либо готовый заголовок "Basic <base64>" / "Bearer <токен>".', '',
       '## 3. CORS (обязательно для запроса из браузера)',
-      'Веб-сервер 1С должен отдавать заголовки CORS для домена приложения:',
-      '  Access-Control-Allow-Origin: https://<домен-приложения>',
-      '  Access-Control-Allow-Headers: Authorization, Content-Type',
-      '  Access-Control-Allow-Methods: GET, OPTIONS',
-      'Apache - в .htaccess каталога публикации (Header set ...). IIS - web.config -> customHeaders. На preflight OPTIONS отвечать кодом 200.', '',
+      'Симптом: сервис открывается в браузере напрямую (просит пароль и отдаёт JSON), но из приложения «нет ответа». Это всегда CORS.',
+      'Способ А (надёжно для облачной 1С) — добавить заголовки прямо в коде HTTP-сервиса, в обработчике ответа:',
+      '  Ответ.Заголовки.Вставить("Access-Control-Allow-Origin", "*");',
+      '  Ответ.Заголовки.Вставить("Access-Control-Allow-Headers", "Authorization, Content-Type");',
+      '  Ответ.Заголовки.Вставить("Access-Control-Allow-Methods", "GET, OPTIONS");',
+      '  Ответ.Заголовки.Вставить("Content-Type", "application/json; charset=utf-8");',
+      'И ОБЯЗАТЕЛЬНО добавить метод OPTIONS для того же шаблона URL ("/data"), который возвращает HTTPСервисОтвет(200) с теми же четырьмя заголовками и пустым телом — браузер шлёт предварительный OPTIONS-запрос перед GET.',
+      'Способ Б (если есть доступ к веб-серверу) — те же заголовки на уровне Apache (.htaccess: Header set ...) или IIS (web.config -> customHeaders).',
+      'Замечание для облачных 1С (1cfresh, scloud и т.п.): доступа к веб-серверу обычно нет — используйте Способ А (заголовки в коде сервиса). Если и это недоступно у провайдера — переходите на Вариант 1 (загрузка Excel) или облако-реле.', '',
       '## 4. Если CORS включить нельзя - вариант через облако',
       'Регламентное задание 1С раз в день отправляет тот же JSON в Firestore (REST API) - приложение читает без CORS. Запросите отдельную инструкцию.', '',
       '## 5. Безопасность',
