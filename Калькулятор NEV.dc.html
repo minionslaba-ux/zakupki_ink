@@ -2619,13 +2619,26 @@ class Component extends DCLogic {
       if (row.name) { const m = byName.get(this.norm(row.name)); if (m) return m; }
       return null;
     };
-    const stock = { ...this.state.stock }; let sN = 0, sMiss = 0;
-    for (const row of pv.stock) { const m = find(row); if (!m) { sMiss++; continue; } stock[this.norm(m.name)] = Number(row.qty != null ? row.qty : row.balance) || 0; sN++; }
+    const stock = { ...this.state.stock }; let sN = 0, sNew = 0;
+    const existing = new Set(this.rawByName ? this.rawByName.keys() : []);
+    for (const e of (this.state.extra || [])) existing.add(this.norm(e.name));
+    const addedExtra = [];
+    for (const row of pv.stock) {
+      const q = Number(row.qty != null ? row.qty : row.balance);
+      if (!isFinite(q)) continue;
+      const m = find(row);
+      if (m) { stock[this.norm(m.name)] = q; sN++; continue; }
+      const nm = (row.name || '').trim();
+      if (!nm) continue;
+      const k = this.norm(nm); stock[k] = q; sN++;
+      if (!existing.has(k)) { existing.add(k); addedExtra.push({ name: nm, unit: row.unit || 'кг' }); sNew++; }
+    }
+    const extra = addedExtra.length ? (this.state.extra || []).concat(addedExtra) : (this.state.extra || []);
     const prices = { ...this.state.prices }; let pN = 0, pMiss = 0;
     for (const row of pv.prices) { const m = find(row); if (!m) { pMiss++; continue; } const v = Number(row.priceEur != null ? row.priceEur : row.price); if (isFinite(v) && v > 0) { prices[this.norm(m.name)] = v; pN++; } else pMiss++; }
-    const note = 'Применено из 1С: остатки ' + sN + (sMiss ? ' (не сопоставлено ' + sMiss + ')' : '') + ', цены ' + pN + (pMiss ? ' (не сопоставлено ' + pMiss + ')' : '');
+    const note = 'Применено из 1С: остатки ' + sN + (sNew ? ' (новых позиций ' + sNew + ')' : '') + ', цены ' + pN + (pMiss ? ' (по цене не сопоставлено ' + pMiss + ')' : '');
     const log = [{ at: Date.now(), note }, ...(this.state.oneCLog || [])].slice(0, 40);
-    this.setState({ stock, prices, oneCLastAt: Date.now(), oneCLog: log, stockUpdatedAt: Date.now(), oneCStatus: note });
+    this.setState({ stock, extra, prices, whFilled: true, oneCLastAt: Date.now(), oneCLog: log, stockUpdatedAt: Date.now(), oneCStatus: note });
   }
   oneCQuickGet() { this.setState({ tab: 'onec', navOpen: false }); if ((this.state.oneCUrl || '').trim()) this.oneCSync(true); }
   downloadOneCSpec() {
@@ -2956,26 +2969,47 @@ class Component extends DCLogic {
       strings = [...ss.matchAll(/<si>([\s\S]*?)<\/si>/g)].map(m => [...m[1].matchAll(/<t[^>]*>([\s\S]*?)<\/t>/g)].map(x => this.xlsxDecode(x[1])).join(''));
     }
     const sheetNames = Object.keys(files).filter(n => /^xl\/worksheets\/sheet\d+\.xml$/.test(n));
+    const junk = /ведомост|параметр|отбор|период|количество товаров|единиц|итог|сформирован|^склад\b/;
+    const scoreQty = (x) => {
+      if (/цена|сумма|стоим/.test(x)) return 0;
+      if (/конечн.*остат|остат.*конец|остаток на кон/.test(x)) return 10;
+      if (/^остаток$|остаток$|тек.*остат|свобод.*остат|доступ.*остат/.test(x)) return 8;
+      if (/конечн/.test(x)) return 7;
+      if (/налич|запас|^остат|остат/.test(x)) return 6;
+      if (/начальн.*остат|остат.*начал/.test(x)) return 2;
+      if (/кол-?во|колич/.test(x)) return 3;
+      return 0;
+    };
     let best = null;
     for (const sn of sheetNames) {
       const rows = this.sheetToRows(td.decode(files[sn]), strings);
-      for (let i = 0; i < Math.min(rows.length, 20); i++) {
+      for (let i = 0; i < Math.min(rows.length, 30); i++) {
         const r = rows[i].map(x => String(x).toLowerCase().replace(/\s+/g, ' ').trim());
-        const nc = r.findIndex(x => /наимен|сырь|материал|компонент|номенклат|товар|позиц|продукт/.test(x));
-        const ac = r.findIndex(x => /артикул|^код$|sku/.test(x));
-        const qc = r.findIndex(x => (/остат|налич|запас|свобод|доступ|кол-?во|колич/.test(x)) && !/цена|сумма|стоим/.test(x));
+        let nc = -1, ncScore = 0;
+        r.forEach((x, idx) => { if (junk.test(x)) return; let s = 0; if (/номенклат/.test(x)) s = 3; else if (/наимен/.test(x)) s = 2; else if (/сырь|материал|компонент|товар(?!ов)|позиц|продукт/.test(x)) s = 1; if (s > ncScore) { ncScore = s; nc = idx; } });
+        const ac = r.findIndex(x => /артикул|^код$|sku/.test(x) && !junk.test(x));
+        let qc = -1, qScore = 0;
+        r.forEach((x, idx) => { if (junk.test(x)) return; const s = scoreQty(x); if (s > qScore) { qScore = s; qc = idx; } });
         const pc = r.findIndex(x => /цена|стоим|закуп/.test(x) && !/сумма|колич|кол-?во/.test(x));
-        if ((nc >= 0 || ac >= 0) && (qc >= 0 || pc >= 0)) { const score = rows.length - i; if (!best || score > best.score) best = { rows, hr: i, nc, ac, qc, pc, score, sn }; break; }
+        if (nc < 0 && ac < 0) continue;
+        if (qc < 0 && pc < 0) continue;
+        if (qc >= 0 && (qc === nc || qc === ac)) continue;
+        const labels = (nc >= 0 ? 1 : 0) + (ac >= 0 ? 1 : 0) + (qc >= 0 ? 1 : 0) + (pc >= 0 ? 1 : 0);
+        if (labels < 2) continue;
+        const score = labels * 100000 + (rows.length - i);
+        if (!best || score > best.score) best = { rows, hr: i, nc, ac, qc, pc, score, sn };
       }
     }
-    if (!best) throw new Error('не найдены столбцы. Нужен лист с заголовками «Наименование» или «Артикул» и «Остаток»/«Цена».');
+    if (!best) throw new Error('не найдены столбцы. Нужен лист 1С с заголовками «Номенклатура»/«Артикул» и «Остаток» (например «Конечный остаток») или «Цена».');
     const stock = [], prices = [];
     for (let i = best.hr + 1; i < best.rows.length; i++) {
       const row = best.rows[i];
-      const name = (best.nc >= 0 ? (row[best.nc] || '') : '').trim();
+      let name = (best.nc >= 0 ? (row[best.nc] || '') : '').trim();
       const article = (best.ac >= 0 ? (row[best.ac] || '') : '').trim();
       if (!name && !article) continue;
-      if (best.qc >= 0) { const raw = String(row[best.qc] != null ? row[best.qc] : '').trim(); if (raw !== '') { const q = this.parseNum(raw); if (isFinite(q)) stock.push({ name, article, qty: q }); } }
+      if (junk.test(name.toLowerCase()) || junk.test(article.toLowerCase())) continue;
+      name = name.replace(/,\s*$/, '').trim();
+      if (best.qc >= 0) { let raw = String(row[best.qc] != null ? row[best.qc] : '').trim(); if (raw === '' && best.nc >= 0) raw = String(row[best.nc + 6] != null ? row[best.nc + 6] : '').trim(); if (raw !== '') { const q = this.parseNum(raw); if (isFinite(q)) stock.push({ name, article, qty: q }); } }
       if (best.pc >= 0) { const raw = String(row[best.pc] != null ? row[best.pc] : '').trim(); if (raw !== '') { const p = this.parseNum(raw); if (isFinite(p) && p > 0) prices.push({ name, article, price: p }); } }
     }
     return { stock, prices, sheet: best.sn, hasQty: best.qc >= 0, hasPrice: best.pc >= 0 };
