@@ -1511,7 +1511,9 @@ class Component extends DCLogic {
     const all = this.allTabIds();
     if (user.role === 'admin') return ['home'].concat(all, ['users']);
     const perms = Array.isArray(user.perms) ? user.perms : all;
-    return ['home'].concat(all.filter(id => perms.includes(id)));
+    // Новые разделы доступны по умолчанию всем (добавлены позже — их нет в старых perms)
+    const always = ['prodplan', 'procplan', 'onec'];
+    return ['home'].concat(all.filter(id => perms.includes(id) || always.includes(id)));
   }
 
   doLogin() {
@@ -2618,7 +2620,7 @@ class Component extends DCLogic {
     const log = [{ at: Date.now(), note }, ...(this.state.oneCLog || [])].slice(0, 40);
     this.setState({ stock, prices, oneCLastAt: Date.now(), oneCLog: log, stockUpdatedAt: Date.now(), oneCStatus: note });
   }
-  oneCQuickGet() { if ((this.state.oneCUrl || '').trim()) this.oneCSync(true); else this.setState({ tab: 'onec', navOpen: false }); }
+  oneCQuickGet() { this.setState({ tab: 'onec', navOpen: false }); if ((this.state.oneCUrl || '').trim()) this.oneCSync(true); }
   downloadOneCSpec() {
     const L = [
       '# Интеграция Shtark INK Flow с 1С (ERP) — техническое задание', '',
