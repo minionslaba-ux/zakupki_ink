@@ -1085,6 +1085,9 @@ class Component extends DCLogic {
     this._sloganInt = setInterval(() => this.setState(s => ({ sloganTick: s.sloganTick + 1 })), 10000);
     this.restore();
     this.cloudRestore();
+    // Авто-подключение общего облака данных (встроенный конфиг) — вводить ничего не нужно
+    this._autoCloud = () => { try { if (!this.state.cloudConnected) this.setState({ cloudCfgText: JSON.stringify(Component.FBCFG), cloudWsId: (this.state.cloudWsId || 'workspace') }, () => this.cloudConnect()); } catch (e) {} };
+    if (window.__FB) this._autoCloud(); else window.addEventListener('fbready', this._autoCloud, { once: true });
     fetch('nev_data.json').then(r => r.json()).then(d => {
       this.data = d; this.buildIndex(); this.setState({ ready: true });
     });
@@ -1341,7 +1344,7 @@ class Component extends DCLogic {
     if (!u.active) { this.setState({ loginErr: 'Учётная запись отключена. Обратитесь к администратору.' }); return; }
     try { localStorage.setItem('inkflow_session_v1', JSON.stringify({ id: u.id })); } catch (e) {}
     const allowed = this.allowedTabs(u);
-    this.setState({ currentUser: u, loginErr: '', passInput: '', tab: 'home' }, () => this.beginWelcome());
+    this.setState({ currentUser: u, loginErr: '', passInput: '', tab: 'home', cloudName: u.name || this.state.cloudName }, () => this.beginWelcome());
   }
   doLogout() {
     this.stopPresence();
