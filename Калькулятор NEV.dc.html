@@ -253,6 +253,13 @@ tbody td.l{text-align:left}
 .p2inp::placeholder{color:rgba(255,255,255,.3)}
 .p2inp:focus{border-color:#FFD200;background:rgba(255,255,255,.1)}
 .p2err{font-size:12.5px;font-weight:600;color:#ff8a8a;min-height:1em}
+.p2ok{font-size:12.5px;font-weight:600;color:#7ee0a8;line-height:1.45}
+.p2reset{margin-top:14px;padding:14px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.05);display:flex;flex-direction:column;gap:9px}
+.p2rrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.p2btn.sm{padding:9px 16px;font-size:13px}
+.estat{font-size:12.5px;font-weight:700}
+.estat.ok{color:#1f8a4d}
+.estat.off{color:#9a8f00}
 .p2you{font-size:14.5px;color:rgba(255,255,255,.8)}
 .p2you b{color:#fff;font-weight:700}
 .p2link{appearance:none;background:none;border:none;cursor:pointer;font:inherit;font-size:12.5px;color:rgba(255,255,255,.6);text-decoration:underline;text-underline-offset:3px;padding:0;margin-top:2px}
@@ -295,6 +302,130 @@ tbody td.l{text-align:left}
 .aifab:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.34)}
 .aifab.open{background:#26231f}
 .aifabic{color:#FFD200;font-size:16px;line-height:1}
+/* Виджет «Календарь и задачи» — верхний правый угол */
+.cwbtn{position:fixed;top:14px;right:18px;z-index:1230;width:46px;height:46px;border-radius:13px;background:#0e0e0e;color:#fff;border:1px solid #26231f;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.22);transition:transform .18s,box-shadow .18s,background .18s}
+.cwbtn:hover{transform:translateY(-2px);background:#1c1b18;box-shadow:0 12px 28px rgba(0,0,0,.3);color:#FFD200}
+.cwbadge{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;border-radius:10px;background:#FFD200;color:#0e0e0e;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.cwbk{position:fixed;inset:0;background:rgba(15,18,22,.34);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:1240;animation:cwFade .28s ease}
+@keyframes cwFade{from{opacity:0}to{opacity:1}}
+.wrap{transition:transform .5s cubic-bezier(.16,1,.3,1),filter .5s cubic-bezier(.16,1,.3,1)}
+.wrap.cwfocus{transform:scale(.986)}
+.cwdrawer{position:fixed;top:0;right:0;bottom:0;width:380px;max-width:calc(100vw - 24px);background:#faf9f7;z-index:1241;display:flex;flex-direction:column;box-shadow:-16px 0 40px rgba(0,0,0,.22);transform:translateX(0);animation:cwSlide .46s cubic-bezier(.16,1,.3,1) both}
+@keyframes cwSlide{from{opacity:0;transform:translateX(46px)}to{opacity:1;transform:translateX(0)}}
+.cwstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:8px;padding:12px 16px;background:#0e0e0e}
+.cwmodes{display:flex;gap:0;padding:10px 16px 0;background:#0e0e0e}
+.cwmtab{flex:1;appearance:none;cursor:pointer;font:inherit;font-weight:600;font-size:12.5px;padding:8px 10px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.12)}
+.cwmtab:first-child{border-radius:9px 0 0 9px}
+.cwmtab:last-child{border-radius:0 9px 9px 0;border-left:none}
+.cwmtab.on{background:#FFD200;color:#0e0e0e;border-color:#FFD200}
+.cwk{border-radius:11px;padding:8px 6px;text-align:center;background:rgba(255,255,255,.06)}
+.cwk-over{background:rgba(229,72,77,.16)}
+.cwkn{display:block;font-family:'Montserrat',sans-serif;font-weight:800;font-size:20px;color:#fff;line-height:1}
+.cwk-over .cwkn{color:#ff8f8a}
+.cwkl{display:block;font-size:10.5px;font-weight:600;color:rgba(255,255,255,.6);margin-top:3px}
+.cwk.cwroll .cwkn{animation:cwRoll .6s cubic-bezier(.16,1,.3,1)}
+@keyframes cwRoll{0%{transform:translateY(-14px) scale(1.25);opacity:.2}55%{transform:translateY(3px) scale(1)}100%{transform:translateY(0)}}
+.cwcontent{flex:1;display:flex;flex-direction:column;min-height:0;animation:cwCross .42s ease both}
+@keyframes cwCross{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.cwskel{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.cwsk{border-radius:10px;background:linear-gradient(100deg,#ececec 30%,#f7f7f7 50%,#ececec 70%);background-size:200% 100%;animation:cwShimmer 1.1s linear infinite}
+.cwsk-cal{height:168px;border-radius:14px}
+.cwsk-line{height:46px}
+.cwsk-line.short{width:60%}
+@keyframes cwShimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+.cwcheck{width:20px;height:20px;border-radius:7px;border:2px solid #c5c2bd;background:#fff;cursor:pointer;flex:none;position:relative;transition:border-color .15s,background .15s}
+.cwcheck:hover{border-color:#34a85b}
+.cwcheck:hover:after{content:'';position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #34a85b;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.cwtopen{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;text-align:left;padding:0;font:inherit}
+.cwconfetti{position:fixed;z-index:1300;pointer-events:none;width:0;height:0}
+.cwconfetti i{position:absolute;left:0;top:0;width:7px;height:7px;border-radius:2px;transform:translate(-50%,-50%);animation:cwSpark var(--d,.9s) cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes cwSpark{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.4) rotate(120deg)}}
+.cwhead{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 12px;background:#0e0e0e;color:#fff}
+.cwh1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px}
+.cwx{appearance:none;background:rgba(255,255,255,.1);border:none;color:#fff;width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:13px}
+.cwx:hover{background:rgba(255,210,0,.25)}
+.cwcal{padding:14px 16px 8px;background:#fff;border-bottom:1px solid #eeece8}
+.cwnav{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.cwmon{font-family:'Montserrat',sans-serif;font-weight:800;font-size:14px;flex:1}
+.cwarr{appearance:none;width:28px;height:28px;border-radius:8px;border:1px solid #e7e4e0;background:#fff;cursor:pointer;font-size:13px;color:#26231f}
+.cwarr:hover{background:#f1efec}
+.cwtoday-b{appearance:none;background:none;border:none;cursor:pointer;font:inherit;font-size:12px;font-weight:600;color:#8a8782}
+.cwtoday-b:hover{color:#26231f}
+.cwgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:2px}
+.cwwd{text-align:center;font-size:10.5px;font-weight:700;color:#9a9793;text-transform:uppercase;padding-bottom:3px}
+.cwwd.off{color:#d97706}
+.cwrow{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:2px}
+.cwc{position:relative;appearance:none;border:none;background:none;cursor:pointer;aspect-ratio:1;border-radius:9px;font:inherit;font-size:12.5px;font-weight:600;color:#3a3833;display:flex;align-items:center;justify-content:center}
+.cwc.cwoff{color:#c2410c;background:#fdf4ec}
+.cwc.cwoff.cwsel{color:#fff}
+.cwadd{position:absolute;top:1px;right:1px;width:15px;height:15px;border-radius:50%;background:#1f8a4d;color:#fff;font-size:12px;font-weight:800;line-height:13px;display:none;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.cwc:hover .cwadd{display:flex}
+.cwc.cwsel .cwadd{background:#FFD200;color:#0e0e0e}
+.cwc:hover{background:#f1efec}
+.cwc.blank{visibility:hidden;cursor:default}
+.cwc.cwtoday{color:#c08a00;font-weight:800}
+.cwc.cwsel{background:#0e0e0e;color:#fff}
+.cwdot{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#FFD200}
+.cwc.cwsel .cwdot{background:#FFD200}
+.cwbody{flex:1;overflow:auto;padding:12px 16px 4px}
+.cwgrp{margin-bottom:14px}
+.cwgl{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#8a8782;margin-bottom:7px}
+.cwg-over .cwgl{color:#c0322b}
+.cwtask{width:100%;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #eeece8;border-radius:11px;padding:9px 11px;cursor:pointer;text-align:left;margin-bottom:7px;transition:box-shadow .15s,transform .12s}
+.cwtask:hover{box-shadow:0 4px 14px rgba(0,0,0,.08);transform:translateY(-1px)}
+.cwtside{width:4px;align-self:stretch;border-radius:3px;background:#c7c4bf;flex:none}
+.cwtside.st-new{background:#b9b5af}.cwtside.st-acc{background:#6b6ff0}.cwtside.st-prog{background:#2f6fe0}.cwtside.st-done{background:#34a85b}.cwtside.st-rej{background:#e5484d}
+.cwtmain{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.cwtt{font-size:13px;font-weight:600;color:#1c1b18;line-height:1.25;text-wrap:pretty}
+.cwtmeta{display:flex;gap:6px}
+.cwst{font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px}
+.cwst.st-new{background:#eef0f1;color:#56534f}.cwst.st-acc{background:#e7e9ff;color:#4a4fd6}.cwst.st-prog{background:#e2edff;color:#1f5bd6}.cwst.st-done{background:#dff3e6;color:#1f8a4d}.cwst.st-rej{background:#fbdedb;color:#c0322b}
+.cwavs{display:flex;flex-direction:row-reverse;flex:none}
+.cwav{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;border:2px solid #fff;margin-left:-7px}
+.cwav.av0{background:#2f6fe0}.cwav.av1{background:#7a5cf0}.cwav.av2{background:#1f8a5b}.cwav.av3{background:#d97706}.cwav.av4{background:#c0392b}.cwav.av5{background:#0e7490}
+.cwempty{font-size:13px;color:#8a8782;padding:10px 2px;line-height:1.5}
+.cwmain{margin:6px 16px 16px;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:12px;background:#0e0e0e;color:#FFD200;border:none;cursor:pointer;font:inherit;font-weight:700;font-size:13.5px;transition:filter .15s}
+.cwmain:hover{filter:brightness(1.15)}
+.cwmainarr{transition:transform .15s}
+.cwmain:hover .cwmainarr{transform:translateX(4px)}
+@media(max-width:560px){.cwbtn{top:auto;bottom:148px;right:16px}.cwdrawer{width:auto;left:8px;right:8px;border-radius:16px 16px 0 0;top:auto;height:88vh}}
+/* АЯ «выглядывает»: всплывающий аватар ассистента у правого края с облачком-напоминанием */
+.ayapeek{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:1250;display:flex;align-items:center;max-width:min(380px,calc(100vw - 18px));animation:ayaPeek .5s cubic-bezier(.22,1.2,.36,1)}
+@keyframes ayaPeek{from{transform:translate(70px,-50%);opacity:0}to{transform:translate(0,-50%);opacity:1}}
+.ayaav{flex:none;width:62px;height:62px;border-radius:50% 0 0 50%;background:#0e0e0e;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;box-shadow:-6px 8px 24px rgba(0,0,0,.28);border:2px solid #FFD200;border-right:none;position:relative}
+.ayapeek.warn .ayaav{animation:ayaBounce 1.9s ease-in-out infinite}
+.ayapeek.crit .ayaav{animation:ayaBounce 1.4s ease-in-out infinite,ayaGlow 1.4s ease-in-out infinite}
+@keyframes ayaBounce{0%,55%,100%{transform:translateX(0)}65%{transform:translateX(-8px) scale(1.05)}75%{transform:translateX(0)}82%{transform:translateX(-4px)}90%{transform:translateX(0)}}
+@keyframes ayaGlow{0%,100%{box-shadow:-6px 8px 24px rgba(0,0,0,.28),0 0 0 0 rgba(229,72,77,.55)}50%{box-shadow:-6px 8px 24px rgba(0,0,0,.28),0 0 0 13px rgba(229,72,77,0)}}
+.ayabadge{position:absolute;top:-6px;left:-6px;min-width:20px;height:20px;border-radius:10px;background:#e5484d;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;box-shadow:0 2px 6px rgba(0,0,0,.3);border:2px solid #fff}
+.ayapeek.warn .ayabadge{background:#e0a800}
+.ayaspark{color:#FFD200;font-size:13px;line-height:1}
+.ayamono{color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:14px;letter-spacing:.02em;line-height:1.1;margin-top:1px}
+.ayabubble{background:#fff;border:1px solid #e7e4e0;border-radius:14px;box-shadow:-10px 12px 30px rgba(0,0,0,.16);padding:12px 14px;margin-right:-2px;display:flex;flex-direction:column;gap:9px;position:relative}
+.ayapeek.crit .ayabubble{border-color:#f1c4c0;background:#fff7f6}
+.ayapeek.crit .ayaav{border-color:#e5484d}
+.ayapeek.warn .ayabubble{border-color:#f3e2b0;background:#fffdf5}
+.ayapeek.ok .ayabubble{border-color:#bfe6cf;background:#f4fbf6}
+.ayapeek.idle .ayabubble{border-color:#e7e4e0;background:#fbfaf8}
+.ayapeek.idle .ayabubble{display:none}
+.ayapeek.idle:hover .ayabubble{display:flex}
+.ayapeek.idle .ayaav{border-color:#7a7770;opacity:.96}
+.ayapeek.idle .ayaspark{color:#FFD200}
+.ayapeek.idle .ayatext{color:#56534f;font-weight:600}
+.ayatext{font-size:13px;line-height:1.45;color:#26231f;font-weight:600;text-wrap:pretty}
+.ayabtns{display:flex;gap:7px;flex-wrap:wrap}
+.ayaq{appearance:none;border:none;cursor:pointer;font:inherit;font-weight:700;font-size:12px;padding:7px 12px;border-radius:9px;background:#0e0e0e;color:#FFD200}
+.ayaq:hover{filter:brightness(1.14)}
+.ayao{appearance:none;cursor:pointer;font:inherit;font-weight:600;font-size:12px;padding:7px 11px;border-radius:9px;background:#f1efec;color:#26231f;border:1px solid #e0ddd8}
+.ayao:hover{background:#e9e6e2}
+.ayamore{appearance:none;background:none;border:none;cursor:pointer;font:inherit;font-size:11px;color:#8a8782;text-align:left;padding:0}
+.ayamore:hover{color:#26231f}
+.ayaclose{position:absolute;left:-9px;top:-9px;width:22px;height:22px;border-radius:50%;border:1px solid #e7e4e0;background:#fff;color:#8a8782;cursor:pointer;font-size:11px;line-height:1;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.ayaclose:hover{color:#26231f}
+.preg tr.prisk.crit td{background:#fff5f4}
+.preg tr.prisk.warn td{background:#fffdf3}
+.preg tr.prisk.crit td:first-child{box-shadow:inset 3px 0 0 #e5484d}
+.preg tr.prisk.warn td:first-child{box-shadow:inset 3px 0 0 #e0a800}
 .aipanel{position:fixed;right:22px;bottom:84px;z-index:1200;width:400px;max-width:calc(100vw - 28px);height:560px;max-height:calc(100vh - 110px);background:#fff;border:1px solid #e7e4e0;border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.26);display:flex;flex-direction:column;overflow:hidden}
 .aihead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;border-bottom:1px solid #efedea;background:#fbf3c8}
 .aihl{font-family:'Montserrat',sans-serif;font-weight:800;font-size:14px;display:flex;align-items:center;gap:8px}
@@ -328,7 +459,7 @@ tbody td.l{text-align:left}
 .aisend{appearance:none;cursor:pointer;white-space:nowrap;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:#0e0e0e;background:#FFD200;border:none;border-radius:11px;padding:11px 15px;transition:filter .14s}
 .aisend:hover{filter:brightness(1.05)}
 .aisend:disabled{opacity:.5;cursor:default}
-@media(max-width:560px){.aifabtx{display:none}.aifab{padding:14px;right:16px;bottom:16px}.aipanel{right:8px;left:8px;bottom:76px;width:auto;max-width:none}}
+@media(max-width:560px){.aifabtx{display:none}.aifab{padding:14px;right:16px;bottom:16px}.aipanel{right:8px;left:8px;bottom:76px;width:auto;max-width:none}.ayapeek{top:auto;bottom:86px;transform:none;animation:none;max-width:calc(100vw - 14px)}.ayaav{width:52px;height:52px;animation:none}}
 @media(max-width:680px){.uform{grid-template-columns:1fr}}
 @media(max-width:680px){.p2card{flex-direction:column;gap:26px;text-align:center}.p2left{border-right:none;border-bottom:1px solid rgba(255,255,255,.1);padding-right:0;padding-bottom:22px}.p2right{align-items:center}.p2logo{margin:0 auto;max-width:200px}.p2h{font-size:21px}}
 .slogan{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#e10000;margin-top:7px;min-height:1.1em}
@@ -409,6 +540,138 @@ a.wordmark:hover{opacity:.6}
 .msum .mr{margin-left:auto;display:flex;gap:10px}
 .nowrap{white-space:nowrap}
 .btn.xs{padding:5px 9px;font-size:11.5px}
+.tform{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;align-items:end}
+.tform .full{grid-column:1/-1}
+.tarea{resize:vertical;min-height:42px;font:inherit;line-height:1.4}
+.tvrow{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}
+.tvtab{appearance:none;cursor:pointer;font:inherit;font-weight:600;font-size:13px;padding:7px 14px;border-radius:9px;background:#f1efec;color:#56534f;border:1px solid #e7e4e0}
+.tvtab:hover{background:#e9e6e2}
+.tvtab.on{background:#0e0e0e;color:#fff;border-color:#0e0e0e}
+.tlist{display:flex;flex-direction:column;gap:10px}
+.tcard{display:flex;gap:14px;align-items:flex-start;border:1px solid #e7e4e0;border-radius:12px;padding:13px 15px;background:#fff}
+.tcard.task-over{border-color:#f1c4c0;background:#fff8f7}
+.tcmain{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.tctop{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tctitle{font-family:'Montserrat',sans-serif;font-weight:700;font-size:14.5px;color:#1c1b18;text-wrap:pretty}
+.tcdesc{font-size:13px;color:#56534f;line-height:1.5}
+.tcmeta{font-size:12px;color:#8a8782}
+.tcmeta b{color:#26231f;font-weight:700}
+.tprio{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px}
+.tprio.pr-norm{background:#eef0f1;color:#56534f}
+.tprio.pr-high{background:#fdeccd;color:#9a6a00}
+.tprio.pr-hot{background:#fbdedb;color:#c0322b}
+.tcstatus{font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px}
+.tcstatus.st-new{background:#eef0f1;color:#56534f}
+.tcstatus.st-acc{background:#e7e9ff;color:#4a4fd6}
+.tcstatus.st-prog{background:#e2edff;color:#1f5bd6}
+.tcstatus.st-done{background:#dff3e6;color:#1f8a4d}
+.tcstatus.st-rej{background:#fbdedb;color:#c0322b}
+.execpick{display:flex;flex-wrap:wrap;gap:7px}
+.execchip{appearance:none;cursor:pointer;font:inherit;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:9px;background:#f1efec;color:#56534f;border:1px solid #e0ddd8}
+.execchip:hover{background:#e9e6e2}
+.execchip.on{background:#0e0e0e;color:#fff;border-color:#0e0e0e}
+.execchip .pcbox{width:14px;height:14px;border-radius:4px;border:1.5px solid #b9b5af;position:relative;flex:none}
+.execchip.on .pcbox{background:#FFD200;border-color:#FFD200}
+.execchip.on .pcbox:after{content:'';position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid #0e0e0e;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.trej{font-size:12.5px;font-weight:600;color:#c0322b;background:#fff5f4;border-radius:7px;padding:5px 9px}
+.trejform{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:2px}
+.trejform .inp{flex:1;min-width:160px}
+.tcthread{margin-top:4px}
+.tthtoggle{appearance:none;background:none;border:none;cursor:pointer;font:inherit;font-size:12px;font-weight:600;color:#56534f;padding:2px 0}
+.tthtoggle:hover{color:#1f5bd6}
+.tthbox{margin-top:6px;border-top:1px dashed #e7e4e0;padding-top:8px;display:flex;flex-direction:column;gap:6px}
+.tthmsg{display:flex;flex-direction:column;gap:1px;background:#f7f6f4;border-radius:8px;padding:6px 9px;max-width:90%}
+.tthmsg.tcm-me{align-self:flex-end;background:#eef4ff}
+.tthwho{font-size:11px;font-weight:700;color:#26231f}
+.tthtxt{font-size:13px;color:#1c1b18;line-height:1.4;text-wrap:pretty}
+.tthwhen{font-size:10.5px;color:#9a9793}
+.tthinput{display:flex;gap:7px;align-items:center}
+.tthinput .inp{flex:1}
+.tcdue{font-size:12px;font-weight:600;color:#56534f}
+.tcdue.due-soon{color:#9a6a00}
+.tcdue.due-over{color:#c0322b}
+.tcact{display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex:none}
+.tlink{appearance:none;background:none;border:none;cursor:pointer;font:inherit;font-size:12px;color:#8a8782;padding:0}
+.tlink:hover{color:#26231f}
+.tlink.del:hover{color:#c0322b}
+.kpi.kpiBad .kv{color:#c0322b}
+.tmodes{margin-left:auto;display:flex;gap:0;border:1px solid #e7e4e0;border-radius:9px;overflow:hidden}
+.tmbtn{appearance:none;cursor:pointer;font:inherit;font-weight:600;font-size:12.5px;padding:7px 13px;background:#fff;color:#56534f;border:none}
+.tmbtn.on{background:#0e0e0e;color:#fff}
+.tcalhead{display:flex;align-items:center;gap:10px;margin:4px 0 12px}
+.tcalm{font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;min-width:150px}
+.tcalgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px}
+.tcalwd{font-size:11px;font-weight:700;color:#8a8782;text-transform:uppercase;letter-spacing:.04em;text-align:center;padding:2px 0}
+.tcalwd.off{color:#c2410c}
+.tcalrow{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px}
+.tcell{position:relative;min-height:84px;border:1px solid #efedea;border-radius:9px;padding:5px 6px;background:#fff;display:flex;flex-direction:column;gap:3px}
+.tcell.toff{background:#fdf4ec;border-color:#f6e2d2}
+.tcell.toff .tcellnum{color:#c2410c}
+.tadd{position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:#1f8a4d;color:#fff;font-size:14px;font-weight:800;line-height:16px;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.3);z-index:2}
+.tcell:hover .tadd{display:flex}
+.tadd:hover{background:#16703d;transform:scale(1.12)}
+.qabk{position:fixed;inset:0;background:rgba(15,18,22,.4);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1320;animation:cwFade .2s ease}
+.qacard{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:380px;max-width:calc(100vw - 28px);background:#fff;border-radius:18px;z-index:1321;box-shadow:0 30px 80px rgba(0,0,0,.4);overflow:hidden;animation:qaIn .34s cubic-bezier(.16,1,.3,1) both}
+@keyframes qaIn{from{opacity:0;transform:translate(-50%,-46%) scale(.94)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.qahead{display:flex;align-items:center;gap:10px;padding:16px 16px 12px;background:#0e0e0e;color:#fff}
+.qaplus{width:30px;height:30px;border-radius:50%;background:#1f8a4d;color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex:none}
+.qah1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px}
+.qadate{font-size:12.5px;color:rgba(255,255,255,.6);font-weight:600}
+.qax{margin-left:auto;appearance:none;background:rgba(255,255,255,.1);border:none;color:#fff;width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:13px}
+.qax:hover{background:rgba(255,210,0,.25)}
+.qabody{padding:15px 16px 16px;display:flex;flex-direction:column;gap:11px}
+.qatitle{font-size:15px;font-weight:600;padding:11px 13px}
+.qarow{display:flex;gap:12px}
+.qafield{flex:1;display:flex;flex-direction:column;gap:5px}
+.qafield.qatime{flex:0 0 110px}
+.qafield label{font-size:11.5px;font-weight:600;color:#56534f}
+.qaerr{font-size:12.5px;font-weight:600;color:#c0322b}
+.qaact{display:flex;gap:9px;margin-top:2px}
+.qasave{flex:1;justify-content:center}
+.qahint{font-size:11.5px;color:#8a8782;line-height:1.5}
+.chwrap{position:fixed;right:20px;bottom:96px;z-index:1260;display:flex;flex-direction:column;align-items:flex-end;gap:8px;pointer-events:none;animation:chIn .5s cubic-bezier(.16,1,.3,1) both}
+@keyframes chIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.chbubble{max-width:236px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:9px 13px;font-size:12.5px;line-height:1.45;color:#1e293b;box-shadow:0 12px 32px rgba(15,23,42,.18);font-weight:500;text-wrap:pretty}
+.chby{display:block;font-size:10.5px;font-weight:800;color:#4f46e5;margin-bottom:2px}
+.chrow{display:flex;align-items:flex-end}
+.chmax{margin-right:-16px;animation:chSlideMax .5s cubic-bezier(.16,1,.3,1) both}
+@keyframes chSlideMax{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+.chaya{animation:chPop .5s cubic-bezier(.16,1,.3,1) both}
+@keyframes chPop{from{opacity:0;transform:translateY(12px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+.ch-bored .chaya{animation:chSway 3s ease-in-out infinite}
+@keyframes chSway{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+.chzzz{opacity:0}
+.ch-bored .chzzz{opacity:1;animation:chZzz 2.4s ease-in-out infinite}
+@keyframes chZzz{0%{opacity:0;transform:translateY(4px)}40%{opacity:1}100%{opacity:0;transform:translateY(-7px)}}
+.chspark{opacity:0}
+.ch-coffee .chspark,.ch-bye .chspark{opacity:1;animation:chTwinkle 1.2s ease-in-out infinite}
+@keyframes chTwinkle{0%,100%{opacity:.35;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
+.ch-leave .chrow{animation:chWalkOff 2.6s ease-in 1.5s forwards}
+@keyframes chWalkOff{0%{transform:translateX(0);opacity:1}100%{transform:translateX(170px);opacity:0}}
+.ch-leave .chbubble{animation:chFadeLate .6s ease 1.6s forwards}
+@keyframes chFadeLate{to{opacity:0;transform:translateX(40px)}}
+.chcup{opacity:0}
+.ch-coffee .chcup{opacity:1}
+.chwave{transform-origin:60px 72px}
+.ch-coffee .chwave{display:none}
+.ch-bye .chwave,.ch-leave .chwave{animation:chWaveHand 1s ease-in-out infinite}
+@keyframes chWaveHand{0%,100%{transform:rotate(0)}50%{transform:rotate(-24deg)}}
+.chsteam{animation:chSteam 1.6s ease-in-out infinite}
+@keyframes chSteam{0%{opacity:0;transform:translateY(2px)}50%{opacity:.8}100%{opacity:0;transform:translateY(-5px)}}
+.ch-coffee .chcheek,.ch-bye .chcheek{opacity:.8!important}
+@media(max-width:560px){.chwrap{right:10px;bottom:150px}}
+.tcell.blank{background:#faf9f7;border-style:dashed;border-color:#f1efec}
+.tcell.today{border-color:#0e0e0e;box-shadow:inset 0 0 0 1px #0e0e0e}
+.tcellnum{font-size:12px;font-weight:700;color:#56534f}
+.tcell.today .tcellnum{color:#0e0e0e}
+.tcellt{display:flex;flex-direction:column;gap:3px}
+.tchip{appearance:none;cursor:pointer;font:inherit;text-align:left;font-size:11px;font-weight:600;line-height:1.2;padding:3px 6px;border-radius:6px;border:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.tchip.st-new{background:#eef0f1;color:#3a3833}
+.tchip.st-prog{background:#e2edff;color:#1f5bd6}
+.tchip.st-done{background:#dff3e6;color:#1f8a4d;text-decoration:line-through}
+.tchip.over{background:#fbdedb;color:#c0322b}
+@media(max-width:680px){.tcell{min-height:60px}.tchip{font-size:10px}}
+@media(max-width:680px){.tform{grid-template-columns:1fr}.tcard{flex-direction:column}.tcact{flex-direction:row;align-items:center;flex-wrap:wrap}}
 .printbg{position:fixed;inset:0;background:rgba(28,27,24,.55);display:flex;align-items:flex-start;justify-content:center;padding:28px 16px;z-index:80;overflow:auto}
 .printwrap{width:100%;max-width:760px}
 .prtools{display:flex;gap:10px;justify-content:flex-end;margin-bottom:12px}
@@ -447,6 +710,19 @@ a.wordmark:hover{opacity:.6}
 .sbitems{display:flex;flex-direction:column;gap:2px}
 .sbtab{display:flex;align-items:center;gap:9px;width:100%;text-align:left;appearance:none;cursor:pointer;border:none;background:none;color:#c7c4bf;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:13.5px;font-weight:500;padding:8px 10px;border-radius:8px;transition:background .14s,color .14s}
 .sbtab:hover{background:rgba(255,255,255,.07);color:#fff}
+.sbtab{position:relative}
+.nbadge{margin-left:auto;min-width:18px;height:18px;border-radius:9px;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;color:#fff;background:#e0a800}
+.nbadge.crit{background:#e5484d}
+.sbtab.tnav-crit{animation:tnavCrit .7s steps(1,end) infinite}
+.sbtab.tnav-hot{animation:tnavHot 1.1s ease-in-out infinite}
+.sbtab.tnav-soft{animation:tnavSoft 1.9s ease-in-out infinite}
+@keyframes tnavCrit{0%,49%{background:rgba(229,72,77,.32);color:#fff}50%,100%{background:transparent;color:#c7c4bf}}
+@keyframes tnavHot{0%,100%{background:transparent}50%{background:rgba(229,72,77,.2);color:#fff}}
+@keyframes tnavSoft{0%,100%{background:transparent}50%{background:rgba(224,168,0,.18)}}
+.sbtab.tnav-crit .nbadge{animation:tnavBadge .7s ease-in-out infinite}
+@keyframes tnavBadge{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+.tcard.tnew{animation:tcardNew 2.4s ease-out 1}
+@keyframes tcardNew{0%{background:#fff7d6;box-shadow:0 0 0 2px #FFD200}12%{background:#fffbe9}100%{background:#fff;box-shadow:none}}
 .sbbar{width:3px;height:15px;border-radius:2px;background:transparent;flex:none;transition:background .14s}
 .sblbl{flex:1}
 .sbtab.on{background:rgba(255,210,0,.14);color:#fff;font-weight:700}
@@ -557,8 +833,9 @@ window.dispatchEvent(new Event('fbready'));
 <script src="letterhead-data.js"></script>
 <script>window.addEventListener('error',function(e){if(!e.filename&&(e.message==='Script error.'||e.message==='Script error')){e.preventDefault();e.stopImmediatePropagation();return true;}},true);window.addEventListener('unhandledrejection',function(e){var m=e&&e.reason&&(e.reason.message||e.reason);if(typeof m==='string'&&/puter|popup|signin|sign-in/i.test(m)){e.preventDefault();}});</script>
 <script src="https://js.puter.com/v2/"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </helmet>
-<sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="{{ loaderCls }}" role="status"><div class="si-p1 {{ p1cls }}"><div class="si-in"><img class="si-logo" src="loader-logo-white.png" alt="Shtark INK"><div class="si-tag">{{ tagLetters }}</div><div class="si-bar"><div class="si-run"></div></div><div class="si-cap">Производство спиртовых красок для печати на гибкой упаковке</div></div></div><div class="si-p2 {{ p2cls }}"><div class="p2card"><div class="p2left"><div class="p2brand">Shtark INK <span class="p2flow">Flow</span></div><div class="p2bar"><div class="p2run"></div></div><div class="p2slo">{{ sloganLetters }}</div><a class="p2site" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Официальный сайт">Перейти на shtarkink.com →</a></div><div class="p2right"><div class="p2ready"><span class="p2dot"></span> Система готова к работе</div><div class="p2h">Портал закупок<br>и производства</div><sc-if value="{{ needLogin }}" hint-placeholder-val="{{ true }}"><div class="p2form"><div><div class="p2lbl">Логин</div><input class="p2inp" value="{{ loginInput }}" onInput="{{ onLoginInput }}" onKeyDown="{{ onLoginKey }}" placeholder="например, ivanov" autocomplete="username"></div><div><div class="p2lbl">Пароль</div><input class="p2inp" type="password" value="{{ passInput }}" onInput="{{ onPassInput }}" onKeyDown="{{ onLoginKey }}" placeholder="••••••••" autocomplete="current-password"></div><div class="p2err">{{ loginErr }}</div><button class="p2btn" onClick="{{ doLogin }}">Войти <span class="p2arr">→</span></button></div><div class="p2hint">Введите логин и пароль, выданные администратором</div></sc-if><sc-if value="{{ hasSession }}" hint-placeholder-val=""><div class="p2you">Вы вошли как <b>{{ sessionName }}</b></div><button class="p2btn" onClick="{{ enterWelcome }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ switchUser }}">Войти под другим пользователем</button></sc-if></div></div></div></div></sc-if>
+<sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="{{ loaderCls }}" role="status"><div class="si-p1 {{ p1cls }}"><div class="si-in"><img class="si-logo" src="loader-logo-white.png" alt="Shtark INK"><div class="si-tag">{{ tagLetters }}</div><div class="si-bar"><div class="si-run"></div></div><div class="si-cap">Производство спиртовых красок для печати на гибкой упаковке</div></div></div><div class="si-p2 {{ p2cls }}"><div class="p2card"><div class="p2left"><div class="p2brand">Shtark INK <span class="p2flow">Flow</span></div><div class="p2bar"><div class="p2run"></div></div><div class="p2slo">{{ sloganLetters }}</div><a class="p2site" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Официальный сайт">Перейти на shtarkink.com →</a></div><div class="p2right"><div class="p2ready"><span class="p2dot"></span> Система готова к работе</div><div class="p2h">Портал закупок<br>и производства</div><sc-if value="{{ needLogin }}" hint-placeholder-val="{{ true }}"><div class="p2form"><div><div class="p2lbl">Логин</div><input class="p2inp" value="{{ loginInput }}" onInput="{{ onLoginInput }}" onKeyDown="{{ onLoginKey }}" placeholder="например, ivanov" autocomplete="username"></div><div><div class="p2lbl">Пароль</div><input class="p2inp" type="password" value="{{ passInput }}" onInput="{{ onPassInput }}" onKeyDown="{{ onLoginKey }}" placeholder="••••••••" autocomplete="current-password"></div><div class="p2err">{{ loginErr }}</div><button class="p2btn" onClick="{{ doLogin }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ openReset }}">Забыли пароль?</button></div><sc-if value="{{ resetOpen }}" hint-placeholder-val=""><div class="p2reset"><div class="p2lbl">Восстановление пароля</div><input class="p2inp" value="{{ resetInput }}" onInput="{{ onResetInput }}" onKeyDown="{{ onResetKey }}" placeholder="ваш e-mail или логин" autocomplete="email"><sc-if value="{{ resetErr }}" hint-placeholder-val=""><div class="p2err">{{ resetErr }}</div></sc-if><sc-if value="{{ resetOk }}" hint-placeholder-val=""><div class="p2ok">{{ resetOk }}</div></sc-if><div class="p2rrow"><button class="p2btn sm" onClick="{{ doReset }}" disabled="{{ resetBusy }}">Прислать новый пароль</button><button class="p2link" onClick="{{ closeReset }}">Отмена</button></div><div class="p2hint">На указанный e-mail придёт новый временный пароль. Если e-mail не привязан — обратитесь к администратору.</div></div></sc-if><div class="p2hint">Введите логин и пароль, выданные администратором</div></sc-if><sc-if value="{{ hasSession }}" hint-placeholder-val=""><div class="p2you">Вы вошли как <b>{{ sessionName }}</b></div><button class="p2btn" onClick="{{ enterWelcome }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ switchUser }}">Войти под другим пользователем</button></sc-if></div></div></div></div></sc-if>
 <div class="wrap {{ wrapCls }}">
 <div class="mtop"><button class="mburg" onClick="{{ toggleNav }}" aria-label="Меню"><span></span><span></span><span></span></button><span class="mtitle">Shtark INK <span class="mflow">Flow</span></span></div>
 <div class="navbk {{ navBkCls }}" onClick="{{ closeNav }}"></div>
@@ -566,7 +843,7 @@ window.dispatchEvent(new Event('fbready'));
 <a class="sblogo" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Перейти на shtarkink.com"><span class="sbwm">Shtark</span><span class="sbink">I N K</span></a>
 <div class="sbcmyk"><div class="sbrun"></div></div>
 <button class="{{ oneCBtnCls }}" onClick="{{ oneCQuickGet }}" title="Загрузить остатки и закупочные цены из 1С"><span class="oneclogo">1С</span><span class="onecbtx">{{ oneCBtnText }}</span></button>
-<nav class="sbnav"><sc-for list="{{ navGroups }}" as="g" hint-placeholder-count="6"><div class="sbgroup"><span class="sbglabel">{{ g.label }}</span><div class="sbitems"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="sbtab {{ t.cls }}" onClick="{{ t.go }}"><span class="sbbar"></span>{{ t.icon }}<span class="sblbl">{{ t.label }}</span></button></sc-for></div></div></sc-for></nav>
+<nav class="sbnav"><sc-for list="{{ navGroups }}" as="g" hint-placeholder-count="6"><div class="sbgroup"><span class="sbglabel">{{ g.label }}</span><div class="sbitems"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="sbtab {{ t.cls }}" onClick="{{ t.go }}"><span class="sbbar"></span>{{ t.icon }}<span class="sblbl">{{ t.label }}</span><sc-if value="{{ t.hasBadge }}" hint-placeholder-val=""><span class="nbadge {{ t.badgeCls }}">{{ t.badge }}</span></sc-if></button></sc-for></div></div></sc-for></nav>
 <button class="sbmap" onClick="{{ goHome }}" title="Карта навигации (стартовая страница)"><span>🗺</span> Карта навигации</button>
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
@@ -754,7 +1031,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sec">Заявки на закупку</div>
 <div class="kpis"><sc-for list="{{ purchaseKpis }}" as="k" hint-placeholder-count="4"><div class="kpi"><div class="kl">{{ k.label }}</div><div class="kv mono">{{ k.value }}</div></div></sc-for></div>
 <div class="scroll"><table class="preg"><thead><tr><th>№</th><th>Инициатор</th><th>Наименование сырья</th><th>Кол-во</th><th>Категория</th><th>Поставщик</th><th>Сумма ₽</th><th>Согласование</th><th>Статус заказа</th><th>Факт. на склад</th><th></th></tr></thead>
-<tbody><sc-for list="{{ purchaseList }}" as="p" hint-placeholder-count="2"><tr class="clk"><td class="mono" onClick="{{ p.open }}">{{ p.no }}</td><td onClick="{{ p.open }}">{{ p.initiator }}</td><td class="nm" onClick="{{ p.open }}">{{ p.material }}</td><td class="right mono nowrap" onClick="{{ p.open }}">{{ p.qty }} {{ p.unit }}</td><td onClick="{{ p.open }}">{{ p.category }}</td><td onClick="{{ p.open }}">{{ p.supplier }}</td><td class="right mono" onClick="{{ p.open }}">{{ p.sumRub }}</td><td onClick="{{ p.open }}"><span class="st {{ p.approvalCls }}">{{ p.approval }}</span></td><td onClick="{{ p.open }}"><span class="st {{ p.statusCls }}">{{ p.status }}</span></td><td class="mono" onClick="{{ p.open }}">{{ p.arriveDate }}</td><td class="right nowrap"><button class="btn xs" onClick="{{ p.print }}">печать</button> <button class="btn x" onClick="{{ p.remove }}">×</button></td></tr></sc-for></tbody></table></div>
+<tbody><sc-for list="{{ purchaseList }}" as="p" hint-placeholder-count="2"><tr class="clk {{ p.rowCls }}"><td class="mono" onClick="{{ p.open }}">{{ p.no }}</td><td onClick="{{ p.open }}">{{ p.initiator }}</td><td class="nm" onClick="{{ p.open }}">{{ p.material }}</td><td class="right mono nowrap" onClick="{{ p.open }}">{{ p.qty }} {{ p.unit }}</td><td onClick="{{ p.open }}">{{ p.category }}</td><td onClick="{{ p.open }}">{{ p.supplier }}</td><td class="right mono" onClick="{{ p.open }}">{{ p.sumRub }}</td><td onClick="{{ p.open }}"><span class="st {{ p.approvalCls }}">{{ p.approval }}</span></td><td onClick="{{ p.open }}"><span class="st {{ p.statusCls }}">{{ p.status }}</span></td><td class="mono" onClick="{{ p.open }}">{{ p.arriveDate }}</td><td class="right nowrap"><button class="btn xs" onClick="{{ p.print }}">печать</button> <button class="btn x" onClick="{{ p.remove }}">×</button></td></tr></sc-for></tbody></table></div>
 <div class="rowline"><button class="btn dark" onClick="{{ addPurchase }}">+ заявка на закупку</button><span class="hint">Нажмите на строку, чтобы открыть полную карточку заявки.</span></div>
 </div>
 </sc-if>
@@ -958,6 +1235,57 @@ window.dispatchEvent(new Event('fbready'));
 </sc-if>
 </sc-if>
 
+<sc-if value="{{ isTasks }}" hint-placeholder-val="">
+<div class="card">
+<div class="sec">{{ taskFormTitle }}</div>
+<sc-if value="{{ taskNoUsers }}" hint-placeholder-val=""><div class="banner err">Нет сотрудников для назначения. Добавьте пользователей в разделе «Пользователи».</div></sc-if>
+<div class="tform">
+<div class="fg full"><label>Название задачи</label><input class="inp" value="{{ tdTitle }}" onInput="{{ onTdTitle }}" placeholder="Например: согласовать договор с поставщиком"></div>
+<div class="fg full"><label>Исполнители (можно несколько)</label><div class="execpick"><sc-for list="{{ taskExecChips }}" as="u" hint-placeholder-count="4"><button class="{{ u.cls }}" onClick="{{ u.toggle }}"><span class="pcbox"></span>{{ u.label }}</button></sc-for></div></div>
+<div class="fg"><label>Срок · дата</label><input class="inp" type="date" value="{{ tdDue }}" onInput="{{ onTdDue }}"></div>
+<div class="fg"><label>Срок · время</label><input class="inp" type="time" value="{{ tdDueTime }}" onInput="{{ onTdDueTime }}"></div>
+<div class="fg"><label>Приоритет</label><select class="sel" value="{{ tdPriority }}" onChange="{{ onTdPriority }}"><sc-for list="{{ tdPriorityOpts }}" as="p" hint-placeholder-count="3"><option value="{{ p.v }}">{{ p.label }}</option></sc-for></select></div>
+<div class="fg full"><label>Описание (необязательно)</label><textarea class="inp tarea" rows="2" value="{{ tdDesc }}" onInput="{{ onTdDesc }}" placeholder="Детали задачи…"></textarea></div>
+</div>
+<sc-if value="{{ taskHasErr }}" hint-placeholder-val=""><div class="banner err">{{ taskErr }}</div></sc-if>
+<div class="genrow"><button class="btn dark" onClick="{{ saveTask }}">{{ taskFormTitle }}</button><sc-if value="{{ taskHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelTaskEdit }}">Отмена</button></sc-if><span class="hint">Исполнители и команда получат уведомление в чат (и Telegram, если подключён).</span></div>
+</div>
+<div class="card">
+<div class="kpis"><sc-for list="{{ taskKpis }}" as="k" hint-placeholder-count="4"><div class="kpi {{ k.cls }}"><div class="kl">{{ k.label }}</div><div class="kv mono">{{ k.value }}</div></div></sc-for></div>
+<div class="tvrow"><sc-for list="{{ taskViews }}" as="v" hint-placeholder-count="3"><button class="{{ v.cls }}" onClick="{{ v.go }}">{{ v.label }} · {{ v.n }}</button></sc-for><span class="tmodes"><button class="{{ taskModeList }}" onClick="{{ setTaskList }}">Список</button><button class="{{ taskModeCal }}" onClick="{{ setTaskCal }}">Календарь</button></span></div>
+<sc-if value="{{ isTaskList }}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{ taskEmpty }}" hint-placeholder-val=""><div class="repempty"><div class="reIcon">📋</div><div class="reMsg">{{ taskEmptyMsg }}</div></div></sc-if>
+<div class="tlist"><sc-for list="{{ taskRows }}" as="t" hint-placeholder-count="3"><div class="tcard {{ t.rowCls }}">
+<div class="tcmain">
+<div class="tctop"><span class="tprio {{ t.prioCls }}">{{ t.priority }}</span><span class="tcstatus {{ t.statusCls }}">{{ t.status }}</span><span class="tcdue {{ t.dueCls }}">⏱ {{ t.due }}</span></div>
+<div class="tctitle">{{ t.title }}</div>
+<sc-if value="{{ t.hasDesc }}" hint-placeholder-val=""><div class="tcdesc">{{ t.desc }}</div></sc-if>
+<div class="tcmeta">Исполнители: <b>{{ t.execNames }}</b> · Поставил: {{ t.author }}</div>
+<sc-if value="{{ t.isRejected }}" hint-placeholder-val=""><div class="trej">⛔ Отказ: {{ t.rejectReason }}</div></sc-if>
+<sc-if value="{{ t.rejecting }}" hint-placeholder-val=""><div class="trejform"><input class="inp" value="{{ t.rejectInput }}" onInput="{{ t.onRejectInput }}" placeholder="Причина отказа…"><button class="btn xs dark" onClick="{{ t.confirmReject }}">Отклонить</button><button class="tlink" onClick="{{ t.cancelReject }}">Отмена</button></div></sc-if>
+<div class="tcthread"><button class="tthtoggle" onClick="{{ t.toggleThread }}">💬 Обсуждение · {{ t.threadCount }}</button><sc-if value="{{ t.threadOpen }}" hint-placeholder-val=""><div class="tthbox"><sc-for list="{{ t.thread }}" as="m" hint-placeholder-count="2"><div class="tthmsg {{ m.me }}"><span class="tthwho">{{ m.author }}</span><span class="tthtxt">{{ m.text }}</span><span class="tthwhen">{{ m.when }}</span></div></sc-for><div class="tthinput"><input class="inp" value="{{ t.commentInput }}" onInput="{{ t.onComment }}" onKeyDown="{{ t.onCommentKey }}" placeholder="Написать в обсуждение…"><button class="btn xs dark" onClick="{{ t.sendComment }}">Отпр.</button></div></div></sc-if></div>
+</div>
+<div class="tcact">
+<sc-if value="{{ t.canAccept }}" hint-placeholder-val=""><button class="btn xs" onClick="{{ t.accept }}">Принять</button></sc-if>
+<sc-if value="{{ t.canStart }}" hint-placeholder-val=""><button class="btn xs" onClick="{{ t.start }}">В работу</button></sc-if>
+<sc-if value="{{ t.canDone }}" hint-placeholder-val=""><button class="btn xs dark" onClick="{{ t.done }}">Выполнено</button></sc-if>
+<sc-if value="{{ t.canReject }}" hint-placeholder-val=""><button class="tlink del" onClick="{{ t.reject }}">Отказать</button></sc-if>
+<sc-if value="{{ t.canReopen }}" hint-placeholder-val=""><button class="btn xs" onClick="{{ t.reopen }}">Вернуть</button></sc-if>
+<sc-if value="{{ t.canEdit }}" hint-placeholder-val=""><button class="tlink" onClick="{{ t.edit }}">Изм.</button></sc-if>
+<sc-if value="{{ t.canRemove }}" hint-placeholder-val=""><button class="tlink del" onClick="{{ t.remove }}">Удал.</button></sc-if>
+</div>
+</div></sc-for></div>
+</sc-if>
+<sc-if value="{{ isTaskCal }}" hint-placeholder-val="">
+<div class="tcalhead"><button class="btn xs" onClick="{{ taskPrevMonth }}">←</button><span class="tcalm">{{ taskMonthLabel }}</span><button class="btn xs" onClick="{{ taskNextMonth }}">→</button><button class="tlink" onClick="{{ taskThisMonth }}">Сегодня</button><span class="hint">{{ taskMonthCount }} задач(и) в этом месяце</span></div>
+<div class="tcalgrid">
+<sc-for list="{{ taskWeekdays }}" as="w" hint-placeholder-count="7"><div class="{{ w.cls }}">{{ w.d }}</div></sc-for>
+</div>
+<sc-for list="{{ taskCalWeeks }}" as="wk" hint-placeholder-count="5"><div class="tcalrow"><sc-for list="{{ wk.days }}" as="c" hint-placeholder-count="7"><div class="{{ c.dayCls }}"><span class="tcellnum">{{ c.day }}</span><sc-if value="{{ c.canAdd }}" hint-placeholder-val=""><span class="tadd" onClick="{{ c.qadd }}" title="Добавить задачу на этот день">+</span></sc-if><sc-if value="{{ c.hasTasks }}" hint-placeholder-val=""><div class="tcellt"><sc-for list="{{ c.tasks }}" as="ct" hint-placeholder-count="2"><button class="{{ ct.chipCls }}" onClick="{{ ct.open }}" title="{{ ct.title }}">{{ ct.title }}</button></sc-for></div></sc-if></div></sc-for></div></sc-for>
+</sc-if>
+</div>
+</sc-if>
+
 <sc-if value="{{ isUsers }}" hint-placeholder-val="">
 <sc-if value="{{ usNoAccess }}" hint-placeholder-val=""><div class="card"><div class="banner err">Управление пользователями доступно только администратору.</div></div></sc-if>
 <sc-if value="{{ usHasAccess }}" hint-placeholder-val="{{ true }}">
@@ -967,6 +1295,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="uform">
 <div class="fg"><label>Имя сотрудника</label><input class="inp" value="{{ udName }}" onInput="{{ onUdName }}" placeholder="Иванов Иван"></div>
 <div class="fg"><label>Логин</label><input class="inp" value="{{ udLogin }}" onInput="{{ onUdLogin }}" placeholder="ivanov"></div>
+<div class="fg"><label>E-mail (для восстановления пароля)</label><input class="inp" type="email" value="{{ udEmail }}" onInput="{{ onUdEmail }}" placeholder="ivanov@company.ru"></div>
 <div class="fg"><label>Пароль</label><div class="upassrow"><input class="inp" value="{{ udPass }}" onInput="{{ onUdPass }}" placeholder="пароль"><button class="btn ugen" onClick="{{ genPass }}">↻ Сгенерировать</button></div></div>
 <div class="fg"><label>Роль</label><select class="sel" value="{{ udRole }}" onChange="{{ onUdRole }}"><option value="user">Закупщик</option><option value="rukovoditel">Руководитель</option><option value="tehnolog">Технолог</option><option value="ved">Менеджер ВЭД</option><option value="logist">Логист</option><option value="admin">Администратор</option></select></div>
 </div>
@@ -975,9 +1304,20 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ userErr }}" hint-placeholder-val="x"><div class="banner err">{{ userErr }}</div></sc-if>
 <div class="uactions"><button class="btn dark" onClick="{{ saveUser }}">{{ usSaveLabel }}</button><sc-if value="{{ usEditing }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelUser }}">Отмена</button></sc-if></div>
 </div>
+<div class="card"><div class="sec">Восстановление пароля · отправка писем (EmailJS)</div>
+<div class="unote">Чтобы сотрудники могли восстановить пароль кнопкой «Забыли пароль?» на экране входа, подключите бесплатный сервис EmailJS: зарегистрируйтесь на emailjs.com, создайте Email Service и Email Template, затем впишите сюда три значения ниже. В шаблоне письма используйте переменные: to_email (куда), to_name (имя), login (логин), password (новый пароль).</div>
+<div class="uform">
+<div class="fg"><label>Service ID</label><input class="inp" value="{{ emServiceId }}" onInput="{{ onEmService }}" placeholder="service_xxxxxxx"></div>
+<div class="fg"><label>Template ID</label><input class="inp" value="{{ emTemplateId }}" onInput="{{ onEmTemplate }}" placeholder="template_xxxxxxx"></div>
+<div class="fg"><label>Public Key</label><input class="inp" value="{{ emPublicKey }}" onInput="{{ onEmPublic }}" placeholder="xxxxxxxxxxxxxx"></div>
+<div class="fg"><label>Имя отправителя</label><input class="inp" value="{{ emFromName }}" onInput="{{ onEmFrom }}" placeholder="Shtark INK Flow"></div>
+</div>
+<div class="genrow"><button class="btn dark" onClick="{{ saveEmailCfg }}">Сохранить настройки почты</button><sc-if value="{{ emailConfigured }}" hint-placeholder-val=""><span class="estat ok">● Отправка настроена</span></sc-if><sc-if value="{{ emailNotConfigured }}" hint-placeholder-val="{{ true }}"><span class="estat off">● Не настроено</span></sc-if></div>
+<sc-if value="{{ emailHasStatus }}" hint-placeholder-val=""><div class="hint">{{ emailStatus }}</div></sc-if>
+</div>
 <div class="card"><div class="sec">Пользователи · {{ usCount }}</div>
-<div class="scroll"><table><thead><tr><th class="l">Имя</th><th class="l">Логин</th><th class="l">Пароль</th><th class="l">Роль</th><th class="l">Доступ</th><th class="l">Статус</th><th class="l">Действия</th></tr></thead>
-<tbody><sc-for list="{{ usRows }}" as="u" hint-placeholder-count="2"><tr class="{{ u.rowCls }}"><td class="l nm">{{ u.name }}</td><td class="l mono">{{ u.login }}</td><td class="l"><span class="umono">{{ u.pass }}</span></td><td class="l"><span class="{{ u.roleCls }}">{{ u.roleLabel }}</span></td><td class="l"><span class="{{ u.accessCls }}">{{ u.accessLabel }}</span></td><td class="l"><span class="{{ u.statusCls }}">{{ u.statusLabel }}</span></td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ u.edit }}">Изменить</button><button class="ulink" onClick="{{ u.copy }}">Копировать</button><button class="ulink" onClick="{{ u.toggle }}">{{ u.toggleLabel }}</button><button class="ulink del" onClick="{{ u.del }}">Удалить</button></div></td></tr></sc-for></tbody></table></div>
+<div class="scroll"><table><thead><tr><th class="l">Имя</th><th class="l">Логин</th><th class="l">E-mail</th><th class="l">Пароль</th><th class="l">Роль</th><th class="l">Доступ</th><th class="l">Статус</th><th class="l">Действия</th></tr></thead>
+<tbody><sc-for list="{{ usRows }}" as="u" hint-placeholder-count="2"><tr class="{{ u.rowCls }}"><td class="l nm">{{ u.name }}</td><td class="l mono">{{ u.login }}</td><td class="l">{{ u.email }}</td><td class="l"><span class="umono">{{ u.pass }}</span></td><td class="l"><span class="{{ u.roleCls }}">{{ u.roleLabel }}</span></td><td class="l"><span class="{{ u.accessCls }}">{{ u.accessLabel }}</span></td><td class="l"><span class="{{ u.statusCls }}">{{ u.statusLabel }}</span></td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ u.edit }}">Изменить</button><button class="ulink" onClick="{{ u.copy }}">Копировать</button><button class="ulink" onClick="{{ u.toggle }}">{{ u.toggleLabel }}</button><button class="ulink del" onClick="{{ u.del }}">Удалить</button></div></td></tr></sc-for></tbody></table></div>
 </div>
 </sc-if>
 </sc-if>
@@ -1143,7 +1483,73 @@ window.dispatchEvent(new Event('fbready'));
 <div class="chatfoot"><textarea class="chatinp" rows="1" placeholder="Сообщение команде…" value="{{ chatInput }}" onInput="{{ onChatInput }}" onKeyDown="{{ onChatKey }}"></textarea><button class="chsend" onClick="{{ chatSend }}">→</button></div>
 </div>
 </sc-if>
+<sc-if value="{{ peekShow }}" hint-placeholder-val="">
+<div class="ayapeek {{ peekLevel }}">
+<sc-if value="{{ peekCanClose }}" hint-placeholder-val=""><button class="ayaclose" onClick="{{ peekClose }}" title="Скрыть">✕</button></sc-if>
+<div class="ayabubble">
+<div class="ayatext">{{ peekText }}</div>
+<sc-if value="{{ peekShowBtns }}" hint-placeholder-val="{{ true }}"><div class="ayabtns"><sc-if value="{{ peekHasQuick }}" hint-placeholder-val="x"><button class="ayaq" onClick="{{ peekDoQuick }}">{{ peekQuick }}</button></sc-if><button class="ayao" onClick="{{ peekOpenPurchase }}">{{ peekOpenLabel }}</button></div></sc-if>
+<sc-if value="{{ peekHasMore }}" hint-placeholder-val=""><button class="ayamore" onClick="{{ peekNext }}">Ещё {{ peekMoreN }} · дальше →</button></sc-if>
+</div>
+<div class="ayaav" onClick="{{ peekOpenAI }}" title="Открыть AI-ассистента АЯ"><sc-if value="{{ peekShowBtns }}" hint-placeholder-val=""><span class="ayabadge">{{ peekCount }}</span></sc-if><span class="ayaspark">✦</span><span class="ayamono">АЯ</span></div>
+</div>
+</sc-if>
 <div class="{{ aiBtnCls }}" onClick="{{ aiToggle }}" title="AI-аналитик"><span class="aifabic">✦</span><span class="aifabtx">AI-аналитик</span></div>
+<sc-if value="{{ cwShow }}" hint-placeholder-val="">
+<button class="cwbtn" onClick="{{ cwToggle }}" title="Календарь и задачи"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9h18"/><path d="M8 2.5v4M16 2.5v4"/><path d="M12 12.5v3.2l2 1.3"/></svg><sc-if value="{{ cwHasBadge }}" hint-placeholder-val=""><span class="cwbadge">{{ cwBadge }}</span></sc-if></button>
+<sc-if value="{{ cwOpen }}" hint-placeholder-val="">
+<div class="cwbk" onClick="{{ cwClose }}"></div>
+<aside class="cwdrawer">
+<div class="cwhead"><div class="cwh1">Календарь и задачи</div><button class="cwx" onClick="{{ cwClose }}">✕</button></div>
+<div class="cwmodes"><button class="{{ cwModeCalCls }}" onClick="{{ setCwCal }}">Календарь</button><button class="{{ cwModePulseCls }}" onClick="{{ setCwPulse }}">Пульс производства</button></div>
+<div class="cwstats"><sc-for list="{{ cwStats }}" as="s" hint-placeholder-count="3"><div class="cwk {{ s.cls }}"><span class="cwkn">{{ s.n }}</span><span class="cwkl">{{ s.label }}</span></div></sc-for></div>
+<sc-if value="{{ cwLoading }}" hint-placeholder-val="{{ true }}"><div class="cwskel"><div class="cwsk cwsk-cal"></div><div class="cwsk cwsk-line"></div><div class="cwsk cwsk-line"></div><div class="cwsk cwsk-line"></div><div class="cwsk cwsk-line short"></div></div></sc-if>
+<sc-if value="{{ cwReady }}" hint-placeholder-val=""><div class="cwcontent">
+<sc-if value="{{ cwIsCal }}" hint-placeholder-val="{{ true }}">
+<div class="cwcal">
+<div class="cwnav"><button class="cwarr" onClick="{{ cwPrev }}">←</button><span class="cwmon">{{ cwMonthLabel }}</span><button class="cwarr" onClick="{{ cwNext }}">→</button><button class="cwtoday-b" onClick="{{ cwBackToday }}">Сегодня</button></div>
+<div class="cwgrid"><sc-for list="{{ cwWeekdays }}" as="w" hint-placeholder-count="7"><div class="{{ w.cls }}">{{ w.d }}</div></sc-for></div>
+<sc-for list="{{ cwWeeks }}" as="wk" hint-placeholder-count="6"><div class="cwrow"><sc-for list="{{ wk.days }}" as="c" hint-placeholder-count="7"><button class="{{ c.dayCls }}" onClick="{{ c.pick }}"><span>{{ c.day }}</span><sc-if value="{{ c.canAdd }}" hint-placeholder-val=""><span class="cwadd" onClick="{{ c.qadd }}" title="Добавить задачу">+</span></sc-if><sc-if value="{{ c.hasDot }}" hint-placeholder-val=""><i class="cwdot"></i></sc-if></button></sc-for></div></sc-for>
+</div>
+<div class="cwbody">
+<sc-if value="{{ cwIsGroups }}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{ cwEmptyAll }}" hint-placeholder-val=""><div class="cwempty">На сегодня и ближайшую неделю задач нет 🎉</div></sc-if>
+<sc-for list="{{ cwGroups }}" as="g" hint-placeholder-count="3"><sc-if value="{{ g.has }}" hint-placeholder-val=""><div class="cwgrp {{ g.cls }}"><div class="cwgl">{{ g.label }} · {{ g.count }}</div><sc-for list="{{ g.tasks }}" as="t" hint-placeholder-count="2"><div class="cwtask"><sc-if value="{{ t.canComplete }}" hint-placeholder-val=""><button class="cwcheck" onClick="{{ t.complete }}" title="Отметить выполненной"></button></sc-if><span class="cwtside {{ t.statusCls }}"></span><button class="cwtopen" onClick="{{ t.open }}"><span class="cwtmain"><span class="cwtt">{{ t.title }}</span><span class="cwtmeta"><span class="cwst {{ t.statusCls }}">{{ t.status }}</span></span></span><span class="cwavs"><sc-for list="{{ t.avatars }}" as="a" hint-placeholder-count="1"><span class="{{ a.cls }}" title="{{ a.title }}">{{ a.ini }}</span></sc-for></span></button></div></sc-for></div></sc-if></sc-for>
+</sc-if>
+<sc-if value="{{ cwNotGroups }}" hint-placeholder-val=""><div class="cwgrp"><div class="cwgl">{{ cwDayLabel }}</div><sc-if value="{{ cwDayEmpty }}" hint-placeholder-val=""><div class="cwempty">На этот день задач нет.</div></sc-if><sc-for list="{{ cwDayList }}" as="t" hint-placeholder-count="2"><div class="cwtask"><sc-if value="{{ t.canComplete }}" hint-placeholder-val=""><button class="cwcheck" onClick="{{ t.complete }}" title="Отметить выполненной"></button></sc-if><span class="cwtside {{ t.statusCls }}"></span><button class="cwtopen" onClick="{{ t.open }}"><span class="cwtmain"><span class="cwtt">{{ t.title }}</span><span class="cwtmeta"><span class="cwst {{ t.statusCls }}">{{ t.status }}</span></span></span><span class="cwavs"><sc-for list="{{ t.avatars }}" as="a" hint-placeholder-count="1"><span class="{{ a.cls }}" title="{{ a.title }}">{{ a.ini }}</span></sc-for></span></button></div></sc-for></div></sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ cwIsPulse }}" hint-placeholder-val=""><div class="cwbody">
+<sc-if value="{{ pulseEmpty }}" hint-placeholder-val=""><div class="cwempty">Оперативных рисков нет — производство идёт по плану 🏭</div></sc-if>
+<sc-for list="{{ pulseGroups }}" as="g" hint-placeholder-count="3"><sc-if value="{{ g.has }}" hint-placeholder-val=""><div class="cwgrp {{ g.cls }}"><div class="cwgl">{{ g.label }} · {{ g.count }}</div><sc-for list="{{ g.tasks }}" as="t" hint-placeholder-count="2"><div class="cwtask"><button class="cwcheck" onClick="{{ t.resolve }}" title="Проблема решена"></button><button class="cwtopen" onClick="{{ t.open }}"><span class="cwtmain"><span class="cwtt">{{ t.text }}</span></span><span class="cwavs"><sc-for list="{{ t.avatars }}" as="a" hint-placeholder-count="1"><span class="{{ a.cls }}" title="{{ a.title }}">{{ a.ini }}</span></sc-for></span></button></div></sc-for></div></sc-if></sc-for>
+</div></sc-if>
+</div></sc-if>
+<button class="cwmain" onClick="{{ cwOpenMain }}">Открыть основной календарь <span class="cwmainarr">→</span></button>
+</aside>
+</sc-if>
+</sc-if>
+<sc-if value="{{ chShow }}" hint-placeholder-val="">
+<div class="{{ chWrapCls }}">
+<div class="chbubble"><span class="chby">{{ chBubbleBy }}</span>{{ chText }}</div>
+<div class="chrow">
+<sc-if value="{{ chHasMax }}" hint-placeholder-val=""><div class="chmax"><svg viewBox="0 0 80 116" width="74" height="108"><ellipse cx="40" cy="112" rx="22" ry="4" fill="rgba(15,23,42,.12)"/><path d="M22 70c0-12 8-19 18-19s18 7 18 19v30H22z" fill="#475569"/><path d="M40 51l-9 9 9 7 9-7z" fill="#fff"/><path d="M40 60l4 8-4 22-4-22z" fill="#10b981"/><circle cx="40" cy="32" r="18" fill="#f1c79e"/><path d="M23 30c0-12 8-18 17-18s17 6 17 17c-4-5-9-6-17-6s-13 2-17 7z" fill="#2d2a3a"/><circle cx="34" cy="32" r="2.1" fill="#2d2a3a"/><circle cx="46" cy="32" r="2.1" fill="#2d2a3a"/><path d="M35 39c3 2.4 7 2.4 10 0" stroke="#9a5a37" stroke-width="2" fill="none" stroke-linecap="round"/><path class="chcheek" d="M30 36a2.4 2.4 0 1 0 .1 0z" fill="#f9a8a3" opacity="0"/><path class="chcheek" d="M50 36a2.4 2.4 0 1 0 .1 0z" fill="#f9a8a3" opacity="0"/><g class="chwave"><path d="M58 72l13-12" stroke="#f1c79e" stroke-width="7" stroke-linecap="round"/><circle cx="72" cy="58" r="5" fill="#f1c79e"/></g><g class="chcup"><rect x="60" y="74" width="13" height="11" rx="2" fill="#fff" stroke="#cbd5e1"/><path d="M73 76h3a3 3 0 0 1 0 6h-3" fill="none" stroke="#cbd5e1" stroke-width="1.6"/><path class="chsteam" d="M64 72c-2-2 2-4 0-6M69 72c-2-2 2-4 0-6" stroke="#cbd5e1" stroke-width="1.4" fill="none" stroke-linecap="round"/></g></svg></div></sc-if>
+<div class="chaya"><svg viewBox="0 0 80 116" width="74" height="108"><ellipse cx="40" cy="112" rx="22" ry="4" fill="rgba(15,23,42,.12)"/><path d="M22 70c0-12 8-19 18-19s18 7 18 19v30H22z" fill="#4f46e5"/><path d="M40 50c-7 0-12 4-12 4l3 16h18l3-16s-5-4-12-4z" fill="#6366f1"/><path d="M24 34c-2 14 0 26 0 26l-6-2c-3-16 2-30 22-30s25 14 22 30l-6 2s2-12 0-26c-4-7-10-10-16-10s-12 3-16 10z" fill="#3b3a55"/><circle cx="40" cy="34" r="17" fill="#ffe0c4"/><circle cx="34" cy="34" r="2.1" fill="#2d2a3a"/><circle cx="46" cy="34" r="2.1" fill="#2d2a3a"/><path class="chsmile" d="M35 40c3 2.6 7 2.6 10 0" stroke="#c2674a" stroke-width="2" fill="none" stroke-linecap="round"/><path class="chcheek" d="M30 38a2.6 2.6 0 1 0 .1 0z" fill="#f9a8a3" opacity="0"/><path class="chcheek" d="M50 38a2.6 2.6 0 1 0 .1 0z" fill="#f9a8a3" opacity="0"/><text class="chspark" x="58" y="20" font-size="11" fill="#FFD200">✦</text><g class="chzzz"><text x="56" y="22" font-size="9" fill="#94a3b8">z</text><text x="62" y="14" font-size="11" fill="#94a3b8">Z</text></g></svg></div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ qaOpen }}" hint-placeholder-val="">
+<div class="qabk" onClick="{{ qaClose }}"></div>
+<div class="qacard">
+<div class="qahead"><span class="qaplus">✓</span><div class="qah1">Новая задача</div><div class="qadate">на {{ qaDateLabel }}</div><button class="qax" onClick="{{ qaClose }}">✕</button></div>
+<div class="qabody">
+<input class="inp qatitle" value="{{ qaTitle }}" onInput="{{ onQaTitle }}" onKeyDown="{{ onQaKey }}" placeholder="Что нужно сделать?" autofocus>
+<div class="qarow"><div class="qafield"><label>Исполнитель</label><select class="sel" value="{{ qaExecId }}" onChange="{{ onQaExec }}"><sc-for list="{{ qaUserOpts }}" as="u" hint-placeholder-count="3"><option value="{{ u.v }}">{{ u.label }}</option></sc-for></select></div><div class="qafield qatime"><label>Время</label><input class="inp" type="time" value="{{ qaTime }}" onInput="{{ onQaTime }}"></div></div>
+<sc-if value="{{ qaHasErr }}" hint-placeholder-val=""><div class="qaerr">{{ qaErr }}</div></sc-if>
+<div class="qaact"><button class="btn dark qasave" onClick="{{ qaSave }}">Создать задачу</button><button class="btn" onClick="{{ qaClose }}">Отмена</button></div>
+<div class="qahint">По умолчанию задача ставится себе. Выберите коллегу из списка, чтобы поручить ему.</div>
+</div>
+</div>
+</sc-if>
 <sc-if value="{{ aiOpen }}" hint-placeholder-val="">
 <div class="aipanel">
 <div class="aihead"><div class="aihl"><span class="aidot"></span> AI-аналитик</div><div class="aihr"><select class="aimodel" value="{{ aiModel }}" onChange="{{ onAiModel }}"><option value="gpt-4o-mini">GPT-4o mini · быстро</option><option value="gpt-4o">GPT-4o · точнее</option><option value="claude-sonnet-4">Claude Sonnet</option></select><sc-if value="{{ aiIsAdmin }}" hint-placeholder-val=""><button class="aiclr" onClick="{{ aiCfgToggle }}" title="Свой API-ключ">⚙</button></sc-if><button class="aiclr" onClick="{{ aiClear }}" title="Очистить">⌫</button><button class="aix" onClick="{{ aiClose }}">✕</button></div></div>
@@ -1160,6 +1566,7 @@ class Component extends DCLogic {
   state = {
     ready: false, tab: 'home', loading: true, loaderHide: false, loaderPhase: 'p1', sloganTick: 0, showWelcome: false, welcomePhoto: '', welGreeting: '', welGreetBusy: false, showFarewell: false, farewellText: '',
     users: [], currentUser: null, loginInput: '', passInput: '', loginErr: '', userDraft: null, userErr: '',
+    resetOpen: false, resetInput: '', resetErr: '', resetOk: '', resetBusy: false, emailCfg: {}, emailEdit: { serviceId: '', templateId: '', publicKey: '', fromName: '' }, emailStatus: '',
     product: 'Black (PBl 7) / RASTR', rate: 83.6892, loss: 0, mode: 'stored',
     orders: [{ id: 'o1', no: '1', status: 'Принята', date: '', client: '', manager: '', items: [{ product: 'Black (PBl 7) / RASTR', kg: 1000 }] }],
     purchases: [], editId: null, printId: null,
@@ -1177,6 +1584,8 @@ class Component extends DCLogic {
     oneCUrl: '', oneCToken: '', oneCMatch: 'article', oneCAuto: false, oneCBusy: false, oneCStatus: '', oneCErr: '', oneCPreview: null, oneCLastAt: 0, oneCLog: [], oneCFileCur: 'RUB',
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {},
     chat: [], chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false,
+    tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '',
+    peekIdx: 0, peekDismissed: {}, peekClosed: false, peekToast: '',
     tgToken: '', tgChatId: '', tgFwd: false, tgEditToken: '', tgEditChatId: '', tgStatus: '',
     cloudHistory: [], cloudName: '', cloudCfgText: '', cloudWsId: 'workspace',
   };
@@ -1197,10 +1606,16 @@ class Component extends DCLogic {
     try { welcomePhoto = localStorage.getItem('inkflow_welcome_photo') || ''; } catch (e) {}
     let chat = [], tgLink = '';
     try { chat = JSON.parse(localStorage.getItem('inkflow_chat') || '[]'); if (!Array.isArray(chat)) chat = []; } catch (e) {}
+    let tasks = [];
+    try { tasks = JSON.parse(localStorage.getItem('inkflow_tasks') || '[]'); if (!Array.isArray(tasks)) tasks = []; } catch (e) {}
+    let emailCfg = {};
+    try { emailCfg = JSON.parse(localStorage.getItem('inkflow_emailcfg') || '{}') || {}; } catch (e) {}
+    let tasksSeenAt = 0;
+    try { tasksSeenAt = Number(localStorage.getItem('inkflow_tasks_seen')) || 0; } catch (e) {}
     try { tgLink = localStorage.getItem('inkflow_tg') || ''; } catch (e) {}
     let tgBot = {};
     try { tgBot = JSON.parse(localStorage.getItem('inkflow_tgbot') || '{}') || {}; } catch (e) {}
-    this.setState({ users, currentUser, welcomePhoto, chat, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
+    this.setState({ users, currentUser, welcomePhoto, chat, tasks, tasksSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
     // Двухфазный экран входа: фаза 1 (загрузка) → фаза 2 (логотип слева + кнопка «Войти»)
     this._loaderT1 = setTimeout(() => this.setState({ loaderPhase: 'p2' }), 3400);
     // Слоган под логотипом перепечатывается каждые 10 c (remount по tick → анимация проигрывается заново)
@@ -1209,9 +1624,21 @@ class Component extends DCLogic {
     this.cloudRestore();
     // Авто-выход по неактивности (35 минут): любое действие продлевает сессию
     this._lastAct = Date.now();
-    this._markAct = () => { this._lastAct = Date.now(); if (this.state.currentUser) { try { const s = JSON.parse(localStorage.getItem('inkflow_session_v1') || 'null'); if (s && s.id && (!s.ts || Date.now() - s.ts > 60000)) localStorage.setItem('inkflow_session_v1', JSON.stringify({ id: s.id, ts: Date.now() })); } catch (e) {} } };
+    this._markAct = () => { this._lastAct = Date.now(); const sc = this.state.chScene; if (sc === 'bored' || sc === 'leave' || sc === 'gone') this.setState({ chScene: '' }); if (this.state.currentUser) { try { const s = JSON.parse(localStorage.getItem('inkflow_session_v1') || 'null'); if (s && s.id && (!s.ts || Date.now() - s.ts > 60000)) localStorage.setItem('inkflow_session_v1', JSON.stringify({ id: s.id, ts: Date.now() })); } catch (e) {} } };
     ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.addEventListener(ev, this._markAct, { passive: true }));
+    // Персонажи Ая и Макс: сценарий «Спасение от скуки» (30 c → Скука, +15 c → Макс уводит)
+    this._chInt = setInterval(() => {
+      if (!this.state.currentUser || this.state.loading) return;
+      const sc = this.state.chScene; const idle = Date.now() - this._lastAct;
+      if (sc === '' && idle > 30000) this.setState({ chScene: 'bored' });
+      else if (sc === 'bored' && idle > 45000) { this.setState({ chScene: 'leave' }); clearTimeout(this._chLeaveT); this._chLeaveT = setTimeout(() => { if (this.state.chScene === 'leave') this.setState({ chScene: 'gone' }); }, 5200); }
+    }, 2000);
     this._idleInt = setInterval(() => { if (this.state.currentUser && Date.now() - this._lastAct > Component.IDLE_MS) this.expireSession(); }, 15000);
+    // Ротация облачка АЯ: если рисков несколько — показываем их по очереди
+    this._peekInt = setInterval(() => { if (!this.state.currentUser || this.state.peekClosed || this.state.peekToast) return; const n = this.riskAlerts().filter(a => !this.state.peekDismissed[a.id]).length; if (n > 1) this.setState(s => ({ peekIdx: s.peekIdx + 1 })); }, 7000);
+    // Автоудаление выполненных задач старше 70 дней (из программы и облака)
+    this._purgeT = setTimeout(() => this.purgeOldTasks(), 5000);
+    this._purgeInt = setInterval(() => this.purgeOldTasks(), 3600000);
     // Авто-подключение общего облака данных (встроенный конфиг) — вводить ничего не нужно
     this._autoCloud = () => { try { if (!this.state.cloudConnected) this.setState({ cloudCfgText: JSON.stringify(Component.FBCFG), cloudWsId: (this.state.cloudWsId || 'workspace') }, () => this.cloudConnect()); } catch (e) {} };
     if (window.__FB) this._autoCloud(); else window.addEventListener('fbready', this._autoCloud, { once: true });
@@ -1285,7 +1712,7 @@ class Component extends DCLogic {
     if (!this._applyingRemote && this.state.cloudRole === 'editor') this.queueCloudPush();
   }
 
-  componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
+  componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); clearInterval(this._peekInt); clearTimeout(this._peekToastT); clearTimeout(this._purgeT); clearInterval(this._purgeInt); clearInterval(this._chInt); clearTimeout(this._chLeaveT); clearTimeout(this._coffeeT); if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
 
   loaderVals() {
     const T = 'ENGINEERED FOR EXCELLENCE. PRINTED FOR IMPACT.';
@@ -1305,6 +1732,12 @@ class Component extends DCLogic {
       onLoginInput: (e) => this.setState({ loginInput: e.target.value, loginErr: '' }),
       onPassInput: (e) => this.setState({ passInput: e.target.value, loginErr: '' }),
       onLoginKey: (e) => { if (e.key === 'Enter') this.doLogin(); },
+      resetOpen: !!this.state.resetOpen, resetInput: this.state.resetInput || '', resetErr: this.state.resetErr || '', resetOk: this.state.resetOk || '', resetBusy: !!this.state.resetBusy,
+      onResetInput: (e) => this.setState({ resetInput: e.target.value, resetErr: '', resetOk: '' }),
+      onResetKey: (e) => { if (e.key === 'Enter') this.requestPasswordReset(); },
+      openReset: () => this.setState({ resetOpen: true, resetErr: '', resetOk: '', resetInput: '' }),
+      closeReset: () => this.setState({ resetOpen: false }),
+      doReset: () => this.requestPasswordReset(),
       doLogin: () => this.doLogin(), switchUser: () => this.switchUser(),
       showWelcome: !!this.state.showWelcome, welName: cu ? cu.name : '',
       welGreeting: this.state.welGreeting || '', welGreetBusy: !!this.state.welGreetBusy,
@@ -1414,6 +1847,7 @@ class Component extends DCLogic {
       reports: '<path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/>',
       cloud: '<path d="M7 18a4.5 4.5 0 0 1-.5-9 6 6 0 0 1 11.5 1.5A3.5 3.5 0 0 1 17.5 18z"/>',
       onec: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 13l2.5 2.5L8 18"/><path d="M13 18h3"/>',
+      tasks: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8l1.5 1.5L12 7"/><path d="M8 15l1.5 1.5L12 14"/><line x1="14" y1="8" x2="17" y2="8"/><line x1="14" y1="15" x2="17" y2="15"/>',
       users: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 6.4M21.5 20a6 6 0 0 0-3.5-5.5"/>',
     };
     const svg = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + (P[id] || '') + '</svg>';
@@ -1502,6 +1936,7 @@ class Component extends DCLogic {
   permCatalog() {
     return [
       { label: 'FLOW', tabs: [['prodplan', 'Production Schedule'], ['procplan', 'Procurement Plan']] },
+      { label: 'Команда', tabs: [['tasks', 'Задачи']] },
       { label: 'Производство', tabs: [['calc', 'Калькулятор'], ['recipe', 'Рецептуры'], ['prod', 'План производства'], ['catalog', 'Каталоги']] },
       { label: 'Планирование закупок', tabs: [['runrate', 'Run Rate'], ['proc', 'План закупок'], ['cal', 'Календарь']] },
       { label: 'Цены и поставщики', tabs: [['audit', 'Аудит цен'], ['pay', 'Платежи'], ['prices', 'Реестр цен']] },
@@ -1518,7 +1953,7 @@ class Component extends DCLogic {
     if (user.role === 'admin') return ['home'].concat(all, ['users']);
     const perms = Array.isArray(user.perms) ? user.perms : all;
     // Новые разделы доступны по умолчанию всем (добавлены позже — их нет в старых perms)
-    const always = ['prodplan', 'procplan', 'onec'];
+    const always = ['prodplan', 'procplan', 'onec', 'tasks'];
     return ['home'].concat(all.filter(id => perms.includes(id) || always.includes(id)));
   }
 
@@ -1545,7 +1980,7 @@ class Component extends DCLogic {
     try { localStorage.removeItem('inkflow_session_v1'); } catch (e) {}
     this.setState({ currentUser: null, loading: true, loaderHide: false, loaderPhase: 'p2', showWelcome: false, showFarewell: false, loginInput: '', passInput: '', loginErr: '', tab: 'home', userDraft: null, userErr: '' });
   }
-  askFarewell() { this.setState({ showFarewell: true, welAvatar: this.pickWelcomeAvatar() }, () => { this.showFarewellPhrase(); }); }
+  askFarewell() { this.setState({ showFarewell: true, chScene: 'bye', welAvatar: this.pickWelcomeAvatar() }, () => { this.showFarewellPhrase(); }); }
   randomFarewell() {
     const list = [
       'Смена закрыта, герой! Отдыхай — ты заслужил. 👋✨',
@@ -1602,18 +2037,54 @@ class Component extends DCLogic {
   }
   switchUser() { this.setState({ currentUser: null, loginInput: '', passInput: '', loginErr: '' }); }
 
+  // ===== Восстановление пароля по e-mail (EmailJS) =====
+  emailCfgVal() { const c = this.state.emailCfg || {}; return { serviceId: c.serviceId || '', templateId: c.templateId || '', publicKey: c.publicKey || '', fromName: c.fromName || 'Shtark INK Flow' }; }
+  emailConfigured() { const c = this.emailCfgVal(); return !!(c.serviceId && c.templateId && c.publicKey); }
+  maskEmail(em) { const p = String(em || '').split('@'); if (p.length !== 2) return em; const a = p[0]; return (a.length <= 2 ? a : a.slice(0, 2) + '***') + '@' + p[1]; }
+  saveEmailCfg() {
+    const e = this.state.emailEdit || {};
+    const cfg = { serviceId: (e.serviceId || '').trim(), templateId: (e.templateId || '').trim(), publicKey: (e.publicKey || '').trim(), fromName: (e.fromName || '').trim() || 'Shtark INK Flow' };
+    this.setState({ emailCfg: cfg, emailStatus: 'Настройки отправки писем сохранены ✓' });
+    try { localStorage.setItem('inkflow_emailcfg', JSON.stringify(cfg)); } catch (e2) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { emailCfg: cfg }, { merge: true }).catch(() => {}); } catch (e2) {} }
+  }
+  async requestPasswordReset() {
+    const S = this.state; const q = (S.resetInput || '').trim().toLowerCase();
+    if (!q) { this.setState({ resetErr: 'Введите e-mail или логин.', resetOk: '' }); return; }
+    const u = (S.users || []).find(x => (x.email || '').toLowerCase() === q || (x.login || '').toLowerCase() === q);
+    if (!u) { this.setState({ resetErr: 'Пользователь с таким e-mail или логином не найден.', resetOk: '' }); return; }
+    if (!u.active) { this.setState({ resetErr: 'Учётная запись отключена. Обратитесь к администратору.', resetOk: '' }); return; }
+    if (!u.email) { this.setState({ resetErr: 'У вашей учётной записи не указан e-mail. Обратитесь к администратору.', resetOk: '' }); return; }
+    const c = this.emailCfgVal();
+    if (!c.serviceId || !c.templateId || !c.publicKey) { this.setState({ resetErr: 'Отправка писем ещё не настроена администратором.', resetOk: '' }); return; }
+    if (!window.emailjs) { this.setState({ resetErr: 'Сервис почты не загрузился. Проверьте интернет и обновите страницу.', resetOk: '' }); return; }
+    this.setState({ resetBusy: true, resetErr: '', resetOk: '' });
+    const np = this.genPassword();
+    try {
+      await window.emailjs.send(c.serviceId, c.templateId, { to_email: u.email, email: u.email, to_name: u.name, user_name: u.name, login: u.login, password: np, new_password: np, app_name: c.fromName }, { publicKey: c.publicKey });
+      const next = (S.users || []).map(x => x.id === u.id ? { ...x, password: np } : x);
+      this.saveUsers(next);
+      this.setState({ resetBusy: false, resetOk: 'Новый пароль отправлен на ' + this.maskEmail(u.email) + '. Проверьте почту (и папку «Спам»).', resetErr: '', resetInput: '' });
+    } catch (err) {
+      const msg = (err && (err.text || err.message)) || 'ошибка отправки';
+      this.setState({ resetBusy: false, resetErr: 'Не удалось отправить письмо: ' + msg, resetOk: '' });
+    }
+  }
+
   saveUser() {
     const d = this.state.userDraft; if (!d) return;
     const name = (d.name || '').trim(), login = (d.login || '').trim(), password = (d.password || '').trim(), role = d.role || 'user';
+    const email = (d.email || '').trim();
     if (!name || !login || !password) { this.setState({ userErr: 'Заполните имя, логин и пароль.' }); return; }
     if (/\s/.test(login)) { this.setState({ userErr: 'Логин не должен содержать пробелов.' }); return; }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { this.setState({ userErr: 'Проверьте e-mail — формат не похож на адрес.' }); return; }
     const users = this.state.users || [];
     if (users.find(u => u.login.toLowerCase() === login.toLowerCase() && u.id !== d.id)) { this.setState({ userErr: 'Логин «' + login + '» уже занят.' }); return; }
     if (d.id && d.role !== 'admin') { const cur = users.find(u => u.id === d.id); if (cur && cur.role === 'admin' && this.countAdmins() <= 1) { this.setState({ userErr: 'Это единственный администратор — нельзя понизить роль.' }); return; } }
     const perms = role === 'admin' ? this.allTabIds() : (Array.isArray(d.perms) ? d.perms.filter(id => this.allTabIds().includes(id)) : this.allTabIds());
     let next, cu = this.state.currentUser;
-    if (d.id) { next = users.map(u => u.id === d.id ? { ...u, name, login, password, role, perms, photo: d.photo || '' } : u); if (cu && cu.id === d.id) cu = { ...cu, name, login, password, role, perms, photo: d.photo || '' }; }
-    else { next = [...users, { id: 'u_' + Date.now().toString(36), name, login, password, role, perms, photo: d.photo || '', active: true, created: Date.now() }]; }
+    if (d.id) { next = users.map(u => u.id === d.id ? { ...u, name, login, password, role, perms, email, photo: d.photo || '' } : u); if (cu && cu.id === d.id) cu = { ...cu, name, login, password, role, perms, email, photo: d.photo || '' }; }
+    else { next = [...users, { id: 'u_' + Date.now().toString(36), name, login, password, role, perms, email, photo: d.photo || '', active: true, created: Date.now() }]; }
     this.saveUsers(next);
     this.setState({ userDraft: null, userErr: '', currentUser: cu });
   }
@@ -1652,16 +2123,17 @@ class Component extends DCLogic {
       id: u.id, name: u.name, login: u.login, pass: u.password,
       roleLabel: roleLabel(u.role), roleCls: u.role === 'admin' ? 'st prof' : 'st',
       accessLabel: accLabel(u), accessCls: u.role === 'admin' ? 'st prof' : (Array.isArray(u.perms) && u.perms.length === 0 ? 'st def' : 'st'),
-      statusLabel: u.active ? 'Активен' : 'Отключён', statusCls: u.active ? 'st prof' : 'st def',
+      statusLabel: u.active ? 'Активен' : 'Отключён', statusCls: u.active ? 'st prof' : 'st def', email: u.email || '—',
       rowCls: (me && u.id === me.id) ? 'urowme' : '',
-      edit: () => set({ userDraft: { id: u.id, name: u.name, login: u.login, password: u.password, role: u.role, photo: u.photo || '', perms: Array.isArray(u.perms) ? u.perms.slice() : allIds.slice() }, userErr: '' }),
+      edit: () => set({ userDraft: { id: u.id, name: u.name, login: u.login, password: u.password, role: u.role, email: u.email || '', photo: u.photo || '', perms: Array.isArray(u.perms) ? u.perms.slice() : allIds.slice() }, userErr: '' }),
       copy: () => { try { navigator.clipboard.writeText('Логин: ' + u.login + '\nПароль: ' + u.password); } catch (e) {} },
       toggle: () => this.toggleUser(u.id), toggleLabel: u.active ? 'Отключить' : 'Включить',
       del: () => this.deleteUser(u.id),
     }));
     return {
       isUsers: true, usNoAccess: false, usHasAccess: true, usCount: rows.length, usRows: rows,
-      udName: dn.name, udLogin: dn.login, udPass: dn.password, udRole: dn.role,
+      udName: dn.name, udLogin: dn.login, udPass: dn.password, udRole: dn.role, udEmail: dn.email || '',
+      onUdEmail: patch('email'),
       udPhoto: dn.photo || '', udHasPhoto: !!dn.photo, udNoPhoto: !dn.photo, udInitial: (dn.name || '?').trim().charAt(0).toUpperCase() || '?',
       udPhotoImg: dn.photo ? React.createElement('img', { className: 'uava-img', src: dn.photo, alt: '' }) : null,
       onUdPhoto: (e) => { const f = e.target.files && e.target.files[0]; if (!f) return; this.readAvatarFile(f, (url) => set({ userDraft: { ...(S.userDraft || blank), photo: url }, userErr: '' })); },
@@ -1673,6 +2145,13 @@ class Component extends DCLogic {
       usSaveLabel: editing ? 'Сохранить' : 'Добавить пользователя', userErr: S.userErr || '',
       permGroups, udIsAdmin, udIsUser: !udIsAdmin,
       permAll: () => setPerms(allIds.slice()), permNone: () => setPerms([]),
+      emServiceId: (S.emailEdit || {}).serviceId || '', emTemplateId: (S.emailEdit || {}).templateId || '', emPublicKey: (S.emailEdit || {}).publicKey || '', emFromName: (S.emailEdit || {}).fromName || '',
+      onEmService: (e) => set({ emailEdit: { ...(S.emailEdit || {}), serviceId: e.target.value }, emailStatus: '' }),
+      onEmTemplate: (e) => set({ emailEdit: { ...(S.emailEdit || {}), templateId: e.target.value }, emailStatus: '' }),
+      onEmPublic: (e) => set({ emailEdit: { ...(S.emailEdit || {}), publicKey: e.target.value }, emailStatus: '' }),
+      onEmFrom: (e) => set({ emailEdit: { ...(S.emailEdit || {}), fromName: e.target.value }, emailStatus: '' }),
+      saveEmailCfg: () => this.saveEmailCfg(), emailStatus: S.emailStatus || '', emailHasStatus: !!S.emailStatus,
+      emailConfigured: this.emailConfigured(), emailNotConfigured: !this.emailConfigured(),
     };
   }
 
@@ -1905,6 +2384,8 @@ class Component extends DCLogic {
     this._cloudRev = d.rev || 0;
     const patch = { cloudConnected: true, cloudErr: '', cloudStatus: 'Онлайн', cloudHistory: d.history || [], cloudPresence: d.presence || {}, cloudWho: ttlOk ? (lock.name || '—') : '', cloudRole: iEdit ? 'editor' : (ttlOk ? 'viewer' : 'idle') };
     if (Array.isArray(d.chat)) { patch.chat = d.chat; try { localStorage.setItem('inkflow_chat', JSON.stringify(d.chat)); } catch (e) {} }
+    if (Array.isArray(d.tasks)) { patch.tasks = d.tasks; try { localStorage.setItem('inkflow_tasks', JSON.stringify(d.tasks)); } catch (e) {} }
+    if (d.emailCfg && typeof d.emailCfg === 'object') { patch.emailCfg = d.emailCfg; try { localStorage.setItem('inkflow_emailcfg', JSON.stringify(d.emailCfg)); } catch (e) {} }
     if (typeof d.tgLink === 'string') patch.tgLink = d.tgLink;
     if (d.tgBot && typeof d.tgBot === 'object') { patch.tgToken = d.tgBot.token || ''; patch.tgChatId = d.tgBot.chatId || ''; patch.tgFwd = !!d.tgBot.fwd; }
     if (!iEdit && d.state) {
@@ -2009,6 +2490,201 @@ class Component extends DCLogic {
       try { window.__FB.setDoc(this._docRef, { chat: next }, { merge: true }).catch(() => {}); } catch (e) {}
     }
     this.forwardToTelegram(msg);
+  }
+
+  // ===== Задачи: постановка задач коллегам =====
+  emptyTaskDraft() { return { id: '', title: '', executorIds: [], due: '', dueTime: '', desc: '', priority: 'Обычный' }; }
+  // Совместимость + мульти-исполнители
+  taskExecutors(t) { if (Array.isArray(t.executors) && t.executors.length) return t.executors; if (t.executorId) return [{ id: t.executorId, name: t.executor || '—' }]; return []; }
+  taskExecIds(t) { return this.taskExecutors(t).map(e => e.id); }
+  isTaskExec(t, cid) { return this.taskExecIds(t).indexOf(cid) >= 0; }
+  taskExecNames(t) { const a = this.taskExecutors(t); return a.length ? a.map(e => e.name).join(', ') : '—'; }
+  taskDone(t) { return t.status === 'Выполнена' || t.status === 'Отклонена'; }
+  taskDueLabel(t) { if (!t.due) return 'без срока'; return this.dmFull(t.due) + (t.dueTime ? ' ' + t.dueTime : ''); }
+  taskOverdue(t) { if (!t.due || this.taskDone(t)) return false; let due = this.parseISO(t.due).getTime(); if (t.dueTime) { const p = String(t.dueTime).split(':'); due += ((+p[0] || 0) * 60 + (+p[1] || 0)) * 60000; return Date.now() > due; } const z = new Date(); z.setHours(0, 0, 0, 0); return due < z.getTime(); }
+  writeTasks(next) {
+    this.setState({ tasks: next });
+    try { localStorage.setItem('inkflow_tasks', JSON.stringify(next)); } catch (e) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) {
+      try { window.__FB.setDoc(this._docRef, { tasks: next }, { merge: true }).catch(() => {}); } catch (e) {}
+    }
+  }
+  // Автоудаление: выполненные задачи, завершённые 70+ дней назад, убираются из программы и облака.
+  purgeOldTasks() {
+    const cutoff = Date.now() - 70 * 86400000;
+    const tasks = this.state.tasks || [];
+    const keep = tasks.filter(t => !(t && t.status === 'Выполнена' && (t.doneAt || 0) > 0 && t.doneAt < cutoff));
+    if (keep.length !== tasks.length) this.writeTasks(keep);
+  }
+  postSystemNote(text, author) {
+    const msg = { id: 'm' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), author: author || 'Система', text: text, ts: Date.now() };
+    const next = [...(this.state.chat || []), msg].slice(-120);
+    this.setState({ chat: next });
+    try { localStorage.setItem('inkflow_chat', JSON.stringify(next)); } catch (e) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { chat: next }, { merge: true }).catch(() => {}); } catch (e) {} }
+    this.forwardToTelegram(msg);
+  }
+  dmFull(s) { if (!s) return ''; const a = String(s).split('-'); return a.length === 3 ? (a[2] + '.' + a[1] + '.' + a[0]) : s; }
+  saveTask() {
+    const S = this.state, d = S.taskDraft || this.emptyTaskDraft();
+    const title = (d.title || '').trim();
+    if (!title) { this.setState({ taskErr: 'Введите название задачи' }); return; }
+    const ids = Array.isArray(d.executorIds) ? d.executorIds : [];
+    if (!ids.length) { this.setState({ taskErr: 'Выберите хотя бы одного исполнителя' }); return; }
+    const execs = ids.map(id => { const u = (S.users || []).find(x => x.id === id); return { id, name: u ? u.name : '—' }; });
+    const cu = S.currentUser;
+    if (d.id) {
+      const next = (S.tasks || []).map(t => t.id === d.id ? { ...t, title: title.slice(0, 200), executors: execs, executorId: undefined, executor: undefined, due: d.due || '', dueTime: d.dueTime || '', desc: (d.desc || '').slice(0, 1000), priority: d.priority || 'Обычный' } : t);
+      this.writeTasks(next);
+      this.setState({ taskDraft: null, taskErr: '' });
+      this.postSystemNote('✏️ Задача обновлена: «' + title + '» — исполнители: ' + execs.map(e => e.name).join(', '), cu ? cu.name : '—');
+      return;
+    }
+    const task = {
+      id: 't_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5),
+      title: title.slice(0, 200), executors: execs,
+      authorId: cu ? cu.id : '', author: cu ? cu.name : '—', due: d.due || '', dueTime: d.dueTime || '', desc: (d.desc || '').slice(0, 1000),
+      priority: d.priority || 'Обычный', status: 'Новая', rejectReason: '', thread: [], createdAt: Date.now(), doneAt: 0,
+    };
+    this.writeTasks([task, ...(S.tasks || [])].slice(0, 500));
+    this.setState({ taskDraft: null, taskErr: '', taskView: 'assigned' });
+    this.postSystemNote('📋 Новая задача для «' + execs.map(e => e.name).join(', ') + '»: ' + task.title + (task.due ? ' · срок ' + this.taskDueLabel(task) : ''), cu ? cu.name : '—');
+  }
+  setTaskStatus(id, status) {
+    const t = (this.state.tasks || []).find(x => x.id === id); if (!t) return;
+    const next = (this.state.tasks || []).map(x => x.id === id ? { ...x, status, rejectReason: status === 'Отклонена' ? x.rejectReason : '', doneAt: status === 'Выполнена' ? Date.now() : 0 } : x);
+    this.writeTasks(next);
+    const cu = this.state.currentUser, who = cu ? cu.name : '—';
+    const m = { 'Принята': '👌 Принята в работу', 'В работе': '▶️ Взята в работу', 'Выполнена': '✅ Выполнена', 'Новая': '↩️ Возвращена' };
+    if (m[status]) this.postSystemNote(m[status] + ': «' + t.title + '» (' + who + ')', who);
+  }
+  startReject(id) { this.setState({ taskRejecting: id, taskRejectReason: '' }); }
+  cancelReject() { this.setState({ taskRejecting: '', taskRejectReason: '' }); }
+  confirmReject(id) {
+    const reason = (this.state.taskRejectReason || '').trim();
+    if (!reason) { this.setState({ taskErr: 'Укажите причину отказа' }); return; }
+    const t = (this.state.tasks || []).find(x => x.id === id); if (!t) return;
+    const next = (this.state.tasks || []).map(x => x.id === id ? { ...x, status: 'Отклонена', rejectReason: reason.slice(0, 400), doneAt: 0 } : x);
+    this.writeTasks(next);
+    const cu = this.state.currentUser, who = cu ? cu.name : '—';
+    this.setState({ taskRejecting: '', taskRejectReason: '', taskErr: '' });
+    this.postSystemNote('⛔ Отказ по задаче «' + t.title + '» (' + who + '): ' + reason, who);
+  }
+  toggleTaskThread(id) { this.setState(s => ({ taskOpenThread: s.taskOpenThread === id ? '' : id, taskCommentInput: '' })); }
+  addTaskComment(id) {
+    const text = (this.state.taskCommentInput || '').trim(); if (!text) return;
+    const t = (this.state.tasks || []).find(x => x.id === id); if (!t) return;
+    const cu = this.state.currentUser;
+    const msg = { id: 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 4), author: cu ? cu.name : 'Гость', authorId: cu ? cu.id : '', text: text.slice(0, 600), ts: Date.now() };
+    const next = (this.state.tasks || []).map(x => x.id === id ? { ...x, thread: [...(x.thread || []), msg] } : x);
+    this.writeTasks(next);
+    this.setState({ taskCommentInput: '' });
+    this.forwardToTelegram({ author: (cu ? cu.name : '—') + ' · задача «' + t.title + '»', text: text });
+  }
+  buildTasks() {
+    const S = this.state, set = (p) => this.setState(p);
+    const cu = S.currentUser; const cid = cu ? cu.id : '';
+    const isAdmin = cu && cu.role === 'admin';
+    const d = S.taskDraft || this.emptyTaskDraft();
+    const draftIds = Array.isArray(d.executorIds) ? d.executorIds : [];
+    const users = (S.users || []).filter(u => u.active !== false);
+    const view = S.taskView || 'mine';
+    const today = new Date(); today.setHours(0, 0, 0, 0); const t0 = today.getTime();
+    const all = (S.tasks || []);
+    const active = (t) => !this.taskDone(t);
+    const mineN = all.filter(t => this.isTaskExec(t, cid) && active(t)).length;
+    const assignedN = all.filter(t => t.authorId === cid && active(t)).length;
+    let list = all;
+    if (view === 'mine') list = all.filter(t => this.isTaskExec(t, cid));
+    else if (view === 'assigned') list = all.filter(t => t.authorId === cid);
+    list = list.slice().sort((a, b) => {
+      const ad = this.taskDone(a), bd = this.taskDone(b); if (ad !== bd) return ad ? 1 : -1;
+      const au = (a.due || '9999') + (a.dueTime || ''), bu = (b.due || '9999') + (b.dueTime || ''); if (au !== bu) return au < bu ? -1 : 1;
+      return (b.createdAt || 0) - (a.createdAt || 0);
+    });
+    const stCls = { 'Новая': 'st-new', 'Принята': 'st-acc', 'В работе': 'st-prog', 'Выполнена': 'st-done', 'Отклонена': 'st-rej' };
+    const seenCut = this._taskSeenSnap != null ? this._taskSeenSnap : (Number(S.tasksSeenAt) || 0);
+    const rows = list.map(t => {
+      const overdue = this.taskOverdue(t);
+      const dueSoon = !overdue && t.due && active(t) && (this.parseISO(t.due).getTime() - t0) / 86400000 <= 1;
+      const canManage = isAdmin || t.authorId === cid;
+      const isExec = this.isTaskExec(t, cid);
+      const thread = (t.thread || []).map(m => ({ id: m.id, author: m.author || '—', text: m.text || '', when: this.fmtDateTime(m.ts), me: m.authorId === cid ? 'tcm-me' : '' }));
+      return {
+        id: t.id, title: t.title, desc: t.desc || '', hasDesc: !!(t.desc && t.desc.trim()),
+        execNames: this.taskExecNames(t), author: t.author || '—',
+        due: this.taskDueLabel(t), dueCls: overdue ? 'due-over' : (dueSoon ? 'due-soon' : ''),
+        status: t.status || 'Новая', statusCls: stCls[t.status] || 'st-new',
+        isRejected: t.status === 'Отклонена', rejectReason: t.rejectReason || '',
+        priority: t.priority || 'Обычный', prioCls: t.priority === 'Срочный' ? 'pr-hot' : (t.priority === 'Высокий' ? 'pr-high' : 'pr-norm'),
+        rowCls: (overdue ? 'task-over' : '') + (isExec && (t.createdAt || 0) > seenCut ? ' tnew' : ''),
+        canAccept: isExec && t.status === 'Новая', accept: () => this.setTaskStatus(t.id, 'Принята'),
+        canStart: isExec && (t.status === 'Новая' || t.status === 'Принята'), start: () => this.setTaskStatus(t.id, 'В работе'),
+        canDone: isExec && (t.status === 'Принята' || t.status === 'В работе'), done: () => this.setTaskStatus(t.id, 'Выполнена'),
+        canReject: isExec && (t.status === 'Новая' || t.status === 'Принята' || t.status === 'В работе'), reject: () => this.startReject(t.id),
+        rejecting: S.taskRejecting === t.id, rejectInput: S.taskRejecting === t.id ? (S.taskRejectReason || '') : '',
+        onRejectInput: (e) => set({ taskRejectReason: e.target.value, taskErr: '' }), confirmReject: () => this.confirmReject(t.id), cancelReject: () => this.cancelReject(),
+        canReopen: (this.taskDone(t)) && canManage, reopen: () => this.setTaskStatus(t.id, 'Новая'),
+        canEdit: canManage, edit: () => set({ taskDraft: { id: t.id, title: t.title, executorIds: this.taskExecIds(t), due: t.due || '', dueTime: t.dueTime || '', desc: t.desc || '', priority: t.priority || 'Обычный' }, taskErr: '' }),
+        canRemove: canManage, remove: () => this.askDelete('задачу «' + t.title + '»', () => this.writeTasks((this.state.tasks || []).filter(x => x.id !== t.id))),
+        threadOpen: S.taskOpenThread === t.id, threadCount: (t.thread || []).length, toggleThread: () => this.toggleTaskThread(t.id),
+        thread, commentInput: S.taskOpenThread === t.id ? (S.taskCommentInput || '') : '',
+        onComment: (e) => set({ taskCommentInput: e.target.value }), sendComment: () => this.addTaskComment(t.id),
+        onCommentKey: (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.addTaskComment(t.id); } },
+      };
+    });
+    const overdueN = all.filter(t => this.taskOverdue(t) && (this.isTaskExec(t, cid) || t.authorId === cid)).length;
+    const mode = S.taskMode || 'list';
+    const MONr = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+    const calKey = S.taskCalKey || (today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0'));
+    const cy = +calKey.split('-')[0], cm = +calKey.split('-')[1];
+    const first = new Date(cy, cm - 1, 1);
+    const startWd = (first.getDay() + 6) % 7;
+    const dim = new Date(cy, cm, 0).getDate();
+    const todayStr = this.ymd(today);
+    const dayMap = {};
+    for (const t of list) { if (!t.due) continue; (dayMap[t.due] = dayMap[t.due] || []).push(t); }
+    const cells = [];
+    for (let i = 0; i < startWd; i++) cells.push({ blank: true, key: 'b' + i, day: '', dayCls: 'tcell blank', tasks: [], hasTasks: false });
+    for (let dd = 1; dd <= dim; dd++) {
+      const ds = calKey + '-' + String(dd).padStart(2, '0');
+      const its = (dayMap[ds] || []).map(t => {
+        const over = this.taskOverdue(t);
+        const canManage = isAdmin || t.authorId === cid;
+        return { id: t.id, title: (t.dueTime ? t.dueTime + ' ' : '') + t.title, chipCls: 'tchip ' + (stCls[t.status] || 'st-new') + (over ? ' over' : ''), open: canManage ? (() => set({ taskDraft: { id: t.id, title: t.title, executorIds: this.taskExecIds(t), due: t.due || '', dueTime: t.dueTime || '', desc: t.desc || '', priority: t.priority || 'Обычный' }, taskErr: '' })) : (() => {}) };
+      });
+      cells.push({ blank: false, key: ds, day: dd, dayCls: 'tcell' + (ds === todayStr ? ' today' : '') + (this.isOffDay(ds) ? ' toff' : ''), tasks: its, hasTasks: its.length > 0, canAdd: true, qadd: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.openQuickAdd(ds); } });
+    }
+    while (cells.length % 7) cells.push({ blank: true, key: 't' + cells.length, day: '', dayCls: 'tcell blank', tasks: [], hasTasks: false });
+    const weeks = []; for (let i = 0; i < cells.length; i += 7) weeks.push({ key: 'w' + i, days: cells.slice(i, i + 7) });
+    const monthCount = list.filter(t => t.due && t.due.slice(0, 7) === calKey).length;
+    const shiftMonth = (delta) => { let y = cy, m = cm + delta; while (m < 1) { m += 12; y--; } while (m > 12) { m -= 12; y++; } set({ taskCalKey: y + '-' + String(m).padStart(2, '0') }); };
+    const toggleExec = (id) => { const dd = this.state.taskDraft || this.emptyTaskDraft(); const cur = Array.isArray(dd.executorIds) ? dd.executorIds.slice() : []; const i = cur.indexOf(id); if (i >= 0) cur.splice(i, 1); else cur.push(id); set({ taskDraft: { ...dd, executorIds: cur }, taskErr: '' }); };
+    const upd = (patch) => set({ taskDraft: { ...(this.state.taskDraft || this.emptyTaskDraft()), ...patch }, taskErr: '' });
+    return {
+      isTasks: true,
+      taskMode: mode, isTaskList: mode === 'list', isTaskCal: mode === 'calendar',
+      taskModeList: mode === 'list' ? 'tmbtn on' : 'tmbtn', taskModeCal: mode === 'calendar' ? 'tmbtn on' : 'tmbtn',
+      setTaskList: () => set({ taskMode: 'list' }), setTaskCal: () => set({ taskMode: 'calendar' }),
+      taskWeekdays: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map((dd, i) => ({ d: dd, key: 'wd' + i, cls: i >= 5 ? 'tcalwd off' : 'tcalwd' })),
+      taskCalWeeks: weeks, taskMonthLabel: MONr[cm - 1] + ' ' + cy, taskMonthCount: monthCount,
+      taskPrevMonth: () => shiftMonth(-1), taskNextMonth: () => shiftMonth(1), taskThisMonth: () => set({ taskCalKey: '' }),
+      taskViews: [['mine', 'Мои задачи', mineN], ['assigned', 'Поручено мной', assignedN], ['all', 'Все', all.length]].map(([v, label, n]) => ({ v, label, n, cls: view === v ? 'tvtab on' : 'tvtab', go: () => set({ taskView: v }) })),
+      taskRows: rows, taskEmpty: rows.length === 0,
+      taskEmptyMsg: view === 'mine' ? 'Вам пока не поручено задач.' : (view === 'assigned' ? 'Вы ещё не поставили задач коллегам.' : 'Задач пока нет. Создайте первую.'),
+      taskKpis: [{ label: 'Мне поручено', value: mineN, cls: '' }, { label: 'Поставил я', value: assignedN, cls: '' }, { label: 'Просрочено', value: overdueN, cls: overdueN ? 'kpiBad' : '' }, { label: 'Всего', value: all.length, cls: '' }],
+      tdTitle: d.title, onTdTitle: (e) => upd({ title: e.target.value }),
+      taskExecChips: users.map(u => ({ id: u.id, label: u.name, cls: draftIds.indexOf(u.id) >= 0 ? 'execchip on' : 'execchip', toggle: () => toggleExec(u.id) })),
+      tdDue: d.due, onTdDue: (e) => upd({ due: e.target.value }),
+      tdDueTime: d.dueTime, onTdDueTime: (e) => upd({ dueTime: e.target.value }),
+      tdDesc: d.desc, onTdDesc: (e) => upd({ desc: e.target.value }),
+      tdPriority: d.priority, onTdPriority: (e) => upd({ priority: e.target.value }),
+      tdPriorityOpts: ['Обычный', 'Высокий', 'Срочный'].map(v => ({ v, label: v })),
+      saveTask: () => this.saveTask(),
+      taskIsEdit: !!d.id, taskFormTitle: d.id ? 'Редактирование задачи' : 'Новая задача · поручить коллегам',
+      cancelTaskEdit: () => set({ taskDraft: null, taskErr: '' }), taskHasDraft: !!d.id,
+      taskErr: S.taskErr || '', taskHasErr: !!S.taskErr, taskNoUsers: users.length === 0,
+    };
   }
   forwardToTelegram(msg) {
     const S = this.state;
@@ -2547,6 +3223,304 @@ class Component extends DCLogic {
     const curRate = Number(p.curRate) || 0;
     const sumRub = this.excelRound(qty * price * (curRate || rate), 2);
     return { qty, price, eurNoVat, eurVat, rubNoVat: this.excelRound(eurNoVat * rate, 2), transport, customs, fullRub, sumRub };
+  }
+
+  // ===== АЯ «выглядывает»: контроль рисков по срокам заявок на закупку =====
+  // Возвращает САМЫЙ острый риск по одной заявке либо null. Логику легко перенастроить
+  // под реальные дедлайны из БД: меняйте пороги (дни) и набор статусов.
+  purchaseRisk(p) {
+    if (!p) return null;
+    const DAY = 86400000;
+    const t0 = new Date(); t0.setHours(0, 0, 0, 0); const t = t0.getTime();
+    const status = String(p.status || '').toLowerCase();
+    const arrived = /получено|на склад|закрыт|отмен/.test(status);
+    const no = p.no || '—'; const sup = (p.supplier || '').trim() || 'поставщик'; const mat = (p.material || '').trim();
+    let risk = null;
+    const worse = (r) => { if (!risk || (r.level === 'crit' && risk.level !== 'crit') || (r.level === risk.level && r.days < risk.days)) risk = r; };
+    // --- Оплата ---
+    const paid = Number(p.paid) || 0;
+    let full = 0; try { full = this.purchaseCalc(p, Number(this.state.rate) || 0, this.vat || 0).fullRub; } catch (e) {}
+    const isPaid = full > 0 ? paid >= full - 1 : paid > 0;
+    if (p.payDate && !isPaid && !/отмен/.test(status)) {
+      const days = Math.round((this.parseISO(p.payDate).getTime() - t) / DAY);
+      if (days < 0) worse({ level: 'crit', type: 'pay', days, text: '⚠️ Платёж по заявке №' + no + ' (' + sup + ') просрочен на ' + (-days) + ' дн. Напомнить бухгалтеру?', quick: 'Напомнить бухгалтеру', chatText: '🔔 АЯ: платёж по заявке №' + no + ' (' + sup + (mat ? ', ' + mat : '') + ') просрочен на ' + (-days) + ' дн. Прошу подготовить оплату.' });
+      else if (days <= 2) worse({ level: 'warn', type: 'pay', days, text: '⏳ Срок оплаты по заявке №' + no + ' — через ' + days + ' дн. Подготовить платёж?', quick: 'Напомнить бухгалтеру', chatText: '🔔 АЯ: приближается срок оплаты по заявке №' + no + ' (' + sup + ') — через ' + days + ' дн.' });
+    }
+    // --- Поставка ---
+    if (p.arriveDate && !arrived) {
+      const days = Math.round((this.parseISO(p.arriveDate).getTime() - t) / DAY);
+      if (days < 0) worse({ level: 'crit', type: 'arr', days, text: '🚚 Поставка по заявке №' + no + ' (' + sup + ') задерживается на ' + (-days) + ' дн. Поднажать на поставщика?', quick: 'Пнуть исполнителя', chatText: '🔔 АЯ: поставка по заявке №' + no + ' (' + sup + (mat ? ', ' + mat : '') + ') задерживается на ' + (-days) + ' дн. Прошу уточнить статус у поставщика.' });
+      else if (days <= 3 && this.isInTransit(p)) worse({ level: 'warn', type: 'arr', days, text: '🚚 Приход по заявке №' + no + ' ожидается через ' + days + ' дн. Всё по плану?', quick: 'Уточнить статус', chatText: '🔔 АЯ: приход по заявке №' + no + ' (' + sup + ') ожидается через ' + days + ' дн.' });
+    }
+    // --- Согласование ---
+    if (/нов|рассмотр/.test(status) && p.reqDate) {
+      const days = Math.round((t - this.parseISO(p.reqDate).getTime()) / DAY);
+      if (days >= 3) worse({ level: 'warn', type: 'appr', days: -days, text: '📝 Заявка №' + no + ' ждёт согласования уже ' + days + ' дн. Поднять вопрос?', quick: 'Поднажать', chatText: '🔔 АЯ: заявка на закупку №' + no + (mat ? ' (' + mat + ')' : '') + ' ждёт согласования уже ' + days + ' дн.' });
+    }
+    if (risk) { risk.id = p.id + ':' + risk.type; risk.purchaseId = p.id; risk.no = no; risk.open = () => this.setState({ tab: 'proc', editId: p.id, navOpen: false }); risk.openLabel = 'Открыть заявку'; }
+    return risk;
+  }
+  // Риски по задачам (для АЯ): просрочка/срок завтра по задачам, где я исполнитель или постановщик.
+  taskRisks() {
+    const S = this.state, cu = S.currentUser; if (!cu) return [];
+    const cid = cu.id; const DAY = 86400000;
+    const t0 = new Date(); t0.setHours(0, 0, 0, 0); const t = t0.getTime();
+    const seen = Number(S.tasksSeenAt) || 0;
+    const out = [];
+    for (const tk of (S.tasks || [])) {
+      if (!tk || this.taskDone(tk)) continue;
+      const mineExec = this.isTaskExec(tk, cid);
+      if (!mineExec && tk.authorId !== cid) continue;
+      if (mineExec && (tk.createdAt || 0) > seen) {
+        out.push({ level: 'warn', days: 0.5, id: tk.id + ':new', taskId: tk.id, text: '📋 Вам поручена новая задача: «' + tk.title + '»' + (tk.due ? ' · срок ' + this.taskDueLabel(tk) : '') + '. Взять в работу?', quick: 'Взять в работу', chatText: '🔔 АЯ: новая задача «' + tk.title + '».', open: () => { this.markTasksSeen(); this.setState({ tab: 'tasks', taskView: 'mine', navOpen: false }); }, openLabel: 'Открыть задачи' });
+      }
+      if (!tk.due) continue;
+      const days = Math.round((this.parseISO(tk.due).getTime() - t) / DAY);
+      const exNames = this.taskExecNames(tk);
+      let r = null;
+      if (this.taskOverdue(tk)) r = { level: 'crit', days, text: '📋 Задача «' + tk.title + '» просрочена' + (days < 0 ? ' на ' + (-days) + ' дн.' : ' (срок ' + this.taskDueLabel(tk) + ')') + (mineExec ? '' : ' (исполн. ' + exNames + ')') + '. Напомнить?', quick: mineExec ? 'Взять в работу' : 'Напомнить исполнителю', chatText: '🔔 АЯ: задача «' + tk.title + '» (исполн. ' + exNames + ') просрочена.' };
+      else if (days <= 1) r = { level: 'warn', days, text: '📋 Задача «' + tk.title + '» — срок ' + (days === 0 ? 'сегодня' : 'завтра') + (tk.dueTime ? ' ' + tk.dueTime : '') + '.' + (mineExec ? '' : ' Исполн. ' + exNames + '.') + ' Напомнить?', quick: mineExec ? 'Взять в работу' : 'Напомнить исполнителю', chatText: '🔔 АЯ: по задаче «' + tk.title + '» срок ' + (days === 0 ? 'сегодня' : 'завтра') + '.' };
+      if (r) { r.id = tk.id + ':task'; r.taskId = tk.id; r.open = () => this.setState({ tab: 'tasks', taskView: mineExec ? 'mine' : 'assigned', navOpen: false }); r.openLabel = 'Открыть задачи'; out.push(r); }
+    }
+    return out;
+  }
+  // Запоминаем, что пользователь видел задачи (гасит мигание/бейдж «новых»).
+  markTasksSeen() { const now = Date.now(); this.setState({ tasksSeenAt: now }); try { localStorage.setItem('inkflow_tasks_seen', String(now)); } catch (e) {} }
+  // Состояние внимания по задачам для пункта меню: уровень и счётчик (чем ближе срок — тем выше уровень).
+  myTaskAlertState() {
+    const S = this.state, cu = S.currentUser; if (!cu) return { level: '', badge: 0, minDays: 99, newCount: 0, overdue: 0, soon: 0 };
+    const cid = cu.id; const DAY = 86400000; const t0 = new Date(); t0.setHours(0, 0, 0, 0); const t = t0.getTime();
+    const seen = Number(S.tasksSeenAt) || 0;
+    let overdue = 0, soon = 0, newCount = 0, minDays = 99;
+    for (const tk of (S.tasks || [])) {
+      if (!tk || this.taskDone(tk)) continue;
+      const mine = this.isTaskExec(tk, cid); const involved = mine || tk.authorId === cid;
+      if (!involved) continue;
+      if (tk.due) { const dys = Math.round((this.parseISO(tk.due).getTime() - t) / DAY); if (dys < minDays) minDays = dys; if (this.taskOverdue(tk)) overdue++; else if (dys <= 2) soon++; }
+      if (mine && (tk.createdAt || 0) > seen) newCount++;
+    }
+    let level = '';
+    if (overdue > 0) level = 'crit';
+    else if (minDays <= 1) level = 'hot';
+    else if (minDays <= 3 || newCount > 0) level = 'soft';
+    return { level, badge: Math.max(overdue + soon, newCount), minDays, newCount, overdue, soon };
+  }
+  // ===== Быстрое добавление задачи с календаря (зелёный «+») =====
+  isRuHoliday(ds) { const md = String(ds).slice(5); return ['01-01', '01-02', '01-03', '01-04', '01-05', '01-06', '01-07', '01-08', '02-23', '03-08', '05-01', '05-09', '06-12', '11-04'].indexOf(md) >= 0; }
+  isOffDay(ds) { const wd = this.parseISO(ds).getDay(); return wd === 0 || wd === 6 || this.isRuHoliday(ds); }
+  openQuickAdd(date) { const cu = this.state.currentUser; this.setState({ qaDate: date, qaTitle: '', qaExecId: cu ? cu.id : '', qaTime: '', qaErr: '' }); }
+  saveQuickAdd() {
+    const S = this.state, cu = S.currentUser; const title = (S.qaTitle || '').trim();
+    if (!title) { this.setState({ qaErr: 'Введите название задачи' }); return; }
+    const id = S.qaExecId || (cu && cu.id); const u = (S.users || []).find(x => x.id === id);
+    const task = { id: 't_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), title: title.slice(0, 200), executors: [{ id, name: u ? u.name : (cu ? cu.name : '—') }], authorId: cu ? cu.id : '', author: cu ? cu.name : '—', due: S.qaDate || '', dueTime: S.qaTime || '', desc: '', priority: 'Обычный', status: 'Новая', rejectReason: '', thread: [], createdAt: Date.now(), doneAt: 0 };
+    this.writeTasks([task, ...(S.tasks || [])].slice(0, 500));
+    this.setState({ qaDate: '', qaTitle: '', qaTime: '', qaErr: '' });
+    this.postSystemNote('📋 Новая задача для «' + (u ? u.name : (cu ? cu.name : '—')) + '»: ' + task.title + (task.due ? ' · срок ' + this.taskDueLabel(task) : ''), cu ? cu.name : '—');
+  }
+  quickAddVals() {
+    const S = this.state, cu = S.currentUser;
+    if (!cu || S.loading) return { qaOpen: false };
+    const set = (p) => this.setState(p);
+    const users = (S.users || []).filter(u => u.active !== false);
+    const sp = (S.qaDate || '').split('-');
+    return {
+      qaOpen: !!S.qaDate,
+      qaDateLabel: sp.length === 3 ? sp[2] + '.' + sp[1] + '.' + sp[0] : S.qaDate,
+      qaTitle: S.qaTitle || '', onQaTitle: (e) => set({ qaTitle: e.target.value, qaErr: '' }),
+      qaExecId: S.qaExecId || cu.id, onQaExec: (e) => set({ qaExecId: e.target.value }),
+      qaUserOpts: users.map(u => ({ v: u.id, label: u.id === cu.id ? (u.name + ' (я)') : u.name })),
+      qaTime: S.qaTime || '', onQaTime: (e) => set({ qaTime: e.target.value }),
+      qaErr: S.qaErr || '', qaHasErr: !!S.qaErr,
+      qaSave: () => this.saveQuickAdd(), qaClose: () => set({ qaDate: '' }),
+      onQaKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.saveQuickAdd(); } },
+    };
+  }
+  // ===== Виджет «Календарь и задачи» (верхний правый угол) =====
+  taskInitials(name) { const p = String(name || '').trim().split(/\s+/); return ((((p[0] || '')[0] || '') + ((p[1] || '')[0] || '')).toUpperCase()) || '?'; }
+  avatarTone(name) { let h = 0; const s = String(name || ''); for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return 'av' + (h % 6); }
+  // Лёгкий «салют» из изумрудных искр от точки (x,y). Вызывать при завершении просроченной задачи.
+  cwConfetti(x, y) {
+    try {
+      const host = document.createElement('div'); host.className = 'cwconfetti'; host.style.left = x + 'px'; host.style.top = y + 'px';
+      document.body.appendChild(host);
+      const N = 16, cols = ['#34a85b', '#1f8a4d', '#7ee0a8', '#FFD200'];
+      for (let i = 0; i < N; i++) {
+        const s = document.createElement('i');
+        const ang = (Math.PI * 2 * i) / N + (Math.random() - 0.5) * 0.6, dist = 24 + Math.random() * 38;
+        s.style.setProperty('--dx', (Math.cos(ang) * dist).toFixed(1) + 'px');
+        s.style.setProperty('--dy', (Math.sin(ang) * dist).toFixed(1) + 'px');
+        s.style.setProperty('--d', (0.72 + Math.random() * 0.4).toFixed(2) + 's');
+        s.style.background = cols[i % cols.length];
+        host.appendChild(s);
+      }
+      setTimeout(() => host.remove(), 1150);
+    } catch (e) {}
+  }
+  // ===== Персонажи Ая и Макс =====
+  triggerCoffee() { this.setState({ chScene: 'coffee' }); clearTimeout(this._coffeeT); this._coffeeT = setTimeout(() => { if (this.state.chScene === 'coffee') this.setState({ chScene: '' }); }, 3200); }
+  chVals() {
+    const S = this.state, sc = S.chScene || '';
+    const show = !!sc && sc !== 'gone' && !!S.currentUser && !S.loading;
+    const hasMax = sc === 'leave' || sc === 'coffee' || sc === 'bye';
+    return {
+      chShow: show, chWrapCls: 'chwrap ch-' + (sc || 'none'), chHasMax: hasMax, chBlush: sc === 'coffee' || sc === 'bye',
+      chBubbleBy: sc === 'bored' ? 'Ая' : 'Макс',
+      chText: (sc === 'leave') ? 'Ая, пользователь отошёл — пойдём на перерыв. Хватит караулить конвейер 🙂'
+        : (sc === 'coffee') ? 'Ты спасла Цех №2 от остановки. Держи заслуженный латте! ☕'
+        : (sc === 'bored') ? 'Тихо-то как… никто не нажимает кнопки 😴'
+        : (sc === 'bye') ? 'Смена окончена, риски закрыты! Уходим домой — программа в дежурном режиме. Отличного вечера! 👋' : '',
+    };
+  }
+  calWidgetVals() {
+    const S = this.state, cu = S.currentUser;
+    if (!cu || S.loading) return { cwShow: false, cwOpen: false, cwHasBadge: false, cwBadge: '', cwToggle: () => {}, cwClose: () => {} };
+    const cid = cu.id; const set = (p) => this.setState(p);
+    const today = new Date(); today.setHours(0, 0, 0, 0); const t0 = today.getTime(); const todayStr = this.ymd(today);
+    const mine = (S.tasks || []).filter(t => this.isTaskExec(t, cid) || t.authorId === cid);
+    const todayCount = mine.filter(t => !this.taskDone(t) && t.due === todayStr).length;
+    const MONr = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+    const calKey = S.cwMonth || (today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0'));
+    const cy = +calKey.split('-')[0], cm = +calKey.split('-')[1];
+    const startWd = (new Date(cy, cm - 1, 1).getDay() + 6) % 7;
+    const dim = new Date(cy, cm, 0).getDate();
+    const dayHas = {}; for (const t of mine) { if (t.due) dayHas[t.due] = (dayHas[t.due] || 0) + 1; }
+    const selDay = S.cwDay || todayStr;
+    const cells = [];
+    for (let i = 0; i < startWd; i++) cells.push({ key: 'b' + i, day: '', dayCls: 'cwc blank', hasDot: false, pick: () => {} });
+    for (let dd = 1; dd <= dim; dd++) {
+      const ds = calKey + '-' + String(dd).padStart(2, '0');
+      cells.push({ key: ds, day: dd, dayCls: 'cwc' + (ds === todayStr ? ' cwtoday' : '') + (ds === selDay ? ' cwsel' : '') + (this.isOffDay(ds) ? ' cwoff' : ''), hasDot: !!dayHas[ds], pick: () => set({ cwDay: ds }), canAdd: true, qadd: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.openQuickAdd(ds); } });
+    }
+    while (cells.length % 7) cells.push({ key: 'z' + cells.length, day: '', dayCls: 'cwc blank', hasDot: false, pick: () => {} });
+    const weeks = []; for (let i = 0; i < cells.length; i += 7) weeks.push({ key: 'w' + i, days: cells.slice(i, i + 7) });
+    const item = (t) => ({
+      id: t.id, title: (t.dueTime ? t.dueTime + ' · ' : '') + t.title,
+      status: t.status || 'Новая', statusCls: ({ 'Новая': 'st-new', 'Принята': 'st-acc', 'В работе': 'st-prog', 'Выполнена': 'st-done', 'Отклонена': 'st-rej' })[t.status] || 'st-new',
+      avatars: this.taskExecutors(t).slice(0, 4).map(e => ({ ini: this.taskInitials(e.name), cls: 'cwav ' + this.avatarTone(e.name), title: e.name })),
+      canComplete: !this.taskDone(t) && this.isTaskExec(t, cid),
+      complete: (e) => { try { const r = e.currentTarget.getBoundingClientRect(); this.cwConfetti(r.left + r.width / 2, r.top + r.height / 2); } catch (x) {} this.setState({ cwBump: Date.now() }); clearTimeout(this._cwBumpT); this._cwBumpT = setTimeout(() => this.setState({ cwBump: 0 }), 700); this.setTaskStatus(t.id, 'Выполнена'); },
+      open: () => set({ tab: 'tasks', taskMode: 'list', taskView: this.isTaskExec(t, cid) ? 'mine' : 'assigned', navOpen: false, cwOpen: false }),
+    });
+    const isToday = selDay === todayStr;
+    const overdue = mine.filter(t => this.taskOverdue(t)).map(item);
+    const todayTasks = mine.filter(t => !this.taskDone(t) && t.due === todayStr && !this.taskOverdue(t)).map(item);
+    const weekEndTs = t0 + 7 * 86400000;
+    const week = mine.filter(t => !this.taskDone(t) && t.due && t.due > todayStr && this.parseISO(t.due).getTime() <= weekEndTs).map(item);
+    const dayList = mine.filter(t => t.due === selDay).map(item);
+    const groups = [
+      { key: 'o', label: 'Просрочено', cls: 'cwg-over', tasks: overdue, has: overdue.length > 0, count: overdue.length },
+      { key: 't', label: 'На сегодня', cls: 'cwg-today', tasks: todayTasks, has: todayTasks.length > 0, count: todayTasks.length },
+      { key: 'w', label: 'Планы на неделю', cls: 'cwg-week', tasks: week, has: week.length > 0, count: week.length },
+    ];
+    const sp = selDay.split('-');
+    // --- Режим «Пульс производства»: оперативные риски из заявок и задач ---
+    const palerts = this.riskAlerts().filter(a => !S.peekDismissed[a.id]);
+    const tidy = (s) => String(s || '').replace(/\s*(Напомнить исполнителю\??|Напомнить\??|Взять в работу\??|Поднять вопрос\??|Уточнить статус\??|Поднажать на поставщика\??|Поднажать\??|Подготовить платёж\??|Всё по плану\??)\s*$/i, '').trim();
+    const palert = (a) => {
+      const tk = a.taskId ? (S.tasks || []).find(t => t.id === a.taskId) : null;
+      const avs = tk ? this.taskExecutors(tk).slice(0, 3).map(e => ({ ini: this.taskInitials(e.name), cls: 'cwav ' + this.avatarTone(e.name), title: e.name })) : (a.no ? [{ ini: '№' + String(a.no).slice(0, 2), cls: 'cwav av5', title: 'Заявка №' + a.no }] : []);
+      return {
+        id: a.id, text: tidy(a.text), avatars: avs, open: a.open || (() => {}),
+        resolve: (e) => { try { const r = e.currentTarget.getBoundingClientRect(); this.cwConfetti(r.left + r.width / 2, r.top + r.height / 2); } catch (x) {} this.setState({ cwBump: Date.now(), peekDismissed: { ...this.state.peekDismissed, [a.id]: 1 } }); clearTimeout(this._cwBumpT); this._cwBumpT = setTimeout(() => this.setState({ cwBump: 0 }), 700); if (a.level === 'crit') this.triggerCoffee(); if (a.taskId) this.setTaskStatus(a.taskId, 'Выполнена'); },
+      };
+    };
+    const pFail = palerts.filter(a => a.level === 'crit').map(palert);
+    const pProd = palerts.filter(a => a.taskId && a.level !== 'crit').map(palert);
+    const pSupply = palerts.filter(a => a.purchaseId).map(palert);
+    const inProd = (S.tasks || []).filter(t => t.status === 'В работе').length;
+    const awaitBuy = (S.purchases || []).filter(p => this.isInTransit(p)).length;
+    const shipPlan = (S.purchases || []).filter(p => { if (!p.arriveDate || /получено|на склад/.test(String(p.status || '').toLowerCase())) return false; const dt = this.parseISO(p.arriveDate).getTime(); return dt >= t0 && dt <= t0 + 7 * 86400000; }).length;
+    const isPulse = S.cwMode === 'pulse';
+    const pulseGroups = [
+      { key: 'f', label: '⚠️ Риски срыва (Просрочено)', cls: 'cwg-over', tasks: pFail, has: pFail.length > 0, count: pFail.length },
+      { key: 'p', label: '🏭 Производство сегодня', cls: 'cwg-today', tasks: pProd, has: pProd.length > 0, count: pProd.length },
+      { key: 's', label: '📦 Снабжение', cls: 'cwg-week', tasks: pSupply, has: pSupply.length > 0, count: pSupply.length },
+    ];
+    const pulseStats = [
+      { label: 'Критич. риски', n: pFail.length, cls: 'cwk-over' + (S.cwBump ? ' cwroll' : '') },
+      { label: 'В производстве', n: inProd, cls: 'cwk-today' },
+      { label: 'Ожидает закупки', n: awaitBuy, cls: 'cwk-week' },
+      { label: 'План отгрузок', n: shipPlan, cls: '' },
+    ];
+    const calStats = [{ label: 'Просрочено', n: overdue.length, cls: 'cwk-over' + (S.cwBump ? ' cwroll' : '') }, { label: 'На сегодня', n: todayTasks.length, cls: 'cwk-today' }, { label: 'Неделя', n: week.length, cls: 'cwk-week' }];
+    return {
+      cwShow: true, cwOpen: !!S.cwOpen,
+      cwHasBadge: todayCount > 0, cwBadge: String(todayCount),
+      cwToggle: () => { if (S.cwOpen) { set({ cwOpen: false }); } else { set({ cwOpen: true, cwLoading: true }); clearTimeout(this._cwT); this._cwT = setTimeout(() => this.setState({ cwLoading: false }), 420); } }, cwClose: () => set({ cwOpen: false }),
+      cwLoading: !!S.cwLoading, cwReady: !S.cwLoading,
+      cwMode: S.cwMode || 'cal', cwIsCal: !isPulse, cwIsPulse: isPulse,
+      cwModeCalCls: !isPulse ? 'cwmtab on' : 'cwmtab', cwModePulseCls: isPulse ? 'cwmtab on' : 'cwmtab',
+      setCwCal: () => set({ cwMode: 'cal' }), setCwPulse: () => set({ cwMode: 'pulse' }),
+      cwStats: isPulse ? pulseStats : calStats,
+      pulseGroups: pulseGroups, pulseEmpty: !pFail.length && !pProd.length && !pSupply.length,
+      cwMonthLabel: MONr[cm - 1] + ' ' + cy,
+      cwPrev: () => { let y = cy, m = cm - 1; if (m < 1) { m = 12; y--; } set({ cwMonth: y + '-' + String(m).padStart(2, '0') }); },
+      cwNext: () => { let y = cy, m = cm + 1; if (m > 12) { m = 1; y++; } set({ cwMonth: y + '-' + String(m).padStart(2, '0') }); },
+      cwWeekdays: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map((d, i) => ({ d, key: 'cwd' + i, cls: i >= 5 ? 'cwwd off' : 'cwwd' })),
+      cwWeeks: weeks,
+      cwIsGroups: isToday, cwNotGroups: !isToday, cwGroups: groups,
+      cwDayLabel: 'Задачи на ' + (sp.length === 3 ? sp[2] + '.' + sp[1] + '.' + sp[0] : selDay),
+      cwDayList: dayList, cwDayEmpty: dayList.length === 0,
+      cwEmptyAll: isToday && !overdue.length && !todayTasks.length && !week.length,
+      cwBackToday: () => set({ cwDay: '', cwMonth: '' }),
+      cwOpenMain: () => set({ tab: 'tasks', taskMode: 'calendar', taskCalKey: (S.cwMonth || ''), navOpen: false, cwOpen: false }),
+    };
+  }
+  // Все активные риски: заявки на закупку + задачи, отсортированы (критичные → ближайшие сроки).
+  riskAlerts() {
+    const out = [];
+    for (const p of (this.state.purchases || [])) { const r = this.purchaseRisk(p); if (r) out.push(r); }
+    for (const r of this.taskRisks()) out.push(r);
+    out.sort((a, b) => (a.level === b.level ? a.days - b.days : (a.level === 'crit' ? -1 : 1)));
+    return out;
+  }
+  // Значения для всплывающего аватара АЯ (вычисляются на каждый рендер).
+  peekVals() {
+    const S = this.state;
+    const stub = {
+      peekShow: false, peekText: '', peekLevel: 'warn', peekQuick: '', peekHasQuick: false,
+      peekShowBtns: false, peekHasMore: false, peekMoreN: '', peekCount: 0, peekCanClose: false, peekOpenLabel: 'Открыть',
+      peekDoQuick: () => {}, peekOpenPurchase: () => {}, peekOpenAI: () => this.peekOpenAI(),
+      peekClose: () => this.setState({ peekClosed: true, peekToast: '' }),
+      peekNext: () => this.setState(s => ({ peekIdx: s.peekIdx + 1 })),
+    };
+    if (S.peekToast) return { ...stub, peekShow: true, peekText: S.peekToast, peekLevel: 'ok' };
+    if (!S.currentUser || S.loading) return stub;
+    const alerts = this.riskAlerts().filter(a => !S.peekDismissed[a.id]);
+    if (!alerts.length) {
+      // Спокойное состояние: АЯ всегда видна, просрочек нет
+      return { ...stub, peekShow: true, peekLevel: 'idle', peekText: 'Я на связи. Срочных задач по срокам нет — всё под контролем 👍' };
+    }
+    const idx = ((S.peekIdx % alerts.length) + alerts.length) % alerts.length;
+    const a = alerts[idx];
+    return {
+      ...stub, peekShow: true, peekText: a.text, peekLevel: a.level, peekQuick: a.quick, peekHasQuick: !!a.quick,
+      peekShowBtns: true, peekCount: alerts.length, peekHasMore: alerts.length > 1, peekMoreN: String(alerts.length - 1), peekCanClose: true, peekOpenLabel: a.openLabel || 'Открыть',
+      peekDoQuick: () => { if (a.taskId && a.quick === 'Взять в работу') { this.setTaskStatus(a.taskId, 'В работе'); this.setState({ peekDismissed: { ...this.state.peekDismissed, [a.id]: 1 }, peekIdx: this.state.peekIdx + 1, peekToast: '✓ Задача взята в работу' }); clearTimeout(this._peekToastT); this._peekToastT = setTimeout(() => this.setState({ peekToast: '' }), 2600); } else { this.peekAct(a); } },
+      peekOpenPurchase: a.open || (() => this.setState({ tab: 'proc', editId: a.purchaseId, navOpen: false })),
+      peekClose: () => this.setState({ peekDismissed: { ...this.state.peekDismissed, [a.id]: 1 }, peekIdx: this.state.peekIdx + 1 }),
+    };
+  }
+  // Быстрое действие из облачка: публикуем напоминание в чат команды (+ Telegram) и убираем риск.
+  peekAct(a) {
+    const cu = this.state.currentUser;
+    const msg = { id: 'm' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), author: (cu ? cu.name : 'Гость') + ' · через АЯ', text: a.chatText, ts: Date.now() };
+    const next = [...(this.state.chat || []), msg].slice(-120);
+    this.setState({ chat: next, peekDismissed: { ...this.state.peekDismissed, [a.id]: 1 }, peekIdx: this.state.peekIdx + 1, peekToast: '✓ Напоминание отправлено в чат команды' });
+    try { localStorage.setItem('inkflow_chat', JSON.stringify(next)); } catch (e) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { chat: next }, { merge: true }).catch(() => {}); } catch (e) {} }
+    this.forwardToTelegram(msg);
+    clearTimeout(this._peekToastT); this._peekToastT = setTimeout(() => this.setState({ peekToast: '' }), 2600);
+  }
+  // Клик по аватару — открываем панель AI-ассистента и просим план действий по рискам.
+  peekOpenAI() {
+    const alerts = this.riskAlerts().filter(a => !this.state.peekDismissed[a.id]);
+    this.setState({ aiOpen: true });
+    if (alerts.length) {
+      const prompt = 'Вот заявки на закупку с риском по срокам:\n' + alerts.slice(0, 12).map(a => '№' + a.no + ': ' + a.text).join('\n') + '\nДай краткий план действий на русском: за что взяться в первую очередь.';
+      try { this.aiSend(prompt, '✦ Риски по срокам (' + alerts.length + ')'); } catch (e) {}
+    }
   }
 
   costOf(product, lossF) {
@@ -3427,7 +4401,7 @@ class Component extends DCLogic {
     const L = this.loaderVals();
     const Rt = this.ratesVals();
     if (!S.ready) {
-      return { ...L, ...Rt, ready: false, aiOpen: false, aiBtnCls: 'aifab', aiToggle: () => {}, aiClose: () => {}, aiMsgs: [], aiHasMsgs: false, aiNoMsgs: true, aiInput: '', aiBusy: false, onAiInput: () => {}, onAiKey: () => {}, aiSend: () => {}, aiClear: () => {}, analyzeScreen: () => {}, aiAnalyzable: false, aiModel: 'gpt-4o-mini', onAiModel: () => {}, aiCfgOpen: false, aiCfgToggle: () => {}, aiKeySet: false, aiKeyEdit: '', onAiKeyEdit: () => {}, aiBaseEdit: '', onAiBaseEdit: () => {}, aiModelEdit: '', onAiModelEdit: () => {}, saveAiCfg: () => {}, aiIsAdmin: false, aiPrompts: [], userName: '', userInitial: '?', userRoleLabel: '', userRoleCls: 'srole', logout: () => this.askFarewell(), doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: false, farewellText: '', onlineUsers: [], hasOnline: false, navCls: '', navBkCls: '', sidebarStyle: null, toggleNav: () => {}, closeNav: () => {}, chatOpen: false, chatToggle: () => {}, chatClose: () => {}, chatMsgs: [], chatEmpty: true, chatCount: 0, chatInput: '', onChatInput: () => {}, onChatKey: () => {}, chatSend: () => {}, tgLink: '', tgHasLink: false, tgNoLink: true, tgEdit: '', onTgEdit: () => {}, saveTg: () => {}, tgIsAdmin: false, tgEditToken: '', onTgToken: () => {}, tgEditChatId: '', onTgChatId: () => {}, saveTgBot: () => {}, tgTest: () => {}, tgStatus: '', tgFwdOn: false, navGroups: [], homeGroups: [], isHome: false, goHome: () => {}, oneCQuickGet: () => {}, oneCBtnText: 'Получить данные из 1С', oneCBtnCls: 'onecbtn', tabDesc: 'Загрузка данных…', productOptions: [], ownerOptions: [], componentOptions: [], calcLines: [], recipeRows: [], prodRows: [], requirement: [], purchase: [], priceRows: [] };
+      return { ...L, ...Rt, ready: false, aiOpen: false, aiBtnCls: 'aifab', aiToggle: () => {}, aiClose: () => {}, aiMsgs: [], aiHasMsgs: false, aiNoMsgs: true, aiInput: '', aiBusy: false, onAiInput: () => {}, onAiKey: () => {}, aiSend: () => {}, aiClear: () => {}, analyzeScreen: () => {}, aiAnalyzable: false, aiModel: 'gpt-4o-mini', onAiModel: () => {}, aiCfgOpen: false, aiCfgToggle: () => {}, aiKeySet: false, aiKeyEdit: '', onAiKeyEdit: () => {}, aiBaseEdit: '', onAiBaseEdit: () => {}, aiModelEdit: '', onAiModelEdit: () => {}, saveAiCfg: () => {}, aiIsAdmin: false, aiPrompts: [], userName: '', userInitial: '?', userRoleLabel: '', userRoleCls: 'srole', logout: () => this.askFarewell(), doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: false, farewellText: '', onlineUsers: [], hasOnline: false, navCls: '', navBkCls: '', sidebarStyle: null, toggleNav: () => {}, closeNav: () => {}, chatOpen: false, chatToggle: () => {}, chatClose: () => {}, chatMsgs: [], chatEmpty: true, chatCount: 0, chatInput: '', onChatInput: () => {}, onChatKey: () => {}, chatSend: () => {}, tgLink: '', tgHasLink: false, tgNoLink: true, tgEdit: '', onTgEdit: () => {}, saveTg: () => {}, tgIsAdmin: false, tgEditToken: '', onTgToken: () => {}, tgEditChatId: '', onTgChatId: () => {}, saveTgBot: () => {}, tgTest: () => {}, tgStatus: '', tgFwdOn: false, navGroups: [], homeGroups: [], isHome: false, goHome: () => {}, oneCQuickGet: () => {}, oneCBtnText: 'Получить данные из 1С', oneCBtnCls: 'onecbtn', tabDesc: 'Загрузка данных…', productOptions: [], ownerOptions: [], componentOptions: [], calcLines: [], recipeRows: [], prodRows: [], requirement: [], purchase: [], priceRows: [], peekShow: false, peekShowBtns: false, peekHasQuick: false, peekHasMore: false, peekCanClose: false, peekOpenLabel: 'Открыть', peekText: '', peekLevel: 'warn', peekQuick: '', peekMoreN: '', peekDoQuick: () => {}, peekOpenPurchase: () => {}, peekOpenAI: () => {}, peekClose: () => {}, peekNext: () => {}, cwShow: false, cwOpen: false, cwHasBadge: false, cwBadge: '', cwToggle: () => {}, cwClose: () => {}, qaOpen: false, chShow: false };
     }
     this._memo = new Map();
     const lossF = (Number(S.loss) || 0) / 100;
@@ -3440,11 +4414,12 @@ class Component extends DCLogic {
       ['proc', 'План закупок'], ['cal', 'Календарь'], ['wh', 'Склад'], ['cover', 'Сводка'],
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
-      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
+      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
     const tabGroups = [
       { label: 'FLOW', items: ['prodplan', 'procplan'], en: { prodplan: 'Production Schedule', procplan: 'Procurement Plan' } },
+      { label: 'Команда', items: ['tasks'] },
       { label: 'Производство', items: ['calc', 'recipe', 'prod', 'catalog'] },
       { label: 'Планирование закупок', items: ['runrate', 'proc', 'cal'] },
       { label: 'Цены и поставщики', items: ['audit', 'pay', 'prices'] },
@@ -3459,9 +4434,18 @@ class Component extends DCLogic {
       const fb = allowSet.has('home') ? 'home' : (allowSet.has('calc') ? 'calc' : (allowed[0] || 'home'));
       if (fb !== S.tab) { clearTimeout(this._redirT); this._redirT = setTimeout(() => this.setState({ tab: fb }), 0); }
     }
+    const ta = this.myTaskAlertState();
     const navGroups = tabGroups.map(g => ({
       label: g.label,
-      items: g.items.filter(id => allowSet.has(id)).map(id => ({ label: (g.en && g.en[id]) || tabLabels[id], icon: this.tabIcon(id), cls: S.tab === id ? 'on' : '', go: () => set({ tab: id, navOpen: false }) })),
+      items: g.items.filter(id => allowSet.has(id)).map(id => {
+        const it = { label: (g.en && g.en[id]) || tabLabels[id], icon: this.tabIcon(id), cls: S.tab === id ? 'on' : '', go: () => set({ tab: id, navOpen: false }) };
+        if (id === 'tasks') {
+          if (ta.level) it.cls += ' tnav-' + ta.level;
+          it.hasBadge = ta.badge > 0; it.badge = String(ta.badge); it.badgeCls = ta.level === 'crit' ? 'crit' : 'warn';
+          it.go = () => { this._taskSeenSnap = Number(this.state.tasksSeenAt) || 0; set({ tab: 'tasks', navOpen: false }); clearTimeout(this._taskSeenT); this._taskSeenT = setTimeout(() => this.markTasksSeen(), 4000); };
+        }
+        return it;
+      }),
     })).filter(g => g.items.length);
     const descs = {
       calc: 'Себестоимость 1 кг готового продукта с развёрткой по компонентам.',
@@ -3484,6 +4468,7 @@ class Component extends DCLogic {
       catalog: 'Справочные каталоги: сырьё по категориям, готовая продукция и полуфабрикаты.',
       cloud: 'Общая база для команды: подключение к Firebase, блокировка на редактирование и журнал изменений.',
       onec: 'Интеграция с 1С: автоматическая загрузка остатков сырья и закупочных цен из 1С (ERP) по расписанию через HTTP-сервис.',
+      tasks: 'Постановка задач коллегам: исполнитель, срок, приоритет. Виды «Мои задачи» и «Поручено мной»; АЯ напоминает о просроченных.',
       users: 'Управление доступом: добавление сотрудников, выдача логинов и паролей, роли и блокировка учётных записей.',
     };
     const homeGroups = tabGroups.map(g => ({
@@ -3537,7 +4522,7 @@ class Component extends DCLogic {
       tgEditToken: S.tgEditToken || '', onTgToken: (e) => this.setState({ tgEditToken: e.target.value }), tgEditChatId: S.tgEditChatId || '', onTgChatId: (e) => this.setState({ tgEditChatId: e.target.value }),
       saveTgBot: () => this.saveTgBot(), tgTest: () => this.tgTest(), tgStatus: S.tgStatus || '', tgFwdOn: !!S.tgFwd,
       ...this.buildAssistant(),
-      wrapCls: (S.cloudConnected && S.cloudRole !== 'editor') ? 'viewonly' : '',
+      wrapCls: ((S.cloudConnected && S.cloudRole !== 'editor') ? 'viewonly' : '') + (S.cwOpen ? ' cwfocus' : ''),
       cloudBarCls: cbCls, cloudBarText: cbText, cloudBarBtn: cbBtn, cloudHasBtn: !!cbBtn, onCloudBar: cbAct,
       isCloud: S.tab === 'cloud', cloudConnected: S.cloudConnected, cloudNotConnected: !S.cloudConnected,
       isOneC: S.tab === 'onec',
@@ -3648,12 +4633,14 @@ class Component extends DCLogic {
         const c = this.purchaseCalc(p, rate, vat);
         pEur += c.eurNoVat; pRub += c.sumRub;
         if (p.status === 'отгружено') shipped++; if (p.status === 'получено на склад') atWh++;
+        const rk = this.purchaseRisk(p);
         return {
           no: p.no, arriveDate: p.arriveDate || '—', supplier: p.supplier || '—', material: p.material || '—',
           initiator: p.initiator || '—', qty: this.fmt(Number(p.qty) || 0, 2), unit: unitLookup(p.material),
           category: catLookup(p.material) || '—', sumRub: this.fmt(c.sumRub), currency: p.currency || '₽',
           approval: p.approvalStatus || '—', approvalCls: this.statusCls(p.approvalStatus),
           status: p.status, statusCls: this.statusCls(p.status), eurNoVat: this.fmt(c.eurNoVat), fullRub: this.fmt(c.fullRub),
+          rowCls: rk ? ('prisk ' + rk.level) : '',
           open: () => set({ editId: p.id }),
           print: () => set({ printId: p.id }),
           remove: () => this.askDelete('заявку на закупку № ' + p.no, () => set({ purchases: S.purchases.filter(x => x.id !== p.id), editId: S.editId === p.id ? null : S.editId })),
@@ -3957,6 +4944,7 @@ class Component extends DCLogic {
     if (S.tab === 'pay') Object.assign(base, this.buildTreasury(rate));
     if (S.tab === 'users') Object.assign(base, this.buildUsers());
     if (S.tab === 'onec') Object.assign(base, this.buildOneC());
+    if (S.tab === 'tasks') Object.assign(base, this.buildTasks());
 
     // ---- Календарь поставок ----
     if (S.tab === 'cal') {
@@ -4418,6 +5406,10 @@ class Component extends DCLogic {
       base.confirmNo = () => this.setState({ confirmDel: null });
     }
 
+    Object.assign(base, this.peekVals());
+    Object.assign(base, this.calWidgetVals());
+    Object.assign(base, this.quickAddVals());
+    Object.assign(base, this.chVals());
     return base;
   }
 }
