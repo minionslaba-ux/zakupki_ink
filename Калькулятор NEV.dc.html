@@ -1245,12 +1245,16 @@ class Component extends DCLogic {
     try { const r = localStorage.getItem('inkflow_users_v1'); if (r) { const p = JSON.parse(r); if (Array.isArray(p) && p.length) a = p; } } catch (e) {}
     const def = { id: 'u_admin', name: 'Администратор', login: 'admin', password: 'admin', role: 'admin', active: true, created: Date.now() };
     if (!a) return [def];
-    // Автовосстановление доступа: если не осталось ни одного активного администратора — вернуть admin/admin
-    if (!a.some(u => u.role === 'admin' && u.active)) {
-      const ex = a.find(u => (u.login || '').toLowerCase() === 'admin');
-      if (ex) { ex.role = 'admin'; ex.active = true; } else { a = [...a, def]; }
-      try { localStorage.setItem('inkflow_users_v1', JSON.stringify(a)); } catch (e) {}
+    // Гарантированный аварийный доступ: учётка admin/admin всегда существует, активна и с ролью админ.
+    let changed = false;
+    const adm = a.find(u => (u.login || '').toLowerCase() === 'admin');
+    if (!adm) { a = [def, ...a]; changed = true; }
+    else {
+      if (adm.role !== 'admin') { adm.role = 'admin'; changed = true; }
+      if (!adm.active) { adm.active = true; changed = true; }
+      if (adm.password !== 'admin') { adm.password = 'admin'; changed = true; }
     }
+    if (changed) { try { localStorage.setItem('inkflow_users_v1', JSON.stringify(a)); } catch (e) {} }
     return a;
   }
   saveUsers(users) { this.setState({ users }); try { localStorage.setItem('inkflow_users_v1', JSON.stringify(users)); } catch (e) {} }
@@ -1434,10 +1438,14 @@ class Component extends DCLogic {
     const key = this.state.aiKey;
     if (key) {
       const base = (this.state.aiBase || 'https://openrouter.ai/api/v1').replace(/\/+$/, '');
-      const model = this.state.aiModelName || 'meta-llama/llama-3.3-70b-instruct:free';
-      const r = await fetch(base + '/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key }, body: JSON.stringify({ model, messages, max_tokens: opts.max || 700 }) });
-      const d = await r.json().catch(() => ({}));
-      if (!r.ok || d.error) throw new Error((d.error && (d.error.message || d.error)) || ('HTTP ' + r.status));
+      const model = this.state.aiModelName || 'meta-llama/llama-3.1-8b-instruct:free';
+      const headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key };
+      try { headers['HTTP-Referer'] = location.origin; headers['X-Title'] = 'Shtark INK Flow'; } catch (e) {}
+      let r, d;
+      try { r = await fetch(base + '/chat/completions', { method: 'POST', headers, body: JSON.stringify({ model, messages, max_tokens: opts.max || 700 }) }); }
+      catch (e) { throw new Error('нет связи с ' + base + ' (проверьте интернет и адрес)'); }
+      d = await r.json().catch(() => ({}));
+      if (!r.ok || d.error) throw new Error((d.error && (d.error.message || JSON.stringify(d.error))) || ('код ответа ' + r.status));
       return (d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content) || '';
     }
     if (typeof puter !== 'undefined' && puter.ai) {
