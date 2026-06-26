@@ -143,7 +143,8 @@ tbody td.l{text-align:left}
 .welcard{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;max-width:430px;background:#fff;border-radius:22px;padding:28px 30px 26px;box-shadow:0 34px 90px rgba(0,0,0,.42);animation:welPop .42s cubic-bezier(.18,.9,.3,1.2) both}
 @keyframes welPop{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
 .welphoto{position:relative;width:248px;height:158px;border-radius:16px;overflow:hidden;cursor:pointer;background:#f4f2ef;border:1px solid #e7e4e0;box-shadow:0 10px 26px rgba(0,0,0,.16);display:flex;align-items:center;justify-content:center}
-.welimg{width:100%;height:100%;object-fit:cover;object-position:60% 28%;display:block}
+.welimg{width:100%;height:100%;object-fit:cover;object-position:60% 28%;display:block;animation:welFade .5s ease}
+@keyframes welFade{from{opacity:0}to{opacity:1}}
 .welfile{position:absolute;inset:0;opacity:0;cursor:pointer}
 .welai{font-family:'Montserrat',sans-serif;font-weight:800;font-size:23px;line-height:1.24;color:#0e0e0e;letter-spacing:-.01em;margin-top:4px;text-wrap:balance;min-height:1.2em}
 .welthanks{font-size:13.5px;color:#56534f}
@@ -341,6 +342,10 @@ a.wordmark:hover{opacity:.6}
 .pill{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:#edebe8;color:#56534f}
 .right{text-align:right}
 .scroll{max-height:540px;overflow:auto;margin-top:4px}
+.chiprow{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 2px}
+.pcell{width:62px;text-align:right;padding:5px 7px}
+.segrow{display:flex;gap:6px;flex-wrap:wrap}
+.whtag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;background:#eef4ff;color:#1f5bd6}
 .filter{width:100%;max-width:320px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:#e7e4e0;border-radius:10px;overflow:hidden;margin-top:16px}
 .kpi{background:#ffffff;padding:14px 16px}
@@ -624,14 +629,61 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 </sc-if>
 
+<sc-if value="{{ isProdPlan }}" hint-placeholder-val="{{ true }}">
+<div class="card">
+<div class="toolbar"><div class="field"><span class="lbl">Горизонт</span><select class="sel" value="{{ planHorizon }}" onChange="{{ onPlanHorizon }}"><sc-for list="{{ planHorizonOpts }}" as="h" hint-placeholder-count="4"><option value="{{ h.v }}">{{ h.label }}</option></sc-for></select></div><div class="field"><span class="lbl">Старт</span><span class="segrow"><button class="btn" onClick="{{ planStartPrev }}">◀</button><span class="pill mono">{{ planStartLabel }}</span><button class="btn" onClick="{{ planStartNext }}">▶</button><button class="btn" onClick="{{ planStartNow }}">тек. месяц</button></span></div><div class="field"><span class="lbl">Потери, %</span><input class="inp num w90" type="number" value="{{ loss }}" onInput="{{ onLoss }}"></div><div class="field"><span class="lbl">Валюта оценки</span><select class="sel" value="{{ planCur }}" onChange="{{ onPlanCur }}"><sc-for list="{{ planCurOpts }}" as="c" hint-placeholder-count="4"><option value="{{ c.v }}">{{ c.label }}</option></sc-for></select></div><div class="field grow"><span class="lbl">Фильтр продукта</span><input class="inp filter" type="text" placeholder="поиск…" value="{{ planFilter }}" onInput="{{ onPlanFilter }}"></div></div>
+<div class="desc">Помесячный план выпуска готовой продукции, кг. Нажмите на месяц ниже, чтобы развернуть его на недели и вносить план понедельно. Этот план — источник для вкладки «Закупки по графику».</div>
+<div class="kpis"><sc-for list="{{ ppdKpis }}" as="k" hint-placeholder-count="4"><div class="kpi {{ k.cls }}"><div class="kl">{{ k.label }}</div><div class="kv mono">{{ k.value }}</div></div></sc-for></div>
+<div class="sec">Развернуть месяц на недели</div>
+<div class="chiprow"><sc-for list="{{ planChips }}" as="c" hint-placeholder-count="6"><button class="{{ c.on }}" onClick="{{ c.toggle }}">{{ c.label }}</button></sc-for></div>
+<div class="sec">План выпуска ГП, кг</div>
+<sc-if value="{{ planEmpty }}" hint-placeholder-val=""><div class="hint">План пуст. Добавьте продукты ниже — и заполните плановый выпуск по месяцам/неделям.</div></sc-if>
+<div class="scroll"><table class="gridtbl"><thead><tr><th class="l">Продукт</th><sc-for list="{{ planCols }}" as="col" hint-placeholder-count="6"><th>{{ col.label }}</th></sc-for><th>Итого, кг</th></tr></thead>
+<tbody><sc-for list="{{ planRows }}" as="r" hint-placeholder-count="3"><tr><td class="l nm">{{ r.name }} <button class="btn x" onClick="{{ r.remove }}">×</button></td><sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="6"><td class="right"><input class="inp num pcell" type="number" placeholder="0" value="{{ c.val }}" onInput="{{ c.onInput }}"></td></sc-for><td class="mono">{{ r.tot }}</td></tr></sc-for></tbody></table></div>
+<div class="rowline"><select class="sel grow" value="{{ planProduct }}" onChange="{{ onPlanProduct }}"><option value="">— выберите продукт для плана —</option><sc-for list="{{ planAddOptions }}" as="opt" hint-placeholder-count="3"><option value="{{ opt }}">{{ opt }}</option></sc-for></select><button class="btn dark" onClick="{{ addPlanProduct }}">+ продукт в план</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProcPlan }}" hint-placeholder-val="{{ true }}">
+<div class="card">
+<div class="toolbar"><div class="field"><span class="lbl">Шкала</span><span class="segrow"><sc-for list="{{ ppScaleOpts }}" as="s" hint-placeholder-count="3"><button class="{{ s.on }}" onClick="{{ s.go }}">{{ s.label }}</button></sc-for></span></div><div class="field"><span class="lbl">Период с</span><input class="inp" type="date" value="{{ ppFrom }}" onInput="{{ onPpFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp" type="date" value="{{ ppTo }}" onInput="{{ onPpTo }}"></div><div class="field"><span class="lbl">&nbsp;</span><button class="btn" onClick="{{ ppResetRange }}">весь горизонт</button></div><div class="field"><span class="lbl">Срез</span><span class="segrow"><button class="{{ ppByRawCls }}" onClick="{{ setPpByRaw }}">По сырью</button><button class="{{ ppByProductCls }}" onClick="{{ setPpByProduct }}">По продукту</button></span></div><div class="field"><span class="lbl">Валюта</span><select class="sel" value="{{ ppCur }}" onChange="{{ onPpCur }}"><sc-for list="{{ ppCurOpts }}" as="c" hint-placeholder-count="4"><option value="{{ c.v }}">{{ c.label }}</option></sc-for></select></div></div>
+<div class="toolbar"><div class="field"><span class="lbl">Вычитать</span><span class="segrow"><button class="{{ ppNetStockCls }}" onClick="{{ toggleNetStock }}">остаток склада</button><button class="{{ ppNetTransitCls }}" onClick="{{ toggleNetTransit }}">поставки в пути</button></span></div><div class="field"><span class="lbl">Детализация</span><select class="sel" value="{{ ppGroup }}" onChange="{{ onPpGroup }}"><sc-for list="{{ ppGroupOpts }}" as="g" hint-placeholder-count="3"><option value="{{ g.v }}">{{ g.label }}</option></sc-for></select></div><div class="field"><span class="lbl">Потери, %</span><input class="inp num w90" type="number" value="{{ loss }}" onInput="{{ onLoss }}"></div></div>
+<div class="desc">Потребность в сырье разворачивается из «Графика производства». Нетто к закупке = брутто-потребность − остаток склада − поставки «в пути» (методом наката по периодам). Диапазон: {{ ppRangeLabel }}.</div>
+<div class="kpis"><sc-for list="{{ ppKpis }}" as="k" hint-placeholder-count="4"><div class="kpi {{ k.cls }}"><div class="kl">{{ k.label }}</div><div class="kv mono">{{ k.value }}</div></div></sc-for></div>
+<sc-if value="{{ ppEmpty }}" hint-placeholder-val=""><div class="hint">Нет данных. Заполните «График производства» — план выпуска ГП по месяцам/неделям.</div></sc-if>
+<div class="sec">{{ ppRowHeadLabel }} по периодам · {{ ppCurSym }}</div>
+<div class="scroll"><table class="gridtbl"><thead><tr><th class="l">{{ ppRowHeadLabel }}</th><sc-for list="{{ ppCols }}" as="c" hint-placeholder-count="6"><th>{{ c.label }}</th></sc-for><th>Итого</th><th>Сумма</th></tr></thead>
+<tbody><sc-for list="{{ ppRows }}" as="r" hint-placeholder-count="5"><tr><td class="l nm">{{ r.name }}</td><sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="6"><td class="mono {{ c.zero }}">{{ c.v }}</td></sc-for><td class="mono {{ r.zero }}">{{ r.totBuy }}</td><td class="mono {{ r.zero }}">{{ r.totSum }}</td></tr></sc-for></tbody></table></div>
+<sc-if value="{{ ppColsMore }}" hint-placeholder-val=""><div class="hint">Показаны первые {{ ppColsShown }} из {{ ppColsTotal }} периодов — сузьте диапазон дат или укрупните шкалу. Итоги и суммы посчитаны по всему диапазону.</div></sc-if>
+<div class="exprow"><button class="btn" onClick="{{ exportProcPlan }}"><span>↓</span> Экспорт CSV</button></div>
+</div>
+<sc-if value="{{ ppByRaw }}" hint-placeholder-val="{{ true }}">
+<div class="card">
+<div class="sec">Где сейчас сырьё · остаток, в пути и ближайший приход</div>
+<div class="scroll"><table><thead><tr><th class="l">Сырьё</th><th>Остаток склада</th><th>В пути</th><th class="l">Ближайший приход</th><th>К закупке</th><th>Сумма</th><th></th></tr></thead>
+<tbody><sc-for list="{{ ppWhere }}" as="w" hint-placeholder-count="5"><tr><td class="l nm">{{ w.name }}</td><td class="mono">{{ w.stock }}</td><td class="mono"><span class="whtag">{{ w.transit }}</span></td><td class="l">{{ w.next }}</td><td class="mono">{{ w.buy }}</td><td class="mono">{{ w.sum }}</td><td class="right nowrap"><button class="btn xs" onClick="{{ w.createReq }}">+ заявка</button></td></tr></sc-for></tbody></table></div>
+<div class="hint">«В пути» — заявки на закупку в статусах: в работе, согласовано, оплачено, отгружено, на таможне. Эти объёмы вычитаются из потребности по дате прихода. Кнопка «+ заявка» создаёт заявку на закупку по этому сырью (кол-во = к закупке) и открывает форму заполнения.</div>
+</div>
+<sc-if value="{{ ppGroupOn }}" hint-placeholder-val="">
+<div class="card">
+<div class="sec">Детализация плана закупок · {{ ppGroupTitle }}</div>
+<sc-for list="{{ ppGroups }}" as="g" hint-placeholder-count="2"><div class="calmon"><div class="calmonh"><span>{{ g.title }}</span><span class="cs">{{ g.qty }} · {{ g.sum }}</span></div>
+<table><thead><tr><th class="l">Сырьё</th><th>К закупке, кг</th><th>Сумма</th></tr></thead>
+<tbody><sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="2"><tr><td class="l nm">{{ r.name }}</td><td class="mono">{{ r.qty }}</td><td class="mono">{{ r.sum }}</td></tr></sc-for></tbody></table>
+</div></sc-for>
+</div>
+</sc-if>
+</sc-if>
+</sc-if>
+
 <sc-if value="{{ isProcurement }}" hint-placeholder-val="{{ true }}">
 <div class="card">
 <div class="toolbar"><div class="field"><span class="lbl">Период с</span><input class="inp" type="date" value="{{ planFrom }}" onInput="{{ onPlanFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp" type="date" value="{{ planTo }}" onInput="{{ onPlanTo }}"></div><div class="field"><span class="lbl">Потери, %</span><input class="inp num w90" type="number" value="{{ loss }}" onInput="{{ onLoss }}"></div><div class="field"><span class="lbl">Курс EUR/₽</span><input class="inp num w120" type="number" value="{{ rate }}" onInput="{{ onRate }}"></div></div>
 <div class="desc">Потребность к закупке = развёртка заявок клиентов в сырьё − остатки склада. Цены из «Реестра цен», потери {{ loss }}%. Период плана: {{ periodLabel }} (заявки без даты учитываются всегда).</div>
 <div class="sec">Потребность к закупке · {{ prodTotalKg }} кг ГП</div>
-<table><thead><tr><th class="l">Сырьё</th><th>Нужно</th><th>Остаток</th><th>К закупке</th><th>Цена €/кг</th><th>€ без НДС</th><th>€ с НДС</th></tr></thead>
-<tbody><sc-for list="{{ buyRows }}" as="b" hint-placeholder-count="5"><tr><td class="l nm">{{ b.name }}</td><td class="mono">{{ b.need }}</td><td class="mono">{{ b.stock }}</td><td class="mono {{ b.zero }}">{{ b.toBuy }}</td><td class="mono">{{ b.price }}</td><td class="mono {{ b.zero }}">{{ b.eur }}</td><td class="mono {{ b.zero }}">{{ b.vat }}</td></tr></sc-for></tbody>
-<tfoot><tr class="tfoot"><td class="l">ИТОГО к закупке</td><td></td><td></td><td class="mono">{{ buyTotKg }}</td><td></td><td class="mono">{{ buyEur }}</td><td class="mono">{{ buyVat }}</td></tr></tfoot></table>
+<table><thead><tr><th class="l">Сырьё</th><th>Нужно</th><th>Остаток</th><th>К закупке</th><th>Цена €/кг</th><th>€ без НДС</th><th>€ с НДС</th><th></th></tr></thead>
+<tbody><sc-for list="{{ buyRows }}" as="b" hint-placeholder-count="5"><tr><td class="l nm">{{ b.name }}</td><td class="mono">{{ b.need }}</td><td class="mono">{{ b.stock }}</td><td class="mono {{ b.zero }}">{{ b.toBuy }}</td><td class="mono">{{ b.price }}</td><td class="mono {{ b.zero }}">{{ b.eur }}</td><td class="mono {{ b.zero }}">{{ b.vat }}</td><td class="right nowrap"><button class="btn xs" onClick="{{ b.createReq }}">+ заявка</button></td></tr></sc-for></tbody>
+<tfoot><tr class="tfoot"><td class="l">ИТОГО к закупке</td><td></td><td></td><td class="mono">{{ buyTotKg }}</td><td></td><td class="mono">{{ buyEur }}</td><td class="mono">{{ buyVat }}</td><td></td></tr></tfoot></table>
 </div>
 <div class="card">
 <div class="sec">Заявки на закупку</div>
@@ -698,6 +750,7 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ repNotEmpty }}" hint-placeholder-val="{{ true }}">
 <table><thead><tr><sc-for list="{{ repHead }}" as="h" hint-placeholder-count="4"><th class="{{ h.cls }}">{{ h.label }}</th></sc-for></tr></thead>
 <tbody><sc-for list="{{ repRows }}" as="row" hint-placeholder-count="6"><tr><sc-for list="{{ row.cells }}" as="cell" hint-placeholder-count="4"><td class="{{ cell.cls }}"><sc-if value="{{ cell.isStatus }}" hint-placeholder-val=""><span class="st {{ cell.badge }}">{{ cell.v }}</span></sc-if><sc-if value="{{ cell.notStatus }}" hint-placeholder-val="x">{{ cell.v }}</sc-if></td></sc-for></tr></sc-for></tbody></table>
+<sc-if value="{{ isReleasedRep }}" hint-placeholder-val=""><div class="hint">Выпущенная продукция в периоде: {{ releasedProducts }}. Себестоимость считается развёрткой рецептур в сырьё (с учётом потерь {{ loss }}%) по текущим ценам «Реестра цен».</div></sc-if>
 <div class="exp"><button class="btn" onClick="{{ exportReport }}"><span>↓</span> Экспорт CSV</button></div>
 </sc-if>
 <sc-if value="{{ repEmpty }}" hint-placeholder-val=""><div class="repempty"><div class="reIcon">📭</div><div class="reMsg">{{ repEmptyMsg }}</div><button class="btn dark" onClick="{{ onRepEmptyGo }}">{{ repEmptyBtn }}</button></div></sc-if>
@@ -1053,6 +1106,8 @@ class Component extends DCLogic {
     aiOpen: false, aiInput: '', aiBusy: false, aiMessages: [], aiModel: 'gpt-4o-mini', aiKey: '', aiBase: '', aiModelName: '', aiKeyEdit: '', aiBaseEdit: '', aiModelEdit: '', aiCfgOpen: false,
     rrHorizon: 3, rrSafetyMonths: 1, rrLeadDefault: 1, rrRun: {}, rrLead: {}, rrSafety: {}, auditSku: '',
     turnoverDays: 90, turnoverGen: false, planfactGen: false, stressGrowth: 30, stressGen: false, calcExpanded: {}, treasuryGen: false,
+    prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planProduct: '', planFilter: '', planCur: 'RUB',
+    ppScale: 'month', ppFrom: '', ppTo: '', ppNetStock: true, ppNetTransit: true, ppBy: 'raw', ppCur: 'RUB', ppGroup: 'none',
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {},
     chat: [], chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false,
     tgToken: '', tgChatId: '', tgFwd: false, tgEditToken: '', tgEditChatId: '', tgStatus: '',
@@ -1124,7 +1179,7 @@ class Component extends DCLogic {
   // Сохранение данных пользователя между сессиями (localStorage)
   static get STORE_KEY() { return 'inkflow_state_v1'; }
   static get FBCFG() { return { apiKey: 'AIzaSyCOoE74NqK4xkpmzUvzoPmanz8Ej_IW5q8', authDomain: 'shtark-flow.firebaseapp.com', projectId: 'shtark-flow', storageBucket: 'shtark-flow.firebasestorage.app', messagingSenderId: '969786336713', appId: '1:969786336713:web:39bd23af4ca2e281d07418' }; }
-  static get PERSIST() { return ['stock', 'extra', 'orders', 'purchases', 'prices', 'pct', 'added', 'rate', 'loss', 'planFrom', 'planTo', 'recipeOwner', 'whFilled', 'stockUpdatedAt', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth']; }
+  static get PERSIST() { return ['stock', 'extra', 'orders', 'purchases', 'prices', 'pct', 'added', 'rate', 'loss', 'planFrom', 'planTo', 'recipeOwner', 'whFilled', 'stockUpdatedAt', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth', 'prodPlan', 'planHorizon', 'planStart', 'planExpand', 'planCur', 'ppScale', 'ppFrom', 'ppTo', 'ppNetStock', 'ppNetTransit', 'ppBy', 'ppCur', 'ppGroup']; }
 
   restore() {
     try {
@@ -1180,12 +1235,10 @@ class Component extends DCLogic {
       doLogin: () => this.doLogin(), switchUser: () => this.switchUser(),
       showWelcome: !!this.state.showWelcome, welName: cu ? cu.name : '',
       welGreeting: this.state.welGreeting || '', welGreetBusy: !!this.state.welGreetBusy,
-      welPhoto: this.state.welcomePhoto || 'welcome-photo.png', welHasPhoto: true, welNoPhoto: false,
-      welPhotoImg: React.createElement('img', { className: 'welimg', src: this.state.welcomePhoto || 'welcome-photo.png', alt: 'Фото' }),
-      welPhotoImg: React.createElement('img', { className: 'welimg', src: this.state.welcomePhoto || 'welcome-photo.png', alt: 'Фото' }),
-      welPhotoImg: React.createElement('img', { className: 'welimg', src: this.state.welcomePhoto || 'welcome-photo.png', alt: 'Фото' }),
+      welPhoto: this.state.welAvatar || this.userAvatar(cu && cu.name) || this.state.welcomePhoto || 'welcome-photo.png', welHasPhoto: true, welNoPhoto: false,
+      welPhotoImg: React.createElement('img', { key: this.state.welAvatar || 'w', className: 'welimg', src: this.state.welAvatar || this.userAvatar(cu && cu.name) || this.state.welcomePhoto || 'welcome-photo.png', alt: 'Фото' }),
       onWelPhoto: (e) => { const f = e.target.files && e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { try { localStorage.setItem('inkflow_welcome_photo', r.result); } catch (_) {} this.setState({ welcomePhoto: r.result }); }; r.readAsDataURL(f); },
-      enterWelcome: () => this.beginWelcome(), startWork: () => this.setState({ showWelcome: false }) };
+      enterWelcome: () => this.beginWelcome(), startWork: () => { this.setState({ showWelcome: false }); } };
   }
 
   enterApp() {
@@ -1197,7 +1250,15 @@ class Component extends DCLogic {
   }
 
   // ===== Приветствие после входа (AI-фраза) =====
-  beginWelcome() { this.setState({ showWelcome: true }, () => { this.enterApp(); this.showGreeting(); }); }
+  avatarPool() { return ['avatar-bushueva.png', 'avatar-sergeeva.png', 'avatar-afanasyeva.png', 'avatar-kuznetsov.png', 'avatar-chernopyatova.png', 'welcome-photo.png']; }
+  pickWelcomeAvatar() {
+    const pool = this.avatarPool();
+    let next = pool[Math.floor(Math.random() * pool.length)];
+    if (pool.length > 1 && next === this._lastWelAvatar) next = pool[(pool.indexOf(next) + 1) % pool.length];
+    this._lastWelAvatar = next;
+    return next;
+  }
+  beginWelcome() { this.setState({ showWelcome: true, welAvatar: this.pickWelcomeAvatar() }, () => { this.enterApp(); this.showGreeting(); }); }
   randomGreeting() {
     const list = [
       'Привет! Кофе заряжен, таблицы дрожат. Погнали! ☕🚀',
@@ -1210,6 +1271,31 @@ class Component extends DCLogic {
       'Внимание: в системе обнаружен профессионал высшего класса. ✨',
       'Заряжен на результат? Программа уже волнуется от твоего таланта! 💼💪',
       'Пусть сегодня всё сходится: и баланс, и настроение! ☕✨',
+      'С возвращением! Без тебя таблицы были какие-то грустные. 🥹',
+      'Готов творить порядок из хаоса? Вижу, что да. Поехали! 🔥',
+      'Кнопки замерли в ожидании твоих гениальных нажатий. 🖱️✨',
+      'Сегодня твой день — цифры уже выстроились по стойке смирно! 🫡',
+      'Доброго дня, мастер учёта! Пусть всё считается с первого раза. 🎯',
+      'Эй, звезда смены! Кофе налит, дела построились в очередь. ☕😎',
+      'Ты включился — система выдохнула с облегчением. Работаем! 💼',
+      'Пусть остатки сходятся, поставки приходят, а кофе не кончается! ☕📦',
+      'Привет, чемпион! Сегодня без багов и с хорошим настроением. 🏆',
+      'Калькулятор уже подмигивает — он скучал по твоим формулам. 🧮✨',
+      'Лёгкого дня! Сложное оставь программе, себе возьми кофе. ☕🙂',
+      'Ого, кто пришёл! Сразу видно — день будет продуктивным. 🌟',
+      'Заходи смелее: тут тебя ждут и цифры, и маленькие победы. 🎉',
+      'Доброе утро! Сегодня ты быстрее, точнее и обаятельнее обычного. 😏',
+      'Смена открыта — пусть удача округляется в твою пользу! 🍀',
+      'Привет, профи! Разберёмся с задачами играючи. Начнём? 💪',
+      'Твоё рабочее место соскучилось. Покажем класс сегодня! ✨',
+      'Бодрого старта! Пусть каждая накладная радует глаз. 📄😊',
+      'Ну что, навёдем порядок в делах и в космосе заодно? 🚀',
+      'Здорово, что ты здесь! С тобой любая таблица по плечу. 📊',
+      'Пусть сегодня всё клеится: и баланс, и планы, и кофе-брейки. ☕',
+      'Доброго дня! Минимум рутины, максимум твоего таланта. 🌈',
+      'Система готова, кофе горячий, ты — на месте. Идеально! ✅',
+      'Привет! Сегодня отличный день, чтобы быть лучшим. И ты будешь. 😎',
+      'С добрым утром! Пусть цифры слушаются, а вечер придёт пораньше. 🌇',
     ];
     return list[Math.floor(Math.random() * list.length)];
   }
@@ -1238,6 +1324,8 @@ class Component extends DCLogic {
       calc: '<rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="12" x2="9.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="15" y1="12" x2="15.01" y2="12"/><line x1="9" y1="16" x2="9.01" y2="16"/><line x1="12" y1="16" x2="12.01" y2="16"/><line x1="15" y1="16" x2="15.01" y2="16"/>',
       recipe: '<path d="M9 3h6"/><path d="M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3"/><path d="M7.5 14h9"/>',
       prod: '<path d="M3 21V9l6 4V9l6 4V6l6 3v12z"/><line x1="2.5" y1="21" x2="21.5" y2="21"/>',
+      prodplan: '<rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/><line x1="15" y1="9" x2="15" y2="21"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/>',
+      procplan: '<path d="M3 4h2l2.4 12.3a2 2 0 0 0 2 1.7h7.7a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/>',
       catalog: '<path d="M5 4a2 2 0 0 1 2-2h11v18H7a2 2 0 0 0-2 2z"/><line x1="9" y1="7" x2="14" y2="7"/><line x1="9" y1="11" x2="14" y2="11"/>',
       runrate: '<path d="M3 14a9 9 0 1 1 18 0"/><line x1="12" y1="14" x2="16" y2="10"/><line x1="12" y1="18" x2="12.01" y2="18"/>',
       proc: '<circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.4a1 1 0 0 0 1 .8h8.7a1 1 0 0 0 1-.8L21 7H6"/>',
@@ -1317,6 +1405,7 @@ class Component extends DCLogic {
   // Каталог разделов для настройки прав (без вкладки «Пользователи» — она только у админа)
   permCatalog() {
     return [
+      { label: 'FLOW', tabs: [['prodplan', 'Production Schedule'], ['procplan', 'Procurement Plan']] },
       { label: 'Производство', tabs: [['calc', 'Калькулятор'], ['recipe', 'Рецептуры'], ['prod', 'План производства'], ['catalog', 'Каталоги']] },
       { label: 'Планирование закупок', tabs: [['runrate', 'Run Rate'], ['proc', 'План закупок'], ['cal', 'Календарь']] },
       { label: 'Цены и поставщики', tabs: [['audit', 'Аудит цен'], ['pay', 'Платежи'], ['prices', 'Реестр цен']] },
@@ -1351,7 +1440,7 @@ class Component extends DCLogic {
     try { localStorage.removeItem('inkflow_session_v1'); } catch (e) {}
     this.setState({ currentUser: null, loading: true, loaderHide: false, loaderPhase: 'p2', showWelcome: false, showFarewell: false, loginInput: '', passInput: '', loginErr: '', tab: 'home', userDraft: null, userErr: '' });
   }
-  askFarewell() { this.setState({ showFarewell: true }, () => this.showFarewellPhrase()); }
+  askFarewell() { this.setState({ showFarewell: true, welAvatar: this.pickWelcomeAvatar() }, () => { this.showFarewellPhrase(); }); }
   randomFarewell() {
     const list = [
       'Смена закрыта, герой! Отдыхай — ты заслужил. 👋✨',
@@ -1362,6 +1451,33 @@ class Component extends DCLogic {
       'Пора на перезагрузку. Возвращайся бодрым! ✨',
       'Дела сделаны — и пятница ближе. Пока! 😎',
       'Спасибо за смену! Пусть вечер будет уютным. ☕🌙',
+      'Ты сегодня жёг! Теперь честный отдых. До связи! 🔥',
+      'Всё посчитано, всё на местах. Спокойного вечера! 🌆',
+      'Рабочий день закрыт на твою пятёрку. Молодец! 🏅',
+      'Иди отдыхай, легенда. Завтра снова покоряем вершины. ⛰️',
+      'Спасибо за труд! Пусть дома ждёт что-то вкусное. 🍵',
+      'Кнопки выдохнули, ты — свободен. Отличного вечера! 🙌',
+      'Дело сделано на отлично. Заслуженный релакс активирован. 😌',
+      'До завтра, профи! Набирайся сил для новых рекордов. ⚡',
+      'Смена позади — впереди диван и тишина. Ты заслужил! 🛋️',
+      'Какой продуктивный день! Теперь твой ход — отдыхать. 🌟',
+      'Спасибо, что был на высоте. Доброй ночи и сладких снов! 🌙',
+      'Закрываем ноутбук с чувством выполненного долга. Пока! 💼',
+      'Ты сделал больше, чем планировал. Гордимся! Отдыхай. 👏',
+      'Вечер твой — заслуженно. Завтра снова блеснёшь. ✨',
+      'Хорошего отдыха! Цифры подождут до утра, честно-честно. 😄',
+      'Финиш дня пройден красиво. Восстановись и возвращайся! 🏁',
+      'Спасибо за классную смену! Пусть вечер будет тёплым. 🤗',
+      'Можно выдыхать — всё под контролем. До новой встречи! 🍃',
+      'Ты сегодня двигал дела вперёд. Теперь отдых вперёд! 🚀',
+      'Рабочий режим выключен, режим отдыха — включён. Пока! 🔌',
+      'Отличный итог дня! Пусть вечер порадует чем-то приятным. 🌷',
+      'До завтра, чемпион! Силы восстановятся — мы подождём. 💤',
+      'Смена закрыта без сучка и задоринки. Браво! Отдыхай. 👌',
+      'Спасибо за работу! Пусть дорога домой будет лёгкой. 🚗',
+      'День удался благодаря тебе. Приятного вечера, коллега! 🥂',
+      'Всё, кнопки спят. И тебе пора. Доброй ночи! 😴',
+      'Уходишь победителем дня. Завтра продолжим в том же духе! 🏆',
     ];
     return list[Math.floor(Math.random() * list.length)];
   }
@@ -1453,7 +1569,7 @@ class Component extends DCLogic {
 
   // ===== AI-ассистент (Puter.js) =====
   aiTabName(id) {
-    const m = { calc: 'Калькулятор себестоимости', recipe: 'Рецептуры', prod: 'План производства', proc: 'План закупок', cal: 'Календарь поставок', wh: 'Склад', cover: 'Сводка покрытия', reports: 'Отчёты', runrate: 'Run Rate', audit: 'Аудит цен', turnover: 'Оборачиваемость', planfact: 'План-факт', stress: 'Стресс-тест', pay: 'Платежи / казначейство', prices: 'Реестр цен', catalog: 'Каталоги', users: 'Пользователи' };
+    const m = { calc: 'Калькулятор себестоимости', recipe: 'Рецептуры', prod: 'План производства', prodplan: 'График производства (помесячный план)', procplan: 'Закупки по графику', proc: 'План закупок', cal: 'Календарь поставок', wh: 'Склад', cover: 'Сводка покрытия', reports: 'Отчёты', runrate: 'Run Rate', audit: 'Аудит цен', turnover: 'Оборачиваемость', planfact: 'План-факт', stress: 'Стресс-тест', pay: 'Платежи / казначейство', prices: 'Реестр цен', catalog: 'Каталоги', users: 'Пользователи' };
     return m[id] || id;
   }
   aiContext() {
@@ -1724,9 +1840,14 @@ class Component extends DCLogic {
   stopHeartbeat() { if (this._hb) { clearInterval(this._hb); this._hb = null; } }
 
   // ===== Присутствие: кто сейчас в программе =====
+  userAvatar(name) {
+    if (!name) return '';
+    const map = { 'бушуева ольга': 'avatar-bushueva.png', 'екатерина сергеева': 'avatar-sergeeva.png', 'сергеева екатерина': 'avatar-sergeeva.png', 'афанасьева оксана': 'avatar-afanasyeva.png', 'оксана афанасьева': 'avatar-afanasyeva.png', 'максим кузнецов': 'avatar-kuznetsov.png', 'кузнецов максим': 'avatar-kuznetsov.png', 'татьяна чернопятова': 'avatar-chernopyatova.png', 'чернопятова татьяна': 'avatar-chernopyatova.png' };
+    return map[String(name).trim().toLowerCase().replace(/\s+/g, ' ')] || '';
+  }
   presenceData() {
     const cu = this.state.currentUser;
-    const ph = this.state.welcomePhoto || '';
+    const ph = this.userAvatar(cu && cu.name) || this.state.welcomePhoto || '';
     return { name: cu ? cu.name : '—', role: cu ? cu.role : 'user', photo: (ph && ph.length < 300) ? ph : '', ts: Date.now() };
   }
   writePresence() {
@@ -1738,10 +1859,20 @@ class Component extends DCLogic {
     if (this._pres) { clearInterval(this._pres); this._pres = null; }
     if (this._docRef && this._clientId && window.__FB) { try { window.__FB.setDoc(this._docRef, { presence: { [this._clientId]: null } }, { merge: true }).catch(() => {}); } catch (e) {} }
   }
+  avatarForName(name, photo) {
+    if (photo) return photo;
+    const m = this.userAvatar(name);
+    if (m) return m;
+    const pool = this.avatarPool();
+    const s = String(name || '');
+    let h = 0;
+    for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+    return pool[h % pool.length];
+  }
   presenceList() {
     const S = this.state, now = Date.now(), out = [], seen = new Set();
-    const add = (name, photo, self) => { const initial = (name || '?').trim().charAt(0).toUpperCase(); const avatar = photo ? React.createElement('img', { className: 'onimg', src: photo, alt: '' }) : React.createElement('span', { className: 'onini' }, initial); out.push({ name: name || '—', avatar, self: !!self }); };
-    if (S.currentUser) { add(S.currentUser.name, S.welcomePhoto || 'welcome-photo.png', true); seen.add(this._clientId); }
+    const add = (name, photo, self) => { const initial = (name || '?').trim().charAt(0).toUpperCase(); const src = this.avatarForName(name, photo); const avatar = src ? React.createElement('img', { className: 'onimg', src, alt: '' }) : React.createElement('span', { className: 'onini' }, initial); out.push({ name: name || '—', avatar, self: !!self }); };
+    if (S.currentUser) { add(S.currentUser.name, this.userAvatar(S.currentUser.name) || S.welcomePhoto || 'welcome-photo.png', true); seen.add(this._clientId); }
     if (S.cloudConnected && S.cloudPresence) {
       for (const cid of Object.keys(S.cloudPresence)) {
         const p = S.cloudPresence[cid];
@@ -1972,6 +2103,306 @@ class Component extends DCLogic {
       this.explodeRaw(row.product, kg * (1 + lossF), acc, new Set());
     }
     return { acc, totKg };
+  }
+
+  // ====================================================================
+  // ===== Помесячный план производства → план закупок по периодам =====
+  // ====================================================================
+  static get MABBR() { return ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек']; }
+  curMonthKey() { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); }
+  pkParse(key) { const [y, m] = String(key || this.curMonthKey()).split('-').map(Number); return { y, m }; }
+  pkAdd(key, n) { let { y, m } = this.pkParse(key); const t = (y * 12 + (m - 1)) + n; return Math.floor(t / 12) + '-' + String((t % 12) + 1).padStart(2, '0'); }
+  pkDays(key) { const { y, m } = this.pkParse(key); return new Date(y, m, 0).getDate(); }
+  pkLabel(key) { const { y, m } = this.pkParse(key); return Component.MABBR[m - 1] + ' ' + String(y).slice(2); }
+  pkShort(key) { return Component.MABBR[this.pkParse(key).m - 1]; }
+  planStartKey() { return this.state.planStart || this.curMonthKey(); }
+  planMonthList() { const h = Math.max(1, Number(this.state.planHorizon) || 12); const s = this.planStartKey(); const out = []; for (let i = 0; i < h; i++) { const k = this.pkAdd(s, i); out.push({ key: k, label: this.pkLabel(k), short: this.pkShort(k) }); } return out; }
+  // Недельные блоки месяца: 1–7, 8–14, 15–21, 22–28, 29–конец
+  weekChunksOf(key) { const dim = this.pkDays(key); const out = []; let w = 1; for (let d0 = 1; d0 <= dim; d0 += 7) { out.push({ wk: w, key: key + '#' + w, d0, d1: Math.min(d0 + 6, dim) }); w++; } return out; }
+
+  // Суточный выпуск продукта (кг) на дату: недельные значения важнее месячного
+  dailyProdKg(product, date) {
+    const plan = (this.state.prodPlan || {})[product]; if (!plan) return 0;
+    const key = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');
+    const chunks = this.weekChunksOf(key);
+    let anyWeek = false; for (const c of chunks) if (Number(plan[c.key]) > 0) anyWeek = true;
+    const day = date.getDate();
+    if (anyWeek) { const c = chunks.find(c => day >= c.d0 && day <= c.d1); if (!c) return 0; const v = Number(plan[c.key]) || 0; return v / (c.d1 - c.d0 + 1); }
+    const mv = Number(plan[key]) || 0; return mv / this.pkDays(key);
+  }
+  // Эффективный месячный план (кг): сумма недель, если заданы, иначе месячное значение
+  effMonthKg(product, key) {
+    const plan = (this.state.prodPlan || {})[product]; if (!plan) return 0;
+    const chunks = this.weekChunksOf(key); let sw = 0, any = false;
+    for (const c of chunks) { const v = Number(plan[c.key]) || 0; if (v > 0) { any = true; sw += v; } }
+    return any ? sw : (Number(plan[key]) || 0);
+  }
+  planProductNames() { return Object.keys(this.state.prodPlan || {}); }
+
+  // Валюта отчёта: пересчёт суммы из EUR
+  curSym(cur) { return ({ RUB: '₽', EUR: '€', USD: '$', CNY: '¥' })[cur] || cur; }
+  convFromEur(eur, cur, rate) {
+    if (cur === 'EUR') return eur;
+    const rub = eur * (Number(rate) || 0);
+    if (cur === 'RUB') return rub;
+    const r = this.state.rates && this.state.rates[cur];
+    if (!r || !isFinite(r.val) || !r.val) return null;
+    return rub / r.val;
+  }
+  fmtCur(eur, cur, rate, dec = 0) { const v = this.convFromEur(eur, cur, rate); return v == null ? '—' : this.fmt(v, dec); }
+
+  // Заявки на закупку «в пути» (размещены, ещё не на складе)
+  inTransitSet() { return new Set(['в работе', 'согласовано', 'оплачено', 'отгружено', 'на таможне', 'в пути']); }
+  isInTransit(p) { return this.inTransitSet().has(String(p.status || '').toLowerCase()); }
+
+  // Поставщик / условия оплаты по сырью — эвристика из истории закупок
+  topByMaterial(field) {
+    const map = {};
+    for (const p of (this.state.purchases || [])) {
+      const k = this.norm(p.material || ''); const v = (p[field] || '').trim(); if (!k || !v) continue;
+      (map[k] = map[k] || {})[v] = (map[k][v] || 0) + 1;
+    }
+    const out = {};
+    for (const k of Object.keys(map)) { let best = '', bc = -1; for (const v of Object.keys(map[k])) if (map[k][v] > bc) { bc = map[k][v]; best = v; } out[k] = best; }
+    return out;
+  }
+
+  ymd(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  dm(d) { return String(d.getDate()).padStart(2, '0') + '.' + String(d.getMonth() + 1).padStart(2, '0'); }
+  parseISO(s) { const [y, m, d] = String(s).split('-').map(Number); return new Date(y, (m || 1) - 1, d || 1); }
+  procRange() {
+    const months = this.planMonthList();
+    const first = this.parseISO(this.planStartKey() + '-01');
+    const lastKey = months[months.length - 1].key; const ld = this.pkDays(lastKey);
+    const last = this.parseISO(lastKey + '-' + String(ld).padStart(2, '0'));
+    const from = this.state.ppFrom ? this.parseISO(this.state.ppFrom) : first;
+    const to = this.state.ppTo ? this.parseISO(this.state.ppTo) : last;
+    return { from, to };
+  }
+  // Корзины периодов по выбранной шкале
+  makeBuckets(from, to, scale) {
+    const out = [];
+    if (to < from) return out;
+    if (scale === 'month') {
+      let k = from.getFullYear() + '-' + String(from.getMonth() + 1).padStart(2, '0');
+      const endK = to.getFullYear() + '-' + String(to.getMonth() + 1).padStart(2, '0');
+      while (true) {
+        const { y, m } = this.pkParse(k); const d0 = new Date(y, m - 1, 1), d1 = new Date(y, m, 0);
+        out.push({ label: this.pkLabel(k), d0: d0 < from ? from : d0, d1: d1 > to ? to : d1 });
+        if (k === endK) break; k = this.pkAdd(k, 1); if (out.length > 600) break;
+      }
+    } else if (scale === 'week') {
+      const s = new Date(from); const off = (s.getDay() + 6) % 7; s.setDate(s.getDate() - off);
+      let cur = s;
+      while (cur <= to) {
+        const e = new Date(cur); e.setDate(e.getDate() + 6);
+        const d0 = cur < from ? from : cur, d1 = e > to ? to : e;
+        out.push({ label: this.dm(cur) + '–' + this.dm(e), d0: new Date(d0), d1: new Date(d1) });
+        cur = new Date(cur); cur.setDate(cur.getDate() + 7); if (out.length > 600) break;
+      }
+    } else {
+      let cur = new Date(from);
+      while (cur <= to) { out.push({ label: this.dm(cur), d0: new Date(cur), d1: new Date(cur) }); cur = new Date(cur); cur.setDate(cur.getDate() + 1); if (out.length > 800) break; }
+    }
+    return out;
+  }
+
+  // Создать заявку на закупку из потребности и открыть форму
+  createPurchaseFor(name, qty) {
+    const S = this.state;
+    const supMap = this.topByMaterial('supplier'), termMap = this.topByMaterial('payTerms');
+    const k = this.norm(name);
+    const p = {
+      id: this.uid(), no: String(this.nextNo(S.purchases)), reqDate: this.ymd(new Date()), orderDate: '', shipDate: '',
+      vesselDate: '', arriveDate: '', week: '', supplier: supMap[k] || '', buyer: '', country: '',
+      market: 'Внутренний', reqId: '', proforma: '', terms: '', route: '', carrier: '', container: '',
+      material: name, qty: Math.max(0, Math.round(Number(qty) || 0)), priceEur: this.rawPrice(name), currency: '€', curRate: 0,
+      transport: 0, customs: 0, prepay: 0, status: 'новая', approvalStatus: 'на рассмотрении', priceApproval: '',
+      deliveryTerm: '', comment: 'Сформировано из плана закупок', initiator: '', manager: '', payTerms: termMap[k] || '', paid: 0, payDate: '',
+    };
+    this.setState({ purchases: [...(S.purchases || []), p], editId: p.id, tab: 'proc' });
+  }
+
+  // ===== Вкладка «График производства» =====
+  buildProdPlan(rate) {
+    const S = this.state, set = (p) => this.setState(p);
+    const cur = S.planCur || 'RUB', lossF = (Number(S.loss) || 0) / 100;
+    const months = this.planMonthList();
+    // плоский список колонок (месяц или недели)
+    const cols = [];
+    for (const m of months) {
+      if ((S.planExpand || {})[m.key]) for (const c of this.weekChunksOf(m.key)) cols.push({ type: 'week', key: c.key, label: m.short + ' н' + c.wk });
+      else cols.push({ type: 'month', key: m.key, label: m.label });
+    }
+    const filt = (S.planFilter || '').trim().toLowerCase();
+    const names = this.planProductNames().filter(n => !filt || n.toLowerCase().includes(filt));
+    const setCell = (product, key, val) => {
+      const plan = { ...(S.prodPlan || {}) }; const row = { ...(plan[product] || {}) };
+      if (val === '' || val == null) delete row[key]; else row[key] = val;
+      plan[product] = row; set({ prodPlan: plan });
+    };
+    let grandKg = 0, grandEur = 0;
+    const rows = names.map(name => {
+      const plan = (S.prodPlan || {})[name] || {};
+      const cells = cols.map(c => ({ val: plan[c.key] != null ? plan[c.key] : '', onInput: (e) => setCell(name, c.key, e.target.value) }));
+      let tot = 0; for (const m of months) tot += this.effMonthKg(name, m.key);
+      grandKg += tot; grandEur += tot * this.costOf(name, lossF);
+      return { name, cells, tot: this.fmt(tot, 0), remove: () => this.askDelete('продукт «' + name + '» из плана', () => { const plan = { ...(S.prodPlan || {}) }; delete plan[name]; set({ prodPlan: plan }); }) };
+    });
+    const chips = months.map(m => ({ label: m.label, on: (S.planExpand || {})[m.key] ? 'permchip on' : 'permchip', toggle: () => { const ex = { ...(S.planExpand || {}) }; if (ex[m.key]) delete ex[m.key]; else ex[m.key] = true; set({ planExpand: ex }); } }));
+    const allProducts = this.data.products.map(p => p.name);
+    const addable = allProducts.filter(n => !(S.prodPlan || {})[n]);
+    const horizonOpts = [6, 12, 24, 36];
+    return {
+      isProdPlan: true,
+      planHorizon: S.planHorizon || 12, planHorizonOpts: horizonOpts.map(v => ({ v, label: v + ' мес' })),
+      onPlanHorizon: (e) => set({ planHorizon: Number(e.target.value) }),
+      planStartLabel: this.pkLabel(this.planStartKey()),
+      planStartPrev: () => set({ planStart: this.pkAdd(this.planStartKey(), -1) }),
+      planStartNext: () => set({ planStart: this.pkAdd(this.planStartKey(), 1) }),
+      planStartNow: () => set({ planStart: this.curMonthKey() }),
+      loss: S.loss, onLoss: (e) => set({ loss: e.target.value }),
+      planCur: cur, planCurOpts: ['RUB', 'EUR', 'USD', 'CNY'].map(c => ({ v: c, label: c })), onPlanCur: (e) => set({ planCur: e.target.value }),
+      planFilter: S.planFilter || '', onPlanFilter: (e) => set({ planFilter: e.target.value }),
+      planChips: chips, planCols: cols, planRows: rows, planColspan: cols.length + 2,
+      planEmpty: names.length === 0,
+      planProduct: S.planProduct || '', onPlanProduct: (e) => set({ planProduct: e.target.value }),
+      planAddOptions: addable,
+      addPlanProduct: () => { const n = S.planProduct; if (!n) return; const plan = { ...(S.prodPlan || {}) }; if (!plan[n]) plan[n] = {}; set({ prodPlan: plan, planProduct: '' }); },
+      ppdKpis: [
+        { label: 'Σ план выпуска, кг', value: this.fmt(grandKg, 0), cls: '' },
+        { label: 'Продуктов в плане', value: String(names.length), cls: '' },
+        { label: 'Ориент. стоимость сырья, ' + this.curSym(cur), value: this.fmtCur(grandEur, cur, rate, 0), cls: '' },
+        { label: 'Горизонт', value: (S.planHorizon || 12) + ' мес · с ' + this.pkLabel(this.planStartKey()), cls: '' },
+      ],
+    };
+  }
+
+  // ===== Вкладка «Закупки по графику» =====
+  buildProcPlan(rate) {
+    const S = this.state, set = (p) => this.setState(p);
+    const cur = S.ppCur || 'RUB', scale = S.ppScale || 'month', lossF = (Number(S.loss) || 0) / 100;
+    const by = S.ppBy || 'raw', netStock = S.ppNetStock !== false, netTransit = S.ppNetTransit !== false;
+    const { from, to } = this.procRange();
+    const buckets = this.makeBuckets(from, to, scale);
+    const products = this.planProductNames();
+    // агрегируем выпуск ГП по корзинам и разворачиваем в сырьё
+    const prodByBucket = {}; // product -> [kg per bucket]
+    const matGross = {};     // material -> [kg per bucket]
+    const matSet = new Set();
+    buckets.forEach((b, bi) => {
+      const acc = {};
+      for (const prod of products) {
+        let pk = 0; const d = new Date(b.d0);
+        while (d <= b.d1) { pk += this.dailyProdKg(prod, d); d.setDate(d.getDate() + 1); }
+        if (pk > 1e-9) { (prodByBucket[prod] = prodByBucket[prod] || new Array(buckets.length).fill(0))[bi] = pk; this.explodeRaw(prod, pk * (1 + lossF), acc, new Set()); }
+      }
+      for (const mat of Object.keys(acc)) { matSet.add(mat); (matGross[mat] = matGross[mat] || new Array(buckets.length).fill(0))[bi] += acc[mat]; }
+    });
+    // приход «в пути» по корзинам, по сырью
+    const incoming = {};
+    for (const p of (S.purchases || [])) {
+      if (!netTransit || !this.isInTransit(p)) continue;
+      const mat = (p.material || '').trim(); if (!mat) continue; const k = this.norm(mat);
+      const ds = p.arriveDate || p.vesselDate || ''; if (!ds) continue; const dt = this.parseISO(ds);
+      const bi = buckets.findIndex(b => dt >= b.d0 && dt <= b.d1); if (bi < 0) continue;
+      (incoming[k] = incoming[k] || new Array(buckets.length).fill(0))[bi] += Number(p.qty) || 0;
+    }
+    const supMap = this.topByMaterial('supplier'), termMap = this.topByMaterial('payTerms');
+    const MAXCOL = 24;
+    const colsAll = buckets.map(b => ({ label: b.label }));
+    const cols = colsAll.slice(0, MAXCOL);
+    let grandKg = 0, grandEur = 0, deficitN = 0, grossKg = 0;
+
+    let rows = [];
+    if (by === 'raw') {
+      const mats = [...matSet];
+      mats.sort((a, b) => (matGross[b].reduce((x, y) => x + y, 0)) - (matGross[a].reduce((x, y) => x + y, 0)));
+      rows = mats.map(mat => {
+        const k = this.norm(mat);
+        const gross = matGross[mat] || new Array(buckets.length).fill(0);
+        const inc = incoming[k] || new Array(buckets.length).fill(0);
+        let proj = netStock ? (Number(S.stock[k]) || 0) : 0;
+        const net = new Array(buckets.length).fill(0);
+        for (let bi = 0; bi < buckets.length; bi++) { proj += inc[bi]; proj -= gross[bi]; if (proj < 0) { net[bi] = -proj; proj = 0; } }
+        const totBuy = net.reduce((x, y) => x + y, 0); const grossTot = gross.reduce((x, y) => x + y, 0);
+        const price = this.rawPrice(mat); const eur = totBuy * price;
+        grandKg += totBuy; grandEur += eur; grossKg += grossTot; if (totBuy > 1e-6) deficitN++;
+        return { name: mat, _k: k, _net: net, _buy: totBuy, _eur: eur, _price: price,
+          cells: net.slice(0, MAXCOL).map(v => ({ v: v > 1e-6 ? this.fmt(v, 0) : '·', zero: v > 1e-6 ? '' : 'zero' })),
+          totBuy: this.fmt(totBuy, 0), totSum: this.fmtCur(eur, cur, rate, 0), zero: totBuy > 1e-6 ? '' : 'zero' };
+      }).filter(r => r._buy > 1e-6 || (matGross[r.name] || []).some(v => v > 1e-6));
+    } else {
+      rows = products.map(prod => {
+        const arr = prodByBucket[prod] || new Array(buckets.length).fill(0);
+        const tot = arr.reduce((x, y) => x + y, 0); const eur = tot * this.costOf(prod, lossF);
+        grandKg += tot; grandEur += eur; grossKg += tot;
+        return { name: prod, _eur: eur, cells: arr.slice(0, MAXCOL).map(v => ({ v: v > 1e-6 ? this.fmt(v, 0) : '·', zero: v > 1e-6 ? '' : 'zero' })),
+          totBuy: this.fmt(tot, 0), totSum: this.fmtCur(eur, cur, rate, 0), zero: tot > 1e-6 ? '' : 'zero' };
+      }).filter(r => r.zero === '');
+    }
+
+    // «Где товар»: остаток, в пути, ближайший приход (только по сырью)
+    let where = [];
+    if (by === 'raw') {
+      where = rows.map(r => {
+        const arrivals = (S.purchases || []).filter(p => this.isInTransit(p) && this.norm(p.material || '') === r._k && (p.arriveDate || ''));
+        let transit = 0; for (const p of arrivals) transit += Number(p.qty) || 0;
+        arrivals.sort((a, b) => (a.arriveDate || '').localeCompare(b.arriveDate || ''));
+        const nx = arrivals[0];
+        return {
+          name: r.name, stock: this.fmt(Number(S.stock[r._k]) || 0, 0), transit: this.fmt(transit, 0),
+          next: nx ? (this.dm(this.parseISO(nx.arriveDate)) + ' · ' + (nx.supplier || '—') + ' · ' + (String(nx.status || '').trim() || '—')) : '—',
+          buy: r.totBuy, sum: r.totSum, createReq: () => this.createPurchaseFor(r.name, r._buy),
+        };
+      });
+    }
+
+    // Детализация по поставщику / условиям оплаты (только по сырью)
+    let groups = [], groupTitle = '';
+    if (by === 'raw' && (S.ppGroup === 'supplier' || S.ppGroup === 'terms')) {
+      const fld = S.ppGroup === 'supplier' ? supMap : termMap;
+      groupTitle = S.ppGroup === 'supplier' ? 'по поставщикам' : 'по условиям оплаты';
+      const g = {};
+      for (const r of rows) { const key = fld[r._k] || '— не задано —'; (g[key] = g[key] || []).push(r); }
+      groups = Object.keys(g).sort((a, b) => a.localeCompare(b, 'ru')).map(title => {
+        const list = g[title]; let qty = 0, eur = 0;
+        const grows = list.map(r => { qty += r._buy; eur += r._eur; return { name: r.name, qty: r.totBuy, sum: r.totSum }; });
+        return { title, qty: this.fmt(qty, 0) + ' кг', sum: this.fmtCur(eur, cur, rate, 0) + ' ' + this.curSym(cur), rows: grows };
+      });
+    }
+
+    const scaleOpts = [['day', 'Дни'], ['week', 'Недели'], ['month', 'Месяцы']].map(([v, l]) => ({ v, label: l, on: scale === v ? 'permchip on' : 'permchip', go: () => set({ ppScale: v }) }));
+    const exportRows = rows.map(r => { const e = Number(r._eur) || 0; const v = this.convFromEur(e, cur, rate); return [r.name, String(r.totBuy).replace(/\s/g, ''), v == null ? '' : v.toFixed(0)]; });
+
+    return {
+      isProcPlan: true,
+      ppScaleOpts: scaleOpts,
+      ppFrom: S.ppFrom || this.ymd(from), ppTo: S.ppTo || this.ymd(to),
+      onPpFrom: (e) => set({ ppFrom: e.target.value }), onPpTo: (e) => set({ ppTo: e.target.value }),
+      ppResetRange: () => set({ ppFrom: '', ppTo: '' }),
+      ppBy: by, ppByRaw: by === 'raw', ppByProduct: by === 'product',
+      ppByRawCls: by === 'raw' ? 'permchip on' : 'permchip', ppByProductCls: by === 'product' ? 'permchip on' : 'permchip',
+      setPpByRaw: () => set({ ppBy: 'raw' }), setPpByProduct: () => set({ ppBy: 'product' }),
+      ppCur: cur, ppCurSym: this.curSym(cur), ppCurOpts: ['RUB', 'EUR', 'USD', 'CNY'].map(c => ({ v: c, label: c })), onPpCur: (e) => set({ ppCur: e.target.value }),
+      ppNetStock: netStock, ppNetStockCls: netStock ? 'permchip on' : 'permchip', toggleNetStock: () => set({ ppNetStock: !netStock }),
+      ppNetTransit: netTransit, ppNetTransitCls: netTransit ? 'permchip on' : 'permchip', toggleNetTransit: () => set({ ppNetTransit: !netTransit }),
+      ppGroup: S.ppGroup || 'none', ppGroupOpts: [['none', 'Без детализации'], ['supplier', 'По поставщику'], ['terms', 'По условиям оплаты']].map(([v, l]) => ({ v, label: l })), onPpGroup: (e) => set({ ppGroup: e.target.value }),
+      loss: S.loss, onLoss: (e) => set({ loss: e.target.value }),
+      ppRowHeadLabel: by === 'raw' ? 'Сырьё' : 'Готовый продукт',
+      ppCols: cols, ppColsMore: colsAll.length > MAXCOL, ppColsShown: cols.length, ppColsTotal: colsAll.length,
+      ppRows: rows, ppEmpty: rows.length === 0,
+      ppKpis: [
+        { label: by === 'raw' ? 'Брутто-потребность, кг' : 'Выпуск ГП, кг', value: this.fmt(grossKg, 0), cls: '' },
+        { label: by === 'raw' ? 'К закупке нетто, кг' : 'Σ план, кг', value: this.fmt(grandKg, 0), cls: '' },
+        { label: 'Сумма, ' + this.curSym(cur), value: this.fmtCur(grandEur, cur, rate, 0), cls: '' },
+        { label: by === 'raw' ? 'Позиций к закупке' : 'Продуктов', value: String(by === 'raw' ? deficitN : rows.length), cls: by === 'raw' && deficitN ? 'bad' : '' },
+      ],
+      ppWhere: where, ppHasWhere: where.length > 0,
+      ppGroupOn: groups.length > 0, ppGroupTitle: groupTitle, ppGroups: groups,
+      ppRangeLabel: this.dm(from) + ' – ' + this.dm(to),
+      exportProcPlan: () => this.downloadCsv('plan-zakupok.csv', [by === 'raw' ? 'Сырьё' : 'Продукт', 'К закупке кг', 'Сумма ' + cur], exportRows),
+    };
   }
 
   // Сумма заявки на закупку: € без НДС, € с НДС, полная себестоимость ₽.
@@ -2664,6 +3095,7 @@ class Component extends DCLogic {
 
     const tabsDef = [
       ['calc', 'Калькулятор'], ['recipe', 'Рецептуры'], ['prod', 'План производства'],
+      ['prodplan', 'График производства'], ['procplan', 'Закупки по графику'],
       ['proc', 'План закупок'], ['cal', 'Календарь'], ['wh', 'Склад'], ['cover', 'Сводка'],
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
@@ -2671,6 +3103,7 @@ class Component extends DCLogic {
     ];
     const tabLabels = Object.fromEntries(tabsDef);
     const tabGroups = [
+      { label: 'FLOW', items: ['prodplan', 'procplan'], en: { prodplan: 'Production Schedule', procplan: 'Procurement Plan' } },
       { label: 'Производство', items: ['calc', 'recipe', 'prod', 'catalog'] },
       { label: 'Планирование закупок', items: ['runrate', 'proc', 'cal'] },
       { label: 'Цены и поставщики', items: ['audit', 'pay', 'prices'] },
@@ -2687,12 +3120,14 @@ class Component extends DCLogic {
     }
     const navGroups = tabGroups.map(g => ({
       label: g.label,
-      items: g.items.filter(id => allowSet.has(id)).map(id => ({ label: tabLabels[id], icon: this.tabIcon(id), cls: S.tab === id ? 'on' : '', go: () => set({ tab: id, navOpen: false }) })),
+      items: g.items.filter(id => allowSet.has(id)).map(id => ({ label: (g.en && g.en[id]) || tabLabels[id], icon: this.tabIcon(id), cls: S.tab === id ? 'on' : '', go: () => set({ tab: id, navOpen: false }) })),
     })).filter(g => g.items.length);
     const descs = {
       calc: 'Себестоимость 1 кг готового продукта с развёрткой по компонентам.',
       recipe: 'Просмотр и правка состава рецептуры; можно внести новую компоненту.',
       prod: 'Заявки клиентов нарастающим итогом → суммарная потребность в компонентах.',
+      prodplan: 'Помесячный план выпуска ГП с разворотом месяца на недели; горизонт 6/12/24/36 мес — основа для плана закупок.',
+      procplan: 'Потребность в сырье из графика производства по дням/неделям/месяцам: нетто за вычетом остатков и поставок «в пути», детализация по поставщикам и условиям оплаты, валюта ₽/€/$/¥.',
       proc: 'Потребность к закупке (с учётом остатков) и реестр заявок на закупку.',
       cal: 'Календарь поставок по датам поступления из заявок на закупку.',
       wh: 'Остатки сырья на складе — ручной ввод; участвуют в сводке и отчётах.',
@@ -2711,7 +3146,7 @@ class Component extends DCLogic {
     };
     const homeGroups = tabGroups.map(g => ({
       label: g.label,
-      items: g.items.filter(id => allowSet.has(id)).map(id => ({ icon: this.tabIcon(id), label: tabLabels[id], desc: descs[id] || '', go: () => set({ tab: id, navOpen: false }) })),
+      items: g.items.filter(id => allowSet.has(id)).map(id => ({ icon: this.tabIcon(id), label: (g.en && g.en[id]) || tabLabels[id], desc: descs[id] || '', go: () => set({ tab: id, navOpen: false }) })),
     })).filter(g => g.items.length);
 
     const productOptions = this.data.products.map(p => p.name);
@@ -2747,7 +3182,7 @@ class Component extends DCLogic {
       userName: S.currentUser ? S.currentUser.name : '', userInitial: (S.currentUser && S.currentUser.name) ? S.currentUser.name.trim().charAt(0).toUpperCase() : '?',
       userRoleLabel: S.currentUser ? this.roleName(S.currentUser.role) : '',
       userRoleCls: (S.currentUser && S.currentUser.role === 'admin') ? 'srole adm' : 'srole', logout: () => this.askFarewell(),
-      doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: !!S.showFarewell, farewellText: S.farewellText || '',
+      doLogout: () => this.doLogout(), cancelFarewell: () => { this.setState({ showFarewell: false }); }, showFarewell: !!S.showFarewell, farewellText: S.farewellText || '',
       onlineUsers: this.presenceList(), hasOnline: !!S.currentUser,
       navCls: S.navOpen ? 'sbon' : '', navBkCls: S.navOpen ? 'bkopen' : '',
       sidebarStyle: S.isMobile ? { position: 'fixed', left: S.navOpen ? '0' : '-274px', top: 0, bottom: 0, width: '264px', transition: 'left .26s ease', zIndex: 200, overflowY: 'auto', boxShadow: S.navOpen ? '0 0 60px rgba(0,0,0,.5)' : 'none' } : null,
@@ -2774,6 +3209,7 @@ class Component extends DCLogic {
       product: S.product, rate: S.rate, loss: S.loss, recipeOwner: S.recipeOwner,
       draftComp: S.draftComp, draftPct: S.draftPct, priceFilter: S.priceFilter,
       isCalc: S.tab === 'calc', isRecipe: S.tab === 'recipe', isProduction: S.tab === 'prod',
+      isProdPlan: S.tab === 'prodplan', isProcPlan: S.tab === 'procplan',
       isProcurement: S.tab === 'proc', isPrices: S.tab === 'prices',
       isWarehouse: S.tab === 'wh', isCover: S.tab === 'cover', isReports: S.tab === 'reports', isRunrate: S.tab === 'runrate', isAudit: S.tab === 'audit',
       isTurnover: S.tab === 'turnover', isPlanfact: S.tab === 'planfact', isStress: S.tab === 'stress', isPay: S.tab === 'pay',
@@ -3067,7 +3503,7 @@ class Component extends DCLogic {
         return {
           name, need: this.fmt(need, 2), stock: this.fmt(stock, 2), toBuy: this.fmt(toBuy, 3),
           price: this.fmt(price), eur: this.fmt(eur), vat: this.fmt(this.excelRound(eur * (1 + this.vat), 2)),
-          zero: toBuy > 0 ? '' : 'zero',
+          zero: toBuy > 0 ? '' : 'zero', createReq: () => this.createPurchaseFor(name, toBuy),
         };
       });
       base.buyRows = rows;
@@ -3169,6 +3605,8 @@ class Component extends DCLogic {
 
     // ---- Оборачиваемость / План-факт / Стресс-тест ----
     if (S.tab === 'turnover') Object.assign(base, this.buildTurnover(rate));
+    if (S.tab === 'prodplan') Object.assign(base, this.buildProdPlan(rate));
+    if (S.tab === 'procplan') Object.assign(base, this.buildProcPlan(rate));
     if (S.tab === 'planfact') Object.assign(base, this.buildPlanFact(rate));
     if (S.tab === 'stress') Object.assign(base, this.buildStress(rate));
     if (S.tab === 'pay') Object.assign(base, this.buildTreasury(rate));
@@ -3291,7 +3729,7 @@ class Component extends DCLogic {
         ['delivery', 'Календарь поставок'],
         ['arrivals', 'График поступления сырья'], ['statuses', 'Статусы заявок'],
         ['deficit', 'Дефицит / профицит'], ['consumption', 'Расход сырья по плану'],
-        ['products', 'Себестоимость по продуктам'], ['summary', 'Свод по производству'],
+        ['products', 'Себестоимость по продуктам'], ['released', 'Себестоимость выпуска'], ['summary', 'Свод по производству'],
       ];
       base.repPicks = picks.map(([id, label]) => ({ label, cls: S.repKind === id ? 'on' : '', go: () => set({ repKind: id }) }));
       base.isDeliveryRep = S.repKind === 'delivery';
@@ -3468,6 +3906,32 @@ class Component extends DCLogic {
         csvHead = ['Продукт', 'кг', 'EUR/кг', 'Итого EUR', 'Итого RUB'];
         csvRows = list.map(r => [r.name, r.kg.toFixed(0), r.c.toFixed(2), r.eur.toFixed(2), r.rub.toFixed(2)]);
         csvName = 'sebestoimost-produktov.csv';
+      } else if (S.repKind === 'released') {
+        title = 'Себестоимость выпущенной продукции · разворот по сырью';
+        // Только заявки клиентов со статусом «Отгружена» / «Выполнено» в выбранном периоде
+        const relOrders = repOrders.filter(o => /отгруж|выполн|выпущ/i.test(String(o.status || '')));
+        const prod = this.aggProducts(relOrders);
+        const accRel = {}; let totGp = 0;
+        for (const row of prod) { const kg = Number(row.kg) || 0; totGp += kg; this.explodeRaw(row.product, kg * (1 + lossF), accRel, new Set()); }
+        let sumEur = 0;
+        const list = Object.entries(accRel).map(([name, kg]) => { const price = this.rawPrice(name); const eur = this.excelRound(kg * price, 2); sumEur += eur; return { name, kg, price, eur, rub: this.excelRound(eur * rate, 2) }; }).sort((a, b) => b.eur - a.eur);
+        const totEur = this.excelRound(sumEur, 2);
+        head = [{ label: 'Сырьё', cls: 'l' }, { label: 'Расход, кг' }, { label: 'Цена €/кг' }, { label: 'Сумма €' }, { label: 'Сумма ₽' }, { label: 'Доля' }];
+        rows = list.map(r => ({ cells: [mkCell(r.name, 'l nm'), mkCell(this.fmt(r.kg, 3), 'mono'), mkCell(this.fmt(r.price), 'mono'), mkCell(this.fmt(r.eur), 'mono'), mkCell(this.fmt(r.rub), 'mono'), mkCell(totEur > 0 ? this.fmt(r.eur / totEur * 100, 1) + '%' : '—', 'mono')] }));
+        const avgPerKg = totGp > 0 ? totEur / totGp : 0;
+        const prodList = prod.slice().sort((a, b) => b.kg - a.kg).map(p => p.product + ' (' + this.fmt(Number(p.kg) || 0, 0) + ' кг)').join(', ');
+        kpis = [
+          { label: 'Продуктов выпущено', value: prod.length, cls: '' },
+          { label: 'Выпущено ГП, кг', value: this.fmt(totGp, 2), cls: '' },
+          { label: 'Себестоимость €', value: this.fmt(totEur), cls: '' },
+          { label: 'Себестоимость ₽', value: this.fmt(this.excelRound(totEur * rate, 2)), cls: '' },
+          { label: 'Средняя ₽/кг ГП', value: this.fmt(this.excelRound(avgPerKg * rate, 2)), cls: '' },
+        ];
+        base.releasedProducts = prodList;
+        base.isReleasedRep = true;
+        csvHead = ['Сырьё', 'Расход кг', 'Цена EUR/кг', 'Сумма EUR', 'Сумма RUB', 'Доля %'];
+        csvRows = list.map(r => [r.name, r.kg.toFixed(3), r.price.toFixed(4), r.eur.toFixed(2), r.rub.toFixed(2), totEur > 0 ? (r.eur / totEur * 100).toFixed(1) : '0']);
+        csvName = 'sebestoimost-vypuska.csv';
       } else {
         title = 'Свод по производству';
         let sumEur = 0;
@@ -3511,7 +3975,9 @@ class Component extends DCLogic {
       base.repNotEmpty = rows.length > 0;
       base.repEmptyMsg = purchaseRep
         ? 'Этот отчёт строится по заявкам на закупку, а их пока нет. Добавьте заявки во вкладке «План закупок» (кнопка «+ заявка на закупку») — отчёт сформируется автоматически по внесённым данным.'
-        : 'Нет данных плана производства за выбранный период. Добавьте заявки клиентов во вкладке «План производства», либо расширьте диапазон дат вверху.';
+        : (S.repKind === 'released'
+          ? 'За выбранный период нет заявок клиентов со статусом «Отгружена» / «Выполнено». Отметьте выпущенные заявки соответствующим статусом во вкладке «План производства» или расширьте диапазон дат.'
+          : 'Нет данных плана производства за выбранный период. Добавьте заявки клиентов во вкладке «План производства», либо расширьте диапазон дат вверху.');
       base.repEmptyBtn = purchaseRep ? 'Открыть «План закупок»' : 'Открыть «План производства»';
       base.onRepEmptyGo = () => set({ tab: purchaseRep ? 'proc' : 'prod' });
       }
