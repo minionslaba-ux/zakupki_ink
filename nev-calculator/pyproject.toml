@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nev-calculator"
+version = "1.0.0"
+description = "Калькулятор себестоимости NEV — порт таблицы Калькулятор_NEV и её Apps Script на Python"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "NEV" }]
+keywords = ["себестоимость", "рецептуры", "ЦБ", "курсы валют", "calculator"]
+dependencies = []
+
+[project.optional-dependencies]
+xlsx = ["openpyxl>=3.1"]
+dev = ["pytest>=7.0", "openpyxl>=3.1"]
+
+[project.scripts]
+nev-calc = "nev_calc.cli:main"
+
+[tool.setuptools]
+packages = ["nev_calc"]
+
+[tool.setuptools.package-data]
+nev_calc = ["data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+*{box-sizing:border-box}
+body{margin:0;background:#eceae5;font-family:'Inter',system-ui,sans-serif;color:#1c1b18}
+.mono{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:920px;margin:0 auto;padding:48px 28px 72px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8a857a;font-weight:600}
+.h1{font-size:27px;font-weight:700;letter-spacing:-.01em;margin:6px 0 0}
+.sub{color:#6f6a60;font-size:14px;margin-top:7px}
+.card{background:#fdfcfa;border:1px solid #ddd9d0;border-radius:10px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#ddd9d0;border-radius:10px;overflow:hidden;margin-top:26px}
+.metacell{background:#fdfcfa;padding:14px 16px}
+.metalbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#928d82;font-weight:600}
+.metaval{font-size:17px;font-weight:600;margin-top:4px}
+.sec{margin-top:30px;font-size:13px;font-weight:600;color:#54504a;display:flex;align-items:center;gap:9px}
+.sec::after{content:"";flex:1;height:1px;background:#d7d3ca}
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+thead th{text-align:right;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#928d82;font-weight:600;padding:0 14px 9px}
+thead th.l{text-align:left}
+tbody td{padding:11px 14px;border-top:1px solid #ebe8e1;text-align:right}
+tbody td.l{text-align:left}
+tbody tr:first-child td{border-top:none}
+.idx{color:#a8a299;width:30px}
+.nm{font-weight:500}
+.tag{display:inline-block;font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:5px;margin-left:8px;vertical-align:1px}
+.tag.semi{background:#ece4f4;color:#6b4ea0}
+.tag.raw{background:#e3ece2;color:#4a7351}
+.zero{color:#bdb7ad}
+.totrow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#ddd9d0;border-radius:10px;overflow:hidden;margin-top:18px}
+.totcell{background:#fdfcfa;padding:18px 18px}
+.totcell.accent{background:#1c1b18;color:#f4f1ea}
+.totlbl{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#928d82;font-weight:600}
+.totcell.accent .totlbl{color:#9f9a8f}
+.totnum{font-size:25px;font-weight:600;margin-top:6px;letter-spacing:-.01em}
+.totunit{font-size:12px;color:#928d82;font-weight:500;margin-left:5px}
+.totcell.accent .totunit{color:#9f9a8f}
+.cli{margin-top:34px;background:#1c1b18;border-radius:10px;padding:18px 20px;color:#d7d3ca;font-size:13px;line-height:1.65;overflow-x:auto}
+.cli .p{color:#7d9a76}
+.cli .c{color:#e6c07b}
+.foot{margin-top:24px;font-size:12.5px;color:#8a857a;line-height:1.6}
+</style>
+</helmet>
+<div class="wrap">
+<div class="eyebrow">nev_calc · результат расчёта</div>
+<div class="h1">Себестоимость 1 кг ГП</div>
+<div class="sub">{{ product }} — воспроизведение листа «Калькулятор» из Калькулятор_NEV. Режим цен: stored (как в файле).</div>
+
+<div class="meta">
+<div class="metacell"><div class="metalbl">Курс EUR / ₽</div><div class="metaval mono">{{ rate }}</div></div>
+<div class="metacell"><div class="metalbl">Потери</div><div class="metaval mono">{{ loss }}</div></div>
+<div class="metacell"><div class="metalbl">Σ долей</div><div class="metaval mono">{{ sumPct }}</div></div>
+<div class="metacell"><div class="metalbl">НДС</div><div class="metaval mono">{{ vat }}</div></div>
+</div>
+
+<div class="sec">Развёртка рецептуры</div>
+<table>
+<thead><tr><th class="l">№</th><th class="l">Компонента</th><th>Доля</th><th>€/кг</th><th>₽/кг</th></tr></thead>
+<tbody>
+<sc-for list="{{ lines }}" as="ln" hint-placeholder-count="5">
+<tr><td class="l idx mono">{{ ln.i }}</td><td class="l"><span class="nm">{{ ln.name }}</span><span class="tag {{ ln.kind }}">{{ ln.kindLabel }}</span></td><td class="mono">{{ ln.pct }}</td><td class="mono {{ ln.zeroCls }}">{{ ln.eur }}</td><td class="mono {{ ln.zeroCls }}">{{ ln.rub }}</td></tr>
+</sc-for>
+</tbody>
+</table>
+
+<div class="sec">Итог</div>
+<div class="totrow">
+<div class="totcell"><div class="totlbl">€/кг без НДС</div><div class="totnum mono">{{ eurNoVat }}<span class="totunit">€</span></div></div>
+<div class="totcell"><div class="totlbl">€/кг с НДС</div><div class="totnum mono">{{ eurVat }}<span class="totunit">€</span></div></div>
+<div class="totcell"><div class="totlbl">₽/кг без НДС</div><div class="totnum mono">{{ rubNoVat }}<span class="totunit">₽</span></div></div>
+<div class="totcell accent"><div class="totlbl">₽/кг с НДС</div><div class="totnum mono">{{ rubVat }}<span class="totunit">₽</span></div></div>
+</div>
+
+<div class="cli">
+<div><span class="p">$</span> python -m nev_calc cost <span class="c">"{{ product }}"</span> --rate {{ rateRaw }}</div>
+</div>
+
+<div class="foot">Сгенерировано пакетом <b>nev_calc</b> (Python). Те же числа выдаёт лист «Калькулятор» исходной таблицы: 3.12 € / 3.81 € / 261.11 ₽ / 318.55 ₽. Покрыто тестом <span class="mono">tests/test_calculator.py</span>.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const rows = [
+      { i: 1, name: 'Паста NSF/Paste Black (Pbk 7) КП 80 РАСТ', kind: 'raw',  pct: '78.00%', eur: '2.83', rub: '236.84' },
+      { i: 2, name: 'Technical Extender UNI 397',                kind: 'semi', pct: '12.00%', eur: '0.00', rub: '0.00' },
+      { i: 3, name: 'Extender SL-2 ЭЦ',                          kind: 'semi', pct: '5.00%',  eur: '0.14', rub: '11.72' },
+      { i: 4, name: 'TCA-IAM20 (аналог Титан АП 100/130 Д)',     kind: 'raw',  pct: '0.50%',  eur: '0.07', rub: '5.86' },
+      { i: 5, name: 'Этилцеллозольв',                            kind: 'raw',  pct: '4.50%',  eur: '0.08', rub: '6.70' },
+    ];
+    const lines = rows.map(r => ({
+      ...r,
+      kindLabel: r.kind === 'semi' ? 'полупр.' : 'сырьё',
+      zeroCls: r.eur === '0.00' ? 'zero' : '',
+    }));
+    return {
+      product: 'Black (PBl 7) / RASTR',
+      rate: '83.6892',
+      rateRaw: '83.6892',
+      loss: '0.0%',
+      sumPct: '100.00%',
+      vat: '22%',
+      lines,
+      eurNoVat: '3.12',
+      eurVat: '3.81',
+      rubNoVat: '261.11',
+      rubVat: '318.55',
+    };
+  }
+}
+</script>
+</body>
+</html>

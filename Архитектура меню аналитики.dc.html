@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#eceae6;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#16171c;-webkit-font-smoothing:antialiased}
+.mono{font-family:'IBM Plex Mono',monospace}
+.mn{font-family:'Montserrat',sans-serif}
+.page{max-width:1200px;margin:0 auto;padding:40px 32px 80px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8a877f;font-weight:700}
+.h1{font-family:'Montserrat',sans-serif;font-size:32px;font-weight:800;letter-spacing:-.02em;margin:8px 0 0;line-height:1.05}
+.lead{color:#56534f;font-size:14.5px;margin-top:12px;max-width:74ch;line-height:1.55}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;border-bottom:2px solid #16171c;padding-bottom:22px}
+.wm{font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;white-space:nowrap;padding-top:6px}
+.wm .ink{color:#e10000;letter-spacing:.18em;margin-left:4px;font-size:10px;vertical-align:2px}
+.cmyk{display:flex;gap:3px;margin-top:8px;justify-content:flex-end}
+.cmyk i{width:22px;height:4px;border-radius:2px;display:block}
+.sct{display:flex;align-items:baseline;gap:12px;margin:46px 0 18px}
+.snum{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#fff;background:#16171c;padding:3px 8px;border-radius:5px}
+.sttl{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:800;letter-spacing:-.01em}
+.sline{flex:1;height:1px;background:#d8d5cf}
+.namegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ncard{background:#fff;border:1px solid #e1ded8;border-radius:14px;padding:20px;position:relative;overflow:hidden}
+.ncard.rec{border-color:#16171c;box-shadow:0 6px 22px rgba(0,0,0,.08)}
+.ncard .ru{font-family:'Montserrat',sans-serif;font-size:19px;font-weight:800;letter-spacing:-.01em}
+.ncard .en{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#0080b0;font-weight:600;margin-top:3px}
+.ncard .note{font-size:12.5px;color:#6b6862;margin-top:11px;line-height:1.5}
+.rectag{position:absolute;top:0;right:0;background:#FFD200;color:#16171c;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-bottom-left-radius:10px}
+.arch{display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:start}
+.sb{background:#14151a;border-radius:16px;padding:16px 12px;position:sticky;top:20px;box-shadow:0 14px 40px rgba(0,0,0,.22)}
+.sbtop{display:flex;align-items:center;gap:11px;padding:8px 10px 14px;border-bottom:1px solid #26272e;margin-bottom:8px}
+.sbtop .ic{color:#FFD200;font-size:22px;display:flex}
+.sbtop .t{color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px}
+.sbtop .s{color:#6f6d75;font-size:10.5px;font-family:'IBM Plex Mono',monospace;margin-top:1px}
+.grp{margin-top:4px}
+.ghead{display:flex;align-items:center;gap:11px;padding:10px;border-radius:9px;cursor:default}
+.ghead.on{background:#23242b}
+.ghead .gic{color:#cfd2da;font-size:18px;display:flex;width:18px}
+.ghead.on .gic{color:#FFD200}
+.ghead .gt{color:#e7e8ec;font-weight:600;font-size:13px;flex:1}
+.bdg{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;font-family:'IBM Plex Mono',monospace;display:inline-flex;align-items:center;gap:5px}
+.b-red{background:#e10000;color:#fff}
+.b-amber{background:#e8a900;color:#1a1400}
+.b-blue{background:#0080b0;color:#fff}
+.b-redo{border:1px solid #ff6a6a;color:#ff8a8a;background:transparent}
+.b-yellow{background:#FFD200;color:#16171c}
+.b-grey{background:#2b2c33;color:#9a9aa2}
+.dotp{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pulse 1.3s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.subs{padding:2px 0 6px 6px}
+.sitem{display:flex;align-items:center;gap:10px;padding:7px 10px 7px 14px;border-left:1px solid #2b2c33;margin-left:18px}
+.sitem .sic{color:#7f828c;font-size:14px;display:flex}
+.sitem .st{color:#b7b9c0;font-size:12px}
+.speccol{display:flex;flex-direction:column;gap:14px}
+.spc{background:#fff;border:1px solid #e1ded8;border-radius:14px;padding:18px 20px}
+.spc .head{display:flex;align-items:center;gap:12px}
+.spc .hic{width:38px;height:38px;border-radius:10px;background:#fbf3c8;color:#16171c;display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
+.spc .ru{font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;letter-spacing:-.01em}
+.spc .en{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#0080b0;font-weight:600;margin-top:1px}
+.spc .mb{margin-left:auto}
+.spc .solves{font-size:13px;color:#56534f;margin-top:12px;line-height:1.5}
+.spc .solves b{color:#16171c;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.chip{font-size:11.5px;font-weight:600;background:#f1f0ec;border:1px solid #e4e1da;color:#3a382f;padding:5px 11px;border-radius:7px;display:inline-flex;align-items:center;gap:6px}
+.chip i{font-size:14px;color:#8a877f}
+.kvi{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8a877f;margin-top:11px;display:flex;gap:16px;flex-wrap:wrap;border-top:1px dashed #e4e1da;padding-top:10px}
+.kvi b{color:#16171c}
+.tagcat{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.trow{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #e1ded8;border-radius:12px;padding:13px 16px}
+.trow .pr{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#b4b1aa;font-weight:600;width:18px}
+.trow .meta{flex:1}
+.trow .rule{font-size:12px;color:#6b6862;margin-top:3px;line-height:1.45}
+.trow .src{font-size:10.5px;color:#a8a59e;font-family:'IBM Plex Mono',monospace;margin-top:3px}
+.sevbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#16171c;border-radius:12px;padding:13px 18px;margin-top:12px;color:#cfd2da;font-size:12.5px}
+.sevbar .lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7f828c;text-transform:uppercase;letter-spacing:.08em;margin-right:4px}
+.sevbar .ar{color:#56534f}
+.itable{background:#fff;border:1px solid #e1ded8;border-radius:14px;overflow:hidden}
+.irow{display:grid;grid-template-columns:54px 230px 1fr;gap:14px;align-items:center;padding:12px 18px;border-top:1px solid #efece7}
+.irow:first-child{border-top:none;background:#faf9f6}
+.irow .ig{font-size:24px;color:#16171c;display:flex;justify-content:center}
+.irow .nm{font-weight:600;font-size:13.5px}
+.irow .pn{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#0080b0}
+.irow .as{font-size:12.5px;color:#6b6862}
+.irow.h{background:#16171c;color:#fff}
+.irow.h span{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#9a9aa2;font-weight:600}
+.foot{margin-top:40px;border-top:1px solid #d8d5cf;padding-top:16px;font-size:12px;color:#8a877f;line-height:1.6}
+@media(max-width:900px){.arch{grid-template-columns:1fr}.sb{position:static}.namegrid{grid-template-columns:1fr}.tagcat{grid-template-columns:1fr}.irow{grid-template-columns:44px 1fr;row-gap:4px}.irow .as{grid-column:2}}
+</style>
+</helmet>
+<div class="page">
+<div class="topbar">
+<div>
+<div class="eyebrow">UX/UI · Information Architecture · BI</div>
+<div class="h1">Модуль аналитики<br>закупок и запасов</div>
+<div class="lead">Навигационная архитектура для аналитического контура завода флексокрасок. Стиль — Tableau / Power BI: лаконично, без терминов «старой 1С». Дашборды сгруппированы по бизнес-доменам, статусы выведены в меню умными тегами.</div>
+</div>
+<div><div class="wm">Shtark<span class="ink">INK</span></div><div class="cmyk"><i style="background:#00aeef"></i><i style="background:#ec0080"></i><i style="background:#FFD200"></i><i style="background:#16171c"></i></div></div>
+</div>
+
+<div class="sct"><span class="snum">01</span><span class="sttl">Название раздела · Sidebar</span><span class="sline"></span></div>
+<div class="namegrid">
+<div class="ncard rec"><span class="rectag">Рекомендуется</span><div class="ru">Аналитика снабжения</div><div class="en">Supply Analytics</div><div class="note">Нейтрально и широко. Охватывает оба домена — закупки и запасы. Понятно закупщику и финансисту.</div></div>
+<div class="ncard"><div class="ru">Закупочный интеллект</div><div class="en">Procurement IQ</div><div class="note">BI-тон, акцент на инсайтах и решениях, а не на отчётности. Звучит современно.</div></div>
+<div class="ncard"><div class="ru">Контур закупок</div><div class="en">Sourcing Hub</div><div class="note">Компактный «раздел ERP». Удобно, если модуль — часть большой системы.</div></div>
+</div>
+
+<div class="sct"><span class="snum">02</span><span class="sttl">Дерево навигации · Architecture</span><span class="sline"></span></div>
+<div class="arch">
+<div class="sb">
+<div class="sbtop"><span class="ic"><i class="ph ph-chart-line-up"></i></span><div><div class="t">Аналитика снабжения</div><div class="s">supply · analytics</div></div></div>
+<div class="grp">
+<div class="ghead on"><span class="gic"><i class="ph ph-gauge"></i></span><span class="gt">Планирование закупок</span><span class="bdg b-red"><span class="dotp"></span>8</span></div>
+<div class="subs"><div class="sitem"><span class="sic"><i class="ph ph-gauge"></i></span><span class="st">Run Rate</span></div><div class="sitem"><span class="sic"><i class="ph ph-calendar-check"></i></span><span class="st">Календарь поставок</span></div></div>
+</div>
+<div class="grp">
+<div class="ghead"><span class="gic"><i class="ph ph-scales"></i></span><span class="gt">Цены и поставщики</span><span class="bdg b-blue">62K ₽</span></div>
+<div class="subs"><div class="sitem"><span class="sic"><i class="ph ph-chart-line-up"></i></span><span class="st">Аудит цен</span></div><div class="sitem"><span class="sic"><i class="ph ph-hand-coins"></i></span><span class="st">Переплаты</span></div><div class="sitem"><span class="sic"><i class="ph ph-tag"></i></span><span class="st">Реестр цен</span></div></div>
+</div>
+<div class="grp">
+<div class="ghead"><span class="gic"><i class="ph ph-arrows-clockwise"></i></span><span class="gt">Запасы</span><span class="bdg b-amber">заморож.</span></div>
+<div class="subs"><div class="sitem"><span class="sic"><i class="ph ph-arrows-clockwise"></i></span><span class="st">Оборачиваемость</span></div><div class="sitem"><span class="sic"><i class="ph ph-snowflake"></i></span><span class="st">Неликвиды</span></div><div class="sitem"><span class="sic"><i class="ph ph-shield-check"></i></span><span class="st">Покрытие / дефицит</span></div></div>
+</div>
+<div class="grp">
+<div class="ghead"><span class="gic"><i class="ph ph-target"></i></span><span class="gt">Контроль и сценарии</span><span class="bdg b-redo">+12%</span></div>
+<div class="subs"><div class="sitem"><span class="sic"><i class="ph ph-chart-bar"></i></span><span class="st">План-факт</span></div><div class="sitem"><span class="sic"><i class="ph ph-flask"></i></span><span class="st">Стресс-тест «Что если»</span></div></div>
+</div>
+</div>
+<div class="speccol">
+<div class="spc">
+<div class="head"><span class="hic"><i class="ph ph-gauge"></i></span><div><div class="ru">Планирование закупок</div><div class="en">Procurement Planning</div></div><span class="mb bdg b-red" style="color:#fff"><span class="dotp"></span>дефицит · N</span></div>
+<div class="solves"><b>Решает:</b> когда и сколько закупать. Не допустить простоя завода и затоваривания склада.</div>
+<div class="chips"><span class="chip"><i class="ph ph-gauge"></i>Run Rate · точка заказа · объём · месяц</span><span class="chip"><i class="ph ph-calendar-check"></i>Календарь поставок</span></div>
+<div class="kvi"><span>иконка <b>ph-gauge</b></span><span>тег <b>Дефицит · N</b></span></div>
+</div>
+<div class="spc">
+<div class="head"><span class="hic"><i class="ph ph-scales"></i></span><div><div class="ru">Цены и поставщики</div><div class="en">Pricing &amp; Suppliers</div></div><span class="mb bdg b-blue" style="color:#fff">переплата · ₽</span></div>
+<div class="solves"><b>Решает:</b> лучшая цена в каждом периоде, контроль роста цен, возврат переплат, рычаги для переговоров.</div>
+<div class="chips"><span class="chip"><i class="ph ph-chart-line-up"></i>Аудит цен · динамика · бенчмаркинг</span><span class="chip"><i class="ph ph-hand-coins"></i>Переплаты</span><span class="chip"><i class="ph ph-tag"></i>Реестр цен</span></div>
+<div class="kvi"><span>иконка <b>ph-scales</b></span><span>тег <b>Переплата · ₽</b></span></div>
+</div>
+<div class="spc">
+<div class="head"><span class="hic"><i class="ph ph-arrows-clockwise"></i></span><div><div class="ru">Запасы</div><div class="en">Inventory Health</div></div><span class="mb bdg b-amber">заморожено · ₽</span></div>
+<div class="solves"><b>Решает:</b> оборачиваемость в днях, поиск неликвидов («мёртвый груз»), высвобождение оборотного капитала.</div>
+<div class="chips"><span class="chip"><i class="ph ph-arrows-clockwise"></i>Оборачиваемость · Од · статусы</span><span class="chip"><i class="ph ph-snowflake"></i>Неликвиды</span><span class="chip"><i class="ph ph-shield-check"></i>Покрытие / дефицит</span></div>
+<div class="kvi"><span>иконка <b>ph-arrows-clockwise</b></span><span>тег <b>Заморожено · ₽</b></span></div>
+</div>
+<div class="spc">
+<div class="head"><span class="hic"><i class="ph ph-target"></i></span><div><div class="ru">Контроль и сценарии</div><div class="en">Control &amp; Scenarios</div></div><span class="mb bdg b-redo">бюджет +%</span></div>
+<div class="solves"><b>Решает:</b> дисциплина бюджета (план-факт), устойчивость склада к росту спроса, моделирование «Что если».</div>
+<div class="chips"><span class="chip"><i class="ph ph-chart-bar"></i>План-факт · отклонения · причины</span><span class="chip"><i class="ph ph-flask"></i>Стресс-тест «Что если»</span></div>
+<div class="kvi"><span>иконка <b>ph-target</b></span><span>тег <b>Бюджет +X%</b></span></div>
+</div>
+</div>
+</div>
+
+<div class="sct"><span class="snum">03</span><span class="sttl">Умные теги · Smart status badges</span><span class="sline"></span></div>
+<div class="tagcat">
+<div class="trow"><span class="pr">P1</span><span class="bdg b-red"><span class="dotp"></span>Дефицит · N</span><div class="meta"><div class="rule">Сплошной красный, пульсация. Число — крит. позиций.</div><div class="src">источник: Run Rate (СРОЧНО) + Стресс-тест (красная зона)</div></div></div>
+<div class="trow"><span class="pr">P2</span><span class="bdg b-yellow">Риск простоя</span><div class="meta"><div class="rule">Жёлтый. Есть позиции, где запас кончится раньше поставки.</div><div class="src">источник: Стресс-тест «Что если»</div></div></div>
+<div class="trow"><span class="pr">P3</span><span class="bdg b-redo" style="color:#e10000;border-color:#e10000">Бюджет +X%</span><div class="meta"><div class="rule">Красный контур. Перерасход к плану &gt; 10%.</div><div class="src">источник: План-факт</div></div></div>
+<div class="trow"><span class="pr">P4</span><span class="bdg b-amber">Заморожено X ₽</span><div class="meta"><div class="rule">Янтарный. Сумма неликвидов выше порога (напр. &gt; 1 млн ₽).</div><div class="src">источник: Оборачиваемость</div></div></div>
+<div class="trow"><span class="pr">P5</span><span class="bdg b-blue">Переплата X ₽</span><div class="meta"><div class="rule">Синий. Возвратный потенциал из-за неоптимального поставщика.</div><div class="src">источник: Аудит цен</div></div></div>
+<div class="trow"><span class="pr">—</span><span class="bdg b-grey" style="background:#eceae6;color:#6b6862">Норма</span><div class="meta"><div class="rule">Нейтральный. Серый/зелёный — показатели в пределах нормы.</div><div class="src">бейдж скрывается, либо точка-индикатор</div></div></div>
+</div>
+<div class="sevbar"><span class="lbl">Правило вывода</span><span>1 бейдж на пункт — берётся максимальный по приоритету.</span><span class="ar">·</span><span>Дефицит</span><span class="ar">›</span><span>Простой</span><span class="ar">›</span><span>Бюджет</span><span class="ar">›</span><span>Заморожено</span><span class="ar">›</span><span>Переплата.</span><span class="ar">·</span><span>Число = позиции / сумма ₽, real-time.</span></div>
+
+<div class="sct"><span class="snum">04</span><span class="sttl">Иконки · Phosphor / Line</span><span class="sline"></span></div>
+<div class="itable">
+<div class="irow h"><span>icon</span><span>пункт меню</span><span>ph-name · ассоциация</span></div>
+<div class="irow"><span class="ig"><i class="ph ph-chart-line-up"></i></span><span class="nm">Модуль (корень)</span><span class="as"><span class="pn">ph-chart-line-up</span> · рост, аналитика</span></div>
+<div class="irow"><span class="ig"><i class="ph ph-gauge"></i></span><span class="nm">Планирование закупок · Run Rate</span><span class="as"><span class="pn">ph-gauge</span> · скорость расхода, темп</span></div>
+<div class="irow"><span class="ig"><i class="ph ph-calendar-check"></i></span><span class="nm">Календарь поставок</span><span class="as"><span class="pn">ph-calendar-check</span> · даты, сроки</span></div>
+<div class="irow"><span class="ig"><i class="ph ph-scales"></i></span><span class="nm">Цены и поставщики</span><span class="as"><span class="pn">ph-scales</span> · баланс цен, сравнение</span></div>
+<div class="irow"><span class="ig"><i class="ph ph-chart-line-up"></i></span><span class="nm">Аудит цен</span><span class="as"><span class="pn">ph-chart-line-up</span> · динамика по периодам</span></div>
+<div class="irow"><span class="ig"><i class="ph ph-hand-coins"></i></span><span class="nm">Переплаты</span><span class="as"><span class="pn">ph-hand-coins</span> · деньги, возврат</span></div>
+<div class="irow"><span class="ig"><i class="ph ph-arrows-clockwise"></i></span><span class="nm">Запасы · Оборачиваемость</span><span class="as"><span class="pn">ph-arrows-clockwise</span> · цикл, оборот</span></div>
+<div class="irow"><span class="ig"><i class="ph ph-snowflake"></i></span><span class="nm">Неликвиды</span><span class="as"><span class="pn">ph-snowflake</span> · «заморожено», мёртвый груз</span></div>
+<div class="irow"><span class="ig"><i class="ph ph-target"></i></span><span class="nm">Контроль и сценарии</span><span class="as"><span class="pn">ph-target</span> · план vs факт, точность</span></div>
+<div class="irow"><span class="ig"><i class="ph ph-chart-bar"></i></span><span class="nm">План-факт</span><span class="as"><span class="pn">ph-chart-bar</span> · отклонения по статьям</span></div>
+<div class="irow"><span class="ig"><i class="ph ph-flask"></i></span><span class="nm">Стресс-тест «Что если»</span><span class="as"><span class="pn">ph-flask</span> · эксперимент, сценарий</span></div>
+</div>
+
+<div class="foot">Набор: Phosphor Icons, вес Regular (line). Размер в меню 18–20 px, активный пункт — акцент #FFD200. Бейджи — компактные пилюли с моноширинным числом. Сетка меню: группа → отчёты, аккордеон, активная группа подсвечена тёмным.<br>Spec · Shtark INK Flow · Аналитика снабжения.</div>
+</div>
+</x-dc>
+</body>
+</html>
