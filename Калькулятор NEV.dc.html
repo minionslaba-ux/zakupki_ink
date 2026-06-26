@@ -114,6 +114,8 @@ tbody td.l{text-align:left}
 .hhead,.hrow{display:grid;grid-template-columns:130px 150px 1fr;gap:12px;padding:9px 15px;font-size:12.5px;align-items:center}
 .hhead{background:#f4f3f0;font-weight:700;color:#56534f;text-transform:none}
 .hrow{border-top:1px solid #efedea}
+.hrow2{display:grid;grid-template-columns:140px 1fr;gap:12px;padding:9px 15px;font-size:12.5px;align-items:center;border-top:1px solid #efedea}
+.hhd2{background:#f4f3f0;font-weight:700;color:#56534f;border-top:0}
 .hwhen{color:#56534f}
 .hauthor{font-weight:600;color:#0e0e0e}
 .viewonly .card{pointer-events:none;opacity:.92}
@@ -346,6 +348,11 @@ a.wordmark:hover{opacity:.6}
 .pcell{width:62px;text-align:right;padding:5px 7px}
 .segrow{display:flex;gap:6px;flex-wrap:wrap}
 .whtag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;background:#eef4ff;color:#1f5bd6}
+.uava-row{display:flex;align-items:center;gap:16px;margin:4px 0 14px}
+.uava{width:72px;height:72px;border-radius:50%;overflow:hidden;flex:none;background:#0e0e0e;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px #fff,0 0 0 3.5px #e7e4e0}
+.uava-img{width:100%;height:100%;object-fit:cover}
+.uava-ini{font-family:'Montserrat',sans-serif;font-weight:800;font-size:26px;color:#fff}
+.uava-act{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
 .filter{width:100%;max-width:320px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:#e7e4e0;border-radius:10px;overflow:hidden;margin-top:16px}
 .kpi{background:#ffffff;padding:14px 16px}
@@ -430,6 +437,11 @@ a.wordmark:hover{opacity:.6}
 .sbcmyk{position:relative;height:6px;border-radius:3px;overflow:hidden;margin:13px 22px 0;width:118px;flex:none;background:rgba(255,255,255,.1)}
 .sbrun{position:absolute;top:0;left:0;height:100%;width:300%;background:repeating-linear-gradient(90deg,#00AEEF 0,#00AEEF 16px,#EC008C 16px,#EC008C 32px,#FFD200 32px,#FFD200 48px,#e10000 48px,#e10000 64px);animation:siRun 4s linear infinite}
 .sbnav{flex:1;padding:22px 14px 16px;display:flex;flex-direction:column;gap:17px}
+.onecbtn{display:flex;align-items:center;gap:10px;width:calc(100% - 28px);margin:14px 14px 2px;padding:9px 11px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:11px;cursor:pointer;font:inherit;font-weight:600;font-size:12.5px;color:#fff;text-align:left;transition:all .15s}
+.onecbtn:hover{background:rgba(255,204,0,.14);border-color:#FFCC00}
+.onecbtn.busy{opacity:.65;pointer-events:none}
+.oneclogo{flex:none;width:27px;height:27px;border-radius:6px;background:#FFCC00;color:#c00000;font-family:'Montserrat',sans-serif;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;letter-spacing:-.02em}
+.onecbtx{flex:1;line-height:1.15}
 .sbgroup{display:flex;flex-direction:column;gap:4px}
 .sbglabel{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6f6b66;padding:0 10px 3px}
 .sbitems{display:flex;flex-direction:column;gap:2px}
@@ -553,6 +565,7 @@ window.dispatchEvent(new Event('fbready'));
 <aside class="sidebar" style="{{ sidebarStyle }}">
 <a class="sblogo" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Перейти на shtarkink.com"><span class="sbwm">Shtark</span><span class="sbink">I N K</span></a>
 <div class="sbcmyk"><div class="sbrun"></div></div>
+<button class="{{ oneCBtnCls }}" onClick="{{ oneCQuickGet }}" title="Загрузить остатки и закупочные цены из 1С"><span class="oneclogo">1С</span><span class="onecbtx">{{ oneCBtnText }}</span></button>
 <nav class="sbnav"><sc-for list="{{ navGroups }}" as="g" hint-placeholder-count="6"><div class="sbgroup"><span class="sbglabel">{{ g.label }}</span><div class="sbitems"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="sbtab {{ t.cls }}" onClick="{{ t.go }}"><span class="sbbar"></span>{{ t.icon }}<span class="sblbl">{{ t.label }}</span></button></sc-for></div></div></sc-for></nav>
 <button class="sbmap" onClick="{{ goHome }}" title="Карта навигации (стартовая страница)"><span>🗺</span> Карта навигации</button>
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
@@ -579,6 +592,44 @@ window.dispatchEvent(new Event('fbready'));
 <div class="csec">Журнал изменений · {{ cloudHistoryCount }}</div>
 <div class="htable"><div class="hhead"><span>Когда</span><span>Автор</span><span>Действие</span></div><sc-for list="{{ cloudHistoryRows }}" as="h" hint-placeholder-count="3"><div class="hrow"><span class="mono hwhen">{{ h.when }}</span><span class="hauthor">{{ h.author }}</span><span>{{ h.note }}</span></div></sc-for></div>
 </div>
+</sc-if>
+
+<sc-if value="{{ isOneC }}" hint-placeholder-val="x">
+<div class="card">
+<div class="sec"><span class="oneclogo">1С</span> Вариант 1 · Загрузка файла из 1С (проще всего)</div>
+<div class="desc">Без программиста и настроек: в 1С откройте отчёт по остаткам и/или ценам, сохраните как Excel (.xlsx) и загрузите сюда. Столбцы «Наименование/Артикул», «Остаток», «Цена» определяются автоматически и применяются к «Складу» и «Реестру цен».</div>
+<div class="genrow"><label class="btn dark"><span class="oneclogo">1С</span> Загрузить выгрузку из 1С (Excel)<input type="file" accept=".xlsx" style="display:none" onChange="{{ onImport1C }}"></label><span class="field"><span class="lbl">Цены в файле</span><select class="sel" value="{{ oneCFileCur }}" onChange="{{ onOneCFileCur }}"><sc-for list="{{ oneCFileCurOpts }}" as="c" hint-placeholder-count="2"><option value="{{ c.v }}">{{ c.label }}</option></sc-for></select></span><button class="btn" onClick="{{ oneCSaveSpec }}"><span>↓</span> Инструкция</button></div>
+<div class="hint">Цены в «Реестре цен» хранятся в евро за кг. Если в файле цены в рублях — оставьте «₽», приложение пересчитает по текущему курсу ЦБ ({{ rate }} ₽/€). Для записи данных в общую базу включите «Взять для редактирования» в облаке.</div>
+</div>
+<div class="card">
+<div class="sec"><span class="oneclogo">1С</span> Вариант 2 · Прямой API (HTTP-сервис 1С)</div>
+<div class="desc">Автоматическая загрузка из опубликованного HTTP-сервиса 1С по кнопке или по расписанию (раз в день). Требует настройки на стороне 1С (HTTP-сервис + CORS) — см. «Инструкцию для 1С». Кнопка «Получить данные из 1С» доступна и в левом меню.</div>
+<div class="uform">
+<div class="fg full"><label>Адрес HTTP-сервиса 1С (URL)</label><input class="inp" value="{{ oneCUrl }}" onInput="{{ onOneCUrl }}" placeholder="https://host/base/hs/shtark/data"></div>
+<div class="fg full"><label>Токен / авторизация (заголовок Authorization; хранится только в этом браузере)</label><input class="inp" value="{{ oneCToken }}" onInput="{{ onOneCToken }}" onBlur="{{ saveOneCToken }}" placeholder="Basic base64(логин:пароль)  или  Bearer токен"></div>
+<div class="fg"><label>Сопоставлять позиции</label><select class="sel" value="{{ oneCMatch }}" onChange="{{ onOneCMatch }}"><sc-for list="{{ oneCMatchOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></div>
+<div class="fg"><label>Авто-загрузка раз в день</label><button class="{{ oneCAutoCls }}" onClick="{{ toggleOneCAuto }}"><span class="pcbox"></span>Включить авто-синхронизацию</button></div>
+</div>
+<div class="genrow"><button class="btn dark" onClick="{{ oneCSyncNow }}" disabled="{{ oneCBusy }}"><span class="oneclogo">1С</span> Получить данные из 1С</button><button class="btn" onClick="{{ oneCTest }}" disabled="{{ oneCBusy }}">Проверить связь</button><sc-if value="{{ oneCHasPreview }}" hint-placeholder-val=""><button class="btn" onClick="{{ oneCApplyNow }}">Применить загруженное</button></sc-if><button class="btn" onClick="{{ oneCSaveSpec }}"><span>↓</span> Инструкция для 1С</button></div>
+<sc-if value="{{ oneCHasErr }}" hint-placeholder-val=""><div class="banner err">{{ oneCErr }}</div></sc-if>
+<sc-if value="{{ oneCHasStatus }}" hint-placeholder-val=""><div class="hint">{{ oneCStatus }}</div></sc-if>
+<div class="kpis"><div class="kpi"><div class="kl">Остатки</div><div class="kv mono">{{ oneCStockCnt }}</div></div><div class="kpi"><div class="kl">Цены</div><div class="kv mono">{{ oneCPriceCnt }}</div></div><div class="kpi"><div class="kl">Номенклатура</div><div class="kv mono">{{ oneCNomCnt }}</div></div><div class="kpi"><div class="kl">Поставщики</div><div class="kv mono">{{ oneCSupCnt }}</div></div></div>
+<div class="hint">Последняя загрузка: {{ oneCLastLabel }}.</div>
+</div>
+<sc-if value="{{ oneCHasPreview }}" hint-placeholder-val="">
+<div class="card">
+<div class="sec">Предпросмотр остатков из 1С · первые позиции</div>
+<div class="scroll"><table><thead><tr><th class="l">Артикул</th><th class="l">Наименование</th><th>Остаток</th></tr></thead>
+<tbody><sc-for list="{{ oneCPreviewStock }}" as="r" hint-placeholder-count="4"><tr><td class="l mono">{{ r.article }}</td><td class="l nm">{{ r.name }}</td><td class="mono">{{ r.qty }}</td></tr></sc-for></tbody></table></div>
+<div class="hint">«Применить загруженное» обновит остатки на «Складе» и цены в «Реестре цен» по сопоставлению. Не сопоставленные позиции пропускаются.</div>
+</div>
+</sc-if>
+<sc-if value="{{ oneCHasLog }}" hint-placeholder-val="">
+<div class="card">
+<div class="sec">Журнал синхронизаций с 1С</div>
+<div class="htable"><div class="hrow2 hhd2"><span>Когда</span><span>Результат</span></div><sc-for list="{{ oneCLog }}" as="l" hint-placeholder-count="2"><div class="hrow2"><span class="mono hwhen">{{ l.when }}</span><span>{{ l.note }}</span></div></sc-for></div>
+</div>
+</sc-if>
 </sc-if>
 
 <sc-if value="{{ isCalc }}" hint-placeholder-val="{{ true }}">
@@ -649,6 +700,8 @@ window.dispatchEvent(new Event('fbready'));
 <div class="toolbar"><div class="field"><span class="lbl">Шкала</span><span class="segrow"><sc-for list="{{ ppScaleOpts }}" as="s" hint-placeholder-count="3"><button class="{{ s.on }}" onClick="{{ s.go }}">{{ s.label }}</button></sc-for></span></div><div class="field"><span class="lbl">Период с</span><input class="inp" type="date" value="{{ ppFrom }}" onInput="{{ onPpFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp" type="date" value="{{ ppTo }}" onInput="{{ onPpTo }}"></div><div class="field"><span class="lbl">&nbsp;</span><button class="btn" onClick="{{ ppResetRange }}">весь горизонт</button></div><div class="field"><span class="lbl">Срез</span><span class="segrow"><button class="{{ ppByRawCls }}" onClick="{{ setPpByRaw }}">По сырью</button><button class="{{ ppByProductCls }}" onClick="{{ setPpByProduct }}">По продукту</button></span></div><div class="field"><span class="lbl">Валюта</span><select class="sel" value="{{ ppCur }}" onChange="{{ onPpCur }}"><sc-for list="{{ ppCurOpts }}" as="c" hint-placeholder-count="4"><option value="{{ c.v }}">{{ c.label }}</option></sc-for></select></div></div>
 <div class="toolbar"><div class="field"><span class="lbl">Вычитать</span><span class="segrow"><button class="{{ ppNetStockCls }}" onClick="{{ toggleNetStock }}">остаток склада</button><button class="{{ ppNetTransitCls }}" onClick="{{ toggleNetTransit }}">поставки в пути</button></span></div><div class="field"><span class="lbl">Детализация</span><select class="sel" value="{{ ppGroup }}" onChange="{{ onPpGroup }}"><sc-for list="{{ ppGroupOpts }}" as="g" hint-placeholder-count="3"><option value="{{ g.v }}">{{ g.label }}</option></sc-for></select></div><div class="field"><span class="lbl">Потери, %</span><input class="inp num w90" type="number" value="{{ loss }}" onInput="{{ onLoss }}"></div></div>
 <div class="desc">Потребность в сырье разворачивается из «Графика производства». Нетто к закупке = брутто-потребность − остаток склада − поставки «в пути» (методом наката по периодам). Диапазон: {{ ppRangeLabel }}.</div>
+<div class="genrow"><button class="btn dark" onClick="{{ genProc }}"><span>📊</span> Сформировать отчёт</button><span class="hint">Сырьё разворачивается из рецептур продуктов — в тех же пропорциях, в которых оно входит в каждый продукт.</span></div>
+<sc-if value="{{ procGen }}" hint-placeholder-val="{{ true }}">
 <div class="kpis"><sc-for list="{{ ppKpis }}" as="k" hint-placeholder-count="4"><div class="kpi {{ k.cls }}"><div class="kl">{{ k.label }}</div><div class="kv mono">{{ k.value }}</div></div></sc-for></div>
 <sc-if value="{{ ppEmpty }}" hint-placeholder-val=""><div class="hint">Нет данных. Заполните «График производства» — план выпуска ГП по месяцам/неделям.</div></sc-if>
 <div class="sec">{{ ppRowHeadLabel }} по периодам · {{ ppCurSym }}</div>
@@ -656,8 +709,20 @@ window.dispatchEvent(new Event('fbready'));
 <tbody><sc-for list="{{ ppRows }}" as="r" hint-placeholder-count="5"><tr><td class="l nm">{{ r.name }}</td><sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="6"><td class="mono {{ c.zero }}">{{ c.v }}</td></sc-for><td class="mono {{ r.zero }}">{{ r.totBuy }}</td><td class="mono {{ r.zero }}">{{ r.totSum }}</td></tr></sc-for></tbody></table></div>
 <sc-if value="{{ ppColsMore }}" hint-placeholder-val=""><div class="hint">Показаны первые {{ ppColsShown }} из {{ ppColsTotal }} периодов — сузьте диапазон дат или укрупните шкалу. Итоги и суммы посчитаны по всему диапазону.</div></sc-if>
 <div class="exprow"><button class="btn" onClick="{{ exportProcPlan }}"><span>↓</span> Экспорт CSV</button></div>
+</sc-if>
+<sc-if value="{{ ppNotGen }}" hint-placeholder-val=""><div class="hint">Задайте параметры выше и нажмите «Сформировать отчёт».</div></sc-if>
 </div>
-<sc-if value="{{ ppByRaw }}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{ ppShowBreak }}" hint-placeholder-val="">
+<div class="card">
+<div class="sec">Состав по продуктам · сырьё в пропорциях рецептуры</div>
+<sc-for list="{{ prodBreak }}" as="p" hint-placeholder-count="1"><div class="calmon"><div class="calmonh"><span>{{ p.product }}</span><span class="cs">{{ p.sub }}</span></div>
+<table><thead><tr><th class="l">Сырьё</th><th>Доля в продукте</th><th>Нужно, кг</th><th>Цена €/кг</th><th>Сумма</th></tr></thead>
+<tbody><sc-for list="{{ p.rows }}" as="r" hint-placeholder-count="3"><tr><td class="l nm">{{ r.name }}</td><td class="mono">{{ r.pct }}</td><td class="mono">{{ r.kg }}</td><td class="mono">{{ r.price }}</td><td class="mono">{{ r.sum }}</td></tr></sc-for></tbody></table>
+</div></sc-for>
+<div class="hint">Доля = масса сырья к общей массе сырья в продукте (развёртка рецептуры с учётом полуфабрикатов и потерь {{ loss }}%).</div>
+</div>
+</sc-if>
+<sc-if value="{{ ppByRawShow }}" hint-placeholder-val="">
 <div class="card">
 <div class="sec">Где сейчас сырьё · остаток, в пути и ближайший приход</div>
 <div class="scroll"><table><thead><tr><th class="l">Сырьё</th><th>Остаток склада</th><th>В пути</th><th class="l">Ближайший приход</th><th>К закупке</th><th>Сумма</th><th></th></tr></thead>
@@ -898,6 +963,7 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ usHasAccess }}" hint-placeholder-val="{{ true }}">
 <div class="card"><div class="sec">{{ usFormTitle }}</div>
 <div class="unote">Создайте учётную запись для сотрудника и выдайте ему логин и пароль. Пароль виден в таблице ниже — его можно скопировать и передать. «Закупщик» работает с порталом, «Администратор» дополнительно управляет пользователями.</div>
+<div class="uava-row"><div class="uava"><sc-if value="{{ udHasPhoto }}" hint-placeholder-val="x">{{ udPhotoImg }}</sc-if><sc-if value="{{ udNoPhoto }}" hint-placeholder-val="{{ true }}"><span class="uava-ini">{{ udInitial }}</span></sc-if></div><div class="uava-act"><label class="btn"><span>⬆</span> Загрузить фото<input type="file" accept="image/*" style="display:none" onChange="{{ onUdPhoto }}"></label><sc-if value="{{ udHasPhoto }}" hint-placeholder-val="x"><button class="ulink del" onClick="{{ clearUdPhoto }}">Убрать фото</button></sc-if><span class="hint">Необязательно. Фото станет аватаром сотрудника на экране приветствия и в списке «Сейчас в программе» — для всех в команде.</span></div></div>
 <div class="uform">
 <div class="fg"><label>Имя сотрудника</label><input class="inp" value="{{ udName }}" onInput="{{ onUdName }}" placeholder="Иванов Иван"></div>
 <div class="fg"><label>Логин</label><input class="inp" value="{{ udLogin }}" onInput="{{ onUdLogin }}" placeholder="ivanov"></div>
@@ -1107,7 +1173,8 @@ class Component extends DCLogic {
     rrHorizon: 3, rrSafetyMonths: 1, rrLeadDefault: 1, rrRun: {}, rrLead: {}, rrSafety: {}, auditSku: '',
     turnoverDays: 90, turnoverGen: false, planfactGen: false, stressGrowth: 30, stressGen: false, calcExpanded: {}, treasuryGen: false,
     prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planProduct: '', planFilter: '', planCur: 'RUB',
-    ppScale: 'month', ppFrom: '', ppTo: '', ppNetStock: true, ppNetTransit: true, ppBy: 'raw', ppCur: 'RUB', ppGroup: 'none',
+    ppScale: 'month', ppFrom: '', ppTo: '', ppNetStock: true, ppNetTransit: true, ppBy: 'raw', ppCur: 'RUB', ppGroup: 'none', procGen: false,
+    oneCUrl: '', oneCToken: '', oneCMatch: 'article', oneCAuto: false, oneCBusy: false, oneCStatus: '', oneCErr: '', oneCPreview: null, oneCLastAt: 0, oneCLog: [], oneCFileCur: 'RUB',
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {},
     chat: [], chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false,
     tgToken: '', tgChatId: '', tgFwd: false, tgEditToken: '', tgEditChatId: '', tgStatus: '',
@@ -1144,7 +1211,7 @@ class Component extends DCLogic {
     this._autoCloud = () => { try { if (!this.state.cloudConnected) this.setState({ cloudCfgText: JSON.stringify(Component.FBCFG), cloudWsId: (this.state.cloudWsId || 'workspace') }, () => this.cloudConnect()); } catch (e) {} };
     if (window.__FB) this._autoCloud(); else window.addEventListener('fbready', this._autoCloud, { once: true });
     fetch('nev_data.json').then(r => r.json()).then(d => {
-      this.data = d; this.buildIndex(); this.setState({ ready: true });
+      this.data = d; this.buildIndex(); this.setState({ ready: true }); this.loadOneCToken(); this.oneCMaybeAuto();
     });
     fetch('catalog.json').then(r => r.json()).then(d => { this.catalog = d; this.setState({ catReady: true }); }).catch(() => {});
     this.loadRates();
@@ -1179,7 +1246,7 @@ class Component extends DCLogic {
   // Сохранение данных пользователя между сессиями (localStorage)
   static get STORE_KEY() { return 'inkflow_state_v1'; }
   static get FBCFG() { return { apiKey: 'AIzaSyCOoE74NqK4xkpmzUvzoPmanz8Ej_IW5q8', authDomain: 'shtark-flow.firebaseapp.com', projectId: 'shtark-flow', storageBucket: 'shtark-flow.firebasestorage.app', messagingSenderId: '969786336713', appId: '1:969786336713:web:39bd23af4ca2e281d07418' }; }
-  static get PERSIST() { return ['stock', 'extra', 'orders', 'purchases', 'prices', 'pct', 'added', 'rate', 'loss', 'planFrom', 'planTo', 'recipeOwner', 'whFilled', 'stockUpdatedAt', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth', 'prodPlan', 'planHorizon', 'planStart', 'planExpand', 'planCur', 'ppScale', 'ppFrom', 'ppTo', 'ppNetStock', 'ppNetTransit', 'ppBy', 'ppCur', 'ppGroup']; }
+  static get PERSIST() { return ['stock', 'extra', 'orders', 'purchases', 'prices', 'pct', 'added', 'rate', 'loss', 'planFrom', 'planTo', 'recipeOwner', 'whFilled', 'stockUpdatedAt', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth', 'prodPlan', 'planHorizon', 'planStart', 'planExpand', 'planCur', 'ppScale', 'ppFrom', 'ppTo', 'ppNetStock', 'ppNetTransit', 'ppBy', 'ppCur', 'ppGroup', 'oneCUrl', 'oneCMatch', 'oneCAuto', 'oneCLastAt', 'oneCLog']; }
 
   restore() {
     try {
@@ -1340,6 +1407,7 @@ class Component extends DCLogic {
       stress: '<path d="M3 12h4l2.5-7 4 14 2.5-7H21"/>',
       reports: '<path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/>',
       cloud: '<path d="M7 18a4.5 4.5 0 0 1-.5-9 6 6 0 0 1 11.5 1.5A3.5 3.5 0 0 1 17.5 18z"/>',
+      onec: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 13l2.5 2.5L8 18"/><path d="M13 18h3"/>',
       users: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 6.4M21.5 20a6 6 0 0 0-3.5-5.5"/>',
     };
     const svg = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + (P[id] || '') + '</svg>';
@@ -1394,6 +1462,28 @@ class Component extends DCLogic {
   }
   pushUsers(list) { if (this._usersRef && this._usersFb) { try { this._usersFb.setDoc(this._usersRef, { list }, { merge: true }).catch(() => {}); } catch (e) {} } }
   saveUsers(users) { this.setState({ users }); try { localStorage.setItem('inkflow_users_v1', JSON.stringify(users)); } catch (e) {} this.pushUsers(users); }
+  // Чтение фото пользователя из файла → квадрат 256px, JPEG (компактно для облака)
+  readAvatarFile(file, cb) {
+    if (!file) { cb(''); return; }
+    const r = new FileReader();
+    r.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const Z = 256, c = document.createElement('canvas'); c.width = Z; c.height = Z;
+          const ctx = c.getContext('2d');
+          const scale = Math.max(Z / img.width, Z / img.height);
+          const w = img.width * scale, h = img.height * scale;
+          ctx.drawImage(img, (Z - w) / 2, (Z - h) / 2, w, h);
+          cb(c.toDataURL('image/jpeg', 0.82));
+        } catch (e) { cb(''); }
+      };
+      img.onerror = () => cb('');
+      img.src = r.result;
+    };
+    r.onerror = () => cb('');
+    r.readAsDataURL(file);
+  }
   genPassword() {
     const lo = 'abcdefghjkmnpqrstuvwxyz', up = 'ABCDEFGHJKMNPQRSTUVWXYZ', nu = '23456789';
     const pick = (s) => s[Math.floor(Math.random() * s.length)];
@@ -1411,7 +1501,7 @@ class Component extends DCLogic {
       { label: 'Цены и поставщики', tabs: [['audit', 'Аудит цен'], ['pay', 'Платежи'], ['prices', 'Реестр цен']] },
       { label: 'Запасы', tabs: [['wh', 'Склад'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка']] },
       { label: 'Контроль и сценарии', tabs: [['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
-      { label: 'Система', tabs: [['cloud', 'Облако']] },
+      { label: 'Система', tabs: [['cloud', 'Облако'], ['onec', 'Интеграция 1С']] },
     ];
   }
   allTabIds() { return this.permCatalog().reduce((a, g) => a.concat(g.tabs.map(t => t[0])), []); }
@@ -1507,8 +1597,8 @@ class Component extends DCLogic {
     if (d.id && d.role !== 'admin') { const cur = users.find(u => u.id === d.id); if (cur && cur.role === 'admin' && this.countAdmins() <= 1) { this.setState({ userErr: 'Это единственный администратор — нельзя понизить роль.' }); return; } }
     const perms = role === 'admin' ? this.allTabIds() : (Array.isArray(d.perms) ? d.perms.filter(id => this.allTabIds().includes(id)) : this.allTabIds());
     let next, cu = this.state.currentUser;
-    if (d.id) { next = users.map(u => u.id === d.id ? { ...u, name, login, password, role, perms } : u); if (cu && cu.id === d.id) cu = { ...cu, name, login, password, role, perms }; }
-    else { next = [...users, { id: 'u_' + Date.now().toString(36), name, login, password, role, perms, active: true, created: Date.now() }]; }
+    if (d.id) { next = users.map(u => u.id === d.id ? { ...u, name, login, password, role, perms, photo: d.photo || '' } : u); if (cu && cu.id === d.id) cu = { ...cu, name, login, password, role, perms, photo: d.photo || '' }; }
+    else { next = [...users, { id: 'u_' + Date.now().toString(36), name, login, password, role, perms, photo: d.photo || '', active: true, created: Date.now() }]; }
     this.saveUsers(next);
     this.setState({ userDraft: null, userErr: '', currentUser: cu });
   }
@@ -1549,7 +1639,7 @@ class Component extends DCLogic {
       accessLabel: accLabel(u), accessCls: u.role === 'admin' ? 'st prof' : (Array.isArray(u.perms) && u.perms.length === 0 ? 'st def' : 'st'),
       statusLabel: u.active ? 'Активен' : 'Отключён', statusCls: u.active ? 'st prof' : 'st def',
       rowCls: (me && u.id === me.id) ? 'urowme' : '',
-      edit: () => set({ userDraft: { id: u.id, name: u.name, login: u.login, password: u.password, role: u.role, perms: Array.isArray(u.perms) ? u.perms.slice() : allIds.slice() }, userErr: '' }),
+      edit: () => set({ userDraft: { id: u.id, name: u.name, login: u.login, password: u.password, role: u.role, photo: u.photo || '', perms: Array.isArray(u.perms) ? u.perms.slice() : allIds.slice() }, userErr: '' }),
       copy: () => { try { navigator.clipboard.writeText('Логин: ' + u.login + '\nПароль: ' + u.password); } catch (e) {} },
       toggle: () => this.toggleUser(u.id), toggleLabel: u.active ? 'Отключить' : 'Включить',
       del: () => this.deleteUser(u.id),
@@ -1557,6 +1647,10 @@ class Component extends DCLogic {
     return {
       isUsers: true, usNoAccess: false, usHasAccess: true, usCount: rows.length, usRows: rows,
       udName: dn.name, udLogin: dn.login, udPass: dn.password, udRole: dn.role,
+      udPhoto: dn.photo || '', udHasPhoto: !!dn.photo, udNoPhoto: !dn.photo, udInitial: (dn.name || '?').trim().charAt(0).toUpperCase() || '?',
+      udPhotoImg: dn.photo ? React.createElement('img', { className: 'uava-img', src: dn.photo, alt: '' }) : null,
+      onUdPhoto: (e) => { const f = e.target.files && e.target.files[0]; if (!f) return; this.readAvatarFile(f, (url) => set({ userDraft: { ...(S.userDraft || blank), photo: url }, userErr: '' })); },
+      clearUdPhoto: () => set({ userDraft: { ...(S.userDraft || blank), photo: '' }, userErr: '' }),
       onUdName: patch('name'), onUdLogin: patch('login'), onUdPass: patch('password'), onUdRole: patch('role'),
       genPass: () => set({ userDraft: { ...(S.userDraft || blank), password: this.genPassword() }, userErr: '' }),
       saveUser: () => this.saveUser(), cancelUser: () => set({ userDraft: null, userErr: '' }),
@@ -1569,7 +1663,7 @@ class Component extends DCLogic {
 
   // ===== AI-ассистент (Puter.js) =====
   aiTabName(id) {
-    const m = { calc: 'Калькулятор себестоимости', recipe: 'Рецептуры', prod: 'План производства', prodplan: 'График производства (помесячный план)', procplan: 'Закупки по графику', proc: 'План закупок', cal: 'Календарь поставок', wh: 'Склад', cover: 'Сводка покрытия', reports: 'Отчёты', runrate: 'Run Rate', audit: 'Аудит цен', turnover: 'Оборачиваемость', planfact: 'План-факт', stress: 'Стресс-тест', pay: 'Платежи / казначейство', prices: 'Реестр цен', catalog: 'Каталоги', users: 'Пользователи' };
+    const m = { calc: 'Калькулятор себестоимости', recipe: 'Рецептуры', prod: 'План производства', prodplan: 'График производства (помесячный план)', procplan: 'Закупки по графику', proc: 'План закупок', cal: 'Календарь поставок', wh: 'Склад', cover: 'Сводка покрытия', reports: 'Отчёты', runrate: 'Run Rate', audit: 'Аудит цен', turnover: 'Оборачиваемость', planfact: 'План-факт', stress: 'Стресс-тест', pay: 'Платежи / казначейство', prices: 'Реестр цен', catalog: 'Каталоги', onec: 'Интеграция с 1С', users: 'Пользователи' };
     return m[id] || id;
   }
   aiContext() {
@@ -1842,8 +1936,11 @@ class Component extends DCLogic {
   // ===== Присутствие: кто сейчас в программе =====
   userAvatar(name) {
     if (!name) return '';
+    const key = String(name).trim().toLowerCase().replace(/\s+/g, ' ');
+    const u = (this.state.users || []).find(x => String(x.name || '').trim().toLowerCase().replace(/\s+/g, ' ') === key);
+    if (u && u.photo) return u.photo;
     const map = { 'бушуева ольга': 'avatar-bushueva.png', 'екатерина сергеева': 'avatar-sergeeva.png', 'сергеева екатерина': 'avatar-sergeeva.png', 'афанасьева оксана': 'avatar-afanasyeva.png', 'оксана афанасьева': 'avatar-afanasyeva.png', 'максим кузнецов': 'avatar-kuznetsov.png', 'кузнецов максим': 'avatar-kuznetsov.png', 'татьяна чернопятова': 'avatar-chernopyatova.png', 'чернопятова татьяна': 'avatar-chernopyatova.png' };
-    return map[String(name).trim().toLowerCase().replace(/\s+/g, ' ')] || '';
+    return map[key] || '';
   }
   presenceData() {
     const cu = this.state.currentUser;
@@ -2375,8 +2472,28 @@ class Component extends DCLogic {
     const scaleOpts = [['day', 'Дни'], ['week', 'Недели'], ['month', 'Месяцы']].map(([v, l]) => ({ v, label: l, on: scale === v ? 'permchip on' : 'permchip', go: () => set({ ppScale: v }) }));
     const exportRows = rows.map(r => { const e = Number(r._eur) || 0; const v = this.convFromEur(e, cur, rate); return [r.name, String(r.totBuy).replace(/\s/g, ''), v == null ? '' : v.toFixed(0)]; });
 
+    // Состав по продуктам: сырьё в пропорциях рецептуры (брутто, по плановому выпуску в периоде)
+    const prodBreak = [];
+    for (const prod of products) {
+      const vol = (prodByBucket[prod] || []).reduce((x, y) => x + y, 0);
+      if (vol <= 1e-9) continue;
+      const acc2 = {}; this.explodeRaw(prod, vol * (1 + lossF), acc2, new Set());
+      const entries = Object.entries(acc2).sort((a, b) => b[1] - a[1]);
+      let totRaw = 0, totEur = 0;
+      for (const e of entries) totRaw += e[1];
+      const brows = entries.map(([name, kg]) => { const price = this.rawPrice(name); const eur = kg * price; totEur += eur; return { name, kg, price, eur }; });
+      prodBreak.push({
+        product: prod,
+        sub: this.fmt(vol, 0) + ' кг ГП · сырьё ' + this.fmt(totRaw, 0) + ' кг · ' + this.fmtCur(totEur, cur, rate, 0) + ' ' + this.curSym(cur),
+        rows: brows.map(r => ({ name: r.name, pct: totRaw > 0 ? this.fmt(r.kg / totRaw * 100, 1) + '%' : '—', kg: this.fmt(r.kg, 1), price: this.fmt(r.price), sum: this.fmtCur(r.eur, cur, rate, 0) })),
+      });
+    }
+
     return {
       isProcPlan: true,
+      procGen: !!S.procGen, ppNotGen: !S.procGen, genProc: () => set({ procGen: true }),
+      prodBreak, ppShowBreak: !!S.procGen && prodBreak.length > 0,
+      ppByRawShow: by === 'raw' && !!S.procGen,
       ppScaleOpts: scaleOpts,
       ppFrom: S.ppFrom || this.ymd(from), ppTo: S.ppTo || this.ymd(to),
       onPpFrom: (e) => set({ ppFrom: e.target.value }), onPpTo: (e) => set({ ppTo: e.target.value }),
@@ -2448,6 +2565,118 @@ class Component extends DCLogic {
     const url = URL.createObjectURL(blob); const a = document.createElement('a');
     a.href = url; a.download = name; document.body.appendChild(a); a.click();
     setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 100);
+  }
+
+  // ===== Интеграция с 1С =====
+  loadOneCToken() { try { const t = localStorage.getItem('inkflow_1c_token'); if (t != null && t !== '') this.setState({ oneCToken: t }); } catch (e) {} }
+  saveOneCToken() { try { localStorage.setItem('inkflow_1c_token', this.state.oneCToken || ''); } catch (e) {} }
+  oneCMaybeAuto() {
+    if (!this.state.oneCAuto || !this.state.oneCUrl || !this.data) return;
+    const last = Number(this.state.oneCLastAt) || 0;
+    if (Date.now() - last > 20 * 3600 * 1000) this.oneCSync(true);
+  }
+  async oneCSync(apply) {
+    const url = (this.state.oneCUrl || '').trim();
+    if (!url) { this.setState({ oneCErr: 'Укажите адрес HTTP-сервиса 1С во вкладке «Интеграция 1С».', tab: 'onec' }); return; }
+    this.setState({ oneCBusy: true, oneCErr: '', oneCStatus: 'Запрос к 1С…' });
+    try {
+      const headers = { 'Accept': 'application/json' };
+      const tok = (this.state.oneCToken || '').trim();
+      if (tok) headers['Authorization'] = /\s/.test(tok) ? tok : ('Bearer ' + tok);
+      const r = await fetch(url, { headers, cache: 'no-store' });
+      if (!r.ok) throw new Error('1С ответила HTTP ' + r.status + ' ' + (r.statusText || ''));
+      const d = await r.json();
+      const arr = (a) => Array.isArray(a) ? a : [];
+      const pv = { stock: arr(d.stock), prices: arr(d.prices), nomenclature: arr(d.nomenclature), suppliers: arr(d.suppliers), generatedAt: d.generatedAt || '' };
+      this.setState({ oneCPreview: pv, oneCBusy: false, oneCStatus: 'Получено из 1С: остатки ' + pv.stock.length + ', цены ' + pv.prices.length + ', номенклатура ' + pv.nomenclature.length + ', поставщики ' + pv.suppliers.length });
+      if (apply) this.oneCApply(pv);
+    } catch (e) {
+      let msg = e.message || String(e);
+      if (/Failed to fetch|NetworkError|load failed|ERR_/i.test(msg)) msg = 'нет ответа. Проверьте адрес, доступность 1С и настройку CORS на веб-сервере (см. инструкцию ниже).';
+      this.setState({ oneCBusy: false, oneCErr: 'Ошибка связи с 1С: ' + msg, oneCStatus: '' });
+    }
+  }
+  oneCApply(preview) {
+    const pv = preview || this.state.oneCPreview; if (!pv) return;
+    const match = this.state.oneCMatch || 'article';
+    const mats = (this.data && this.data.raw_materials) || [];
+    const byArticle = new Map(), byCode = new Map(), byName = new Map();
+    for (const m of mats) { if (m.article != null) byArticle.set(String(m.article).trim(), m); if (m.code != null) byCode.set(String(m.code).trim(), m); byName.set(this.norm(m.name), m); }
+    const find = (row) => {
+      if (match === 'article' && row.article != null) { const m = byArticle.get(String(row.article).trim()); if (m) return m; }
+      if (match === 'code' && row.code != null) { const m = byCode.get(String(row.code).trim()); if (m) return m; }
+      if (row.article != null) { const m = byArticle.get(String(row.article).trim()); if (m) return m; }
+      if (row.code != null) { const m = byCode.get(String(row.code).trim()); if (m) return m; }
+      if (row.name) { const m = byName.get(this.norm(row.name)); if (m) return m; }
+      return null;
+    };
+    const stock = { ...this.state.stock }; let sN = 0, sMiss = 0;
+    for (const row of pv.stock) { const m = find(row); if (!m) { sMiss++; continue; } stock[this.norm(m.name)] = Number(row.qty != null ? row.qty : row.balance) || 0; sN++; }
+    const prices = { ...this.state.prices }; let pN = 0, pMiss = 0;
+    for (const row of pv.prices) { const m = find(row); if (!m) { pMiss++; continue; } const v = Number(row.priceEur != null ? row.priceEur : row.price); if (isFinite(v) && v > 0) { prices[this.norm(m.name)] = v; pN++; } else pMiss++; }
+    const note = 'Применено из 1С: остатки ' + sN + (sMiss ? ' (не сопоставлено ' + sMiss + ')' : '') + ', цены ' + pN + (pMiss ? ' (не сопоставлено ' + pMiss + ')' : '');
+    const log = [{ at: Date.now(), note }, ...(this.state.oneCLog || [])].slice(0, 40);
+    this.setState({ stock, prices, oneCLastAt: Date.now(), oneCLog: log, stockUpdatedAt: Date.now(), oneCStatus: note });
+  }
+  oneCQuickGet() { if ((this.state.oneCUrl || '').trim()) this.oneCSync(true); else this.setState({ tab: 'onec', navOpen: false }); }
+  downloadOneCSpec() {
+    const L = [
+      '# Интеграция Shtark INK Flow с 1С (ERP) — техническое задание', '',
+      'Приложение по кнопке или по расписанию (раз в день) делает HTTP GET к опубликованному HTTP-сервису 1С и получает JSON.',
+      'Направление: 1С -> приложение. Загружаются ОСТАТКИ сырья и ЗАКУПОЧНЫЕ ЦЕНЫ (номенклатура и поставщики - опционально).', '',
+      '## 1. Контракт JSON (что отдаёт 1С)', 'GET <адрес HTTP-сервиса>  ->  application/json; charset=utf-8', '',
+      '{', '  "generatedAt": "2026-06-26T03:00:00+03:00",',
+      '  "stock":   [ { "article": "АП-100", "code": "00-0001", "name": "TCA-IAM20", "qty": 1250.5, "unit": "кг" } ],',
+      '  "prices":  [ { "article": "АП-100", "code": "00-0001", "name": "TCA-IAM20", "priceEur": 14.56, "currency": "EUR" } ],',
+      '  "nomenclature": [ { "article": "АП-100", "code": "00-0001", "name": "TCA-IAM20", "kind": "raw" } ],',
+      '  "suppliers": [ { "code": "П-001", "name": "ООО Поставщик", "inn": "7700000000", "terms": "предоплата" } ]', '}', '',
+      'Поля:',
+      '- stock[].qty  - текущий остаток на складах (число, кг). Из регистра запасов ERP.',
+      '- prices[].priceEur - закупочная цена за 1 кг В ЕВРО без НДС (как в «Реестре цен»). Если в 1С цены в рублях - пересчитайте в евро по курсу.',
+      '- Сопоставление в приложении - по полю "article" (артикул), либо "code"/"name".',
+      '- nomenclature и suppliers - опционально (резерв для расширения).', '',
+      '## 2. Реализация в 1С (HTTP-сервис)',
+      '1) Конфигуратор -> Общие -> HTTP-сервисы -> новый сервис (например shtark_flow, корневой URL "shtark").',
+      '2) Метод GET, шаблон "/data" -> обработчик формирует JSON по контракту (ЗаписатьJSON).',
+      '3) Остатки - запрос к регистру накопления запасов на дату; цены - регистр сведений «Цены номенклатуры» (последний срез).',
+      '4) Публикация на веб-сервере (Администрирование -> Публикация на веб-сервере), включить HTTP-сервисы.',
+      'Авторизация: пользователь 1С только на чтение. В приложении в поле «Токен/авторизация» укажите "Basic <base64(логин:пароль)>" или "Bearer <токен>" - оно подставляется в заголовок Authorization как есть.', '',
+      '## 3. CORS (обязательно для запроса из браузера)',
+      'Веб-сервер 1С должен отдавать заголовки CORS для домена приложения:',
+      '  Access-Control-Allow-Origin: https://<домен-приложения>',
+      '  Access-Control-Allow-Headers: Authorization, Content-Type',
+      '  Access-Control-Allow-Methods: GET, OPTIONS',
+      'Apache - в .htaccess каталога публикации (Header set ...). IIS - web.config -> customHeaders. На preflight OPTIONS отвечать кодом 200.', '',
+      '## 4. Если CORS включить нельзя - вариант через облако',
+      'Регламентное задание 1С раз в день отправляет тот же JSON в Firestore (REST API) - приложение читает без CORS. Запросите отдельную инструкцию.', '',
+      '## 5. Безопасность',
+      'Учётная запись 1С для сервиса - только чтение остатков и цен. Токен хранится локально в браузере администратора и не публикуется в коде приложения.',
+    ];
+    this.dlBlob('1C-integration-spec.md', new Blob([L.join('\n')], { type: 'text/markdown;charset=utf-8' }));
+  }
+  buildOneC() {
+    const S = this.state, set = (p) => this.setState(p);
+    const pv = S.oneCPreview;
+    return {
+      isOneC: true,
+      oneCUrl: S.oneCUrl || '', onOneCUrl: (e) => set({ oneCUrl: e.target.value }),
+      oneCToken: S.oneCToken || '', onOneCToken: (e) => set({ oneCToken: e.target.value }), saveOneCToken: () => this.saveOneCToken(),
+      oneCMatch: S.oneCMatch || 'article', onOneCMatch: (e) => set({ oneCMatch: e.target.value }),
+      oneCMatchOpts: [['article', 'По артикулу'], ['code', 'По коду'], ['name', 'По наименованию']].map(([v, label]) => ({ v, label })),
+      oneCAuto: !!S.oneCAuto, oneCAutoCls: S.oneCAuto ? 'permchip on' : 'permchip', toggleOneCAuto: () => set({ oneCAuto: !S.oneCAuto }),
+      oneCBusy: !!S.oneCBusy,
+      oneCTest: () => this.oneCSync(false), oneCSyncNow: () => this.oneCSync(true), oneCApplyNow: () => this.oneCApply(),
+      oneCStatus: S.oneCStatus || '', oneCHasStatus: !!S.oneCStatus, oneCErr: S.oneCErr || '', oneCHasErr: !!S.oneCErr,
+      oneCHasPreview: !!pv,
+      oneCStockCnt: pv ? String(pv.stock.length) : '0', oneCPriceCnt: pv ? String(pv.prices.length) : '0',
+      oneCNomCnt: pv ? String(pv.nomenclature.length) : '0', oneCSupCnt: pv ? String(pv.suppliers.length) : '0',
+      oneCLastLabel: S.oneCLastAt ? this.fmtStamp(S.oneCLastAt) : 'ещё не загружалось',
+      oneCPreviewStock: pv ? pv.stock.slice(0, 10).map(r => ({ name: r.name || '—', article: r.article != null ? String(r.article) : '—', qty: this.fmt(Number(r.qty != null ? r.qty : r.balance) || 0, 2) })) : [],
+      oneCLog: (S.oneCLog || []).map(e => ({ when: this.fmtDateTime(e.at), note: e.note })), oneCHasLog: (S.oneCLog || []).length > 0,
+      oneCSaveSpec: () => this.downloadOneCSpec(),
+      onImport1C: (e) => { const f = e.target.files && e.target.files[0]; if (f) this.import1CFile(f); e.target.value = ''; },
+      oneCFileCur: S.oneCFileCur || 'RUB', oneCFileCurOpts: [['RUB', '₽ (пересчёт в €)'], ['EUR', '€']].map(([v, label]) => ({ v, label })), onOneCFileCur: (e) => set({ oneCFileCur: e.target.value }),
+    };
   }
 
   expTableHtml(exp) {
@@ -2702,6 +2931,58 @@ class Component extends DCLogic {
     } catch (e) {
       const msg = /DecompressionStream/.test(String(e)) ? 'этот браузер не умеет распаковывать .xlsx — откройте в свежем Chrome или Edge.' : e.message;
       this.setState({ importOk: false, importMsg: 'Не удалось прочитать файл: ' + msg });
+    }
+  }
+
+  // Универсальный разбор выгрузки 1С (Excel): остатки и/или цены с автоопределением столбцов
+  async parseXlsx1C(file) {
+    const { files, td } = await this.unzipXlsx(file);
+    let strings = [];
+    if (files['xl/sharedStrings.xml']) {
+      const ss = td.decode(files['xl/sharedStrings.xml']);
+      strings = [...ss.matchAll(/<si>([\s\S]*?)<\/si>/g)].map(m => [...m[1].matchAll(/<t[^>]*>([\s\S]*?)<\/t>/g)].map(x => this.xlsxDecode(x[1])).join(''));
+    }
+    const sheetNames = Object.keys(files).filter(n => /^xl\/worksheets\/sheet\d+\.xml$/.test(n));
+    let best = null;
+    for (const sn of sheetNames) {
+      const rows = this.sheetToRows(td.decode(files[sn]), strings);
+      for (let i = 0; i < Math.min(rows.length, 20); i++) {
+        const r = rows[i].map(x => String(x).toLowerCase().replace(/\s+/g, ' ').trim());
+        const nc = r.findIndex(x => /наимен|сырь|материал|компонент|номенклат|товар|позиц|продукт/.test(x));
+        const ac = r.findIndex(x => /артикул|^код$|sku/.test(x));
+        const qc = r.findIndex(x => (/остат|налич|запас|свобод|доступ|кол-?во|колич/.test(x)) && !/цена|сумма|стоим/.test(x));
+        const pc = r.findIndex(x => /цена|стоим|закуп/.test(x) && !/сумма|колич|кол-?во/.test(x));
+        if ((nc >= 0 || ac >= 0) && (qc >= 0 || pc >= 0)) { const score = rows.length - i; if (!best || score > best.score) best = { rows, hr: i, nc, ac, qc, pc, score, sn }; break; }
+      }
+    }
+    if (!best) throw new Error('не найдены столбцы. Нужен лист с заголовками «Наименование» или «Артикул» и «Остаток»/«Цена».');
+    const stock = [], prices = [];
+    for (let i = best.hr + 1; i < best.rows.length; i++) {
+      const row = best.rows[i];
+      const name = (best.nc >= 0 ? (row[best.nc] || '') : '').trim();
+      const article = (best.ac >= 0 ? (row[best.ac] || '') : '').trim();
+      if (!name && !article) continue;
+      if (best.qc >= 0) { const raw = String(row[best.qc] != null ? row[best.qc] : '').trim(); if (raw !== '') { const q = this.parseNum(raw); if (isFinite(q)) stock.push({ name, article, qty: q }); } }
+      if (best.pc >= 0) { const raw = String(row[best.pc] != null ? row[best.pc] : '').trim(); if (raw !== '') { const p = this.parseNum(raw); if (isFinite(p) && p > 0) prices.push({ name, article, price: p }); } }
+    }
+    return { stock, prices, sheet: best.sn, hasQty: best.qc >= 0, hasPrice: best.pc >= 0 };
+  }
+  async import1CFile(file) {
+    if (!file) return;
+    if (!/\.xlsx$/i.test(file.name || '')) { this.setState({ oneCErr: '«' + (file.name || 'файл') + '» — нужен .xlsx. Пересохраните в 1С/Excel как «Книга Excel (.xlsx)».', oneCStatus: '' }); return; }
+    this.setState({ oneCBusy: true, oneCErr: '', oneCStatus: 'Чтение выгрузки 1С…' });
+    try {
+      const r = await this.parseXlsx1C(file);
+      const rate = Number(this.state.rate) || 0;
+      const toEur = (p) => (this.state.oneCFileCur === 'RUB' && rate > 0) ? (p / rate) : p;
+      const prices = r.prices.map(x => ({ name: x.name, article: x.article, priceEur: toEur(x.price) }));
+      const pv = { stock: r.stock, prices, nomenclature: [], suppliers: [], generatedAt: '' };
+      const warn = (!r.hasQty ? ' · столбец остатка не найден' : '') + (!r.hasPrice ? ' · столбец цены не найден' : '');
+      this.setState({ oneCPreview: pv, oneCBusy: false, oneCStatus: 'Из файла «' + file.name + '»: остатки ' + pv.stock.length + ', цены ' + pv.prices.length + warn });
+      this.oneCApply(pv);
+    } catch (e) {
+      const msg = /DecompressionStream/.test(String(e)) ? 'этот браузер не умеет распаковывать .xlsx — откройте в свежем Chrome/Edge.' : (e.message || e);
+      this.setState({ oneCBusy: false, oneCErr: 'Не удалось прочитать файл: ' + msg, oneCStatus: '' });
     }
   }
 
@@ -3086,7 +3367,7 @@ class Component extends DCLogic {
     const L = this.loaderVals();
     const Rt = this.ratesVals();
     if (!S.ready) {
-      return { ...L, ...Rt, ready: false, aiOpen: false, aiBtnCls: 'aifab', aiToggle: () => {}, aiClose: () => {}, aiMsgs: [], aiHasMsgs: false, aiNoMsgs: true, aiInput: '', aiBusy: false, onAiInput: () => {}, onAiKey: () => {}, aiSend: () => {}, aiClear: () => {}, analyzeScreen: () => {}, aiAnalyzable: false, aiModel: 'gpt-4o-mini', onAiModel: () => {}, aiCfgOpen: false, aiCfgToggle: () => {}, aiKeySet: false, aiKeyEdit: '', onAiKeyEdit: () => {}, aiBaseEdit: '', onAiBaseEdit: () => {}, aiModelEdit: '', onAiModelEdit: () => {}, saveAiCfg: () => {}, aiIsAdmin: false, aiPrompts: [], userName: '', userInitial: '?', userRoleLabel: '', userRoleCls: 'srole', logout: () => this.askFarewell(), doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: false, farewellText: '', onlineUsers: [], hasOnline: false, navCls: '', navBkCls: '', sidebarStyle: null, toggleNav: () => {}, closeNav: () => {}, chatOpen: false, chatToggle: () => {}, chatClose: () => {}, chatMsgs: [], chatEmpty: true, chatCount: 0, chatInput: '', onChatInput: () => {}, onChatKey: () => {}, chatSend: () => {}, tgLink: '', tgHasLink: false, tgNoLink: true, tgEdit: '', onTgEdit: () => {}, saveTg: () => {}, tgIsAdmin: false, tgEditToken: '', onTgToken: () => {}, tgEditChatId: '', onTgChatId: () => {}, saveTgBot: () => {}, tgTest: () => {}, tgStatus: '', tgFwdOn: false, navGroups: [], homeGroups: [], isHome: false, goHome: () => {}, tabDesc: 'Загрузка данных…', productOptions: [], ownerOptions: [], componentOptions: [], calcLines: [], recipeRows: [], prodRows: [], requirement: [], purchase: [], priceRows: [] };
+      return { ...L, ...Rt, ready: false, aiOpen: false, aiBtnCls: 'aifab', aiToggle: () => {}, aiClose: () => {}, aiMsgs: [], aiHasMsgs: false, aiNoMsgs: true, aiInput: '', aiBusy: false, onAiInput: () => {}, onAiKey: () => {}, aiSend: () => {}, aiClear: () => {}, analyzeScreen: () => {}, aiAnalyzable: false, aiModel: 'gpt-4o-mini', onAiModel: () => {}, aiCfgOpen: false, aiCfgToggle: () => {}, aiKeySet: false, aiKeyEdit: '', onAiKeyEdit: () => {}, aiBaseEdit: '', onAiBaseEdit: () => {}, aiModelEdit: '', onAiModelEdit: () => {}, saveAiCfg: () => {}, aiIsAdmin: false, aiPrompts: [], userName: '', userInitial: '?', userRoleLabel: '', userRoleCls: 'srole', logout: () => this.askFarewell(), doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: false, farewellText: '', onlineUsers: [], hasOnline: false, navCls: '', navBkCls: '', sidebarStyle: null, toggleNav: () => {}, closeNav: () => {}, chatOpen: false, chatToggle: () => {}, chatClose: () => {}, chatMsgs: [], chatEmpty: true, chatCount: 0, chatInput: '', onChatInput: () => {}, onChatKey: () => {}, chatSend: () => {}, tgLink: '', tgHasLink: false, tgNoLink: true, tgEdit: '', onTgEdit: () => {}, saveTg: () => {}, tgIsAdmin: false, tgEditToken: '', onTgToken: () => {}, tgEditChatId: '', onTgChatId: () => {}, saveTgBot: () => {}, tgTest: () => {}, tgStatus: '', tgFwdOn: false, navGroups: [], homeGroups: [], isHome: false, goHome: () => {}, oneCQuickGet: () => {}, oneCBtnText: 'Получить данные из 1С', oneCBtnCls: 'onecbtn', tabDesc: 'Загрузка данных…', productOptions: [], ownerOptions: [], componentOptions: [], calcLines: [], recipeRows: [], prodRows: [], requirement: [], purchase: [], priceRows: [] };
     }
     this._memo = new Map();
     const lossF = (Number(S.loss) || 0) / 100;
@@ -3099,7 +3380,7 @@ class Component extends DCLogic {
       ['proc', 'План закупок'], ['cal', 'Календарь'], ['wh', 'Склад'], ['cover', 'Сводка'],
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
-      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['cloud', 'Облако'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
+      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
     const tabGroups = [
@@ -3109,7 +3390,7 @@ class Component extends DCLogic {
       { label: 'Цены и поставщики', items: ['audit', 'pay', 'prices'] },
       { label: 'Запасы', items: ['wh', 'turnover', 'cover'] },
       { label: 'Контроль и сценарии', items: ['planfact', 'stress', 'reports'] },
-      { label: 'Система', items: ['cloud', 'users'] },
+      { label: 'Система', items: ['cloud', 'onec', 'users'] },
     ];
     const allowed = this.allowedTabs(S.currentUser);
     const allowSet = new Set(allowed);
@@ -3142,6 +3423,7 @@ class Component extends DCLogic {
       prices: 'Ввод и правка цен сырья — пересчитывает всё приложение.',
       catalog: 'Справочные каталоги: сырьё по категориям, готовая продукция и полуфабрикаты.',
       cloud: 'Общая база для команды: подключение к Firebase, блокировка на редактирование и журнал изменений.',
+      onec: 'Интеграция с 1С: автоматическая загрузка остатков сырья и закупочных цен из 1С (ERP) по расписанию через HTTP-сервис.',
       users: 'Управление доступом: добавление сотрудников, выдача логинов и паролей, роли и блокировка учётных записей.',
     };
     const homeGroups = tabGroups.map(g => ({
@@ -3198,6 +3480,9 @@ class Component extends DCLogic {
       wrapCls: (S.cloudConnected && S.cloudRole !== 'editor') ? 'viewonly' : '',
       cloudBarCls: cbCls, cloudBarText: cbText, cloudBarBtn: cbBtn, cloudHasBtn: !!cbBtn, onCloudBar: cbAct,
       isCloud: S.tab === 'cloud', cloudConnected: S.cloudConnected, cloudNotConnected: !S.cloudConnected,
+      isOneC: S.tab === 'onec',
+      oneCQuickGet: () => this.oneCQuickGet(), oneCBtnBusy: !!S.oneCBusy,
+      oneCBtnText: S.oneCBusy ? 'Загрузка из 1С…' : 'Получить данные из 1С', oneCBtnCls: S.oneCBusy ? 'onecbtn busy' : 'onecbtn',
       cloudName: S.cloudName, cloudCfgText: S.cloudCfgText, cloudWsId: S.cloudWsId, cloudErr: S.cloudErr,
       cloudStatusText: S.cloudStatus || (S.cloudConnected ? 'Онлайн' : 'Не подключено'), cloudStatusCls: S.cloudConnected ? 'cstatus on' : 'cstatus off',
       cloudHistoryRows: (S.cloudHistory || []).map(h => ({ author: h.author || '—', when: this.fmtDateTime(h.at), note: h.note || '' })),
@@ -3611,6 +3896,7 @@ class Component extends DCLogic {
     if (S.tab === 'stress') Object.assign(base, this.buildStress(rate));
     if (S.tab === 'pay') Object.assign(base, this.buildTreasury(rate));
     if (S.tab === 'users') Object.assign(base, this.buildUsers());
+    if (S.tab === 'onec') Object.assign(base, this.buildOneC());
 
     // ---- Календарь поставок ----
     if (S.tab === 'cal') {
