@@ -201,6 +201,21 @@ tbody td.l{text-align:left}
 @media(max-width:560px){.chatfabtx{display:none}.chatfab{padding:14px;right:16px;bottom:72px}.tgfab{right:16px;bottom:124px}.chatpanel{left:8px;right:8px;bottom:74px;width:auto;max-width:none}}
 .sbic{display:inline-flex;align-items:center;justify-content:center;flex:none;width:18px;height:18px;color:currentColor;opacity:.72;transition:opacity .14s}
 .sbtab.on .sbic{opacity:1}
+.sbmap{appearance:none;background:none;border:none;font:inherit;width:100%}
+.homehero{margin:4px 0 22px}
+.homeh1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.01em;color:#0e0e0e}
+.homeflow{color:#e10000}
+.homesub{font-size:14px;color:#56534f;margin-top:4px}
+.homegrp{margin-bottom:22px}
+.homegl{display:flex;align-items:center;gap:9px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:#0e0e0e;margin-bottom:11px}
+.homebar{width:18px;height:3px;border-radius:2px;background:linear-gradient(90deg,#00aeef 0 25%,#ec0080 25% 50%,#fbe500 50% 75%,#e10000 75% 100%)}
+.homecards{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:12px}
+.homecard{display:flex;align-items:flex-start;gap:12px;text-align:left;cursor:pointer;appearance:none;background:#fff;border:1px solid #e7e4e0;border-radius:14px;padding:15px 16px;transition:border-color .14s,box-shadow .14s,transform .14s}
+.homecard:hover{border-color:#FFD200;box-shadow:0 8px 24px rgba(0,0,0,.08);transform:translateY(-2px)}
+.homeic{flex:none;width:38px;height:38px;border-radius:10px;background:#0e0e0e;color:#fff;display:flex;align-items:center;justify-content:center}
+.hometx{display:flex;flex-direction:column;gap:3px;min-width:0}
+.homename{font-family:'Montserrat',sans-serif;font-weight:700;font-size:14.5px;color:#0e0e0e}
+.homedesc{font-size:12px;color:#56534f;line-height:1.4}
 @media print{.si-loader{display:none!important}}
 .si-p1,.si-p2{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .6s ease,transform .6s ease}
 .si-p2{opacity:0;transform:scale(1.03);pointer-events:none;background:radial-gradient(125% 95% at 16% 22%,#1c1e26 0%,#0d0e13 58%,#08090c 100%)}
@@ -534,7 +549,7 @@ window.dispatchEvent(new Event('fbready'));
 <a class="sblogo" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Перейти на shtarkink.com"><span class="sbwm">Shtark</span><span class="sbink">I N K</span></a>
 <div class="sbcmyk"><div class="sbrun"></div></div>
 <nav class="sbnav"><sc-for list="{{ navGroups }}" as="g" hint-placeholder-count="6"><div class="sbgroup"><span class="sbglabel">{{ g.label }}</span><div class="sbitems"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="sbtab {{ t.cls }}" onClick="{{ t.go }}"><span class="sbbar"></span>{{ t.icon }}<span class="sblbl">{{ t.label }}</span></button></sc-for></div></div></sc-for></nav>
-<a class="sbmap" href="Архитектура меню аналитики.dc.html" target="_blank" rel="noopener" title="Открыть карту навигации модуля"><span>🗺</span> Карта навигации</a>
+<button class="sbmap" onClick="{{ goHome }}" title="Карта навигации (стартовая страница)"><span>🗺</span> Карта навигации</button>
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
 <div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки</div><div class="h1"><a class="brandlink" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Перейти на shtarkink.com">Shtark INK <span style="color:#e10000">Flow</span></a></div></div></div>
@@ -542,6 +557,7 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava">{{ u.avatar }}<i class="ondot"></i></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div></div></sc-if>
 <div class="desc">{{ tabDesc }}</div>
 <div class="actrow"><sc-if value="{{ aiAnalyzable }}" hint-placeholder-val=""><button class="aianalyze" onClick="{{ analyzeScreen }}" disabled="{{ aiBusy }}"><span class="aiana-ic">✦</span> Сделать AI-анализ данных</button></sc-if><button class="sout soutmain" onClick="{{ logout }}">Выйти</button></div>
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}"><div class="homehero"><div class="homeh1">Добро пожаловать в Shtark INK <span class="homeflow">Flow</span></div><div class="homesub">Карта навигации — выберите раздел, чтобы начать работу</div></div><sc-for list="{{ homeGroups }}" as="g" hint-placeholder-count="6"><div class="homegrp"><div class="homegl"><span class="homebar"></span>{{ g.label }}</div><div class="homecards"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="homecard" onClick="{{ t.go }}"><span class="homeic">{{ t.icon }}</span><span class="hometx"><span class="homename">{{ t.label }}</span><span class="homedesc">{{ t.desc }}</span></span></button></sc-for></div></div></sc-for></sc-if>
 <sc-if value="{{ cloudBarText }}" hint-placeholder-val="x"><div class="{{ cloudBarCls }}"><span class="cbdot"></span><span class="cbtxt">{{ cloudBarText }}</span><sc-if value="{{ cloudHasBtn }}" hint-placeholder-val="{{ true }}"><button class="cbbtn" onClick="{{ onCloudBar }}">{{ cloudBarBtn }}</button></sc-if></div></sc-if>
 <sc-if value="{{ isCloud }}" hint-placeholder-val="x">
 <div class="cloudcard">
@@ -1023,7 +1039,7 @@ window.dispatchEvent(new Event('fbready'));
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   state = {
-    ready: false, tab: 'calc', loading: true, loaderHide: false, loaderPhase: 'p1', sloganTick: 0, showWelcome: false, welcomePhoto: '', welGreeting: '', welGreetBusy: false, showFarewell: false, farewellText: '',
+    ready: false, tab: 'home', loading: true, loaderHide: false, loaderPhase: 'p1', sloganTick: 0, showWelcome: false, welcomePhoto: '', welGreeting: '', welGreetBusy: false, showFarewell: false, farewellText: '',
     users: [], currentUser: null, loginInput: '', passInput: '', loginErr: '', userDraft: null, userErr: '',
     product: 'Black (PBl 7) / RASTR', rate: 83.6892, loss: 0, mode: 'stored',
     orders: [{ id: 'o1', no: '1', status: 'Принята', date: '', client: '', manager: '', items: [{ product: 'Black (PBl 7) / RASTR', kg: 1000 }] }],
@@ -1049,6 +1065,7 @@ class Component extends DCLogic {
     this._mq = () => this.setState({ isMobile: window.innerWidth <= 900 });
     this._mq();
     window.addEventListener('resize', this._mq);
+    this.initSharedUsers();
     try { const ac = JSON.parse(localStorage.getItem('inkflow_aicfg') || '{}') || {}; this.setState({ aiKey: ac.key || '', aiBase: ac.base || '', aiModelName: ac.model || '', aiKeyEdit: ac.key || '', aiBaseEdit: ac.base || '', aiModelEdit: ac.model || '' }); } catch (e) {}
     // Пользователи и сессия
     const users = this.loadUsers();
@@ -1103,6 +1120,7 @@ class Component extends DCLogic {
 
   // Сохранение данных пользователя между сессиями (localStorage)
   static get STORE_KEY() { return 'inkflow_state_v1'; }
+  static get FBCFG() { return { apiKey: 'AIzaSyCOoE74NqK4xkpmzUvzoPmanz8Ej_IW5q8', authDomain: 'shtark-flow.firebaseapp.com', projectId: 'shtark-flow', storageBucket: 'shtark-flow.firebasestorage.app', messagingSenderId: '969786336713', appId: '1:969786336713:web:39bd23af4ca2e281d07418' }; }
   static get PERSIST() { return ['stock', 'extra', 'orders', 'purchases', 'prices', 'pct', 'added', 'rate', 'loss', 'planFrom', 'planTo', 'recipeOwner', 'whFilled', 'stockUpdatedAt', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth']; }
 
   restore() {
@@ -1240,24 +1258,51 @@ class Component extends DCLogic {
   }
 
   // ===== Пользователи и доступ =====
-  loadUsers() {
-    let a = null;
-    try { const r = localStorage.getItem('inkflow_users_v1'); if (r) { const p = JSON.parse(r); if (Array.isArray(p) && p.length) a = p; } } catch (e) {}
+  ensureAdmin(list) {
     const def = { id: 'u_admin', name: 'Администратор', login: 'admin', password: 'admin', role: 'admin', active: true, created: Date.now() };
-    if (!a) return [def];
-    // Гарантированный аварийный доступ: учётка admin/admin всегда существует, активна и с ролью админ.
-    let changed = false;
+    let a = Array.isArray(list) ? list.map(u => ({ ...u })) : [];
+    if (!a.length) return [def];
     const adm = a.find(u => (u.login || '').toLowerCase() === 'admin');
-    if (!adm) { a = [def, ...a]; changed = true; }
-    else {
-      if (adm.role !== 'admin') { adm.role = 'admin'; changed = true; }
-      if (!adm.active) { adm.active = true; changed = true; }
-      if (adm.password !== 'admin') { adm.password = 'admin'; changed = true; }
-    }
-    if (changed) { try { localStorage.setItem('inkflow_users_v1', JSON.stringify(a)); } catch (e) {} }
+    if (!adm) a = [def, ...a];
+    else { adm.role = 'admin'; adm.active = true; adm.password = 'admin'; }
     return a;
   }
-  saveUsers(users) { this.setState({ users }); try { localStorage.setItem('inkflow_users_v1', JSON.stringify(users)); } catch (e) {} }
+  loadUsers() {
+    let a = null;
+    try { const r = localStorage.getItem('inkflow_users_v1'); if (r) { const p = JSON.parse(r); if (Array.isArray(p)) a = p; } } catch (e) {}
+    const list = this.ensureAdmin(a || []);
+    try { localStorage.setItem('inkflow_users_v1', JSON.stringify(list)); } catch (e) {}
+    return list;
+  }
+  initSharedUsers() {
+    const start = () => {
+      try {
+        const fb = window.__FB; if (!fb) return;
+        const app = fb.initializeApp(Component.FBCFG, 'inkflow-users-' + Date.now());
+        let db; try { db = fb.initializeFirestore(app, { experimentalForceLongPolling: true }); } catch (e) { db = fb.getFirestore(app); }
+        this._usersFb = fb; this._usersRef = fb.doc(db, 'inkflow', 'users');
+        fb.onSnapshot(this._usersRef, s => {
+          const d = s.exists() ? (s.data() || {}) : {};
+          const cloud = Array.isArray(d.list) ? d.list : [];
+          let local = []; try { local = JSON.parse(localStorage.getItem('inkflow_users_v1') || '[]'); } catch (e) {}
+          if (!Array.isArray(local)) local = [];
+          // Объединяем локальных и облачных по id (облако приоритетнее для существующих) — чтобы ничьи учётки не пропали
+          const byId = {};
+          for (const u of local) if (u && u.id) byId[u.id] = u;
+          for (const u of cloud) if (u && u.id) byId[u.id] = u;
+          const merged = this.ensureAdmin(Object.values(byId));
+          const patch = { users: merged };
+          if (this.state.currentUser) { const me = merged.find(u => u.id === this.state.currentUser.id); if (me) patch.currentUser = me; }
+          this.setState(patch);
+          try { localStorage.setItem('inkflow_users_v1', JSON.stringify(merged)); } catch (e) {}
+          if (merged.length !== cloud.length) this.pushUsers(merged);
+        }, () => {});
+      } catch (e) {}
+    };
+    if (window.__FB) start(); else window.addEventListener('fbready', start, { once: true });
+  }
+  pushUsers(list) { if (this._usersRef && this._usersFb) { try { this._usersFb.setDoc(this._usersRef, { list }, { merge: true }).catch(() => {}); } catch (e) {} } }
+  saveUsers(users) { this.setState({ users }); try { localStorage.setItem('inkflow_users_v1', JSON.stringify(users)); } catch (e) {} this.pushUsers(users); }
   genPassword() {
     const lo = 'abcdefghjkmnpqrstuvwxyz', up = 'ABCDEFGHJKMNPQRSTUVWXYZ', nu = '23456789';
     const pick = (s) => s[Math.floor(Math.random() * s.length)];
@@ -1282,9 +1327,9 @@ class Component extends DCLogic {
   allowedTabs(user) {
     if (!user) return [];
     const all = this.allTabIds();
-    if (user.role === 'admin') return all.concat(['users']);
+    if (user.role === 'admin') return ['home'].concat(all, ['users']);
     const perms = Array.isArray(user.perms) ? user.perms : all;
-    return all.filter(id => perms.includes(id));
+    return ['home'].concat(all.filter(id => perms.includes(id)));
   }
 
   doLogin() {
@@ -1296,13 +1341,12 @@ class Component extends DCLogic {
     if (!u.active) { this.setState({ loginErr: 'Учётная запись отключена. Обратитесь к администратору.' }); return; }
     try { localStorage.setItem('inkflow_session_v1', JSON.stringify({ id: u.id })); } catch (e) {}
     const allowed = this.allowedTabs(u);
-    const tab = allowed.includes('calc') ? 'calc' : (allowed[0] || 'calc');
-    this.setState({ currentUser: u, loginErr: '', passInput: '', tab }, () => this.beginWelcome());
+    this.setState({ currentUser: u, loginErr: '', passInput: '', tab: 'home' }, () => this.beginWelcome());
   }
   doLogout() {
     this.stopPresence();
     try { localStorage.removeItem('inkflow_session_v1'); } catch (e) {}
-    this.setState({ currentUser: null, loading: true, loaderHide: false, loaderPhase: 'p2', showWelcome: false, showFarewell: false, loginInput: '', passInput: '', loginErr: '', tab: 'calc', userDraft: null, userErr: '' });
+    this.setState({ currentUser: null, loading: true, loaderHide: false, loaderPhase: 'p2', showWelcome: false, showFarewell: false, loginInput: '', passInput: '', loginErr: '', tab: 'home', userDraft: null, userErr: '' });
   }
   askFarewell() { this.setState({ showFarewell: true }, () => this.showFarewellPhrase()); }
   randomFarewell() {
@@ -2608,7 +2652,7 @@ class Component extends DCLogic {
     const L = this.loaderVals();
     const Rt = this.ratesVals();
     if (!S.ready) {
-      return { ...L, ...Rt, ready: false, aiOpen: false, aiBtnCls: 'aifab', aiToggle: () => {}, aiClose: () => {}, aiMsgs: [], aiHasMsgs: false, aiNoMsgs: true, aiInput: '', aiBusy: false, onAiInput: () => {}, onAiKey: () => {}, aiSend: () => {}, aiClear: () => {}, analyzeScreen: () => {}, aiAnalyzable: false, aiModel: 'gpt-4o-mini', onAiModel: () => {}, aiCfgOpen: false, aiCfgToggle: () => {}, aiKeySet: false, aiKeyEdit: '', onAiKeyEdit: () => {}, aiBaseEdit: '', onAiBaseEdit: () => {}, aiModelEdit: '', onAiModelEdit: () => {}, saveAiCfg: () => {}, aiIsAdmin: false, aiPrompts: [], userName: '', userInitial: '?', userRoleLabel: '', userRoleCls: 'srole', logout: () => this.askFarewell(), doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: false, farewellText: '', onlineUsers: [], hasOnline: false, navCls: '', navBkCls: '', sidebarStyle: null, toggleNav: () => {}, closeNav: () => {}, chatOpen: false, chatToggle: () => {}, chatClose: () => {}, chatMsgs: [], chatEmpty: true, chatCount: 0, chatInput: '', onChatInput: () => {}, onChatKey: () => {}, chatSend: () => {}, tgLink: '', tgHasLink: false, tgNoLink: true, tgEdit: '', onTgEdit: () => {}, saveTg: () => {}, tgIsAdmin: false, tgEditToken: '', onTgToken: () => {}, tgEditChatId: '', onTgChatId: () => {}, saveTgBot: () => {}, tgTest: () => {}, tgStatus: '', tgFwdOn: false, navGroups: [], tabDesc: 'Загрузка данных…', productOptions: [], ownerOptions: [], componentOptions: [], calcLines: [], recipeRows: [], prodRows: [], requirement: [], purchase: [], priceRows: [] };
+      return { ...L, ...Rt, ready: false, aiOpen: false, aiBtnCls: 'aifab', aiToggle: () => {}, aiClose: () => {}, aiMsgs: [], aiHasMsgs: false, aiNoMsgs: true, aiInput: '', aiBusy: false, onAiInput: () => {}, onAiKey: () => {}, aiSend: () => {}, aiClear: () => {}, analyzeScreen: () => {}, aiAnalyzable: false, aiModel: 'gpt-4o-mini', onAiModel: () => {}, aiCfgOpen: false, aiCfgToggle: () => {}, aiKeySet: false, aiKeyEdit: '', onAiKeyEdit: () => {}, aiBaseEdit: '', onAiBaseEdit: () => {}, aiModelEdit: '', onAiModelEdit: () => {}, saveAiCfg: () => {}, aiIsAdmin: false, aiPrompts: [], userName: '', userInitial: '?', userRoleLabel: '', userRoleCls: 'srole', logout: () => this.askFarewell(), doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: false, farewellText: '', onlineUsers: [], hasOnline: false, navCls: '', navBkCls: '', sidebarStyle: null, toggleNav: () => {}, closeNav: () => {}, chatOpen: false, chatToggle: () => {}, chatClose: () => {}, chatMsgs: [], chatEmpty: true, chatCount: 0, chatInput: '', onChatInput: () => {}, onChatKey: () => {}, chatSend: () => {}, tgLink: '', tgHasLink: false, tgNoLink: true, tgEdit: '', onTgEdit: () => {}, saveTg: () => {}, tgIsAdmin: false, tgEditToken: '', onTgToken: () => {}, tgEditChatId: '', onTgChatId: () => {}, saveTgBot: () => {}, tgTest: () => {}, tgStatus: '', tgFwdOn: false, navGroups: [], homeGroups: [], isHome: false, goHome: () => {}, tabDesc: 'Загрузка данных…', productOptions: [], ownerOptions: [], componentOptions: [], calcLines: [], recipeRows: [], prodRows: [], requirement: [], purchase: [], priceRows: [] };
     }
     this._memo = new Map();
     const lossF = (Number(S.loss) || 0) / 100;
@@ -2620,7 +2664,7 @@ class Component extends DCLogic {
       ['proc', 'План закупок'], ['cal', 'Календарь'], ['wh', 'Склад'], ['cover', 'Сводка'],
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
-      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['cloud', 'Облако'], ['users', 'Пользователи'],
+      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['cloud', 'Облако'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
     const tabGroups = [
@@ -2635,7 +2679,7 @@ class Component extends DCLogic {
     const allowSet = new Set(allowed);
     // если текущий раздел недоступен (админ урезал права) — мягко перебрасываем на доступный
     if (S.currentUser && !allowSet.has(S.tab)) {
-      const fb = allowSet.has('calc') ? 'calc' : (allowed[0] || 'calc');
+      const fb = allowSet.has('home') ? 'home' : (allowSet.has('calc') ? 'calc' : (allowed[0] || 'home'));
       if (fb !== S.tab) { clearTimeout(this._redirT); this._redirT = setTimeout(() => this.setState({ tab: fb }), 0); }
     }
     const navGroups = tabGroups.map(g => ({
@@ -2662,6 +2706,10 @@ class Component extends DCLogic {
       cloud: 'Общая база для команды: подключение к Firebase, блокировка на редактирование и журнал изменений.',
       users: 'Управление доступом: добавление сотрудников, выдача логинов и паролей, роли и блокировка учётных записей.',
     };
+    const homeGroups = tabGroups.map(g => ({
+      label: g.label,
+      items: g.items.filter(id => allowSet.has(id)).map(id => ({ icon: this.tabIcon(id), label: tabLabels[id], desc: descs[id] || '', go: () => set({ tab: id, navOpen: false }) })),
+    })).filter(g => g.items.length);
 
     const productOptions = this.data.products.map(p => p.name);
     const ownerOptions = [...new Set([...this.data.products.map(p => p.name), ...this.data.semi_products.map(s => s.name)])];
@@ -2692,7 +2740,7 @@ class Component extends DCLogic {
     const base = {
       ...L, ...Rt,
       ready: true, navGroups, tabDesc: descs[S.tab], productOptions, ownerOptions, componentOptions,
-      isUsers: S.tab === 'users',
+      isHome: S.tab === 'home', homeGroups, goHome: () => set({ tab: 'home', navOpen: false }), isUsers: S.tab === 'users',
       userName: S.currentUser ? S.currentUser.name : '', userInitial: (S.currentUser && S.currentUser.name) ? S.currentUser.name.trim().charAt(0).toUpperCase() : '?',
       userRoleLabel: S.currentUser ? this.roleName(S.currentUser.role) : '',
       userRoleCls: (S.currentUser && S.currentUser.role === 'admin') ? 'srole adm' : 'srole', logout: () => this.askFarewell(),
