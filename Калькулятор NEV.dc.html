@@ -1192,7 +1192,7 @@ class Component extends DCLogic {
     // Пользователи и сессия
     const users = this.loadUsers();
     let currentUser = null;
-    try { const s = JSON.parse(localStorage.getItem('inkflow_session_v1') || 'null'); if (s && s.id) { const u = users.find(x => x.id === s.id); if (u && u.active) currentUser = u; } } catch (e) {}
+    try { const s = JSON.parse(localStorage.getItem('inkflow_session_v1') || 'null'); if (s && s.id) { const fresh = !s.ts || (Date.now() - s.ts) < Component.IDLE_MS; const u = users.find(x => x.id === s.id); if (u && u.active && fresh) currentUser = u; else if (s.ts && !fresh) { try { localStorage.removeItem('inkflow_session_v1'); } catch (e2) {} } } } catch (e) {}
     let welcomePhoto = '';
     try { welcomePhoto = localStorage.getItem('inkflow_welcome_photo') || ''; } catch (e) {}
     let chat = [], tgLink = '';
@@ -1207,6 +1207,11 @@ class Component extends DCLogic {
     this._sloganInt = setInterval(() => this.setState(s => ({ sloganTick: s.sloganTick + 1 })), 10000);
     this.restore();
     this.cloudRestore();
+    // Авто-выход по неактивности (35 минут): любое действие продлевает сессию
+    this._lastAct = Date.now();
+    this._markAct = () => { this._lastAct = Date.now(); if (this.state.currentUser) { try { const s = JSON.parse(localStorage.getItem('inkflow_session_v1') || 'null'); if (s && s.id && (!s.ts || Date.now() - s.ts > 60000)) localStorage.setItem('inkflow_session_v1', JSON.stringify({ id: s.id, ts: Date.now() })); } catch (e) {} } };
+    ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.addEventListener(ev, this._markAct, { passive: true }));
+    this._idleInt = setInterval(() => { if (this.state.currentUser && Date.now() - this._lastAct > Component.IDLE_MS) this.expireSession(); }, 15000);
     // Авто-подключение общего облака данных (встроенный конфиг) — вводить ничего не нужно
     this._autoCloud = () => { try { if (!this.state.cloudConnected) this.setState({ cloudCfgText: JSON.stringify(Component.FBCFG), cloudWsId: (this.state.cloudWsId || 'workspace') }, () => this.cloudConnect()); } catch (e) {} };
     if (window.__FB) this._autoCloud(); else window.addEventListener('fbready', this._autoCloud, { once: true });
@@ -1245,6 +1250,7 @@ class Component extends DCLogic {
 
   // Сохранение данных пользователя между сессиями (localStorage)
   static get STORE_KEY() { return 'inkflow_state_v1'; }
+  static get IDLE_MS() { return 35 * 60 * 1000; }
   static get FBCFG() { return { apiKey: 'AIzaSyCOoE74NqK4xkpmzUvzoPmanz8Ej_IW5q8', authDomain: 'shtark-flow.firebaseapp.com', projectId: 'shtark-flow', storageBucket: 'shtark-flow.firebasestorage.app', messagingSenderId: '969786336713', appId: '1:969786336713:web:39bd23af4ca2e281d07418' }; }
   static get PERSIST() { return ['stock', 'extra', 'orders', 'purchases', 'prices', 'pct', 'added', 'rate', 'loss', 'planFrom', 'planTo', 'recipeOwner', 'whFilled', 'stockUpdatedAt', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth', 'prodPlan', 'planHorizon', 'planStart', 'planExpand', 'planCur', 'ppScale', 'ppFrom', 'ppTo', 'ppNetStock', 'ppNetTransit', 'ppBy', 'ppCur', 'ppGroup', 'oneCUrl', 'oneCMatch', 'oneCAuto', 'oneCLastAt', 'oneCLog']; }
 
@@ -1279,7 +1285,7 @@ class Component extends DCLogic {
     if (!this._applyingRemote && this.state.cloudRole === 'editor') this.queueCloudPush();
   }
 
-  componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); }
+  componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
 
   loaderVals() {
     const T = 'ENGINEERED FOR EXCELLENCE. PRINTED FOR IMPACT.';
@@ -1523,9 +1529,16 @@ class Component extends DCLogic {
     const u = (this.state.users || []).find(x => x.login.toLowerCase() === login && x.password === pass);
     if (!u) { this.setState({ loginErr: 'Неверный логин или пароль.' }); return; }
     if (!u.active) { this.setState({ loginErr: 'Учётная запись отключена. Обратитесь к администратору.' }); return; }
-    try { localStorage.setItem('inkflow_session_v1', JSON.stringify({ id: u.id })); } catch (e) {}
+    try { localStorage.setItem('inkflow_session_v1', JSON.stringify({ id: u.id, ts: Date.now() })); } catch (e) {}
     const allowed = this.allowedTabs(u);
     this.setState({ currentUser: u, loginErr: '', passInput: '', tab: 'home', cloudName: u.name || this.state.cloudName }, () => this.beginWelcome());
+  }
+  // Авто-выход по неактивности: завершаем сессию и требуем повторный вход
+  expireSession() {
+    if (!this.state.currentUser) return;
+    this.stopPresence();
+    try { localStorage.removeItem('inkflow_session_v1'); } catch (e) {}
+    this.setState({ currentUser: null, loading: true, loaderHide: false, loaderPhase: 'p2', showWelcome: false, showFarewell: false, loginInput: '', passInput: '', tab: 'home', userDraft: null, navOpen: false, loginErr: 'Сессия завершена из-за неактивности (более 35 минут). Войдите снова.' });
   }
   doLogout() {
     this.stopPresence();
