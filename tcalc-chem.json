@@ -1,0 +1,38 @@
+{
+ "source": "calculator_v7 — Калькулятор технолога ШТАРК КЕМИКАЛЗ",
+ "settings": {
+  "vat": 0.22,
+  "rateEur": 87.4027,
+  "rateUsd": 77.0611,
+  "rateCny": 11.3359,
+  "assumedEur": 100,
+  "delivery": 0.10,
+  "gm2": 0.05,
+  "kv": 0,
+  "other": 0,
+  "markupPct": 0.20,
+  "markupRub": 0
+ },
+ "sections": ["Материал основной", "Тара для ГП", "Оснастка (фильтры)", "Оснастка (этикетка)"],
+ "products": [
+  {
+   "id": "starkbond2014",
+   "name": "Клей Starkbond 2014 бочка 225кг",
+   "comps": [
+    { "name": "Полиол Puranol Polyether polyol D220", "section": "Материал основной", "unit": "кг", "kind": "main", "base": 0.385042, "priceEur": 1.31 },
+    { "name": "Изоцианат Ongronat 3000", "section": "Материал основной", "unit": "кг", "kind": "main", "base": 0.115129, "priceEur": 2.82 },
+    { "name": "Хлорпарафин ХП-470 м.\"А\" ( куб 1200 кг )", "section": "Материал основной", "unit": "кг", "kind": "main", "base": 0.256268, "priceEur": 1.09 },
+    { "name": "Изоцианат Lupranate MI (бочка 225 кг) / Изоцианат Lupranate MI (бочка 250 кг)", "section": "Материал основной", "unit": "кг", "kind": "main", "base": 0.213201, "priceEur": 2.90 },
+    { "name": "Изоцианат полимерный Wannate PM-200", "section": "Материал основной", "unit": "кг", "kind": "main", "base": 0.028995, "priceEur": 2.22 },
+    { "name": "П-толуолсульфонил изоцианат / p-toluene sulfonyl isocyanate (PTSI)", "section": "Материал основной", "unit": "кг", "kind": "main", "base": 0.000810, "priceEur": 8.27 },
+    { "name": "Катализатор DMDEE бочки по 210 кг", "section": "Материал основной", "unit": "кг", "kind": "main", "base": 0.000554, "priceEur": 7.15 },
+    { "name": "Бочка металлическая 210л. (с крышкой на обруч/пробка) красная RAL3020 / синяя RAL5010 / черная RAL9005", "section": "Тара для ГП", "unit": "шт", "kind": "fixed", "qty": 0.0043, "priceEur": 30.04 },
+    { "name": "Поддон деревянный 1200*1200", "section": "Тара для ГП", "unit": "шт", "kind": "fixed", "qty": 0.0009, "priceEur": 6.32 },
+    { "name": "Поддон деревянный 1200*800", "section": "Тара для ГП", "unit": "шт", "kind": "fixed", "qty": 0.0004, "priceEur": 4.86 },
+    { "name": "Банка 12л. с внешним покрытием", "section": "Тара для ГП", "unit": "шт", "kind": "fixed", "qty": 0.0004, "priceEur": 3.28 },
+    { "name": "Фильтрующий мешок 178х810 НМО 100/150/200 мкм п/к", "section": "Оснастка (фильтры)", "unit": "шт", "kind": "fixed", "qty": 0.0009, "priceEur": 7.29 },
+    { "name": "Этикетка 210x300мм (крошка) STARKBOND", "section": "Оснастка (этикетка)", "unit": "шт", "kind": "fixed", "qty": 0.0043, "priceEur": 0.13 }
+   ]
+  }
+ ]
+}
