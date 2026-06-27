@@ -403,6 +403,7 @@ tbody td.l{text-align:left}
 .cwmain:hover .cwmainarr{transform:translateX(4px)}
 @media(max-width:560px){.cwbtn{top:auto;bottom:182px;right:14px;width:46px;height:46px}.cwdrawer{width:auto;left:8px;right:8px;border-radius:16px 16px 0 0;top:auto;height:88vh}}
 /* АЯ «выглядывает»: всплывающий аватар ассистента у правого края с облачком-напоминанием */
+.aibackdrop{position:fixed;inset:0;z-index:1199;background:transparent}
 .ayapeek{position:fixed;right:0;top:188px;z-index:1250;display:flex;align-items:center;max-width:min(380px,calc(100vw - 18px));animation:ayaPeek .5s cubic-bezier(.22,1.2,.36,1)}
 @keyframes ayaPeek{from{transform:translate(70px,0);opacity:0}to{transform:translate(0,0);opacity:1}}
 .ayaav{flex:none;width:62px;height:62px;border-radius:50% 0 0 50%;background:#0e0e0e;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;box-shadow:-6px 8px 24px rgba(0,0,0,.28);border:2px solid #FFD200;border-right:none;position:relative}
@@ -649,8 +650,9 @@ a.wordmark:hover{opacity:.6}
 .qaact{display:flex;gap:9px;margin-top:2px}
 .qasave{flex:1;justify-content:center}
 .qahint{font-size:11.5px;color:#8a8782;line-height:1.5}
-.chwrap{position:fixed;right:20px;bottom:96px;z-index:1260;display:flex;flex-direction:column;align-items:flex-end;gap:8px;pointer-events:none;animation:chIn .5s cubic-bezier(.16,1,.3,1) both}
+.chwrap{position:fixed;left:0;bottom:96px;z-index:1260;display:flex;flex-direction:column;align-items:flex-start;gap:8px;pointer-events:none;animation:chCross 8s ease-in-out forwards}
 @keyframes chIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes chCross{0%{transform:translate(-90px,0);opacity:0}12%{transform:translate(16px,0);opacity:1}82%{transform:translate(calc(100vw - 300px),0);opacity:1}100%{transform:translate(100vw,0);opacity:0}}
 .chbubble{max-width:236px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:9px 13px;font-size:12.5px;line-height:1.45;color:#1e293b;box-shadow:0 12px 32px rgba(15,23,42,.18);font-weight:500;text-wrap:pretty}
 .chby{display:block;font-size:10.5px;font-weight:800;color:#4f46e5;margin-bottom:2px}
 .chemp{display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid #eef0f4}
@@ -684,7 +686,7 @@ a.wordmark:hover{opacity:.6}
 .chsteam{animation:chSteam 1.6s ease-in-out infinite}
 @keyframes chSteam{0%{opacity:0;transform:translateY(2px)}50%{opacity:.8}100%{opacity:0;transform:translateY(-5px)}}
 .ch-coffee .chcheek,.ch-bye .chcheek{opacity:.8!important}
-@media(max-width:560px){.chwrap{right:10px;bottom:296px}}
+@media(max-width:560px){.chwrap{left:8px;bottom:296px}}
 .tcell.blank{background:#faf9f7;border-style:dashed;border-color:#f1efec}
 .tcell.today{border-color:#0e0e0e;box-shadow:inset 0 0 0 1px #0e0e0e}
 .tcellnum{font-size:12px;font-weight:700;color:#56534f}
@@ -730,6 +732,11 @@ a.wordmark:hover{opacity:.6}
 .onecbtn.busy{opacity:.65;pointer-events:none}
 .oneclogo{flex:none;width:27px;height:27px;border-radius:6px;background:#FFCC00;color:#c00000;font-family:'Montserrat',sans-serif;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;letter-spacing:-.02em}
 .onecbtx{flex:1;line-height:1.15}
+.sbai{display:flex;align-items:center;gap:9px;width:calc(100% - 28px);margin:4px 14px 2px;padding:9px 11px;background:rgba(124,92,255,.14);border:1px solid rgba(124,92,255,.4);border-radius:11px;cursor:pointer;font:inherit;font-weight:700;font-size:12.5px;color:#fff;text-align:left}
+.sbai:hover{background:rgba(124,92,255,.26);border-color:#7c5cff}
+.sbai2{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+.sbai2:hover{background:rgba(255,210,0,.14);border-color:#FFD200}
+.sbaiic{color:#c7b9ff;font-size:14px}
 .sbgroup{display:flex;flex-direction:column;gap:4px}
 .sbglabel{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6f6b66;padding:0 10px 3px}
 .sbitems{display:flex;flex-direction:column;gap:2px}
@@ -965,6 +972,8 @@ window.dispatchEvent(new Event('fbready'));
 <a class="sblogo" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Перейти на shtarkink.com"><span class="sbwm">Shtark</span><span class="sbink">I N K</span></a>
 <div class="sbcmyk"><div class="sbrun"></div></div>
 <button class="{{ oneCBtnCls }}" onClick="{{ oneCQuickGet }}" title="Загрузить остатки и закупочные цены из 1С"><span class="oneclogo">1С</span><span class="onecbtx">{{ oneCBtnText }}</span></button>
+<button class="sbai" onClick="{{ runGlobalAudit }}" title="Глубокий AI-аудит производства, снабжения и кассы"><span class="sbaiic">✦</span> Глубокий анализ</button>
+<button class="sbai sbai2" onClick="{{ aiToggle }}" title="Открыть AI-аналитика АЯ"><span class="sbaiic">✦</span> AI-аналитик АЯ</button>
 <nav class="sbnav"><sc-for list="{{ navGroups }}" as="g" hint-placeholder-count="6"><div class="sbgroup"><span class="sbglabel">{{ g.label }}</span><div class="sbitems"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="sbtab {{ t.cls }}" onClick="{{ t.go }}"><span class="sbbar"></span>{{ t.icon }}<span class="sblbl">{{ t.label }}</span><sc-if value="{{ t.hasBadge }}" hint-placeholder-val=""><span class="nbadge {{ t.badgeCls }}">{{ t.badge }}</span></sc-if></button></sc-for></div></div></sc-for></nav>
 <button class="sbmap" onClick="{{ goHome }}" title="Карта навигации (стартовая страница)"><span>🗺</span> Карта навигации</button>
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
@@ -995,6 +1004,12 @@ window.dispatchEvent(new Event('fbready'));
 </sc-if>
 
 <sc-if value="{{ isOneC }}" hint-placeholder-val="x">
+<div class="card">
+<div class="sec">✦ Глубокий AI-аудит производства, снабжения и кассы</div>
+<div class="desc">АЯ соберёт данные из плана-факта (перерасход сырья), казначейства (баланс кассы, оплаты, кассовые разрывы) и курса евро — и выдаст сводный инженерно-финансовый вердикт.</div>
+<button class="aianalyze" onClick="{{ runGlobalAudit }}"><span class="aiana-ic">✦</span> Запустить глубокий анализ</button>
+<sc-if value="{{ auditHas }}" hint-placeholder-val=""><div class="ai-summary-box {{ auditBusy }}"><div class="aisb-ttl">✦ Сводный инженерно-финансовый вердикт АЯ</div><div class="aisb-txt">{{ auditSummary }}</div></div></sc-if>
+</div>
 <div class="card">
 <div class="sec"><span class="oneclogo">1С</span> Вариант 1 · Загрузка файла из 1С (проще всего)</div>
 <div class="desc">Без программиста и настроек: в 1С откройте отчёт по остаткам и/или ценам, сохраните как Excel (.xlsx) и загрузите сюда. Столбцы «Наименование/Артикул», «Остаток», «Цена» определяются автоматически и применяются к «Складу» и «Реестру цен».</div>
@@ -1872,6 +1887,7 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 </sc-if>
 <sc-if value="{{ aiOpen }}" hint-placeholder-val="">
+<div class="aibackdrop" onClick="{{ aiClose }}"></div>
 <div class="aipanel">
 <div class="aihead"><div class="aihl"><span class="aidot"></span> AI-аналитик</div><div class="aihr"><select class="aimodel" value="{{ aiModel }}" onChange="{{ onAiModel }}"><option value="gpt-4o-mini">GPT-4o mini · быстро</option><option value="gpt-4o">GPT-4o · точнее</option><option value="claude-sonnet-4">Claude Sonnet</option></select><sc-if value="{{ aiIsAdmin }}" hint-placeholder-val=""><button class="aiclr" onClick="{{ aiCfgToggle }}" title="Свой API-ключ">⚙</button></sc-if><button class="aiclr" onClick="{{ aiClear }}" title="Очистить">⌫</button><button class="aix" onClick="{{ aiClose }}">✕</button></div></div>
 <sc-if value="{{ aiCfgOpen }}" hint-placeholder-val=""><div class="aicfg"><div class="aicfgt">Свой AI-ключ (работает без Puter)</div><input class="tginp" value="{{ aiKeyEdit }}" onInput="{{ onAiKeyEdit }}" placeholder="API-ключ (OpenRouter sk-or-… / OpenAI sk-…)"><input class="tginp" value="{{ aiModelEdit }}" onInput="{{ onAiModelEdit }}" placeholder="Модель (по умолч. meta-llama/llama-3.3-70b-instruct:free)"><input class="tginp" value="{{ aiBaseEdit }}" onInput="{{ onAiBaseEdit }}" placeholder="API URL (по умолч. openrouter.ai/api/v1)"><div class="tgrow"><button class="tgsave" onClick="{{ saveAiCfg }}">Сохранить</button><span class="aicfgh">Ключ хранится только в этом браузере.</span></div></div></sc-if>
@@ -2643,7 +2659,7 @@ class Component extends DCLogic {
     }));
     return {
       aiOpen: !!S.aiOpen, aiBtnCls: S.aiOpen ? 'aifab open' : 'aifab',
-      aiToggle: () => set({ aiOpen: !S.aiOpen }), aiClose: () => set({ aiOpen: false }),
+      aiToggle: () => this.setState(st => ({ aiOpen: !st.aiOpen })), aiClose: () => set({ aiOpen: false }), runGlobalAudit: () => this.runGlobalAiAudit(),
       aiMsgs: msgs, aiHasMsgs: msgs.length > 0, aiNoMsgs: msgs.length === 0, aiInput: S.aiInput || '', aiBusy: !!S.aiBusy,
       onAiInput: (e) => set({ aiInput: e.target.value }),
       onAiKey: (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.aiSend(); } },
@@ -4439,6 +4455,42 @@ class Component extends DCLogic {
     ];
     this.dlBlob('1C-integration-spec.md', new Blob([L.join('\n')], { type: 'text/markdown;charset=utf-8' }));
   }
+  // Глубокий перекрёстный аудит, запускаемый с любой вкладки (в т.ч. из раздела 1С)
+  runGlobalAiAudit() {
+    const rate = Number(this.state.rate) || 0;
+    const pf = this.buildPlanFact(rate);
+    const lossPct = Number(this.state.loss) || 0;
+    let actCostRub = 0;
+    for (const p of (this.state.purchases || [])) { if (p.status === 'отменено') continue; const q = Number(p.qty) || 0; const pr = (Number(p.priceEur) || 0) * ((Number(p.curRate) || 0) || rate); actCostRub += q * pr; }
+    const brakRub = this.excelRound(actCostRub * lossPct / 100, 0);
+    this.analyzeProdDeviations(pf, lossPct, brakRub);
+  }
+  // Полный скрининг всей базы: производство, закупки, склад, продажи, контрагенты, касса
+  async runFullDbScreening() {
+    const S = this.state, rate = Number(S.rate) || 0, vat = this.vat;
+    const ctx = {
+      курсЕвро: rate, потериПроцент: Number(S.loss) || 0,
+      заявокНаЗакупку: (S.purchases || []).length,
+      долгПоставщикамРуб: this.excelRound((S.purchases || []).reduce((s, p) => { if (/отмен/.test(String(p.status || '').toLowerCase())) return s; const c = this.purchaseCalc(p, rate, vat); return s + Math.max(0, c.fullRub - (Number(p.paid) || 0)); }, 0), 0),
+      позицийНаСкладе: Object.keys(S.stock || {}).length,
+      поступленийТМЦ: (S.receipts || []).length, продажГП: (S.sales || []).length,
+      контрагентов: (S.cparties || []).length, поручИймЛогистики: (S.logistics || []).length,
+      балансКассыРуб: Number(S.cashStart) || 0, кассовыйРазрыв: this.cashGapInfo().gap ? 'да' : 'нет',
+      заявокНаПлатёж: (S.payreqs || []).length, задачАктивных: (S.tasks || []).filter(t => !this.taskDone(t)).length,
+    };
+    const pf = this.buildPlanFact(rate);
+    ctx.перерасходПозиций = (pf.pfRowsRaw || []).filter(r => r.actVol > r.planVol && r.planVol > 0).length;
+    if (!S.aiKey) { this.setState({ tab: 'onec', prodAiBusy: false, prodAiSummary: '⚙ Укажите ваш API-ключ OpenRouter в настройках (кнопка «⚙ AI-ключ» в окне АЯ).' }); return; }
+    this.setState({ tab: 'onec', prodAiBusy: true, prodAiSummary: '✦ АЯ проводит сплошной скрининг всей базы данных…' });
+    const sys = 'Ты — операционный директор и аудит-партнёр холдинга Shtark INK (производство спиртовых красок ЛКМ). Проведи сплошной скрининг всей базы данных предприятия и выдай управленческое резюме. Опирайся строго на цифры из JSON. Структура ответа:\n\n✦ СКРИНИНГ БАЗЫ ДАННЫХ — РЕЗЮМЕ АЯ:\n1. 📦 Снабжение и склад: [объёмы, долг поставщикам, перерасход].\n2. 💰 Финансы и касса: [баланс, кассовый разрыв, валютный риск по курсу евро].\n3. 🏭 Производство и продажи: [состояние, потери].\n4. 🚩 Главные риски и 3 первоочередных действия.\nПиши сухо, по делу, с цифрами. Не лей воду.';
+    try {
+      const txt = await this.aiComplete([{ role: 'system', content: sys }, { role: 'user', content: 'Снимок базы данных (JSON):\n' + JSON.stringify(ctx, null, 1) }], { max: 800 });
+      this.setState({ prodAiBusy: false, prodAiSummary: (txt || 'Пустой ответ.').trim() });
+    } catch (e) {
+      const m = (e && e.message) || 'ошибка';
+      this.setState({ prodAiBusy: false, prodAiSummary: (/limit|rate/i.test(m) ? 'Исчерпан дневной лимит бесплатных запросов OpenRouter — попробуйте завтра или смените ключ/модель в ⚙.' : (/key|ключ|no-key/i.test(m) ? '⚙ Укажите ваш API-ключ OpenRouter в настройках (⚙).' : 'Не удалось получить ответ от АЯ: ' + m)) });
+    }
+  }
   buildOneC() {
     const S = this.state, set = (p) => this.setState(p);
     const pv = S.oneCPreview;
@@ -4459,6 +4511,9 @@ class Component extends DCLogic {
       oneCPreviewStock: pv ? pv.stock.slice(0, 10).map(r => ({ name: r.name || '—', article: r.article != null ? String(r.article) : '—', qty: this.fmt(Number(r.qty != null ? r.qty : r.balance) || 0, 2) })) : [],
       oneCLog: (S.oneCLog || []).map(e => ({ when: this.fmtDateTime(e.at), note: e.note })), oneCHasLog: (S.oneCLog || []).length > 0,
       oneCSaveSpec: () => this.downloadOneCSpec(),
+      runGlobalAudit: () => this.runGlobalAiAudit(),
+      runFullScan: () => this.runFullDbScreening(),
+      auditSummary: S.prodAiSummary || '', auditHas: !!S.prodAiSummary, auditBusy: !!S.prodAiBusy,
       onImport1C: (e) => { const f = e.target.files && e.target.files[0]; if (f) this.import1CFile(f); e.target.value = ''; },
       oneCFileCur: S.oneCFileCur || 'RUB', oneCFileCurOpts: [['RUB', '₽ (пересчёт в €)'], ['EUR', '€']].map(([v, label]) => ({ v, label })), onOneCFileCur: (e) => set({ oneCFileCur: e.target.value }),
     };
@@ -4991,21 +5046,31 @@ class Component extends DCLogic {
   }
   // Собирает аномалии и формирует промпт для АЯ (AI-анализ отклонений) — вывод для директора по производству
   async analyzeProdDeviations(pf, lossPct, brakRub) {
-    // Собираем строки с ПЕРЕРАСХОДОМ (факт > плана) прямо из таблицы плана-факта
+    // Глубокий перекрёстный аудит: производство + казначейство + валютные риски
     const over = (pf.pfRowsRaw || []).filter(r => r.actVol > r.planVol && r.planVol > 0).map(r => ({
-      component: r.name, planKg: this.excelRound(r.planVol, 1), factKg: this.excelRound(r.actVol, 1), deviationPct: this.excelRound(r.volPct, 1),
+      component: r.name, planKg: this.excelRound(r.planVol, 1), factKg: this.excelRound(r.actVol, 1), deltaKg: this.excelRound(r.actVol - r.planVol, 1), deviationPct: this.excelRound(r.volPct, 1),
     }));
-    if (!over.length) { this.setState({ prodAiBusy: false, prodAiSummary: '✦ АЯ: Отклонений от рецептуры не обнаружено, производство идёт строго по регламенту.' }); return; }
+    const rate = Number(this.state.rate) || 0, vat = this.vat;
+    let payDue = 0; for (const p of (this.state.purchases || [])) { if (/отмен/.test(String(p.status || '').toLowerCase())) continue; const c = this.purchaseCalc(p, rate, vat); payDue += Math.max(0, c.fullRub - (Number(p.paid) || 0)); }
+    const gap = this.cashGapInfo();
+    const auditContext = {
+      курсЕвро: rate, потериПроцент: lossPct, стоимостьБракаРуб: brakRub,
+      балансКассыРуб: Number(this.state.cashStart) || 0, кОплатеПоставщикамРуб: this.excelRound(payDue, 0),
+      кассовыйРазрыв: gap.gap ? ('да, ' + gap.day + ' не хватает ' + gap.amount + ' ₽') : 'нет',
+      перерасходСырья: over,
+    };
+    const hasData = over.length > 0 || payDue > 0;
+    if (!hasData) { this.setState({ prodAiBusy: false, prodAiSummary: '✦ АЯ: Данные для перекрёстного аудита отсутствуют. Загрузите отчёты из 1С (план-факт расхода и заявки на оплату).' }); return; }
     if (!this.state.aiKey) { this.setState({ prodAiBusy: false, prodAiSummary: '⚙ Укажите ваш API-ключ OpenRouter в настройках (кнопка «⚙ AI-ключ» в окне АЯ).' }); return; }
-    this.setState({ prodAiBusy: true, prodAiSummary: '✦ АЯ изучает таблицы и рассчитывает риски перерасхода…' });
-    const sys = 'Ты — легендарный технический директор и главный технолог завода по производству флексографских и глубоких спиртовых красок Shtark INK. Твоя задача — провести глубокий инженерный аудит отчёта о перерасходе сырья. Анализируй данные жёстко, профессионально и глубоко, используя специфику ЛКМ. Избегай банальных фраз вроде «произошла ошибка».\n\nДля каждого критического отклонения выбери ОДНУ наиболее вероятную ТЕХНОЛОГИЧЕСКУЮ причину из реальной практики:\n1. Если перерасход по ПИГМЕНТНЫМ ПАСТАМ (Cyan, Magenta, Yellow, Black и др.): гипотеза — низкая колористическая интенсивность входящей партии пигмента (пришлось дозировать больше для попадания в эталон Delta E), либо некорректная калибровка весового дозатора на диссольвере, либо высокая исходная вязкость, потребовавшая избыточного перетира.\n2. Если перерасход по ТЕХНОЛОГИЧЕСКИМ ЛАКАМ (нитроцеллюлозный, полиуретановый): гипотеза — избыточный слив на замывку реакторов между сменой цветов, не сливаемый остаток в баке из-за высокой вязкости, либо компенсация испарения спиртов (этилацетат/изопропанол) при затяжном перемешивании.\n3. Если перерасход по РАСТВОРИТЕЛЯМ: гипотеза — высокая температура в цеху (повышенное летучее испарение), задержка на этапе фасовки или слишком долгий цикл деаэрации красок.\n\nНапиши технический вердикт для руководства (строго до 5 предложений). Формат вывода:\n- 🔴 Критическая аномалия: [Что и на сколько перерасходовано].\n- ⚙️ Технологический диагноз: [Глубокая инженерная гипотеза причины].\n- 🛠 Действие для цеха: [Чёткое техническое задание мастеру или снабжению для минимизации потерь].\n\nПиши сухим, экспертным языком производственников. Не лей воду.';
-    const user = 'Перерасход компонентов (кг и % отклонения):\n' + JSON.stringify(over) + '\n\nПроцент потерь: ' + this.fmt(lossPct, 1) + '% (норма 5%). Оценка стоимости брака: ' + this.fmt(brakRub, 0) + ' ₽.';
+    this.setState({ prodAiBusy: true, prodAiSummary: '✦ АЯ проводит перекрёстный аудит цеха, снабжения и кассы…' });
+    const sys = 'Ты — жёсткий, высокооплачиваемый операционный директор и аудит-партнёр холдинга Shtark INK. Твоя задача — провести перекрёстный анализ цеха, снабжения и кассы. Коллеги не должны сомневаться в твоём профессионализме, поэтому ты обязан ОПИРАТЬСЯ НА ЦИФРЫ и использовать глубокую терминологию ЛКМ и флексопечати.\n\nПРАВИЛА АНАЛИЗА:\n- Запрещено лить воду и писать абстрактные фразы вроде «проверьте оборудование» или «курс изменился».\n- Ссылайся на конкретные цифры из контекста: если видишь перерасход пигмента, пиши: «Перерасход [Название] на [Х] кг ([Х]%)». Если видишь проблему в кассе, увязывай её со снабжением и курсом евро.\n- Используй профессиональный сленг: Delta E (цветовое отклонение), вязкость по ВЗ-4, сухой остаток, летучесть растворителей (этилацетат/изопропанол), смывки, технологический отгон, кассовый разрыв, оборачиваемость сырьевого склада.\n\nСТРУКТУРА ТВОЕГО ОТВЕТА (строго по шаблону):\n\n✦ СВОДНЫЙ ИНЖЕНЕРНО-ФИНАНСОВЫЙ ВЕРДИКТ АЯ:\n\n1. 🔴 КРИТИЧЕСКИЕ АНОМАЛИИ В ЦЕХУ (ПРОИЗВОДСТВО):\n[Топ-отклонения. Свяжи перерасход пигментов с низкой колористикой сырья или калибровкой дозаторов диссольвера. Перерасход лаков — с плохой замывкой реакторов или несливаемыми остатками. Сравни фактический брак с базовым ограничением потерь.]\n\n2. ⚠️ ЗАКУПКИ, ВАЛЮТНЫЕ РИСКИ И КАССА:\n[Проанализируй казначейство. Как текущий курс евро бьёт по закупке импортных компонентов? Есть ли кассовый разрыв? Какую сумму срочно зарезервировать под контракты снабжения, чтобы производство не встало из-за дефицита?]\n\n3. 🛠 ТЕХНИЧЕСКОЕ ЗАДАНИЕ ДЛЯ КОМАНДЫ:\n- Мастеру цеха: [Чёткое инженерное указание по дозации или контролю вязкости].\n- Менеджеру по снабжению: [Указание по рекламации поставщику, пересчёту лимитов или фиксации цены контракта].';
+    const user = 'Контекст для перекрёстного аудита (JSON):\n' + JSON.stringify(auditContext, null, 1);
     try {
-      const txt = await this.aiComplete([{ role: 'system', content: sys }, { role: 'user', content: user }], { max: 500 });
+      const txt = await this.aiComplete([{ role: 'system', content: sys }, { role: 'user', content: user }], { max: 750 });
       this.setState({ prodAiBusy: false, prodAiSummary: (txt || 'Пустой ответ. Попробуйте ещё раз.').trim() });
     } catch (e) {
       const m = (e && e.message) || 'ошибка';
-      this.setState({ prodAiBusy: false, prodAiSummary: (/key|ключ|no-key/i.test(m) ? '⚙ Укажите ваш API-ключ OpenRouter в настройках (⚙).' : 'Не удалось получить ответ от АЯ: ' + m) });
+      this.setState({ prodAiBusy: false, prodAiSummary: (/limit|rate/i.test(m) ? 'Исчерпан дневной лимит бесплатных запросов OpenRouter. Попробуйте завтра, смените ключ или модель в ⚙.' : (/key|ключ|no-key/i.test(m) ? '⚙ Укажите ваш API-ключ OpenRouter в настройках (⚙).' : 'Не удалось получить ответ от АЯ: ' + m)) });
     }
   }
   // План-фактный анализ закупок и потребления
@@ -5226,7 +5291,7 @@ class Component extends DCLogic {
     const L = this.loaderVals();
     const Rt = this.ratesVals();
     if (!S.ready) {
-      return { ...L, ...Rt, ready: false, aiOpen: false, aiBtnCls: 'aifab', aiToggle: () => {}, aiClose: () => {}, aiMsgs: [], aiHasMsgs: false, aiNoMsgs: true, aiInput: '', aiBusy: false, onAiInput: () => {}, onAiKey: () => {}, aiSend: () => {}, aiClear: () => {}, analyzeScreen: () => {}, aiAnalyzable: false, aiModel: 'gpt-4o-mini', onAiModel: () => {}, aiCfgOpen: false, aiCfgToggle: () => {}, aiKeySet: false, aiKeyEdit: '', onAiKeyEdit: () => {}, aiBaseEdit: '', onAiBaseEdit: () => {}, aiModelEdit: '', onAiModelEdit: () => {}, saveAiCfg: () => {}, aiIsAdmin: false, aiPrompts: [], userName: '', userInitial: '?', userRoleLabel: '', userRoleCls: 'srole', logout: () => this.askFarewell(), doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: false, farewellText: '', onlineUsers: [], hasOnline: false, navCls: '', navBkCls: '', sidebarStyle: null, toggleNav: () => {}, closeNav: () => {}, chatOpen: false, chatToggle: () => {}, chatClose: () => {}, chatMsgs: [], chatEmpty: true, chatCount: 0, chatInput: '', onChatInput: () => {}, onChatKey: () => {}, chatSend: () => {}, tgLink: '', tgHasLink: false, tgNoLink: true, tgEdit: '', onTgEdit: () => {}, saveTg: () => {}, tgIsAdmin: false, tgEditToken: '', onTgToken: () => {}, tgEditChatId: '', onTgChatId: () => {}, saveTgBot: () => {}, tgTest: () => {}, tgStatus: '', tgFwdOn: false, navGroups: [], homeGroups: [], isHome: false, goHome: () => {}, oneCQuickGet: () => {}, oneCBtnText: 'Получить данные из 1С', oneCBtnCls: 'onecbtn', tabDesc: 'Загрузка данных…', productOptions: [], ownerOptions: [], componentOptions: [], calcLines: [], recipeRows: [], prodRows: [], requirement: [], purchase: [], priceRows: [], peekShow: false, peekShowBtns: false, peekHasQuick: false, peekHasMore: false, peekCanClose: false, peekOpenLabel: 'Открыть', peekText: '', peekLevel: 'warn', peekQuick: '', peekMoreN: '', peekDoQuick: () => {}, peekOpenPurchase: () => {}, peekOpenAI: () => {}, peekClose: () => {}, peekNext: () => {}, cwShow: false, cwOpen: false, cwHasBadge: false, cwBadge: '', cwToggle: () => {}, cwClose: () => {}, qaOpen: false, chShow: false, gsearch: '', onGsearch: () => {}, clearGsearch: () => {}, gsOpen: false, searchResults: [], gsEmpty: false };
+      return { ...L, ...Rt, ready: false, aiOpen: false, aiBtnCls: 'aifab', aiToggle: () => {}, aiClose: () => {}, runGlobalAudit: () => {}, aiMsgs: [], aiHasMsgs: false, aiNoMsgs: true, aiInput: '', aiBusy: false, onAiInput: () => {}, onAiKey: () => {}, aiSend: () => {}, aiClear: () => {}, analyzeScreen: () => {}, aiAnalyzable: false, aiModel: 'gpt-4o-mini', onAiModel: () => {}, aiCfgOpen: false, aiCfgToggle: () => {}, aiKeySet: false, aiKeyEdit: '', onAiKeyEdit: () => {}, aiBaseEdit: '', onAiBaseEdit: () => {}, aiModelEdit: '', onAiModelEdit: () => {}, saveAiCfg: () => {}, aiIsAdmin: false, aiPrompts: [], userName: '', userInitial: '?', userRoleLabel: '', userRoleCls: 'srole', logout: () => this.askFarewell(), doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: false, farewellText: '', onlineUsers: [], hasOnline: false, navCls: '', navBkCls: '', sidebarStyle: null, toggleNav: () => {}, closeNav: () => {}, chatOpen: false, chatToggle: () => {}, chatClose: () => {}, chatMsgs: [], chatEmpty: true, chatCount: 0, chatInput: '', onChatInput: () => {}, onChatKey: () => {}, chatSend: () => {}, tgLink: '', tgHasLink: false, tgNoLink: true, tgEdit: '', onTgEdit: () => {}, saveTg: () => {}, tgIsAdmin: false, tgEditToken: '', onTgToken: () => {}, tgEditChatId: '', onTgChatId: () => {}, saveTgBot: () => {}, tgTest: () => {}, tgStatus: '', tgFwdOn: false, navGroups: [], homeGroups: [], isHome: false, goHome: () => {}, oneCQuickGet: () => {}, oneCBtnText: 'Получить данные из 1С', oneCBtnCls: 'onecbtn', tabDesc: 'Загрузка данных…', productOptions: [], ownerOptions: [], componentOptions: [], calcLines: [], recipeRows: [], prodRows: [], requirement: [], purchase: [], priceRows: [], peekShow: false, peekShowBtns: false, peekHasQuick: false, peekHasMore: false, peekCanClose: false, peekOpenLabel: 'Открыть', peekText: '', peekLevel: 'warn', peekQuick: '', peekMoreN: '', peekDoQuick: () => {}, peekOpenPurchase: () => {}, peekOpenAI: () => {}, peekClose: () => {}, peekNext: () => {}, cwShow: false, cwOpen: false, cwHasBadge: false, cwBadge: '', cwToggle: () => {}, cwClose: () => {}, qaOpen: false, chShow: false, gsearch: '', onGsearch: () => {}, clearGsearch: () => {}, gsOpen: false, searchResults: [], gsEmpty: false };
     }
     this._memo = new Map();
     const lossF = (Number(S.loss) || 0) / 100;
