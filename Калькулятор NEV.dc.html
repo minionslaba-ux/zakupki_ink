@@ -26,6 +26,17 @@ body{margin:0;background:#f6f5f2;font-family:'IBM Plex Sans',system-ui,sans-seri
 .tab:hover{background:#ffe872;color:#0e0e0e}
 .tab.on{color:#0e0e0e;background:linear-gradient(90deg,#FFD200 0%,#FFE872 25%,#FFD200 50%,#FFE872 75%,#FFD200 100%);background-size:200% 100%;animation:btnScroll 3s linear infinite;box-shadow:0 1px 2px rgba(0,0,0,.12)}
 .rates{display:flex;align-items:center;flex-wrap:wrap;gap:7px 18px;margin-top:12px;padding:9px 15px;background:#0e0e0e;border-radius:8px}
+.raterow{display:flex;align-items:stretch;gap:12px;margin-top:12px}
+.raterow .rates{margin-top:0;flex:1;min-width:0}
+.clocks{display:inline-flex;align-items:center;gap:14px;margin-left:auto;padding-left:16px;border-left:1px solid rgba(255,255,255,.14)}
+.clk{display:inline-flex;flex-direction:column;align-items:center;line-height:1.05}
+.clk b{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13px;color:#fff;font-variant-numeric:tabular-nums}
+.clk i{font-style:normal;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#FFD200;margin-top:1px}
+.soutbig{flex:none;align-self:stretch;display:flex;align-items:center;gap:9px;appearance:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;padding:0 24px;border-radius:10px;background:#fff;color:#b00020;border:1.5px solid #f0c9cf;transition:background .15s,color .15s,box-shadow .15s}
+.soutbig:hover{background:#b00020;color:#fff;border-color:#b00020;box-shadow:0 6px 18px rgba(176,0,32,.28)}
+.soutbig .soutarr{font-size:17px;transition:transform .15s}
+.soutbig:hover .soutarr{transform:translateX(4px)}
+@media(max-width:680px){.raterow{flex-wrap:wrap}.soutbig{align-self:flex-start;padding:11px 22px}.clocks{margin-left:0}}
 .rttl{font-family:'Montserrat',sans-serif;font-weight:800;font-size:10px;letter-spacing:.12em;color:#FFD200;text-transform:uppercase;white-space:nowrap}
 .ritem{display:inline-flex;align-items:baseline;gap:6px;font-size:12.5px}
 .rsym{color:#FFD200;font-weight:700;font-size:13px}
@@ -205,7 +216,9 @@ tbody td.l{text-align:left}
 .sbic{display:inline-flex;align-items:center;justify-content:center;flex:none;width:18px;height:18px;color:currentColor;opacity:.72;transition:opacity .14s}
 .sbtab.on .sbic{opacity:1}
 .sbmap{appearance:none;background:none;border:none;font:inherit;width:100%}
-.homehero{margin:4px 0 22px}
+.homehero{margin:2px 0 14px}
+.homegrp{margin-bottom:13px}
+.homegl{display:flex;align-items:center;gap:9px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:#0e0e0e;margin-bottom:7px}
 .homeh1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.01em;color:#0e0e0e}
 .homeflow{color:#e10000}
 .homesub{font-size:14px;color:#56534f;margin-top:4px}
@@ -390,8 +403,8 @@ tbody td.l{text-align:left}
 .cwmain:hover .cwmainarr{transform:translateX(4px)}
 @media(max-width:560px){.cwbtn{top:auto;bottom:148px;right:16px}.cwdrawer{width:auto;left:8px;right:8px;border-radius:16px 16px 0 0;top:auto;height:88vh}}
 /* АЯ «выглядывает»: всплывающий аватар ассистента у правого края с облачком-напоминанием */
-.ayapeek{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:1250;display:flex;align-items:center;max-width:min(380px,calc(100vw - 18px));animation:ayaPeek .5s cubic-bezier(.22,1.2,.36,1)}
-@keyframes ayaPeek{from{transform:translate(70px,-50%);opacity:0}to{transform:translate(0,-50%);opacity:1}}
+.ayapeek{position:fixed;right:0;top:188px;z-index:1250;display:flex;align-items:center;max-width:min(380px,calc(100vw - 18px));animation:ayaPeek .5s cubic-bezier(.22,1.2,.36,1)}
+@keyframes ayaPeek{from{transform:translate(70px,0);opacity:0}to{transform:translate(0,0);opacity:1}}
 .ayaav{flex:none;width:62px;height:62px;border-radius:50% 0 0 50%;background:#0e0e0e;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;box-shadow:-6px 8px 24px rgba(0,0,0,.28);border:2px solid #FFD200;border-right:none;position:relative}
 .ayapeek.warn .ayaav{animation:ayaBounce 1.9s ease-in-out infinite}
 .ayapeek.crit .ayaav{animation:ayaBounce 1.4s ease-in-out infinite,ayaGlow 1.4s ease-in-out infinite}
@@ -718,14 +731,14 @@ a.wordmark:hover{opacity:.6}
 .sbtab{position:relative}
 .nbadge{margin-left:auto;min-width:18px;height:18px;border-radius:9px;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;color:#fff;background:#e0a800}
 .nbadge.crit{background:#e5484d}
-.sbtab.tnav-crit{animation:tnavCrit .7s steps(1,end) infinite}
-.sbtab.tnav-hot{animation:tnavHot 1.1s ease-in-out infinite}
-.sbtab.tnav-soft{animation:tnavSoft 1.9s ease-in-out infinite}
-@keyframes tnavCrit{0%,49%{background:rgba(229,72,77,.32);color:#fff}50%,100%{background:transparent;color:#c7c4bf}}
-@keyframes tnavHot{0%,100%{background:transparent}50%{background:rgba(229,72,77,.2);color:#fff}}
-@keyframes tnavSoft{0%,100%{background:transparent}50%{background:rgba(224,168,0,.18)}}
-.sbtab.tnav-crit .nbadge{animation:tnavBadge .7s ease-in-out infinite}
-@keyframes tnavBadge{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+.sbtab.tnav-crit{animation:tnavCrit 2.4s ease-in-out infinite}
+.sbtab.tnav-hot{animation:tnavHot 2.8s ease-in-out infinite}
+.sbtab.tnav-soft{animation:tnavSoft 3.4s ease-in-out infinite}
+@keyframes tnavCrit{0%,100%{background:transparent}50%{background:rgba(229,72,77,.12)}}
+@keyframes tnavHot{0%,100%{background:transparent}50%{background:rgba(229,72,77,.09)}}
+@keyframes tnavSoft{0%,100%{background:transparent}50%{background:rgba(224,168,0,.08)}}
+.sbtab.tnav-crit .nbadge{animation:tnavBadge 2.4s ease-in-out infinite}
+@keyframes tnavBadge{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 .tcard.tnew{animation:tcardNew 2.4s ease-out 1}
 @keyframes tcardNew{0%{background:#fff7d6;box-shadow:0 0 0 2px #FFD200}12%{background:#fffbe9}100%{background:#fff;box-shadow:none}}
 .sbbar{width:3px;height:15px;border-radius:2px;background:transparent;flex:none;transition:background .14s}
@@ -735,7 +748,66 @@ a.wordmark:hover{opacity:.6}
 .sbmap{display:flex;align-items:center;gap:8px;text-decoration:none;color:#9a9793;font-size:12.5px;font-weight:600;padding:13px 22px;border-top:1px solid rgba(255,255,255,.08);flex:none}
 .sbmap:hover{color:#FFD200}
 .sbfoot{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.08);flex:none}
-.topbar{margin-bottom:2px}
+.topbar{margin-bottom:2px;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.gsearch{position:relative;flex:1;min-width:240px;max-width:440px;margin-top:6px}
+.gsic{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px;color:#94a3b8;pointer-events:none}
+.gsinp{width:100%;box-sizing:border-box;padding:11px 14px 11px 36px;border:1px solid #e2e2df;border-radius:11px;background:#fff;font:inherit;font-size:13.5px;outline:none;transition:border-color .15s,box-shadow .15s}
+.gsinp:focus{border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79,70,229,.12)}
+.gsdrop{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1px solid #e7e4e0;border-radius:12px;box-shadow:0 16px 40px rgba(15,23,42,.18);z-index:1300;max-height:380px;overflow:auto;padding:6px;animation:cwFade .16s ease}
+.gsempty{padding:14px;font-size:13px;color:#8a8782;text-align:center}
+.gsrow{display:flex;align-items:center;gap:11px;width:100%;text-align:left;appearance:none;background:none;border:none;cursor:pointer;padding:9px 10px;border-radius:9px}
+.gsrow:hover{background:#f3f4f6}
+.gsri{font-size:16px;flex:none;width:22px;text-align:center}
+.gsrt{display:flex;flex-direction:column;gap:1px;min-width:0}
+.gsrl{font-size:13px;font-weight:600;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gsrs{font-size:11px;color:#8a8782}
+.docsgrid{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
+.sec2cp{font-family:'Montserrat',sans-serif;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#56534f;margin:14px 0 8px}
+.cppl{display:flex;flex-direction:column;gap:7px}
+.cpplrow{display:flex;gap:8px;align-items:center}
+.cpplrow .inp{flex:1}
+.cpplrow .w120{flex:0 0 120px}
+.docsform{display:flex;flex-direction:column;gap:11px}
+.docrow2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ayadoc,.maxdoc{font-size:12.5px;line-height:1.5;border-radius:10px;padding:9px 12px;color:#1e293b}
+.ayadoc{background:#eef2ff;border:1px solid #dfe5ff}
+.maxdoc{background:#ecfdf5;border:1px solid #d1f0e0}
+.ayadoc-ic{font-size:14px}
+.docprintbtn{justify-content:center;margin-top:4px}
+.docspreview{background:#eceae6;border-radius:12px;padding:22px;overflow:auto}
+.a4doc{background:#fff;width:100%;max-width:640px;margin:0 auto;padding:34px 40px;box-shadow:0 4px 20px rgba(0,0,0,.12);color:#1e293b;font-family:'PT Serif',Georgia,serif;font-size:13px;line-height:1.5}
+.a4head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.a4logo{font-family:'Montserrat',sans-serif;font-weight:800;font-size:19px;color:#1e293b;letter-spacing:-.01em;white-space:nowrap}
+.a4logo span{color:#334155}
+.a4req{font-size:10px;line-height:1.55;color:#475569;text-align:right;font-family:'IBM Plex Sans',sans-serif}
+.a4rule{height:2px;background:#1e293b;margin:10px 0 18px}
+.a4title{text-align:center;font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;text-transform:uppercase;letter-spacing:.02em;margin-bottom:6px}
+.a4city{display:flex;justify-content:space-between;font-size:12px;color:#475569;margin-bottom:14px}
+.a4p{margin:0 0 11px;text-align:justify;text-wrap:pretty}
+.a4tbl{width:100%;border-collapse:collapse;margin:0 0 13px;font-size:12.5px}
+.a4tbl th,.a4tbl td{border:1px solid #94a3b8;padding:6px 9px;text-align:left;vertical-align:top}
+.a4tbl th{background:#f1f5f9;font-family:'IBM Plex Sans',sans-serif;font-weight:700;font-size:11px}
+.a4tbl td:first-child{width:34px;text-align:center}
+.a4sign{display:flex;justify-content:space-between;align-items:flex-end;margin-top:30px}
+.a4signrow{display:flex;align-items:flex-end;gap:8px;font-size:12px;color:#334155}
+.a4line{display:inline-block;width:130px;border-bottom:1px solid #334155;height:14px}
+.a4stamp{width:74px;height:74px;border:1.5px dashed #94a3b8;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#94a3b8;font-family:'IBM Plex Sans',sans-serif}
+@media(max-width:880px){.docsgrid{grid-template-columns:1fr}}
+@media print{
+  body{background:#fff!important}
+  body *{visibility:hidden!important}
+  .a4doc,.a4doc *{visibility:visible!important}
+  .a4doc{position:absolute;left:0;top:0;width:100%;max-width:none;margin:0;padding:0;box-shadow:none}
+  @page{size:A4;margin:16mm}
+}
+.sidebar{transition:transform .42s cubic-bezier(.16,1,.3,1)}
+.sbcollapse{position:absolute;top:13px;right:11px;width:25px;height:25px;border-radius:8px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff;cursor:pointer;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;z-index:3;transition:background .15s}
+.sbcollapse:hover{background:rgba(255,210,0,.28);color:#FFD200}
+.wrap.sbcoll{margin-left:26px}
+.wrap.sbcoll .sidebar{transform:translateX(-102%)}
+.sbreopen{position:fixed;left:0;top:188px;z-index:200;width:27px;height:56px;border-radius:0 13px 13px 0;border:none;background:#0e0e0e;color:#FFD200;cursor:pointer;font-size:20px;font-weight:700;box-shadow:5px 5px 16px rgba(0,0,0,.28);animation:sbReIn .34s cubic-bezier(.16,1,.3,1)}
+.sbreopen:hover{background:#1c1b18}
+@keyframes sbReIn{from{transform:translateX(-100%);opacity:0}to{transform:translateX(0);opacity:1}}
 .mtop{display:none}
 .navbk{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:180}
 @media(max-width:900px){
@@ -845,6 +917,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="mtop"><button class="mburg" onClick="{{ toggleNav }}" aria-label="Меню"><span></span><span></span><span></span></button><span class="mtitle">Shtark INK <span class="mflow">Flow</span></span></div>
 <div class="navbk {{ navBkCls }}" onClick="{{ closeNav }}"></div>
 <aside class="sidebar" style="{{ sidebarStyle }}">
+<button class="sbcollapse" onClick="{{ toggleSb }}" title="Свернуть меню">‹</button>
 <a class="sblogo" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Перейти на shtarkink.com"><span class="sbwm">Shtark</span><span class="sbink">I N K</span></a>
 <div class="sbcmyk"><div class="sbrun"></div></div>
 <button class="{{ oneCBtnCls }}" onClick="{{ oneCQuickGet }}" title="Загрузить остатки и закупочные цены из 1С"><span class="oneclogo">1С</span><span class="onecbtx">{{ oneCBtnText }}</span></button>
@@ -852,11 +925,12 @@ window.dispatchEvent(new Event('fbready'));
 <button class="sbmap" onClick="{{ goHome }}" title="Карта навигации (стартовая страница)"><span>🗺</span> Карта навигации</button>
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
-<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки</div><div class="h1"><a class="brandlink" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Перейти на shtarkink.com">Shtark INK <span style="color:#e10000">Flow</span></a></div></div></div>
-<div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if></div>
+<sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
+<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки</div><div class="h1"><a class="brandlink" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Перейти на shtarkink.com">Shtark INK <span style="color:#e10000">Flow</span></a></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск: контрагент, ИНН, артикул, сырьё, заявка, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">Ничего не найдено</div></sc-if><sc-for list="{{ searchResults }}" as="r" hint-placeholder-count="3"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-if></div></div>
+<div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava">{{ u.avatar }}<i class="ondot"></i></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div></div></sc-if>
 <div class="desc">{{ tabDesc }}</div>
-<div class="actrow"><sc-if value="{{ aiAnalyzable }}" hint-placeholder-val=""><button class="aianalyze" onClick="{{ analyzeScreen }}" disabled="{{ aiBusy }}"><span class="aiana-ic">✦</span> Сделать AI-анализ данных</button></sc-if><button class="sout soutmain" onClick="{{ logout }}">Выйти</button></div>
+<div class="actrow"><sc-if value="{{ aiAnalyzable }}" hint-placeholder-val=""><button class="aianalyze" onClick="{{ analyzeScreen }}" disabled="{{ aiBusy }}"><span class="aiana-ic">✦</span> Сделать AI-анализ данных</button></sc-if></div>
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}"><div class="homehero"><div class="homeh1">Добро пожаловать в Shtark INK <span class="homeflow">Flow</span></div><div class="homesub">Карта навигации — выберите раздел, чтобы начать работу</div></div><sc-for list="{{ homeGroups }}" as="g" hint-placeholder-count="6"><div class="homegrp"><div class="homegl"><span class="homebar"></span>{{ g.label }}</div><div class="homecards"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="homecard" onClick="{{ t.go }}"><span class="homeic">{{ t.icon }}</span><span class="hometx"><span class="homename">{{ t.label }}</span><span class="homedesc">{{ t.desc }}</span></span></button></sc-for></div></div></sc-for></sc-if>
 <sc-if value="{{ cloudBarText }}" hint-placeholder-val="x"><div class="{{ cloudBarCls }}"><span class="cbdot"></span><span class="cbtxt">{{ cloudBarText }}</span><sc-if value="{{ cloudHasBtn }}" hint-placeholder-val="{{ true }}"><button class="cbbtn" onClick="{{ onCloudBar }}">{{ cloudBarBtn }}</button></sc-if></div></sc-if>
 <sc-if value="{{ isCloud }}" hint-placeholder-val="x">
@@ -1291,6 +1365,67 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 </sc-if>
 
+<sc-if value="{{ isDocs }}" hint-placeholder-val="">
+<div class="card"><div class="docsgrid">
+<div class="docsform">
+<div class="sec">Генератор печатных форм</div>
+<div class="fg"><label>Тип документа</label><select class="sel" value="{{ docType }}" onChange="{{ onDocType }}"><sc-for list="{{ docTypeOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></div>
+<div class="docrow2"><div class="fg"><label>№ документа</label><input class="inp" value="{{ docNoInput }}" onInput="{{ onDocNo }}" placeholder="14"></div><div class="fg"><label>Дата</label><input class="inp" type="date" value="{{ docDateInput }}" onInput="{{ onDocDate }}"></div></div>
+<sc-for list="{{ docFields }}" as="f" hint-placeholder-count="5"><div class="fg"><label>{{ f.label }}</label><sc-if value="{{ f.area }}" hint-placeholder-val=""><textarea class="inp tarea" rows="3" value="{{ f.value }}" onInput="{{ f.onInput }}"></textarea></sc-if><sc-if value="{{ f.notArea }}" hint-placeholder-val="x"><input class="inp" value="{{ f.value }}" onInput="{{ f.onInput }}"></sc-if></div></sc-for>
+<div class="ayadoc"><span class="ayadoc-ic">🤖</span> <b>Ая:</b> Документ заполнен без ошибок на основе данных 1С. Можно отправлять на печать!</div>
+<sc-if value="{{ docMaxNote }}" hint-placeholder-val=""><div class="maxdoc"><span class="ayadoc-ic">👨‍💼</span> <b>Макс:</b> Фура забронирована, водитель проверен. Латте в дорогу ему не обещал, но дедлайн он знает.</div></sc-if>
+<button class="btn dark docprintbtn" onClick="{{ docPrint }}"><span>🖨</span> Сгенерировать и распечатать / PDF</button>
+</div>
+<div class="docspreview">
+<div class="a4doc">
+<div class="a4head"><div class="a4logo">Shtark INK <span>Flow</span></div><div class="a4req">ООО «Штарк ИНК» · ИНН 7707083893 · КПП 770701001<br>123022, г. Москва, ул. Промышленная, д. 12 · тел. +7 (495) 123-45-67<br>shtarkink.com · info@shtarkink.com</div></div>
+<div class="a4rule"></div>
+<div class="a4title">{{ docTitle }} № {{ docNo }}</div>
+<div class="a4city"><span>г. Москва</span><span>{{ docDate }}</span></div>
+<sc-if value="{{ docIsPower }}" hint-placeholder-val="">
+<p class="a4p">ООО «Штарк ИНК» настоящим уполномочивает <b>{{ dEmpName }}</b> ({{ dEmpPost }}), паспорт {{ dEmpPassport }}, получить у поставщика <b>{{ dSupplier }}</b> ({{ dSupplierAddr }}) следующие товарно-материальные ценности:</p>
+<table class="a4tbl"><thead><tr><th>№</th><th>Наименование и количество</th></tr></thead><tbody><sc-for list="{{ dGoods }}" as="g" hint-placeholder-count="3"><tr><td>{{ g.n }}</td><td>{{ g.text }}</td></tr></sc-for></tbody></table>
+<p class="a4p">Доверенность действительна в течение <b>{{ dTerm }}</b> с даты выдачи. Подпись уполномоченного лица удостоверяем.</p>
+</sc-if>
+<sc-if value="{{ docIsForward }}" hint-placeholder-val="">
+<p class="a4p">Поручаем экспедитору организовать междугороднюю перевозку груза по маршруту <b>{{ dRoute }}</b>.</p>
+<table class="a4tbl"><tbody><tr><td>Наименование груза</td><td>{{ dCargoName }}</td></tr><tr><td>Вес / объём</td><td>{{ dCargo }}</td></tr><tr><td>Транспортное средство</td><td>{{ dCar }}</td></tr><tr><td>Водитель</td><td>{{ dDriver }}</td></tr><tr><td>Документ водителя</td><td>{{ dDriverDoc }}</td></tr></tbody></table>
+<p class="a4p">Экспедитор несёт ответственность за сохранность груза с момента приёмки до передачи грузополучателю.</p>
+</sc-if>
+<sc-if value="{{ docIsRfp }}" hint-placeholder-val="">
+<p class="a4p">Уважаемые коллеги! ООО «Штарк ИНК» просит вас, <b>{{ dRfpSupplier }}</b>, предоставить коммерческое предложение на поставку следующих позиций:</p>
+<table class="a4tbl"><thead><tr><th>№</th><th>Позиция и количество</th></tr></thead><tbody><sc-for list="{{ dRfpItems }}" as="g" hint-placeholder-count="3"><tr><td>{{ g.n }}</td><td>{{ g.text }}</td></tr></sc-for></tbody></table>
+<p class="a4p">Просим указать цену за единицу, условия и сроки поставки, порядок оплаты. Срок ответа — <b>{{ dRfpDeadline }}</b>. Заранее благодарим за сотрудничество.</p>
+</sc-if>
+<div class="a4sign"><div class="a4signrow"><span>Генеральный директор</span><span class="a4line"></span><span>/ Моисеенко К.И. /</span></div><div class="a4stamp">М.П.</div></div>
+</div>
+</div>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ isCparties }}" hint-placeholder-val="">
+<div class="card"><div class="sec">{{ cpFormTitle }}</div>
+<div class="uform">
+<div class="fg"><label>Название контрагента</label><input class="inp" value="{{ cdName }}" onInput="{{ onCdName }}" placeholder="ООО «ХимПоставка»"></div>
+<div class="fg"><label>ИНН</label><input class="inp" value="{{ cdInn }}" onInput="{{ onCdInn }}" placeholder="7707083893"></div>
+<div class="fg"><label>КПП</label><input class="inp" value="{{ cdKpp }}" onInput="{{ onCdKpp }}" placeholder="770701001"></div>
+<div class="fg"><label>Отсрочка платежа, дней</label><input class="inp num" type="number" value="{{ cdTerms }}" onInput="{{ onCdTerms }}" placeholder="0 = предоплата"></div>
+<div class="fg"><label>Лимит дебиторки, ₽</label><input class="inp num" type="number" value="{{ cdLimit }}" onInput="{{ onCdLimit }}" placeholder="0"></div>
+<div class="fg full"><label>Контакты</label><input class="inp" value="{{ cdContacts }}" onInput="{{ onCdContacts }}" placeholder="Менеджер, телефон, e-mail"></div>
+</div>
+<div class="sec2cp">Прайс-лист · что и по какой цене покупаем</div>
+<div class="cppl"><sc-for list="{{ cpPriceRows }}" as="p" hint-placeholder-count="2"><div class="cpplrow"><input class="inp" value="{{ p.material }}" onInput="{{ p.onMat }}" placeholder="Наименование сырья"><input class="inp num w120" type="number" value="{{ p.price }}" onInput="{{ p.onPrice }}" placeholder="Цена"><button class="tlink del" onClick="{{ p.del }}">✕</button></div></sc-for></div>
+<div class="genrow"><button class="btn" onClick="{{ addPrice }}">+ позиция прайса</button></div>
+<sc-if value="{{ cpHasErr }}" hint-placeholder-val=""><div class="banner err">{{ cpErr }}</div></sc-if>
+<div class="uactions"><button class="btn dark" onClick="{{ saveCp }}">Сохранить контрагента</button><sc-if value="{{ cpHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelCp }}">Отмена</button></sc-if></div>
+</div>
+<div class="card"><div class="sec">Контрагенты · {{ cpCount }}</div>
+<sc-if value="{{ cpEmpty }}" hint-placeholder-val=""><div class="hint">Пока нет контрагентов. Добавьте первого через форму выше.</div></sc-if>
+<div class="scroll"><table><thead><tr><th class="l">Название</th><th class="l">ИНН</th><th class="l">Условия</th><th>Лимит</th><th class="l">Контакты</th><th>Прайс</th><th class="l">Действия</th></tr></thead>
+<tbody><sc-for list="{{ cpRows }}" as="c" hint-placeholder-count="2"><tr><td class="l nm">{{ c.name }}</td><td class="l mono">{{ c.inn }}</td><td class="l">{{ c.terms }}</td><td class="mono">{{ c.limit }}</td><td class="l">{{ c.contacts }}</td><td class="mono">{{ c.priceCount }}</td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ c.edit }}">Изменить</button><button class="ulink del" onClick="{{ c.remove }}">Удалить</button></div></td></tr></sc-for></tbody></table></div>
+</div>
+</sc-if>
+
 <sc-if value="{{ isUsers }}" hint-placeholder-val="">
 <sc-if value="{{ usNoAccess }}" hint-placeholder-val=""><div class="card"><div class="banner err">Управление пользователями доступно только администратору.</div></div></sc-if>
 <sc-if value="{{ usHasAccess }}" hint-placeholder-val="{{ true }}">
@@ -1589,7 +1724,8 @@ class Component extends DCLogic {
     oneCUrl: '', oneCToken: '', oneCMatch: 'article', oneCAuto: false, oneCBusy: false, oneCStatus: '', oneCErr: '', oneCPreview: null, oneCLastAt: 0, oneCLog: [], oneCFileCur: 'RUB',
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {},
     chat: [], chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false,
-    tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null,
+    tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '',
+    docType: 'power', docData: { no: '14', date: '', empName: 'Иванов Иван Иванович', empPost: 'менеджер по закупкам', empPassport: '45 09 № 123456, выдан ОВД «Тверской» г. Москвы 12.03.2015, код 770-001', supplier: 'ООО «ХимПоставка»', supplierAddr: 'г. Москва, ул. Промышленная, д. 7', goods: 'Пигмент синий (фталоцианиновый) — 500 кг\nРастворитель НефрасС2 — 200 л\nСтабилизатор СТ-4 — 50 кг', term: '10 дней', route: 'Москва — Санкт-Петербург', car: 'Volvo FH, гос. № А123ВС 777', driver: 'Петров Пётр Петрович', driverDoc: 'вод. удостоверение 99 12 345678', cargo: '1200 кг / 4,0 м³, 6 паллет', cargoName: 'Сырьё для производства чернил', rfpSupplier: 'ООО «ХимПоставка»', rfpItems: 'Пигмент синий (фталоцианиновый) — 500 кг\nПигмент жёлтый — 300 кг\nРастворитель НефрасС2 — 200 л', rfpDeadline: '5 рабочих дней' },
     peekIdx: 0, peekDismissed: {}, peekClosed: false, peekToast: '',
     tgToken: '', tgChatId: '', tgFwd: false, tgEditToken: '', tgEditChatId: '', tgStatus: '',
     cloudHistory: [], cloudName: '', cloudCfgText: '', cloudWsId: 'workspace',
@@ -1613,6 +1749,8 @@ class Component extends DCLogic {
     try { chat = JSON.parse(localStorage.getItem('inkflow_chat') || '[]'); if (!Array.isArray(chat)) chat = []; } catch (e) {}
     let tasks = [];
     try { tasks = JSON.parse(localStorage.getItem('inkflow_tasks') || '[]'); if (!Array.isArray(tasks)) tasks = []; } catch (e) {}
+    let cparties = [];
+    try { cparties = JSON.parse(localStorage.getItem('inkflow_cparties') || '[]'); if (!Array.isArray(cparties)) cparties = []; } catch (e) {}
     let emailCfg = {};
     try { emailCfg = JSON.parse(localStorage.getItem('inkflow_emailcfg') || '{}') || {}; } catch (e) {}
     let tasksSeenAt = 0;
@@ -1620,7 +1758,7 @@ class Component extends DCLogic {
     try { tgLink = localStorage.getItem('inkflow_tg') || ''; } catch (e) {}
     let tgBot = {};
     try { tgBot = JSON.parse(localStorage.getItem('inkflow_tgbot') || '{}') || {}; } catch (e) {}
-    this.setState({ users, currentUser, welcomePhoto, chat, tasks, tasksSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
+    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, tasksSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
     // Двухфазный экран входа: фаза 1 (загрузка) → фаза 2 (логотип слева + кнопка «Войти»)
     this._loaderT1 = setTimeout(() => this.setState({ loaderPhase: 'p2' }), 3400);
     // Слоган под логотипом перепечатывается каждые 10 c (remount по tick → анимация проигрывается заново)
@@ -1644,6 +1782,7 @@ class Component extends DCLogic {
     // Автоудаление выполненных задач старше 70 дней (из программы и облака)
     this._purgeT = setTimeout(() => this.purgeOldTasks(), 5000);
     this._purgeInt = setInterval(() => this.purgeOldTasks(), 3600000);
+    this._clockInt = setInterval(() => { if (this.state.currentUser && !this.state.loading) this.forceUpdate(); }, 30000);
     // Авто-подключение общего облака данных (встроенный конфиг) — вводить ничего не нужно
     this._autoCloud = () => { try { if (!this.state.cloudConnected) this.setState({ cloudCfgText: JSON.stringify(Component.FBCFG), cloudWsId: (this.state.cloudWsId || 'workspace') }, () => this.cloudConnect()); } catch (e) {} };
     if (window.__FB) this._autoCloud(); else window.addEventListener('fbready', this._autoCloud, { once: true });
@@ -1717,7 +1856,7 @@ class Component extends DCLogic {
     if (!this._applyingRemote && this.state.cloudRole === 'editor') this.queueCloudPush();
   }
 
-  componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); clearInterval(this._peekInt); clearTimeout(this._peekToastT); clearTimeout(this._purgeT); clearInterval(this._purgeInt); clearInterval(this._chInt); clearTimeout(this._chLeaveT); clearTimeout(this._coffeeT); if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
+  componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); clearInterval(this._peekInt); clearTimeout(this._peekToastT); clearTimeout(this._purgeT); clearInterval(this._purgeInt); clearInterval(this._chInt); clearTimeout(this._chLeaveT); clearTimeout(this._coffeeT); clearInterval(this._clockInt); if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
 
   loaderVals() {
     const T = 'ENGINEERED FOR EXCELLENCE. PRINTED FOR IMPACT.';
@@ -1853,6 +1992,8 @@ class Component extends DCLogic {
       cloud: '<path d="M7 18a4.5 4.5 0 0 1-.5-9 6 6 0 0 1 11.5 1.5A3.5 3.5 0 0 1 17.5 18z"/>',
       onec: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 13l2.5 2.5L8 18"/><path d="M13 18h3"/>',
       tasks: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8l1.5 1.5L12 7"/><path d="M8 15l1.5 1.5L12 14"/><line x1="14" y1="8" x2="17" y2="8"/><line x1="14" y1="15" x2="17" y2="15"/>',
+      docs: '<path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="15" y2="16"/>',
+      cparties: '<path d="M3 7h18v13H3z"/><path d="M3 7l3-4h12l3 4"/><line x1="3" y1="12" x2="21" y2="12"/><circle cx="12" cy="16" r="1.4"/>',
       users: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 6.4M21.5 20a6 6 0 0 0-3.5-5.5"/>',
     };
     const svg = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + (P[id] || '') + '</svg>';
@@ -1941,10 +2082,10 @@ class Component extends DCLogic {
   permCatalog() {
     return [
       { label: 'FLOW', tabs: [['prodplan', 'Production Schedule'], ['procplan', 'Procurement Plan']] },
-      { label: 'Команда', tabs: [['tasks', 'Задачи']] },
+      { label: 'Команда', tabs: [['tasks', 'Задачи'], ['docs', 'Документы']] },
       { label: 'Производство', tabs: [['calc', 'Калькулятор'], ['recipe', 'Рецептуры'], ['prod', 'План производства'], ['catalog', 'Каталоги']] },
       { label: 'Планирование закупок', tabs: [['runrate', 'Run Rate'], ['proc', 'План закупок'], ['cal', 'Календарь']] },
-      { label: 'Цены и поставщики', tabs: [['audit', 'Аудит цен'], ['pay', 'Платежи'], ['prices', 'Реестр цен']] },
+      { label: 'Цены и поставщики', tabs: [['audit', 'Аудит цен'], ['pay', 'Платежи'], ['prices', 'Реестр цен'], ['cparties', 'Контрагенты']] },
       { label: 'Запасы', tabs: [['wh', 'Склад'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка']] },
       { label: 'Контроль и сценарии', tabs: [['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
       { label: 'Система', tabs: [['cloud', 'Облако'], ['onec', 'Интеграция 1С']] },
@@ -1958,7 +2099,7 @@ class Component extends DCLogic {
     if (user.role === 'admin') return ['home'].concat(all, ['users']);
     const perms = Array.isArray(user.perms) ? user.perms : all;
     // Новые разделы доступны по умолчанию всем (добавлены позже — их нет в старых perms)
-    const always = ['prodplan', 'procplan', 'onec', 'tasks'];
+    const always = ['prodplan', 'procplan', 'onec', 'tasks', 'docs', 'cparties'];
     return ['home'].concat(all.filter(id => perms.includes(id) || always.includes(id)));
   }
 
@@ -2390,6 +2531,7 @@ class Component extends DCLogic {
     const patch = { cloudConnected: true, cloudErr: '', cloudStatus: 'Онлайн', cloudHistory: d.history || [], cloudPresence: d.presence || {}, cloudWho: ttlOk ? (lock.name || '—') : '', cloudRole: iEdit ? 'editor' : (ttlOk ? 'viewer' : 'idle') };
     if (Array.isArray(d.chat)) { patch.chat = d.chat; try { localStorage.setItem('inkflow_chat', JSON.stringify(d.chat)); } catch (e) {} }
     if (Array.isArray(d.tasks)) { patch.tasks = d.tasks; try { localStorage.setItem('inkflow_tasks', JSON.stringify(d.tasks)); } catch (e) {} }
+    if (Array.isArray(d.cparties)) { patch.cparties = d.cparties; try { localStorage.setItem('inkflow_cparties', JSON.stringify(d.cparties)); } catch (e) {} }
     if (d.emailCfg && typeof d.emailCfg === 'object') { patch.emailCfg = d.emailCfg; try { localStorage.setItem('inkflow_emailcfg', JSON.stringify(d.emailCfg)); } catch (e) {} }
     if (typeof d.tgLink === 'string') patch.tgLink = d.tgLink;
     if (d.tgBot && typeof d.tgBot === 'object') { patch.tgToken = d.tgBot.token || ''; patch.tgChatId = d.tgBot.chatId || ''; patch.tgFwd = !!d.tgBot.fwd; }
@@ -3410,6 +3552,86 @@ class Component extends DCLogic {
       chText: S.chPhrase || '',
       chHasEmp: !!(emp && sc === 'bored'), chEmpName: emp ? emp.name : '', chEmpDept: emp ? emp.dept : '',
       chEmpImg: emp && emp.photo ? React.createElement('img', { className: 'chempimg', src: emp.photo, alt: '' }) : null,
+    };
+  }
+  // ===== Сквозной умный поиск по программе =====
+  searchVals() {
+    const S = this.state, set = (p) => this.setState(p);
+    const q = (S.gsearch || '').trim().toLowerCase();
+    if (q.length < 2) return { gsOpen: false, searchResults: [], gsEmpty: false };
+    const out = [];
+    for (const c of (S.cparties || [])) { if (out.length > 28) break; if ((c.name || '').toLowerCase().includes(q) || String(c.inn || '').includes(q) || (c.contacts || '').toLowerCase().includes(q)) out.push({ key: c.id, icon: '🏢', label: c.name || '—', sub: 'Контрагент' + (c.inn ? ' · ИНН ' + c.inn : ''), go: () => set({ tab: 'cparties', cpDraft: { ...c, priceList: (c.priceList || []).slice() }, gsearch: '', navOpen: false }) }); }
+    const mats = (this.data && this.data.raw_materials) || [];
+    for (const m of mats) { if (out.length > 40) break; if ((m.name || '').toLowerCase().includes(q) || String(m.article || '').toLowerCase().includes(q)) out.push({ key: 'm' + (m.article || m.name), icon: '🧪', label: m.name, sub: 'Сырьё' + (m.article ? ' · арт. ' + m.article : ''), go: () => set({ tab: 'prices', priceFilter: m.name, gsearch: '', navOpen: false }) }); }
+    for (const p of (S.purchases || [])) { if (out.length > 52) break; const hay = ((p.supplier || '') + ' ' + (p.material || '') + ' ' + (p.no || '')).toLowerCase(); if (hay.includes(q)) out.push({ key: p.id, icon: '📦', label: 'Заявка №' + (p.no || '—') + ' · ' + (p.material || ''), sub: 'Закупка · ' + (p.supplier || '—'), go: () => set({ tab: 'proc', editId: p.id, gsearch: '', navOpen: false }) }); }
+    for (const u of (S.users || [])) { if (out.length > 60) break; if ((u.name || '').toLowerCase().includes(q)) out.push({ key: u.id, icon: '👤', label: u.name, sub: 'Сотрудник', go: () => set({ tab: 'tasks', gsearch: '', navOpen: false }) }); }
+    return { gsOpen: true, searchResults: out.slice(0, 30), gsEmpty: out.length === 0 };
+  }
+  // ===== Справочник контрагентов =====
+  emptyCp() { return { id: '', name: '', inn: '', kpp: '', terms: '', limit: '', contacts: '', priceList: [] }; }
+  writeCparties(next) {
+    this.setState({ cparties: next });
+    try { localStorage.setItem('inkflow_cparties', JSON.stringify(next)); } catch (e) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { cparties: next }, { merge: true }).catch(() => {}); } catch (e) {} }
+  }
+  saveCp() {
+    const S = this.state, d = S.cpDraft || this.emptyCp();
+    const name = (d.name || '').trim();
+    if (!name) { this.setState({ cpErr: 'Введите название контрагента' }); return; }
+    const pl = (d.priceList || []).filter(p => (p.material || '').trim()).map(p => ({ material: (p.material || '').trim(), price: Number(p.price) || 0 }));
+    const cp = { id: d.id || ('cp_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), name: name.slice(0, 160), inn: (d.inn || '').trim(), kpp: (d.kpp || '').trim(), terms: Number(d.terms) || 0, limit: Number(d.limit) || 0, contacts: (d.contacts || '').trim(), priceList: pl, createdAt: d.createdAt || Date.now() };
+    const list = d.id ? (S.cparties || []).map(x => x.id === d.id ? cp : x) : [cp, ...(S.cparties || [])];
+    this.writeCparties(list);
+    this.setState({ cpDraft: null, cpErr: '' });
+  }
+  buildCparties() {
+    const S = this.state, set = (p) => this.setState(p);
+    const d = S.cpDraft, dd = d || {};
+    const upd = (k) => (e) => set({ cpDraft: { ...(this.state.cpDraft || this.emptyCp()), [k]: e.target.value }, cpErr: '' });
+    const rows = (S.cparties || []).slice().sort((a, b) => (a.name || '').localeCompare(b.name || '', 'ru')).map(c => ({
+      id: c.id, name: c.name || '—', inn: c.inn || '—', kpp: c.kpp || '', terms: c.terms ? ('отсрочка ' + c.terms + ' дн.') : 'предоплата', limit: c.limit ? (this.fmt(c.limit) + ' ₽') : '—', contacts: c.contacts || '—', priceCount: (c.priceList || []).length,
+      edit: () => set({ cpDraft: { ...c, priceList: (c.priceList || []).slice() }, cpErr: '' }),
+      remove: () => this.askDelete('контрагента «' + (c.name || '') + '»', () => this.writeCparties((this.state.cparties || []).filter(x => x.id !== c.id))),
+    }));
+    const plSet = (i, k, v) => { const pl = ((this.state.cpDraft || {}).priceList || []).slice(); pl[i] = { ...pl[i], [k]: v }; set({ cpDraft: { ...this.state.cpDraft, priceList: pl } }); };
+    const plRows = (dd.priceList || []).map((p, i) => ({ material: p.material || '', price: p.price || '', onMat: (e) => plSet(i, 'material', e.target.value), onPrice: (e) => plSet(i, 'price', e.target.value), del: () => set({ cpDraft: { ...this.state.cpDraft, priceList: (this.state.cpDraft.priceList || []).filter((_, j) => j !== i) } }) }));
+    return {
+      isCparties: true, cpRows: rows, cpEmpty: rows.length === 0, cpCount: String(rows.length),
+      cpFormTitle: (d && d.id) ? 'Изменить контрагента' : 'Новый контрагент', cpHasDraft: !!d, cpIsEdit: !!(d && d.id),
+      cdName: dd.name || '', onCdName: upd('name'), cdInn: dd.inn || '', onCdInn: upd('inn'), cdKpp: dd.kpp || '', onCdKpp: upd('kpp'),
+      cdTerms: dd.terms || '', onCdTerms: upd('terms'), cdLimit: dd.limit || '', onCdLimit: upd('limit'), cdContacts: dd.contacts || '', onCdContacts: upd('contacts'),
+      cpPriceRows: plRows, addPrice: () => set({ cpDraft: { ...(this.state.cpDraft || this.emptyCp()), priceList: [...(((this.state.cpDraft || {}).priceList) || []), { material: '', price: '' }] } }),
+      saveCp: () => this.saveCp(), cancelCp: () => set({ cpDraft: null, cpErr: '' }), cpErr: S.cpErr || '', cpHasErr: !!S.cpErr,
+    };
+  }
+  // ===== Модуль «Документы»: печатные формы на фирменном бланке =====
+  buildDocs() {
+    const S = this.state, set = (p) => this.setState(p);
+    const d = S.docData || {}; const t = S.docType || 'power';
+    const upd = (k) => (e) => set({ docData: { ...(this.state.docData || {}), [k]: e.target.value } });
+    const dateLabel = d.date ? this.dmFull(d.date) : this.dmFull(this.ymd(new Date()));
+    const goodsList = String(d.goods || '').split('\n').filter(x => x.trim());
+    const rfpList = String(d.rfpItems || '').split('\n').filter(x => x.trim());
+    const FT = {
+      power: [['Имя сотрудника', 'empName', 1], ['Должность', 'empPost', 0], ['Паспортные данные', 'empPassport', 2], ['Поставщик', 'supplier', 0], ['Адрес поставщика', 'supplierAddr', 1], ['Список ТМЦ (каждая позиция с новой строки)', 'goods', 2], ['Срок действия', 'term', 0]],
+      forward: [['Маршрут (пункт А — пункт Б)', 'route', 1], ['Данные авто', 'car', 0], ['ФИО водителя', 'driver', 0], ['Документ водителя', 'driverDoc', 1], ['Наименование груза', 'cargoName', 1], ['Вес / объём груза', 'cargo', 0]],
+      rfp: [['Поставщик', 'rfpSupplier', 1], ['Позиции для оценки (каждая с новой строки)', 'rfpItems', 2], ['Срок ответа', 'rfpDeadline', 0]],
+    };
+    const fields = (FT[t] || []).map(f => ({ label: f[0], value: d[f[1]] || '', onInput: upd(f[1]), area: f[2] === 2, notArea: f[2] !== 2 }));
+    const titleT = { power: 'Доверенность', forward: 'Поручение экспедитору на перевозку', rfp: 'Запрос коммерческого предложения' };
+    return {
+      isDocs: true,
+      docType: t, onDocType: (e) => set({ docType: e.target.value }),
+      docTypeOpts: [['power', 'Доверенность'], ['forward', 'Поручение экспедитору'], ['rfp', 'Запрос КП']].map(o => ({ v: o[0], label: o[1] })),
+      docFields: fields, docNoInput: d.no || '', onDocNo: upd('no'), docDateInput: d.date || '', onDocDate: upd('date'),
+      docNo: d.no || '—', docDate: dateLabel, docTitle: titleT[t],
+      docIsPower: t === 'power', docIsForward: t === 'forward', docIsRfp: t === 'rfp',
+      dEmpName: d.empName || '—', dEmpPost: d.empPost || '', dEmpPassport: d.empPassport || '—', dSupplier: d.supplier || '—', dSupplierAddr: d.supplierAddr || '', dTerm: d.term || '10 дней',
+      dGoods: goodsList.map((g, i) => ({ n: i + 1, text: g })), dGoodsEmpty: goodsList.length === 0,
+      dRoute: d.route || '—', dCar: d.car || '—', dDriver: d.driver || '—', dDriverDoc: d.driverDoc || '', dCargo: d.cargo || '—', dCargoName: d.cargoName || '—',
+      dRfpSupplier: d.rfpSupplier || '—', dRfpDeadline: d.rfpDeadline || '5 рабочих дней', dRfpItems: rfpList.map((g, i) => ({ n: i + 1, text: g })), dRfpEmpty: rfpList.length === 0,
+      docPrint: () => { try { window.print(); } catch (e) {} },
+      docMaxNote: t === 'forward',
     };
   }
   calWidgetVals() {
@@ -4441,7 +4663,7 @@ class Component extends DCLogic {
     const L = this.loaderVals();
     const Rt = this.ratesVals();
     if (!S.ready) {
-      return { ...L, ...Rt, ready: false, aiOpen: false, aiBtnCls: 'aifab', aiToggle: () => {}, aiClose: () => {}, aiMsgs: [], aiHasMsgs: false, aiNoMsgs: true, aiInput: '', aiBusy: false, onAiInput: () => {}, onAiKey: () => {}, aiSend: () => {}, aiClear: () => {}, analyzeScreen: () => {}, aiAnalyzable: false, aiModel: 'gpt-4o-mini', onAiModel: () => {}, aiCfgOpen: false, aiCfgToggle: () => {}, aiKeySet: false, aiKeyEdit: '', onAiKeyEdit: () => {}, aiBaseEdit: '', onAiBaseEdit: () => {}, aiModelEdit: '', onAiModelEdit: () => {}, saveAiCfg: () => {}, aiIsAdmin: false, aiPrompts: [], userName: '', userInitial: '?', userRoleLabel: '', userRoleCls: 'srole', logout: () => this.askFarewell(), doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: false, farewellText: '', onlineUsers: [], hasOnline: false, navCls: '', navBkCls: '', sidebarStyle: null, toggleNav: () => {}, closeNav: () => {}, chatOpen: false, chatToggle: () => {}, chatClose: () => {}, chatMsgs: [], chatEmpty: true, chatCount: 0, chatInput: '', onChatInput: () => {}, onChatKey: () => {}, chatSend: () => {}, tgLink: '', tgHasLink: false, tgNoLink: true, tgEdit: '', onTgEdit: () => {}, saveTg: () => {}, tgIsAdmin: false, tgEditToken: '', onTgToken: () => {}, tgEditChatId: '', onTgChatId: () => {}, saveTgBot: () => {}, tgTest: () => {}, tgStatus: '', tgFwdOn: false, navGroups: [], homeGroups: [], isHome: false, goHome: () => {}, oneCQuickGet: () => {}, oneCBtnText: 'Получить данные из 1С', oneCBtnCls: 'onecbtn', tabDesc: 'Загрузка данных…', productOptions: [], ownerOptions: [], componentOptions: [], calcLines: [], recipeRows: [], prodRows: [], requirement: [], purchase: [], priceRows: [], peekShow: false, peekShowBtns: false, peekHasQuick: false, peekHasMore: false, peekCanClose: false, peekOpenLabel: 'Открыть', peekText: '', peekLevel: 'warn', peekQuick: '', peekMoreN: '', peekDoQuick: () => {}, peekOpenPurchase: () => {}, peekOpenAI: () => {}, peekClose: () => {}, peekNext: () => {}, cwShow: false, cwOpen: false, cwHasBadge: false, cwBadge: '', cwToggle: () => {}, cwClose: () => {}, qaOpen: false, chShow: false };
+      return { ...L, ...Rt, ready: false, aiOpen: false, aiBtnCls: 'aifab', aiToggle: () => {}, aiClose: () => {}, aiMsgs: [], aiHasMsgs: false, aiNoMsgs: true, aiInput: '', aiBusy: false, onAiInput: () => {}, onAiKey: () => {}, aiSend: () => {}, aiClear: () => {}, analyzeScreen: () => {}, aiAnalyzable: false, aiModel: 'gpt-4o-mini', onAiModel: () => {}, aiCfgOpen: false, aiCfgToggle: () => {}, aiKeySet: false, aiKeyEdit: '', onAiKeyEdit: () => {}, aiBaseEdit: '', onAiBaseEdit: () => {}, aiModelEdit: '', onAiModelEdit: () => {}, saveAiCfg: () => {}, aiIsAdmin: false, aiPrompts: [], userName: '', userInitial: '?', userRoleLabel: '', userRoleCls: 'srole', logout: () => this.askFarewell(), doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: false, farewellText: '', onlineUsers: [], hasOnline: false, navCls: '', navBkCls: '', sidebarStyle: null, toggleNav: () => {}, closeNav: () => {}, chatOpen: false, chatToggle: () => {}, chatClose: () => {}, chatMsgs: [], chatEmpty: true, chatCount: 0, chatInput: '', onChatInput: () => {}, onChatKey: () => {}, chatSend: () => {}, tgLink: '', tgHasLink: false, tgNoLink: true, tgEdit: '', onTgEdit: () => {}, saveTg: () => {}, tgIsAdmin: false, tgEditToken: '', onTgToken: () => {}, tgEditChatId: '', onTgChatId: () => {}, saveTgBot: () => {}, tgTest: () => {}, tgStatus: '', tgFwdOn: false, navGroups: [], homeGroups: [], isHome: false, goHome: () => {}, oneCQuickGet: () => {}, oneCBtnText: 'Получить данные из 1С', oneCBtnCls: 'onecbtn', tabDesc: 'Загрузка данных…', productOptions: [], ownerOptions: [], componentOptions: [], calcLines: [], recipeRows: [], prodRows: [], requirement: [], purchase: [], priceRows: [], peekShow: false, peekShowBtns: false, peekHasQuick: false, peekHasMore: false, peekCanClose: false, peekOpenLabel: 'Открыть', peekText: '', peekLevel: 'warn', peekQuick: '', peekMoreN: '', peekDoQuick: () => {}, peekOpenPurchase: () => {}, peekOpenAI: () => {}, peekClose: () => {}, peekNext: () => {}, cwShow: false, cwOpen: false, cwHasBadge: false, cwBadge: '', cwToggle: () => {}, cwClose: () => {}, qaOpen: false, chShow: false, gsearch: '', onGsearch: () => {}, clearGsearch: () => {}, gsOpen: false, searchResults: [], gsEmpty: false };
     }
     this._memo = new Map();
     const lossF = (Number(S.loss) || 0) / 100;
@@ -4454,15 +4676,15 @@ class Component extends DCLogic {
       ['proc', 'План закупок'], ['cal', 'Календарь'], ['wh', 'Склад'], ['cover', 'Сводка'],
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
-      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
+      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['cparties', 'Контрагенты'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
     const tabGroups = [
       { label: 'FLOW', items: ['prodplan', 'procplan'], en: { prodplan: 'Production Schedule', procplan: 'Procurement Plan' } },
-      { label: 'Команда', items: ['tasks'] },
+      { label: 'Команда', items: ['tasks', 'docs'] },
       { label: 'Производство', items: ['calc', 'recipe', 'prod', 'catalog'] },
       { label: 'Планирование закупок', items: ['runrate', 'proc', 'cal'] },
-      { label: 'Цены и поставщики', items: ['audit', 'pay', 'prices'] },
+      { label: 'Цены и поставщики', items: ['audit', 'pay', 'prices', 'cparties'] },
       { label: 'Запасы', items: ['wh', 'turnover', 'cover'] },
       { label: 'Контроль и сценарии', items: ['planfact', 'stress', 'reports'] },
       { label: 'Система', items: ['cloud', 'onec', 'users'] },
@@ -4549,6 +4771,8 @@ class Component extends DCLogic {
       userName: S.currentUser ? S.currentUser.name : '', userInitial: (S.currentUser && S.currentUser.name) ? S.currentUser.name.trim().charAt(0).toUpperCase() : '?',
       userRoleLabel: S.currentUser ? this.roleName(S.currentUser.role) : '',
       userRoleCls: (S.currentUser && S.currentUser.role === 'admin') ? 'srole adm' : 'srole', logout: () => this.askFarewell(),
+      clocks: [['Europe/Moscow', 'Москва'], ['Asia/Shanghai', 'Пекин'], ['Europe/London', 'Лондон']].map(z => { let t = '—'; try { t = new Intl.DateTimeFormat('ru-RU', { timeZone: z[0], hour: '2-digit', minute: '2-digit' }).format(new Date()); } catch (e) {} return { label: z[1], t }; }),
+      gsearch: S.gsearch || '', onGsearch: (e) => set({ gsearch: e.target.value }), clearGsearch: () => set({ gsearch: '' }), ...this.searchVals(),
       doLogout: () => this.doLogout(), cancelFarewell: () => { this.setState({ showFarewell: false }); }, showFarewell: !!S.showFarewell, farewellText: S.farewellText || '',
       onlineUsers: this.presenceList(), hasOnline: !!S.currentUser,
       navCls: S.navOpen ? 'sbon' : '', navBkCls: S.navOpen ? 'bkopen' : '',
@@ -4562,7 +4786,8 @@ class Component extends DCLogic {
       tgEditToken: S.tgEditToken || '', onTgToken: (e) => this.setState({ tgEditToken: e.target.value }), tgEditChatId: S.tgEditChatId || '', onTgChatId: (e) => this.setState({ tgEditChatId: e.target.value }),
       saveTgBot: () => this.saveTgBot(), tgTest: () => this.tgTest(), tgStatus: S.tgStatus || '', tgFwdOn: !!S.tgFwd,
       ...this.buildAssistant(),
-      wrapCls: ((S.cloudConnected && S.cloudRole !== 'editor') ? 'viewonly' : '') + (S.cwOpen ? ' cwfocus' : ''),
+      wrapCls: ((S.cloudConnected && S.cloudRole !== 'editor') ? 'viewonly' : '') + (S.cwOpen ? ' cwfocus' : '') + (S.sbCollapsed ? ' sbcoll' : ''),
+      sbCollapsed: !!S.sbCollapsed, toggleSb: () => set({ sbCollapsed: !S.sbCollapsed }),
       cloudBarCls: cbCls, cloudBarText: cbText, cloudBarBtn: cbBtn, cloudHasBtn: !!cbBtn, onCloudBar: cbAct,
       isCloud: S.tab === 'cloud', cloudConnected: S.cloudConnected, cloudNotConnected: !S.cloudConnected,
       isOneC: S.tab === 'onec',
@@ -4985,6 +5210,8 @@ class Component extends DCLogic {
     if (S.tab === 'users') Object.assign(base, this.buildUsers());
     if (S.tab === 'onec') Object.assign(base, this.buildOneC());
     if (S.tab === 'tasks') Object.assign(base, this.buildTasks());
+    if (S.tab === 'docs') Object.assign(base, this.buildDocs());
+    if (S.tab === 'cparties') Object.assign(base, this.buildCparties());
 
     // ---- Календарь поставок ----
     if (S.tab === 'cal') {
