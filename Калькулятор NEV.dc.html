@@ -212,7 +212,7 @@ tbody td.l{text-align:left}
 .chatinp{flex:1;resize:none;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:13.5px;line-height:1.45;background:#f6f4f1;border:1px solid #e7e4e0;border-radius:11px;padding:10px 12px;max-height:110px;outline:none}
 .chatinp:focus{border-color:#FFD200;background:#fff}
 .chsend{appearance:none;cursor:pointer;font-size:18px;font-weight:700;color:#0e0e0e;background:#FFD200;border:none;border-radius:11px;padding:8px 16px;line-height:1}
-@media(max-width:560px){.chatfabtx{display:none}.chatfab{padding:14px;right:16px;bottom:72px}.tgfab{right:16px;bottom:124px}.chatpanel{left:8px;right:8px;bottom:74px;width:auto;max-width:none}}
+@media(max-width:560px){.chatfabtx{display:none}.chatfab{padding:0;width:46px;height:46px;justify-content:center;right:14px;bottom:70px}.tgfab{width:46px;height:46px;right:14px;bottom:126px}.chatpanel{left:8px;right:8px;bottom:74px;width:auto;max-width:none}}
 .sbic{display:inline-flex;align-items:center;justify-content:center;flex:none;width:18px;height:18px;color:currentColor;opacity:.72;transition:opacity .14s}
 .sbtab.on .sbic{opacity:1}
 .sbmap{appearance:none;background:none;border:none;font:inherit;width:100%}
@@ -401,7 +401,7 @@ tbody td.l{text-align:left}
 .cwmain:hover{filter:brightness(1.15)}
 .cwmainarr{transition:transform .15s}
 .cwmain:hover .cwmainarr{transform:translateX(4px)}
-@media(max-width:560px){.cwbtn{top:auto;bottom:148px;right:16px}.cwdrawer{width:auto;left:8px;right:8px;border-radius:16px 16px 0 0;top:auto;height:88vh}}
+@media(max-width:560px){.cwbtn{top:auto;bottom:182px;right:14px;width:46px;height:46px}.cwdrawer{width:auto;left:8px;right:8px;border-radius:16px 16px 0 0;top:auto;height:88vh}}
 /* АЯ «выглядывает»: всплывающий аватар ассистента у правого края с облачком-напоминанием */
 .ayapeek{position:fixed;right:0;top:188px;z-index:1250;display:flex;align-items:center;max-width:min(380px,calc(100vw - 18px));animation:ayaPeek .5s cubic-bezier(.22,1.2,.36,1)}
 @keyframes ayaPeek{from{transform:translate(70px,0);opacity:0}to{transform:translate(0,0);opacity:1}}
@@ -462,6 +462,13 @@ tbody td.l{text-align:left}
 .actrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:12px 0 2px}
 .soutmain{margin-left:auto}
 .aianalyze:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.ai-summary-box{margin:10px 0 4px;background:#17151f;border:1px solid #4f46e5;border-radius:14px;padding:14px 16px;box-shadow:0 0 0 1px rgba(124,92,255,.25),0 8px 30px rgba(79,70,229,.28);animation:aisbIn .35s cubic-bezier(.16,1,.3,1)}
+@keyframes aisbIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.aisb-ttl{font-family:'Montserrat',sans-serif;font-weight:800;font-size:12px;letter-spacing:.04em;color:#c7b9ff;margin-bottom:7px}
+.aisb-txt{font-size:13.5px;line-height:1.6;color:#ece9f6;white-space:pre-wrap;text-wrap:pretty}
+.ai-summary-box.true{border-color:#7c5cff}
+.ai-summary-box.true .aisb-txt{animation:aisbPulse 1.3s ease-in-out infinite}
+@keyframes aisbPulse{0%,100%{opacity:.6}50%{opacity:1}}
 .aianalyze:disabled{opacity:.55;cursor:default;transform:none}
 .aiana-ic{color:#0e0e0e;font-size:14px}
 .aichip{text-align:left;appearance:none;cursor:pointer;font:inherit;font-size:13px;font-weight:600;color:#0e0e0e;background:#fff;border:1px solid #e7e4e0;border-radius:11px;padding:11px 13px;line-height:1.4;transition:all .14s}
@@ -472,7 +479,7 @@ tbody td.l{text-align:left}
 .aisend{appearance:none;cursor:pointer;white-space:nowrap;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:#0e0e0e;background:#FFD200;border:none;border-radius:11px;padding:11px 15px;transition:filter .14s}
 .aisend:hover{filter:brightness(1.05)}
 .aisend:disabled{opacity:.5;cursor:default}
-@media(max-width:560px){.aifabtx{display:none}.aifab{padding:14px;right:16px;bottom:16px}.aipanel{right:8px;left:8px;bottom:76px;width:auto;max-width:none}.ayapeek{top:auto;bottom:86px;transform:none;animation:none;max-width:calc(100vw - 14px)}.ayaav{width:52px;height:52px;animation:none}}
+@media(max-width:560px){.aifabtx{display:none}.aifab{padding:0;width:46px;height:46px;justify-content:center;right:14px;bottom:14px}.aipanel{right:8px;left:8px;bottom:76px;width:auto;max-width:none}.ayapeek{top:auto;bottom:238px;right:0;transform:none;animation:none;max-width:calc(100vw - 70px)}.ayaav{width:48px;height:48px;animation:none}}
 @media(max-width:680px){.uform{grid-template-columns:1fr}}
 @media(max-width:680px){.p2card{flex-direction:column;gap:26px;text-align:center}.p2left{border-right:none;border-bottom:1px solid rgba(255,255,255,.1);padding-right:0;padding-bottom:22px}.p2right{align-items:center}.p2logo{margin:0 auto;max-width:200px}.p2h{font-size:21px}}
 .slogan{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#e10000;margin-top:7px;min-height:1.1em}
@@ -677,7 +684,7 @@ a.wordmark:hover{opacity:.6}
 .chsteam{animation:chSteam 1.6s ease-in-out infinite}
 @keyframes chSteam{0%{opacity:0;transform:translateY(2px)}50%{opacity:.8}100%{opacity:0;transform:translateY(-5px)}}
 .ch-coffee .chcheek,.ch-bye .chcheek{opacity:.8!important}
-@media(max-width:560px){.chwrap{right:10px;bottom:150px}}
+@media(max-width:560px){.chwrap{right:10px;bottom:296px}}
 .tcell.blank{background:#faf9f7;border-style:dashed;border-color:#f1efec}
 .tcell.today{border-color:#0e0e0e;box-shadow:inset 0 0 0 1px #0e0e0e}
 .tcellnum{font-size:12px;font-weight:700;color:#56534f}
@@ -785,12 +792,18 @@ a.wordmark:hover{opacity:.6}
 .t30pt b{color:#1c1b18}
 .t30act{display:flex;gap:8px;flex-wrap:wrap;margin-top:3px}
 .t30act .tlink{font-size:10.5px}
+@media print{body.pbdds *{visibility:hidden!important}body.pbdds .t30grid,body.pbdds .t30grid *{visibility:visible!important}body.pbdds .t30grid{position:absolute;left:0;top:0;width:100%;grid-template-columns:repeat(3,1fr)}body.pbdds .t30act{display:none!important}@page{size:A4;margin:12mm}}
 .logchart{display:flex;flex-direction:column;gap:9px;margin:6px 0 14px}
 .lcrow{display:flex;align-items:center;gap:12px}
 .lclabel{flex:0 0 160px;font-size:12.5px;font-weight:600;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lcbarwrap{flex:1;height:16px;background:#eef0f2;border-radius:8px;overflow:hidden}
 .lcbar{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,#4f46e5,#6366f1);transition:width .5s cubic-bezier(.16,1,.3,1)}
 .lcval{flex:0 0 110px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:#334155}
+.prchk{appearance:none;cursor:pointer;font:inherit;font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:9px;background:#f1efec;color:#56534f;border:1px solid #e0ddd8}
+.prchk .prchkbox{width:15px;height:15px;border-radius:4px;border:1.5px solid #b9b5af;position:relative;flex:none}
+.prchk.on{background:#0e0e0e;color:#fff;border-color:#0e0e0e}
+.prchk.on .prchkbox{background:#FFD200;border-color:#FFD200}
+.prchk.on .prchkbox:after{content:'';position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid #0e0e0e;border-width:0 2px 2px 0;transform:rotate(45deg)}
 .docsform{display:flex;flex-direction:column;gap:11px}
 .docrow2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .ayadoc,.maxdoc{font-size:12.5px;line-height:1.5;border-radius:10px;padding:9px 12px;color:#1e293b}
@@ -1300,6 +1313,29 @@ window.dispatchEvent(new Event('fbready'));
 </sc-if>
 </sc-if>
 
+<sc-if value="{{ isProdRep }}" hint-placeholder-val="">
+<div class="card">
+<div class="toolbar"><div class="field"><span class="lbl">Период с</span><input class="inp" type="date" value="{{ prFrom }}" onInput="{{ onPrFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp" type="date" value="{{ prTo }}" onInput="{{ onPrTo }}"></div><div class="field"><span class="lbl">Потери %</span><input class="inp num w90" type="number" value="{{ prLoss }}" onInput="{{ onPrLoss }}"></div><div class="field"><span class="lbl">Курс EUR/₽</span><input class="inp num w90" type="number" value="{{ prRate }}" onInput="{{ onPrRate }}"></div><button class="btn dark" onClick="{{ prOneC }}"><span>🏭</span> Загрузить из 1С (Excel/API)</button></div>
+<div class="actrow"><button class="aianalyze" onClick="{{ analyzeDeviations }}"><span class="aiana-ic">✦</span> Сделать AI-анализ отклонений</button><span class="hint">Данные обновлены: {{ prUpdatedText }}</span></div>
+<sc-if value="{{ prodAiHas }}" hint-placeholder-val=""><div class="ai-summary-box {{ prodAiBusy }}"><div class="aisb-ttl">✦ Заключение АЯ · технолог производства</div><div class="aisb-txt">{{ prodAiSummary }}</div></div></sc-if>
+<div class="tvrow"><button class="{{ prTabPlanCls }}" onClick="{{ setPrPlan }}">План-факт расхода сырья</button><button class="{{ prTabLossCls }}" onClick="{{ setPrLoss }}">Техпотери и брак</button></div>
+<sc-if value="{{ prIsPlan }}" hint-placeholder-val="{{ true }}">
+<div class="kpis"><sc-for list="{{ pfKpis }}" as="k" hint-placeholder-count="4"><div class="kpi {{ k.cls }}"><div class="kl">{{ k.label }}</div><div class="kv mono">{{ k.value }}</div></div></sc-for></div>
+<sc-if value="{{ pfVerdict }}" hint-placeholder-val="x"><div class="banner err">{{ pfVerdict }}</div></sc-if>
+<sc-if value="{{ pfEmpty }}" hint-placeholder-val=""><div class="hint">Нет данных. Нужны заявки клиентов (план) и заявки на закупку с фактом расхода.</div></sc-if>
+<div class="scroll"><table><thead><tr><th class="l">Компонента</th><th>План кг</th><th>Факт кг</th><th>Откл. %</th><th>План ₽/кг</th><th>Факт ₽/кг</th><th>Цена %</th><th>Фин. потери ₽</th></tr></thead>
+<tbody><sc-for list="{{ pfRows }}" as="r" hint-placeholder-count="5"><tr class="{{ r.rowCls }}"><td class="l nm">{{ r.name }}</td><td class="mono">{{ r.planVol }}</td><td class="mono">{{ r.actVol }}</td><td class="mono {{ r.volCls }}">{{ r.volPct }}</td><td class="mono">{{ r.planPrice }}</td><td class="mono">{{ r.actPrice }}</td><td class="mono {{ r.priceCls }}">{{ r.pricePct }}</td><td class="mono {{ r.finCls }}">{{ r.finDev }}</td></tr></sc-for></tbody></table></div>
+<div class="exprow"><button class="btn" onClick="{{ exportProdRep }}"><span>↓</span> Экспорт CSV</button></div>
+</sc-if>
+<sc-if value="{{ prIsLoss }}" hint-placeholder-val="">
+<div class="kpis"><sc-for list="{{ prLossKpis }}" as="k" hint-placeholder-count="3"><div class="kpi {{ k.cls }}"><div class="kl">{{ k.label }}</div><div class="kv mono">{{ k.value }}</div></div></sc-for></div>
+<div class="sec2cp">Критические отклонения (перерасход сырья)</div>
+<sc-if value="{{ pfHasAnomalies }}" hint-placeholder-val=""><div class="tips"><sc-for list="{{ pfAnomalies }}" as="a" hint-placeholder-count="3"><div class="tip"><span class="ilbl">{{ a.name }}</span><span>{{ a.text }}</span></div></sc-for></div></sc-if>
+<sc-if value="{{ pfHasAnomalies }}" hint-placeholder-val="x"><div class="hint">Критических отклонений по нормам не выявлено. Детальные выпуски по линиям/реакторам подтягиваются из 1С.</div></sc-if>
+</sc-if>
+</div>
+</sc-if>
+
 <sc-if value="{{ isPlanfact }}" hint-placeholder-val="{{ true }}">
 <div class="card">
 <div class="toolbar"><div class="field"><span class="lbl">Курс EUR/₽</span><input class="inp num w120" type="number" value="{{ rate }}" onInput="{{ onRate }}"></div></div>
@@ -1451,14 +1487,16 @@ window.dispatchEvent(new Event('fbready'));
 <div class="fg"><label>Статус ФТС</label><select class="sel" value="{{ lgFtsStatus }}" onChange="{{ onLgFtsStatus }}"><sc-for list="{{ lgFtsStatusOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></div>
 <div class="fg"><label>Вес груза, кг</label><input class="inp num" type="number" value="{{ lgWeight }}" onInput="{{ onLgWeight }}"></div>
 <div class="fg"><label>Стоимость фрахта, ₽</label><input class="inp num" type="number" value="{{ lgFreight }}" onInput="{{ onLgFreight }}"></div>
+<div class="fg"><label>Привязать к заявке на закупку</label><select class="sel" value="{{ lgLinkP }}" onChange="{{ onLgLinkP }}"><option value="">— нет —</option><sc-for list="{{ lgPurchaseOpts }}" as="o" hint-placeholder-count="2"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></div>
+<div class="fg"><label>Привязать к заказу клиента</label><select class="sel" value="{{ lgLinkO }}" onChange="{{ onLgLinkO }}"><option value="">— нет —</option><sc-for list="{{ lgOrderOpts }}" as="o" hint-placeholder-count="2"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></div>
 </div>
 <sc-if value="{{ lgHasErr }}" hint-placeholder-val=""><div class="banner err">{{ lgErr }}</div></sc-if>
 <div class="uactions"><button class="btn dark" onClick="{{ saveLog }}">Сохранить поручение</button><sc-if value="{{ lgHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelLog }}">Отмена</button></sc-if></div>
 </div>
 <div class="card"><div class="sec">Монитор перевозок · {{ logCount }}</div>
 <sc-if value="{{ logEmpty }}" hint-placeholder-val=""><div class="hint">Пока нет поручений на перевозку.</div></sc-if>
-<div class="scroll"><table><thead><tr><th class="l">№</th><th class="l">Дата</th><th class="l">Маршрут</th><th class="l">Транспорт</th><th class="l">Контейнер</th><th class="l">Водитель</th><th class="l">ФТС</th><th class="l">Статус</th><th>Вес</th><th>Фрахт ₽</th><th>₽/кг</th><th class="l"></th></tr></thead>
-<tbody><sc-for list="{{ logRows }}" as="r" hint-placeholder-count="2"><tr><td class="l mono">{{ r.no }}</td><td class="l mono">{{ r.date }}</td><td class="l nm">{{ r.route }}</td><td class="l">{{ r.transType }}</td><td class="l mono">{{ r.container }}</td><td class="l">{{ r.driver }}</td><td class="l">{{ r.fts }}</td><td class="l"><span class="tcstatus {{ r.statusCls }}">{{ r.status }}</span></td><td class="mono">{{ r.weight }}</td><td class="mono">{{ r.freight }}</td><td class="mono">{{ r.perKg }}</td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ r.edit }}">Изм.</button><button class="ulink del" onClick="{{ r.remove }}">×</button></div></td></tr></sc-for></tbody></table></div>
+<div class="scroll"><table><thead><tr><th class="l">№</th><th class="l">Дата</th><th class="l">Маршрут</th><th class="l">Транспорт</th><th class="l">Контейнер</th><th class="l">Водитель</th><th class="l">Привязка</th><th class="l">ФТС</th><th class="l">Статус</th><th>Вес</th><th>Фрахт ₽</th><th>₽/кг</th><th class="l"></th></tr></thead>
+<tbody><sc-for list="{{ logRows }}" as="r" hint-placeholder-count="2"><tr><td class="l mono">{{ r.no }}</td><td class="l mono">{{ r.date }}</td><td class="l nm">{{ r.route }}</td><td class="l">{{ r.transType }}</td><td class="l mono">{{ r.container }}</td><td class="l">{{ r.driver }}</td><td class="l">{{ r.link }}</td><td class="l">{{ r.fts }}</td><td class="l"><span class="tcstatus {{ r.statusCls }}">{{ r.status }}</span></td><td class="mono">{{ r.weight }}</td><td class="mono">{{ r.freight }}</td><td class="mono">{{ r.perKg }}</td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ r.edit }}">Изм.</button><button class="ulink del" onClick="{{ r.remove }}">×</button></div></td></tr></sc-for></tbody></table></div>
 </div>
 <div class="card"><div class="sec">Аналитика по географии перевозок</div>
 <sc-if value="{{ routeEmpty }}" hint-placeholder-val=""><div class="hint">Нет данных для сводки.</div></sc-if>
@@ -1469,8 +1507,27 @@ window.dispatchEvent(new Event('fbready'));
 </sc-if>
 
 <sc-if value="{{ isTreas30 }}" hint-placeholder-val="">
+<div class="card"><div class="sec">Добавить платёж · заявка на согласование</div>
+<div class="uform">
+<div class="fg"><label>Получатель / поставщик</label><input class="inp" value="{{ prSupplier }}" onInput="{{ onPrSupplier }}" placeholder="ООО «ХимПоставка»"></div>
+<div class="fg"><label>Сумма, ₽</label><input class="inp num" type="number" value="{{ prAmount }}" onInput="{{ onPrAmount }}"></div>
+<div class="fg"><label>Дата платежа</label><input class="inp" type="date" value="{{ prDate }}" onInput="{{ onPrDate }}"></div>
+<div class="fg"><label>Согласующий</label><select class="sel" value="{{ prApprover }}" onChange="{{ onPrApprover }}"><option value="">— выберите —</option><sc-for list="{{ prApproverOpts }}" as="u" hint-placeholder-count="3"><option value="{{ u.v }}">{{ u.label }}</option></sc-for></select></div>
+<div class="fg full"><label>Назначение платежа</label><input class="inp" value="{{ prPurpose }}" onInput="{{ onPrPurpose }}" placeholder="Оплата за сырьё по счёту №…"></div>
+</div>
+<div class="genrow"><button class="{{ prTrack }}" onClick="{{ togglePrTrack }}"><span class="prchkbox"></span>Отслеживать платёж</button></div>
+<sc-if value="{{ prHasErr }}" hint-placeholder-val=""><div class="banner err">{{ prErr }}</div></sc-if>
+<div class="uactions"><button class="btn dark" onClick="{{ prSend }}">Отправить на согласование</button><button class="btn" onClick="{{ prSave }}">Сохранить черновик</button><label class="btn"><span>🏦</span> Загрузить выписку .txt<input type="file" accept=".txt" style="display:none" onChange="{{ onStmtFile }}"></label></div>
+<sc-if value="{{ stmtHasMsg }}" hint-placeholder-val=""><div class="hint">{{ stmtMsg }}</div></sc-if>
+</div>
+<div class="card"><div class="sec">Заявки на платёж · {{ prCount }}</div>
+<sc-if value="{{ prEmpty }}" hint-placeholder-val=""><div class="hint">Пока нет заявок на платёж.</div></sc-if>
+<div class="scroll"><table><thead><tr><th class="l">Получатель</th><th>Сумма</th><th class="l">Дата</th><th class="l">Инициатор</th><th class="l">Согласующий</th><th class="l">Статус</th><th>Отсл.</th><th class="l">Действия</th></tr></thead>
+<tbody><sc-for list="{{ prRows }}" as="p" hint-placeholder-count="2"><tr><td class="l nm">{{ p.supplier }}</td><td class="mono">{{ p.amount }}</td><td class="l mono">{{ p.date }}</td><td class="l">{{ p.initiator }}</td><td class="l">{{ p.approver }}</td><td class="l"><span class="tcstatus {{ p.statusCls }}">{{ p.status }}</span></td><td><button class="{{ p.trackCls }}" onClick="{{ p.toggleTrack }}"><span class="prchkbox"></span></button></td><td class="l"><div class="urowact"><sc-if value="{{ p.canSend }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.send }}">На согл.</button></sc-if><sc-if value="{{ p.canApprove }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.approve }}">Согл.</button><button class="ulink del" onClick="{{ p.reject }}">Откл.</button></sc-if><sc-if value="{{ p.canPay }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.pay }}">Оплачено</button></sc-if><sc-if value="{{ p.canRemove }}" hint-placeholder-val=""><button class="ulink del" onClick="{{ p.remove }}">×</button></sc-if></div></td></tr></sc-for></tbody></table></div>
+<div class="hint">При смене статуса инициатор и согласующий получают уведомление в командный чат (и Telegram). «Отслеживать» помечает важные платежи.</div>
+</div>
 <div class="card"><div class="sec">Казначейский календарь · БДДС на 30 дней</div>
-<div class="toolbar"><div class="field"><span class="lbl">Остаток на счетах сегодня, ₽</span><input class="inp num w120" type="number" value="{{ cashStart }}" onInput="{{ onCashStart }}"></div><button class="btn" onClick="{{ trResetPlan }}">Сбросить переносы</button></div>
+<div class="toolbar"><div class="field"><span class="lbl">Остаток на счетах сегодня, ₽</span><input class="inp num w120" type="number" value="{{ cashStart }}" onInput="{{ onCashStart }}"></div><button class="btn" onClick="{{ trResetPlan }}">Сбросить переносы</button><button class="btn" onClick="{{ exportBdds }}"><span>↓</span> Excel (CSV)</button><button class="btn dark" onClick="{{ printBdds }}"><span>🖨</span> Печать / PDF</button></div>
 <div class="kpis"><div class="kpi"><div class="kl">Платежи 30 дн., ₽</div><div class="kv mono">{{ trTotalOut }}</div></div><div class="kpi {{ trMinCls }}"><div class="kl">Мин. остаток (риск разрыва)</div><div class="kv mono">{{ trMinBal }}</div></div><sc-if value="{{ trHasOverdue }}" hint-placeholder-val=""><div class="kpi kpiBad"><div class="kl">Просрочено, ₽</div><div class="kv mono">{{ trOverdue }}</div></div></sc-if></div>
 <div class="t30grid"><sc-for list="{{ trDays }}" as="d" hint-placeholder-count="10"><div class="t30cell {{ d.off }}"><div class="t30h"><span class="t30d">{{ d.day }} {{ d.wd }}</span><span class="t30b {{ d.gap }}">{{ d.bal }} ₽</span></div><sc-if value="{{ d.hasItems }}" hint-placeholder-val=""><div class="t30items"><sc-for list="{{ d.items }}" as="p" hint-placeholder-count="1"><div class="t30pay {{ p.over }}"><div class="t30pt"><b>{{ p.amount }} ₽</b> {{ p.supplier }} · {{ p.material }}</div><div class="t30act"><button class="tlink" onClick="{{ p.startMove }}">перенести</button><sc-if value="{{ p.isSplit }}" hint-placeholder-val="x"><button class="tlink" onClick="{{ p.split }}">разбить 30/40/30</button></sc-if><sc-if value="{{ p.isSplit }}" hint-placeholder-val=""><button class="tlink" onClick="{{ p.unsplit }}">объединить</button></sc-if></div><sc-if value="{{ p.moveOpen }}" hint-placeholder-val=""><input class="inp" type="date" value="{{ p.moveVal }}" onInput="{{ p.onMove }}"></sc-if></div></sc-for></div></sc-if></div></sc-for></div>
 <div class="hint">Остаток на конец дня пересчитывается на лету. Красный остаток — кассовый разрыв. «Разбить 30/40/30» дробит счёт на аванс/перед отгрузкой/постоплату (0/+15/+30 дн.), «перенести» сдвигает дату платежа. Источник — неоплаченные заявки на закупку.</div>
@@ -1817,7 +1874,7 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ aiOpen }}" hint-placeholder-val="">
 <div class="aipanel">
 <div class="aihead"><div class="aihl"><span class="aidot"></span> AI-аналитик</div><div class="aihr"><select class="aimodel" value="{{ aiModel }}" onChange="{{ onAiModel }}"><option value="gpt-4o-mini">GPT-4o mini · быстро</option><option value="gpt-4o">GPT-4o · точнее</option><option value="claude-sonnet-4">Claude Sonnet</option></select><sc-if value="{{ aiIsAdmin }}" hint-placeholder-val=""><button class="aiclr" onClick="{{ aiCfgToggle }}" title="Свой API-ключ">⚙</button></sc-if><button class="aiclr" onClick="{{ aiClear }}" title="Очистить">⌫</button><button class="aix" onClick="{{ aiClose }}">✕</button></div></div>
-<sc-if value="{{ aiCfgOpen }}" hint-placeholder-val=""><div class="aicfg"><div class="aicfgt">Свой AI-ключ (работает без Puter)</div><input class="tginp" value="{{ aiKeyEdit }}" onInput="{{ onAiKeyEdit }}" placeholder="API-ключ (OpenRouter sk-or-… / OpenAI sk-…)"><input class="tginp" value="{{ aiModelEdit }}" onInput="{{ onAiModelEdit }}" placeholder="Модель (напр. openai/gpt-4o-mini)"><input class="tginp" value="{{ aiBaseEdit }}" onInput="{{ onAiBaseEdit }}" placeholder="API URL (по умолч. openrouter.ai/api/v1)"><div class="tgrow"><button class="tgsave" onClick="{{ saveAiCfg }}">Сохранить</button><span class="aicfgh">Ключ хранится только в этом браузере.</span></div></div></sc-if>
+<sc-if value="{{ aiCfgOpen }}" hint-placeholder-val=""><div class="aicfg"><div class="aicfgt">Свой AI-ключ (работает без Puter)</div><input class="tginp" value="{{ aiKeyEdit }}" onInput="{{ onAiKeyEdit }}" placeholder="API-ключ (OpenRouter sk-or-… / OpenAI sk-…)"><input class="tginp" value="{{ aiModelEdit }}" onInput="{{ onAiModelEdit }}" placeholder="Модель (по умолч. meta-llama/llama-3.3-70b-instruct:free)"><input class="tginp" value="{{ aiBaseEdit }}" onInput="{{ onAiBaseEdit }}" placeholder="API URL (по умолч. openrouter.ai/api/v1)"><div class="tgrow"><button class="tgsave" onClick="{{ saveAiCfg }}">Сохранить</button><span class="aicfgh">Ключ хранится только в этом браузере.</span></div></div></sc-if>
 <div class="aibody">
 <sc-if value="{{ aiHasMsgs }}" hint-placeholder-val="{{ true }}"><sc-for list="{{ aiMsgs }}" as="m" hint-placeholder-count="2"><div class="{{ m.cls }}">{{ m.content }}</div></sc-for></sc-if>
 <sc-if value="{{ aiNoMsgs }}" hint-placeholder-val="{{ true }}"><div class="aiempty"><div class="aiet">Спросите про закупки, себестоимость, запасы или платежи — я вижу данные из приложения.</div><div class="aihint">Без своего ключа AI работает через Puter (нужен вход). Если регистрация в Puter недоступна — нажмите «⚙» и укажите свой API-ключ (например, бесплатный OpenRouter).</div><sc-for list="{{ aiPrompts }}" as="p" hint-placeholder-count="3"><button class="aichip" onClick="{{ p.ask }}">{{ p.text }}</button></sc-for></div></sc-if>
@@ -1848,7 +1905,7 @@ class Component extends DCLogic {
     oneCUrl: '', oneCToken: '', oneCMatch: 'article', oneCAuto: false, oneCBusy: false, oneCStatus: '', oneCErr: '', oneCPreview: null, oneCLastAt: 0, oneCLog: [], oneCFileCur: 'RUB',
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {},
     chat: [], chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false,
-    tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '', sales: [], saleDraft: null, saleErr: '', salesTransport: 0, salesTransMode: 'weight', cashStart: 0, payMoves: {}, paySplits: {}, payMoveEdit: '', logistics: [], logDraft: null, logErr: '',
+    tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '', sales: [], saleDraft: null, saleErr: '', salesTransport: 0, salesTransMode: 'weight', cashStart: 0, payMoves: {}, paySplits: {}, payMoveEdit: '', logistics: [], logDraft: null, logErr: '', payreqs: [], prDraft: null, prErr: '', stmtMsg: '',
     docType: 'power', docData: { no: '14', date: '', empName: 'Иванов Иван Иванович', empPost: 'менеджер по закупкам', empPassport: '45 09 № 123456, выдан ОВД «Тверской» г. Москвы 12.03.2015, код 770-001', supplier: 'ООО «ХимПоставка»', supplierAddr: 'г. Москва, ул. Промышленная, д. 7', goods: 'Пигмент синий (фталоцианиновый) — 500 кг\nРастворитель НефрасС2 — 200 л\nСтабилизатор СТ-4 — 50 кг', term: '10 дней', route: 'Москва — Санкт-Петербург', car: 'Volvo FH, гос. № А123ВС 777', driver: 'Петров Пётр Петрович', driverDoc: 'вод. удостоверение 99 12 345678', cargo: '1200 кг / 4,0 м³, 6 паллет', cargoName: 'Сырьё для производства чернил', rfpSupplier: 'ООО «ХимПоставка»', rfpItems: 'Пигмент синий (фталоцианиновый) — 500 кг\nПигмент жёлтый — 300 кг\nРастворитель НефрасС2 — 200 л', rfpDeadline: '5 рабочих дней' },
     peekIdx: 0, peekDismissed: {}, peekClosed: false, peekToast: '',
     tgToken: '', tgChatId: '', tgFwd: false, tgEditToken: '', tgEditChatId: '', tgStatus: '',
@@ -1881,6 +1938,8 @@ class Component extends DCLogic {
     try { sales = JSON.parse(localStorage.getItem('inkflow_sales') || '[]'); if (!Array.isArray(sales)) sales = []; } catch (e) {}
     let logistics = [];
     try { logistics = JSON.parse(localStorage.getItem('inkflow_logistics') || '[]'); if (!Array.isArray(logistics)) logistics = []; } catch (e) {}
+    let payreqs = [];
+    try { payreqs = JSON.parse(localStorage.getItem('inkflow_payreqs') || '[]'); if (!Array.isArray(payreqs)) payreqs = []; } catch (e) {}
     let emailCfg = {};
     try { emailCfg = JSON.parse(localStorage.getItem('inkflow_emailcfg') || '{}') || {}; } catch (e) {}
     let tasksSeenAt = 0;
@@ -1888,7 +1947,7 @@ class Component extends DCLogic {
     try { tgLink = localStorage.getItem('inkflow_tg') || ''; } catch (e) {}
     let tgBot = {};
     try { tgBot = JSON.parse(localStorage.getItem('inkflow_tgbot') || '{}') || {}; } catch (e) {}
-    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, tasksSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
+    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, tasksSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
     // Двухфазный экран входа: фаза 1 (загрузка) → фаза 2 (логотип слева + кнопка «Войти»)
     this._loaderT1 = setTimeout(() => this.setState({ loaderPhase: 'p2' }), 3400);
     // Слоган под логотипом перепечатывается каждые 10 c (remount по tick → анимация проигрывается заново)
@@ -1913,6 +1972,7 @@ class Component extends DCLogic {
     this._purgeT = setTimeout(() => this.purgeOldTasks(), 5000);
     this._purgeInt = setInterval(() => this.purgeOldTasks(), 3600000);
     this._clockInt = setInterval(() => { if (this.state.currentUser && !this.state.loading) this.forceUpdate(); }, 30000);
+    this._badgeInt = setInterval(() => this.updateAppBadge(), 25000);
     // Авто-подключение общего облака данных (встроенный конфиг) — вводить ничего не нужно
     this._autoCloud = () => { try { if (!this.state.cloudConnected) this.setState({ cloudCfgText: JSON.stringify(Component.FBCFG), cloudWsId: (this.state.cloudWsId || 'workspace') }, () => this.cloudConnect()); } catch (e) {} };
     if (window.__FB) this._autoCloud(); else window.addEventListener('fbready', this._autoCloud, { once: true });
@@ -1986,7 +2046,7 @@ class Component extends DCLogic {
     if (!this._applyingRemote && this.state.cloudRole === 'editor') this.queueCloudPush();
   }
 
-  componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); clearInterval(this._peekInt); clearTimeout(this._peekToastT); clearTimeout(this._purgeT); clearInterval(this._purgeInt); clearInterval(this._chInt); clearTimeout(this._chLeaveT); clearTimeout(this._coffeeT); clearInterval(this._clockInt); if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
+  componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); clearInterval(this._peekInt); clearTimeout(this._peekToastT); clearTimeout(this._purgeT); clearInterval(this._purgeInt); clearInterval(this._chInt); clearTimeout(this._chLeaveT); clearTimeout(this._coffeeT); clearInterval(this._clockInt); clearInterval(this._badgeInt); if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
 
   loaderVals() {
     const T = 'ENGINEERED FOR EXCELLENCE. PRINTED FOR IMPACT.';
@@ -2117,6 +2177,7 @@ class Component extends DCLogic {
       turnover: '<path d="M21 12a9 9 0 1 1-2.6-6.3"/><path d="M21 4v5h-5"/>',
       cover: '<rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 13l2 2 4-4"/>',
       planfact: '<line x1="5" y1="21" x2="5" y2="11"/><line x1="12" y1="21" x2="12" y2="4"/><line x1="19" y1="21" x2="19" y2="14"/><line x1="2.5" y1="21" x2="21.5" y2="21"/>',
+      prodrep: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 14l3-3 2 2 4-5"/><line x1="7" y1="17" x2="17" y2="17"/>',
       stress: '<path d="M3 12h4l2.5-7 4 14 2.5-7H21"/>',
       reports: '<path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/>',
       cloud: '<path d="M7 18a4.5 4.5 0 0 1-.5-9 6 6 0 0 1 11.5 1.5A3.5 3.5 0 0 1 17.5 18z"/>',
@@ -2221,7 +2282,7 @@ class Component extends DCLogic {
       { label: 'Планирование закупок', tabs: [['runrate', 'Run Rate'], ['proc', 'План закупок'], ['cal', 'Календарь'], ['logi', 'Логистика']] },
       { label: 'Цены и поставщики', tabs: [['audit', 'Аудит цен'], ['pay', 'Платежи'], ['treas30', 'БДДС 30 дней'], ['prices', 'Реестр цен'], ['cparties', 'Контрагенты']] },
       { label: 'Запасы', tabs: [['wh', 'Склад'], ['receipts', 'Поступления ТМЦ'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка']] },
-      { label: 'Контроль и сценарии', tabs: [['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
+      { label: 'Контроль и сценарии', tabs: [['planfact', 'План-факт'], ['prodrep', 'Отчёты производства'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
       { label: 'Система', tabs: [['cloud', 'Облако'], ['onec', 'Интеграция 1С']] },
     ];
   }
@@ -2233,7 +2294,7 @@ class Component extends DCLogic {
     if (user.role === 'admin') return ['home'].concat(all, ['users']);
     const perms = Array.isArray(user.perms) ? user.perms : all;
     // Новые разделы доступны по умолчанию всем (добавлены позже — их нет в старых perms)
-    const always = ['prodplan', 'procplan', 'onec', 'tasks', 'docs', 'cparties', 'receipts', 'sales', 'treas30', 'logi'];
+    const always = ['prodplan', 'procplan', 'onec', 'tasks', 'docs', 'cparties', 'receipts', 'sales', 'treas30', 'logi', 'prodrep'];
     return ['home'].concat(all.filter(id => perms.includes(id) || always.includes(id)));
   }
 
@@ -2469,23 +2530,38 @@ class Component extends DCLogic {
     const key = this.state.aiKey;
     if (key) {
       const base = (this.state.aiBase || 'https://openrouter.ai/api/v1').replace(/\/+$/, '');
-      const model = this.state.aiModelName || 'meta-llama/llama-3.1-8b-instruct:free';
       const headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key };
       try { headers['HTTP-Referer'] = location.origin; headers['X-Title'] = 'Shtark INK Flow'; } catch (e) {}
-      let r, d;
-      try { r = await fetch(base + '/chat/completions', { method: 'POST', headers, body: JSON.stringify({ model, messages, max_tokens: opts.max || 700 }) }); }
-      catch (e) { throw new Error('нет связи с ' + base + ' (проверьте интернет и адрес)'); }
-      d = await r.json().catch(() => ({}));
-      if (!r.ok || d.error) throw new Error((d.error && (d.error.message || JSON.stringify(d.error))) || ('код ответа ' + r.status));
-      return (d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content) || '';
+      // Список моделей для перебора: выбранная пользователем + живые бесплатные из каталога OpenRouter
+      let tryModels = [];
+      if (this.state.aiModelName) tryModels.push(this.state.aiModelName);
+      if (!this._freeModels) {
+        try { const mr = await fetch(base + '/models', { headers: { 'Authorization': 'Bearer ' + key } }); const md = await mr.json(); const list = (md && md.data) || []; this._freeModels = list.filter(m => { const p = m.pricing || {}; const id = String(m.id || ''); const free = (Number(p.prompt) === 0 && Number(p.completion) === 0) && /:free$/.test(id); const guard = /guard|shield|moderat|safety|vision|embed|whisper|tts|image|nemoguard/i.test(id); return free && !guard; }).map(m => m.id); } catch (e) { this._freeModels = []; }
+      }
+      const known = ['deepseek/deepseek-chat-v3.1:free', 'meta-llama/llama-3.3-70b-instruct:free', 'qwen/qwen-2.5-72b-instruct:free', 'mistralai/mistral-small-3.2-24b-instruct:free'];
+      for (const m of known) if (tryModels.indexOf(m) < 0) tryModels.push(m);
+      for (const m of (this._freeModels || [])) if (tryModels.indexOf(m) < 0) tryModels.push(m);
+      tryModels = tryModels.slice(0, 8);
+      let lastErr = '';
+      for (const model of tryModels) {
+        let r, d;
+        try { r = await fetch(base + '/chat/completions', { method: 'POST', headers, body: JSON.stringify({ model, messages, max_tokens: opts.max || 700 }) }); }
+        catch (e) { throw new Error('нет связи с ' + base + ' (проверьте интернет и адрес)'); }
+        d = await r.json().catch(() => ({}));
+        if (!r.ok || d.error) { lastErr = (d.error && (d.error.message || JSON.stringify(d.error))) || ('код ответа ' + r.status); if (/key|auth|credit|insufficient|401|403/i.test(lastErr)) throw new Error(lastErr); continue; }
+        const out = (d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content) || '';
+        if (out && /^\s*(user|response)\s+safety\s*:/i.test(out)) { lastErr = 'модель-классификатор безопасности, пропущена'; continue; }
+        if (out) { this._lastModel = model; return out; }
+      }
+      throw new Error(lastErr || 'нет доступных бесплатных моделей — впишите модель вручную в ⚙ (см. openrouter.ai/models, фильтр Free)');
     }
-    if (typeof puter !== 'undefined' && puter.ai) {
+    if (typeof puter !== 'undefined' && puter.ai && !this.state.aiKey) {
       const rr = await puter.ai.chat(messages, { model: this.state.aiModel });
       return (rr && (rr.message && rr.message.content || rr.text || (typeof rr === 'string' ? rr : ''))) || '';
     }
-    throw new Error('AI не настроен');
+    throw new Error('no-key: укажите ключ OpenRouter');
   }
-  hasAI() { return !!this.state.aiKey || (typeof puter !== 'undefined' && !!puter.ai); }
+  hasAI() { return !!this.state.aiKey; }
   aiSignedInSilent() { return !!this.state.aiKey || (typeof puter !== 'undefined' && puter.ai && puter.auth && typeof puter.auth.isSignedIn === 'function' && puter.auth.isSignedIn()); }
   saveAiCfg() {
     const key = (this.state.aiKeyEdit || '').trim(), base = (this.state.aiBaseEdit || '').trim(), model = (this.state.aiModelEdit || '').trim();
@@ -2498,32 +2574,27 @@ class Component extends DCLogic {
     if (!text || S.aiBusy) return;
     const display = (typeof displayArg === 'string' && displayArg) ? displayArg : text;
     if (!this.hasAI()) {
-      this.setState({ aiMessages: [...S.aiMessages, { role: 'user', content: display }, { role: 'assistant', content: 'AI ещё не настроен. Укажите свой API-ключ (кнопка «⚙ AI-ключ» в шапке этого окна) или дождитесь загрузки сервиса Puter.', error: true }], aiInput: '' });
+      this.setState({ aiMessages: [...S.aiMessages, { role: 'user', content: display }, { role: 'assistant', content: '⚙ Пожалуйста, укажите ваш API-ключ OpenRouter в настройках (кнопка «⚙ AI-ключ» в шапке этого окна). Ключ хранится только в вашем браузере.', error: true }], aiInput: '' });
       return;
     }
     const history = S.aiMessages.filter(m => !m.error).slice(-10).map(m => ({ role: m.role, content: m.full || m.content }));
     const msgs = [{ role: 'system', content: this.aiSystemPrompt() }, ...history, { role: 'user', content: text }];
-    const next = [...S.aiMessages, { role: 'user', content: display, full: text }, { role: 'assistant', content: '' }];
+    const next = [...S.aiMessages, { role: 'user', content: display, full: text }, { role: 'assistant', content: 'АЯ думает…' }];
     const idx = next.length - 1;
     this.setState({ aiMessages: next, aiInput: '', aiBusy: true });
     const setChunk = (txt) => this.setState(st => { const a = st.aiMessages.slice(); if (a[idx]) a[idx] = { ...a[idx], content: txt }; return { aiMessages: a }; });
     const fail = (txt) => this.setState(st => { const a = st.aiMessages.slice(); if (a[idx]) a[idx] = { role: 'assistant', content: txt, error: true }; return { aiMessages: a, aiBusy: false }; });
     (async () => {
       try {
-        // Если нет своего ключа — используем Puter (может потребоваться вход)
-        if (!this.state.aiKey && typeof puter !== 'undefined' && puter.ai && puter.auth && typeof puter.auth.isSignedIn === 'function' && !puter.auth.isSignedIn()) {
-          setChunk('Открываю вход в AI-сервис Puter… разрешите всплывающее окно (бесплатно, один раз). Если регистрация недоступна — нажмите «⚙ AI-ключ» и укажите свой ключ.');
-          try { await puter.auth.signIn(); } catch (e) { fail('Не удалось войти в Puter. Нажмите «⚙ AI-ключ» в шапке окна и укажите свой API-ключ (OpenRouter/OpenAI) — тогда AI заработает без Puter.'); return; }
-          setChunk('…');
-        }
         const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
         const acc = await withTimeout(this.aiComplete(msgs, { max: 900 }), 60000);
         setChunk(acc || 'Пустой ответ. Попробуйте ещё раз.');
         this.setState({ aiBusy: false });
       } catch (e) {
         const m = (e && e.message) || '';
-        if (m === 'timeout') fail('AI не ответил за минуту. Проверьте интернет и попробуйте ещё раз.');
-        else fail('Не удалось получить ответ от AI: ' + (m || 'ошибка') + '. Можно указать свой API-ключ через «⚙ AI-ключ».');
+        if (m === 'timeout') fail('АЯ не ответила за минуту. Проверьте интернет и попробуйте ещё раз.');
+        else if (/no.?key|ключ/i.test(m)) fail('⚙ Пожалуйста, укажите ваш API-ключ OpenRouter в настройках (⚙).');
+        else fail('Не удалось получить ответ от АЯ: ' + (m || 'ошибка') + '. Проверьте API-ключ OpenRouter в «⚙ AI-ключ».');
       }
     })();
   }
@@ -2669,6 +2740,7 @@ class Component extends DCLogic {
     if (Array.isArray(d.receipts)) { patch.receipts = d.receipts; try { localStorage.setItem('inkflow_receipts', JSON.stringify(d.receipts)); } catch (e) {} }
     if (Array.isArray(d.sales)) { patch.sales = d.sales; try { localStorage.setItem('inkflow_sales', JSON.stringify(d.sales)); } catch (e) {} }
     if (Array.isArray(d.logistics)) { patch.logistics = d.logistics; try { localStorage.setItem('inkflow_logistics', JSON.stringify(d.logistics)); } catch (e) {} }
+    if (Array.isArray(d.payreqs)) { patch.payreqs = d.payreqs; try { localStorage.setItem('inkflow_payreqs', JSON.stringify(d.payreqs)); } catch (e) {} }
     if (d.emailCfg && typeof d.emailCfg === 'object') { patch.emailCfg = d.emailCfg; try { localStorage.setItem('inkflow_emailcfg', JSON.stringify(d.emailCfg)); } catch (e) {} }
     if (typeof d.tgLink === 'string') patch.tgLink = d.tgLink;
     if (d.tgBot && typeof d.tgBot === 'object') { patch.tgToken = d.tgBot.token || ''; patch.tgChatId = d.tgBot.chatId || ''; patch.tgFwd = !!d.tgBot.fwd; }
@@ -2719,6 +2791,7 @@ class Component extends DCLogic {
     const key = String(name).trim().toLowerCase().replace(/\s+/g, ' ');
     const u = (this.state.users || []).find(x => String(x.name || '').trim().toLowerCase().replace(/\s+/g, ' ') === key);
     if (u && u.photo) return u.photo;
+    if (u && u.role === 'admin') return 'icon-192.png';
     const map = { 'бушуева ольга': 'avatar-bushueva.png', 'екатерина сергеева': 'avatar-sergeeva.png', 'сергеева екатерина': 'avatar-sergeeva.png', 'афанасьева оксана': 'avatar-afanasyeva.png', 'оксана афанасьева': 'avatar-afanasyeva.png', 'максим кузнецов': 'avatar-kuznetsov.png', 'кузнецов максим': 'avatar-kuznetsov.png', 'татьяна чернопятова': 'avatar-chernopyatova.png', 'чернопятова татьяна': 'avatar-chernopyatova.png' };
     return map[key] || '';
   }
@@ -2792,6 +2865,7 @@ class Component extends DCLogic {
     if (this.state.cloudConnected && this._docRef && window.__FB) {
       try { window.__FB.setDoc(this._docRef, { tasks: next }, { merge: true }).catch(() => {}); } catch (e) {}
     }
+    setTimeout(() => this.updateAppBadge(), 50);
   }
   // Автоудаление: выполненные задачи, завершённые 70+ дней назад, убираются из программы и облака.
   purgeOldTasks() {
@@ -3702,7 +3776,7 @@ class Component extends DCLogic {
     return { gap: false };
   }
   // ===== Монитор логистики =====
-  emptyLog() { return { id: '', no: '', date: this.ymd(new Date()), route: '', carrier: '', transType: 'Авто РФ', container: '', truck: '', driver: '', driverDoc: '', status: 'На согласовании', ftsDecl: '', ftsStatus: '', weight: '', freight: '' }; }
+  emptyLog() { return { id: '', no: '', date: this.ymd(new Date()), route: '', carrier: '', transType: 'Авто РФ', container: '', truck: '', driver: '', driverDoc: '', status: 'На согласовании', ftsDecl: '', ftsStatus: '', weight: '', freight: '', linkPurchase: '', linkOrder: '' }; }
   writeLogistics(next) {
     this.setState({ logistics: next });
     try { localStorage.setItem('inkflow_logistics', JSON.stringify(next)); } catch (e) {}
@@ -3726,6 +3800,7 @@ class Component extends DCLogic {
       const w = Number(r.weight) || 0, fr = Number(r.freight) || 0; const perKg = w > 0 ? fr / w : 0;
       const rt = (r.route || '—'); byRoute[rt] = byRoute[rt] || { route: rt, n: 0, weight: 0, freight: 0 }; byRoute[rt].n++; byRoute[rt].weight += w; byRoute[rt].freight += fr;
       return { id: r.id, no: r.no || '—', date: this.dmFull(r.date), route: rt, carrier: r.carrier || '—', transType: r.transType || '—', container: r.container || r.truck || '—', driver: r.driver || '—', status: r.status || '—', statusCls: stCls[r.status] || 'st-new', fts: (r.ftsDecl ? ('ДТ ' + r.ftsDecl) : '—') + (r.ftsStatus ? (' · ' + r.ftsStatus) : ''), weight: this.fmt(w, 0), freight: this.fmt(fr), perKg: w > 0 ? this.fmt(perKg, 2) : '—',
+        link: ((p) => { const lp = (S.purchases || []).find(x => x.id === r.linkPurchase); const lo = (S.orders || []).find(x => x.id === r.linkOrder); const a = []; if (lp) a.push('Заявка №' + (lp.no || '-')); if (lo) a.push('Заказ №' + (lo.no || '-')); return a.join(' · ') || '—'; })(),
         edit: () => set({ logDraft: { ...r }, logErr: '' }), remove: () => this.askDelete('поручение «' + rt + '»', () => this.writeLogistics((this.state.logistics || []).filter(x => x.id !== r.id))) };
     });
     const routeVals = Object.values(byRoute).sort((a, b) => b.freight - a.freight);
@@ -3743,8 +3818,99 @@ class Component extends DCLogic {
       lgFtsDecl: d.ftsDecl || '', onLgFtsDecl: upd('ftsDecl'), lgFtsStatus: d.ftsStatus || '', onLgFtsStatus: upd('ftsStatus'),
       lgFtsStatusOpts: ['', 'Выпуск разрешён', 'Досмотр'].map(v => ({ v, label: v || '—' })),
       lgWeight: d.weight || '', onLgWeight: upd('weight'), lgFreight: d.freight || '', onLgFreight: upd('freight'),
+      lgLinkP: d.linkPurchase || '', onLgLinkP: upd('linkPurchase'), lgPurchaseOpts: (S.purchases || []).slice(0, 200).map(p => ({ v: p.id, label: '№' + (p.no || '-') + ' · ' + (p.supplier || '') + ' · ' + (p.material || '') })),
+      lgLinkO: d.linkOrder || '', onLgLinkO: upd('linkOrder'), lgOrderOpts: (S.orders || []).map(o => ({ v: o.id, label: '№' + (o.no || '-') + ' · ' + (o.client || 'клиент') })),
       saveLog: () => this.saveLog(), cancelLog: () => set({ logDraft: null, logErr: '' }), lgHasDraft: isDraft, lgErr: S.logErr || '', lgHasErr: !!S.logErr,
       logRows: rows, logEmpty: rows.length === 0, logCount: String(rows.length), routeRows, routeEmpty: routeRows.length === 0,
+    };
+  }
+  // ===== Заявки на платёж (согласование) =====
+  emptyPayReq() { const cu = this.state.currentUser; return { id: '', initiator: cu ? cu.name : '', initiatorId: cu ? cu.id : '', approverId: '', supplier: '', amount: '', date: this.ymd(new Date()), purpose: '', status: 'Черновик', track: true }; }
+  writePayreqs(next) {
+    this.setState({ payreqs: next });
+    try { localStorage.setItem('inkflow_payreqs', JSON.stringify(next)); } catch (e) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { payreqs: next }, { merge: true }).catch(() => {}); } catch (e) {} }
+  }
+  prApproverName(id) { const u = (this.state.users || []).find(x => x.id === id); return u ? u.name : '—'; }
+  savePayReq(send) {
+    const S = this.state, d = S.prDraft || this.emptyPayReq();
+    if (!(d.supplier || '').trim()) { this.setState({ prErr: 'Укажите получателя/поставщика' }); return; }
+    if (!(Number(d.amount) > 0)) { this.setState({ prErr: 'Укажите сумму' }); return; }
+    if (send && !d.approverId) { this.setState({ prErr: 'Выберите согласующего' }); return; }
+    const cu = S.currentUser;
+    const pr = { id: d.id || ('pr_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), initiator: d.initiator || (cu ? cu.name : '—'), initiatorId: d.initiatorId || (cu ? cu.id : ''), approverId: d.approverId || '', supplier: (d.supplier || '').trim(), amount: Number(d.amount) || 0, date: d.date || this.ymd(new Date()), purpose: (d.purpose || '').trim(), status: send ? 'На согласовании' : (d.status || 'Черновик'), track: d.track !== false, createdAt: d.createdAt || Date.now() };
+    this.writePayreqs([pr, ...(S.payreqs || []).filter(x => x.id !== pr.id)]);
+    this.setState({ prDraft: null, prErr: '' });
+    if (send) this.postSystemNote('🧾 На согласование: платёж «' + pr.supplier + '» на ' + this.fmt(pr.amount) + ' ₽ от ' + pr.initiator + ' → согласующий ' + this.prApproverName(pr.approverId), cu ? cu.name : '—');
+  }
+  setPayReqStatus(id, status) {
+    const pr = (this.state.payreqs || []).find(x => x.id === id); if (!pr) return;
+    const next = (this.state.payreqs || []).map(x => x.id === id ? { ...x, status } : x);
+    this.writePayreqs(next);
+    const cu = this.state.currentUser, who = cu ? cu.name : '—';
+    this.postSystemNote('🧾 Платёж «' + pr.supplier + '» (' + this.fmt(pr.amount) + ' ₽) → статус «' + status + '» (' + who + '). Инициатор: ' + pr.initiator + ', согласующий: ' + this.prApproverName(pr.approverId), who);
+  }
+  togglePayReqTrack(id) { const next = (this.state.payreqs || []).map(x => x.id === id ? { ...x, track: !x.track } : x); this.writePayreqs(next); }
+  // Загрузка банковской выписки .txt с разнесением платежей по заявкам (как в 1С)
+  async importStatement(file) {
+    if (!file) return;
+    if (!/\.txt$/i.test(file.name || '')) { this.setState({ stmtMsg: 'Нужен файл .txt (выгрузка из банк-клиента/1С).' }); return; }
+    this.setState({ stmtMsg: 'Чтение выписки…' });
+    try {
+      const text = await file.text();
+      const lines = text.split(/\r?\n/);
+      const rate = Number(this.state.rate) || 0, vat = this.vat;
+      const purchases = (this.state.purchases || []).map(p => ({ ...p }));
+      let matched = 0, total = 0, unmatched = 0;
+      for (const ln of lines) {
+        const m = ln.match(/(\d[\d \u00a0]{0,12}[.,]\d{2})/); if (!m) continue;
+        const amount = parseFloat(m[1].replace(/[ \u00a0]/g, '').replace(',', '.')); if (!(amount > 0)) continue;
+        const low = ln.toLowerCase(); let hit = false;
+        for (const p of purchases) {
+          if (p.__paidByStmt) continue;
+          const c = this.purchaseCalc(p, rate, vat); const due = c.fullRub - (Number(p.paid) || 0);
+          if (due <= 1) continue;
+          const sup = (p.supplier || '').trim().toLowerCase(); const word = sup.split(/\s+/).filter(w => w.length > 3)[0] || sup;
+          if (word && low.includes(word) && Math.abs(amount - c.fullRub) <= c.fullRub * 0.03) { p.paid = c.fullRub; p.__paidByStmt = true; matched++; total += amount; hit = true; break; }
+        }
+        if (!hit) unmatched++;
+      }
+      for (const p of purchases) delete p.__paidByStmt;
+      this.setState({ purchases, stmtMsg: 'Разнесено платежей: ' + matched + ' на ' + this.fmt(total) + ' ₽. Не сопоставлено строк: ' + unmatched + '. Остатки задолженности и БДДС пересчитаны.' });
+      this.postSystemNote('🏦 Импорт выписки: разнесено ' + matched + ' платеж(ей) на ' + this.fmt(total) + ' ₽', this.state.currentUser ? this.state.currentUser.name : '—');
+    } catch (e) { this.setState({ stmtMsg: 'Не удалось прочитать файл: ' + (e.message || e) }); }
+  }
+  // Бейдж приложения (PWA): число невыполненных задач текущего пользователя на иконке
+  updateAppBadge() {
+    try {
+      if (!('setAppBadge' in navigator)) return;
+      const cu = this.state.currentUser;
+      if (!cu) { if (navigator.clearAppBadge) navigator.clearAppBadge().catch(() => {}); return; }
+      const cid = cu.id; const n = (this.state.tasks || []).filter(t => this.isTaskExec(t, cid) && !this.taskDone(t)).length;
+      if (n > 0) navigator.setAppBadge(n).catch(() => {}); else if (navigator.clearAppBadge) navigator.clearAppBadge().catch(() => {});
+    } catch (e) {}
+  }
+  payReqVals() {
+    const S = this.state, set = (p) => this.setState(p); const cu = S.currentUser; const cid = cu ? cu.id : '';
+    const d = S.prDraft || this.emptyPayReq();
+    const upd = (k) => (e) => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), [k]: e.target.value }, prErr: '' });
+    const users = (S.users || []).filter(u => u.active !== false);
+    const stCls = { 'Черновик': 'st-new', 'На согласовании': 'st-acc', 'Согласован': 'st-prog', 'Оплачен': 'st-done', 'Отклонён': 'st-rej' };
+    const rows = (S.payreqs || []).slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).map(pr => {
+      const isApprover = pr.approverId === cid; const isInit = pr.initiatorId === cid; const isAdmin = cu && cu.role === 'admin';
+      return { id: pr.id, supplier: pr.supplier || '—', amount: this.fmt(pr.amount), date: this.dmFull(pr.date), purpose: pr.purpose || '', initiator: pr.initiator || '—', approver: this.prApproverName(pr.approverId), status: pr.status, statusCls: stCls[pr.status] || 'st-new', track: !!pr.track, trackCls: pr.track ? 'prchk on' : 'prchk', toggleTrack: () => this.togglePayReqTrack(pr.id),
+        canApprove: (isApprover || isAdmin) && pr.status === 'На согласовании', approve: () => this.setPayReqStatus(pr.id, 'Согласован'), reject: () => this.setPayReqStatus(pr.id, 'Отклонён'),
+        canPay: (isApprover || isAdmin || isInit) && pr.status === 'Согласован', pay: () => this.setPayReqStatus(pr.id, 'Оплачен'),
+        canSend: isInit && pr.status === 'Черновик', send: () => this.setPayReqStatus(pr.id, 'На согласовании'),
+        canRemove: isInit || isAdmin, remove: () => this.askDelete('заявку на платёж «' + (pr.supplier || '') + '»', () => this.writePayreqs((this.state.payreqs || []).filter(x => x.id !== pr.id))) };
+    });
+    return {
+      prSupplier: d.supplier || '', onPrSupplier: upd('supplier'), prAmount: d.amount || '', onPrAmount: upd('amount'), prDate: d.date || '', onPrDate: upd('date'), prPurpose: d.purpose || '', onPrPurpose: upd('purpose'),
+      prApprover: d.approverId || '', onPrApprover: upd('approverId'), prApproverOpts: users.map(u => ({ v: u.id, label: u.name })),
+      prTrack: d.track !== false ? 'prchk on' : 'prchk', togglePrTrack: () => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), track: !((this.state.prDraft || this.emptyPayReq()).track !== false) } }),
+      prSave: () => this.savePayReq(false), prSend: () => this.savePayReq(true), prErr: S.prErr || '', prHasErr: !!S.prErr,
+      prRows: rows, prEmpty: rows.length === 0, prCount: String(rows.length),
+      onStmtFile: (e) => { const f = e.target.files && e.target.files[0]; if (f) this.importStatement(f); e.target.value = ''; }, stmtMsg: S.stmtMsg || '', stmtHasMsg: !!S.stmtMsg,
     };
   }
   // ===== БДДС: казначейский календарь на 30 дней =====
@@ -3789,6 +3955,8 @@ class Component extends DCLogic {
       trDays: days, trOverdue: this.fmt(overdueSum), trHasOverdue: overdueSum > 0,
       trTotalOut: this.fmt(totalOut), trMinBal: this.fmt(minBal), trMinCls: minBal < 0 ? 'mneg' : 'mpos', trGap: minBal < 0,
       trResetPlan: () => set({ payMoves: {}, paySplits: {}, payMoveEdit: '' }),
+      exportBdds: () => { const rows = []; for (const dd of days) { if (!dd.hasItems) { rows.push([dd.key, dd.day + ' ' + dd.wd, '', '', '', dd.bal]); continue; } for (const it of dd.items) rows.push([dd.key, dd.day + ' ' + dd.wd, it.supplier, it.material, it.amount, dd.bal]); } this.downloadCsv('bdds-30-dney.csv', ['Дата', 'День', 'Получатель', 'Сырьё', 'Сумма ₽', 'Остаток на конец дня ₽'], rows); },
+      printBdds: () => { try { document.body.classList.add('pbdds'); setTimeout(() => { window.print(); setTimeout(() => document.body.classList.remove('pbdds'), 400); }, 60); } catch (e) {} },
     };
   }
   // ===== Продажи и дистрибуция ГП =====
@@ -4788,6 +4956,58 @@ class Component extends DCLogic {
     };
   }
 
+  // ===== Отчёты производства (план-факт расхода + техпотери/брак + AI-анализ отклонений) =====
+  buildProdReport(rate) {
+    const S = this.state, set = (p) => this.setState(p);
+    const pf = this.buildPlanFact(rate);
+    const tab = S.prodRepTab || 'planfact';
+    const lossPct = Number(S.loss) || 0;
+    // Стоимость брака: норматив потерь × фактическая себестоимость закупленного сырья (₽)
+    let actCostRub = 0;
+    for (const p of (S.purchases || [])) { if (p.status === 'отменено') continue; const q = Number(p.qty) || 0; const pr = (Number(p.priceEur) || 0) * ((Number(p.curRate) || 0) || rate); actCostRub += q * pr; }
+    const brakRub = this.excelRound(actCostRub * lossPct / 100, 0);
+    const critCount = (pf.pfAnomalies || []).length;
+    const norm = 5; // нормативный процент потерь
+    const updated = S.stockUpdatedAt ? this.fmtStamp(S.stockUpdatedAt) : '—';
+    return {
+      isProdRep: true,
+      prFrom: S.planFrom || '', onPrFrom: (e) => set({ planFrom: e.target.value }), prTo: S.planTo || '', onPrTo: (e) => set({ planTo: e.target.value }),
+      prLoss: S.loss != null ? S.loss : '', onPrLoss: (e) => set({ loss: e.target.value }), prRate: S.rate || '', onPrRate: (e) => set({ rate: e.target.value }),
+      prUpdatedText: updated,
+      prOneC: () => set({ tab: 'onec', navOpen: false }),
+      prTabPlanCls: tab === 'planfact' ? 'tvtab on' : 'tvtab', prTabLossCls: tab === 'loss' ? 'tvtab on' : 'tvtab',
+      setPrPlan: () => set({ prodRepTab: 'planfact' }), setPrLoss: () => set({ prodRepTab: 'loss' }),
+      prIsPlan: tab === 'planfact', prIsLoss: tab === 'loss',
+      pfRows: pf.pfRows, pfEmpty: pf.pfEmpty, pfKpis: pf.pfKpis, pfVerdict: pf.pfVerdict, pfAnomalies: pf.pfAnomalies, pfHasAnomalies: pf.pfHasAnomalies,
+      exportProdRep: pf.exportPlanFact,
+      prLossKpis: [
+        { label: 'Потери / норма', value: this.fmt(lossPct, 1) + '% / ' + norm + '%', cls: lossPct > norm ? 'bad' : '' },
+        { label: 'Стоимость брака, ₽', value: this.fmt(brakRub, 0), cls: brakRub > 0 ? 'bad' : '' },
+        { label: 'Критические отклонения', value: critCount, cls: critCount ? 'bad' : '' },
+      ],
+      analyzeDeviations: () => this.analyzeProdDeviations(pf, lossPct, brakRub),
+      prodAiSummary: S.prodAiSummary || '', prodAiHas: !!S.prodAiSummary, prodAiBusy: !!S.prodAiBusy,
+    };
+  }
+  // Собирает аномалии и формирует промпт для АЯ (AI-анализ отклонений) — вывод для директора по производству
+  async analyzeProdDeviations(pf, lossPct, brakRub) {
+    // Собираем строки с ПЕРЕРАСХОДОМ (факт > плана) прямо из таблицы плана-факта
+    const over = (pf.pfRowsRaw || []).filter(r => r.actVol > r.planVol && r.planVol > 0).map(r => ({
+      component: r.name, planKg: this.excelRound(r.planVol, 1), factKg: this.excelRound(r.actVol, 1), deviationPct: this.excelRound(r.volPct, 1),
+    }));
+    if (!over.length) { this.setState({ prodAiBusy: false, prodAiSummary: '✦ АЯ: Отклонений от рецептуры не обнаружено, производство идёт строго по регламенту.' }); return; }
+    if (!this.state.aiKey) { this.setState({ prodAiBusy: false, prodAiSummary: '⚙ Укажите ваш API-ключ OpenRouter в настройках (кнопка «⚙ AI-ключ» в окне АЯ).' }); return; }
+    this.setState({ prodAiBusy: true, prodAiSummary: '✦ АЯ изучает таблицы и рассчитывает риски перерасхода…' });
+    const sys = 'Ты — легендарный технический директор и главный технолог завода по производству флексографских и глубоких спиртовых красок Shtark INK. Твоя задача — провести глубокий инженерный аудит отчёта о перерасходе сырья. Анализируй данные жёстко, профессионально и глубоко, используя специфику ЛКМ. Избегай банальных фраз вроде «произошла ошибка».\n\nДля каждого критического отклонения выбери ОДНУ наиболее вероятную ТЕХНОЛОГИЧЕСКУЮ причину из реальной практики:\n1. Если перерасход по ПИГМЕНТНЫМ ПАСТАМ (Cyan, Magenta, Yellow, Black и др.): гипотеза — низкая колористическая интенсивность входящей партии пигмента (пришлось дозировать больше для попадания в эталон Delta E), либо некорректная калибровка весового дозатора на диссольвере, либо высокая исходная вязкость, потребовавшая избыточного перетира.\n2. Если перерасход по ТЕХНОЛОГИЧЕСКИМ ЛАКАМ (нитроцеллюлозный, полиуретановый): гипотеза — избыточный слив на замывку реакторов между сменой цветов, не сливаемый остаток в баке из-за высокой вязкости, либо компенсация испарения спиртов (этилацетат/изопропанол) при затяжном перемешивании.\n3. Если перерасход по РАСТВОРИТЕЛЯМ: гипотеза — высокая температура в цеху (повышенное летучее испарение), задержка на этапе фасовки или слишком долгий цикл деаэрации красок.\n\nНапиши технический вердикт для руководства (строго до 5 предложений). Формат вывода:\n- 🔴 Критическая аномалия: [Что и на сколько перерасходовано].\n- ⚙️ Технологический диагноз: [Глубокая инженерная гипотеза причины].\n- 🛠 Действие для цеха: [Чёткое техническое задание мастеру или снабжению для минимизации потерь].\n\nПиши сухим, экспертным языком производственников. Не лей воду.';
+    const user = 'Перерасход компонентов (кг и % отклонения):\n' + JSON.stringify(over) + '\n\nПроцент потерь: ' + this.fmt(lossPct, 1) + '% (норма 5%). Оценка стоимости брака: ' + this.fmt(brakRub, 0) + ' ₽.';
+    try {
+      const txt = await this.aiComplete([{ role: 'system', content: sys }, { role: 'user', content: user }], { max: 500 });
+      this.setState({ prodAiBusy: false, prodAiSummary: (txt || 'Пустой ответ. Попробуйте ещё раз.').trim() });
+    } catch (e) {
+      const m = (e && e.message) || 'ошибка';
+      this.setState({ prodAiBusy: false, prodAiSummary: (/key|ключ|no-key/i.test(m) ? '⚙ Укажите ваш API-ключ OpenRouter в настройках (⚙).' : 'Не удалось получить ответ от АЯ: ' + m) });
+    }
+  }
   // План-фактный анализ закупок и потребления
   buildPlanFact(rate) {
     const S = this.state;
@@ -4846,6 +5066,7 @@ class Component extends DCLogic {
     return {
       genPlanFact: () => this.setState({ planfactGen: true }), planfactGen: !!S.planfactGen,
       pfRows, pfEmpty: pfRows.length === 0,
+      pfRowsRaw: rows,
       pfKpis: [
         { label: 'Σ отклонение, ₽', value: sign(sumFin) + this.fmt(this.excelRound(sumFin, 0), 0), cls: sumFin > 0 ? 'bad' : '' },
         { label: 'Из-за цен, ₽', value: sign(sumPrice) + this.fmt(this.excelRound(sumPrice, 0), 0), cls: '' },
@@ -5017,7 +5238,7 @@ class Component extends DCLogic {
       ['prodplan', 'График производства'], ['procplan', 'Закупки по графику'],
       ['proc', 'План закупок'], ['cal', 'Календарь'], ['wh', 'Склад'], ['cover', 'Сводка'],
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'],
-      ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
+      ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['prodrep', 'Отчёты производства'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
       ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
@@ -5028,7 +5249,7 @@ class Component extends DCLogic {
       { label: 'Планирование закупок', items: ['runrate', 'proc', 'cal', 'logi'] },
       { label: 'Цены и поставщики', items: ['audit', 'pay', 'treas30', 'prices', 'cparties'] },
       { label: 'Запасы', items: ['wh', 'receipts', 'turnover', 'cover'] },
-      { label: 'Контроль и сценарии', items: ['planfact', 'stress', 'reports'] },
+      { label: 'Контроль и сценарии', items: ['planfact', 'prodrep', 'stress', 'reports'] },
       { label: 'Система', items: ['cloud', 'onec', 'users'] },
     ];
     const allowed = this.allowedTabs(S.currentUser);
@@ -5067,6 +5288,7 @@ class Component extends DCLogic {
       pay: 'Казначейство: статусы оплат по заказам, кредитный портфель (предоплата vs отсрочка), календарь платежей, долги по поставщикам и сырью, риски срыва поставок.',
       turnover: 'Оборачиваемость запасов: коэффициент и дни оборота, неликвиды («замороженный капитал») и дефицитные риски, сумма замороженных денег.',
       planfact: 'План-факт анализ закупок: отклонения по объёму и цене, разделение причин (рынок vs планирование) и финансовый итог к бюджету.',
+      prodrep: 'Отчёты производства: план-факт расхода сырья, анализ техпотерь и брака, AI-анализ отклонений для директора по производству.',
       stress: 'Стресс-тест склада: пересчёт потребления при росте продаж, на сколько дней хватит остатка, «красная зона простоя» и экстренный оборотный капитал.',
       prices: 'Ввод и правка цен сырья — пересчитывает всё приложение.',
       catalog: 'Справочные каталоги: сырьё по категориям, готовая продукция и полуфабрикаты.',
@@ -5149,7 +5371,7 @@ class Component extends DCLogic {
       isProdPlan: S.tab === 'prodplan', isProcPlan: S.tab === 'procplan',
       isProcurement: S.tab === 'proc', isPrices: S.tab === 'prices',
       isWarehouse: S.tab === 'wh', isCover: S.tab === 'cover', isReports: S.tab === 'reports', isRunrate: S.tab === 'runrate', isAudit: S.tab === 'audit',
-      isTurnover: S.tab === 'turnover', isPlanfact: S.tab === 'planfact', isStress: S.tab === 'stress', isPay: S.tab === 'pay',
+      isTurnover: S.tab === 'turnover', isPlanfact: S.tab === 'planfact', isStress: S.tab === 'stress', isPay: S.tab === 'pay', isProdRep: S.tab === 'prodrep',
       genTreasury: () => {}, treasuryGen: false, trEmpty: false, trKpis: [], trPortfolio: [], trSuppliers: [], trCatRows: [], trCal: [], trHasCal: false, trRisks: [], trHasRisks: false, exportTreasury: () => {},
       turnoverDays: S.turnoverDays, onTurnoverDays: () => {}, genTurnover: () => {}, turnoverGen: false,
       toRows: [], toEmpty: false, toKpis: [], toTopFrozen: [], toHasFrozen: false, toTopFast: [], toHasFast: false, toTips: [], exportTurnover: () => {},
@@ -5547,6 +5769,7 @@ class Component extends DCLogic {
     if (S.tab === 'prodplan') Object.assign(base, this.buildProdPlan(rate));
     if (S.tab === 'procplan') Object.assign(base, this.buildProcPlan(rate));
     if (S.tab === 'planfact') Object.assign(base, this.buildPlanFact(rate));
+    if (S.tab === 'prodrep') Object.assign(base, this.buildProdReport(rate));
     if (S.tab === 'stress') Object.assign(base, this.buildStress(rate));
     if (S.tab === 'pay') Object.assign(base, this.buildTreasury(rate));
     if (S.tab === 'users') Object.assign(base, this.buildUsers());
@@ -5556,7 +5779,7 @@ class Component extends DCLogic {
     if (S.tab === 'cparties') Object.assign(base, this.buildCparties());
     if (S.tab === 'receipts') Object.assign(base, this.buildReceipts());
     if (S.tab === 'sales') Object.assign(base, this.buildSales());
-    if (S.tab === 'treas30') Object.assign(base, this.buildTreasury30());
+    if (S.tab === 'treas30') { Object.assign(base, this.buildTreasury30()); Object.assign(base, this.payReqVals()); }
     if (S.tab === 'logi') Object.assign(base, this.buildLogistics());
 
     // ---- Календарь поставок ----
