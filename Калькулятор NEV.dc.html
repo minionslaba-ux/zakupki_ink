@@ -770,6 +770,27 @@ a.wordmark:hover{opacity:.6}
 .rectbl .inp{padding:6px 8px}
 .rectbl .w120{width:100px}
 .rectbl .w90{width:78px}
+.mpos{color:#1f8a4d}
+.mneg{color:#c0322b}
+.t30grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:6px}
+.t30cell{border:1px solid #e7e4e0;border-radius:10px;padding:8px;background:#fff;min-height:62px}
+.t30cell.off{background:#fdf4ec}
+.t30h{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-bottom:5px}
+.t30d{font-size:11.5px;font-weight:700;color:#56534f}
+.t30b{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#1f8a4d}
+.t30b.gap{color:#c0322b}
+.t30items{display:flex;flex-direction:column;gap:5px}
+.t30pay{background:#f7f6f4;border-radius:7px;padding:5px 7px;font-size:11px;line-height:1.35}
+.t30pay.over{background:#fbe7e6;box-shadow:inset 2px 0 0 #c0322b}
+.t30pt b{color:#1c1b18}
+.t30act{display:flex;gap:8px;flex-wrap:wrap;margin-top:3px}
+.t30act .tlink{font-size:10.5px}
+.logchart{display:flex;flex-direction:column;gap:9px;margin:6px 0 14px}
+.lcrow{display:flex;align-items:center;gap:12px}
+.lclabel{flex:0 0 160px;font-size:12.5px;font-weight:600;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lcbarwrap{flex:1;height:16px;background:#eef0f2;border-radius:8px;overflow:hidden}
+.lcbar{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,#4f46e5,#6366f1);transition:width .5s cubic-bezier(.16,1,.3,1)}
+.lcval{flex:0 0 110px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:#334155}
 .docsform{display:flex;flex-direction:column;gap:11px}
 .docrow2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .ayadoc,.maxdoc{font-size:12.5px;line-height:1.5;border-radius:10px;padding:9px 12px;color:#1e293b}
@@ -913,6 +934,13 @@ window.dispatchEvent(new Event('fbready'));
 <script src="letterhead-data.js"></script>
 <script>window.addEventListener('error',function(e){if(!e.filename&&(e.message==='Script error.'||e.message==='Script error')){e.preventDefault();e.stopImmediatePropagation();return true;}},true);window.addEventListener('unhandledrejection',function(e){var m=e&&e.reason&&(e.reason.message||e.reason);if(typeof m==='string'&&/puter|popup|signin|sign-in/i.test(m)){e.preventDefault();}});</script>
 <script src="https://js.puter.com/v2/"></script>
+<link rel="icon" href="icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0e0e0e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="INK Flow">
+<script>try{if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}}catch(e){}</script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </helmet>
 <sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="{{ loaderCls }}" role="status"><div class="si-p1 {{ p1cls }}"><div class="si-in"><img class="si-logo" src="loader-logo-white.png" alt="Shtark INK"><div class="si-tag">{{ tagLetters }}</div><div class="si-bar"><div class="si-run"></div></div><div class="si-cap">Производство спиртовых красок для печати на гибкой упаковке</div></div></div><div class="si-p2 {{ p2cls }}"><div class="p2card"><div class="p2left"><div class="p2brand">Shtark INK <span class="p2flow">Flow</span></div><div class="p2bar"><div class="p2run"></div></div><div class="p2slo">{{ sloganLetters }}</div><a class="p2site" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Официальный сайт">Перейти на shtarkink.com →</a></div><div class="p2right"><div class="p2ready"><span class="p2dot"></span> Система готова к работе</div><div class="p2h">Портал закупок<br>и производства</div><sc-if value="{{ needLogin }}" hint-placeholder-val="{{ true }}"><div class="p2form"><div><div class="p2lbl">Логин</div><input class="p2inp" value="{{ loginInput }}" onInput="{{ onLoginInput }}" onKeyDown="{{ onLoginKey }}" placeholder="например, ivanov" autocomplete="username"></div><div><div class="p2lbl">Пароль</div><input class="p2inp" type="password" value="{{ passInput }}" onInput="{{ onPassInput }}" onKeyDown="{{ onLoginKey }}" placeholder="••••••••" autocomplete="current-password"></div><div class="p2err">{{ loginErr }}</div><button class="p2btn" onClick="{{ doLogin }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ openReset }}">Забыли пароль?</button></div><sc-if value="{{ resetOpen }}" hint-placeholder-val=""><div class="p2reset"><div class="p2lbl">Восстановление пароля</div><input class="p2inp" value="{{ resetInput }}" onInput="{{ onResetInput }}" onKeyDown="{{ onResetKey }}" placeholder="ваш e-mail или логин" autocomplete="email"><sc-if value="{{ resetErr }}" hint-placeholder-val=""><div class="p2err">{{ resetErr }}</div></sc-if><sc-if value="{{ resetOk }}" hint-placeholder-val=""><div class="p2ok">{{ resetOk }}</div></sc-if><div class="p2rrow"><button class="p2btn sm" onClick="{{ doReset }}" disabled="{{ resetBusy }}">Прислать новый пароль</button><button class="p2link" onClick="{{ closeReset }}">Отмена</button></div><div class="p2hint">На указанный e-mail придёт новый временный пароль. Если e-mail не привязан — обратитесь к администратору.</div></div></sc-if><div class="p2hint">Введите логин и пароль, выданные администратором</div></sc-if><sc-if value="{{ hasSession }}" hint-placeholder-val=""><div class="p2you">Вы вошли как <b>{{ sessionName }}</b></div><button class="p2btn" onClick="{{ enterWelcome }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ switchUser }}">Войти под другим пользователем</button></sc-if></div></div></div></div></sc-if>
@@ -1406,6 +1434,74 @@ window.dispatchEvent(new Event('fbready'));
 </div></div>
 </sc-if>
 
+<sc-if value="{{ isLogi }}" hint-placeholder-val="">
+<div class="card"><div class="sec">Поручение на перевозку</div>
+<div class="uform">
+<div class="fg"><label>№</label><input class="inp" value="{{ lgNo }}" onInput="{{ onLgNo }}" placeholder="ТР-001"></div>
+<div class="fg"><label>Дата</label><input class="inp" type="date" value="{{ lgDate }}" onInput="{{ onLgDate }}"></div>
+<div class="fg full"><label>Маршрут (А — Б)</label><input class="inp" value="{{ lgRoute }}" onInput="{{ onLgRoute }}" placeholder="Шанхай — Москва"></div>
+<div class="fg"><label>Перевозчик</label><input class="inp" value="{{ lgCarrier }}" onInput="{{ onLgCarrier }}"></div>
+<div class="fg"><label>Тип транспорта</label><select class="sel" value="{{ lgTrans }}" onChange="{{ onLgTrans }}"><sc-for list="{{ lgTransOpts }}" as="o" hint-placeholder-count="4"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></div>
+<div class="fg"><label>Контейнер / вагон №</label><input class="inp" value="{{ lgContainer }}" onInput="{{ onLgContainer }}"></div>
+<div class="fg"><label>Тягач / прицеп</label><input class="inp" value="{{ lgTruck }}" onInput="{{ onLgTruck }}"></div>
+<div class="fg"><label>ФИО водителя</label><input class="inp" value="{{ lgDriver }}" onInput="{{ onLgDriver }}"></div>
+<div class="fg"><label>Паспорт / вод. удост.</label><input class="inp" value="{{ lgDriverDoc }}" onInput="{{ onLgDriverDoc }}"></div>
+<div class="fg"><label>Статус</label><select class="sel" value="{{ lgStatus }}" onChange="{{ onLgStatus }}"><sc-for list="{{ lgStatusOpts }}" as="o" hint-placeholder-count="6"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></div>
+<div class="fg"><label>№ декларации ДТ (ФТС)</label><input class="inp" value="{{ lgFtsDecl }}" onInput="{{ onLgFtsDecl }}"></div>
+<div class="fg"><label>Статус ФТС</label><select class="sel" value="{{ lgFtsStatus }}" onChange="{{ onLgFtsStatus }}"><sc-for list="{{ lgFtsStatusOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></div>
+<div class="fg"><label>Вес груза, кг</label><input class="inp num" type="number" value="{{ lgWeight }}" onInput="{{ onLgWeight }}"></div>
+<div class="fg"><label>Стоимость фрахта, ₽</label><input class="inp num" type="number" value="{{ lgFreight }}" onInput="{{ onLgFreight }}"></div>
+</div>
+<sc-if value="{{ lgHasErr }}" hint-placeholder-val=""><div class="banner err">{{ lgErr }}</div></sc-if>
+<div class="uactions"><button class="btn dark" onClick="{{ saveLog }}">Сохранить поручение</button><sc-if value="{{ lgHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelLog }}">Отмена</button></sc-if></div>
+</div>
+<div class="card"><div class="sec">Монитор перевозок · {{ logCount }}</div>
+<sc-if value="{{ logEmpty }}" hint-placeholder-val=""><div class="hint">Пока нет поручений на перевозку.</div></sc-if>
+<div class="scroll"><table><thead><tr><th class="l">№</th><th class="l">Дата</th><th class="l">Маршрут</th><th class="l">Транспорт</th><th class="l">Контейнер</th><th class="l">Водитель</th><th class="l">ФТС</th><th class="l">Статус</th><th>Вес</th><th>Фрахт ₽</th><th>₽/кг</th><th class="l"></th></tr></thead>
+<tbody><sc-for list="{{ logRows }}" as="r" hint-placeholder-count="2"><tr><td class="l mono">{{ r.no }}</td><td class="l mono">{{ r.date }}</td><td class="l nm">{{ r.route }}</td><td class="l">{{ r.transType }}</td><td class="l mono">{{ r.container }}</td><td class="l">{{ r.driver }}</td><td class="l">{{ r.fts }}</td><td class="l"><span class="tcstatus {{ r.statusCls }}">{{ r.status }}</span></td><td class="mono">{{ r.weight }}</td><td class="mono">{{ r.freight }}</td><td class="mono">{{ r.perKg }}</td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ r.edit }}">Изм.</button><button class="ulink del" onClick="{{ r.remove }}">×</button></div></td></tr></sc-for></tbody></table></div>
+</div>
+<div class="card"><div class="sec">Аналитика по географии перевозок</div>
+<sc-if value="{{ routeEmpty }}" hint-placeholder-val=""><div class="hint">Нет данных для сводки.</div></sc-if>
+<div class="logchart"><sc-for list="{{ routeRows }}" as="g" hint-placeholder-count="3"><div class="lcrow"><span class="lclabel">{{ g.route }}</span><span class="lcbarwrap"><span class="lcbar" style="width:{{ g.barW }}"></span></span><span class="lcval">{{ g.freight }} ₽</span></div></sc-for></div>
+<div class="scroll"><table><thead><tr><th class="l">Маршрут</th><th>Рейсов</th><th>Вес, кг</th><th>Фрахт, ₽</th><th>Распределение ₽/кг</th></tr></thead>
+<tbody><sc-for list="{{ routeRows }}" as="g" hint-placeholder-count="2"><tr><td class="l nm">{{ g.route }}</td><td class="mono">{{ g.n }}</td><td class="mono">{{ g.weight }}</td><td class="mono">{{ g.freight }}</td><td class="mono">{{ g.perKg }}</td></tr></sc-for></tbody></table></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isTreas30 }}" hint-placeholder-val="">
+<div class="card"><div class="sec">Казначейский календарь · БДДС на 30 дней</div>
+<div class="toolbar"><div class="field"><span class="lbl">Остаток на счетах сегодня, ₽</span><input class="inp num w120" type="number" value="{{ cashStart }}" onInput="{{ onCashStart }}"></div><button class="btn" onClick="{{ trResetPlan }}">Сбросить переносы</button></div>
+<div class="kpis"><div class="kpi"><div class="kl">Платежи 30 дн., ₽</div><div class="kv mono">{{ trTotalOut }}</div></div><div class="kpi {{ trMinCls }}"><div class="kl">Мин. остаток (риск разрыва)</div><div class="kv mono">{{ trMinBal }}</div></div><sc-if value="{{ trHasOverdue }}" hint-placeholder-val=""><div class="kpi kpiBad"><div class="kl">Просрочено, ₽</div><div class="kv mono">{{ trOverdue }}</div></div></sc-if></div>
+<div class="t30grid"><sc-for list="{{ trDays }}" as="d" hint-placeholder-count="10"><div class="t30cell {{ d.off }}"><div class="t30h"><span class="t30d">{{ d.day }} {{ d.wd }}</span><span class="t30b {{ d.gap }}">{{ d.bal }} ₽</span></div><sc-if value="{{ d.hasItems }}" hint-placeholder-val=""><div class="t30items"><sc-for list="{{ d.items }}" as="p" hint-placeholder-count="1"><div class="t30pay {{ p.over }}"><div class="t30pt"><b>{{ p.amount }} ₽</b> {{ p.supplier }} · {{ p.material }}</div><div class="t30act"><button class="tlink" onClick="{{ p.startMove }}">перенести</button><sc-if value="{{ p.isSplit }}" hint-placeholder-val="x"><button class="tlink" onClick="{{ p.split }}">разбить 30/40/30</button></sc-if><sc-if value="{{ p.isSplit }}" hint-placeholder-val=""><button class="tlink" onClick="{{ p.unsplit }}">объединить</button></sc-if></div><sc-if value="{{ p.moveOpen }}" hint-placeholder-val=""><input class="inp" type="date" value="{{ p.moveVal }}" onInput="{{ p.onMove }}"></sc-if></div></sc-for></div></sc-if></div></sc-for></div>
+<div class="hint">Остаток на конец дня пересчитывается на лету. Красный остаток — кассовый разрыв. «Разбить 30/40/30» дробит счёт на аванс/перед отгрузкой/постоплату (0/+15/+30 дн.), «перенести» сдвигает дату платежа. Источник — неоплаченные заявки на закупку.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSales }}" hint-placeholder-val="">
+<div class="card"><div class="sec">Продажа готовой продукции</div>
+<div class="uform">
+<div class="fg"><label>№ отгрузки</label><input class="inp" value="{{ slNo }}" onInput="{{ onSlNo }}" placeholder="РН-001"></div>
+<div class="fg"><label>Дата</label><input class="inp" type="date" value="{{ slDate }}" onInput="{{ onSlDate }}"></div>
+<div class="fg"><label>Клиент</label><input class="inp" value="{{ slClient }}" onInput="{{ onSlClient }}" placeholder="ООО «Печатный двор»"></div>
+<div class="fg full"><label>Продукт (ГП)</label><select class="sel" value="{{ slProduct }}" onChange="{{ onSlProduct }}"><sc-for list="{{ slProdOpts }}" as="p" hint-placeholder-count="3"><option value="{{ p.v }}">{{ p.label }}</option></sc-for></select></div>
+<div class="fg"><label>Объём, кг</label><input class="inp num" type="number" value="{{ slQty }}" onInput="{{ onSlQty }}"></div>
+<div class="fg"><label>Цена за кг</label><input class="inp num" type="number" value="{{ slPrice }}" onInput="{{ onSlPrice }}"></div>
+<div class="fg"><label>Валюта</label><select class="sel" value="{{ slCurrency }}" onChange="{{ onSlCurrency }}"><sc-for list="{{ slCurOpts }}" as="c" hint-placeholder-count="4"><option value="{{ c.v }}">{{ c.label }}</option></sc-for></select></div>
+<div class="fg"><label>Курс к ₽</label><input class="inp num" type="number" value="{{ slRate }}" onInput="{{ onSlRate }}"></div>
+</div>
+<sc-if value="{{ slHasErr }}" hint-placeholder-val=""><div class="banner err">{{ slErr }}</div></sc-if>
+<div class="uactions"><button class="btn dark" onClick="{{ saveSale }}">Записать отгрузку</button><sc-if value="{{ slHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelSale }}">Отмена</button></sc-if></div>
+</div>
+<div class="card"><div class="sec">Маржинальность продаж · {{ salesCount }}</div>
+<div class="toolbar"><div class="field"><span class="lbl">Транспортный пул за период, ₽</span><input class="inp num w120" type="number" value="{{ salesTransport }}" onInput="{{ onSalesTransport }}"></div><div class="field"><span class="lbl">Распределять</span><span class="segrow"><button class="{{ transWeightCls }}" onClick="{{ setTransWeight }}">по весу</button><button class="{{ transValueCls }}" onClick="{{ setTransValue }}">по стоимости</button></span></div></div>
+<sc-if value="{{ salesEmpty }}" hint-placeholder-val=""><div class="hint">Пока нет отгрузок. Запишите первую через форму выше.</div></sc-if>
+<div class="scroll"><table><thead><tr><th class="l">№</th><th class="l">Дата</th><th class="l">Клиент</th><th class="l">Продукт</th><th>Кг</th><th>Выручка ₽</th><th>Себест. ₽</th><th>Транспорт ₽</th><th>Маржа ₽</th><th>%</th><th class="l"></th></tr></thead>
+<tbody><sc-for list="{{ saleRows }}" as="s" hint-placeholder-count="2"><tr><td class="l mono">{{ s.no }}</td><td class="l mono">{{ s.date }}</td><td class="l nm">{{ s.client }}</td><td class="l">{{ s.product }}</td><td class="mono">{{ s.qty }}</td><td class="mono">{{ s.rev }}</td><td class="mono">{{ s.cost }}</td><td class="mono">{{ s.transp }}</td><td class="mono {{ s.mcls }}">{{ s.margin }}</td><td class="mono {{ s.mcls }}">{{ s.mpct }}</td><td class="l"><button class="ulink del" onClick="{{ s.remove }}">×</button></td></tr></sc-for></tbody>
+<tfoot><tr class="tfoot"><td class="l">ИТОГО</td><td></td><td></td><td></td><td></td><td class="mono">{{ sumRev }}</td><td class="mono">{{ sumCost }}</td><td class="mono">{{ sumTr }}</td><td class="mono {{ sumMcls }}">{{ sumMar }}</td><td class="mono {{ sumMcls }}">{{ sumMpct }}</td><td></td></tr></tfoot></table></div>
+<div class="hint">Чистая маржа = Выручка − Себестоимость рецептуры (по курсу ЦБ) − распределённый транспорт. Транспортный пул распределяется по выбранному принципу.</div>
+</div>
+</sc-if>
+
 <sc-if value="{{ isReceipts }}" hint-placeholder-val="">
 <div class="card"><div class="sec">Поступление ТМЦ на склад</div>
 <div class="uform">
@@ -1752,7 +1848,7 @@ class Component extends DCLogic {
     oneCUrl: '', oneCToken: '', oneCMatch: 'article', oneCAuto: false, oneCBusy: false, oneCStatus: '', oneCErr: '', oneCPreview: null, oneCLastAt: 0, oneCLog: [], oneCFileCur: 'RUB',
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {},
     chat: [], chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false,
-    tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '',
+    tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '', sales: [], saleDraft: null, saleErr: '', salesTransport: 0, salesTransMode: 'weight', cashStart: 0, payMoves: {}, paySplits: {}, payMoveEdit: '', logistics: [], logDraft: null, logErr: '',
     docType: 'power', docData: { no: '14', date: '', empName: 'Иванов Иван Иванович', empPost: 'менеджер по закупкам', empPassport: '45 09 № 123456, выдан ОВД «Тверской» г. Москвы 12.03.2015, код 770-001', supplier: 'ООО «ХимПоставка»', supplierAddr: 'г. Москва, ул. Промышленная, д. 7', goods: 'Пигмент синий (фталоцианиновый) — 500 кг\nРастворитель НефрасС2 — 200 л\nСтабилизатор СТ-4 — 50 кг', term: '10 дней', route: 'Москва — Санкт-Петербург', car: 'Volvo FH, гос. № А123ВС 777', driver: 'Петров Пётр Петрович', driverDoc: 'вод. удостоверение 99 12 345678', cargo: '1200 кг / 4,0 м³, 6 паллет', cargoName: 'Сырьё для производства чернил', rfpSupplier: 'ООО «ХимПоставка»', rfpItems: 'Пигмент синий (фталоцианиновый) — 500 кг\nПигмент жёлтый — 300 кг\nРастворитель НефрасС2 — 200 л', rfpDeadline: '5 рабочих дней' },
     peekIdx: 0, peekDismissed: {}, peekClosed: false, peekToast: '',
     tgToken: '', tgChatId: '', tgFwd: false, tgEditToken: '', tgEditChatId: '', tgStatus: '',
@@ -1781,6 +1877,10 @@ class Component extends DCLogic {
     try { cparties = JSON.parse(localStorage.getItem('inkflow_cparties') || '[]'); if (!Array.isArray(cparties)) cparties = []; } catch (e) {}
     let receipts = [];
     try { receipts = JSON.parse(localStorage.getItem('inkflow_receipts') || '[]'); if (!Array.isArray(receipts)) receipts = []; } catch (e) {}
+    let sales = [];
+    try { sales = JSON.parse(localStorage.getItem('inkflow_sales') || '[]'); if (!Array.isArray(sales)) sales = []; } catch (e) {}
+    let logistics = [];
+    try { logistics = JSON.parse(localStorage.getItem('inkflow_logistics') || '[]'); if (!Array.isArray(logistics)) logistics = []; } catch (e) {}
     let emailCfg = {};
     try { emailCfg = JSON.parse(localStorage.getItem('inkflow_emailcfg') || '{}') || {}; } catch (e) {}
     let tasksSeenAt = 0;
@@ -1788,7 +1888,7 @@ class Component extends DCLogic {
     try { tgLink = localStorage.getItem('inkflow_tg') || ''; } catch (e) {}
     let tgBot = {};
     try { tgBot = JSON.parse(localStorage.getItem('inkflow_tgbot') || '{}') || {}; } catch (e) {}
-    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, tasksSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
+    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, tasksSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
     // Двухфазный экран входа: фаза 1 (загрузка) → фаза 2 (логотип слева + кнопка «Войти»)
     this._loaderT1 = setTimeout(() => this.setState({ loaderPhase: 'p2' }), 3400);
     // Слоган под логотипом перепечатывается каждые 10 c (remount по tick → анимация проигрывается заново)
@@ -2025,6 +2125,9 @@ class Component extends DCLogic {
       docs: '<path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="15" y2="16"/>',
       cparties: '<path d="M3 7h18v13H3z"/><path d="M3 7l3-4h12l3 4"/><line x1="3" y1="12" x2="21" y2="12"/><circle cx="12" cy="16" r="1.4"/>',
       receipts: '<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4"/><line x1="12" y1="11" x2="12" y2="21"/><path d="M8 4.5l8 3.5"/>',
+      sales: '<path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/><path d="M19 7v4h-4"/>',
+      treas30: '<rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/><path d="M12 12v5"/><path d="M10 14h4"/>',
+      logi: '<rect x="1" y="7" width="13" height="10" rx="1"/><path d="M14 10h4l3 3v4h-7z"/><circle cx="5.5" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/>',
       users: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 6.4M21.5 20a6 6 0 0 0-3.5-5.5"/>',
     };
     const svg = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + (P[id] || '') + '</svg>';
@@ -2114,9 +2217,9 @@ class Component extends DCLogic {
     return [
       { label: 'FLOW', tabs: [['prodplan', 'Production Schedule'], ['procplan', 'Procurement Plan']] },
       { label: 'Команда', tabs: [['tasks', 'Задачи'], ['docs', 'Документы']] },
-      { label: 'Производство', tabs: [['calc', 'Калькулятор'], ['recipe', 'Рецептуры'], ['prod', 'План производства'], ['catalog', 'Каталоги']] },
-      { label: 'Планирование закупок', tabs: [['runrate', 'Run Rate'], ['proc', 'План закупок'], ['cal', 'Календарь']] },
-      { label: 'Цены и поставщики', tabs: [['audit', 'Аудит цен'], ['pay', 'Платежи'], ['prices', 'Реестр цен'], ['cparties', 'Контрагенты']] },
+      { label: 'Производство', tabs: [['calc', 'Калькулятор'], ['recipe', 'Рецептуры'], ['prod', 'План производства'], ['sales', 'Продажи ГП'], ['catalog', 'Каталоги']] },
+      { label: 'Планирование закупок', tabs: [['runrate', 'Run Rate'], ['proc', 'План закупок'], ['cal', 'Календарь'], ['logi', 'Логистика']] },
+      { label: 'Цены и поставщики', tabs: [['audit', 'Аудит цен'], ['pay', 'Платежи'], ['treas30', 'БДДС 30 дней'], ['prices', 'Реестр цен'], ['cparties', 'Контрагенты']] },
       { label: 'Запасы', tabs: [['wh', 'Склад'], ['receipts', 'Поступления ТМЦ'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка']] },
       { label: 'Контроль и сценарии', tabs: [['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
       { label: 'Система', tabs: [['cloud', 'Облако'], ['onec', 'Интеграция 1С']] },
@@ -2130,7 +2233,7 @@ class Component extends DCLogic {
     if (user.role === 'admin') return ['home'].concat(all, ['users']);
     const perms = Array.isArray(user.perms) ? user.perms : all;
     // Новые разделы доступны по умолчанию всем (добавлены позже — их нет в старых perms)
-    const always = ['prodplan', 'procplan', 'onec', 'tasks', 'docs', 'cparties', 'receipts'];
+    const always = ['prodplan', 'procplan', 'onec', 'tasks', 'docs', 'cparties', 'receipts', 'sales', 'treas30', 'logi'];
     return ['home'].concat(all.filter(id => perms.includes(id) || always.includes(id)));
   }
 
@@ -2564,6 +2667,8 @@ class Component extends DCLogic {
     if (Array.isArray(d.tasks)) { patch.tasks = d.tasks; try { localStorage.setItem('inkflow_tasks', JSON.stringify(d.tasks)); } catch (e) {} }
     if (Array.isArray(d.cparties)) { patch.cparties = d.cparties; try { localStorage.setItem('inkflow_cparties', JSON.stringify(d.cparties)); } catch (e) {} }
     if (Array.isArray(d.receipts)) { patch.receipts = d.receipts; try { localStorage.setItem('inkflow_receipts', JSON.stringify(d.receipts)); } catch (e) {} }
+    if (Array.isArray(d.sales)) { patch.sales = d.sales; try { localStorage.setItem('inkflow_sales', JSON.stringify(d.sales)); } catch (e) {} }
+    if (Array.isArray(d.logistics)) { patch.logistics = d.logistics; try { localStorage.setItem('inkflow_logistics', JSON.stringify(d.logistics)); } catch (e) {} }
     if (d.emailCfg && typeof d.emailCfg === 'object') { patch.emailCfg = d.emailCfg; try { localStorage.setItem('inkflow_emailcfg', JSON.stringify(d.emailCfg)); } catch (e) {} }
     if (typeof d.tgLink === 'string') patch.tgLink = d.tgLink;
     if (d.tgBot && typeof d.tgBot === 'object') { patch.tgToken = d.tgBot.token || ''; patch.tgChatId = d.tgBot.chatId || ''; patch.tgFwd = !!d.tgBot.fwd; }
@@ -3586,6 +3691,155 @@ class Component extends DCLogic {
       chEmpImg: emp && emp.photo ? React.createElement('img', { className: 'chempimg', src: emp.photo, alt: '' }) : null,
     };
   }
+  // Кассовый разрыв в БДДС на 30 дней (для сигнала Аи)
+  cashGapInfo() {
+    const S = this.state; const rate = Number(S.rate) || 0, vat = this.vat;
+    const t0 = new Date(); t0.setHours(0, 0, 0, 0); const todayMs = t0.getTime(); const todayStr = this.ymd(t0);
+    const moves = S.payMoves || {}, splits = S.paySplits || {}; const dayMap = {};
+    for (const p of (S.purchases || [])) { if (/отмен/.test(String(p.status || '').toLowerCase())) continue; const c = this.purchaseCalc(p, rate, vat); const due = c.fullRub - (Number(p.paid) || 0); if (due <= 1) continue; const base = p.payDate || p.arriveDate || ''; if (!base) continue; const sp = splits[p.id]; if (Array.isArray(sp) && sp.length) sp.forEach(pt => { dayMap[pt.date] = (dayMap[pt.date] || 0) + (Number(pt.amount) || 0); }); else { const dt = moves[p.id] || base; dayMap[dt] = (dayMap[dt] || 0) + due; } }
+    let bal = Number(S.cashStart) || 0;
+    for (let i = 0; i < 30; i++) { const d = new Date(todayMs + i * 86400000); const ds = this.ymd(d); let out = dayMap[ds] || 0; if (i === 0) { for (const k of Object.keys(dayMap)) { if (k < todayStr) out += dayMap[k]; } } bal -= out; if (bal < 0) return { gap: true, day: this.dm(d), amount: this.fmt(-bal) }; }
+    return { gap: false };
+  }
+  // ===== Монитор логистики =====
+  emptyLog() { return { id: '', no: '', date: this.ymd(new Date()), route: '', carrier: '', transType: 'Авто РФ', container: '', truck: '', driver: '', driverDoc: '', status: 'На согласовании', ftsDecl: '', ftsStatus: '', weight: '', freight: '' }; }
+  writeLogistics(next) {
+    this.setState({ logistics: next });
+    try { localStorage.setItem('inkflow_logistics', JSON.stringify(next)); } catch (e) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { logistics: next }, { merge: true }).catch(() => {}); } catch (e) {} }
+  }
+  saveLog() {
+    const S = this.state, d = S.logDraft || this.emptyLog();
+    if (!(d.route || '').trim()) { this.setState({ logErr: 'Укажите маршрут' }); return; }
+    const r = { ...this.emptyLog(), ...d, id: d.id || ('lg_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), route: (d.route || '').trim(), createdAt: d.createdAt || Date.now() };
+    this.writeLogistics([r, ...(S.logistics || []).filter(x => x.id !== r.id)]);
+    this.setState({ logDraft: null, logErr: '' });
+  }
+  buildLogistics() {
+    const S = this.state, set = (p) => this.setState(p);
+    const d = S.logDraft || this.emptyLog(); const isDraft = !!S.logDraft;
+    const upd = (k) => (e) => set({ logDraft: { ...(this.state.logDraft || this.emptyLog()), [k]: e.target.value }, logErr: '' });
+    const stCls = { 'На согласовании': 'st-new', 'Согласовано': 'st-acc', 'В пути': 'st-prog', 'Таможня (ФТС)': 'st-prog', 'Прибыло': 'st-done', 'Не согласовано': 'st-rej' };
+    const list = (S.logistics || []);
+    const byRoute = {};
+    const rows = list.slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).map(r => {
+      const w = Number(r.weight) || 0, fr = Number(r.freight) || 0; const perKg = w > 0 ? fr / w : 0;
+      const rt = (r.route || '—'); byRoute[rt] = byRoute[rt] || { route: rt, n: 0, weight: 0, freight: 0 }; byRoute[rt].n++; byRoute[rt].weight += w; byRoute[rt].freight += fr;
+      return { id: r.id, no: r.no || '—', date: this.dmFull(r.date), route: rt, carrier: r.carrier || '—', transType: r.transType || '—', container: r.container || r.truck || '—', driver: r.driver || '—', status: r.status || '—', statusCls: stCls[r.status] || 'st-new', fts: (r.ftsDecl ? ('ДТ ' + r.ftsDecl) : '—') + (r.ftsStatus ? (' · ' + r.ftsStatus) : ''), weight: this.fmt(w, 0), freight: this.fmt(fr), perKg: w > 0 ? this.fmt(perKg, 2) : '—',
+        edit: () => set({ logDraft: { ...r }, logErr: '' }), remove: () => this.askDelete('поручение «' + rt + '»', () => this.writeLogistics((this.state.logistics || []).filter(x => x.id !== r.id))) };
+    });
+    const routeVals = Object.values(byRoute).sort((a, b) => b.freight - a.freight);
+    const maxFr = routeVals.reduce((m, g) => Math.max(m, g.freight), 0) || 1;
+    const routeRows = routeVals.map(g => ({ route: g.route, n: g.n, weight: this.fmt(g.weight, 0), freight: this.fmt(g.freight), perKg: g.weight > 0 ? this.fmt(g.freight / g.weight, 2) : '—', barW: Math.max(4, Math.round(g.freight / maxFr * 100)) + '%' }));
+    return {
+      isLogi: true,
+      lgNo: d.no || '', onLgNo: upd('no'), lgDate: d.date || '', onLgDate: upd('date'), lgRoute: d.route || '', onLgRoute: upd('route'),
+      lgCarrier: d.carrier || '', onLgCarrier: upd('carrier'), lgTrans: d.transType || 'Авто РФ', onLgTrans: upd('transType'),
+      lgTransOpts: ['Море/Контейнеры', 'ЖД РФ', 'Авто РФ', 'Международное авто'].map(v => ({ v, label: v })),
+      lgContainer: d.container || '', onLgContainer: upd('container'), lgTruck: d.truck || '', onLgTruck: upd('truck'),
+      lgDriver: d.driver || '', onLgDriver: upd('driver'), lgDriverDoc: d.driverDoc || '', onLgDriverDoc: upd('driverDoc'),
+      lgStatus: d.status || 'На согласовании', onLgStatus: upd('status'),
+      lgStatusOpts: ['На согласовании', 'Согласовано', 'В пути', 'Таможня (ФТС)', 'Прибыло', 'Не согласовано'].map(v => ({ v, label: v })),
+      lgFtsDecl: d.ftsDecl || '', onLgFtsDecl: upd('ftsDecl'), lgFtsStatus: d.ftsStatus || '', onLgFtsStatus: upd('ftsStatus'),
+      lgFtsStatusOpts: ['', 'Выпуск разрешён', 'Досмотр'].map(v => ({ v, label: v || '—' })),
+      lgWeight: d.weight || '', onLgWeight: upd('weight'), lgFreight: d.freight || '', onLgFreight: upd('freight'),
+      saveLog: () => this.saveLog(), cancelLog: () => set({ logDraft: null, logErr: '' }), lgHasDraft: isDraft, lgErr: S.logErr || '', lgHasErr: !!S.logErr,
+      logRows: rows, logEmpty: rows.length === 0, logCount: String(rows.length), routeRows, routeEmpty: routeRows.length === 0,
+    };
+  }
+  // ===== БДДС: казначейский календарь на 30 дней =====
+  buildTreasury30() {
+    const S = this.state, set = (p) => this.setState(p);
+    const rate = Number(S.rate) || 0, vat = this.vat;
+    const t0 = new Date(); t0.setHours(0, 0, 0, 0); const todayMs = t0.getTime(); const todayStr = this.ymd(t0);
+    const moves = S.payMoves || {}, splits = S.paySplits || {};
+    const pays = [];
+    for (const p of (S.purchases || [])) {
+      if (/отмен/.test(String(p.status || '').toLowerCase())) continue;
+      const c = this.purchaseCalc(p, rate, vat); const due = c.fullRub - (Number(p.paid) || 0);
+      if (due <= 1) continue;
+      const baseDate = p.payDate || p.arriveDate || ''; if (!baseDate) continue;
+      const sp = splits[p.id];
+      if (Array.isArray(sp) && sp.length) sp.forEach((part, i) => pays.push({ id: p.id, part: i, supplier: p.supplier || '—', material: p.material || '—', date: part.date, amount: Number(part.amount) || 0, due }));
+      else pays.push({ id: p.id, part: -1, supplier: p.supplier || '—', material: p.material || '—', date: moves[p.id] || baseDate, amount: due, due });
+    }
+    const dayMap = {}; let overdueSum = 0;
+    for (const pay of pays) { (dayMap[pay.date] = dayMap[pay.date] || []).push(pay); if (pay.date < todayStr) overdueSum += pay.amount; }
+    const WD = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
+    let bal = Number(S.cashStart) || 0; const days = []; let minBal = bal; let totalOut = 0;
+    // просрочка садится на сегодня
+    for (let i = 0; i < 30; i++) {
+      const d = new Date(todayMs + i * 86400000); const ds = this.ymd(d);
+      let items = (dayMap[ds] || []).slice();
+      if (i === 0) { for (const k of Object.keys(dayMap)) { if (k < todayStr) items = items.concat(dayMap[k].map(x => ({ ...x, over: true }))); } }
+      const out = items.reduce((s, x) => s + x.amount, 0); totalOut += out; bal -= out; if (bal < minBal) minBal = bal;
+      const wd = d.getDay();
+      days.push({ key: ds, day: d.getDate(), wd: WD[wd], off: (wd === 0 || wd === 6) ? 'off' : '', isToday: i === 0, out: out > 0 ? this.fmt(out) : '', bal: this.fmt(bal), gap: bal < 0 ? 'gap' : '', hasItems: items.length > 0,
+        items: items.map(x => ({ key: x.id + '_' + x.part + (x.over ? 'o' : ''), supplier: x.supplier, material: x.material, amount: this.fmt(x.amount), over: x.over ? 'over' : '', isSplit: x.part >= 0,
+          moveOpen: S.payMoveEdit === (x.id + '_' + x.part), moveVal: x.date,
+          onMove: (e) => { const v = e.target.value; const m = { ...(this.state.payMoves || {}) }; m[x.id] = v; set({ payMoves: m, payMoveEdit: '' }); },
+          startMove: () => set({ payMoveEdit: (this.state.payMoveEdit === (x.id + '_' + x.part)) ? '' : (x.id + '_' + x.part) }),
+          split: () => { const due = x.due; const sp = {}; const base = x.date; const d15 = this.ymd(new Date(this.parseISO(base).getTime() + 15 * 86400000)); const d30 = this.ymd(new Date(this.parseISO(base).getTime() + 30 * 86400000)); const next = { ...(this.state.paySplits || {}) }; next[x.id] = [{ date: base, amount: this.excelRound(due * 0.3, 2) }, { date: d15, amount: this.excelRound(due * 0.4, 2) }, { date: d30, amount: this.excelRound(due * 0.3, 2) }]; set({ paySplits: next }); },
+          unsplit: () => { const next = { ...(this.state.paySplits || {}) }; delete next[x.id]; set({ paySplits: next }); },
+        })),
+      });
+    }
+    return {
+      isTreas30: true, cashStart: S.cashStart || 0, onCashStart: (e) => set({ cashStart: e.target.value }),
+      trDays: days, trOverdue: this.fmt(overdueSum), trHasOverdue: overdueSum > 0,
+      trTotalOut: this.fmt(totalOut), trMinBal: this.fmt(minBal), trMinCls: minBal < 0 ? 'mneg' : 'mpos', trGap: minBal < 0,
+      trResetPlan: () => set({ payMoves: {}, paySplits: {}, payMoveEdit: '' }),
+    };
+  }
+  // ===== Продажи и дистрибуция ГП =====
+  emptySale() { const prods = (this.data && this.data.products) ? this.data.products.map(p => p.name || p) : []; return { id: '', no: '', date: this.ymd(new Date()), client: '', product: prods[0] || '', qty: '', price: '', currency: 'RUB', rate: 1 }; }
+  writeSales(next) {
+    this.setState({ sales: next });
+    try { localStorage.setItem('inkflow_sales', JSON.stringify(next)); } catch (e) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { sales: next }, { merge: true }).catch(() => {}); } catch (e) {} }
+  }
+  saveSale() {
+    const S = this.state, d = S.saleDraft || this.emptySale();
+    const client = (d.client || '').trim();
+    if (!client) { this.setState({ saleErr: 'Укажите клиента' }); return; }
+    if (!(Number(d.qty) > 0)) { this.setState({ saleErr: 'Укажите объём (кг)' }); return; }
+    const sale = { id: d.id || ('sl_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), no: (d.no || '').trim(), date: d.date || this.ymd(new Date()), client, product: d.product || '', qty: Number(d.qty) || 0, price: Number(d.price) || 0, currency: d.currency || 'RUB', rate: Number(d.rate) || 1, createdAt: d.createdAt || Date.now() };
+    this.writeSales([sale, ...(S.sales || []).filter(x => x.id !== sale.id)]);
+    this.setState({ saleDraft: null, saleErr: '' });
+  }
+  buildSales() {
+    const S = this.state, set = (p) => this.setState(p);
+    const d = S.saleDraft || this.emptySale(); const isDraft = !!S.saleDraft;
+    const upd = (k) => (e) => set({ saleDraft: { ...(this.state.saleDraft || this.emptySale()), [k]: e.target.value }, saleErr: '' });
+    const prods = (this.data && this.data.products) ? this.data.products.map(p => p.name || p) : [];
+    const loss = (Number(S.loss) || 0) / 100; const eurRate = Number(S.rate) || 0;
+    const pool = Number(S.salesTransport) || 0; const mode = S.salesTransMode || 'weight';
+    const list = (S.sales || []);
+    let totW = 0, totV = 0; for (const s of list) { const q = Number(s.qty) || 0; totW += q; totV += q * (Number(s.price) || 0) * (Number(s.rate) || 1); }
+    let tRev = 0, tCost = 0, tTr = 0, tMar = 0;
+    const rows = list.slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).map(s => {
+      const q = Number(s.qty) || 0, price = Number(s.price) || 0, rate = Number(s.rate) || 1;
+      const revRub = this.excelRound(q * price * rate, 2);
+      const costRub = this.excelRound(this.costOf(s.product, loss) * eurRate * q, 2);
+      const alloc = pool > 0 ? (mode === 'weight' ? (totW ? pool * q / totW : 0) : (totV ? pool * revRub / totV : 0)) : 0;
+      const margin = revRub - costRub - alloc; const mpct = revRub ? margin / revRub * 100 : 0;
+      tRev += revRub; tCost += costRub; tTr += alloc; tMar += margin;
+      return { id: s.id, no: s.no || '—', date: this.dmFull(s.date), client: s.client || '—', product: s.product || '—', qty: this.fmt(q, 1), rev: this.fmt(revRub), cost: this.fmt(costRub), transp: this.fmt(alloc), margin: this.fmt(margin), mpct: this.fmt(mpct, 1) + '%', mcls: margin >= 0 ? 'mpos' : 'mneg', remove: () => this.askDelete('продажу клиенту «' + (s.client || '') + '»', () => this.writeSales((this.state.sales || []).filter(x => x.id !== s.id))) };
+    });
+    return {
+      isSales: true,
+      slNo: d.no || '', onSlNo: upd('no'), slDate: d.date || '', onSlDate: upd('date'), slClient: d.client || '', onSlClient: upd('client'),
+      slProduct: d.product || '', onSlProduct: upd('product'), slProdOpts: prods.map(p => ({ v: p, label: p })),
+      slQty: d.qty || '', onSlQty: upd('qty'), slPrice: d.price || '', onSlPrice: upd('price'),
+      slCurrency: d.currency || 'RUB', onSlCurrency: (e) => set({ saleDraft: { ...(this.state.saleDraft || this.emptySale()), currency: e.target.value, rate: e.target.value === 'EUR' ? eurRate : (e.target.value === 'RUB' ? 1 : (this.state.saleDraft || {}).rate || 1) }, saleErr: '' }), slCurOpts: ['RUB', 'USD', 'EUR', 'CNY'].map(c => ({ v: c, label: c })),
+      slRate: d.rate != null ? d.rate : 1, onSlRate: upd('rate'),
+      saveSale: () => this.saveSale(), cancelSale: () => set({ saleDraft: null, saleErr: '' }), slHasDraft: isDraft, slErr: S.saleErr || '', slHasErr: !!S.saleErr,
+      salesTransport: S.salesTransport || 0, onSalesTransport: (e) => set({ salesTransport: e.target.value }),
+      transWeightCls: mode === 'weight' ? 'tmbtn on' : 'tmbtn', transValueCls: mode === 'value' ? 'tmbtn on' : 'tmbtn', setTransWeight: () => set({ salesTransMode: 'weight' }), setTransValue: () => set({ salesTransMode: 'value' }),
+      saleRows: rows, salesEmpty: rows.length === 0, salesCount: String(rows.length),
+      sumRev: this.fmt(tRev), sumCost: this.fmt(tCost), sumTr: this.fmt(tTr), sumMar: this.fmt(tMar), sumMpct: this.fmt(tRev ? tMar / tRev * 100 : 0, 1) + '%', sumMcls: tMar >= 0 ? 'mpos' : 'mneg',
+    };
+  }
   // ===== Поступление ТМЦ на склад =====
   emptyReceipt() { return { id: '', no: '', date: this.ymd(new Date()), supplier: '', inn: '', currency: 'RUB', rate: 1, market: 'Внутренний', lines: [{ material: '', article: '', qty: '', price: '' }] }; }
   writeReceipts(next) {
@@ -3821,6 +4075,7 @@ class Component extends DCLogic {
     const out = [];
     for (const p of (this.state.purchases || [])) { const r = this.purchaseRisk(p); if (r) out.push(r); }
     for (const r of this.taskRisks()) out.push(r);
+    const cg = this.cashGapInfo(); if (cg.gap) out.push({ level: 'crit', days: -100, id: 'cashgap', text: '⚠️ Обнаружен кассовый разрыв ' + cg.day + ' — не хватает ' + cg.amount + ' ₽. Перенести оплату?', quick: 'Открыть БДДС', chatText: '🔔 АЯ: кассовый разрыв ' + cg.day + ' на ' + cg.amount + ' ₽ — перенесите платежи.', open: () => this.setState({ tab: 'treas30', navOpen: false }), openLabel: 'Открыть БДДС' });
     out.sort((a, b) => (a.level === b.level ? a.days - b.days : (a.level === 'crit' ? -1 : 1)));
     return out;
   }
@@ -4763,15 +5018,15 @@ class Component extends DCLogic {
       ['proc', 'План закупок'], ['cal', 'Календарь'], ['wh', 'Склад'], ['cover', 'Сводка'],
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
-      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
+      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
     const tabGroups = [
       { label: 'FLOW', items: ['prodplan', 'procplan'], en: { prodplan: 'Production Schedule', procplan: 'Procurement Plan' } },
       { label: 'Команда', items: ['tasks', 'docs'] },
-      { label: 'Производство', items: ['calc', 'recipe', 'prod', 'catalog'] },
-      { label: 'Планирование закупок', items: ['runrate', 'proc', 'cal'] },
-      { label: 'Цены и поставщики', items: ['audit', 'pay', 'prices', 'cparties'] },
+      { label: 'Производство', items: ['calc', 'recipe', 'prod', 'sales', 'catalog'] },
+      { label: 'Планирование закупок', items: ['runrate', 'proc', 'cal', 'logi'] },
+      { label: 'Цены и поставщики', items: ['audit', 'pay', 'treas30', 'prices', 'cparties'] },
       { label: 'Запасы', items: ['wh', 'receipts', 'turnover', 'cover'] },
       { label: 'Контроль и сценарии', items: ['planfact', 'stress', 'reports'] },
       { label: 'Система', items: ['cloud', 'onec', 'users'] },
@@ -5300,6 +5555,9 @@ class Component extends DCLogic {
     if (S.tab === 'docs') Object.assign(base, this.buildDocs());
     if (S.tab === 'cparties') Object.assign(base, this.buildCparties());
     if (S.tab === 'receipts') Object.assign(base, this.buildReceipts());
+    if (S.tab === 'sales') Object.assign(base, this.buildSales());
+    if (S.tab === 'treas30') Object.assign(base, this.buildTreasury30());
+    if (S.tab === 'logi') Object.assign(base, this.buildLogistics());
 
     // ---- Календарь поставок ----
     if (S.tab === 'cal') {
