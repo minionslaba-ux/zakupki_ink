@@ -143,6 +143,7 @@ tbody td.l{text-align:left}
 .si-loader.is-done{opacity:0;visibility:hidden;pointer-events:none}
 .si-in{display:flex;flex-direction:column;align-items:center;gap:20px;width:min(460px,84vw);text-align:center}
 .si-logo{width:78%;height:auto;display:block;animation:siLogoIn .55s ease both}
+.si-wm{font-family:'Montserrat',sans-serif;font-weight:800;font-size:52px;line-height:1;color:#fff;letter-spacing:-.015em;animation:siLogoIn .55s ease both}
 .si-tag{font-family:'Montserrat',sans-serif;font-size:12.5px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#E10000;margin:2px 0 6px;min-height:1.2em;white-space:nowrap}
 .sil{display:inline-block;white-space:pre;opacity:0;transform:translateY(4px);animation:siLetter .32s ease forwards}
 .si-bar{position:relative;width:88%;height:7px;border-radius:7px;overflow:hidden;background:rgba(255,255,255,.22)}
@@ -243,7 +244,7 @@ tbody td.l{text-align:left}
 .p2wm{font-family:'Montserrat',sans-serif;font-weight:800;font-size:22px;color:#fff;margin-top:18px;letter-spacing:-.01em}
 .p2wm span{color:#e10000;letter-spacing:.2em;font-size:13px;vertical-align:2px;margin:0 2px}
 .p2slo{font-family:'Montserrat',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.1em;color:#FFD200;margin-top:11px;white-space:nowrap;min-height:1.2em}
-.p2brand{font-family:'Montserrat',sans-serif;font-weight:800;font-size:46px;line-height:1.02;color:#fff;letter-spacing:-.01em}
+.p2brand{font-family:'Montserrat',sans-serif;font-weight:800;font-size:38px;line-height:1.06;color:#fff;letter-spacing:-.01em}
 .p2brand .p2flow{color:#e10000}
 .p2bar{position:relative;width:172px;height:7px;border-radius:7px;overflow:hidden;background:rgba(255,255,255,.18);margin:18px 0 0}
 .p2run{position:absolute;top:0;left:0;height:100%;width:300%;background:repeating-linear-gradient(90deg,#00AEEF 0,#00AEEF 16px,#EC008C 16px,#EC008C 32px,#FFD200 32px,#FFD200 48px,#0F1115 48px,#0F1115 64px);animation:siRun 1.5s linear infinite}
@@ -253,7 +254,10 @@ tbody td.l{text-align:left}
 .p2ready{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:#bfe6c9;background:rgba(31,138,76,.16);border:1px solid rgba(31,138,76,.4);padding:6px 13px;border-radius:20px}
 .p2dot{width:8px;height:8px;border-radius:50%;background:#3fd07a;animation:p2pulse 1.6s infinite}
 @keyframes p2pulse{0%{box-shadow:0 0 0 0 rgba(63,208,122,.6)}70%{box-shadow:0 0 0 9px rgba(63,208,122,0)}100%{box-shadow:0 0 0 0 rgba(63,208,122,0)}}
-.p2h{font-family:'Montserrat',sans-serif;font-size:25px;font-weight:800;line-height:1.14;letter-spacing:-.02em;color:#fff}
+.p2h{display:flex;flex-direction:column;gap:10px;margin:2px 0 4px}
+.p2heb{font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;letter-spacing:.02em;color:rgba(255,255,255,.62)}
+.p2hbrand{position:relative;align-self:flex-start;font-family:'Montserrat',sans-serif;font-weight:800;font-size:58px;line-height:.92;letter-spacing:.06em;color:#fff;padding-bottom:15px;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+.p2hbar{position:absolute;left:3px;bottom:0;width:72px;height:5px;border-radius:3px;background:linear-gradient(90deg,#00AEEF 0 25%,#EC008C 25% 50%,#FFD200 50% 75%,#e10000 75% 100%)}
 .p2btn{appearance:none;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:800;font-size:17px;color:#0e0e0e;padding:15px 38px;border-radius:12px;display:inline-flex;align-items:center;gap:12px;margin-top:4px;background:linear-gradient(90deg,#FFD200 0%,#FFE872 25%,#FFD200 50%,#FFE872 75%,#FFD200 100%);background-size:200% 100%;animation:btnScroll 3s linear infinite;box-shadow:0 10px 34px rgba(255,210,0,.42),0 0 0 1px rgba(255,210,0,.5);transition:transform .18s ease,box-shadow .18s ease}
 .p2btn:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 16px 48px rgba(255,210,0,.62),0 0 0 1px #fff;animation:btnScroll 1.1s linear infinite}
 .p2btn:active{transform:translateY(0) scale(.99)}
@@ -482,7 +486,7 @@ tbody td.l{text-align:left}
 .aisend:disabled{opacity:.5;cursor:default}
 @media(max-width:560px){.aifabtx{display:none}.aifab{padding:0;width:46px;height:46px;justify-content:center;right:14px;bottom:14px}.aipanel{right:8px;left:8px;bottom:76px;width:auto;max-width:none}.ayapeek{top:auto;bottom:238px;right:0;transform:none;animation:none;max-width:calc(100vw - 70px)}.ayaav{width:48px;height:48px;animation:none}}
 @media(max-width:680px){.uform{grid-template-columns:1fr}}
-@media(max-width:680px){.p2card{flex-direction:column;gap:26px;text-align:center}.p2left{border-right:none;border-bottom:1px solid rgba(255,255,255,.1);padding-right:0;padding-bottom:22px}.p2right{align-items:center}.p2logo{margin:0 auto;max-width:200px}.p2h{font-size:21px}}
+@media(max-width:680px){.p2card{flex-direction:column;gap:26px;text-align:center}.p2left{border-right:none;border-bottom:1px solid rgba(255,255,255,.1);padding-right:0;padding-bottom:22px}.p2right{align-items:center}.p2logo{margin:0 auto;max-width:200px}.p2h{align-items:center}.p2hbrand{align-self:center;font-size:40px}}
 .slogan{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#e10000;margin-top:7px;min-height:1.1em}
 .sil2{display:inline-block;white-space:pre;opacity:0;transform:translateY(4px);animation:siLetter .3s ease forwards}
 a.wordmark{text-decoration:none;cursor:pointer;transition:opacity .15s}
@@ -723,8 +727,25 @@ a.wordmark:hover{opacity:.6}
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:252px;background:#0e0e0e;color:#fff;display:flex;flex-direction:column;z-index:60;overflow-y:auto}
 .sblogo{display:block;text-decoration:none;padding:24px 22px 0;flex:none}
 .sbwm{display:block;font-family:'Montserrat',sans-serif;font-weight:800;font-size:30px;line-height:.9;color:#fff;letter-spacing:-.02em}
-.sbink{display:block;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;letter-spacing:.44em;color:#fff;margin-top:6px}
+.sbink{display:block;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;letter-spacing:.26em;color:#fff;margin-top:6px}
 .sbcmyk{position:relative;height:6px;border-radius:3px;overflow:hidden;margin:13px 22px 0;width:118px;flex:none;background:rgba(255,255,255,.1)}
+.coswitch{position:relative;margin:13px 22px 2px;flex:none}
+.cosw-btn{display:flex;align-items:center;gap:9px;width:100%;appearance:none;cursor:pointer;background:#1a1916;border:1px solid #2c2a26;border-radius:10px;padding:9px 11px;color:#fff;font:inherit;transition:background .15s,border-color .15s}
+.cosw-btn:hover{background:#23211d;border-color:#3a3833}
+.cosw-chip{width:10px;height:10px;border-radius:3px;flex:none}
+.cosw-name{flex:1;text-align:left;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cosw-car{color:#8a8782;font-size:11px}
+.comenu{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:80;background:#1a1916;border:1px solid #2c2a26;border-radius:12px;padding:6px;box-shadow:0 18px 40px rgba(0,0,0,.5)}
+.comenu-h{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#7a7770;padding:7px 9px 5px}
+.comenu-it{display:flex;align-items:center;gap:10px;width:100%;appearance:none;cursor:pointer;background:transparent;border:none;border-radius:8px;padding:9px;color:#fff;font:inherit;text-align:left;transition:background .14s}
+.comenu-it:hover{background:#2a2723}
+.comenu-chip{width:11px;height:11px;border-radius:3px;flex:none}
+.comenu-tx{flex:1;display:flex;flex-direction:column;gap:1px;min-width:0}
+.comenu-name{font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px}
+.comenu-sub{font-size:10.5px;color:#8a8782;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.comenu-chk{color:#FFD200;font-weight:800;opacity:0;font-size:13px}
+.comenu-it.on{background:#23211d}
+.comenu-it.on .comenu-chk{opacity:1}
 .sbrun{position:absolute;top:0;left:0;height:100%;width:300%;background:repeating-linear-gradient(90deg,#00AEEF 0,#00AEEF 16px,#EC008C 16px,#EC008C 32px,#FFD200 32px,#FFD200 48px,#e10000 48px,#e10000 64px);animation:siRun 4s linear infinite}
 .sbnav{flex:1;padding:22px 14px 16px;display:flex;flex-direction:column;gap:17px}
 .onecbtn{display:flex;align-items:center;gap:10px;width:calc(100% - 28px);margin:14px 14px 2px;padding:9px 11px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:11px;cursor:pointer;font:inherit;font-weight:600;font-size:12.5px;color:#fff;text-align:left;transition:all .15s}
@@ -980,18 +1001,19 @@ window.dispatchEvent(new Event('fbready'));
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0e0e0e">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="INK Flow">
+<meta name="apple-mobile-web-app-title" content="Chemicals Flow">
 <script>try{if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}}catch(e){}</script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </helmet>
-<sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="{{ loaderCls }}" role="status"><div class="si-p1 {{ p1cls }}"><div class="si-in"><img class="si-logo" src="loader-logo-white.png" alt="Shtark INK"><div class="si-tag">{{ tagLetters }}</div><div class="si-bar"><div class="si-run"></div></div><div class="si-cap">Производство спиртовых красок для печати на гибкой упаковке</div></div></div><div class="si-p2 {{ p2cls }}"><div class="p2card"><div class="p2left"><div class="p2brand">Shtark INK <span class="p2flow">Flow</span></div><div class="p2bar"><div class="p2run"></div></div><div class="p2slo">{{ sloganLetters }}</div><a class="p2site" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Официальный сайт">Перейти на shtarkink.com →</a></div><div class="p2right"><div class="p2ready"><span class="p2dot"></span> Система готова к работе</div><div class="p2h">Портал закупок<br>и производства</div><sc-if value="{{ needLogin }}" hint-placeholder-val="{{ true }}"><div class="p2form"><div><div class="p2lbl">Логин</div><input class="p2inp" value="{{ loginInput }}" onInput="{{ onLoginInput }}" onKeyDown="{{ onLoginKey }}" placeholder="например, ivanov" autocomplete="username"></div><div><div class="p2lbl">Пароль</div><input class="p2inp" type="password" value="{{ passInput }}" onInput="{{ onPassInput }}" onKeyDown="{{ onLoginKey }}" placeholder="••••••••" autocomplete="current-password"></div><div class="p2err">{{ loginErr }}</div><button class="p2btn" onClick="{{ doLogin }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ openReset }}">Забыли пароль?</button></div><sc-if value="{{ resetOpen }}" hint-placeholder-val=""><div class="p2reset"><div class="p2lbl">Восстановление пароля</div><input class="p2inp" value="{{ resetInput }}" onInput="{{ onResetInput }}" onKeyDown="{{ onResetKey }}" placeholder="ваш e-mail или логин" autocomplete="email"><sc-if value="{{ resetErr }}" hint-placeholder-val=""><div class="p2err">{{ resetErr }}</div></sc-if><sc-if value="{{ resetOk }}" hint-placeholder-val=""><div class="p2ok">{{ resetOk }}</div></sc-if><div class="p2rrow"><button class="p2btn sm" onClick="{{ doReset }}" disabled="{{ resetBusy }}">Прислать новый пароль</button><button class="p2link" onClick="{{ closeReset }}">Отмена</button></div><div class="p2hint">На указанный e-mail придёт новый временный пароль. Если e-mail не привязан — обратитесь к администратору.</div></div></sc-if><div class="p2hint">Введите логин и пароль, выданные администратором</div></sc-if><sc-if value="{{ hasSession }}" hint-placeholder-val=""><div class="p2you">Вы вошли как <b>{{ sessionName }}</b></div><button class="p2btn" onClick="{{ enterWelcome }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ switchUser }}">Войти под другим пользователем</button></sc-if></div></div></div></div></sc-if>
+<sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="{{ loaderCls }}" role="status"><div class="si-p1 {{ p1cls }}"><div class="si-in"><div class="si-wm">Shtark</div><div class="si-tag">{{ tagLetters }}</div><div class="si-bar"><div class="si-run"></div></div><div class="si-cap">Корпоративный портал группы компаний</div></div></div><div class="si-p2 {{ p2cls }}"><div class="p2card"><div class="p2left"><div class="p2brand">Shtark <span class="p2flow">Flow</span></div><div class="p2bar"><div class="p2run"></div></div><div class="p2slo">{{ sloganLetters }}</div><a class="p2site" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Официальный сайт группы">Официальный сайт →</a></div><div class="p2right"><div class="p2ready"><span class="p2dot"></span> Система готова к работе</div><div class="p2h"><span class="p2heb">Единая платформа управления</span><span class="p2hbrand">SHTARK<i class="p2hbar"></i></span></div><sc-if value="{{ needLogin }}" hint-placeholder-val="{{ true }}"><div class="p2form"><div><div class="p2lbl">Логин</div><input class="p2inp" value="{{ loginInput }}" onInput="{{ onLoginInput }}" onKeyDown="{{ onLoginKey }}" placeholder="например, ivanov" autocomplete="username"></div><div><div class="p2lbl">Пароль</div><input class="p2inp" type="password" value="{{ passInput }}" onInput="{{ onPassInput }}" onKeyDown="{{ onLoginKey }}" placeholder="••••••••" autocomplete="current-password"></div><div class="p2err">{{ loginErr }}</div><button class="p2btn" onClick="{{ doLogin }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ openReset }}">Забыли пароль?</button></div><sc-if value="{{ resetOpen }}" hint-placeholder-val=""><div class="p2reset"><div class="p2lbl">Восстановление пароля</div><input class="p2inp" value="{{ resetInput }}" onInput="{{ onResetInput }}" onKeyDown="{{ onResetKey }}" placeholder="ваш e-mail или логин" autocomplete="email"><sc-if value="{{ resetErr }}" hint-placeholder-val=""><div class="p2err">{{ resetErr }}</div></sc-if><sc-if value="{{ resetOk }}" hint-placeholder-val=""><div class="p2ok">{{ resetOk }}</div></sc-if><div class="p2rrow"><button class="p2btn sm" onClick="{{ doReset }}" disabled="{{ resetBusy }}">Прислать новый пароль</button><button class="p2link" onClick="{{ closeReset }}">Отмена</button></div><div class="p2hint">На указанный e-mail придёт новый временный пароль. Если e-mail не привязан — обратитесь к администратору.</div></div></sc-if><div class="p2hint">Введите логин и пароль, выданные администратором</div></sc-if><sc-if value="{{ hasSession }}" hint-placeholder-val=""><div class="p2you">Вы вошли как <b>{{ sessionName }}</b></div><button class="p2btn" onClick="{{ enterWelcome }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ switchUser }}">Войти под другим пользователем</button></sc-if></div></div></div></div></sc-if>
 <div class="wrap {{ wrapCls }}">
-<div class="mtop"><button class="mburg" onClick="{{ toggleNav }}" aria-label="Меню"><span></span><span></span><span></span></button><span class="mtitle">Shtark INK <span class="mflow">Flow</span></span></div>
+<div class="mtop"><button class="mburg" onClick="{{ toggleNav }}" aria-label="Меню"><span></span><span></span><span></span></button><span class="mtitle">{{ coName }} <span class="mflow">Flow</span></span></div>
 <div class="navbk {{ navBkCls }}" onClick="{{ closeNav }}"></div>
 <aside class="sidebar" style="{{ sidebarStyle }}">
 <button class="sbcollapse" onClick="{{ toggleSb }}" title="Свернуть меню">‹</button>
-<a class="sblogo" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Перейти на shtarkink.com"><span class="sbwm">Shtark</span><span class="sbink">I N K</span></a>
+<a class="sblogo" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}"><span class="sbwm">{{ coWm1 }}</span><span class="sbink" style="{{ coWmStyle }}">{{ coWm2 }}</span></a>
 <div class="sbcmyk"><div class="sbrun"></div></div>
+<sc-if value="{{ canSwitch }}" hint-placeholder-val=""><div class="coswitch"><button class="cosw-btn" onClick="{{ toggleCoMenu }}" title="Сменить компанию группы"><span class="cosw-chip" style="{{ coChipStyle }}"></span><span class="cosw-name">{{ coName }}</span><span class="cosw-car">▾</span></button><sc-if value="{{ coMenuOpen }}" hint-placeholder-val=""><div class="comenu"><div class="comenu-h">Компания группы</div><sc-for list="{{ coList }}" as="c" hint-placeholder-count="2"><button class="{{ c.cls }}" onClick="{{ c.go }}"><span class="comenu-chip" style="{{ c.chipStyle }}"></span><span class="comenu-tx"><span class="comenu-name">{{ c.coItemName }}</span><span class="comenu-sub">{{ c.coItemSub }}</span></span><span class="comenu-chk">✓</span></button></sc-for></div></sc-if></div></sc-if>
 <button class="{{ oneCBtnCls }}" onClick="{{ oneCQuickGet }}" title="Загрузить остатки и закупочные цены из 1С"><span class="oneclogo">1С</span><span class="onecbtx">{{ oneCBtnText }}</span></button>
 <button class="sbai" onClick="{{ runGlobalAudit }}" title="Глубокий AI-аудит производства, снабжения и кассы"><span class="sbaiic">✦</span> Глубокий анализ</button>
 <button class="sbai sbai2" onClick="{{ aiToggle }}" title="Открыть AI-аналитика АЯ"><span class="sbaiic">✦</span> AI-аналитик АЯ</button>
@@ -1001,13 +1023,13 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
 <sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
-<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки</div><div class="h1"><a class="brandlink" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Перейти на shtarkink.com">Shtark INK <span style="color:#e10000">Flow</span></a></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск: контрагент, ИНН, артикул, сырьё, заявка, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">Ничего не найдено</div></sc-if><sc-for list="{{ searchResults }}" as="r" hint-placeholder-count="3"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-if></div></div>
+<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки</div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск: контрагент, ИНН, артикул, сырьё, заявка, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">Ничего не найдено</div></sc-if><sc-for list="{{ searchResults }}" as="r" hint-placeholder-count="3"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava">{{ u.avatar }}<i class="ondot"></i></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div></div></sc-if>
 <div class="desc">{{ tabDesc }}</div>
 <div class="actrow"><sc-if value="{{ aiAnalyzable }}" hint-placeholder-val=""><button class="aianalyze" onClick="{{ analyzeScreen }}" disabled="{{ aiBusy }}"><span class="aiana-ic">✦</span> Сделать AI-анализ данных</button></sc-if></div>
-<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}"><div class="homehero"><div class="homeh1">Добро пожаловать в Shtark INK <span class="homeflow">Flow</span></div><div class="homesub">Карта навигации — выберите раздел, чтобы начать работу</div></div><sc-for list="{{ homeGroups }}" as="g" hint-placeholder-count="6"><div class="homegrp"><div class="homegl"><span class="homebar"></span>{{ g.label }}</div><div class="homecards"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="homecard" onClick="{{ t.go }}"><span class="homeic">{{ t.icon }}</span><span class="hometx"><span class="homename">{{ t.label }}</span><span class="homedesc">{{ t.desc }}</span></span></button></sc-for></div></div></sc-for></sc-if>
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}"><div class="homehero"><div class="homeh1">Добро пожаловать в {{ coName }} <span class="homeflow">Flow</span></div><div class="homesub">Карта навигации — выберите раздел, чтобы начать работу</div></div><sc-for list="{{ homeGroups }}" as="g" hint-placeholder-count="6"><div class="homegrp"><div class="homegl"><span class="homebar"></span>{{ g.label }}</div><div class="homecards"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="homecard" onClick="{{ t.go }}"><span class="homeic">{{ t.icon }}</span><span class="hometx"><span class="homename">{{ t.label }}</span><span class="homedesc">{{ t.desc }}</span></span></button></sc-for></div></div></sc-for></sc-if>
 <sc-if value="{{ cloudBarText }}" hint-placeholder-val="x"><div class="{{ cloudBarCls }}"><span class="cbdot"></span><span class="cbtxt">{{ cloudBarText }}</span><sc-if value="{{ cloudHasBtn }}" hint-placeholder-val="{{ true }}"><button class="cbbtn" onClick="{{ onCloudBar }}">{{ cloudBarBtn }}</button></sc-if></div></sc-if>
 <sc-if value="{{ isCloud }}" hint-placeholder-val="x">
 <div class="cloudcard">
@@ -1483,12 +1505,12 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 <div class="docspreview">
 <div class="a4doc">
-<div class="a4head"><div class="a4logo">Shtark INK <span>Flow</span></div><div class="a4req">ООО «Штарк ИНК» · ИНН 7707083893 · КПП 770701001<br>123022, г. Москва, ул. Промышленная, д. 12 · тел. +7 (495) 123-45-67<br>shtarkink.com · info@shtarkink.com</div></div>
+<div class="a4head"><div class="a4logo">{{ coName }} <span>Flow</span></div><div class="a4req">{{ coReqLine }}<br>{{ coReqLine2 }}<br>{{ coReqLine3 }}</div></div>
 <div class="a4rule"></div>
 <div class="a4title">{{ docTitle }} № {{ docNo }}</div>
 <div class="a4city"><span>г. Москва</span><span>{{ docDate }}</span></div>
 <sc-if value="{{ docIsPower }}" hint-placeholder-val="">
-<p class="a4p">ООО «Штарк ИНК» настоящим уполномочивает <b>{{ dEmpName }}</b> ({{ dEmpPost }}), паспорт {{ dEmpPassport }}, получить у поставщика <b>{{ dSupplier }}</b> ({{ dSupplierAddr }}) следующие товарно-материальные ценности:</p>
+<p class="a4p">{{ coLegalFull }} настоящим уполномочивает <b>{{ dEmpName }}</b> ({{ dEmpPost }}), паспорт {{ dEmpPassport }}, получить у поставщика <b>{{ dSupplier }}</b> ({{ dSupplierAddr }}) следующие товарно-материальные ценности:</p>
 <table class="a4tbl"><thead><tr><th>№</th><th>Наименование и количество</th></tr></thead><tbody><sc-for list="{{ dGoods }}" as="g" hint-placeholder-count="3"><tr><td>{{ g.n }}</td><td>{{ g.text }}</td></tr></sc-for></tbody></table>
 <p class="a4p">Доверенность действительна в течение <b>{{ dTerm }}</b> с даты выдачи. Подпись уполномоченного лица удостоверяем.</p>
 </sc-if>
@@ -1498,22 +1520,22 @@ window.dispatchEvent(new Event('fbready'));
 <p class="a4p">Экспедитор несёт ответственность за сохранность груза с момента приёмки до передачи грузополучателю.</p>
 </sc-if>
 <sc-if value="{{ docIsRfp }}" hint-placeholder-val="">
-<p class="a4p">Уважаемые коллеги! ООО «Штарк ИНК» просит вас, <b>{{ dRfpSupplier }}</b>, предоставить коммерческое предложение на поставку следующих позиций:</p>
+<p class="a4p">Уважаемые коллеги! {{ coLegalFull }} просит вас, <b>{{ dRfpSupplier }}</b>, предоставить коммерческое предложение на поставку следующих позиций:</p>
 <table class="a4tbl"><thead><tr><th>№</th><th>Позиция и количество</th></tr></thead><tbody><sc-for list="{{ dRfpItems }}" as="g" hint-placeholder-count="3"><tr><td>{{ g.n }}</td><td>{{ g.text }}</td></tr></sc-for></tbody></table>
 <p class="a4p">Просим указать цену за единицу, условия и сроки поставки, порядок оплаты. Срок ответа — <b>{{ dRfpDeadline }}</b>. Заранее благодарим за сотрудничество.</p>
 </sc-if>
 <sc-if value="{{ docIsInvoice }}" hint-placeholder-val="">
-<table class="a4tbl"><tbody><tr><td>Поставщик</td><td>ООО «Штарк ИНК», ИНН 7707083893, КПП 770701001, 123022, г. Москва, ул. Промышленная, д. 12</td></tr><tr><td>Банк / р/с</td><td>{{ dInvBank }}</td></tr><tr><td>Покупатель</td><td>{{ dInvBuyer }} · {{ dInvBuyerInn }}</td></tr></tbody></table>
+<table class="a4tbl"><tbody><tr><td>Поставщик</td><td>{{ coLegalFull }}, ИНН {{ coInn }}, КПП {{ coKpp }}, {{ coAddr }}</td></tr><tr><td>Банк / р/с</td><td>{{ dInvBank }}</td></tr><tr><td>Покупатель</td><td>{{ dInvBuyer }} · {{ dInvBuyerInn }}</td></tr></tbody></table>
 <table class="a4tbl"><thead><tr><th>№</th><th>Наименование</th><th>Кол-во</th><th>Ед.</th><th>Цена без НДС</th><th>Сумма без НДС</th></tr></thead><tbody><sc-for list="{{ dInvItems }}" as="r" hint-placeholder-count="3"><tr><td>{{ r.n }}</td><td>{{ r.name }}</td><td>{{ r.qty }}</td><td>{{ r.unit }}</td><td>{{ r.price }}</td><td>{{ r.sumNo }}</td></tr></sc-for></tbody></table>
 <div class="a4tot"><div class="a4totr"><span>Итого без НДС:</span><b>{{ dInvTotNo }} ₽</b></div><div class="a4totr"><span>В том числе НДС {{ dInvVatPct }}%:</span><b>{{ dInvVat }} ₽</b></div><div class="a4totr big"><span>Всего к оплате с НДС:</span><b>{{ dInvTotWith }} ₽</b></div></div>
 <p class="a4p">Оплата настоящего счёта означает согласие с условиями поставки. Счёт действителен в течение 5 банковских дней.</p>
 <div class="a4sign2"><div class="a4signrow"><span>Руководитель</span><span class="a4line"></span><span>/ Моисеенко К.И. /</span></div><div class="a4signrow"><span>Главный бухгалтер</span><span class="a4line"></span><span>/ Сергеева Е.А. /</span></div></div>
 </sc-if>
 <sc-if value="{{ docIsSpec }}" hint-placeholder-val="">
-<p class="a4p">Спецификация — неотъемлемая часть договора поставки <b>{{ dSpecContract }}</b>. Поставщик ООО «Штарк ИНК» обязуется поставить, а Покупатель <b>{{ dInvBuyer }}</b> — принять и оплатить продукцию:</p>
+<p class="a4p">Спецификация — неотъемлемая часть договора поставки <b>{{ dSpecContract }}</b>. Поставщик {{ coLegalFull }} обязуется поставить, а Покупатель <b>{{ dInvBuyer }}</b> — принять и оплатить продукцию:</p>
 <table class="a4tbl"><thead><tr><th>№</th><th>Наименование</th><th>Кол-во</th><th>Ед.</th><th>Цена б/НДС</th><th>Сумма б/НДС</th><th>НДС {{ dInvVatPct }}%</th><th>Всего с НДС</th></tr></thead><tbody><sc-for list="{{ dSpecItems }}" as="r" hint-placeholder-count="3"><tr><td>{{ r.n }}</td><td>{{ r.name }}</td><td>{{ r.qty }}</td><td>{{ r.unit }}</td><td>{{ r.price }}</td><td>{{ r.sumNo }}</td><td>{{ r.sumVat }}</td><td>{{ r.sumWith }}</td></tr></sc-for></tbody></table>
 <div class="a4tot"><div class="a4totr"><span>Итого без НДС:</span><b>{{ dInvTotNo }} ₽</b></div><div class="a4totr"><span>В том числе НДС {{ dInvVatPct }}%:</span><b>{{ dInvVat }} ₽</b></div><div class="a4totr big"><span>Всего с НДС:</span><b>{{ dInvTotWith }} ₽</b></div></div>
-<div class="a4sign2"><div class="a4signrow"><span>Поставщик / ООО «Штарк ИНК»</span><span class="a4line"></span><span>/ Моисеенко К.И. /</span></div><div class="a4signrow"><span>Покупатель / {{ dInvBuyer }}</span><span class="a4line"></span><span>/ ____________ /</span></div></div>
+<div class="a4sign2"><div class="a4signrow"><span>Поставщик / {{ coLegalFull }}</span><span class="a4line"></span><span>/ Моисеенко К.И. /</span></div><div class="a4signrow"><span>Покупатель / {{ dInvBuyer }}</span><span class="a4line"></span><span>/ ____________ /</span></div></div>
 </sc-if>
 <div class="a4sign"><div class="a4signrow"><span>Генеральный директор</span><span class="a4line"></span><span>/ Моисеенко К.И. /</span></div><div class="a4stamp">М.П.</div></div>
 </div>
@@ -1671,6 +1693,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="fg"><label>Пароль</label><div class="upassrow"><input class="inp" value="{{ udPass }}" onInput="{{ onUdPass }}" placeholder="пароль"><button class="btn ugen" onClick="{{ genPass }}">↻ Сгенерировать</button></div></div>
 <div class="fg"><label>Роль</label><select class="sel" value="{{ udRole }}" onChange="{{ onUdRole }}"><option value="user">Закупщик</option><option value="rukovoditel">Руководитель</option><option value="tehnolog">Технолог</option><option value="ved">Менеджер ВЭД</option><option value="logist">Логист</option><option value="admin">Администратор</option></select></div>
 </div>
+<div class="permhead"><span class="sec2">Доступ к компаниям группы</span></div><div class="permchips"><sc-for list="{{ companyToggles }}" as="c" hint-placeholder-count="2"><button class="{{ c.cls }}" onClick="{{ c.toggle }}"><span class="pcbox"></span>{{ c.label }}</button></sc-for></div>
 <sc-if value="{{ udIsAdmin }}" hint-placeholder-val=""><div class="permnote">Администратор видит все разделы и управляет пользователями.</div></sc-if>
 <sc-if value="{{ udIsUser }}" hint-placeholder-val="{{ true }}"><div class="permhead"><span class="sec2">Доступ к разделам</span><span class="permbtns"><button class="ulink" onClick="{{ permAll }}">Выбрать всё</button><button class="ulink" onClick="{{ permNone }}">Снять всё</button></span></div><div class="permgrid"><sc-for list="{{ permGroups }}" as="g" hint-placeholder-count="6"><div class="permgrp"><div class="permgl">{{ g.label }}</div><div class="permchips"><sc-for list="{{ g.tabs }}" as="t" hint-placeholder-count="3"><button class="{{ t.on }}" onClick="{{ t.toggle }}"><span class="pcbox"></span>{{ t.label }}</button></sc-for></div></div></sc-for></div></sc-if>
 <sc-if value="{{ userErr }}" hint-placeholder-val="x"><div class="banner err">{{ userErr }}</div></sc-if>
@@ -1682,7 +1705,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="fg"><label>Service ID</label><input class="inp" value="{{ emServiceId }}" onInput="{{ onEmService }}" placeholder="service_xxxxxxx"></div>
 <div class="fg"><label>Template ID</label><input class="inp" value="{{ emTemplateId }}" onInput="{{ onEmTemplate }}" placeholder="template_xxxxxxx"></div>
 <div class="fg"><label>Public Key</label><input class="inp" value="{{ emPublicKey }}" onInput="{{ onEmPublic }}" placeholder="xxxxxxxxxxxxxx"></div>
-<div class="fg"><label>Имя отправителя</label><input class="inp" value="{{ emFromName }}" onInput="{{ onEmFrom }}" placeholder="Shtark INK Flow"></div>
+<div class="fg"><label>Имя отправителя</label><input class="inp" value="{{ emFromName }}" onInput="{{ onEmFrom }}" placeholder="Shtark Chemicals Flow"></div>
 </div>
 <div class="genrow"><button class="btn dark" onClick="{{ saveEmailCfg }}">Сохранить настройки почты</button><sc-if value="{{ emailConfigured }}" hint-placeholder-val=""><span class="estat ok">● Отправка настроена</span></sc-if><sc-if value="{{ emailNotConfigured }}" hint-placeholder-val="{{ true }}"><span class="estat off">● Не настроено</span></sc-if></div>
 <sc-if value="{{ emailHasStatus }}" hint-placeholder-val=""><div class="hint">{{ emailStatus }}</div></sc-if>
@@ -1811,7 +1834,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="printbg" onClick="{{ printCard.close }}"><div class="printwrap" onClick="{{ stopProp }}">
 <div class="prtools"><button class="btn" onClick="{{ printCard.close }}">Закрыть</button><button class="btn dark" onClick="{{ printCard.doPrint }}">Печать / PDF</button></div>
 <div class="prdoc">
-<div class="prhd"><div class="prco">ООО «ШТАРК ИНК»</div><div class="prsub">Производство адгезивов, ПУ-систем и связующих · Starkbond</div></div>
+<div class="prhd"><div class="prco">{{ coLegalUpper }}</div><div class="prsub">{{ coSubtitle }}</div></div>
 <div class="prtitle">ЗАЯВКА НА ЗАКУПКУ СЫРЬЯ № {{ printCard.no }}</div>
 <table class="prtab"><tbody>
 <tr><td class="prk">Дата заявки</td><td class="prv">{{ printCard.reqDate }}</td></tr>
@@ -1844,8 +1867,8 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 </div></div>
 </sc-if>
-<sc-if value="{{ showWelcome }}" hint-placeholder-val=""><div class="weloverlay"><div class="welcard"><label class="welphoto" title="Нажмите, чтобы поменять фото">{{ welPhotoImg }}<input type="file" accept="image/*" class="welfile" onChange="{{ onWelPhoto }}"></label><div class="welai">{{ welGreeting }}</div><div class="welthanks">Спасибо, что пользуетесь <b>Shtark INK Flow</b>.</div><button class="welbtn" onClick="{{ startWork }}">Начать работу <span class="p2arr">→</span></button></div></div></sc-if>
-<sc-if value="{{ showFarewell }}" hint-placeholder-val=""><div class="weloverlay"><div class="welcard"><label class="welphoto">{{ welPhotoImg }}</label><div class="welai">{{ farewellText }}</div><div class="welthanks">До скорой встречи в <b>Shtark INK Flow</b>!</div><div class="welrow"><button class="welstay" onClick="{{ cancelFarewell }}">Остаться</button><button class="welbtn" onClick="{{ doLogout }}">Выйти <span class="p2arr">→</span></button></div></div></div></sc-if>
+<sc-if value="{{ showWelcome }}" hint-placeholder-val=""><div class="weloverlay"><div class="welcard"><label class="welphoto" title="Нажмите, чтобы поменять фото">{{ welPhotoImg }}<input type="file" accept="image/*" class="welfile" onChange="{{ onWelPhoto }}"></label><div class="welai">{{ welGreeting }}</div><div class="welthanks">Спасибо, что пользуетесь <b>Shtark Chemicals Flow</b>.</div><button class="welbtn" onClick="{{ startWork }}">Начать работу <span class="p2arr">→</span></button></div></div></sc-if>
+<sc-if value="{{ showFarewell }}" hint-placeholder-val=""><div class="weloverlay"><div class="welcard"><label class="welphoto">{{ welPhotoImg }}</label><div class="welai">{{ farewellText }}</div><div class="welthanks">До скорой встречи в <b>Shtark Chemicals Flow</b>!</div><div class="welrow"><button class="welstay" onClick="{{ cancelFarewell }}">Остаться</button><button class="welbtn" onClick="{{ doLogout }}">Выйти <span class="p2arr">→</span></button></div></div></div></sc-if>
 <sc-if value="{{ tgHasLink }}" hint-placeholder-val=""><a class="tgfab" href="{{ tgLink }}" target="_blank" rel="noopener" title="Telegram-чат компании"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M9.8 15.6 9.6 19c.4 0 .6-.2.8-.4l1.9-1.8 3.9 2.9c.7.4 1.2.2 1.4-.7l2.6-12.2c.2-1-.4-1.4-1.1-1.2L2.4 9.7c-1 .4-1 .9-.2 1.2l4.3 1.3 9.9-6.2c.5-.3.9-.1.5.2z"/></svg></a></sc-if>
 <div class="chatfab" onClick="{{ chatToggle }}" title="Общий чат команды"><span class="chatfabic">💬</span><span class="chatfabtx">Чат команды</span></div>
 <sc-if value="{{ chatOpen }}" hint-placeholder-val="">
@@ -1942,6 +1965,7 @@ class Component extends DCLogic {
   state = {
     ready: false, tab: 'home', loading: true, loaderHide: false, loaderPhase: 'p1', sloganTick: 0, showWelcome: false, welcomePhoto: '', welGreeting: '', welGreetBusy: false, showFarewell: false, farewellText: '',
     users: [], currentUser: null, loginInput: '', passInput: '', loginErr: '', userDraft: null, userErr: '',
+    activeCo: (function () { try { return localStorage.getItem('inkflow_active_co') || 'ink'; } catch (e) { return 'ink'; } })(), coMenuOpen: false,
     resetOpen: false, resetInput: '', resetErr: '', resetOk: '', resetBusy: false, emailCfg: {}, emailEdit: { serviceId: '', templateId: '', publicKey: '', fromName: '' }, emailStatus: '',
     product: 'Black (PBl 7) / RASTR', rate: 83.6892, loss: 0, mode: 'stored',
     orders: [{ id: 'o1', no: '1', status: 'Принята', date: '', client: '', manager: '', items: [{ product: 'Black (PBl 7) / RASTR', kg: 1000 }] }],
@@ -1968,40 +1992,41 @@ class Component extends DCLogic {
   };
 
   componentDidMount() {
-    try { document.title = 'Shtark INK Flow — корпоративный портал'; } catch (e) {}
+    this._activeCo = this.state.activeCo || 'ink';
+    try { document.title = this.co().name + ' Flow — корпоративный портал'; } catch (e) {}
     try { if (typeof puter !== 'undefined') puter.quiet = true; } catch (e) {}
     this._mq = () => this.setState({ isMobile: window.innerWidth <= 900 });
     this._mq();
     window.addEventListener('resize', this._mq);
     this.initSharedUsers();
-    try { const ac = JSON.parse(localStorage.getItem('inkflow_aicfg') || '{}') || {}; this.setState({ aiKey: ac.key || '', aiBase: ac.base || '', aiModelName: ac.model || '', aiKeyEdit: ac.key || '', aiBaseEdit: ac.base || '', aiModelEdit: ac.model || '' }); } catch (e) {}
+    try { const ac = JSON.parse(this.lsGet('aicfg') || '{}') || {}; this.setState({ aiKey: ac.key || '', aiBase: ac.base || '', aiModelName: ac.model || '', aiKeyEdit: ac.key || '', aiBaseEdit: ac.base || '', aiModelEdit: ac.model || '' }); } catch (e) {}
     // Пользователи и сессия
     const users = this.loadUsers();
     let currentUser = null;
-    try { const s = JSON.parse(localStorage.getItem('inkflow_session_v1') || 'null'); if (s && s.id) { const fresh = !s.ts || (Date.now() - s.ts) < Component.IDLE_MS; const u = users.find(x => x.id === s.id); if (u && u.active && fresh) currentUser = u; else if (s.ts && !fresh) { try { localStorage.removeItem('inkflow_session_v1'); } catch (e2) {} } } } catch (e) {}
+    try { const s = JSON.parse(this.lsGet('session_v1') || 'null'); if (s && s.id) { const fresh = !s.ts || (Date.now() - s.ts) < Component.IDLE_MS; const u = users.find(x => x.id === s.id); if (u && u.active && fresh) currentUser = u; else if (s.ts && !fresh) { try { this.lsDel('session_v1'); } catch (e2) {} } } } catch (e) {}
     let welcomePhoto = '';
-    try { welcomePhoto = localStorage.getItem('inkflow_welcome_photo') || ''; } catch (e) {}
+    try { welcomePhoto = this.lsGet('welcome_photo') || ''; } catch (e) {}
     let chat = [], tgLink = '';
-    try { chat = JSON.parse(localStorage.getItem('inkflow_chat') || '[]'); if (!Array.isArray(chat)) chat = []; } catch (e) {}
+    try { chat = JSON.parse(this.lsGet('chat') || '[]'); if (!Array.isArray(chat)) chat = []; } catch (e) {}
     let tasks = [];
-    try { tasks = JSON.parse(localStorage.getItem('inkflow_tasks') || '[]'); if (!Array.isArray(tasks)) tasks = []; } catch (e) {}
+    try { tasks = JSON.parse(this.lsGet('tasks') || '[]'); if (!Array.isArray(tasks)) tasks = []; } catch (e) {}
     let cparties = [];
-    try { cparties = JSON.parse(localStorage.getItem('inkflow_cparties') || '[]'); if (!Array.isArray(cparties)) cparties = []; } catch (e) {}
+    try { cparties = JSON.parse(this.lsGet('cparties') || '[]'); if (!Array.isArray(cparties)) cparties = []; } catch (e) {}
     let receipts = [];
-    try { receipts = JSON.parse(localStorage.getItem('inkflow_receipts') || '[]'); if (!Array.isArray(receipts)) receipts = []; } catch (e) {}
+    try { receipts = JSON.parse(this.lsGet('receipts') || '[]'); if (!Array.isArray(receipts)) receipts = []; } catch (e) {}
     let sales = [];
-    try { sales = JSON.parse(localStorage.getItem('inkflow_sales') || '[]'); if (!Array.isArray(sales)) sales = []; } catch (e) {}
+    try { sales = JSON.parse(this.lsGet('sales') || '[]'); if (!Array.isArray(sales)) sales = []; } catch (e) {}
     let logistics = [];
-    try { logistics = JSON.parse(localStorage.getItem('inkflow_logistics') || '[]'); if (!Array.isArray(logistics)) logistics = []; } catch (e) {}
+    try { logistics = JSON.parse(this.lsGet('logistics') || '[]'); if (!Array.isArray(logistics)) logistics = []; } catch (e) {}
     let payreqs = [];
-    try { payreqs = JSON.parse(localStorage.getItem('inkflow_payreqs') || '[]'); if (!Array.isArray(payreqs)) payreqs = []; } catch (e) {}
+    try { payreqs = JSON.parse(this.lsGet('payreqs') || '[]'); if (!Array.isArray(payreqs)) payreqs = []; } catch (e) {}
     let emailCfg = {};
-    try { emailCfg = JSON.parse(localStorage.getItem('inkflow_emailcfg') || '{}') || {}; } catch (e) {}
+    try { emailCfg = JSON.parse(this.lsGet('emailcfg') || '{}') || {}; } catch (e) {}
     let tasksSeenAt = 0;
-    try { tasksSeenAt = Number(localStorage.getItem('inkflow_tasks_seen')) || 0; } catch (e) {}
-    try { tgLink = localStorage.getItem('inkflow_tg') || ''; } catch (e) {}
+    try { tasksSeenAt = Number(this.lsGet('tasks_seen')) || 0; } catch (e) {}
+    try { tgLink = this.lsGet('tg') || ''; } catch (e) {}
     let tgBot = {};
-    try { tgBot = JSON.parse(localStorage.getItem('inkflow_tgbot') || '{}') || {}; } catch (e) {}
+    try { tgBot = JSON.parse(this.lsGet('tgbot') || '{}') || {}; } catch (e) {}
     this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, tasksSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
     // Двухфазный экран входа: фаза 1 (загрузка) → фаза 2 (логотип слева + кнопка «Войти»)
     this._loaderT1 = setTimeout(() => this.setState({ loaderPhase: 'p2' }), 3400);
@@ -2011,7 +2036,7 @@ class Component extends DCLogic {
     this.cloudRestore();
     // Авто-выход по неактивности (35 минут): любое действие продлевает сессию
     this._lastAct = Date.now();
-    this._markAct = () => { this._lastAct = Date.now(); const sc = this.state.chScene; if (sc === 'bored' || sc === 'leave' || sc === 'gone') this.setState({ chScene: '' }); if (this.state.currentUser) { try { const s = JSON.parse(localStorage.getItem('inkflow_session_v1') || 'null'); if (s && s.id && (!s.ts || Date.now() - s.ts > 60000)) localStorage.setItem('inkflow_session_v1', JSON.stringify({ id: s.id, ts: Date.now() })); } catch (e) {} } };
+    this._markAct = () => { this._lastAct = Date.now(); const sc = this.state.chScene; if (sc === 'bored' || sc === 'leave' || sc === 'gone') this.setState({ chScene: '' }); if (this.state.currentUser) { try { const s = JSON.parse(this.lsGet('session_v1') || 'null'); if (s && s.id && (!s.ts || Date.now() - s.ts > 60000)) this.lsSet('session_v1', JSON.stringify({ id: s.id, ts: Date.now() })); } catch (e) {} } };
     ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.addEventListener(ev, this._markAct, { passive: true }));
     // Персонажи Ая и Макс: сценарий «Спасение от скуки» (30 c → Скука, +15 c → Макс уводит)
     this._chInt = setInterval(() => {
@@ -2031,10 +2056,10 @@ class Component extends DCLogic {
     // Авто-подключение общего облака данных (встроенный конфиг) — вводить ничего не нужно
     this._autoCloud = () => { try { if (!this.state.cloudConnected) this.setState({ cloudCfgText: JSON.stringify(Component.FBCFG), cloudWsId: (this.state.cloudWsId || 'workspace') }, () => this.cloudConnect()); } catch (e) {} };
     if (window.__FB) this._autoCloud(); else window.addEventListener('fbready', this._autoCloud, { once: true });
-    fetch('nev_data.json').then(r => r.json()).then(d => {
-      this.data = d; this.buildIndex(); this._landMap = null; this.setState({ ready: true }); this.loadOneCToken(); this.oneCMaybeAuto();
-    });
-    fetch('catalog.json').then(r => r.json()).then(d => { this.catalog = d; this.setState({ catReady: true }); }).catch(() => {});
+    let _co = this._activeCo || 'ink';
+    if (currentUser) { const cos = this.userCompanies(currentUser); if (cos.indexOf(_co) < 0) _co = cos[0]; }
+    if (_co !== (this._activeCo || 'ink')) { this.applyCompany(_co); }
+    else { this._activeCo = _co; this.loadCompanyData(_co); }
     this.loadRates();
   }
 
@@ -2070,9 +2095,103 @@ class Component extends DCLogic {
   static get FBCFG() { return { apiKey: 'AIzaSyCOoE74NqK4xkpmzUvzoPmanz8Ej_IW5q8', authDomain: 'shtark-flow.firebaseapp.com', projectId: 'shtark-flow', storageBucket: 'shtark-flow.firebasestorage.app', messagingSenderId: '969786336713', appId: '1:969786336713:web:39bd23af4ca2e281d07418' }; }
   static get PERSIST() { return ['stock', 'extra', 'orders', 'purchases', 'prices', 'pct', 'added', 'rate', 'loss', 'planFrom', 'planTo', 'recipeOwner', 'whFilled', 'stockUpdatedAt', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth', 'prodPlan', 'planHorizon', 'planStart', 'planExpand', 'planCur', 'ppScale', 'ppFrom', 'ppTo', 'ppNetStock', 'ppNetTransit', 'ppBy', 'ppCur', 'ppGroup', 'oneCUrl', 'oneCMatch', 'oneCAuto', 'oneCLastAt', 'oneCLog']; }
 
+  // ===== Мультикомпанийность: реестр компаний группы =====
+  coCfg() {
+    return {
+      ink: { id: 'ink', name: 'Shtark INK', wm1: 'Shtark', wm2: 'I N K', wm2ls: '.44em', accent: '#FFD200',
+        site: 'https://shtarkink.com/', host: 'shtarkink.com', logo: 'loader-logo-ink.png',
+        caption: 'Производство спиртовых красок для печати на гибкой упаковке',
+        slogan: 'ENGINEERED FOR EXCELLENCE. PRINTED FOR IMPACT.',
+        legalFull: 'ООО «Штарк ИНК»', legalUpper: 'ООО «ШТАРК ИНК»',
+        inn: '7707083893', kpp: '770701001', addr: '123022, г. Москва, ул. Промышленная, д. 12',
+        tel: '+7 (495) 123-45-67', email: 'info@shtarkink.com',
+        subtitle: 'Производство спиртовых красок для печати на гибкой упаковке',
+        catalog: 'catalog.json', data: 'nev_data.json' },
+      chem: { id: 'chem', name: 'Shtark Chemicals', wm1: 'Shtark', wm2: 'Chemicals', wm2ls: '.26em', accent: '#2A6FDB',
+        site: 'https://shtarkchemicals.com/', host: 'shtarkchemicals.com', logo: 'loader-logo-chem.png',
+        caption: 'Производство клеёв для ламинации и полиуретановых систем',
+        slogan: 'ENGINEERED FOR EXCELLENCE. BONDED FOR STRENGTH.',
+        legalFull: 'ООО «Штарк Кемикалс»', legalUpper: 'ООО «ШТАРК КЕМИКАЛС»',
+        inn: '—', kpp: '—', addr: 'г. Москва (укажите реквизиты)',
+        tel: '+7 (495) 000-00-00', email: 'info@shtarkchemicals.com',
+        subtitle: 'Производство адгезивов, ПУ-систем и связующих',
+        catalog: 'catalog-chem.json', data: 'nev-chem.json' }
+    };
+  }
+  coOrder() { return ['ink', 'chem']; }
+  _co() { return this._activeCo || (this.state && this.state.activeCo) || 'ink'; }
+  co() { return this.coCfg()[this._co()] || this.coCfg().ink; }
+  userCompanies(u) { const a = (u && Array.isArray(u.companies)) ? u.companies.filter(c => this.coCfg()[c]) : []; return a.length ? a : ['ink', 'chem']; }
+
+  // localStorage с разделением по компаниям (INK = legacy-ключи, остальные — со своим префиксом)
+  lsGlobal() { return { users_v1: 1, session_v1: 1, welcome_photo: 1, emailcfg: 1, aicfg: 1, cloud_v1: 1, daily_motiv: 1, active_co: 1 }; }
+  lsKey(name) { return (this.lsGlobal()[name] ? 'inkflow_' : (this._co() === 'ink' ? 'inkflow_' : this._co() + '_')) + name; }
+  lsGet(name) { try { return localStorage.getItem(this.lsKey(name)); } catch (e) { return null; } }
+  lsSet(name, val) { try { localStorage.setItem(this.lsKey(name), val); } catch (e) {} }
+  lsDel(name) { try { localStorage.removeItem(this.lsKey(name)); } catch (e) {} }
+
+  companyBlank() {
+    return { stock: {}, extra: [], orders: [], purchases: [], prices: {}, pct: {}, added: {}, rate: (Number(this.state.rate) || 83.6892), loss: 0, planFrom: '', planTo: '', recipeOwner: '', whFilled: false, stockUpdatedAt: 0, rrHorizon: 3, rrSafetyMonths: 1, rrLeadDefault: 1, rrRun: {}, rrLead: {}, rrSafety: {}, turnoverDays: 90, stressGrowth: 30, prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planCur: 'RUB', ppScale: 'month', ppFrom: '', ppTo: '', ppNetStock: true, ppNetTransit: true, ppBy: 'raw', ppCur: 'RUB', ppGroup: 'none', oneCUrl: '', oneCMatch: 'article', oneCAuto: false, oneCLastAt: 0, oneCLog: [] };
+  }
+  // Применить компанию: переключить namespace, перечитать срезы и состояние, подгрузить каталог/данные
+  applyCompany(co) {
+    if (!this.coCfg()[co]) co = 'ink';
+    this._activeCo = co;
+    this.lsSet('active_co', co);
+    const J = (n, d) => { try { const v = this.lsGet(n); const p = v ? JSON.parse(v) : d; return (p == null) ? d : p; } catch (e) { return d; } };
+    const slices = { chat: J('chat', []), tasks: J('tasks', []), cparties: J('cparties', []), receipts: J('receipts', []), sales: J('sales', []), logistics: J('logistics', []), payreqs: J('payreqs', []), tasksSeenAt: (Number(this.lsGet('tasks_seen')) || 0), tgLink: (this.lsGet('tg') || '') };
+    let st = this.companyBlank();
+    try { const r = this.lsGet('state_v1'); if (r) { const saved = JSON.parse(r); for (const k of Component.PERSIST) if (saved[k] !== undefined) st[k] = saved[k]; } } catch (e) {}
+    if (Array.isArray(st.orders)) st.orders = st.orders.map(o => ({ status: 'Принята', ...o }));
+    this._lastSnap = JSON.stringify(this.pickState(st));
+    this.setState({ activeCo: co, coMenuOpen: false, ...slices, ...st });
+    this.loadCompanyData(co);
+  }
+  loadCompanyData(co) {
+    const cfg = this.coCfg()[co] || this.coCfg().ink;
+    this.setState({ ready: false, catReady: false });
+    fetch(cfg.data).then(r => r.json()).then(d => {
+      this.data = d; this.buildIndex(); this._landMap = null;
+      const prods = (d.products || []).map(p => p.name);
+      const owners = [...prods, ...((d.semi_products || []).map(s => s.name))];
+      const patch = { ready: true };
+      if (!this.state.product || prods.indexOf(this.state.product) < 0) patch.product = prods[0] || '';
+      if (!this.state.recipeOwner || owners.indexOf(this.state.recipeOwner) < 0) patch.recipeOwner = prods[0] || '';
+      this.setState(patch);
+      try { document.title = this.co().name + ' Flow — корпоративный портал'; } catch (e) {}
+      this.loadOneCToken(); this.oneCMaybeAuto();
+    }).catch(() => this.setState({ ready: true }));
+    fetch(cfg.catalog).then(r => r.json()).then(d => { this.catalog = d; this.setState({ catReady: true }); }).catch(() => this.setState({ catReady: true }));
+  }
+  switchCompany(id) {
+    if (!this.coCfg()[id]) return;
+    if (id === this._co()) { this.setState({ coMenuOpen: false }); return; }
+    const u = this.state.currentUser;
+    if (u && this.userCompanies(u).indexOf(id) < 0) { this.setState({ coMenuOpen: false }); return; }
+    this.setState({ coMenuOpen: false, loading: true, loaderHide: false, loaderPhase: 'p1', tab: 'home', navOpen: false });
+    setTimeout(() => { this.applyCompany(id); setTimeout(() => { try { this.enterApp(); } catch (e) { this.setState({ loading: false, loaderHide: true }); } }, 900); }, 30);
+  }
+  toggleCoMenu() { this.setState(s => ({ coMenuOpen: !s.coMenuOpen })); }
+  coVals() {
+    const c = this.co(); const u = this.state.currentUser; const order = this.coOrder();
+    const allowed = u ? this.userCompanies(u) : order;
+    const list = order.filter(id => allowed.indexOf(id) >= 0).map(id => { const cc = this.coCfg()[id]; return { id, coItemName: cc.name, coItemSub: cc.subtitle, chipStyle: { background: cc.accent }, cls: (id === this._co()) ? 'comenu-it on' : 'comenu-it', go: () => this.switchCompany(id) }; });
+    return {
+      coName: c.name, coLogo: c.logo, coCaption: c.caption, coSite: c.site, coHost: c.host,
+      coWm1: c.wm1, coWm2: c.wm2, coWmStyle: { letterSpacing: c.wm2ls }, coChipStyle: { background: c.accent },
+      coLegalFull: c.legalFull, coLegalUpper: c.legalUpper, coSubtitle: c.subtitle,
+      coReqLine: c.legalFull + ' · ИНН ' + c.inn + ' · КПП ' + c.kpp,
+      coReqLine2: c.addr + ' · тел. ' + c.tel, coReqLine3: c.host + ' · ' + c.email,
+      coInn: c.inn, coKpp: c.kpp, coAddr: c.addr, coTel: c.tel, coEmail: c.email,
+      coSiteLabel: 'Перейти на ' + c.host + ' →', coSiteTitle: 'Перейти на ' + c.host,
+      canSwitch: list.length > 1, coMenuOpen: !!this.state.coMenuOpen, coList: list,
+      toggleCoMenu: () => this.toggleCoMenu(), closeCoMenu: () => this.setState({ coMenuOpen: false })
+    };
+  }
+
   restore() {
     try {
-      const raw = localStorage.getItem(Component.STORE_KEY);
+      const raw = this.lsGet('state_v1');
       if (!raw) return;
       const saved = JSON.parse(raw);
       const patch = {};
@@ -2087,7 +2206,7 @@ class Component extends DCLogic {
     try {
       const o = {};
       for (const k of Component.PERSIST) o[k] = this.state[k];
-      localStorage.setItem(Component.STORE_KEY, JSON.stringify(o));
+      this.lsSet('state_v1', JSON.stringify(o));
     } catch (e) { /* квота/приватный режим — молча пропускаем */ }
   }
 
@@ -2104,18 +2223,19 @@ class Component extends DCLogic {
   componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); clearInterval(this._peekInt); clearTimeout(this._peekToastT); clearTimeout(this._purgeT); clearInterval(this._purgeInt); clearInterval(this._chInt); clearTimeout(this._chLeaveT); clearTimeout(this._coffeeT); clearInterval(this._clockInt); clearInterval(this._badgeInt); if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
 
   loaderVals() {
-    const T = 'ENGINEERED FOR EXCELLENCE. PRINTED FOR IMPACT.';
-    if (!this._tagLetters) {
+    const T = 'ENGINEERED FOR EXCELLENCE.';
+    if (!this._tagLetters || this._tagCo !== this._co()) {
+      this._tagCo = this._co();
       this._tagLetters = T.split('').map((ch, i) => React.createElement('span', { key: i, className: 'sil', style: { animationDelay: (i * 40) + 'ms' } }, ch));
     }
     const tick = this.state.sloganTick || 0;
-    if (!this._sloganCache || this._sloganCache.tick !== tick) {
-      this._sloganCache = { tick, letters: T.split('').map((ch, i) => React.createElement('span', { key: tick + '-' + i, className: 'sil2', style: { animationDelay: (i * 35) + 'ms' } }, ch)) };
+    if (!this._sloganCache || this._sloganCache.tick !== tick || this._sloganCache.co !== this._co()) {
+      this._sloganCache = { tick, co: this._co(), letters: T.split('').map((ch, i) => React.createElement('span', { key: this._co() + tick + '-' + i, className: 'sil2', style: { animationDelay: (i * 35) + 'ms' } }, ch)) };
     }
     const p2 = this.state.loaderPhase === 'p2';
     const cls = this.state.loaderHide ? 'si-loader is-done' : 'si-loader';
     const cu = this.state.currentUser;
-    return { loading: this.state.loading, loaderCls: cls, p1cls: p2 ? 'fade' : '', p2cls: p2 ? 'show' : '', enterApp: () => this.enterApp(), tagLetters: this._tagLetters, sloganLetters: this._sloganCache.letters,
+    return { ...this.coVals(), loading: this.state.loading, loaderCls: cls, p1cls: p2 ? 'fade' : '', p2cls: p2 ? 'show' : '', enterApp: () => this.enterApp(), tagLetters: this._tagLetters, sloganLetters: this._sloganCache.letters,
       needLogin: !cu, hasSession: !!cu, sessionName: cu ? cu.name : '',
       loginInput: this.state.loginInput || '', passInput: this.state.passInput || '', loginErr: this.state.loginErr || '',
       onLoginInput: (e) => this.setState({ loginInput: e.target.value, loginErr: '' }),
@@ -2132,7 +2252,7 @@ class Component extends DCLogic {
       welGreeting: this.state.welGreeting || '', welGreetBusy: !!this.state.welGreetBusy,
       welPhoto: this.state.welAvatar || this.userAvatar(cu && cu.name) || this.state.welcomePhoto || 'welcome-photo.png', welHasPhoto: true, welNoPhoto: false,
       welPhotoImg: React.createElement('img', { key: this.state.welAvatar || 'w', className: 'welimg', src: this.state.welAvatar || this.userAvatar(cu && cu.name) || this.state.welcomePhoto || 'welcome-photo.png', alt: 'Фото' }),
-      onWelPhoto: (e) => { const f = e.target.files && e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { try { localStorage.setItem('inkflow_welcome_photo', r.result); } catch (_) {} this.setState({ welcomePhoto: r.result }); }; r.readAsDataURL(f); },
+      onWelPhoto: (e) => { const f = e.target.files && e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { try { this.lsSet('welcome_photo', r.result); } catch (_) {} this.setState({ welcomePhoto: r.result }); }; r.readAsDataURL(f); },
       enterWelcome: () => this.beginWelcome(), startWork: () => { this.setState({ showWelcome: false }); } };
   }
 
@@ -2264,9 +2384,9 @@ class Component extends DCLogic {
   }
   loadUsers() {
     let a = null;
-    try { const r = localStorage.getItem('inkflow_users_v1'); if (r) { const p = JSON.parse(r); if (Array.isArray(p)) a = p; } } catch (e) {}
+    try { const r = this.lsGet('users_v1'); if (r) { const p = JSON.parse(r); if (Array.isArray(p)) a = p; } } catch (e) {}
     const list = this.ensureAdmin(a || []);
-    try { localStorage.setItem('inkflow_users_v1', JSON.stringify(list)); } catch (e) {}
+    try { this.lsSet('users_v1', JSON.stringify(list)); } catch (e) {}
     return list;
   }
   initSharedUsers() {
@@ -2279,7 +2399,7 @@ class Component extends DCLogic {
         fb.onSnapshot(this._usersRef, s => {
           const d = s.exists() ? (s.data() || {}) : {};
           const cloud = Array.isArray(d.list) ? d.list : [];
-          let local = []; try { local = JSON.parse(localStorage.getItem('inkflow_users_v1') || '[]'); } catch (e) {}
+          let local = []; try { local = JSON.parse(this.lsGet('users_v1') || '[]'); } catch (e) {}
           if (!Array.isArray(local)) local = [];
           // Объединяем локальных и облачных по id (облако приоритетнее для существующих) — чтобы ничьи учётки не пропали
           const byId = {};
@@ -2289,7 +2409,7 @@ class Component extends DCLogic {
           const patch = { users: merged };
           if (this.state.currentUser) { const me = merged.find(u => u.id === this.state.currentUser.id); if (me) patch.currentUser = me; }
           this.setState(patch);
-          try { localStorage.setItem('inkflow_users_v1', JSON.stringify(merged)); } catch (e) {}
+          try { this.lsSet('users_v1', JSON.stringify(merged)); } catch (e) {}
           if (merged.length !== cloud.length) this.pushUsers(merged);
         }, () => {});
       } catch (e) {}
@@ -2297,7 +2417,7 @@ class Component extends DCLogic {
     if (window.__FB) start(); else window.addEventListener('fbready', start, { once: true });
   }
   pushUsers(list) { if (this._usersRef && this._usersFb) { try { this._usersFb.setDoc(this._usersRef, { list }, { merge: true }).catch(() => {}); } catch (e) {} } }
-  saveUsers(users) { this.setState({ users }); try { localStorage.setItem('inkflow_users_v1', JSON.stringify(users)); } catch (e) {} this.pushUsers(users); }
+  saveUsers(users) { this.setState({ users }); try { this.lsSet('users_v1', JSON.stringify(users)); } catch (e) {} this.pushUsers(users); }
   // Чтение фото пользователя из файла → квадрат 256px, JPEG (компактно для облака)
   readAvatarFile(file, cb) {
     if (!file) { cb(''); return; }
@@ -2360,7 +2480,9 @@ class Component extends DCLogic {
     const u = (this.state.users || []).find(x => x.login.toLowerCase() === login && x.password === pass);
     if (!u) { this.setState({ loginErr: 'Неверный логин или пароль.' }); return; }
     if (!u.active) { this.setState({ loginErr: 'Учётная запись отключена. Обратитесь к администратору.' }); return; }
-    try { localStorage.setItem('inkflow_session_v1', JSON.stringify({ id: u.id, ts: Date.now() })); } catch (e) {}
+    try { this.lsSet('session_v1', JSON.stringify({ id: u.id, ts: Date.now() })); } catch (e) {}
+    const cos = this.userCompanies(u); let co = this._co(); if (cos.indexOf(co) < 0) co = cos[0];
+    if (co !== this._co()) this.applyCompany(co);
     const allowed = this.allowedTabs(u);
     this.setState({ currentUser: u, loginErr: '', passInput: '', tab: 'home', cloudName: u.name || this.state.cloudName }, () => this.beginWelcome());
   }
@@ -2368,12 +2490,12 @@ class Component extends DCLogic {
   expireSession() {
     if (!this.state.currentUser) return;
     this.stopPresence();
-    try { localStorage.removeItem('inkflow_session_v1'); } catch (e) {}
+    try { this.lsDel('session_v1'); } catch (e) {}
     this.setState({ currentUser: null, loading: true, loaderHide: false, loaderPhase: 'p2', showWelcome: false, showFarewell: false, loginInput: '', passInput: '', tab: 'home', userDraft: null, navOpen: false, loginErr: 'Сессия завершена из-за неактивности (более 35 минут). Войдите снова.' });
   }
   doLogout() {
     this.stopPresence();
-    try { localStorage.removeItem('inkflow_session_v1'); } catch (e) {}
+    try { this.lsDel('session_v1'); } catch (e) {}
     this.setState({ currentUser: null, loading: true, loaderHide: false, loaderPhase: 'p2', showWelcome: false, showFarewell: false, loginInput: '', passInput: '', loginErr: '', tab: 'home', userDraft: null, userErr: '' });
   }
   askFarewell() { const p = this.pickScenePhrase('bye'); this.setState({ showFarewell: true, chScene: 'bye', chPhrase: p.text, chEmp: null, welAvatar: this.pickWelcomeAvatar() }, () => { this.showFarewellPhrase(); }); }
@@ -2434,14 +2556,14 @@ class Component extends DCLogic {
   switchUser() { this.setState({ currentUser: null, loginInput: '', passInput: '', loginErr: '' }); }
 
   // ===== Восстановление пароля по e-mail (EmailJS) =====
-  emailCfgVal() { const c = this.state.emailCfg || {}; return { serviceId: c.serviceId || '', templateId: c.templateId || '', publicKey: c.publicKey || '', fromName: c.fromName || 'Shtark INK Flow' }; }
+  emailCfgVal() { const c = this.state.emailCfg || {}; return { serviceId: c.serviceId || '', templateId: c.templateId || '', publicKey: c.publicKey || '', fromName: c.fromName || 'Shtark Chemicals Flow' }; }
   emailConfigured() { const c = this.emailCfgVal(); return !!(c.serviceId && c.templateId && c.publicKey); }
   maskEmail(em) { const p = String(em || '').split('@'); if (p.length !== 2) return em; const a = p[0]; return (a.length <= 2 ? a : a.slice(0, 2) + '***') + '@' + p[1]; }
   saveEmailCfg() {
     const e = this.state.emailEdit || {};
-    const cfg = { serviceId: (e.serviceId || '').trim(), templateId: (e.templateId || '').trim(), publicKey: (e.publicKey || '').trim(), fromName: (e.fromName || '').trim() || 'Shtark INK Flow' };
+    const cfg = { serviceId: (e.serviceId || '').trim(), templateId: (e.templateId || '').trim(), publicKey: (e.publicKey || '').trim(), fromName: (e.fromName || '').trim() || 'Shtark Chemicals Flow' };
     this.setState({ emailCfg: cfg, emailStatus: 'Настройки отправки писем сохранены ✓' });
-    try { localStorage.setItem('inkflow_emailcfg', JSON.stringify(cfg)); } catch (e2) {}
+    try { this.lsSet('emailcfg', JSON.stringify(cfg)); } catch (e2) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { emailCfg: cfg }, { merge: true }).catch(() => {}); } catch (e2) {} }
   }
   async requestPasswordReset() {
@@ -2478,9 +2600,10 @@ class Component extends DCLogic {
     if (users.find(u => u.login.toLowerCase() === login.toLowerCase() && u.id !== d.id)) { this.setState({ userErr: 'Логин «' + login + '» уже занят.' }); return; }
     if (d.id && d.role !== 'admin') { const cur = users.find(u => u.id === d.id); if (cur && cur.role === 'admin' && this.countAdmins() <= 1) { this.setState({ userErr: 'Это единственный администратор — нельзя понизить роль.' }); return; } }
     const perms = role === 'admin' ? this.allTabIds() : (Array.isArray(d.perms) ? d.perms.filter(id => this.allTabIds().includes(id)) : this.allTabIds());
+    const companies = (Array.isArray(d.companies) && d.companies.length) ? d.companies.filter(c => this.coCfg()[c]) : ['ink', 'chem'];
     let next, cu = this.state.currentUser;
-    if (d.id) { next = users.map(u => u.id === d.id ? { ...u, name, login, password, role, perms, email, photo: d.photo || '' } : u); if (cu && cu.id === d.id) cu = { ...cu, name, login, password, role, perms, email, photo: d.photo || '' }; }
-    else { next = [...users, { id: 'u_' + Date.now().toString(36), name, login, password, role, perms, email, photo: d.photo || '', active: true, created: Date.now() }]; }
+    if (d.id) { next = users.map(u => u.id === d.id ? { ...u, name, login, password, role, perms, companies, email, photo: d.photo || '' } : u); if (cu && cu.id === d.id) cu = { ...cu, name, login, password, role, perms, companies, email, photo: d.photo || '' }; }
+    else { next = [...users, { id: 'u_' + Date.now().toString(36), name, login, password, role, perms, companies, email, photo: d.photo || '', active: true, created: Date.now() }]; }
     this.saveUsers(next);
     this.setState({ userDraft: null, userErr: '', currentUser: cu });
   }
@@ -2508,6 +2631,9 @@ class Component extends DCLogic {
     const allIds = this.allTabIds(), totalT = allIds.length;
     const draftPerms = (S.userDraft && Array.isArray(S.userDraft.perms)) ? S.userDraft.perms : allIds;
     const setPerms = (arr) => set({ userDraft: { ...(S.userDraft || blank), perms: arr }, userErr: '' });
+    const allCo = this.coOrder();
+    const draftCo = (S.userDraft && Array.isArray(S.userDraft.companies) && S.userDraft.companies.length) ? S.userDraft.companies : allCo;
+    const companyToggles = allCo.map(id => { const cc = this.coCfg()[id]; const on = draftCo.indexOf(id) >= 0; return { id, label: cc.name, cls: on ? 'permchip on' : 'permchip', toggle: () => { let arr = draftCo.slice(); if (on) { if (arr.length > 1) arr = arr.filter(x => x !== id); } else arr = [...arr, id]; set({ userDraft: { ...(S.userDraft || blank), companies: arr }, userErr: '' }); } }; });
     const togglePerm = (id) => () => { const has = draftPerms.includes(id); setPerms(has ? draftPerms.filter(x => x !== id) : draftPerms.concat([id])); };
     const udIsAdmin = (dn.role === 'admin');
     const permGroups = this.permCatalog().map(g => ({
@@ -2521,13 +2647,13 @@ class Component extends DCLogic {
       accessLabel: accLabel(u), accessCls: u.role === 'admin' ? 'st prof' : (Array.isArray(u.perms) && u.perms.length === 0 ? 'st def' : 'st'),
       statusLabel: u.active ? 'Активен' : 'Отключён', statusCls: u.active ? 'st prof' : 'st def', email: u.email || '—',
       rowCls: (me && u.id === me.id) ? 'urowme' : '',
-      edit: () => set({ userDraft: { id: u.id, name: u.name, login: u.login, password: u.password, role: u.role, email: u.email || '', photo: u.photo || '', perms: Array.isArray(u.perms) ? u.perms.slice() : allIds.slice() }, userErr: '' }),
+      edit: () => set({ userDraft: { id: u.id, name: u.name, login: u.login, password: u.password, role: u.role, email: u.email || '', photo: u.photo || '', perms: Array.isArray(u.perms) ? u.perms.slice() : allIds.slice(), companies: Array.isArray(u.companies) ? u.companies.slice() : ['ink', 'chem'] }, userErr: '' }),
       copy: () => { try { navigator.clipboard.writeText('Логин: ' + u.login + '\nПароль: ' + u.password); } catch (e) {} },
       toggle: () => this.toggleUser(u.id), toggleLabel: u.active ? 'Отключить' : 'Включить',
       del: () => this.deleteUser(u.id),
     }));
     return {
-      isUsers: true, usNoAccess: false, usHasAccess: true, usCount: rows.length, usRows: rows,
+      isUsers: true, usNoAccess: false, usHasAccess: true, usCount: rows.length, usRows: rows, companyToggles,
       udName: dn.name, udLogin: dn.login, udPass: dn.password, udRole: dn.role, udEmail: dn.email || '',
       onUdEmail: patch('email'),
       udPhoto: dn.photo || '', udHasPhoto: !!dn.photo, udNoPhoto: !dn.photo, udInitial: (dn.name || '?').trim().charAt(0).toUpperCase() || '?',
@@ -2574,7 +2700,7 @@ class Component extends DCLogic {
     return lines.join('\n');
   }
   aiSystemPrompt() {
-    return 'Ты — встроенный AI-аналитик в системе «Shtark INK Flow» — это рабочий портал завода по производству красок для гибкой упаковки. ' +
+    return 'Ты — встроенный AI-аналитик в системе «' + this.co().name + ' Flow» — это рабочий портал завода (' + this.co().subtitle + '). ' +
       'Твоя роль: эксперт по закупкам, себестоимости, оборачиваемости запасов, план-факту и казначейству. ' +
       'Отвечай по-русски, кратко и по делу, как опытный коммерческий аналитик. Используй данные из приложения, приведённые ниже. ' +
       'Если данных не хватает — прямо скажи, какие цифры нужно внести в каком разделе. Не выдумывай числа. Где уместно — приводи конкретные расчёты и рекомендации.\n\n' +
@@ -2586,7 +2712,7 @@ class Component extends DCLogic {
     if (key) {
       const base = (this.state.aiBase || 'https://openrouter.ai/api/v1').replace(/\/+$/, '');
       const headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key };
-      try { headers['HTTP-Referer'] = location.origin; headers['X-Title'] = 'Shtark INK Flow'; } catch (e) {}
+      try { headers['HTTP-Referer'] = location.origin; headers['X-Title'] = 'Shtark Chemicals Flow'; } catch (e) {}
       // Список моделей для перебора: выбранная пользователем + живые бесплатные из каталога OpenRouter
       let tryModels = [];
       if (this.state.aiModelName) tryModels.push(this.state.aiModelName);
@@ -2621,7 +2747,7 @@ class Component extends DCLogic {
   saveAiCfg() {
     const key = (this.state.aiKeyEdit || '').trim(), base = (this.state.aiBaseEdit || '').trim(), model = (this.state.aiModelEdit || '').trim();
     this.setState({ aiKey: key, aiBase: base, aiModelName: model, aiCfgOpen: false });
-    try { localStorage.setItem('inkflow_aicfg', JSON.stringify({ key, base, model })); } catch (e) {}
+    try { this.lsSet('aicfg', JSON.stringify({ key, base, model })); } catch (e) {}
   }
   aiSend(textArg, displayArg) {
     const S = this.state;
@@ -2794,14 +2920,14 @@ class Component extends DCLogic {
     const iEdit = !!(ttlOk && lock.clientId === this._clientId);
     this._cloudRev = d.rev || 0;
     const patch = { cloudConnected: true, cloudErr: '', cloudStatus: 'Онлайн', cloudHistory: d.history || [], cloudPresence: d.presence || {}, cloudWho: ttlOk ? (lock.name || '—') : '', cloudRole: iEdit ? 'editor' : (ttlOk ? 'viewer' : 'idle') };
-    if (Array.isArray(d.chat)) { patch.chat = d.chat; try { localStorage.setItem('inkflow_chat', JSON.stringify(d.chat)); } catch (e) {} }
-    if (Array.isArray(d.tasks)) { patch.tasks = d.tasks; try { localStorage.setItem('inkflow_tasks', JSON.stringify(d.tasks)); } catch (e) {} }
-    if (Array.isArray(d.cparties)) { patch.cparties = d.cparties; try { localStorage.setItem('inkflow_cparties', JSON.stringify(d.cparties)); } catch (e) {} }
-    if (Array.isArray(d.receipts)) { patch.receipts = d.receipts; try { localStorage.setItem('inkflow_receipts', JSON.stringify(d.receipts)); } catch (e) {} }
-    if (Array.isArray(d.sales)) { patch.sales = d.sales; try { localStorage.setItem('inkflow_sales', JSON.stringify(d.sales)); } catch (e) {} }
-    if (Array.isArray(d.logistics)) { patch.logistics = d.logistics; try { localStorage.setItem('inkflow_logistics', JSON.stringify(d.logistics)); } catch (e) {} }
-    if (Array.isArray(d.payreqs)) { patch.payreqs = d.payreqs; try { localStorage.setItem('inkflow_payreqs', JSON.stringify(d.payreqs)); } catch (e) {} }
-    if (d.emailCfg && typeof d.emailCfg === 'object') { patch.emailCfg = d.emailCfg; try { localStorage.setItem('inkflow_emailcfg', JSON.stringify(d.emailCfg)); } catch (e) {} }
+    if (Array.isArray(d.chat)) { patch.chat = d.chat; try { this.lsSet('chat', JSON.stringify(d.chat)); } catch (e) {} }
+    if (Array.isArray(d.tasks)) { patch.tasks = d.tasks; try { this.lsSet('tasks', JSON.stringify(d.tasks)); } catch (e) {} }
+    if (Array.isArray(d.cparties)) { patch.cparties = d.cparties; try { this.lsSet('cparties', JSON.stringify(d.cparties)); } catch (e) {} }
+    if (Array.isArray(d.receipts)) { patch.receipts = d.receipts; try { this.lsSet('receipts', JSON.stringify(d.receipts)); } catch (e) {} }
+    if (Array.isArray(d.sales)) { patch.sales = d.sales; try { this.lsSet('sales', JSON.stringify(d.sales)); } catch (e) {} }
+    if (Array.isArray(d.logistics)) { patch.logistics = d.logistics; try { this.lsSet('logistics', JSON.stringify(d.logistics)); } catch (e) {} }
+    if (Array.isArray(d.payreqs)) { patch.payreqs = d.payreqs; try { this.lsSet('payreqs', JSON.stringify(d.payreqs)); } catch (e) {} }
+    if (d.emailCfg && typeof d.emailCfg === 'object') { patch.emailCfg = d.emailCfg; try { this.lsSet('emailcfg', JSON.stringify(d.emailCfg)); } catch (e) {} }
     if (typeof d.tgLink === 'string') patch.tgLink = d.tgLink;
     if (d.tgBot && typeof d.tgBot === 'object') { patch.tgToken = d.tgBot.token || ''; patch.tgChatId = d.tgBot.chatId || ''; patch.tgFwd = !!d.tgBot.fwd; }
     if (!iEdit && d.state) {
@@ -2902,7 +3028,7 @@ class Component extends DCLogic {
     const msg = { id: 'm' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), author: cu ? cu.name : 'Гость', text: text.slice(0, 800), ts: Date.now() };
     const next = [...(this.state.chat || []), msg].slice(-120);
     this.setState({ chat: next, chatInput: '' });
-    try { localStorage.setItem('inkflow_chat', JSON.stringify(next)); } catch (e) {}
+    try { this.lsSet('chat', JSON.stringify(next)); } catch (e) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) {
       try { window.__FB.setDoc(this._docRef, { chat: next }, { merge: true }).catch(() => {}); } catch (e) {}
     }
@@ -2921,7 +3047,7 @@ class Component extends DCLogic {
   taskOverdue(t) { if (!t.due || this.taskDone(t)) return false; let due = this.parseISO(t.due).getTime(); if (t.dueTime) { const p = String(t.dueTime).split(':'); due += ((+p[0] || 0) * 60 + (+p[1] || 0)) * 60000; return Date.now() > due; } const z = new Date(); z.setHours(0, 0, 0, 0); return due < z.getTime(); }
   writeTasks(next) {
     this.setState({ tasks: next });
-    try { localStorage.setItem('inkflow_tasks', JSON.stringify(next)); } catch (e) {}
+    try { this.lsSet('tasks', JSON.stringify(next)); } catch (e) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) {
       try { window.__FB.setDoc(this._docRef, { tasks: next }, { merge: true }).catch(() => {}); } catch (e) {}
     }
@@ -2938,7 +3064,7 @@ class Component extends DCLogic {
     const msg = { id: 'm' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), author: author || 'Система', text: text, ts: Date.now() };
     const next = [...(this.state.chat || []), msg].slice(-120);
     this.setState({ chat: next });
-    try { localStorage.setItem('inkflow_chat', JSON.stringify(next)); } catch (e) {}
+    try { this.lsSet('chat', JSON.stringify(next)); } catch (e) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { chat: next }, { merge: true }).catch(() => {}); } catch (e) {} }
     this.forwardToTelegram(msg);
   }
@@ -3116,7 +3242,7 @@ class Component extends DCLogic {
     const token = (this.state.tgEditToken || '').trim(), chatId = (this.state.tgEditChatId || '').trim();
     const fwd = !!(token && chatId);
     this.setState({ tgToken: token, tgChatId: chatId, tgFwd: fwd, tgStatus: fwd ? 'Дублирование в Telegram включено' : 'Укажите токен бота и ID чата' });
-    try { localStorage.setItem('inkflow_tgbot', JSON.stringify({ token, chatId, fwd })); } catch (e) {}
+    try { this.lsSet('tgbot', JSON.stringify({ token, chatId, fwd })); } catch (e) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) {
       try { window.__FB.setDoc(this._docRef, { tgBot: { token, chatId, fwd } }, { merge: true }).catch(() => {}); } catch (e) {}
     }
@@ -3124,13 +3250,13 @@ class Component extends DCLogic {
   }
   async tgTest() {
     this.setState({ tgStatus: 'Отправляю тест…' });
-    this.forwardToTelegram({ author: 'Система', text: 'Тестовое сообщение из Shtark INK Flow ✅' });
+    this.forwardToTelegram({ author: 'Система', text: 'Тестовое сообщение из Shtark Chemicals Flow ✅' });
     setTimeout(() => { if (this.state.tgStatus === 'Отправляю тест…') this.setState({ tgStatus: 'Отправлено (проверьте Telegram)' }); }, 1500);
   }
   saveTg() {
     const url = (this.state.tgEdit || '').trim();
     this.setState({ tgLink: url });
-    try { localStorage.setItem('inkflow_tg', url); } catch (e) {}
+    try { this.lsSet('tg', url); } catch (e) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) {
       try { window.__FB.setDoc(this._docRef, { tgLink: url }, { merge: true }).catch(() => {}); } catch (e) {}
     }
@@ -3722,7 +3848,7 @@ class Component extends DCLogic {
     return out;
   }
   // Запоминаем, что пользователь видел задачи (гасит мигание/бейдж «новых»).
-  markTasksSeen() { const now = Date.now(); this.setState({ tasksSeenAt: now }); try { localStorage.setItem('inkflow_tasks_seen', String(now)); } catch (e) {} }
+  markTasksSeen() { const now = Date.now(); this.setState({ tasksSeenAt: now }); try { this.lsSet('tasks_seen', String(now)); } catch (e) {} }
   // Состояние внимания по задачам для пункта меню: уровень и счётчик (чем ближе срок — тем выше уровень).
   myTaskAlertState() {
     const S = this.state, cu = S.currentUser; if (!cu) return { level: '', badge: 0, minDays: 99, newCount: 0, overdue: 0, soon: 0 };
@@ -3794,13 +3920,13 @@ class Component extends DCLogic {
       setTimeout(() => host.remove(), 1150);
     } catch (e) {}
   }
-  // ===== Персонажи Ая и Макс + Цитатник Shtark INK Flow =====
+  // ===== Персонажи Ая и Макс + Цитатник Shtark Chemicals Flow =====
   quoteDB() {
     return {
-      welcome: ['Цена в КП и цена в счёте совпали с первого раза. Вызовите МЧС, это аномалия!', '«Срочно» в закупках — это когда товар нужен был ещё вчера, а ТЗ утвердят только в пятницу.', 'Поставщик обещал скидку, но включил её в стоимость доставки. Мы всё видим через Shtark INK Flow.', 'В любой непонятной ситуации обвиняй логистический коллапс. Никто не проверит, но все посочувствуют.', 'Наш отдел снабжения может достать всё. Даже то, чего ещё нет в природе и в чертежах конструкторов.', 'Каждому закупщику при рождении выдают встроенный детектор лжи на фразу «Товар на складе».', 'Нам не нужна интуиция. У нас есть Shtark INK Flow и ИНН поставщика.', 'Бухгалтерия согласовала платёж за 5 минут. Проверьте, не ретроградный ли Меркурий сегодня?', '«Счёт на оплате». Это может означать как «деньги ушли», так и «подумаем об этом в следующем квартале».', 'Бухгалтер видит ошибку в акте сверки на 3 копейки с расстояния в два километра.', 'Пришёл в бухгалтерию без шоколадки — ушёл без подписанного реестра. Базовый закон экономики.', '«Мы не можем оплатить, у нас отчётный период». Отчётный период длится примерно всегда.', 'Когда бухгалтер нажимает «Провести платёж», где-то в мире радуется один менеджер по продажам.', 'Технолог сказал, что формула идеальна. Ждём, когда цех скажет, что у них ничего не получается.', 'Лаборатория проводит тесты три дня, но производство требует паспорт качества через час.', 'Запах на производстве полимеров — это не химия. Это запах стабильной прибыли и выполненного плана.', 'Формула чернил держится в строжайшем секрете. Даже Ая знает только половину.', 'Новая рецептура экономит 15% бюджета. Главный бухгалтер готов лично мешать компоненты.', 'В лаборатории нет слова «ой». Есть «интересный эффект, надо зафиксировать».', 'Пришёл на 5 минут позже — пропустил планёрку. Пришёл на 5 минут раньше — сидишь один.', '«Я буду через 5 минут» — самая нестабильная единица времени в офисе. Может длиться до обеда.', 'Дедлайн по оплате — 16:00. Снабженец отправляет счёт в бухгалтерию в 15:59. Настоящий адреналин!', 'Тайм-менеджмент в закупках — умение распределить панику равномерно на весь день.', 'Ваше мнение очень важно для нас. Запишите его на черновике и выбросьте в шредер.', 'Мы не ищем лёгких путей. Мы ищем пути, которые согласует юротдел с тридцатой попытки.', 'Наш брендбук требует сдержанности. Поэтому я сдерживаю слёзы, глядя на новые цены поставщиков.', 'Конечно, добавим эту задачу в план. У нас как раз было место между паникой и стрессом.', 'Интуитивно понятный интерфейс — когда закупщик интуитивно понимает, что пора пойти пить чай.', '«С уважением, отдел снабжения» — звучит как скрытая угроза в конце официального письма.', 'Металлопрокат подорожал, пока ты читал это предложение. Закупай быстрее!'],
-      exit: ['Все критические риски на сегодня закрыты, конвейер работает как часы. Отдыхай, я докараулю. Пока! ✨', 'Shtark INK Flow уходит на дежурный режим. Спасибо за отличную работу, Кибер-снабженец!', 'План выполнен, дефициты закрыты, Цех №2 спасён. Время выключить монитор и включить режим отдыха. 🌆', 'Ты сегодня — супергерой этого производства. Спасибо за смену, до завтра!', 'Работа работой, а вечер принадлежит тебе. Никаких мыслей о поставках до утра! 🚫📊', 'Программа закрывается, рабочие чаты засыпают… Отдыхай с чистой совестью! 🛏️💤', 'Официально объявляю закупки на сегодня закрытыми. Твой диван ждёт тебя!', 'Спасибо, что пользуетесь Shtark INK Flow. Ты супер. Смена окончена!'],
+      welcome: ['Цена в КП и цена в счёте совпали с первого раза. Вызовите МЧС, это аномалия!', '«Срочно» в закупках — это когда товар нужен был ещё вчера, а ТЗ утвердят только в пятницу.', 'Поставщик обещал скидку, но включил её в стоимость доставки. Мы всё видим через Shtark Chemicals Flow.', 'В любой непонятной ситуации обвиняй логистический коллапс. Никто не проверит, но все посочувствуют.', 'Наш отдел снабжения может достать всё. Даже то, чего ещё нет в природе и в чертежах конструкторов.', 'Каждому закупщику при рождении выдают встроенный детектор лжи на фразу «Товар на складе».', 'Нам не нужна интуиция. У нас есть Shtark Chemicals Flow и ИНН поставщика.', 'Бухгалтерия согласовала платёж за 5 минут. Проверьте, не ретроградный ли Меркурий сегодня?', '«Счёт на оплате». Это может означать как «деньги ушли», так и «подумаем об этом в следующем квартале».', 'Бухгалтер видит ошибку в акте сверки на 3 копейки с расстояния в два километра.', 'Пришёл в бухгалтерию без шоколадки — ушёл без подписанного реестра. Базовый закон экономики.', '«Мы не можем оплатить, у нас отчётный период». Отчётный период длится примерно всегда.', 'Когда бухгалтер нажимает «Провести платёж», где-то в мире радуется один менеджер по продажам.', 'Технолог сказал, что формула идеальна. Ждём, когда цех скажет, что у них ничего не получается.', 'Лаборатория проводит тесты три дня, но производство требует паспорт качества через час.', 'Запах на производстве полимеров — это не химия. Это запах стабильной прибыли и выполненного плана.', 'Формула клея держится в строжайшем секрете. Даже Ая знает только половину.', 'Новая рецептура экономит 15% бюджета. Главный бухгалтер готов лично мешать компоненты.', 'В лаборатории нет слова «ой». Есть «интересный эффект, надо зафиксировать».', 'Пришёл на 5 минут позже — пропустил планёрку. Пришёл на 5 минут раньше — сидишь один.', '«Я буду через 5 минут» — самая нестабильная единица времени в офисе. Может длиться до обеда.', 'Дедлайн по оплате — 16:00. Снабженец отправляет счёт в бухгалтерию в 15:59. Настоящий адреналин!', 'Тайм-менеджмент в закупках — умение распределить панику равномерно на весь день.', 'Ваше мнение очень важно для нас. Запишите его на черновике и выбросьте в шредер.', 'Мы не ищем лёгких путей. Мы ищем пути, которые согласует юротдел с тридцатой попытки.', 'Наш брендбук требует сдержанности. Поэтому я сдерживаю слёзы, глядя на новые цены поставщиков.', 'Конечно, добавим эту задачу в план. У нас как раз было место между паникой и стрессом.', 'Интуитивно понятный интерфейс — когда закупщик интуитивно понимает, что пора пойти пить чай.', '«С уважением, отдел снабжения» — звучит как скрытая угроза в конце официального письма.', 'Металлопрокат подорожал, пока ты читал это предложение. Закупай быстрее!'],
+      exit: ['Все критические риски на сегодня закрыты, конвейер работает как часы. Отдыхай, я докараулю. Пока! ✨', 'Shtark Chemicals Flow уходит на дежурный режим. Спасибо за отличную работу, Кибер-снабженец!', 'План выполнен, дефициты закрыты, Цех №2 спасён. Время выключить монитор и включить режим отдыха. 🌆', 'Ты сегодня — супергерой этого производства. Спасибо за смену, до завтра!', 'Работа работой, а вечер принадлежит тебе. Никаких мыслей о поставках до утра! 🚫📊', 'Программа закрывается, рабочие чаты засыпают… Отдыхай с чистой совестью! 🛏️💤', 'Официально объявляю закупки на сегодня закрытыми. Твой диван ждёт тебя!', 'Спасибо, что пользуетесь Shtark Chemicals Flow. Ты супер. Смена окончена!'],
       daily_motivation: ['Если кажется, что задач слишком много, просто сделай вдох. Ты управляешь процессами, а не они тобой. Всё получится! ✨', 'Даже самый сложный производственный план собирается по одному шагу. Ты отлично справляешься.', 'Помни: твоё спокойствие важнее любого просроченного дедлайна. Глоток воды — и мы со всем разберёмся. 💧', 'Ты делаешь огромную работу, которую не всегда видно в отчётах, но без которой всё бы встало. Спасибо!', 'Ошибки — это просто данные для оптимизации. Не принимай близко к сердцу, ты крутой профессионал.', 'Если день выдался сумасшедшим, помни: ты сильнее, чем хаос в цепочке поставок. Мы прорвёмся!'],
-      friday: ['Стоп. Хватит планировать. Заводы постоят до понедельника. Бегом отдыхать! 💃🕺', 'Пятница, 16:00. Время закрывать Shtark INK Flow и открывать меню выходного дня!'],
+      friday: ['Стоп. Хватит планировать. Заводы постоят до понедельника. Бегом отдыхать! 💃🕺', 'Пятница, 16:00. Время закрывать Shtark Chemicals Flow и открывать меню выходного дня!'],
       night: ['Эй, а почему мы ещё не дома? Конвейер, конечно, Flow, но спать тоже надо. Закругляйся! 🦉', 'Ночные бдения вредят закупкам. Выключай систему, утро вечера мудренее.'],
       inactivity: ['План замер, производство идёт… Может, проверим остатки на складе, пока есть время?', 'Похоже, у нас пауза. Главное, чтобы Цех №2 не устроил себе перекур раньше времени.'],
       max: 'Ты спасла Цех №2 от остановки. Держи заслуженный латте! ☕',
@@ -3813,8 +3939,8 @@ class Component extends DCLogic {
     return E.map((e, i) => ({ name: e[0], dept: e[1], photo: (this.userAvatar(e[0]) || (ph.length ? ph[i % ph.length] : '')) }));
   }
   randOf(a) { return a[Math.floor(Math.random() * a.length)]; }
-  shownDailyToday() { try { return localStorage.getItem('inkflow_daily_motiv') === this.ymd(new Date()); } catch (e) { return false; } }
-  markDailyShown() { try { localStorage.setItem('inkflow_daily_motiv', this.ymd(new Date())); } catch (e) {} }
+  shownDailyToday() { try { return this.lsGet('daily_motiv') === this.ymd(new Date()); } catch (e) { return false; } }
+  markDailyShown() { try { this.lsSet('daily_motiv', this.ymd(new Date())); } catch (e) {} }
   pickScenePhrase(scene) {
     const Q = this.quoteDB(); const now = new Date(); const h = now.getHours(); const dow = now.getDay();
     let text = '', emp = null;
@@ -3871,7 +3997,7 @@ class Component extends DCLogic {
   emptyLog() { return { id: '', no: '', date: this.ymd(new Date()), route: '', carrier: '', transType: 'Авто РФ', container: '', truck: '', driver: '', driverDoc: '', status: 'На согласовании', ftsDecl: '', ftsStatus: '', weight: '', freight: '', linkPurchase: '', linkOrder: '' }; }
   writeLogistics(next) {
     this.setState({ logistics: next });
-    try { localStorage.setItem('inkflow_logistics', JSON.stringify(next)); } catch (e) {}
+    try { this.lsSet('logistics', JSON.stringify(next)); } catch (e) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { logistics: next }, { merge: true }).catch(() => {}); } catch (e) {} }
   }
   saveLog() {
@@ -3920,7 +4046,7 @@ class Component extends DCLogic {
   emptyPayReq() { const cu = this.state.currentUser; return { id: '', initiator: cu ? cu.name : '', initiatorId: cu ? cu.id : '', approverId: '', supplier: '', amount: '', date: this.ymd(new Date()), purpose: '', status: 'Черновик', track: true }; }
   writePayreqs(next) {
     this.setState({ payreqs: next });
-    try { localStorage.setItem('inkflow_payreqs', JSON.stringify(next)); } catch (e) {}
+    try { this.lsSet('payreqs', JSON.stringify(next)); } catch (e) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { payreqs: next }, { merge: true }).catch(() => {}); } catch (e) {} }
   }
   // ===== Workflow: авто-задача из документа + уведомление АЯ =====
@@ -4093,7 +4219,7 @@ class Component extends DCLogic {
   emptySale() { const prods = (this.data && this.data.products) ? this.data.products.map(p => p.name || p) : []; return { id: '', no: '', date: this.ymd(new Date()), client: '', product: prods[0] || '', qty: '', price: '', currency: 'RUB', rate: 1 }; }
   writeSales(next) {
     this.setState({ sales: next });
-    try { localStorage.setItem('inkflow_sales', JSON.stringify(next)); } catch (e) {}
+    try { this.lsSet('sales', JSON.stringify(next)); } catch (e) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { sales: next }, { merge: true }).catch(() => {}); } catch (e) {} }
   }
   saveSale() {
@@ -4147,7 +4273,7 @@ class Component extends DCLogic {
   emptyReceipt() { return { id: '', no: '', date: this.ymd(new Date()), supplier: '', inn: '', currency: 'RUB', rate: 1, market: 'Внутренний', lines: [{ material: '', article: '', qty: '', price: '' }] }; }
   writeReceipts(next) {
     this.setState({ receipts: next });
-    try { localStorage.setItem('inkflow_receipts', JSON.stringify(next)); } catch (e) {}
+    try { this.lsSet('receipts', JSON.stringify(next)); } catch (e) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { receipts: next }, { merge: true }).catch(() => {}); } catch (e) {} }
   }
   applyReceiptStock(r) {
@@ -4215,7 +4341,7 @@ class Component extends DCLogic {
   emptyCp() { return { id: '', name: '', inn: '', kpp: '', terms: '', limit: '', contacts: '', priceList: [] }; }
   writeCparties(next) {
     this.setState({ cparties: next });
-    try { localStorage.setItem('inkflow_cparties', JSON.stringify(next)); } catch (e) {}
+    try { this.lsSet('cparties', JSON.stringify(next)); } catch (e) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { cparties: next }, { merge: true }).catch(() => {}); } catch (e) {} }
   }
   saveCp() {
@@ -4431,7 +4557,7 @@ class Component extends DCLogic {
     const msg = { id: 'm' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), author: (cu ? cu.name : 'Гость') + ' · через АЯ', text: a.chatText, ts: Date.now() };
     const next = [...(this.state.chat || []), msg].slice(-120);
     this.setState({ chat: next, peekDismissed: { ...this.state.peekDismissed, [a.id]: 1 }, peekIdx: this.state.peekIdx + 1, peekToast: '✓ Напоминание отправлено в чат команды' });
-    try { localStorage.setItem('inkflow_chat', JSON.stringify(next)); } catch (e) {}
+    try { this.lsSet('chat', JSON.stringify(next)); } catch (e) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { chat: next }, { merge: true }).catch(() => {}); } catch (e) {} }
     this.forwardToTelegram(msg);
     clearTimeout(this._peekToastT); this._peekToastT = setTimeout(() => this.setState({ peekToast: '' }), 2600);
@@ -4504,8 +4630,8 @@ class Component extends DCLogic {
   }
 
   // ===== Интеграция с 1С =====
-  loadOneCToken() { try { const t = localStorage.getItem('inkflow_1c_token'); if (t != null && t !== '') this.setState({ oneCToken: t }); } catch (e) {} }
-  saveOneCToken() { try { localStorage.setItem('inkflow_1c_token', this.state.oneCToken || ''); } catch (e) {} }
+  loadOneCToken() { try { const t = this.lsGet('1c_token'); if (t != null && t !== '') this.setState({ oneCToken: t }); } catch (e) {} }
+  saveOneCToken() { try { this.lsSet('1c_token', this.state.oneCToken || ''); } catch (e) {} }
   oneCMaybeAuto() {
     if (!this.state.oneCAuto || !this.state.oneCUrl || !this.data) return;
     const last = Number(this.state.oneCLastAt) || 0;
@@ -4577,7 +4703,7 @@ class Component extends DCLogic {
   oneCQuickGet() { this.setState({ tab: 'onec', navOpen: false }); if ((this.state.oneCUrl || '').trim()) this.oneCSync(true); }
   downloadOneCSpec() {
     const L = [
-      '# Интеграция Shtark INK Flow с 1С (ERP) — техническое задание', '',
+      '# Интеграция Shtark Chemicals Flow с 1С (ERP) — техническое задание', '',
       'Приложение по кнопке или по расписанию (раз в день) делает HTTP GET к опубликованному HTTP-сервису 1С и получает JSON.',
       'Направление: 1С -> приложение. Загружаются ОСТАТКИ сырья и ЗАКУПОЧНЫЕ ЦЕНЫ (номенклатура и поставщики - опционально).', '',
       '## 1. Контракт JSON (что отдаёт 1С)', 'GET <адрес HTTP-сервиса>  ->  application/json; charset=utf-8', '',
@@ -4625,8 +4751,8 @@ class Component extends DCLogic {
     for (const p of (S.purchases || [])) { if (/отмен/.test(String(p.status || '').toLowerCase())) continue; const c = this.purchaseCalc(p, rate, vat); const due = c.fullRub - (Number(p.paid) || 0); if (due <= 1) continue; const base = p.payDate || p.arriveDate || ''; if (!base) continue; const sp = splits[p.id]; if (Array.isArray(sp) && sp.length) { for (const pt of sp) if (pt.date < todayStr) overdue += Number(pt.amount) || 0; } else { const dt = moves[p.id] || base; if (dt < todayStr) overdue += due; } }
     const gap = this.cashGapInfo();
     const lines = [
-      'Ты — операционный директор завода спиртовых красок Shtark INK. Проанализируй следующие операционные и финансовые данные предприятия, найди критические аномалии и риски, выдай глубокий инженерный диагноз причин перерасхода ЛКМ и составь план действий для цеха и снабжения.',
-      '', '=== ОПЕРАЦИОННЫЕ ДАННЫЕ SHTARK INK FLOW ===',
+      'Ты — операционный директор завода клеёв для ламинации Shtark Chemicals. Проанализируй следующие операционные и финансовые данные предприятия, найди критические аномалии и риски, выдай глубокий инженерный диагноз причин перерасхода сырья и составь план действий для цеха и снабжения.',
+      '', '=== ОПЕРАЦИОННЫЕ ДАННЫЕ SHTARK CHEMICALS FLOW ===',
       'Курс евро: ' + rate + ' ₽/€',
       'Норматив безвозвратных потерь: ' + loss + '%',
       '', '— Перерасход сырья (план-факт):',
@@ -4683,7 +4809,7 @@ class Component extends DCLogic {
     ctx.перерасходПозиций = (pf.pfRowsRaw || []).filter(r => r.actVol > r.planVol && r.planVol > 0).length;
     if (!S.aiKey) { this.setState({ tab: 'onec', prodAiBusy: false, prodAiSummary: '⚙ Укажите ваш API-ключ OpenRouter в настройках (кнопка «⚙ AI-ключ» в окне АЯ).' }); return; }
     this.setState({ tab: 'onec', prodAiBusy: true, prodAiSummary: '✦ АЯ проводит сплошной скрининг всей базы данных…' });
-    const sys = 'Ты — операционный директор и аудит-партнёр холдинга Shtark INK (производство спиртовых красок ЛКМ). Проведи сплошной скрининг всей базы данных предприятия и выдай управленческое резюме. Опирайся строго на цифры из JSON. Структура ответа:\n\n✦ СКРИНИНГ БАЗЫ ДАННЫХ — РЕЗЮМЕ АЯ:\n1. 📦 Снабжение и склад: [объёмы, долг поставщикам, перерасход].\n2. 💰 Финансы и касса: [баланс, кассовый разрыв, валютный риск по курсу евро].\n3. 🏭 Производство и продажи: [состояние, потери].\n4. 🚩 Главные риски и 3 первоочередных действия.\nПиши сухо, по делу, с цифрами. Не лей воду.';
+    const sys = 'Ты — операционный директор и аудит-партнёр холдинга Shtark Chemicals (производство клеёв для ламинации и ПУ-систем). Проведи сплошной скрининг всей базы данных предприятия и выдай управленческое резюме. Опирайся строго на цифры из JSON. Структура ответа:\n\n✦ СКРИНИНГ БАЗЫ ДАННЫХ — РЕЗЮМЕ АЯ:\n1. 📦 Снабжение и склад: [объёмы, долг поставщикам, перерасход].\n2. 💰 Финансы и касса: [баланс, кассовый разрыв, валютный риск по курсу евро].\n3. 🏭 Производство и продажи: [состояние, потери].\n4. 🚩 Главные риски и 3 первоочередных действия.\nПиши сухо, по делу, с цифрами. Не лей воду.';
     try {
       const txt = await this.aiComplete([{ role: 'system', content: sys }, { role: 'user', content: 'Снимок базы данных (JSON):\n' + JSON.stringify(ctx, null, 1) }], { max: 800 });
       this.setState({ prodAiBusy: false, prodAiSummary: (txt || 'Пустой ответ.').trim() });
@@ -5270,7 +5396,7 @@ class Component extends DCLogic {
     if (!hasData) { this.setState({ prodAiBusy: false, prodAiSummary: '✦ АЯ: Данные для перекрёстного аудита отсутствуют. Загрузите отчёты из 1С (план-факт расхода и заявки на оплату).' }); return; }
     if (!this.state.aiKey) { this.setState({ prodAiBusy: false, prodAiSummary: '⚙ Укажите ваш API-ключ OpenRouter в настройках (кнопка «⚙ AI-ключ» в окне АЯ).' }); return; }
     this.setState({ prodAiBusy: true, prodAiSummary: '✦ АЯ проводит перекрёстный аудит цеха, снабжения и кассы…' });
-    const sys = 'Ты — финансовый директор завода Shtark INK (спиртовые краски ЛКМ). Проанализируй финансово-логистическое состояние, опираясь СТРОГО на цифры из JSON.\n\nСтруктура ответа:\n\n✦ ФИНАНСОВО-ИНЖЕНЕРНЫЙ АУДИТ АЯ:\n\n1. 🔴 КРИТИЧЕСКИЕ АНОМАЛИИ В ЦЕХУ:\n[Топ-перерасходы сырья с цифрами. Свяжи перерасход пигментов с колористикой/калибровкой дозаторов диссольвера, лаков — с замывкой реакторов и несливаемыми остатками.]\n\n2. ⚠️ ФИНАНСОВЫЕ РИСКИ И НАЛОГИ:\n[Оцени эффективность оборотного капитала: сколько заморожено на складе (totalFrozenCash), назови неликвиды (топНеликвидов), глубину кассовых разрывов. ОБЯЗАТЕЛЬНО оцени налоговый баланс по НДС 22%: сравни входящий НДС от закупок (totalVatToClaim) и исходящий НДС от продаж (totalVatToPay), подсчитай прогнозный итог (итогПоНДС) — сколько доплатить в бюджет или вернуть вычетом.]\n\n3. 🛠 СХЕМА СТАБИЛИЗАЦИИ И ТЕХЗАДАНИЕ:\n[Схема реструктуризации платежей (перенос дат, дробление 30/40/30) для устранения разрыва. Рекомендация снабжению по оптимизации графика закупок, чтобы временно снизить налоговую нагрузку по НДС. Указания мастеру цеха.]\n\nТерминология: Delta E, вязкость ВЗ-4, сухой остаток, оборачиваемость склада, кассовый разрыв, входящий/исходящий НДС, вычет. Пиши сухо, с цифрами.';
+    const sys = 'Ты — финансовый директор завода Shtark Chemicals (клеи для ламинации и ПУ-системы). Проанализируй финансово-логистическое состояние, опираясь СТРОГО на цифры из JSON.\n\nСтруктура ответа:\n\n✦ ФИНАНСОВО-ИНЖЕНЕРНЫЙ АУДИТ АЯ:\n\n1. 🔴 КРИТИЧЕСКИЕ АНОМАЛИИ В ЦЕХУ:\n[Топ-перерасходы сырья с цифрами. Свяжи перерасход пигментов с колористикой/калибровкой дозаторов диссольвера, лаков — с замывкой реакторов и несливаемыми остатками.]\n\n2. ⚠️ ФИНАНСОВЫЕ РИСКИ И НАЛОГИ:\n[Оцени эффективность оборотного капитала: сколько заморожено на складе (totalFrozenCash), назови неликвиды (топНеликвидов), глубину кассовых разрывов. ОБЯЗАТЕЛЬНО оцени налоговый баланс по НДС 22%: сравни входящий НДС от закупок (totalVatToClaim) и исходящий НДС от продаж (totalVatToPay), подсчитай прогнозный итог (итогПоНДС) — сколько доплатить в бюджет или вернуть вычетом.]\n\n3. 🛠 СХЕМА СТАБИЛИЗАЦИИ И ТЕХЗАДАНИЕ:\n[Схема реструктуризации платежей (перенос дат, дробление 30/40/30) для устранения разрыва. Рекомендация снабжению по оптимизации графика закупок, чтобы временно снизить налоговую нагрузку по НДС. Указания мастеру цеха.]\n\nТерминология: Delta E, вязкость ВЗ-4, сухой остаток, оборачиваемость склада, кассовый разрыв, входящий/исходящий НДС, вычет. Пиши сухо, с цифрами.';
     const user = 'Контекст для перекрёстного аудита (JSON):\n' + JSON.stringify(auditContext, null, 1);
     try {
       const txt = await this.aiComplete([{ role: 'system', content: sys }, { role: 'user', content: user }], { max: 750 });

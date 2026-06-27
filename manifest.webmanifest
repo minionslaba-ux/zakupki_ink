@@ -1,7 +1,7 @@
 {
-  "name": "Shtark INK Flow",
-  "short_name": "INK Flow",
-  "description": "Планирование производства и закупок — Shtark INK Flow",
+  "name": "Shtark Flow — единая платформа управления",
+  "short_name": "Shtark Flow",
+  "description": "Единая платформа управления группы компаний Shtark — производство и закупки",
   "lang": "ru",
   "start_url": "./",
   "scope": "./",

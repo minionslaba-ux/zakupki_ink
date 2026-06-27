@@ -1,0 +1,13 @@
+{
+ "meta": {
+  "source": "Shtark Chemicals — стартовые данные (пусто). Подключите номенклатуру и рецептуры.",
+  "vat_rate": 0.22,
+  "extracted": ""
+ },
+ "raw_materials": [],
+ "semi_products": [],
+ "products": [],
+ "recipes": [],
+ "rates": [],
+ "losses": []
+}

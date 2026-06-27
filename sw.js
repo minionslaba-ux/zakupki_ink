@@ -1,4 +1,4 @@
-// Service worker для установки Shtark INK Flow как приложения (PWA).
+// Service worker для установки Shtark Chemicals Flow как приложения (PWA).
 // Стратегия: сеть в приоритете, кэш — как резерв для офлайн-открытия.
 const CACHE = 'inkflow-v1';
 self.addEventListener('install', (e) => { self.skipWaiting(); });
