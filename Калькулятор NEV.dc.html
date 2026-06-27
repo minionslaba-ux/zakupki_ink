@@ -742,6 +742,9 @@ a.wordmark:hover{opacity:.6}
 .sbclaude .sbaiic{color:#f0a07f}
 .claudetoast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:1400;background:#0e0e0e;color:#fff;border:1px solid #d97757;border-radius:13px;padding:13px 18px;font-size:13.5px;font-weight:600;box-shadow:0 12px 40px rgba(0,0,0,.4);display:flex;align-items:center;gap:10px;animation:ctIn .3s cubic-bezier(.16,1,.3,1)}
 .claudetoast .cticon{font-size:17px}
+.tracktoast{position:fixed;top:18px;right:18px;max-width:340px;z-index:1450;background:#11101a;color:#e9e6f6;border:1px solid #7c5cff;border-radius:13px;padding:13px 15px;font-size:13px;line-height:1.5;font-weight:500;display:flex;gap:10px;align-items:flex-start;box-shadow:0 0 0 1px rgba(124,92,255,.3),0 10px 34px rgba(124,92,255,.4);animation:ttIn .35s cubic-bezier(.16,1,.3,1)}
+.tracktoast .tticon{font-size:16px;color:#c7b9ff;filter:drop-shadow(0 0 4px rgba(124,92,255,.8))}
+@keyframes ttIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
 @keyframes ctIn{from{opacity:0;transform:translate(-50%,14px)}to{opacity:1;transform:translate(-50%,0)}}
 .sbgroup{display:flex;flex-direction:column;gap:4px}
 .sbglabel{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6f6b66;padding:0 10px 3px}
@@ -769,6 +772,12 @@ a.wordmark:hover{opacity:.6}
 .sbmap:hover{color:#FFD200}
 .sbfoot{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.08);flex:none}
 .topbar{margin-bottom:2px;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.hotkeys{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+.hk{position:relative;width:40px;height:40px;border-radius:11px;border:1px solid #e7e4e0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .12s,box-shadow .15s,border-color .15s}
+.hk:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,23,42,.12);border-color:#7c5cff}
+.hkic{font-size:18px;line-height:1}
+.hkbadge{position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;border-radius:9px;background:#7c5cff;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #fff}
+.hkbadge.crit{background:#e5484d}
 .gsearch{position:relative;flex:1;min-width:240px;max-width:440px;margin-top:6px}
 .gsic{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px;color:#94a3b8;pointer-events:none}
 .gsinp{width:100%;box-sizing:border-box;padding:11px 14px 11px 36px;border:1px solid #e2e2df;border-radius:11px;background:#fff;font:inherit;font-size:13.5px;outline:none;transition:border-color .15s,box-shadow .15s}
@@ -844,6 +853,10 @@ a.wordmark:hover{opacity:.6}
 .a4signrow{display:flex;align-items:flex-end;gap:8px;font-size:12px;color:#334155}
 .a4line{display:inline-block;width:130px;border-bottom:1px solid #334155;height:14px}
 .a4stamp{width:74px;height:74px;border:1.5px dashed #94a3b8;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#94a3b8;font-family:'IBM Plex Sans',sans-serif}
+.a4tot{margin:8px 0 12px;display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.a4totr{display:flex;gap:14px;font-size:13px;min-width:300px;justify-content:space-between}
+.a4totr.big{font-size:15px;font-weight:800;border-top:1.5px solid #1e293b;padding-top:5px;margin-top:3px}
+.a4sign2{display:flex;flex-direction:column;gap:14px;margin-top:24px}
 @media(max-width:880px){.docsgrid{grid-template-columns:1fr}}
 @media print{
   body{background:#fff!important}
@@ -990,6 +1003,7 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
 <div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки</div><div class="h1"><a class="brandlink" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Перейти на shtarkink.com">Shtark INK <span style="color:#e10000">Flow</span></a></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск: контрагент, ИНН, артикул, сырьё, заявка, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">Ничего не найдено</div></sc-if><sc-for list="{{ searchResults }}" as="r" hint-placeholder-count="3"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
+<div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava">{{ u.avatar }}<i class="ondot"></i></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div></div></sc-if>
 <div class="desc">{{ tabDesc }}</div>
 <div class="actrow"><sc-if value="{{ aiAnalyzable }}" hint-placeholder-val=""><button class="aianalyze" onClick="{{ analyzeScreen }}" disabled="{{ aiBusy }}"><span class="aiana-ic">✦</span> Сделать AI-анализ данных</button></sc-if></div>
@@ -1488,6 +1502,19 @@ window.dispatchEvent(new Event('fbready'));
 <table class="a4tbl"><thead><tr><th>№</th><th>Позиция и количество</th></tr></thead><tbody><sc-for list="{{ dRfpItems }}" as="g" hint-placeholder-count="3"><tr><td>{{ g.n }}</td><td>{{ g.text }}</td></tr></sc-for></tbody></table>
 <p class="a4p">Просим указать цену за единицу, условия и сроки поставки, порядок оплаты. Срок ответа — <b>{{ dRfpDeadline }}</b>. Заранее благодарим за сотрудничество.</p>
 </sc-if>
+<sc-if value="{{ docIsInvoice }}" hint-placeholder-val="">
+<table class="a4tbl"><tbody><tr><td>Поставщик</td><td>ООО «Штарк ИНК», ИНН 7707083893, КПП 770701001, 123022, г. Москва, ул. Промышленная, д. 12</td></tr><tr><td>Банк / р/с</td><td>{{ dInvBank }}</td></tr><tr><td>Покупатель</td><td>{{ dInvBuyer }} · {{ dInvBuyerInn }}</td></tr></tbody></table>
+<table class="a4tbl"><thead><tr><th>№</th><th>Наименование</th><th>Кол-во</th><th>Ед.</th><th>Цена без НДС</th><th>Сумма без НДС</th></tr></thead><tbody><sc-for list="{{ dInvItems }}" as="r" hint-placeholder-count="3"><tr><td>{{ r.n }}</td><td>{{ r.name }}</td><td>{{ r.qty }}</td><td>{{ r.unit }}</td><td>{{ r.price }}</td><td>{{ r.sumNo }}</td></tr></sc-for></tbody></table>
+<div class="a4tot"><div class="a4totr"><span>Итого без НДС:</span><b>{{ dInvTotNo }} ₽</b></div><div class="a4totr"><span>В том числе НДС {{ dInvVatPct }}%:</span><b>{{ dInvVat }} ₽</b></div><div class="a4totr big"><span>Всего к оплате с НДС:</span><b>{{ dInvTotWith }} ₽</b></div></div>
+<p class="a4p">Оплата настоящего счёта означает согласие с условиями поставки. Счёт действителен в течение 5 банковских дней.</p>
+<div class="a4sign2"><div class="a4signrow"><span>Руководитель</span><span class="a4line"></span><span>/ Моисеенко К.И. /</span></div><div class="a4signrow"><span>Главный бухгалтер</span><span class="a4line"></span><span>/ Сергеева Е.А. /</span></div></div>
+</sc-if>
+<sc-if value="{{ docIsSpec }}" hint-placeholder-val="">
+<p class="a4p">Спецификация — неотъемлемая часть договора поставки <b>{{ dSpecContract }}</b>. Поставщик ООО «Штарк ИНК» обязуется поставить, а Покупатель <b>{{ dInvBuyer }}</b> — принять и оплатить продукцию:</p>
+<table class="a4tbl"><thead><tr><th>№</th><th>Наименование</th><th>Кол-во</th><th>Ед.</th><th>Цена б/НДС</th><th>Сумма б/НДС</th><th>НДС {{ dInvVatPct }}%</th><th>Всего с НДС</th></tr></thead><tbody><sc-for list="{{ dSpecItems }}" as="r" hint-placeholder-count="3"><tr><td>{{ r.n }}</td><td>{{ r.name }}</td><td>{{ r.qty }}</td><td>{{ r.unit }}</td><td>{{ r.price }}</td><td>{{ r.sumNo }}</td><td>{{ r.sumVat }}</td><td>{{ r.sumWith }}</td></tr></sc-for></tbody></table>
+<div class="a4tot"><div class="a4totr"><span>Итого без НДС:</span><b>{{ dInvTotNo }} ₽</b></div><div class="a4totr"><span>В том числе НДС {{ dInvVatPct }}%:</span><b>{{ dInvVat }} ₽</b></div><div class="a4totr big"><span>Всего с НДС:</span><b>{{ dInvTotWith }} ₽</b></div></div>
+<div class="a4sign2"><div class="a4signrow"><span>Поставщик / ООО «Штарк ИНК»</span><span class="a4line"></span><span>/ Моисеенко К.И. /</span></div><div class="a4signrow"><span>Покупатель / {{ dInvBuyer }}</span><span class="a4line"></span><span>/ ____________ /</span></div></div>
+</sc-if>
 <div class="a4sign"><div class="a4signrow"><span>Генеральный директор</span><span class="a4line"></span><span>/ Моисеенко К.И. /</span></div><div class="a4stamp">М.П.</div></div>
 </div>
 </div>
@@ -1576,10 +1603,10 @@ window.dispatchEvent(new Event('fbready'));
 <div class="card"><div class="sec">Маржинальность продаж · {{ salesCount }}</div>
 <div class="toolbar"><div class="field"><span class="lbl">Транспортный пул за период, ₽</span><input class="inp num w120" type="number" value="{{ salesTransport }}" onInput="{{ onSalesTransport }}"></div><div class="field"><span class="lbl">Распределять</span><span class="segrow"><button class="{{ transWeightCls }}" onClick="{{ setTransWeight }}">по весу</button><button class="{{ transValueCls }}" onClick="{{ setTransValue }}">по стоимости</button></span></div></div>
 <sc-if value="{{ salesEmpty }}" hint-placeholder-val=""><div class="hint">Пока нет отгрузок. Запишите первую через форму выше.</div></sc-if>
-<div class="scroll"><table><thead><tr><th class="l">№</th><th class="l">Дата</th><th class="l">Клиент</th><th class="l">Продукт</th><th>Кг</th><th>Выручка ₽</th><th>Себест. ₽</th><th>Транспорт ₽</th><th>Маржа ₽</th><th>%</th><th class="l"></th></tr></thead>
-<tbody><sc-for list="{{ saleRows }}" as="s" hint-placeholder-count="2"><tr><td class="l mono">{{ s.no }}</td><td class="l mono">{{ s.date }}</td><td class="l nm">{{ s.client }}</td><td class="l">{{ s.product }}</td><td class="mono">{{ s.qty }}</td><td class="mono">{{ s.rev }}</td><td class="mono">{{ s.cost }}</td><td class="mono">{{ s.transp }}</td><td class="mono {{ s.mcls }}">{{ s.margin }}</td><td class="mono {{ s.mcls }}">{{ s.mpct }}</td><td class="l"><button class="ulink del" onClick="{{ s.remove }}">×</button></td></tr></sc-for></tbody>
-<tfoot><tr class="tfoot"><td class="l">ИТОГО</td><td></td><td></td><td></td><td></td><td class="mono">{{ sumRev }}</td><td class="mono">{{ sumCost }}</td><td class="mono">{{ sumTr }}</td><td class="mono {{ sumMcls }}">{{ sumMar }}</td><td class="mono {{ sumMcls }}">{{ sumMpct }}</td><td></td></tr></tfoot></table></div>
-<div class="hint">Чистая маржа = Выручка − Себестоимость рецептуры (по курсу ЦБ) − распределённый транспорт. Транспортный пул распределяется по выбранному принципу.</div>
+<div class="scroll"><table><thead><tr><th class="l">№</th><th class="l">Дата</th><th class="l">Клиент</th><th class="l">Продукт</th><th>Кг</th><th>Выручка с НДС ₽</th><th>Выручка без НДС ₽</th><th>Себест. без НДС ₽</th><th>Транспорт ₽</th><th>Маржа ₽</th><th>%</th><th class="l"></th></tr></thead>
+<tbody><sc-for list="{{ saleRows }}" as="s" hint-placeholder-count="2"><tr><td class="l mono">{{ s.no }}</td><td class="l mono">{{ s.date }}</td><td class="l nm">{{ s.client }}</td><td class="l">{{ s.product }}</td><td class="mono">{{ s.qty }}</td><td class="mono">{{ s.rev }}</td><td class="mono">{{ s.revNoVat }}</td><td class="mono">{{ s.cost }}</td><td class="mono">{{ s.transp }}</td><td class="mono {{ s.mcls }}">{{ s.margin }}</td><td class="mono {{ s.mcls }}">{{ s.mpct }}</td><td class="l"><button class="ulink del" onClick="{{ s.remove }}">×</button></td></tr></sc-for></tbody>
+<tfoot><tr class="tfoot"><td class="l">ИТОГО</td><td></td><td></td><td></td><td></td><td></td><td class="mono">{{ sumRev }}</td><td class="mono">{{ sumCost }}</td><td class="mono">{{ sumTr }}</td><td class="mono {{ sumMcls }}">{{ sumMar }}</td><td class="mono {{ sumMcls }}">{{ sumMpct }}</td><td></td></tr></tfoot></table></div>
+<div class="hint">Чистая маржа очищена от НДС 22%: Выручка_без_НДС (= с НДС ÷ 1.22) − Себестоимость рецептуры с логистикой (без НДС) − Транспорт_без_НДС. «Грязная» выручка (с НДС) показана отдельной колонкой.</div>
 </div>
 </sc-if>
 
@@ -1773,6 +1800,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="fgrid">
 <div class="fg"><label>ФИО менеджера за поставку</label><input class="inp" value="{{ editCard.manager }}" onInput="{{ editCard.onManager }}"></div>
 </div>
+<div class="genrow"><button class="btn dark" onClick="{{ editCard.sendApproval }}"><span>📨</span> Отправить на согласование</button><span class="hint">Создаст задачу менеджеру (+48 ч, высокий приоритет) и уведомит его через АЯ.</span></div>
 </div>
 <div class="modalft"><div class="msum"><span class="st {{ editCard.statusCls }}">{{ editCard.status }}</span><span><span class="pk">Сумма, ₽</span><span class="pv">{{ editCard.sumRub }}</span></span><span><span class="pk">€ без НДС</span><span class="pv">{{ editCard.eurNoVat }}</span></span><span><span class="pk">Полная СС, ₽</span><span class="pv">{{ editCard.fullRub }}</span></span><span class="mr"><button class="btn" onClick="{{ editCard.print }}">Печать заявки</button><button class="btn" onClick="{{ editCard.remove }}">Удалить</button><button class="btn dark" onClick="{{ closeEdit }}">Готово</button></span></div></div>
 </div></div>
@@ -1895,6 +1923,7 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 </div>
 </sc-if>
+<sc-if value="{{ trackToastHas }}" hint-placeholder-val=""><div class="tracktoast"><span class="tticon">👁</span><span>{{ trackToast }}</span></div></sc-if>
 <sc-if value="{{ claudeToast }}" hint-placeholder-val=""><div class="claudetoast"><span class="cticon">📋</span>Данные для Claude Pro скопированы в буфер! Вставьте их в ваш рабочий чат Claude (Ctrl+V)</div></sc-if>
 <sc-if value="{{ aiOpen }}" hint-placeholder-val="">
 <div class="aibackdrop" onClick="{{ aiClose }}"></div>
@@ -1932,7 +1961,7 @@ class Component extends DCLogic {
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {},
     chat: [], chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false,
     tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '', sales: [], saleDraft: null, saleErr: '', salesTransport: 0, salesTransMode: 'weight', cashStart: 0, payMoves: {}, paySplits: {}, payMoveEdit: '', logistics: [], logDraft: null, logErr: '', payreqs: [], prDraft: null, prErr: '', stmtMsg: '',
-    docType: 'power', docData: { no: '14', date: '', empName: 'Иванов Иван Иванович', empPost: 'менеджер по закупкам', empPassport: '45 09 № 123456, выдан ОВД «Тверской» г. Москвы 12.03.2015, код 770-001', supplier: 'ООО «ХимПоставка»', supplierAddr: 'г. Москва, ул. Промышленная, д. 7', goods: 'Пигмент синий (фталоцианиновый) — 500 кг\nРастворитель НефрасС2 — 200 л\nСтабилизатор СТ-4 — 50 кг', term: '10 дней', route: 'Москва — Санкт-Петербург', car: 'Volvo FH, гос. № А123ВС 777', driver: 'Петров Пётр Петрович', driverDoc: 'вод. удостоверение 99 12 345678', cargo: '1200 кг / 4,0 м³, 6 паллет', cargoName: 'Сырьё для производства чернил', rfpSupplier: 'ООО «ХимПоставка»', rfpItems: 'Пигмент синий (фталоцианиновый) — 500 кг\nПигмент жёлтый — 300 кг\nРастворитель НефрасС2 — 200 л', rfpDeadline: '5 рабочих дней' },
+    docType: 'invoice', docData: { no: '14', date: '', invBuyer: 'ООО «Печатный двор»', invBuyerInn: 'ИНН 7712345678 / КПП 771201001', invBank: 'АО «Альфа-Банк», р/с 40702810000000012345, БИК 044525593, к/с 30101810200000000593', invItems: 'Чёрнила флексо Cyan | 500 | кг | 480\nЧёрнила флексо Magenta | 300 | кг | 510\nРастворитель этилацетат | 200 | л | 95', empName: 'Иванов Иван Иванович', empPost: 'менеджер по закупкам', empPassport: '45 09 № 123456, выдан ОВД «Тверской» г. Москвы 12.03.2015, код 770-001', supplier: 'ООО «ХимПоставка»', supplierAddr: 'г. Москва, ул. Промышленная, д. 7', goods: 'Пигмент синий (фталоцианиновый) — 500 кг\nРастворитель НефрасС2 — 200 л\nСтабилизатор СТ-4 — 50 кг', term: '10 дней', route: 'Москва — Санкт-Петербург', car: 'Volvo FH, гос. № А123ВС 777', driver: 'Петров Пётр Петрович', driverDoc: 'вод. удостоверение 99 12 345678', cargo: '1200 кг / 4,0 м³, 6 паллет', cargoName: 'Сырьё для производства чернил', rfpSupplier: 'ООО «ХимПоставка»', rfpItems: 'Пигмент синий (фталоцианиновый) — 500 кг\nПигмент жёлтый — 300 кг\nРастворитель НефрасС2 — 200 л', rfpDeadline: '5 рабочих дней' },
     peekIdx: 0, peekDismissed: {}, peekClosed: false, peekToast: '',
     tgToken: '', tgChatId: '', tgFwd: false, tgEditToken: '', tgEditChatId: '', tgStatus: '',
     cloudHistory: [], cloudName: '', cloudCfgText: '', cloudWsId: 'workspace',
@@ -2669,12 +2698,17 @@ class Component extends DCLogic {
     }));
     return {
       aiOpen: !!S.aiOpen, aiBtnCls: S.aiOpen ? 'aifab open' : 'aifab',
-      aiToggle: () => this.setState(st => ({ aiOpen: !st.aiOpen })), aiClose: () => set({ aiOpen: false }), runGlobalAudit: () => this.runGlobalAiAudit(), copyClaude: () => this.copyAppContextForClaude(), claudeToast: !!S.claudeToast,
+      aiToggle: () => this.setState(st => ({ aiOpen: !st.aiOpen })), aiClose: () => set({ aiOpen: false }), runGlobalAudit: () => this.runGlobalAiAudit(), copyClaude: () => this.copyAppContextForClaude(), claudeToast: !!S.claudeToast, trackToast: S.trackToast || '', trackToastHas: !!S.trackToast,
       aiMsgs: msgs, aiHasMsgs: msgs.length > 0, aiNoMsgs: msgs.length === 0, aiInput: S.aiInput || '', aiBusy: !!S.aiBusy,
       onAiInput: (e) => set({ aiInput: e.target.value }),
       onAiKey: (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.aiSend(); } },
       aiSend: () => this.aiSend(), aiClear: () => set({ aiMessages: [] }),
       analyzeScreen: () => this.analyzeScreen(), aiAnalyzable: !['users', 'cloud', 'catalog'].includes(S.tab),
+      hkOneC: () => set({ tab: 'onec', navOpen: false }), hkRecipe: () => set({ tab: 'recipe', navOpen: false }), hkBdds: () => set({ tab: 'treas30', navOpen: false }), hkAudit: () => this.runGlobalAiAudit(),
+      hkProc: () => set({ tab: 'proc', navOpen: false }), hkPay: () => set({ tab: 'treas30', navOpen: false }), hkTasks: () => set({ tab: 'tasks', navOpen: false }), hkNewBuy: () => this.hkNewPurchase(),
+      hkProcN: String((S.purchases || []).filter(p => !/отмен|получено|на склад/.test(String(p.status || '').toLowerCase())).length), hkProcHas: (S.purchases || []).some(p => !/отмен|получено|на склад/.test(String(p.status || '').toLowerCase())),
+      hkPayN: String((S.payreqs || []).filter(p => p.status !== 'Оплачен' && p.status !== 'Отклонён').length), hkPayHas: (S.payreqs || []).some(p => p.status !== 'Оплачен' && p.status !== 'Отклонён'),
+      hkTaskN: String((S.tasks || []).filter(t => this.isTaskExec(t, S.currentUser ? S.currentUser.id : '') && !this.taskDone(t)).length), hkTaskHas: (S.tasks || []).some(t => this.isTaskExec(t, S.currentUser ? S.currentUser.id : '') && !this.taskDone(t)),
       aiModel: S.aiModel, onAiModel: (e) => set({ aiModel: e.target.value }),
       aiCfgOpen: !!S.aiCfgOpen, aiCfgToggle: () => set({ aiCfgOpen: !S.aiCfgOpen }), aiKeySet: !!S.aiKey,
       aiKeyEdit: S.aiKeyEdit || '', onAiKeyEdit: (e) => set({ aiKeyEdit: e.target.value }),
@@ -2941,6 +2975,7 @@ class Component extends DCLogic {
     const cu = this.state.currentUser, who = cu ? cu.name : '—';
     const m = { 'Принята': '👌 Принята в работу', 'В работе': '▶️ Взята в работу', 'Выполнена': '✅ Выполнена', 'Новая': '↩️ Возвращена' };
     if (m[status]) this.postSystemNote(m[status] + ': «' + t.title + '» (' + who + ')', who);
+    if (t.docRef || t.track) this.triggerTrackingNotification({ name: 'Задача: ' + t.title, rejectReason: '' }, t.status, status);
   }
   startReject(id) { this.setState({ taskRejecting: id, taskRejectReason: '' }); }
   cancelReject() { this.setState({ taskRejecting: '', taskRejectReason: '' }); }
@@ -3147,7 +3182,7 @@ class Component extends DCLogic {
 
   buildIndex() {
     const d = this.data;
-    this.vat = d.meta.vat_rate;
+    this.vat = 0.22;
     this.rawByName = new Map(d.raw_materials.map(m => [this.norm(m.name), m]));
     this.semiByName = new Map(d.semi_products.map(s => [this.norm(s.name), s]));
     this.recByOwner = new Map();
@@ -3380,6 +3415,24 @@ class Component extends DCLogic {
   }
 
   // Создать заявку на закупку из потребности и открыть форму
+  // Отправить заявку на закупку на согласование: статус + авто-задача менеджеру + уведомление АЯ
+  sendPurchaseApproval(id) {
+    const S = this.state; const p = (S.purchases || []).find(x => x.id === id); if (!p) return;
+    const mgrName = (p.manager || '').trim();
+    const u = (S.users || []).find(x => String(x.name || '').trim().toLowerCase() === mgrName.toLowerCase());
+    this.setState({ purchases: (S.purchases || []).map(x => x.id === id ? { ...x, approvalStatus: 'на согласовании' } : x) });
+    this.postSystemNote('📦 Заявка на закупку №' + (p.no || '—') + ' (' + (p.material || '—') + ', ' + (p.supplier || '—') + ') отправлена на согласование' + (mgrName ? ' → ' + mgrName : ''), S.currentUser ? S.currentUser.name : '—');
+    if (u) {
+      this.createTaskFromDocument('Заявка на закупку', { no: p.no || '—', id: p.id, initiator: p.initiator || (S.currentUser ? S.currentUser.name : '—'), executorId: u.id, supplier: p.supplier, material: p.material, amount: (Number(p.qty) || 0) * (Number(p.priceEur) || 0) });
+      this.triggerAiWorkflowNotification('Заявка на закупку', 'assign', { no: p.no || '—', initiator: p.initiator || (S.currentUser ? S.currentUser.name : '—'), executorId: u.id, status: 'на согласовании' });
+    }
+  }
+  hkNewPurchase() {
+    const id = 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+    const cu = this.state.currentUser;
+    const p = { id, no: String(this.nextNo(this.state.purchases)), reqDate: this.ymd(new Date()), orderDate: '', shipDate: '', vesselDate: '', arriveDate: '', week: '', supplier: '', buyer: '', country: '', market: 'Внутренний', reqId: '', proforma: '', terms: '', route: '', carrier: '', container: '', material: '', qty: 0, priceEur: 0, currency: '€', curRate: 0, transport: 0, customs: 0, prepay: 0, status: 'новая', approvalStatus: 'на рассмотрении', priceApproval: '', deliveryTerm: '', comment: '', initiator: cu ? cu.name : '', manager: '', payTerms: '', paid: 0, payDate: '' };
+    this.setState({ purchases: [...(this.state.purchases || []), p], editId: id, tab: 'proc', navOpen: false });
+  }
   createPurchaseFor(name, qty) {
     const S = this.state;
     const supMap = this.topByMaterial('supplier'), termMap = this.topByMaterial('payTerms');
@@ -3870,6 +3923,41 @@ class Component extends DCLogic {
     try { localStorage.setItem('inkflow_payreqs', JSON.stringify(next)); } catch (e) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { payreqs: next }, { merge: true }).catch(() => {}); } catch (e) {} }
   }
+  // ===== Workflow: авто-задача из документа + уведомление АЯ =====
+  createTaskFromDocument(docType, docData) {
+    const cu = this.state.currentUser;
+    const execId = docData.executorId || docData.approverId; if (!execId) return null;
+    const u = (this.state.users || []).find(x => x.id === execId);
+    const due = this.ymd(new Date(Date.now() + 48 * 3600000));
+    const title = docType + ' №' + (docData.no || '—') + ' от ' + (docData.initiator || (cu ? cu.name : '—'));
+    const desc = 'Необходимо отработать/согласовать документ.' + (docData.supplier ? ' Контрагент: ' + docData.supplier + '.' : '') + (docData.material ? ' Материал: ' + docData.material + '.' : '') + (docData.amount ? ' Сумма: ' + this.fmt(docData.amount) + ' ₽.' : '');
+    const task = { id: 't_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), title: title.slice(0, 200), executors: [{ id: execId, name: u ? u.name : '—' }], authorId: cu ? cu.id : '', author: cu ? cu.name : '—', due, dueTime: '', desc, priority: 'Высокий', status: 'Новая', rejectReason: '', thread: [], docRef: { type: docType, id: docData.id || '' }, createdAt: Date.now(), doneAt: 0 };
+    this.writeTasks([task, ...(this.state.tasks || [])].slice(0, 500));
+    return task;
+  }
+  triggerAiWorkflowNotification(docType, action, docData) {
+    const execName = (this.state.users.find(u => u.id === (docData.executorId || docData.approverId)) || {}).name || '—';
+    const initiator = docData.initiator || (this.state.currentUser ? this.state.currentUser.name : '—');
+    const due = this.dmFull(this.ymd(new Date(Date.now() + 48 * 3600000)));
+    let msg;
+    if (action === 'assign') msg = '🤖 АЯ: ' + execName + ', вам назначена новая задача по «' + docType + ' №' + (docData.no || '—') + '» от ' + initiator + '. Срок: ' + due + '. Статус: ' + (docData.status || 'на согласовании') + '.';
+    else if (action === 'reject') msg = '🤖 АЯ: ' + initiator + ', документ «' + docType + ' №' + (docData.no || '—') + '» отклонён' + (docData.rejectReason ? ' (причина: ' + docData.rejectReason + ')' : '') + '. Требуется доработка.';
+    else msg = '🤖 АЯ: ' + initiator + ', по документу «' + docType + ' №' + (docData.no || '—') + '» новый статус: ' + (docData.status || '') + '.';
+    this.postSystemNote(msg, 'АЯ');
+    this.pushTrackToast(msg);
+  }
+  // Экранный неоновый Toast о смене статуса отслеживаемого документа/задачи (5 сек)
+  pushTrackToast(text) {
+    this.setState({ trackToast: text }); clearTimeout(this._trackToastT);
+    this._trackToastT = setTimeout(() => this.setState({ trackToast: '' }), 5000);
+  }
+  triggerTrackingNotification(docData, oldStatus, newStatus) {
+    if (!docData || docData.isTracked === false || docData.track === false) {}
+    const who = this.state.currentUser ? this.state.currentUser.name : '—';
+    const name = docData.name || docData.title || ((docData.docType || 'Документ') + ' №' + (docData.no || '—'));
+    const msg = '🤖 АЯ: Внимание! Статус отслеживаемой «' + name + '» изменён с «' + (oldStatus || '—') + '» на «' + newStatus + '». Действие совершил: ' + who + '.' + (docData.rejectReason ? ' Причина: ' + docData.rejectReason : '');
+    this.postSystemNote(msg, 'АЯ'); this.pushTrackToast(msg);
+  }
   prApproverName(id) { const u = (this.state.users || []).find(x => x.id === id); return u ? u.name : '—'; }
   savePayReq(send) {
     const S = this.state, d = S.prDraft || this.emptyPayReq();
@@ -3880,7 +3968,7 @@ class Component extends DCLogic {
     const pr = { id: d.id || ('pr_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), initiator: d.initiator || (cu ? cu.name : '—'), initiatorId: d.initiatorId || (cu ? cu.id : ''), approverId: d.approverId || '', supplier: (d.supplier || '').trim(), amount: Number(d.amount) || 0, date: d.date || this.ymd(new Date()), purpose: (d.purpose || '').trim(), status: send ? 'На согласовании' : (d.status || 'Черновик'), track: d.track !== false, createdAt: d.createdAt || Date.now() };
     this.writePayreqs([pr, ...(S.payreqs || []).filter(x => x.id !== pr.id)]);
     this.setState({ prDraft: null, prErr: '' });
-    if (send) this.postSystemNote('🧾 На согласование: платёж «' + pr.supplier + '» на ' + this.fmt(pr.amount) + ' ₽ от ' + pr.initiator + ' → согласующий ' + this.prApproverName(pr.approverId), cu ? cu.name : '—');
+    if (send) { this.postSystemNote('🧾 На согласование: платёж «' + pr.supplier + '» на ' + this.fmt(pr.amount) + ' ₽ от ' + pr.initiator + ' → согласующий ' + this.prApproverName(pr.approverId), cu ? cu.name : '—'); this.createTaskFromDocument('Заявка на платёж', { no: pr.no || pr.id.slice(-4), id: pr.id, initiator: pr.initiator, executorId: pr.approverId, supplier: pr.supplier, amount: pr.amount, status: 'на согласовании' }); this.triggerAiWorkflowNotification('Заявка на платёж', 'assign', { no: pr.no || pr.id.slice(-4), initiator: pr.initiator, approverId: pr.approverId, status: 'на согласовании' }); }
   }
   setPayReqStatus(id, status) {
     const pr = (this.state.payreqs || []).find(x => x.id === id); if (!pr) return;
@@ -3888,6 +3976,7 @@ class Component extends DCLogic {
     this.writePayreqs(next);
     const cu = this.state.currentUser, who = cu ? cu.name : '—';
     this.postSystemNote('🧾 Платёж «' + pr.supplier + '» (' + this.fmt(pr.amount) + ' ₽) → статус «' + status + '» (' + who + '). Инициатор: ' + pr.initiator + ', согласующий: ' + this.prApproverName(pr.approverId), who);
+    if (pr.track) this.triggerAiWorkflowNotification('Заявка на платёж', (status === 'Отклонён' ? 'reject' : 'status'), { no: pr.no || pr.id.slice(-4), initiator: pr.initiator, approverId: pr.approverId, status, rejectReason: pr.rejectReason || '' });
   }
   togglePayReqTrack(id) { const next = (this.state.payreqs || []).map(x => x.id === id ? { ...x, track: !x.track } : x); this.writePayreqs(next); }
   // Загрузка банковской выписки .txt с разнесением платежей по заявкам (как в 1С)
@@ -4032,9 +4121,13 @@ class Component extends DCLogic {
       const revRub = this.excelRound(q * price * rate, 2);
       const costRub = this.excelRound((this.costOf(s.product, loss) * eurRate + this.productLandCost(s.product)) * q, 2);
       const alloc = pool > 0 ? (mode === 'weight' ? (totW ? pool * q / totW : 0) : (totV ? pool * revRub / totV : 0)) : 0;
-      const margin = revRub - costRub - alloc; const mpct = revRub ? margin / revRub * 100 : 0;
-      tRev += revRub; tCost += costRub; tTr += alloc; tMar += margin;
-      return { id: s.id, no: s.no || '—', date: this.dmFull(s.date), client: s.client || '—', product: s.product || '—', qty: this.fmt(q, 1), rev: this.fmt(revRub), cost: this.fmt(costRub), transp: this.fmt(alloc), margin: this.fmt(margin), mpct: this.fmt(mpct, 1) + '%', mcls: margin >= 0 ? 'mpos' : 'mneg', remove: () => this.askDelete('продажу клиенту «' + (s.client || '') + '»', () => this.writeSales((this.state.sales || []).filter(x => x.id !== s.id))) };
+      const vk = 1 + this.vat;
+      const revNoVat = this.excelRound(revRub / vk, 2);
+      const costRubNoVat = costRub;
+      const allocNoVat = this.excelRound(alloc / vk, 2);
+      const margin = this.excelRound(revNoVat - costRubNoVat - allocNoVat, 2); const mpct = revNoVat ? margin / revNoVat * 100 : 0;
+      tRev += revNoVat; tCost += costRubNoVat; tTr += allocNoVat; tMar += margin;
+      return { id: s.id, no: s.no || '—', date: this.dmFull(s.date), client: s.client || '—', product: s.product || '—', qty: this.fmt(q, 1), rev: this.fmt(revRub), revNoVat: this.fmt(revNoVat), cost: this.fmt(costRubNoVat), transp: this.fmt(allocNoVat), margin: this.fmt(margin), mpct: this.fmt(mpct, 1) + '%', mcls: margin >= 0 ? 'mpos' : 'mneg', remove: () => this.askDelete('продажу клиенту «' + (s.client || '') + '»', () => this.writeSales((this.state.sales || []).filter(x => x.id !== s.id))) };
     });
     return {
       isSales: true,
@@ -4163,20 +4256,36 @@ class Component extends DCLogic {
     const dateLabel = d.date ? this.dmFull(d.date) : this.dmFull(this.ymd(new Date()));
     const goodsList = String(d.goods || '').split('\n').filter(x => x.trim());
     const rfpList = String(d.rfpItems || '').split('\n').filter(x => x.trim());
+    // Счёт на оплату: строки «Наименование | Кол-во | Ед | Цена без НДС»
+    const vat = this.vat || 0.22;
+    const invRaw = String(d.invItems || '').split('\n').filter(x => x.trim()).map((ln, i) => {
+      const p = ln.split('|').map(x => x.trim());
+      const qty = Number(p[1]) || 0, price = Number(p[3]) || 0; const sumNo = this.excelRound(qty * price, 2);
+      return { n: i + 1, name: p[0] || '—', qty: this.fmt(qty, 2), unit: p[2] || 'шт', price: this.fmt(price, 2), sumNo: this.fmt(sumNo, 2), _sumNo: sumNo };
+    });
+    const invTotNo = invRaw.reduce((s, r) => s + r._sumNo, 0);
+    const invVat = this.excelRound(invTotNo * vat, 2);
+    const invTotWith = this.excelRound(invTotNo + invVat, 2);
     const FT = {
       power: [['Имя сотрудника', 'empName', 1], ['Должность', 'empPost', 0], ['Паспортные данные', 'empPassport', 2], ['Поставщик', 'supplier', 0], ['Адрес поставщика', 'supplierAddr', 1], ['Список ТМЦ (каждая позиция с новой строки)', 'goods', 2], ['Срок действия', 'term', 0]],
       forward: [['Маршрут (пункт А — пункт Б)', 'route', 1], ['Данные авто', 'car', 0], ['ФИО водителя', 'driver', 0], ['Документ водителя', 'driverDoc', 1], ['Наименование груза', 'cargoName', 1], ['Вес / объём груза', 'cargo', 0]],
       rfp: [['Поставщик', 'rfpSupplier', 1], ['Позиции для оценки (каждая с новой строки)', 'rfpItems', 2], ['Срок ответа', 'rfpDeadline', 0]],
+      invoice: [['Покупатель (наименование)', 'invBuyer', 1], ['Покупатель ИНН/КПП', 'invBuyerInn', 1], ['Банк, р/с поставщика', 'invBank', 2], ['Позиции (Наименование | Кол-во | Ед | Цена без НДС)', 'invItems', 2]],
+      spec: [['Покупатель (наименование)', 'invBuyer', 1], ['№ договора поставки', 'specContract', 1], ['Позиции (Наименование | Кол-во | Ед | Цена без НДС)', 'invItems', 2]],
     };
     const fields = (FT[t] || []).map(f => ({ label: f[0], value: d[f[1]] || '', onInput: upd(f[1]), area: f[2] === 2, notArea: f[2] !== 2 }));
-    const titleT = { power: 'Доверенность', forward: 'Поручение экспедитору на перевозку', rfp: 'Запрос коммерческого предложения' };
+    const titleT = { power: 'Доверенность', forward: 'Поручение экспедитору на перевозку', rfp: 'Запрос коммерческого предложения', invoice: 'Счёт на оплату', spec: 'Спецификация к договору поставки' };
     return {
       isDocs: true,
       docType: t, onDocType: (e) => set({ docType: e.target.value }),
-      docTypeOpts: [['power', 'Доверенность'], ['forward', 'Поручение экспедитору'], ['rfp', 'Запрос КП']].map(o => ({ v: o[0], label: o[1] })),
+      docTypeOpts: [['invoice', 'Счёт на оплату'], ['spec', 'Спецификация'], ['power', 'Доверенность'], ['forward', 'Поручение экспедитору'], ['rfp', 'Запрос КП']].map(o => ({ v: o[0], label: o[1] })),
       docFields: fields, docNoInput: d.no || '', onDocNo: upd('no'), docDateInput: d.date || '', onDocDate: upd('date'),
       docNo: d.no || '—', docDate: dateLabel, docTitle: titleT[t],
-      docIsPower: t === 'power', docIsForward: t === 'forward', docIsRfp: t === 'rfp',
+      docIsPower: t === 'power', docIsForward: t === 'forward', docIsRfp: t === 'rfp', docIsInvoice: t === 'invoice', docIsSpec: t === 'spec',
+      dSpecContract: d.specContract || '—',
+      dSpecItems: invRaw.map(r => ({ ...r, sumVat: this.fmt(this.excelRound(r._sumNo * vat, 2), 2), sumWith: this.fmt(this.excelRound(r._sumNo * (1 + vat), 2), 2) })),
+      dInvBuyer: d.invBuyer || '—', dInvBuyerInn: d.invBuyerInn || '', dInvBank: d.invBank || '', dInvVatPct: Math.round(vat * 100),
+      dInvItems: invRaw, dInvEmpty: invRaw.length === 0, dInvTotNo: this.fmt(invTotNo, 2), dInvVat: this.fmt(invVat, 2), dInvTotWith: this.fmt(invTotWith, 2),
       dEmpName: d.empName || '—', dEmpPost: d.empPost || '', dEmpPassport: d.empPassport || '—', dSupplier: d.supplier || '—', dSupplierAddr: d.supplierAddr || '', dTerm: d.term || '10 дней',
       dGoods: goodsList.map((g, i) => ({ n: i + 1, text: g })), dGoodsEmpty: goodsList.length === 0,
       dRoute: d.route || '—', dCar: d.car || '—', dDriver: d.driver || '—', dDriverDoc: d.driverDoc || '', dCargo: d.cargo || '—', dCargoName: d.cargoName || '—',
@@ -5143,11 +5252,15 @@ class Component extends DCLogic {
       component: r.name, planKg: this.excelRound(r.planVol, 1), factKg: this.excelRound(r.actVol, 1), deltaKg: this.excelRound(r.actVol - r.planVol, 1), deviationPct: this.excelRound(r.volPct, 1),
     }));
     const rate = Number(this.state.rate) || 0, vat = this.vat;
-    let payDue = 0; for (const p of (this.state.purchases || [])) { if (/отмен/.test(String(p.status || '').toLowerCase())) continue; const c = this.purchaseCalc(p, rate, vat); payDue += Math.max(0, c.fullRub - (Number(p.paid) || 0)); }
+    let payDue = 0, vatToClaim = 0; for (const p of (this.state.purchases || [])) { if (/отмен/.test(String(p.status || '').toLowerCase())) continue; const c = this.purchaseCalc(p, rate, vat); payDue += Math.max(0, c.fullRub - (Number(p.paid) || 0)); vatToClaim += (c.eurNoVat * rate + (c.transport || 0) + (c.customs || 0)) * vat; }
+    let vatToPay = 0; for (const s of (this.state.sales || [])) { const rev = (Number(s.qty) || 0) * (Number(s.price) || 0) * (Number(s.rate) || 1); vatToPay += rev - rev / (1 + vat); }
+    const vatBalance = this.excelRound(vatToPay - vatToClaim, 0);
     const gap = this.cashGapInfo();
     const auditContext = {
       курсЕвро: rate, потериПроцент: lossPct, стоимостьБракаРуб: brakRub,
       балансКассыРуб: Number(this.state.cashStart) || 0, кОплатеПоставщикамРуб: this.excelRound(payDue, 0),
+      totalVatToPay: this.excelRound(vatToPay, 0), totalVatToClaim: this.excelRound(vatToClaim, 0),
+      итогПоНДС: vatBalance > 0 ? ('доплатить в бюджет ' + this.fmt(vatBalance, 0) + ' ₽') : ('вычет/возврат ' + this.fmt(-vatBalance, 0) + ' ₽'),
       кассовыйРазрыв: gap.gap ? ('да, ' + gap.day + ' не хватает ' + gap.amount + ' ₽') : 'нет',
       перерасходСырья: over,
       totalFrozenCash: this._frozen ? this._frozen.totalFrozenCash : 0,
@@ -5157,7 +5270,7 @@ class Component extends DCLogic {
     if (!hasData) { this.setState({ prodAiBusy: false, prodAiSummary: '✦ АЯ: Данные для перекрёстного аудита отсутствуют. Загрузите отчёты из 1С (план-факт расхода и заявки на оплату).' }); return; }
     if (!this.state.aiKey) { this.setState({ prodAiBusy: false, prodAiSummary: '⚙ Укажите ваш API-ключ OpenRouter в настройках (кнопка «⚙ AI-ключ» в окне АЯ).' }); return; }
     this.setState({ prodAiBusy: true, prodAiSummary: '✦ АЯ проводит перекрёстный аудит цеха, снабжения и кассы…' });
-    const sys = 'Ты — финансовый директор холдинга Shtark INK (завод спиртовых красок ЛКМ). Проанализируй финансово-логистическое состояние завода. Опирайся СТРОГО на цифры из JSON.\n\nСтруктура ответа:\n\n✦ ФИНАНСОВО-ИНЖЕНЕРНЫЙ АУДИТ АЯ:\n\n1. 🔴 КРИТИЧЕСКИЕ АНОМАЛИИ В ЦЕХУ:\n[Топ-перерасходы сырья с цифрами. Свяжи перерасход пигментов с колористикой/калибровкой дозаторов диссольвера, лаков — с замывкой реакторов и несливаемыми остатками.]\n\n2. ⚠️ ФИНАНСОВЫЕ РИСКИ:\n[Дай жёсткую оценку эффективности использования оборотного капитала: укажи, сколько денег заморожено на складе (используй totalFrozenCash), назови позиции-неликвиды (топНеликвидов), оцени глубину кассовых разрывов в календаре на 30 дней, как курс евро бьёт по импортным закупкам.]\n\n3. 🛠 СХЕМА СТАБИЛИЗАЦИИ КАССЫ И ТЕХЗАДАНИЕ:\n[Предложи схему реструктуризации платежей (перенос дат, дробление долей 30/40/30) для устранения разрыва. Дай указания мастеру цеха и снабжению.]\n\nИспользуй терминологию: Delta E, вязкость ВЗ-4, сухой остаток, летучесть растворителей, оборачиваемость склада, кассовый разрыв, реструктуризация платежей. Пиши сухо, по делу, с цифрами.';
+    const sys = 'Ты — финансовый директор завода Shtark INK (спиртовые краски ЛКМ). Проанализируй финансово-логистическое состояние, опираясь СТРОГО на цифры из JSON.\n\nСтруктура ответа:\n\n✦ ФИНАНСОВО-ИНЖЕНЕРНЫЙ АУДИТ АЯ:\n\n1. 🔴 КРИТИЧЕСКИЕ АНОМАЛИИ В ЦЕХУ:\n[Топ-перерасходы сырья с цифрами. Свяжи перерасход пигментов с колористикой/калибровкой дозаторов диссольвера, лаков — с замывкой реакторов и несливаемыми остатками.]\n\n2. ⚠️ ФИНАНСОВЫЕ РИСКИ И НАЛОГИ:\n[Оцени эффективность оборотного капитала: сколько заморожено на складе (totalFrozenCash), назови неликвиды (топНеликвидов), глубину кассовых разрывов. ОБЯЗАТЕЛЬНО оцени налоговый баланс по НДС 22%: сравни входящий НДС от закупок (totalVatToClaim) и исходящий НДС от продаж (totalVatToPay), подсчитай прогнозный итог (итогПоНДС) — сколько доплатить в бюджет или вернуть вычетом.]\n\n3. 🛠 СХЕМА СТАБИЛИЗАЦИИ И ТЕХЗАДАНИЕ:\n[Схема реструктуризации платежей (перенос дат, дробление 30/40/30) для устранения разрыва. Рекомендация снабжению по оптимизации графика закупок, чтобы временно снизить налоговую нагрузку по НДС. Указания мастеру цеха.]\n\nТерминология: Delta E, вязкость ВЗ-4, сухой остаток, оборачиваемость склада, кассовый разрыв, входящий/исходящий НДС, вычет. Пиши сухо, с цифрами.';
     const user = 'Контекст для перекрёстного аудита (JSON):\n' + JSON.stringify(auditContext, null, 1);
     try {
       const txt = await this.aiComplete([{ role: 'system', content: sys }, { role: 'user', content: user }], { max: 750 });
@@ -5385,7 +5498,7 @@ class Component extends DCLogic {
     const L = this.loaderVals();
     const Rt = this.ratesVals();
     if (!S.ready) {
-      return { ...L, ...Rt, ready: false, aiOpen: false, aiBtnCls: 'aifab', aiToggle: () => {}, aiClose: () => {}, runGlobalAudit: () => {}, copyClaude: () => {}, claudeToast: false, aiMsgs: [], aiHasMsgs: false, aiNoMsgs: true, aiInput: '', aiBusy: false, onAiInput: () => {}, onAiKey: () => {}, aiSend: () => {}, aiClear: () => {}, analyzeScreen: () => {}, aiAnalyzable: false, aiModel: 'gpt-4o-mini', onAiModel: () => {}, aiCfgOpen: false, aiCfgToggle: () => {}, aiKeySet: false, aiKeyEdit: '', onAiKeyEdit: () => {}, aiBaseEdit: '', onAiBaseEdit: () => {}, aiModelEdit: '', onAiModelEdit: () => {}, saveAiCfg: () => {}, aiIsAdmin: false, aiPrompts: [], userName: '', userInitial: '?', userRoleLabel: '', userRoleCls: 'srole', logout: () => this.askFarewell(), doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: false, farewellText: '', onlineUsers: [], hasOnline: false, navCls: '', navBkCls: '', sidebarStyle: null, toggleNav: () => {}, closeNav: () => {}, chatOpen: false, chatToggle: () => {}, chatClose: () => {}, chatMsgs: [], chatEmpty: true, chatCount: 0, chatInput: '', onChatInput: () => {}, onChatKey: () => {}, chatSend: () => {}, tgLink: '', tgHasLink: false, tgNoLink: true, tgEdit: '', onTgEdit: () => {}, saveTg: () => {}, tgIsAdmin: false, tgEditToken: '', onTgToken: () => {}, tgEditChatId: '', onTgChatId: () => {}, saveTgBot: () => {}, tgTest: () => {}, tgStatus: '', tgFwdOn: false, navGroups: [], homeGroups: [], isHome: false, goHome: () => {}, oneCQuickGet: () => {}, oneCBtnText: 'Получить данные из 1С', oneCBtnCls: 'onecbtn', tabDesc: 'Загрузка данных…', productOptions: [], ownerOptions: [], componentOptions: [], calcLines: [], recipeRows: [], prodRows: [], requirement: [], purchase: [], priceRows: [], peekShow: false, peekShowBtns: false, peekHasQuick: false, peekHasMore: false, peekCanClose: false, peekOpenLabel: 'Открыть', peekText: '', peekLevel: 'warn', peekQuick: '', peekMoreN: '', peekDoQuick: () => {}, peekOpenPurchase: () => {}, peekOpenAI: () => {}, peekClose: () => {}, peekNext: () => {}, cwShow: false, cwOpen: false, cwHasBadge: false, cwBadge: '', cwToggle: () => {}, cwClose: () => {}, qaOpen: false, chShow: false, gsearch: '', onGsearch: () => {}, clearGsearch: () => {}, gsOpen: false, searchResults: [], gsEmpty: false };
+      return { ...L, ...Rt, ready: false, aiOpen: false, aiBtnCls: 'aifab', aiToggle: () => {}, aiClose: () => {}, runGlobalAudit: () => {}, copyClaude: () => {}, claudeToast: false, hkOneC: () => {}, hkRecipe: () => {}, hkBdds: () => {}, hkAudit: () => {}, hkProc: () => {}, hkPay: () => {}, hkTasks: () => {}, hkNewBuy: () => {}, hkProcHas: false, hkPayHas: false, hkTaskHas: false, hkProcN: '', hkPayN: '', hkTaskN: '', aiMsgs: [], aiHasMsgs: false, aiNoMsgs: true, aiInput: '', aiBusy: false, onAiInput: () => {}, onAiKey: () => {}, aiSend: () => {}, aiClear: () => {}, analyzeScreen: () => {}, aiAnalyzable: false, aiModel: 'gpt-4o-mini', onAiModel: () => {}, aiCfgOpen: false, aiCfgToggle: () => {}, aiKeySet: false, aiKeyEdit: '', onAiKeyEdit: () => {}, aiBaseEdit: '', onAiBaseEdit: () => {}, aiModelEdit: '', onAiModelEdit: () => {}, saveAiCfg: () => {}, aiIsAdmin: false, aiPrompts: [], userName: '', userInitial: '?', userRoleLabel: '', userRoleCls: 'srole', logout: () => this.askFarewell(), doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: false, farewellText: '', onlineUsers: [], hasOnline: false, navCls: '', navBkCls: '', sidebarStyle: null, toggleNav: () => {}, closeNav: () => {}, chatOpen: false, chatToggle: () => {}, chatClose: () => {}, chatMsgs: [], chatEmpty: true, chatCount: 0, chatInput: '', onChatInput: () => {}, onChatKey: () => {}, chatSend: () => {}, tgLink: '', tgHasLink: false, tgNoLink: true, tgEdit: '', onTgEdit: () => {}, saveTg: () => {}, tgIsAdmin: false, tgEditToken: '', onTgToken: () => {}, tgEditChatId: '', onTgChatId: () => {}, saveTgBot: () => {}, tgTest: () => {}, tgStatus: '', tgFwdOn: false, navGroups: [], homeGroups: [], isHome: false, goHome: () => {}, oneCQuickGet: () => {}, oneCBtnText: 'Получить данные из 1С', oneCBtnCls: 'onecbtn', tabDesc: 'Загрузка данных…', productOptions: [], ownerOptions: [], componentOptions: [], calcLines: [], recipeRows: [], prodRows: [], requirement: [], purchase: [], priceRows: [], peekShow: false, peekShowBtns: false, peekHasQuick: false, peekHasMore: false, peekCanClose: false, peekOpenLabel: 'Открыть', peekText: '', peekLevel: 'warn', peekQuick: '', peekMoreN: '', peekDoQuick: () => {}, peekOpenPurchase: () => {}, peekOpenAI: () => {}, peekClose: () => {}, peekNext: () => {}, cwShow: false, cwOpen: false, cwHasBadge: false, cwBadge: '', cwToggle: () => {}, cwClose: () => {}, qaOpen: false, chShow: false, gsearch: '', onGsearch: () => {}, clearGsearch: () => {}, gsOpen: false, searchResults: [], gsEmpty: false };
     }
     this._memo = new Map();
     const lossF = (Number(S.loss) || 0) / 100;
@@ -5663,7 +5776,7 @@ class Component extends DCLogic {
           onMarket: h('market'), onReqId: h('reqId'), onProforma: h('proforma'), onTerms: h('terms'), onRoute: h('route'),
           onCarrier: h('carrier'), onContainer: h('container'), onMaterial: h('material'), onQty: h('qty'), onPrice: h('priceEur'),
           onCurrency: h('currency'), onTransport: h('transport'), onCustoms: h('customs'), onPrepay: h('prepay'), onStatus: h('status'),
-          onInitiator: h('initiator'), onManager: h('manager'),
+          onInitiator: h('initiator'), onManager: h('manager'), sendApproval: () => this.sendPurchaseApproval(ep.id),
           payTerms: ep.payTerms, paid: ep.paid, payDate: ep.payDate, payTermsOptions: this.payTermsOptions(),
           onPayTerms: h('payTerms'), onPaid: h('paid'), onPayDate: h('payDate'),
           eurNoVat: this.fmt(c.eurNoVat), eurVat: this.fmt(c.eurVat), rubNoVat: this.fmt(c.rubNoVat), fullRub: this.fmt(c.fullRub),
