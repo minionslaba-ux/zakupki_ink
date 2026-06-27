@@ -737,6 +737,12 @@ a.wordmark:hover{opacity:.6}
 .sbai2{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
 .sbai2:hover{background:rgba(255,210,0,.14);border-color:#FFD200}
 .sbaiic{color:#c7b9ff;font-size:14px}
+.sbclaude{background:rgba(217,119,87,.16);border-color:rgba(217,119,87,.45)}
+.sbclaude:hover{background:rgba(217,119,87,.28);border-color:#d97757}
+.sbclaude .sbaiic{color:#f0a07f}
+.claudetoast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:1400;background:#0e0e0e;color:#fff;border:1px solid #d97757;border-radius:13px;padding:13px 18px;font-size:13.5px;font-weight:600;box-shadow:0 12px 40px rgba(0,0,0,.4);display:flex;align-items:center;gap:10px;animation:ctIn .3s cubic-bezier(.16,1,.3,1)}
+.claudetoast .cticon{font-size:17px}
+@keyframes ctIn{from{opacity:0;transform:translate(-50%,14px)}to{opacity:1;transform:translate(-50%,0)}}
 .sbgroup{display:flex;flex-direction:column;gap:4px}
 .sbglabel{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6f6b66;padding:0 10px 3px}
 .sbitems{display:flex;flex-direction:column;gap:2px}
@@ -974,6 +980,7 @@ window.dispatchEvent(new Event('fbready'));
 <button class="{{ oneCBtnCls }}" onClick="{{ oneCQuickGet }}" title="Загрузить остатки и закупочные цены из 1С"><span class="oneclogo">1С</span><span class="onecbtx">{{ oneCBtnText }}</span></button>
 <button class="sbai" onClick="{{ runGlobalAudit }}" title="Глубокий AI-аудит производства, снабжения и кассы"><span class="sbaiic">✦</span> Глубокий анализ</button>
 <button class="sbai sbai2" onClick="{{ aiToggle }}" title="Открыть AI-аналитика АЯ"><span class="sbaiic">✦</span> AI-аналитик АЯ</button>
+<button class="sbai sbclaude" onClick="{{ copyClaude }}" title="Скопировать сводку данных для вставки в Claude Pro"><span class="sbaiic">📋</span> Скопировать контекст для Claude Pro</button>
 <nav class="sbnav"><sc-for list="{{ navGroups }}" as="g" hint-placeholder-count="6"><div class="sbgroup"><span class="sbglabel">{{ g.label }}</span><div class="sbitems"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="sbtab {{ t.cls }}" onClick="{{ t.go }}"><span class="sbbar"></span>{{ t.icon }}<span class="sblbl">{{ t.label }}</span><sc-if value="{{ t.hasBadge }}" hint-placeholder-val=""><span class="nbadge {{ t.badgeCls }}">{{ t.badge }}</span></sc-if></button></sc-for></div></div></sc-for></nav>
 <button class="sbmap" onClick="{{ goHome }}" title="Карта навигации (стартовая страница)"><span>🗺</span> Карта навигации</button>
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
@@ -1886,6 +1893,7 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 </div>
 </sc-if>
+<sc-if value="{{ claudeToast }}" hint-placeholder-val=""><div class="claudetoast"><span class="cticon">📋</span>Данные для Claude Pro скопированы в буфер! Вставьте их в ваш рабочий чат Claude (Ctrl+V)</div></sc-if>
 <sc-if value="{{ aiOpen }}" hint-placeholder-val="">
 <div class="aibackdrop" onClick="{{ aiClose }}"></div>
 <div class="aipanel">
@@ -2659,7 +2667,7 @@ class Component extends DCLogic {
     }));
     return {
       aiOpen: !!S.aiOpen, aiBtnCls: S.aiOpen ? 'aifab open' : 'aifab',
-      aiToggle: () => this.setState(st => ({ aiOpen: !st.aiOpen })), aiClose: () => set({ aiOpen: false }), runGlobalAudit: () => this.runGlobalAiAudit(),
+      aiToggle: () => this.setState(st => ({ aiOpen: !st.aiOpen })), aiClose: () => set({ aiOpen: false }), runGlobalAudit: () => this.runGlobalAiAudit(), copyClaude: () => this.copyAppContextForClaude(), claudeToast: !!S.claudeToast,
       aiMsgs: msgs, aiHasMsgs: msgs.length > 0, aiNoMsgs: msgs.length === 0, aiInput: S.aiInput || '', aiBusy: !!S.aiBusy,
       onAiInput: (e) => set({ aiInput: e.target.value }),
       onAiKey: (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.aiSend(); } },
@@ -4456,6 +4464,33 @@ class Component extends DCLogic {
     this.dlBlob('1C-integration-spec.md', new Blob([L.join('\n')], { type: 'text/markdown;charset=utf-8' }));
   }
   // Глубокий перекрёстный аудит, запускаемый с любой вкладки (в т.ч. из раздела 1С)
+  copyAppContextForClaude() {
+    const S = this.state, rate = Number(S.rate) || 0, vat = this.vat, loss = Number(S.loss) || 0;
+    const pf = this.buildPlanFact(rate);
+    const over = (pf.pfRowsRaw || []).filter(r => r.actVol > r.planVol && r.planVol > 0)
+      .map(r => '  • ' + r.name + ': план ' + this.fmt(r.planVol, 1) + ' кг, факт ' + this.fmt(r.actVol, 1) + ' кг, перерасход ' + this.fmt(r.actVol - r.planVol, 1) + ' кг (' + this.fmt(r.volPct, 1) + '%)');
+    let overdue = 0; const t0 = new Date(); t0.setHours(0, 0, 0, 0); const todayStr = this.ymd(t0);
+    const moves = S.payMoves || {}, splits = S.paySplits || {};
+    for (const p of (S.purchases || [])) { if (/отмен/.test(String(p.status || '').toLowerCase())) continue; const c = this.purchaseCalc(p, rate, vat); const due = c.fullRub - (Number(p.paid) || 0); if (due <= 1) continue; const base = p.payDate || p.arriveDate || ''; if (!base) continue; const sp = splits[p.id]; if (Array.isArray(sp) && sp.length) { for (const pt of sp) if (pt.date < todayStr) overdue += Number(pt.amount) || 0; } else { const dt = moves[p.id] || base; if (dt < todayStr) overdue += due; } }
+    const gap = this.cashGapInfo();
+    const lines = [
+      'Ты — операционный директор завода спиртовых красок Shtark INK. Проанализируй следующие операционные и финансовые данные предприятия, найди критические аномалии и риски, выдай глубокий инженерный диагноз причин перерасхода ЛКМ и составь план действий для цеха и снабжения.',
+      '', '=== ОПЕРАЦИОННЫЕ ДАННЫЕ SHTARK INK FLOW ===',
+      'Курс евро: ' + rate + ' ₽/€',
+      'Норматив безвозвратных потерь: ' + loss + '%',
+      '', '— Перерасход сырья (план-факт):',
+      over.length ? over.join('\n') : '  перерасхода не зафиксировано',
+      '', '— Казначейство (БДДС 30 дней):',
+      '  Кассовый разрыв: ' + (gap.gap ? ('да — ' + gap.day + ', не хватает ' + gap.amount + ' ₽') : 'нет'),
+      '  Просроченные платежи: ' + this.fmt(overdue, 0) + ' ₽',
+      '', 'Дай структурированный вывод: 1) критические аномалии цеха, 2) финансовые/валютные риски и касса, 3) техзадание для цеха и снабжения.',
+    ];
+    const text = lines.join('\n');
+    const done = () => { this.setState({ claudeToast: true }); clearTimeout(this._claudeT); this._claudeT = setTimeout(() => this.setState({ claudeToast: false }), 3200); };
+    try { navigator.clipboard.writeText(text).then(done, () => { this._clipFallback(text); done(); }); }
+    catch (e) { this._clipFallback(text); done(); }
+  }
+  _clipFallback(text) { try { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); } catch (e) {} }
   runGlobalAiAudit() {
     const rate = Number(this.state.rate) || 0;
     const pf = this.buildPlanFact(rate);
@@ -5291,7 +5326,7 @@ class Component extends DCLogic {
     const L = this.loaderVals();
     const Rt = this.ratesVals();
     if (!S.ready) {
-      return { ...L, ...Rt, ready: false, aiOpen: false, aiBtnCls: 'aifab', aiToggle: () => {}, aiClose: () => {}, runGlobalAudit: () => {}, aiMsgs: [], aiHasMsgs: false, aiNoMsgs: true, aiInput: '', aiBusy: false, onAiInput: () => {}, onAiKey: () => {}, aiSend: () => {}, aiClear: () => {}, analyzeScreen: () => {}, aiAnalyzable: false, aiModel: 'gpt-4o-mini', onAiModel: () => {}, aiCfgOpen: false, aiCfgToggle: () => {}, aiKeySet: false, aiKeyEdit: '', onAiKeyEdit: () => {}, aiBaseEdit: '', onAiBaseEdit: () => {}, aiModelEdit: '', onAiModelEdit: () => {}, saveAiCfg: () => {}, aiIsAdmin: false, aiPrompts: [], userName: '', userInitial: '?', userRoleLabel: '', userRoleCls: 'srole', logout: () => this.askFarewell(), doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: false, farewellText: '', onlineUsers: [], hasOnline: false, navCls: '', navBkCls: '', sidebarStyle: null, toggleNav: () => {}, closeNav: () => {}, chatOpen: false, chatToggle: () => {}, chatClose: () => {}, chatMsgs: [], chatEmpty: true, chatCount: 0, chatInput: '', onChatInput: () => {}, onChatKey: () => {}, chatSend: () => {}, tgLink: '', tgHasLink: false, tgNoLink: true, tgEdit: '', onTgEdit: () => {}, saveTg: () => {}, tgIsAdmin: false, tgEditToken: '', onTgToken: () => {}, tgEditChatId: '', onTgChatId: () => {}, saveTgBot: () => {}, tgTest: () => {}, tgStatus: '', tgFwdOn: false, navGroups: [], homeGroups: [], isHome: false, goHome: () => {}, oneCQuickGet: () => {}, oneCBtnText: 'Получить данные из 1С', oneCBtnCls: 'onecbtn', tabDesc: 'Загрузка данных…', productOptions: [], ownerOptions: [], componentOptions: [], calcLines: [], recipeRows: [], prodRows: [], requirement: [], purchase: [], priceRows: [], peekShow: false, peekShowBtns: false, peekHasQuick: false, peekHasMore: false, peekCanClose: false, peekOpenLabel: 'Открыть', peekText: '', peekLevel: 'warn', peekQuick: '', peekMoreN: '', peekDoQuick: () => {}, peekOpenPurchase: () => {}, peekOpenAI: () => {}, peekClose: () => {}, peekNext: () => {}, cwShow: false, cwOpen: false, cwHasBadge: false, cwBadge: '', cwToggle: () => {}, cwClose: () => {}, qaOpen: false, chShow: false, gsearch: '', onGsearch: () => {}, clearGsearch: () => {}, gsOpen: false, searchResults: [], gsEmpty: false };
+      return { ...L, ...Rt, ready: false, aiOpen: false, aiBtnCls: 'aifab', aiToggle: () => {}, aiClose: () => {}, runGlobalAudit: () => {}, copyClaude: () => {}, claudeToast: false, aiMsgs: [], aiHasMsgs: false, aiNoMsgs: true, aiInput: '', aiBusy: false, onAiInput: () => {}, onAiKey: () => {}, aiSend: () => {}, aiClear: () => {}, analyzeScreen: () => {}, aiAnalyzable: false, aiModel: 'gpt-4o-mini', onAiModel: () => {}, aiCfgOpen: false, aiCfgToggle: () => {}, aiKeySet: false, aiKeyEdit: '', onAiKeyEdit: () => {}, aiBaseEdit: '', onAiBaseEdit: () => {}, aiModelEdit: '', onAiModelEdit: () => {}, saveAiCfg: () => {}, aiIsAdmin: false, aiPrompts: [], userName: '', userInitial: '?', userRoleLabel: '', userRoleCls: 'srole', logout: () => this.askFarewell(), doLogout: () => this.doLogout(), cancelFarewell: () => this.setState({ showFarewell: false }), showFarewell: false, farewellText: '', onlineUsers: [], hasOnline: false, navCls: '', navBkCls: '', sidebarStyle: null, toggleNav: () => {}, closeNav: () => {}, chatOpen: false, chatToggle: () => {}, chatClose: () => {}, chatMsgs: [], chatEmpty: true, chatCount: 0, chatInput: '', onChatInput: () => {}, onChatKey: () => {}, chatSend: () => {}, tgLink: '', tgHasLink: false, tgNoLink: true, tgEdit: '', onTgEdit: () => {}, saveTg: () => {}, tgIsAdmin: false, tgEditToken: '', onTgToken: () => {}, tgEditChatId: '', onTgChatId: () => {}, saveTgBot: () => {}, tgTest: () => {}, tgStatus: '', tgFwdOn: false, navGroups: [], homeGroups: [], isHome: false, goHome: () => {}, oneCQuickGet: () => {}, oneCBtnText: 'Получить данные из 1С', oneCBtnCls: 'onecbtn', tabDesc: 'Загрузка данных…', productOptions: [], ownerOptions: [], componentOptions: [], calcLines: [], recipeRows: [], prodRows: [], requirement: [], purchase: [], priceRows: [], peekShow: false, peekShowBtns: false, peekHasQuick: false, peekHasMore: false, peekCanClose: false, peekOpenLabel: 'Открыть', peekText: '', peekLevel: 'warn', peekQuick: '', peekMoreN: '', peekDoQuick: () => {}, peekOpenPurchase: () => {}, peekOpenAI: () => {}, peekClose: () => {}, peekNext: () => {}, cwShow: false, cwOpen: false, cwHasBadge: false, cwBadge: '', cwToggle: () => {}, cwClose: () => {}, qaOpen: false, chShow: false, gsearch: '', onGsearch: () => {}, clearGsearch: () => {}, gsOpen: false, searchResults: [], gsEmpty: false };
     }
     this._memo = new Map();
     const lossF = (Number(S.loss) || 0) / 100;
