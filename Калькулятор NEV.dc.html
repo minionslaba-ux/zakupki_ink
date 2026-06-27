@@ -767,6 +767,9 @@ a.wordmark:hover{opacity:.6}
 .cpplrow{display:flex;gap:8px;align-items:center}
 .cpplrow .inp{flex:1}
 .cpplrow .w120{flex:0 0 120px}
+.rectbl .inp{padding:6px 8px}
+.rectbl .w120{width:100px}
+.rectbl .w90{width:78px}
 .docsform{display:flex;flex-direction:column;gap:11px}
 .docrow2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .ayadoc,.maxdoc{font-size:12.5px;line-height:1.5;border-radius:10px;padding:9px 12px;color:#1e293b}
@@ -1403,6 +1406,31 @@ window.dispatchEvent(new Event('fbready'));
 </div></div>
 </sc-if>
 
+<sc-if value="{{ isReceipts }}" hint-placeholder-val="">
+<div class="card"><div class="sec">Поступление ТМЦ на склад</div>
+<div class="uform">
+<div class="fg"><label>№ документа</label><input class="inp" value="{{ recNo }}" onInput="{{ onRecNo }}" placeholder="ПН-001"></div>
+<div class="fg"><label>Дата</label><input class="inp" type="date" value="{{ recDate }}" onInput="{{ onRecDate }}"></div>
+<div class="fg"><label>Поставщик</label><input class="inp" list="cplist" value="{{ recSupplier }}" onInput="{{ onRecSupplier }}" placeholder="Выберите из справочника"><datalist id="cplist"><sc-for list="{{ recCpOpts }}" as="c" hint-placeholder-count="2"><option value="{{ c.v }}"></option></sc-for></datalist></div>
+<div class="fg"><label>ИНН (авто)</label><input class="inp" value="{{ recInn }}" onInput="{{ onRecInn }}" placeholder="подставится по контрагенту"></div>
+<div class="fg"><label>Валюта</label><select class="sel" value="{{ recCurrency }}" onChange="{{ onRecCurrency }}"><sc-for list="{{ recCurOpts }}" as="c" hint-placeholder-count="4"><option value="{{ c.v }}">{{ c.label }}</option></sc-for></select></div>
+<div class="fg"><label>Курс к ₽</label><input class="inp num" type="number" value="{{ recRate }}" onInput="{{ onRecRate }}"></div>
+<div class="fg"><label>Метка рынка</label><select class="sel" value="{{ recMarket }}" onChange="{{ onRecMarket }}"><sc-for list="{{ recMarketOpts }}" as="m" hint-placeholder-count="2"><option value="{{ m.v }}">{{ m.label }}</option></sc-for></select></div>
+</div>
+<div class="sec2cp">Табличная часть · позиции поступления</div>
+<div class="scroll"><table class="rectbl"><thead><tr><th class="l">Наименование сырья</th><th class="l">Артикул</th><th>Кол-во</th><th>Цена</th><th>Сумма</th><th></th></tr></thead>
+<tbody><sc-for list="{{ recLines }}" as="l" hint-placeholder-count="2"><tr><td><input class="inp" value="{{ l.material }}" onInput="{{ l.onMat }}" placeholder="Наименование"></td><td><input class="inp w120" value="{{ l.article }}" onInput="{{ l.onArt }}" placeholder="арт."></td><td><input class="inp num w90" type="number" value="{{ l.qty }}" onInput="{{ l.onQty }}"></td><td><input class="inp num w90" type="number" value="{{ l.price }}" onInput="{{ l.onPrice }}"></td><td class="mono">{{ l.sum }}</td><td><button class="tlink del" onClick="{{ l.del }}">✕</button></td></tr></sc-for></tbody></table></div>
+<div class="genrow"><button class="btn" onClick="{{ addRecLine }}">+ позиция</button><span class="hint">Итого: {{ recTotCur }} {{ recCurLabel }} · в управленческом учёте ≈ {{ recTotRub }} ₽</span></div>
+<sc-if value="{{ recHasErr }}" hint-placeholder-val=""><div class="banner err">{{ recErr }}</div></sc-if>
+<div class="uactions"><button class="btn dark" onClick="{{ saveReceipt }}">Провести и обновить склад</button><sc-if value="{{ recHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelReceipt }}">Отмена</button></sc-if></div>
+</div>
+<div class="card"><div class="sec">Журнал поступлений · {{ recCount }}</div>
+<sc-if value="{{ recEmpty }}" hint-placeholder-val=""><div class="hint">Пока нет документов поступления.</div></sc-if>
+<div class="scroll"><table><thead><tr><th class="l">№</th><th class="l">Дата</th><th class="l">Поставщик</th><th class="l">Рынок</th><th>Позиций</th><th>Сумма</th><th>В ₽</th><th class="l"></th></tr></thead>
+<tbody><sc-for list="{{ recJournal }}" as="r" hint-placeholder-count="2"><tr><td class="l mono">{{ r.no }}</td><td class="l mono">{{ r.date }}</td><td class="l nm">{{ r.supplier }}</td><td class="l">{{ r.market }}</td><td class="mono">{{ r.lines }}</td><td class="mono">{{ r.sumCur }} {{ r.currency }}</td><td class="mono">{{ r.sumRub }}</td><td class="l"><button class="ulink del" onClick="{{ r.remove }}">Удалить</button></td></tr></sc-for></tbody></table></div>
+</div>
+</sc-if>
+
 <sc-if value="{{ isCparties }}" hint-placeholder-val="">
 <div class="card"><div class="sec">{{ cpFormTitle }}</div>
 <div class="uform">
@@ -1724,7 +1752,7 @@ class Component extends DCLogic {
     oneCUrl: '', oneCToken: '', oneCMatch: 'article', oneCAuto: false, oneCBusy: false, oneCStatus: '', oneCErr: '', oneCPreview: null, oneCLastAt: 0, oneCLog: [], oneCFileCur: 'RUB',
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {},
     chat: [], chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false,
-    tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '',
+    tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '',
     docType: 'power', docData: { no: '14', date: '', empName: 'Иванов Иван Иванович', empPost: 'менеджер по закупкам', empPassport: '45 09 № 123456, выдан ОВД «Тверской» г. Москвы 12.03.2015, код 770-001', supplier: 'ООО «ХимПоставка»', supplierAddr: 'г. Москва, ул. Промышленная, д. 7', goods: 'Пигмент синий (фталоцианиновый) — 500 кг\nРастворитель НефрасС2 — 200 л\nСтабилизатор СТ-4 — 50 кг', term: '10 дней', route: 'Москва — Санкт-Петербург', car: 'Volvo FH, гос. № А123ВС 777', driver: 'Петров Пётр Петрович', driverDoc: 'вод. удостоверение 99 12 345678', cargo: '1200 кг / 4,0 м³, 6 паллет', cargoName: 'Сырьё для производства чернил', rfpSupplier: 'ООО «ХимПоставка»', rfpItems: 'Пигмент синий (фталоцианиновый) — 500 кг\nПигмент жёлтый — 300 кг\nРастворитель НефрасС2 — 200 л', rfpDeadline: '5 рабочих дней' },
     peekIdx: 0, peekDismissed: {}, peekClosed: false, peekToast: '',
     tgToken: '', tgChatId: '', tgFwd: false, tgEditToken: '', tgEditChatId: '', tgStatus: '',
@@ -1751,6 +1779,8 @@ class Component extends DCLogic {
     try { tasks = JSON.parse(localStorage.getItem('inkflow_tasks') || '[]'); if (!Array.isArray(tasks)) tasks = []; } catch (e) {}
     let cparties = [];
     try { cparties = JSON.parse(localStorage.getItem('inkflow_cparties') || '[]'); if (!Array.isArray(cparties)) cparties = []; } catch (e) {}
+    let receipts = [];
+    try { receipts = JSON.parse(localStorage.getItem('inkflow_receipts') || '[]'); if (!Array.isArray(receipts)) receipts = []; } catch (e) {}
     let emailCfg = {};
     try { emailCfg = JSON.parse(localStorage.getItem('inkflow_emailcfg') || '{}') || {}; } catch (e) {}
     let tasksSeenAt = 0;
@@ -1758,7 +1788,7 @@ class Component extends DCLogic {
     try { tgLink = localStorage.getItem('inkflow_tg') || ''; } catch (e) {}
     let tgBot = {};
     try { tgBot = JSON.parse(localStorage.getItem('inkflow_tgbot') || '{}') || {}; } catch (e) {}
-    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, tasksSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
+    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, tasksSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
     // Двухфазный экран входа: фаза 1 (загрузка) → фаза 2 (логотип слева + кнопка «Войти»)
     this._loaderT1 = setTimeout(() => this.setState({ loaderPhase: 'p2' }), 3400);
     // Слоган под логотипом перепечатывается каждые 10 c (remount по tick → анимация проигрывается заново)
@@ -1994,6 +2024,7 @@ class Component extends DCLogic {
       tasks: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8l1.5 1.5L12 7"/><path d="M8 15l1.5 1.5L12 14"/><line x1="14" y1="8" x2="17" y2="8"/><line x1="14" y1="15" x2="17" y2="15"/>',
       docs: '<path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="15" y2="16"/>',
       cparties: '<path d="M3 7h18v13H3z"/><path d="M3 7l3-4h12l3 4"/><line x1="3" y1="12" x2="21" y2="12"/><circle cx="12" cy="16" r="1.4"/>',
+      receipts: '<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4"/><line x1="12" y1="11" x2="12" y2="21"/><path d="M8 4.5l8 3.5"/>',
       users: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 6.4M21.5 20a6 6 0 0 0-3.5-5.5"/>',
     };
     const svg = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + (P[id] || '') + '</svg>';
@@ -2086,7 +2117,7 @@ class Component extends DCLogic {
       { label: 'Производство', tabs: [['calc', 'Калькулятор'], ['recipe', 'Рецептуры'], ['prod', 'План производства'], ['catalog', 'Каталоги']] },
       { label: 'Планирование закупок', tabs: [['runrate', 'Run Rate'], ['proc', 'План закупок'], ['cal', 'Календарь']] },
       { label: 'Цены и поставщики', tabs: [['audit', 'Аудит цен'], ['pay', 'Платежи'], ['prices', 'Реестр цен'], ['cparties', 'Контрагенты']] },
-      { label: 'Запасы', tabs: [['wh', 'Склад'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка']] },
+      { label: 'Запасы', tabs: [['wh', 'Склад'], ['receipts', 'Поступления ТМЦ'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка']] },
       { label: 'Контроль и сценарии', tabs: [['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
       { label: 'Система', tabs: [['cloud', 'Облако'], ['onec', 'Интеграция 1С']] },
     ];
@@ -2099,7 +2130,7 @@ class Component extends DCLogic {
     if (user.role === 'admin') return ['home'].concat(all, ['users']);
     const perms = Array.isArray(user.perms) ? user.perms : all;
     // Новые разделы доступны по умолчанию всем (добавлены позже — их нет в старых perms)
-    const always = ['prodplan', 'procplan', 'onec', 'tasks', 'docs', 'cparties'];
+    const always = ['prodplan', 'procplan', 'onec', 'tasks', 'docs', 'cparties', 'receipts'];
     return ['home'].concat(all.filter(id => perms.includes(id) || always.includes(id)));
   }
 
@@ -2532,6 +2563,7 @@ class Component extends DCLogic {
     if (Array.isArray(d.chat)) { patch.chat = d.chat; try { localStorage.setItem('inkflow_chat', JSON.stringify(d.chat)); } catch (e) {} }
     if (Array.isArray(d.tasks)) { patch.tasks = d.tasks; try { localStorage.setItem('inkflow_tasks', JSON.stringify(d.tasks)); } catch (e) {} }
     if (Array.isArray(d.cparties)) { patch.cparties = d.cparties; try { localStorage.setItem('inkflow_cparties', JSON.stringify(d.cparties)); } catch (e) {} }
+    if (Array.isArray(d.receipts)) { patch.receipts = d.receipts; try { localStorage.setItem('inkflow_receipts', JSON.stringify(d.receipts)); } catch (e) {} }
     if (d.emailCfg && typeof d.emailCfg === 'object') { patch.emailCfg = d.emailCfg; try { localStorage.setItem('inkflow_emailcfg', JSON.stringify(d.emailCfg)); } catch (e) {} }
     if (typeof d.tgLink === 'string') patch.tgLink = d.tgLink;
     if (d.tgBot && typeof d.tgBot === 'object') { patch.tgToken = d.tgBot.token || ''; patch.tgChatId = d.tgBot.chatId || ''; patch.tgFwd = !!d.tgBot.fwd; }
@@ -3552,6 +3584,61 @@ class Component extends DCLogic {
       chText: S.chPhrase || '',
       chHasEmp: !!(emp && sc === 'bored'), chEmpName: emp ? emp.name : '', chEmpDept: emp ? emp.dept : '',
       chEmpImg: emp && emp.photo ? React.createElement('img', { className: 'chempimg', src: emp.photo, alt: '' }) : null,
+    };
+  }
+  // ===== Поступление ТМЦ на склад =====
+  emptyReceipt() { return { id: '', no: '', date: this.ymd(new Date()), supplier: '', inn: '', currency: 'RUB', rate: 1, market: 'Внутренний', lines: [{ material: '', article: '', qty: '', price: '' }] }; }
+  writeReceipts(next) {
+    this.setState({ receipts: next });
+    try { localStorage.setItem('inkflow_receipts', JSON.stringify(next)); } catch (e) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { receipts: next }, { merge: true }).catch(() => {}); } catch (e) {} }
+  }
+  applyReceiptStock(r) {
+    const stock = { ...this.state.stock };
+    for (const ln of (r.lines || [])) { const m = (ln.material || '').trim(); const q = Number(ln.qty) || 0; if (!m || !q) continue; const k = this.norm(m); stock[k] = (Number(stock[k]) || 0) + q; }
+    this.setState({ stock, stockUpdatedAt: Date.now(), whFilled: true });
+  }
+  saveReceipt() {
+    const S = this.state, d = S.recDraft || this.emptyReceipt();
+    const supplier = (d.supplier || '').trim();
+    if (!supplier) { this.setState({ recErr: 'Укажите поставщика' }); return; }
+    const lines = (d.lines || []).filter(l => (l.material || '').trim() && (Number(l.qty) || 0) > 0).map(l => ({ material: (l.material || '').trim(), article: (l.article || '').trim(), qty: Number(l.qty) || 0, price: Number(l.price) || 0 }));
+    if (!lines.length) { this.setState({ recErr: 'Добавьте хотя бы одну позицию с количеством' }); return; }
+    const r = { id: d.id || ('rc_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), no: (d.no || '').trim(), date: d.date || this.ymd(new Date()), supplier, inn: (d.inn || '').trim(), currency: d.currency || 'RUB', rate: Number(d.rate) || 1, market: d.market || 'Внутренний', lines, createdAt: d.createdAt || Date.now() };
+    this.writeReceipts([r, ...(S.receipts || []).filter(x => x.id !== r.id)]);
+    this.applyReceiptStock(r);
+    this.setState({ recDraft: null, recErr: '' });
+    this.postSystemNote('📥 Поступление на склад от «' + supplier + '»: ' + lines.length + ' позиц., обновлены остатки', S.currentUser ? S.currentUser.name : '—');
+  }
+  buildReceipts() {
+    const S = this.state, set = (p) => this.setState(p);
+    const d = S.recDraft || this.emptyReceipt(); const isDraft = !!S.recDraft;
+    const upd = (k) => (e) => set({ recDraft: { ...(this.state.recDraft || this.emptyReceipt()), [k]: e.target.value }, recErr: '' });
+    const lset = (i, k, v) => { const ls = ((this.state.recDraft || this.emptyReceipt()).lines || []).slice(); ls[i] = { ...ls[i], [k]: v }; set({ recDraft: { ...(this.state.recDraft || this.emptyReceipt()), lines: ls }, recErr: '' }); };
+    const lineRows = (d.lines || []).map((l, i) => ({ material: l.material || '', article: l.article || '', qty: l.qty || '', price: l.price || '', sum: this.fmt((Number(l.qty) || 0) * (Number(l.price) || 0)), onMat: (e) => lset(i, 'material', e.target.value), onArt: (e) => lset(i, 'article', e.target.value), onQty: (e) => lset(i, 'qty', e.target.value), onPrice: (e) => lset(i, 'price', e.target.value), del: () => set({ recDraft: { ...(this.state.recDraft || this.emptyReceipt()), lines: (this.state.recDraft || this.emptyReceipt()).lines.filter((_, j) => j !== i) } }) }));
+    const totCur = (d.lines || []).reduce((s, l) => s + (Number(l.qty) || 0) * (Number(l.price) || 0), 0);
+    const rate = Number(d.rate) || 1; const cur = d.currency || 'RUB';
+    const curRate = { RUB: 1, EUR: Number(S.rate) || 0 };
+    const onCurrency = (e) => { const c = e.target.value; set({ recDraft: { ...(this.state.recDraft || this.emptyReceipt()), currency: c, rate: curRate[c] != null ? curRate[c] : (this.state.recDraft || {}).rate || 1 }, recErr: '' }); };
+    const cpList = (S.cparties || []);
+    const onSupplier = (e) => { const name = e.target.value; const c = cpList.find(x => (x.name || '') === name); set({ recDraft: { ...(this.state.recDraft || this.emptyReceipt()), supplier: name, inn: c ? (c.inn || '') : (this.state.recDraft || {}).inn || '' }, recErr: '' }); };
+    const journal = (S.receipts || []).slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).map(r => {
+      const tc = (r.lines || []).reduce((s, l) => s + (Number(l.qty) || 0) * (Number(l.price) || 0), 0);
+      return { id: r.id, no: r.no || '—', date: this.dmFull(r.date), supplier: r.supplier || '—', market: r.market || '—', currency: r.currency || '₽', sumCur: this.fmt(tc), sumRub: this.fmt(tc * (Number(r.rate) || 1)), lines: (r.lines || []).length, remove: () => this.askDelete('документ поступления от «' + (r.supplier || '') + '»', () => this.writeReceipts((this.state.receipts || []).filter(x => x.id !== r.id))) };
+    });
+    return {
+      isReceipts: true,
+      recNo: d.no || '', onRecNo: upd('no'), recDate: d.date || '', onRecDate: upd('date'),
+      recSupplier: d.supplier || '', onRecSupplier: onSupplier, recInn: d.inn || '', onRecInn: upd('inn'),
+      recCurrency: cur, onRecCurrency: onCurrency, recCurOpts: ['RUB', 'USD', 'EUR', 'CNY'].map(c => ({ v: c, label: c })),
+      recRate: d.rate != null ? d.rate : 1, onRecRate: upd('rate'), recMarket: d.market || 'Внутренний', onRecMarket: upd('market'),
+      recMarketOpts: ['Внутренний', 'Внешний'].map(m => ({ v: m, label: m + ' рынок' })),
+      recCpOpts: cpList.map(c => ({ v: c.name, label: c.name })),
+      recLines: lineRows, addRecLine: () => set({ recDraft: { ...(this.state.recDraft || this.emptyReceipt()), lines: [...((this.state.recDraft || this.emptyReceipt()).lines || []), { material: '', article: '', qty: '', price: '' }] } }),
+      recTotCur: this.fmt(totCur), recTotRub: this.fmt(totCur * rate), recCurLabel: cur,
+      saveReceipt: () => this.saveReceipt(), cancelReceipt: () => set({ recDraft: null, recErr: '' }), recHasDraft: isDraft,
+      recErr: S.recErr || '', recHasErr: !!S.recErr,
+      recJournal: journal, recEmpty: journal.length === 0, recCount: String(journal.length),
     };
   }
   // ===== Сквозной умный поиск по программе =====
@@ -4676,7 +4763,7 @@ class Component extends DCLogic {
       ['proc', 'План закупок'], ['cal', 'Календарь'], ['wh', 'Склад'], ['cover', 'Сводка'],
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
-      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['cparties', 'Контрагенты'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
+      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
     const tabGroups = [
@@ -4685,7 +4772,7 @@ class Component extends DCLogic {
       { label: 'Производство', items: ['calc', 'recipe', 'prod', 'catalog'] },
       { label: 'Планирование закупок', items: ['runrate', 'proc', 'cal'] },
       { label: 'Цены и поставщики', items: ['audit', 'pay', 'prices', 'cparties'] },
-      { label: 'Запасы', items: ['wh', 'turnover', 'cover'] },
+      { label: 'Запасы', items: ['wh', 'receipts', 'turnover', 'cover'] },
       { label: 'Контроль и сценарии', items: ['planfact', 'stress', 'reports'] },
       { label: 'Система', items: ['cloud', 'onec', 'users'] },
     ];
@@ -5212,6 +5299,7 @@ class Component extends DCLogic {
     if (S.tab === 'tasks') Object.assign(base, this.buildTasks());
     if (S.tab === 'docs') Object.assign(base, this.buildDocs());
     if (S.tab === 'cparties') Object.assign(base, this.buildCparties());
+    if (S.tab === 'receipts') Object.assign(base, this.buildReceipts());
 
     // ---- Календарь поставок ----
     if (S.tab === 'cal') {
