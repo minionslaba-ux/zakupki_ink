@@ -633,6 +633,11 @@ a.wordmark:hover{opacity:.6}
 @keyframes chIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 .chbubble{max-width:236px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:9px 13px;font-size:12.5px;line-height:1.45;color:#1e293b;box-shadow:0 12px 32px rgba(15,23,42,.18);font-weight:500;text-wrap:pretty}
 .chby{display:block;font-size:10.5px;font-weight:800;color:#4f46e5;margin-bottom:2px}
+.chemp{display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid #eef0f4}
+.chempav{width:30px;height:30px;border-radius:50%;overflow:hidden;flex:none;background:#e2e8f0;display:block}
+.chempimg{width:100%;height:100%;object-fit:cover;display:block}
+.chempmeta{font-size:11px;color:#475569;line-height:1.35}
+.chempmeta b{color:#1e293b;font-weight:700}
 .chrow{display:flex;align-items:flex-end}
 .chmax{margin-right:-16px;animation:chSlideMax .5s cubic-bezier(.16,1,.3,1) both}
 @keyframes chSlideMax{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
@@ -1530,7 +1535,7 @@ window.dispatchEvent(new Event('fbready'));
 </sc-if>
 <sc-if value="{{ chShow }}" hint-placeholder-val="">
 <div class="{{ chWrapCls }}">
-<div class="chbubble"><span class="chby">{{ chBubbleBy }}</span>{{ chText }}</div>
+<div class="chbubble"><span class="chby">{{ chBubbleBy }}</span>{{ chText }}<sc-if value="{{ chHasEmp }}" hint-placeholder-val=""><span class="chemp"><span class="chempav">{{ chEmpImg }}</span><span class="chempmeta">Спасибо от <b>{{ chEmpName }}</b> ({{ chEmpDept }})</span></span></sc-if></div>
 <div class="chrow">
 <sc-if value="{{ chHasMax }}" hint-placeholder-val=""><div class="chmax"><svg viewBox="0 0 80 116" width="74" height="108"><ellipse cx="40" cy="112" rx="22" ry="4" fill="rgba(15,23,42,.12)"/><path d="M22 70c0-12 8-19 18-19s18 7 18 19v30H22z" fill="#475569"/><path d="M40 51l-9 9 9 7 9-7z" fill="#fff"/><path d="M40 60l4 8-4 22-4-22z" fill="#10b981"/><circle cx="40" cy="32" r="18" fill="#f1c79e"/><path d="M23 30c0-12 8-18 17-18s17 6 17 17c-4-5-9-6-17-6s-13 2-17 7z" fill="#2d2a3a"/><circle cx="34" cy="32" r="2.1" fill="#2d2a3a"/><circle cx="46" cy="32" r="2.1" fill="#2d2a3a"/><path d="M35 39c3 2.4 7 2.4 10 0" stroke="#9a5a37" stroke-width="2" fill="none" stroke-linecap="round"/><path class="chcheek" d="M30 36a2.4 2.4 0 1 0 .1 0z" fill="#f9a8a3" opacity="0"/><path class="chcheek" d="M50 36a2.4 2.4 0 1 0 .1 0z" fill="#f9a8a3" opacity="0"/><g class="chwave"><path d="M58 72l13-12" stroke="#f1c79e" stroke-width="7" stroke-linecap="round"/><circle cx="72" cy="58" r="5" fill="#f1c79e"/></g><g class="chcup"><rect x="60" y="74" width="13" height="11" rx="2" fill="#fff" stroke="#cbd5e1"/><path d="M73 76h3a3 3 0 0 1 0 6h-3" fill="none" stroke="#cbd5e1" stroke-width="1.6"/><path class="chsteam" d="M64 72c-2-2 2-4 0-6M69 72c-2-2 2-4 0-6" stroke="#cbd5e1" stroke-width="1.4" fill="none" stroke-linecap="round"/></g></svg></div></sc-if>
 <div class="chaya"><svg viewBox="0 0 80 116" width="74" height="108"><ellipse cx="40" cy="112" rx="22" ry="4" fill="rgba(15,23,42,.12)"/><path d="M22 70c0-12 8-19 18-19s18 7 18 19v30H22z" fill="#4f46e5"/><path d="M40 50c-7 0-12 4-12 4l3 16h18l3-16s-5-4-12-4z" fill="#6366f1"/><path d="M24 34c-2 14 0 26 0 26l-6-2c-3-16 2-30 22-30s25 14 22 30l-6 2s2-12 0-26c-4-7-10-10-16-10s-12 3-16 10z" fill="#3b3a55"/><circle cx="40" cy="34" r="17" fill="#ffe0c4"/><circle cx="34" cy="34" r="2.1" fill="#2d2a3a"/><circle cx="46" cy="34" r="2.1" fill="#2d2a3a"/><path class="chsmile" d="M35 40c3 2.6 7 2.6 10 0" stroke="#c2674a" stroke-width="2" fill="none" stroke-linecap="round"/><path class="chcheek" d="M30 38a2.6 2.6 0 1 0 .1 0z" fill="#f9a8a3" opacity="0"/><path class="chcheek" d="M50 38a2.6 2.6 0 1 0 .1 0z" fill="#f9a8a3" opacity="0"/><text class="chspark" x="58" y="20" font-size="11" fill="#FFD200">✦</text><g class="chzzz"><text x="56" y="22" font-size="9" fill="#94a3b8">z</text><text x="62" y="14" font-size="11" fill="#94a3b8">Z</text></g></svg></div>
@@ -1584,7 +1589,7 @@ class Component extends DCLogic {
     oneCUrl: '', oneCToken: '', oneCMatch: 'article', oneCAuto: false, oneCBusy: false, oneCStatus: '', oneCErr: '', oneCPreview: null, oneCLastAt: 0, oneCLog: [], oneCFileCur: 'RUB',
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {},
     chat: [], chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false,
-    tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '',
+    tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null,
     peekIdx: 0, peekDismissed: {}, peekClosed: false, peekToast: '',
     tgToken: '', tgChatId: '', tgFwd: false, tgEditToken: '', tgEditChatId: '', tgStatus: '',
     cloudHistory: [], cloudName: '', cloudCfgText: '', cloudWsId: 'workspace',
@@ -1630,8 +1635,8 @@ class Component extends DCLogic {
     this._chInt = setInterval(() => {
       if (!this.state.currentUser || this.state.loading) return;
       const sc = this.state.chScene; const idle = Date.now() - this._lastAct;
-      if (sc === '' && idle > 30000) this.setState({ chScene: 'bored' });
-      else if (sc === 'bored' && idle > 45000) { this.setState({ chScene: 'leave' }); clearTimeout(this._chLeaveT); this._chLeaveT = setTimeout(() => { if (this.state.chScene === 'leave') this.setState({ chScene: 'gone' }); }, 5200); }
+      if (sc === '' && idle > 30000) this.setScene('bored');
+      else if (sc === 'bored' && idle > 45000) { this.setScene('leave'); clearTimeout(this._chLeaveT); this._chLeaveT = setTimeout(() => { if (this.state.chScene === 'leave') this.setState({ chScene: 'gone' }); }, 5200); }
     }, 2000);
     this._idleInt = setInterval(() => { if (this.state.currentUser && Date.now() - this._lastAct > Component.IDLE_MS) this.expireSession(); }, 15000);
     // Ротация облачка АЯ: если рисков несколько — показываем их по очереди
@@ -1980,7 +1985,7 @@ class Component extends DCLogic {
     try { localStorage.removeItem('inkflow_session_v1'); } catch (e) {}
     this.setState({ currentUser: null, loading: true, loaderHide: false, loaderPhase: 'p2', showWelcome: false, showFarewell: false, loginInput: '', passInput: '', loginErr: '', tab: 'home', userDraft: null, userErr: '' });
   }
-  askFarewell() { this.setState({ showFarewell: true, chScene: 'bye', welAvatar: this.pickWelcomeAvatar() }, () => { this.showFarewellPhrase(); }); }
+  askFarewell() { const p = this.pickScenePhrase('bye'); this.setState({ showFarewell: true, chScene: 'bye', chPhrase: p.text, chEmp: null, welAvatar: this.pickWelcomeAvatar() }, () => { this.showFarewellPhrase(); }); }
   randomFarewell() {
     const list = [
       'Смена закрыта, герой! Отдыхай — ты заслужил. 👋✨',
@@ -3357,19 +3362,54 @@ class Component extends DCLogic {
       setTimeout(() => host.remove(), 1150);
     } catch (e) {}
   }
-  // ===== Персонажи Ая и Макс =====
-  triggerCoffee() { this.setState({ chScene: 'coffee' }); clearTimeout(this._coffeeT); this._coffeeT = setTimeout(() => { if (this.state.chScene === 'coffee') this.setState({ chScene: '' }); }, 3200); }
+  // ===== Персонажи Ая и Макс + Цитатник Shtark INK Flow =====
+  quoteDB() {
+    return {
+      welcome: ['Цена в КП и цена в счёте совпали с первого раза. Вызовите МЧС, это аномалия!', '«Срочно» в закупках — это когда товар нужен был ещё вчера, а ТЗ утвердят только в пятницу.', 'Поставщик обещал скидку, но включил её в стоимость доставки. Мы всё видим через Shtark INK Flow.', 'В любой непонятной ситуации обвиняй логистический коллапс. Никто не проверит, но все посочувствуют.', 'Наш отдел снабжения может достать всё. Даже то, чего ещё нет в природе и в чертежах конструкторов.', 'Каждому закупщику при рождении выдают встроенный детектор лжи на фразу «Товар на складе».', 'Нам не нужна интуиция. У нас есть Shtark INK Flow и ИНН поставщика.', 'Бухгалтерия согласовала платёж за 5 минут. Проверьте, не ретроградный ли Меркурий сегодня?', '«Счёт на оплате». Это может означать как «деньги ушли», так и «подумаем об этом в следующем квартале».', 'Бухгалтер видит ошибку в акте сверки на 3 копейки с расстояния в два километра.', 'Пришёл в бухгалтерию без шоколадки — ушёл без подписанного реестра. Базовый закон экономики.', '«Мы не можем оплатить, у нас отчётный период». Отчётный период длится примерно всегда.', 'Когда бухгалтер нажимает «Провести платёж», где-то в мире радуется один менеджер по продажам.', 'Технолог сказал, что формула идеальна. Ждём, когда цех скажет, что у них ничего не получается.', 'Лаборатория проводит тесты три дня, но производство требует паспорт качества через час.', 'Запах на производстве полимеров — это не химия. Это запах стабильной прибыли и выполненного плана.', 'Формула чернил держится в строжайшем секрете. Даже Ая знает только половину.', 'Новая рецептура экономит 15% бюджета. Главный бухгалтер готов лично мешать компоненты.', 'В лаборатории нет слова «ой». Есть «интересный эффект, надо зафиксировать».', 'Пришёл на 5 минут позже — пропустил планёрку. Пришёл на 5 минут раньше — сидишь один.', '«Я буду через 5 минут» — самая нестабильная единица времени в офисе. Может длиться до обеда.', 'Дедлайн по оплате — 16:00. Снабженец отправляет счёт в бухгалтерию в 15:59. Настоящий адреналин!', 'Тайм-менеджмент в закупках — умение распределить панику равномерно на весь день.', 'Ваше мнение очень важно для нас. Запишите его на черновике и выбросьте в шредер.', 'Мы не ищем лёгких путей. Мы ищем пути, которые согласует юротдел с тридцатой попытки.', 'Наш брендбук требует сдержанности. Поэтому я сдерживаю слёзы, глядя на новые цены поставщиков.', 'Конечно, добавим эту задачу в план. У нас как раз было место между паникой и стрессом.', 'Интуитивно понятный интерфейс — когда закупщик интуитивно понимает, что пора пойти пить чай.', '«С уважением, отдел снабжения» — звучит как скрытая угроза в конце официального письма.', 'Металлопрокат подорожал, пока ты читал это предложение. Закупай быстрее!'],
+      exit: ['Все критические риски на сегодня закрыты, конвейер работает как часы. Отдыхай, я докараулю. Пока! ✨', 'Shtark INK Flow уходит на дежурный режим. Спасибо за отличную работу, Кибер-снабженец!', 'План выполнен, дефициты закрыты, Цех №2 спасён. Время выключить монитор и включить режим отдыха. 🌆', 'Ты сегодня — супергерой этого производства. Спасибо за смену, до завтра!', 'Работа работой, а вечер принадлежит тебе. Никаких мыслей о поставках до утра! 🚫📊', 'Программа закрывается, рабочие чаты засыпают… Отдыхай с чистой совестью! 🛏️💤', 'Официально объявляю закупки на сегодня закрытыми. Твой диван ждёт тебя!', 'Спасибо, что пользуетесь Shtark INK Flow. Ты супер. Смена окончена!'],
+      daily_motivation: ['Если кажется, что задач слишком много, просто сделай вдох. Ты управляешь процессами, а не они тобой. Всё получится! ✨', 'Даже самый сложный производственный план собирается по одному шагу. Ты отлично справляешься.', 'Помни: твоё спокойствие важнее любого просроченного дедлайна. Глоток воды — и мы со всем разберёмся. 💧', 'Ты делаешь огромную работу, которую не всегда видно в отчётах, но без которой всё бы встало. Спасибо!', 'Ошибки — это просто данные для оптимизации. Не принимай близко к сердцу, ты крутой профессионал.', 'Если день выдался сумасшедшим, помни: ты сильнее, чем хаос в цепочке поставок. Мы прорвёмся!'],
+      friday: ['Стоп. Хватит планировать. Заводы постоят до понедельника. Бегом отдыхать! 💃🕺', 'Пятница, 16:00. Время закрывать Shtark INK Flow и открывать меню выходного дня!'],
+      night: ['Эй, а почему мы ещё не дома? Конвейер, конечно, Flow, но спать тоже надо. Закругляйся! 🦉', 'Ночные бдения вредят закупкам. Выключай систему, утро вечера мудренее.'],
+      inactivity: ['План замер, производство идёт… Может, проверим остатки на складе, пока есть время?', 'Похоже, у нас пауза. Главное, чтобы Цех №2 не устроил себе перекур раньше времени.'],
+      max: 'Ты спасла Цех №2 от остановки. Держи заслуженный латте! ☕',
+      maxLeave: 'Ая, пользователь отошёл — пойдём на перерыв. Хватит караулить конвейер 🙂',
+    };
+  }
+  employeePool() {
+    const ph = this.avatarPool ? this.avatarPool() : [];
+    const E = [['Ольга Бушуева', 'Снабжение'], ['Максим Кузнецов', 'Лаборатория'], ['Екатерина Сергеева', 'Бухгалтерия'], ['Оксана Афанасьева', 'Снабжение'], ['Татьяна Чернопятова', 'Бухгалтерия'], ['Константин Моисеенко', 'Цех №2'], ['Юлия Колобова', 'Снабжение'], ['Андрей Геннадьевич', 'Цех №2'], ['Ирина Лаврова', 'Лаборатория'], ['Сергей Белов', 'Цех №2']];
+    return E.map((e, i) => ({ name: e[0], dept: e[1], photo: (this.userAvatar(e[0]) || (ph.length ? ph[i % ph.length] : '')) }));
+  }
+  randOf(a) { return a[Math.floor(Math.random() * a.length)]; }
+  shownDailyToday() { try { return localStorage.getItem('inkflow_daily_motiv') === this.ymd(new Date()); } catch (e) { return false; } }
+  markDailyShown() { try { localStorage.setItem('inkflow_daily_motiv', this.ymd(new Date())); } catch (e) {} }
+  pickScenePhrase(scene) {
+    const Q = this.quoteDB(); const now = new Date(); const h = now.getHours(); const dow = now.getDay();
+    let text = '', emp = null;
+    if (scene === 'bored') {
+      if (h >= 14 && !this.shownDailyToday()) { text = this.randOf(Q.daily_motivation); this.markDailyShown(); }
+      else { text = this.randOf(Q.inactivity.concat(Q.welcome)); emp = this.randOf(this.employeePool()); }
+    } else if (scene === 'leave') { text = Q.maxLeave; }
+    else if (scene === 'coffee') { text = Q.max; }
+    else if (scene === 'bye') {
+      if (h >= 21) text = this.randOf(Q.night);
+      else if (dow === 5 && h >= 16) text = this.randOf(Q.friday);
+      else text = this.randOf(Q.exit);
+    }
+    return { text, emp };
+  }
+  setScene(scene) { const p = this.pickScenePhrase(scene); this.setState({ chScene: scene, chPhrase: p.text, chEmp: p.emp }); }
+  triggerCoffee() { this.setScene('coffee'); clearTimeout(this._coffeeT); this._coffeeT = setTimeout(() => { if (this.state.chScene === 'coffee') this.setState({ chScene: '' }); }, 3600); }
   chVals() {
     const S = this.state, sc = S.chScene || '';
     const show = !!sc && sc !== 'gone' && !!S.currentUser && !S.loading;
     const hasMax = sc === 'leave' || sc === 'coffee' || sc === 'bye';
+    const emp = S.chEmp;
     return {
-      chShow: show, chWrapCls: 'chwrap ch-' + (sc || 'none'), chHasMax: hasMax, chBlush: sc === 'coffee' || sc === 'bye',
-      chBubbleBy: sc === 'bored' ? 'Ая' : 'Макс',
-      chText: (sc === 'leave') ? 'Ая, пользователь отошёл — пойдём на перерыв. Хватит караулить конвейер 🙂'
-        : (sc === 'coffee') ? 'Ты спасла Цех №2 от остановки. Держи заслуженный латте! ☕'
-        : (sc === 'bored') ? 'Тихо-то как… никто не нажимает кнопки 😴'
-        : (sc === 'bye') ? 'Смена окончена, риски закрыты! Уходим домой — программа в дежурном режиме. Отличного вечера! 👋' : '',
+      chShow: show, chWrapCls: 'chwrap ch-' + (sc || 'none'), chHasMax: hasMax, chBubbleBy: sc === 'bored' ? 'Ая' : 'Макс',
+      chText: S.chPhrase || '',
+      chHasEmp: !!(emp && sc === 'bored'), chEmpName: emp ? emp.name : '', chEmpDept: emp ? emp.dept : '',
+      chEmpImg: emp && emp.photo ? React.createElement('img', { className: 'chempimg', src: emp.photo, alt: '' }) : null,
     };
   }
   calWidgetVals() {
