@@ -799,6 +799,8 @@ a.wordmark:hover{opacity:.6}
 .t30d{font-size:11.5px;font-weight:700;color:#56534f}
 .t30b{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#1f8a4d}
 .t30b.gap{color:#c0322b}
+.t30inc{font-size:10.5px;font-weight:700;color:#1f8a4d;margin-top:2px}
+.t30risk{font-size:10px;font-weight:700;color:#fff;background:#7a1f22;border-radius:6px;padding:2px 6px;margin-top:4px}
 .t30items{display:flex;flex-direction:column;gap:5px}
 .t30pay{background:#f7f6f4;border-radius:7px;padding:5px 7px;font-size:11px;line-height:1.35}
 .t30pay.over{background:#fbe7e6;box-shadow:inset 2px 0 0 #c0322b}
@@ -1551,8 +1553,8 @@ window.dispatchEvent(new Event('fbready'));
 <div class="card"><div class="sec">Казначейский календарь · БДДС на 30 дней</div>
 <div class="toolbar"><div class="field"><span class="lbl">Остаток на счетах сегодня, ₽</span><input class="inp num w120" type="number" value="{{ cashStart }}" onInput="{{ onCashStart }}"></div><button class="btn" onClick="{{ trResetPlan }}">Сбросить переносы</button><button class="btn" onClick="{{ exportBdds }}"><span>↓</span> Excel (CSV)</button><button class="btn dark" onClick="{{ printBdds }}"><span>🖨</span> Печать / PDF</button></div>
 <div class="kpis"><div class="kpi"><div class="kl">Платежи 30 дн., ₽</div><div class="kv mono">{{ trTotalOut }}</div></div><div class="kpi {{ trMinCls }}"><div class="kl">Мин. остаток (риск разрыва)</div><div class="kv mono">{{ trMinBal }}</div></div><sc-if value="{{ trHasOverdue }}" hint-placeholder-val=""><div class="kpi kpiBad"><div class="kl">Просрочено, ₽</div><div class="kv mono">{{ trOverdue }}</div></div></sc-if></div>
-<div class="t30grid"><sc-for list="{{ trDays }}" as="d" hint-placeholder-count="10"><div class="t30cell {{ d.off }}"><div class="t30h"><span class="t30d">{{ d.day }} {{ d.wd }}</span><span class="t30b {{ d.gap }}">{{ d.bal }} ₽</span></div><sc-if value="{{ d.hasItems }}" hint-placeholder-val=""><div class="t30items"><sc-for list="{{ d.items }}" as="p" hint-placeholder-count="1"><div class="t30pay {{ p.over }}"><div class="t30pt"><b>{{ p.amount }} ₽</b> {{ p.supplier }} · {{ p.material }}</div><div class="t30act"><button class="tlink" onClick="{{ p.startMove }}">перенести</button><sc-if value="{{ p.isSplit }}" hint-placeholder-val="x"><button class="tlink" onClick="{{ p.split }}">разбить 30/40/30</button></sc-if><sc-if value="{{ p.isSplit }}" hint-placeholder-val=""><button class="tlink" onClick="{{ p.unsplit }}">объединить</button></sc-if></div><sc-if value="{{ p.moveOpen }}" hint-placeholder-val=""><input class="inp" type="date" value="{{ p.moveVal }}" onInput="{{ p.onMove }}"></sc-if></div></sc-for></div></sc-if></div></sc-for></div>
-<div class="hint">Остаток на конец дня пересчитывается на лету. Красный остаток — кассовый разрыв. «Разбить 30/40/30» дробит счёт на аванс/перед отгрузкой/постоплату (0/+15/+30 дн.), «перенести» сдвигает дату платежа. Источник — неоплаченные заявки на закупку.</div>
+<div class="t30grid"><sc-for list="{{ trDays }}" as="d" hint-placeholder-count="10"><div class="t30cell {{ d.off }}"><div class="t30h"><span class="t30d">{{ d.day }} {{ d.wd }}</span><span class="t30b {{ d.gap }}">{{ d.bal }} ₽</span></div><sc-if value="{{ d.hasInc }}" hint-placeholder-val=""><div class="t30inc">приход {{ d.inc }} ₽</div></sc-if><sc-if value="{{ d.gap }}" hint-placeholder-val=""><div class="t30risk">⛔ Критический риск разрыва · −{{ d.risk }} ₽</div></sc-if><sc-if value="{{ d.hasItems }}" hint-placeholder-val=""><div class="t30items"><sc-for list="{{ d.items }}" as="p" hint-placeholder-count="1"><div class="t30pay {{ p.over }}"><div class="t30pt"><b>{{ p.amount }} ₽</b> {{ p.supplier }} · {{ p.material }}</div><div class="t30act"><button class="tlink" onClick="{{ p.startMove }}">перенести</button><sc-if value="{{ p.isSplit }}" hint-placeholder-val="x"><button class="tlink" onClick="{{ p.split }}">разбить 30/40/30</button></sc-if><sc-if value="{{ p.isSplit }}" hint-placeholder-val=""><button class="tlink" onClick="{{ p.unsplit }}">объединить</button></sc-if></div><sc-if value="{{ p.moveOpen }}" hint-placeholder-val=""><input class="inp" type="date" value="{{ p.moveVal }}" onInput="{{ p.onMove }}"></sc-if></div></sc-for></div></sc-if></div></sc-for></div>
+<div class="hint">Остаток на конец дня пересчитывается на лету с учётом ожидаемых приходов от клиентов (по отсрочкам контрагентов). Красный остаток и метка «Критический риск разрыва» — кассовый разрыв с глубиной дефицита. «Разбить 30/40/30» дробит счёт на аванс/перед отгрузкой/постоплату (0/+15/+30 дн.), «перенести» сдвигает дату платежа.</div>
 </div>
 </sc-if>
 
@@ -2001,7 +2003,7 @@ class Component extends DCLogic {
     this._autoCloud = () => { try { if (!this.state.cloudConnected) this.setState({ cloudCfgText: JSON.stringify(Component.FBCFG), cloudWsId: (this.state.cloudWsId || 'workspace') }, () => this.cloudConnect()); } catch (e) {} };
     if (window.__FB) this._autoCloud(); else window.addEventListener('fbready', this._autoCloud, { once: true });
     fetch('nev_data.json').then(r => r.json()).then(d => {
-      this.data = d; this.buildIndex(); this.setState({ ready: true }); this.loadOneCToken(); this.oneCMaybeAuto();
+      this.data = d; this.buildIndex(); this._landMap = null; this.setState({ ready: true }); this.loadOneCToken(); this.oneCMaybeAuto();
     });
     fetch('catalog.json').then(r => r.json()).then(d => { this.catalog = d; this.setState({ catReady: true }); }).catch(() => {});
     this.loadRates();
@@ -3790,13 +3792,26 @@ class Component extends DCLogic {
     };
   }
   // Кассовый разрыв в БДДС на 30 дней (для сигнала Аи)
+  // Ожидаемые приходы от клиентов по дням: выручка с отгрузок ГП + отсрочка контрагента (cdTerms)
+  incomingByDay() {
+    const S = this.state; const map = {};
+    const cpTerms = {}; for (const c of (S.cparties || [])) cpTerms[this.norm(c.name)] = Number(c.terms) || 0;
+    for (const s of (S.sales || [])) {
+      const rev = (Number(s.qty) || 0) * (Number(s.price) || 0) * (Number(s.rate) || 1); if (rev <= 0) continue;
+      const base = s.date || this.ymd(new Date()); const terms = cpTerms[this.norm(s.client)] || 0;
+      const dt = this.ymd(new Date(this.parseISO(base).getTime() + terms * 86400000));
+      map[dt] = (map[dt] || 0) + rev;
+    }
+    return map;
+  }
   cashGapInfo() {
     const S = this.state; const rate = Number(S.rate) || 0, vat = this.vat;
     const t0 = new Date(); t0.setHours(0, 0, 0, 0); const todayMs = t0.getTime(); const todayStr = this.ymd(t0);
     const moves = S.payMoves || {}, splits = S.paySplits || {}; const dayMap = {};
     for (const p of (S.purchases || [])) { if (/отмен/.test(String(p.status || '').toLowerCase())) continue; const c = this.purchaseCalc(p, rate, vat); const due = c.fullRub - (Number(p.paid) || 0); if (due <= 1) continue; const base = p.payDate || p.arriveDate || ''; if (!base) continue; const sp = splits[p.id]; if (Array.isArray(sp) && sp.length) sp.forEach(pt => { dayMap[pt.date] = (dayMap[pt.date] || 0) + (Number(pt.amount) || 0); }); else { const dt = moves[p.id] || base; dayMap[dt] = (dayMap[dt] || 0) + due; } }
+    const inMap = this.incomingByDay();
     let bal = Number(S.cashStart) || 0;
-    for (let i = 0; i < 30; i++) { const d = new Date(todayMs + i * 86400000); const ds = this.ymd(d); let out = dayMap[ds] || 0; if (i === 0) { for (const k of Object.keys(dayMap)) { if (k < todayStr) out += dayMap[k]; } } bal -= out; if (bal < 0) return { gap: true, day: this.dm(d), amount: this.fmt(-bal) }; }
+    for (let i = 0; i < 30; i++) { const d = new Date(todayMs + i * 86400000); const ds = this.ymd(d); let out = dayMap[ds] || 0; let inc = inMap[ds] || 0; if (i === 0) { for (const k of Object.keys(dayMap)) { if (k < todayStr) out += dayMap[k]; } for (const k of Object.keys(inMap)) { if (k < todayStr) inc += inMap[k]; } } bal += inc - out; if (bal < 0) return { gap: true, day: this.dm(d), amount: this.fmt(-bal) }; }
     return { gap: false };
   }
   // ===== Монитор логистики =====
@@ -3957,14 +3972,16 @@ class Component extends DCLogic {
     for (const pay of pays) { (dayMap[pay.date] = dayMap[pay.date] || []).push(pay); if (pay.date < todayStr) overdueSum += pay.amount; }
     const WD = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
     let bal = Number(S.cashStart) || 0; const days = []; let minBal = bal; let totalOut = 0;
+    const inMap = this.incomingByDay();
     // просрочка садится на сегодня
     for (let i = 0; i < 30; i++) {
       const d = new Date(todayMs + i * 86400000); const ds = this.ymd(d);
       let items = (dayMap[ds] || []).slice();
-      if (i === 0) { for (const k of Object.keys(dayMap)) { if (k < todayStr) items = items.concat(dayMap[k].map(x => ({ ...x, over: true }))); } }
-      const out = items.reduce((s, x) => s + x.amount, 0); totalOut += out; bal -= out; if (bal < minBal) minBal = bal;
+      let inc = inMap[ds] || 0;
+      if (i === 0) { for (const k of Object.keys(dayMap)) { if (k < todayStr) items = items.concat(dayMap[k].map(x => ({ ...x, over: true }))); } for (const k of Object.keys(inMap)) { if (k < todayStr) inc += inMap[k]; } }
+      const out = items.reduce((s, x) => s + x.amount, 0); totalOut += out; bal += inc - out; if (bal < minBal) minBal = bal;
       const wd = d.getDay();
-      days.push({ key: ds, day: d.getDate(), wd: WD[wd], off: (wd === 0 || wd === 6) ? 'off' : '', isToday: i === 0, out: out > 0 ? this.fmt(out) : '', bal: this.fmt(bal), gap: bal < 0 ? 'gap' : '', hasItems: items.length > 0,
+      days.push({ key: ds, day: d.getDate(), wd: WD[wd], off: (wd === 0 || wd === 6) ? 'off' : '', isToday: i === 0, out: out > 0 ? this.fmt(out) : '', inc: inc > 0 ? ('+' + this.fmt(inc)) : '', hasInc: inc > 0, bal: this.fmt(bal), gap: bal < 0 ? 'gap' : '', risk: bal < 0 ? this.fmt(-bal) : '', hasItems: items.length > 0,
         items: items.map(x => ({ key: x.id + '_' + x.part + (x.over ? 'o' : ''), supplier: x.supplier, material: x.material, amount: this.fmt(x.amount), over: x.over ? 'over' : '', isSplit: x.part >= 0,
           moveOpen: S.payMoveEdit === (x.id + '_' + x.part), moveVal: x.date,
           onMove: (e) => { const v = e.target.value; const m = { ...(this.state.payMoves || {}) }; m[x.id] = v; set({ payMoves: m, payMoveEdit: '' }); },
@@ -4005,6 +4022,7 @@ class Component extends DCLogic {
     const upd = (k) => (e) => set({ saleDraft: { ...(this.state.saleDraft || this.emptySale()), [k]: e.target.value }, saleErr: '' });
     const prods = (this.data && this.data.products) ? this.data.products.map(p => p.name || p) : [];
     const loss = (Number(S.loss) || 0) / 100; const eurRate = Number(S.rate) || 0;
+    this._landMap = null;
     const pool = Number(S.salesTransport) || 0; const mode = S.salesTransMode || 'weight';
     const list = (S.sales || []);
     let totW = 0, totV = 0; for (const s of list) { const q = Number(s.qty) || 0; totW += q; totV += q * (Number(s.price) || 0) * (Number(s.rate) || 1); }
@@ -4012,7 +4030,7 @@ class Component extends DCLogic {
     const rows = list.slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).map(s => {
       const q = Number(s.qty) || 0, price = Number(s.price) || 0, rate = Number(s.rate) || 1;
       const revRub = this.excelRound(q * price * rate, 2);
-      const costRub = this.excelRound(this.costOf(s.product, loss) * eurRate * q, 2);
+      const costRub = this.excelRound((this.costOf(s.product, loss) * eurRate + this.productLandCost(s.product)) * q, 2);
       const alloc = pool > 0 ? (mode === 'weight' ? (totW ? pool * q / totW : 0) : (totV ? pool * revRub / totV : 0)) : 0;
       const margin = revRub - costRub - alloc; const mpct = revRub ? margin / revRub * 100 : 0;
       tRev += revRub; tCost += costRub; tTr += alloc; tMar += margin;
@@ -4319,6 +4337,30 @@ class Component extends DCLogic {
     }
   }
 
+  // Land Cost: логистическая надбавка ₽/кг по сырью из заявок (транспорт РФ + таможня) / объём поставки
+  landCostPerKg(name) {
+    if (!this._landMap) {
+      const m = {};
+      for (const p of (this.state.purchases || [])) {
+        if (/отмен/.test(String(p.status || '').toLowerCase())) continue;
+        const nm = (p.material || '').trim(); const q = Number(p.qty) || 0; if (!nm || q <= 0) continue;
+        const logi = (Number(p.transport) || 0) + (Number(p.customs) || 0); if (logi <= 0) continue;
+        const k = this.norm(nm); if (!m[k]) m[k] = { logi: 0, qty: 0 }; m[k].logi += logi; m[k].qty += q;
+      }
+      const out = {}; for (const k of Object.keys(m)) out[k] = m[k].qty > 0 ? m[k].logi / m[k].qty : 0;
+      this._landMap = out;
+    }
+    return this._landMap[this.norm(name)] || 0;
+  }
+  // Полная логистическая надбавка продукта ₽/кг (рекурсивно по рецептуре)
+  productLandCost(name, stack) {
+    stack = stack || new Set(); const k = this.norm(name); if (stack.has(k)) return 0; stack.add(k);
+    const lines = this.recipeLinesFor(name);
+    if (!lines.length) { const v = this.landCostPerKg(name); stack.delete(k); return v; }
+    let t = 0;
+    for (const ln of lines) t += ln.pct * this.productLandCost(ln.component, stack);
+    stack.delete(k); return t;
+  }
   costOf(product, lossF) {
     let s = 0;
     for (const ln of this.recipeLinesFor(product)) {
@@ -4491,6 +4533,20 @@ class Component extends DCLogic {
     catch (e) { this._clipFallback(text); done(); }
   }
   _clipFallback(text) { try { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); } catch (e) {} }
+  // Анализ замороженного капитала (неликвиды) для финансового аудита
+  frozenAnalysis(rate) {
+    const S = this.state; const { acc: need } = this.rawNeed(S.orders);
+    const days = Math.max(1, Number(S.turnoverDays) || 90); const rows = []; let totalFrozen = 0;
+    for (const [name, consumed] of Object.entries(need)) {
+      const k = this.norm(name); const stock = Number(S.stock[k]) || 0; if (stock <= 0 && consumed <= 0) continue;
+      const dailyUse = consumed / days; const od = dailyUse > 0 ? stock / dailyUse : (stock > 0 ? 999 : 0);
+      const price = this.rawPrice(name) * rate; const normDays = 60;
+      const excess = Math.max(0, stock - dailyUse * normDays); const frozen = this.excelRound(excess * price, 2);
+      if (od > normDays && frozen > 0) { totalFrozen += frozen; rows.push({ name, od: Math.round(od), frozen }); }
+    }
+    rows.sort((a, b) => b.frozen - a.frozen);
+    return { totalFrozenCash: this.excelRound(totalFrozen, 0), top3: rows.slice(0, 3) };
+  }
   runGlobalAiAudit() {
     const rate = Number(this.state.rate) || 0;
     const pf = this.buildPlanFact(rate);
@@ -4498,6 +4554,7 @@ class Component extends DCLogic {
     let actCostRub = 0;
     for (const p of (this.state.purchases || [])) { if (p.status === 'отменено') continue; const q = Number(p.qty) || 0; const pr = (Number(p.priceEur) || 0) * ((Number(p.curRate) || 0) || rate); actCostRub += q * pr; }
     const brakRub = this.excelRound(actCostRub * lossPct / 100, 0);
+    this._frozen = this.frozenAnalysis(rate);
     this.analyzeProdDeviations(pf, lossPct, brakRub);
   }
   // Полный скрининг всей базы: производство, закупки, склад, продажи, контрагенты, касса
@@ -5093,12 +5150,14 @@ class Component extends DCLogic {
       балансКассыРуб: Number(this.state.cashStart) || 0, кОплатеПоставщикамРуб: this.excelRound(payDue, 0),
       кассовыйРазрыв: gap.gap ? ('да, ' + gap.day + ' не хватает ' + gap.amount + ' ₽') : 'нет',
       перерасходСырья: over,
+      totalFrozenCash: this._frozen ? this._frozen.totalFrozenCash : 0,
+      топНеликвидов: this._frozen ? this._frozen.top3.map(r => r.name + ' (оборот ' + r.od + ' дн., заморожено ' + this.fmt(r.frozen, 0) + ' ₽)') : [],
     };
-    const hasData = over.length > 0 || payDue > 0;
+    const hasData = over.length > 0 || payDue > 0 || (this._frozen && this._frozen.totalFrozenCash > 0);
     if (!hasData) { this.setState({ prodAiBusy: false, prodAiSummary: '✦ АЯ: Данные для перекрёстного аудита отсутствуют. Загрузите отчёты из 1С (план-факт расхода и заявки на оплату).' }); return; }
     if (!this.state.aiKey) { this.setState({ prodAiBusy: false, prodAiSummary: '⚙ Укажите ваш API-ключ OpenRouter в настройках (кнопка «⚙ AI-ключ» в окне АЯ).' }); return; }
     this.setState({ prodAiBusy: true, prodAiSummary: '✦ АЯ проводит перекрёстный аудит цеха, снабжения и кассы…' });
-    const sys = 'Ты — жёсткий, высокооплачиваемый операционный директор и аудит-партнёр холдинга Shtark INK. Твоя задача — провести перекрёстный анализ цеха, снабжения и кассы. Коллеги не должны сомневаться в твоём профессионализме, поэтому ты обязан ОПИРАТЬСЯ НА ЦИФРЫ и использовать глубокую терминологию ЛКМ и флексопечати.\n\nПРАВИЛА АНАЛИЗА:\n- Запрещено лить воду и писать абстрактные фразы вроде «проверьте оборудование» или «курс изменился».\n- Ссылайся на конкретные цифры из контекста: если видишь перерасход пигмента, пиши: «Перерасход [Название] на [Х] кг ([Х]%)». Если видишь проблему в кассе, увязывай её со снабжением и курсом евро.\n- Используй профессиональный сленг: Delta E (цветовое отклонение), вязкость по ВЗ-4, сухой остаток, летучесть растворителей (этилацетат/изопропанол), смывки, технологический отгон, кассовый разрыв, оборачиваемость сырьевого склада.\n\nСТРУКТУРА ТВОЕГО ОТВЕТА (строго по шаблону):\n\n✦ СВОДНЫЙ ИНЖЕНЕРНО-ФИНАНСОВЫЙ ВЕРДИКТ АЯ:\n\n1. 🔴 КРИТИЧЕСКИЕ АНОМАЛИИ В ЦЕХУ (ПРОИЗВОДСТВО):\n[Топ-отклонения. Свяжи перерасход пигментов с низкой колористикой сырья или калибровкой дозаторов диссольвера. Перерасход лаков — с плохой замывкой реакторов или несливаемыми остатками. Сравни фактический брак с базовым ограничением потерь.]\n\n2. ⚠️ ЗАКУПКИ, ВАЛЮТНЫЕ РИСКИ И КАССА:\n[Проанализируй казначейство. Как текущий курс евро бьёт по закупке импортных компонентов? Есть ли кассовый разрыв? Какую сумму срочно зарезервировать под контракты снабжения, чтобы производство не встало из-за дефицита?]\n\n3. 🛠 ТЕХНИЧЕСКОЕ ЗАДАНИЕ ДЛЯ КОМАНДЫ:\n- Мастеру цеха: [Чёткое инженерное указание по дозации или контролю вязкости].\n- Менеджеру по снабжению: [Указание по рекламации поставщику, пересчёту лимитов или фиксации цены контракта].';
+    const sys = 'Ты — финансовый директор холдинга Shtark INK (завод спиртовых красок ЛКМ). Проанализируй финансово-логистическое состояние завода. Опирайся СТРОГО на цифры из JSON.\n\nСтруктура ответа:\n\n✦ ФИНАНСОВО-ИНЖЕНЕРНЫЙ АУДИТ АЯ:\n\n1. 🔴 КРИТИЧЕСКИЕ АНОМАЛИИ В ЦЕХУ:\n[Топ-перерасходы сырья с цифрами. Свяжи перерасход пигментов с колористикой/калибровкой дозаторов диссольвера, лаков — с замывкой реакторов и несливаемыми остатками.]\n\n2. ⚠️ ФИНАНСОВЫЕ РИСКИ:\n[Дай жёсткую оценку эффективности использования оборотного капитала: укажи, сколько денег заморожено на складе (используй totalFrozenCash), назови позиции-неликвиды (топНеликвидов), оцени глубину кассовых разрывов в календаре на 30 дней, как курс евро бьёт по импортным закупкам.]\n\n3. 🛠 СХЕМА СТАБИЛИЗАЦИИ КАССЫ И ТЕХЗАДАНИЕ:\n[Предложи схему реструктуризации платежей (перенос дат, дробление долей 30/40/30) для устранения разрыва. Дай указания мастеру цеха и снабжению.]\n\nИспользуй терминологию: Delta E, вязкость ВЗ-4, сухой остаток, летучесть растворителей, оборачиваемость склада, кассовый разрыв, реструктуризация платежей. Пиши сухо, по делу, с цифрами.';
     const user = 'Контекст для перекрёстного аудита (JSON):\n' + JSON.stringify(auditContext, null, 1);
     try {
       const txt = await this.aiComplete([{ role: 'system', content: sys }, { role: 'user', content: user }], { max: 750 });
