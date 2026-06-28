@@ -464,6 +464,186 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .lcempic{font-size:38px;margin-bottom:10px}
 .lcverdict{border:1px solid #cdd8e6;border-left:4px solid #1F4E78;background:#f4f7fb;border-radius:9px;padding:14px 16px;margin-top:16px;font-size:13px;line-height:1.55;color:#22384f}
 .lcverdict b{color:#1F4E78}
+.audbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:16px}
+.audkpi{display:flex;flex-direction:column;gap:2px;padding:10px 16px;border-radius:11px;background:#f4f7fb;border:1px solid #cdd8e6;min-width:120px}
+.audkpi.crit{background:#FCE4D6;border-color:#f1b9ad}.audkpi.warn{background:#fff4e0;border-color:#f0d79a}
+.audkl{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#7a7873}
+.audkv{font-size:22px;font-weight:800;font-family:'IBM Plex Mono',monospace;color:#1a1916}
+.audkpi.crit .audkv{color:#b3331f}
+.audgroup{margin-top:22px}
+.audgh{display:flex;align-items:center;gap:9px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:#1a1916;margin-bottom:4px}
+.audgic{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;background:#eef2f8;color:#1F4E78}
+.audgn{margin-left:auto;font-size:12px;font-weight:700;color:#9a9793}
+.audtiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:10px}
+.audtile{border:1px solid #e7e4e0;border-left:4px solid #c9cdd3;border-radius:12px;padding:14px 16px;background:#fff;transition:transform .18s ease,box-shadow .18s ease;cursor:default;will-change:transform}
+.audtile:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 16px 34px rgba(15,23,42,.16)}
+.audtile.crit{border-left-color:#c0322b;background:#fff8f6}
+.audtile.warn{border-left-color:#e8a33d;background:#fffdf5}
+.audtile.ok{border-left-color:#1F8A5B;background:#f4faf6}
+.audtt{display:flex;align-items:center;gap:8px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;color:#1a1916;text-wrap:pretty}
+.audbadge{font-size:9.5px;font-weight:800;padding:2px 7px;border-radius:20px;letter-spacing:.03em;white-space:nowrap}
+.audbadge.crit{background:#FCE4D6;color:#b3331f}.audbadge.warn{background:#fdeccb;color:#8a5a00}.audbadge.ok{background:#E2EFDA;color:#3a6b1f}
+.audmetric{font-family:'IBM Plex Mono',monospace;font-size:21px;font-weight:800;margin-top:8px;letter-spacing:-.01em}
+.audtile.crit .audmetric{color:#b3331f}.audtile.warn .audmetric{color:#8a5a00}.audtile.ok .audmetric{color:#1F8A5B}
+.auddetail{font-size:12.5px;color:#56534f;line-height:1.5;margin-top:6px;text-wrap:pretty}
+.audsum{font-family:'IBM Plex Mono',monospace;font-weight:800;font-size:13px;margin-top:8px;color:#b3331f}
+.audtile.warn .audsum{color:#8a5a00}.audtile.ok .audsum{color:#3a6b1f}
+.audempty{padding:34px 20px;text-align:center;color:#9a9793}
+.audnote{font-size:12px;color:#9a9793;margin-top:6px;font-style:italic}
+.ctseg.ctsegaud{border-color:#f0c9a0;color:#a05a14}
+.ctseg.ctsegaud.on{background:#c0322b;border-color:#c0322b;color:#fff}
+.preqwrap{margin-top:16px;display:flex;flex-direction:column;gap:7px}
+.preqhd,.preqrow{display:grid;grid-template-columns:128px 118px minmax(170px,1.5fr) 86px minmax(120px,.9fr) 78px 92px;gap:12px;align-items:center}
+.preqhd{padding:0 14px 4px;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#9a9793}
+.preqhd .r,.preqrow .r{text-align:right;justify-self:end}
+.preqrow{padding:10px 14px;background:#fff;border:1px solid #e7e4e0;border-radius:11px;cursor:pointer;transition:transform .17s ease,box-shadow .17s ease;will-change:transform}
+.preqrow:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(15,23,42,.14)}
+.preqrow.prisk.crit{border-left:3px solid #c0322b}.preqrow.prisk.warn{border-left:3px solid #e8a33d}
+.preqid{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13px;color:#1a1916;line-height:1.2}
+.preqid small,.preqsup small{display:block;font-weight:500;font-size:10.5px;color:#9a9793;font-family:'IBM Plex Sans',sans-serif}
+.preqsup{font-weight:600;font-size:13px;color:#1a1916;min-width:0;overflow:hidden;line-height:1.25}
+.preqsup small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.preqarr{display:inline-block;margin-top:3px;font-size:10.5px;color:#8a8782;font-family:'IBM Plex Mono',monospace}
+.preqinc{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;color:#56534f}
+.preqsum{text-align:right;justify-self:end;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:12.5px;color:#1a1916;line-height:1.25}
+.preqsum small{display:block;font-weight:500;color:#9a9793}
+.preqov{display:inline-block;font-family:'IBM Plex Mono',monospace;font-weight:800;font-size:12px;padding:3px 8px;border-radius:20px;background:#eef0f3;color:#56534f}
+.preqov.hi{background:#FCE4D6;color:#b3331f}.preqov.zero{color:#b3b0ab}
+.preqact{display:flex;gap:6px;justify-content:flex-end}
+@media (max-width:900px){.preqhd{display:none}.preqrow{grid-template-columns:1fr 1fr;gap:8px 12px}.preqrow .r{justify-self:start;text-align:left}.preqsum{text-align:left;justify-self:start}}
+.dvtools{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-top:16px}
+.dvlegend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:#56534f}
+.dvleg{display:flex;align-items:center;gap:6px}
+.dvdot{width:12px;height:12px;border-radius:3px;display:inline-block}
+.dvdot.red{background:#c0322b}.dvdot.orange{background:#e8923d}.dvdot.yellow{background:#d8b62e}.dvdot.green{background:#1F8A5B}
+.dvkpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:#e7e4e0;border-radius:10px;overflow:hidden;margin-top:16px}
+.dvkpi{background:#fff;padding:13px 15px;display:flex;flex-direction:column;gap:3px}
+.dvkpi.red{background:#fbeae6}.dvkpi.orange{background:#fdf2e6}.dvkpi.yellow{background:#fbf8e3}.dvkpi.green{background:#eef7f1}
+.dvkl{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#8a8782}
+.dvkv{font-size:22px;font-weight:800;font-family:'IBM Plex Mono',monospace;color:#1a1916}
+.dvwrap{margin-top:14px;display:flex;flex-direction:column;gap:6px}
+.dvhd,.dvrow{display:grid;grid-template-columns:22px minmax(160px,1.7fr) 104px 86px 92px 92px 86px;gap:10px;align-items:center}
+.dvhd{padding:0 12px 2px;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#9a9793}
+.dvhd .r,.dvrow .r{text-align:right;justify-self:end}
+.dvrow{padding:9px 12px;background:#fff;border:1px solid #e7e4e0;border-left:4px solid #c9cdd3;border-radius:9px;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;will-change:transform}
+.dvrow:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(15,23,42,.12)}
+.dvrow.red{border-left-color:#c0322b;background:#fff8f6}
+.dvrow.orange{border-left-color:#e8923d;background:#fffaf3}
+.dvrow.yellow{border-left-color:#d8b62e;background:#fffdf1}
+.dvrow.green{border-left-color:#1F8A5B;background:#f6fbf8}
+.dvexp{font-family:'IBM Plex Mono',monospace;color:#9a9793;font-weight:700}
+.dvnm{font-weight:600;font-size:13px;color:#1a1916;min-width:0;line-height:1.22;overflow:hidden}
+.dvnm small{display:block;font-weight:500;font-size:10.5px;color:#9a9793;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dvnum{font-family:'IBM Plex Mono',monospace;font-size:12.5px;text-align:right;justify-self:end;color:#1a1916}
+.dvdate{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;text-align:right;justify-self:end;color:#56534f}
+.dvrow.red .dvdate{color:#c0322b}.dvrow.orange .dvdate{color:#a05a14}.dvrow.yellow .dvdate{color:#8a6a00}.dvrow.green .dvdate{color:#1F8A5B}
+.dvdrill{margin:-2px 0 8px;border:1px solid #e7e4e0;border-radius:9px;background:#faf9f7;padding:12px 14px}
+.dvdh{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#8a8782;margin:2px 0 6px}
+.dvtl{display:grid;grid-template-columns:90px 1fr 88px 96px;gap:8px;font-size:11.5px;padding:5px 0;border-bottom:1px solid #efede9;align-items:center}
+.dvtl .r{text-align:right}
+.dvtl.h{font-weight:700;color:#8a8782;text-transform:uppercase;font-size:9.5px;letter-spacing:.04em;border-bottom:1px solid #ddd}
+.dvtl.crit{color:#b3331f;font-weight:700}
+.dvsrc{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#56534f}
+.dvverdict{border:1px solid #cdd8e6;border-left:4px solid #2A6FDB;background:#f4f7fb;border-radius:9px;padding:14px 16px;margin-top:14px;font-size:13px;line-height:1.55;color:#22384f;white-space:pre-wrap}
+.dvempty{padding:38px 20px;text-align:center;color:#9a9793}
+.dl404{max-width:680px;margin:30px auto;padding:30px;text-align:left;font-family:-apple-system,'Segoe UI',Arial,sans-serif;color:#000}
+.dl404 h1{font-size:26px;font-weight:700;margin:0 0 8px}
+.dl404 hr{border:0;border-top:1px solid #ddd;margin:12px 0}
+.dl404 .addr{color:#555;font-size:13px}
+.dlsec{font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;color:#1a1916;margin:20px 0 4px;display:flex;align-items:center;gap:8px}
+.dlsec .dlchip{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:#eef2f8;color:#1F4E78;letter-spacing:.02em}
+.dlgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:10px}
+.dlzone{position:relative;border:2px dashed #d3d8e0;border-radius:12px;background:#fafbfc;padding:16px 16px 14px;min-height:120px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s,background .15s,transform .15s}
+.dlzone:hover{transform:translateY(-2px)}
+.dlzone.drag{border-color:#2A6FDB;background:#eef4ff}
+.dlzone.ok{border-style:solid;border-color:#7bbf8f;background:#f3faf5}
+.dlzone.err{border-style:solid;border-color:#e0a39a;background:#fff6f4}
+.dlzn{font-weight:700;font-size:13px;color:#1a1916;display:flex;align-items:center;gap:7px;padding-right:22px}
+.dlznum{width:20px;height:20px;border-radius:6px;background:#1F4E78;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dlzh{font-size:11.5px;color:#8a8782;line-height:1.4;flex:1}
+.dlzst{font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;margin-top:auto}
+.dlzst.ok{color:#1F8A5B}.dlzst.err{color:#c0322b}.dlzst.idle{color:#9a9793}
+.dlchk{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
+.dlchk.ok{background:#1F8A5B}.dlchk.err{background:#c0322b}
+.dlza{display:flex;gap:8px;margin-top:4px}
+.dlbtn{appearance:none;border:1px solid #cdd3db;background:#fff;border-radius:8px;font:inherit;font-size:11.5px;font-weight:600;color:#34506f;padding:6px 11px;cursor:pointer}
+.dlbtn:hover{background:#eef4ff;border-color:#2A6FDB}
+.dlbtn.rm{color:#c0322b;border-color:#e6c4bd}
+.dlzx{position:absolute;top:10px;right:10px;border:none;background:#efedea;color:#c0322b;width:24px;height:24px;border-radius:7px;font-size:14px;cursor:pointer;line-height:1}
+.dlextra{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.dlerow{display:grid;grid-template-columns:24px 1fr 130px 100px 80px;gap:10px;align-items:center;border:1px solid #e7e4e0;border-radius:9px;padding:9px 12px;background:#fff;transition:transform .15s,box-shadow .15s}
+.dlerow:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,23,42,.1)}
+.dlenm{font-weight:600;font-size:12.5px;color:#1a1916;min-width:0;overflow:hidden}
+.dlenm small{display:block;font-weight:500;color:#9a9793;font-size:10.5px}
+.dletag{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;text-align:center}
+.dletag.ok{background:#E2EFDA;color:#3a6b1f}.dletag.map{background:#fdeccb;color:#8a5a00}
+.dlrecalc{margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding-top:16px;border-top:1px solid #eee}
+.dlbig{appearance:none;border:none;border-radius:11px;font:inherit;font-size:14px;font-weight:700;padding:13px 22px;cursor:pointer;background:#1F4E78;color:#fff;display:inline-flex;align-items:center;gap:8px}
+.dlbig:disabled{background:#cdd3db;color:#fff;cursor:not-allowed}
+.dlbig:not(:disabled):hover{background:#163a5c}
+.dlprog{font-size:12.5px;color:#56534f}
+.dltmpls{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.dltmpl{display:inline-flex;align-items:center;gap:8px;border:1px solid #dad7d2;border-radius:20px;padding:5px 12px;font-size:12px;background:#faf9f7}
+.dltmpl b{font-weight:700;color:#1a1916}
+.dltmpl button{border:none;background:none;color:#c0322b;cursor:pointer;font-size:13px;padding:0}
+.dlmapbg{position:fixed;inset:0;background:rgba(15,18,22,.42);backdrop-filter:blur(4px);z-index:1300;display:flex;align-items:center;justify-content:center;padding:18px}
+.dlmap{background:#fff;border-radius:14px;max-width:640px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.32);padding:22px 24px}
+.dlmaph{font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;color:#1a1916}
+.dlmaps{font-size:12.5px;color:#56534f;margin:4px 0 14px;line-height:1.5}
+.dlmaprow{display:grid;grid-template-columns:1fr 18px 1fr;gap:10px;align-items:center;margin-bottom:8px}
+.dlmapf{font-size:13px;font-weight:600;color:#1a1916}
+.dlmaparr{color:#9a9793;text-align:center}
+.dlmapsample{margin-top:12px;border:1px solid #eee;border-radius:8px;padding:8px 10px;font-size:11px;color:#8a8782;font-family:'IBM Plex Mono',monospace;overflow:auto;white-space:nowrap}
+.dlmapfoot{display:flex;gap:10px;align-items:center;margin-top:16px;flex-wrap:wrap}
+.dlmapchk{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#56534f}
+.plwrap{display:flex;flex-direction:column;gap:0}
+.plkpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:#dfe6ef;border-radius:12px;overflow:hidden;margin-top:14px;border:1px solid #cdd8e6}
+.plkpi{background:#fff;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.plkpi.navy{background:#1F4E78}.plkpi.navy2{background:#2A6FDB}
+.plkk{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#8a8782;font-weight:700}
+.plkpi.navy .plkk,.plkpi.navy2 .plkk{color:#cfe0f5}
+.plkv{font-size:21px;font-weight:800;letter-spacing:-.01em;color:#1a1916;font-family:'IBM Plex Mono',monospace}
+.plkpi.navy .plkv,.plkpi.navy2 .plkv{color:#fff}
+.plke{font-size:11.5px;color:#9a9793;font-weight:600}
+.plkpi.navy .plke,.plkpi.navy2 .plke{color:#b8cce4}
+.plke.pos{color:#1F8A5B}.plke.neg{color:#c0322b}
+.pltoolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-top:16px}
+.plseg{display:inline-flex;background:#f0eee9;border-radius:9px;padding:3px;gap:2px}
+.plsegb{appearance:none;border:none;background:none;border-radius:7px;padding:7px 13px;font:inherit;font-size:12.5px;font-weight:700;color:#56534f;cursor:pointer;white-space:nowrap}
+.plsegb.on{background:#1F4E78;color:#fff}
+.plplan{display:flex;align-items:center;gap:6px;font-size:12px;color:#56534f}
+.plplan input{width:120px}
+.plhint2{font-size:11.5px;color:#9a9793;margin-top:8px}
+.pltbl{margin-top:14px;border:1px solid #e3e6ea;border-radius:11px;overflow:hidden}
+.plhd,.plr{display:grid;grid-template-columns:minmax(220px,2.4fr) 88px 110px 96px 70px 96px 70px 64px;gap:8px;align-items:center}
+.plhd{background:#f4f7fb;padding:9px 14px;font-size:9.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#7488a0;border-bottom:2px solid #cdd8e6}
+.plhd .r,.plr .r{text-align:right;justify-self:end}
+.plr{padding:8px 14px;border-bottom:1px solid #eef0f3;cursor:default;background:#fff;transition:background .12s}
+.plr:hover{background:#f8fafc}
+.plr.l1{font-weight:800;background:#fbfcfe;cursor:pointer}
+.plr.l1:hover{background:#f1f6fc}
+.plr.l2{cursor:pointer}
+.plr.l2 .plnm{padding-left:20px;font-weight:600}
+.plr.l3 .plnm{padding-left:40px;color:#56534f;font-weight:500}
+.plr.red{background:#fdf2ef}.plr.red:hover{background:#fbe9e4}
+.plr.green{background:#f2f9f4}.plr.green:hover{background:#e9f5ee}
+.plr.warn{background:#fdf8ee}
+.plr.red.l1{box-shadow:inset 4px 0 0 #c0322b}.plr.green.l1{box-shadow:inset 4px 0 0 #1F8A5B}.plr.warn.l1{box-shadow:inset 4px 0 0 #d8b62e}
+.plnm{display:flex;align-items:center;gap:8px;min-width:0;font-size:13px;color:#1a1916}
+.plnm .plx{font-family:'IBM Plex Mono',monospace;color:#9aa0a8;font-weight:700;width:12px;flex-shrink:0}
+.plnm .pltx{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.plnum{font-family:'IBM Plex Mono',monospace;font-size:12px;text-align:right;justify-self:end;color:#1a1916}
+.plnum.dim{color:#9a9793}
+.plnum.pos{color:#1F8A5B;font-weight:700}.plnum.neg{color:#c0322b;font-weight:700}
+.plbar{height:7px;border-radius:4px;background:#eef0f3;overflow:hidden;min-width:48px}
+.plbar > span{display:block;height:100%;background:#2A6FDB}
+.pltot{display:grid;grid-template-columns:minmax(220px,2.4fr) 88px 110px 96px 70px 96px 70px 64px;gap:8px;padding:10px 14px;background:#D9E1F2;font-weight:800;border-top:2px solid #1F4E78}
+.pltot .r{text-align:right;justify-self:end;font-family:'IBM Plex Mono',monospace}
+.plverdict{border:1px solid #cdd8e6;border-left:4px solid #2A6FDB;background:#f4f7fb;border-radius:9px;padding:14px 16px;margin-top:14px;font-size:13px;line-height:1.55;color:#22384f;white-space:pre-wrap}
+.plempty{padding:40px 22px;text-align:center;color:#9a9793}
+.plempty .e{font-size:38px;margin-bottom:10px}
+@media print{body.plprint .sidebar,body.plprint .topbar,body.plprint .hotkeys,body.plprint .cwbtn,body.plprint .aifab,body.plprint .pltoolbar,body.plprint .actrow,body.plprint .online,body.plprint .coswitch,body.plprint .cloudbar,body.plprint .onecbtn{display:none!important}body.plprint .wrap{display:block!important}body.plprint .main{margin:0!important;padding:0!important}body.plprint .card{box-shadow:none!important;border:none!important;padding:0!important}body.plprint .plr,body.plprint .plhd{break-inside:avoid}}
+@media print{body.dvprint .sidebar,body.dvprint .topbar,body.dvprint .hotkeys,body.dvprint .cwbtn,body.dvprint .aifab,body.dvprint .actrow,body.dvprint .dvtools,body.dvprint .hamfix,body.dvprint .sbreopen,body.dvprint .online,body.dvprint .coswitch,body.dvprint .onecbtn,body.dvprint .cloudbar{display:none!important}body.dvprint .wrap{display:block!important}body.dvprint .main{margin:0!important;padding:0!important}body.dvprint .card{box-shadow:none!important;border:none!important;padding:0!important}body.dvprint .dvrow{break-inside:avoid}}
 .ostat{font-weight:600}
 .ostat.acc{color:#0080b0;border-color:#9fd9ef;background:#f4fbfe}
 .ostat.work{color:#7a6a00;border-color:#e6d98a;background:#fdfbf0}
@@ -1674,6 +1854,107 @@ window.dispatchEvent(new Event('fbready'));
 </sc-if>
 </sc-if>
 
+<sc-if value="{{ isPnl }}" hint-placeholder-val="">
+<sc-if value="{{ plEmpty }}" hint-placeholder-val="{{ true }}">
+<div class="card"><div class="sec">📊 P&L и маржинальный анализ 360°</div><div class="plempty"><div class="e">📊</div><div>Нет данных о выручке. Загрузите файл выручки 1С во вкладке «Маржинальный отчёт» — P&L 360° использует те же данные и дерево себестоимости.</div><div style="margin-top:14px"><button class="btn dark" onClick="{{ goMargin }}">Перейти в Маржинальный отчёт</button></div></div></div>
+</sc-if>
+<sc-if value="{{ plKpis }}" hint-placeholder-val="">
+<div class="card">
+<div class="mgrhead"><div class="mgrtitle">P&L и маржинальный анализ 360° <span class="mgrper">{{ plPeriodVal }}</span></div><div class="dvtools"><button class="btn dark" onClick="{{ plRunAi }}" disabled="{{ plAiBusy }}"><span>✦</span> ИИ-вердикт</button><button class="btn mgxls" onClick="{{ plExcel }}"><span>⬇</span> Excel</button><button class="btn" onClick="{{ plPrint }}"><span>🖨</span> Печать</button><button class="btn" onClick="{{ plEmail }}"><span>✉</span> Email</button></div></div>
+<div class="plkpis"><sc-for list="{{ plKpis }}" as="k" hint-placeholder-count="6"><div class="{{ k.cls }}"><span class="plkk">{{ k.k }}</span><span class="plkv">{{ k.v }}</span><span class="{{ k.ecls }}">{{ k.e }}</span></div></sc-for></div>
+<sc-if value="{{ mgCostNoteShow }}" hint-placeholder-val=""><div class="{{ mgCostNoteCls }}">{{ mgCostNote }}</div></sc-if>
+<div class="pltoolbar">
+<div class="field"><span class="lbl">Период</span><input class="inp" value="{{ plPeriodVal }}" onInput="{{ onPlPeriod }}" placeholder="июнь 2026"></div>
+<div class="field"><span class="lbl">Себестоимость</span><div class="plseg"><button class="{{ plModeTreeCls }}" onClick="{{ setModeTree }}">Дерево СС</button><button class="{{ plModeBatchCls }}" onClick="{{ setModeBatch }}">Партионная</button></div></div>
+<div class="plplan">План выручки ₽<input class="inp num" value="{{ plPlanRev }}" onInput="{{ onPlPlanRev }}"></div>
+<div class="plplan">План GM2 ₽<input class="inp num" value="{{ plPlanM2 }}" onInput="{{ onPlPlanM2 }}"></div>
+</div>
+<div class="plhint2">Партионная СС берёт ₽/кг из отчёта «Себестоимость» (по фактическим партиям производства), «Дерево СС» — из активного дерева «Анализ себестоимости» за совпадающий период. Чистая маржа GM2 = GM1 − операционные расходы − КВ/бонусы.</div>
+</div>
+<div class="card">
+<div class="pltoolbar" style="margin-top:0;justify-content:space-between">
+<div class="plseg"><sc-for list="{{ plSliceTabs }}" as="t" hint-placeholder-count="4"><button class="{{ t.cls }}" onClick="{{ t.go }}">{{ t.label }}</button></sc-for></div>
+<div class="dvtools" style="margin:0"><button class="btn" onClick="{{ plExpandAll }}">Развернуть</button><button class="btn" onClick="{{ plCollapseAll }}">Свернуть</button></div>
+</div>
+<div class="pltbl">
+<div class="plhd"><span>Срез / drill-down</span><span class="r">Объём</span><span class="r">Выручка</span><span class="r">COGS</span><span class="r">GM1 %</span><span class="r">GM2 ₽</span><span class="r">GM2 %</span><span class="r">Доля</span></div>
+<sc-for list="{{ plRows }}" as="r" hint-placeholder-count="8"><div class="{{ r.cls }}" onClick="{{ r.toggle }}"><span class="plnm"><span class="plx">{{ r.x }}</span><span class="pltx">{{ r.name }}</span></span><span class="plnum dim">{{ r.w }}</span><span class="plnum">{{ r.rev }}</span><span class="plnum dim">{{ r.ss }}</span><span class="{{ r.r1cls }}">{{ r.r1 }}</span><span class="plnum">{{ r.m2 }}</span><span class="{{ r.r2cls }}">{{ r.r2 }}</span><span class="r"><span class="plbar"><span style="width:{{ r.share }}%"></span></span></span></div></sc-for>
+<div class="pltot"><span>ИТОГО</span><span class="r">{{ plTot.w }}</span><span class="r">{{ plTot.rev }}</span><span class="r">{{ plTot.ss }}</span><span class="r">{{ plTot.r1 }}</span><span class="r">{{ plTot.m2 }}</span><span class="r">{{ plTot.r2 }}</span><span class="r"></span></div>
+</div>
+<sc-if value="{{ plHasAi }}" hint-placeholder-val=""><div class="plverdict">{{ plAi }}</div></sc-if>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ isDataload }}" hint-placeholder-val="">
+<sc-if value="{{ dlNoAccess }}" hint-placeholder-val="{{ true }}">
+<div class="card"><div class="dl404"><h1>404 Not Found</h1><p>The requested URL was not found on this server.</p><hr><div class="addr">nginx</div></div></div>
+</sc-if>
+<sc-if value="{{ dlCoName }}" hint-placeholder-val="">
+<div class="card">
+<div class="sec">📥 Загрузка данных из 1С:КА · {{ dlCoName }}</div>
+<div class="desc">Ежедневная загрузка базовых отчётов и произвольных форм. Поддерживаются .xlsx, .xls, .csv, .txt. Доступ — только для администраторов и ролей с правом загрузки.</div>
+<div class="dlsec"><span class="dlchip">Блок А</span> Базовые отчёты 1С:КА (вкл. банковские выписки) <span class="dlchip">{{ dlBaseLoaded }} / {{ dlBaseTotal }}</span></div>
+<div class="dlgrid"><sc-for list="{{ dlBaseZones }}" as="z" hint-placeholder-count="5">
+<div class="{{ z.zoneCls }}" onDrop="{{ z.onDrop }}" onDragOver="{{ z.onDragOver }}" onDragLeave="{{ z.onDragLeave }}">
+<sc-if value="{{ z.loaded }}" hint-placeholder-val=""><button class="dlzx" onClick="{{ z.remove }}">×</button></sc-if>
+<div class="dlzn"><span class="dlznum">{{ z.no }}</span>{{ z.label }}</div>
+<div class="dlzh">{{ z.hint }}</div>
+<div class="{{ z.stCls }}"><sc-if value="{{ z.isOk }}" hint-placeholder-val=""><span class="{{ z.chkCls }}">{{ z.chkMark }}</span></sc-if><sc-if value="{{ z.isErr }}" hint-placeholder-val=""><span class="{{ z.chkCls }}">{{ z.chkMark }}</span></sc-if>{{ z.statusText }}</div>
+<div class="dlza"><label class="dlbtn">📎 Файл<input type="file" accept=".xlsx,.xls,.csv,.txt" style="display:none" onChange="{{ z.onFile }}"></label></div>
+</div>
+</sc-for></div>
+<div class="dlsec"><span class="dlchip">Блок Б</span> Загрузка дополнительных форм аналитики</div>
+<div class="desc">Расчёты логистов, спецификации, прайсы, ручные корректировки. Если структура файла неизвестна — откроется конструктор сопоставления колонок; можно сохранить как шаблон.</div>
+<div class="dlza"><label class="dlbtn">＋ Добавить форму<input type="file" accept=".xlsx,.xls,.csv,.txt" style="display:none" onChange="{{ onDlExtraFile }}"></label><sc-if value="{{ dlBusyExtra }}" hint-placeholder-val=""><span class="dlprog">Чтение…</span></sc-if></div>
+<sc-if value="{{ dlHasExtra }}" hint-placeholder-val=""><div class="dlextra"><sc-for list="{{ dlExtraRows }}" as="x" hint-placeholder-count="2"><div class="dlerow"><span class="dlchk ok">✓</span><span class="dlenm">{{ x.name }}<small>{{ x.fileName }}</small></span><span class="dlenm">строк: {{ x.n }}</span><span class="{{ x.tagCls }}">{{ x.tag }}</span><button class="dlbtn rm" onClick="{{ x.remove }}">Убрать</button></div></sc-for></div></sc-if>
+<sc-if value="{{ dlHasTpl }}" hint-placeholder-val=""><div class="dlprog" style="margin-top:12px">Сохранённые шаблоны распознавания:</div><div class="dltmpls"><sc-for list="{{ dlTemplates }}" as="t" hint-placeholder-count="2"><span class="dltmpl"><b>{{ t.name }}</b> · {{ t.fields }} полей<button onClick="{{ t.del }}" title="Удалить шаблон">✕</button></span></sc-for></div></sc-if>
+<sc-if value="{{ dlHasErr }}" hint-placeholder-val=""><div class="banner err">{{ dlErr }}</div></sc-if>
+<sc-if value="{{ dlHasDone }}" hint-placeholder-val=""><div class="banner ok">{{ dlDone }}</div></sc-if>
+<div class="dlrecalc"><button class="dlbig" onClick="{{ dlRecalc }}" disabled="{{ dlRecalcOff }}"><span>⚙</span> Запустить сквозной пересчёт аналитики</button><span class="dlprog">{{ dlProgText }}</span></div>
+</div>
+<sc-if value="{{ dlMapOpen }}" hint-placeholder-val=""><div class="dlmapbg" onClick="{{ dlMapCancel }}"></div><div class="dlmap">
+<div class="dlmaph">Сопоставление колонок</div>
+<div class="dlmaps">Файл «{{ dlMapFile }}» системе незнаком. Укажите, какая колонка файла соответствует каждому системному полю. Незаполненные поля игнорируются.</div>
+<sc-for list="{{ dlMapRows }}" as="f" hint-placeholder-count="5"><div class="dlmaprow"><span class="dlmapf">{{ f.label }}</span><span class="dlmaparr">←</span><select class="sel" value="{{ f.sel }}" onChange="{{ f.onSel }}"><option value="">— нет —</option><sc-for list="{{ dlMapColOpts }}" as="c" hint-placeholder-count="3"><option value="{{ c.v }}">{{ c.label }}</option></sc-for></select></div></sc-for>
+<div class="dlmapsample">Колонки файла: {{ dlMapSample }}</div>
+<div class="dlmaprow" style="margin-top:12px"><span class="dlmapf">Название шаблона</span><span class="dlmaparr">→</span><input class="inp" value="{{ dlMapName }}" onInput="{{ onDlMapName }}" placeholder="напр. Прайс Логиста ТЭК"></div>
+<div class="dlmapfoot"><label class="dlmapchk"><input type="checkbox" checked="{{ dlMapSave }}" onChange="{{ toggleDlMapSave }}"> Сохранить как шаблон для автораспознавания</label></div>
+<div class="dlmapfoot"><button class="btn dark" onClick="{{ dlMapApply }}">Применить сопоставление</button><button class="btn" onClick="{{ dlMapCancel }}">Отмена</button></div>
+</div></sc-if>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ isDelivery }}" hint-placeholder-val="">
+<div class="card">
+<div class="sec">🚚 Доставка · сквозной баланс снабжения · {{ dvCoName }}</div>
+<div class="desc">Ежедневная проекция остатков сырья: остаток + приход (в пути / заказы) − потребность производства. {{ dvPeriodLabel }}. Кликните строку для раскрытия источников (drill-down до № заказа и даты).</div>
+<div class="dvtools">
+<div class="field"><span class="lbl">Горизонт</span><select class="sel" value="{{ dvHorizon }}" onChange="{{ onDvHorizon }}"><sc-for list="{{ dvHorizonOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}">{{ o.l }}</option></sc-for></select></div>
+<div class="field"><span class="lbl">Период с</span><input class="inp" type="date" value="{{ dvFrom }}" onInput="{{ onDvFrom }}"></div>
+<div class="field"><span class="lbl">по</span><input class="inp" type="date" value="{{ dvTo }}" onInput="{{ onDvTo }}"></div>
+<div class="field"><span class="lbl">Рынок</span><select class="sel" value="{{ dvFltMarket }}" onChange="{{ onDvMarket }}"><option value="">Все</option><option value="ved">Импорт / ВЭД</option><option value="dom">Внутренний</option></select></div>
+<div class="field"><span class="lbl">Группа сырья</span><select class="sel" value="{{ dvFltGroup }}" onChange="{{ onDvGroup }}"><option value="">Все группы</option><sc-for list="{{ dvGroupOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for></select></div>
+<div class="field"><span class="lbl">Поставщик</span><select class="sel" value="{{ dvFltSupplier }}" onChange="{{ onDvSupplier }}"><option value="">Все</option><sc-for list="{{ dvSupplierOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for></select></div>
+</div>
+<div class="dvlegend"><span class="dvleg"><span class="dvdot red"></span>Критический дефицит</span><span class="dvleg"><span class="dvdot orange"></span>Зона риска</span><span class="dvleg"><span class="dvdot yellow"></span>Избыток (&gt;45 дн)</span><span class="dvleg"><span class="dvdot green"></span>Баланс</span></div>
+<div class="dvkpis"><sc-for list="{{ dvKpis }}" as="k" hint-placeholder-count="5"><div class="{{ k.cls }}"><span class="dvkl">{{ k.label }}</span><span class="dvkv">{{ k.value }}</span></div></sc-for></div>
+<div class="dvtools"><button class="btn dark" onClick="{{ dvRunAi }}" disabled="{{ dvAiBusy }}"><span>✦</span> ИИ-Коннект анализ</button><button class="btn mgxls" onClick="{{ dvExcel }}"><span>⬇</span> Excel</button><button class="btn" onClick="{{ dvPrint }}"><span>🖨</span> Печать</button><button class="btn" onClick="{{ dvEmail }}"><span>✉</span> На почту</button></div>
+<sc-if value="{{ dvHasAi }}" hint-placeholder-val=""><div class="dvverdict">{{ dvAi }}</div></sc-if>
+</div>
+<div class="card">
+<sc-if value="{{ dvEmpty }}" hint-placeholder-val=""><div class="dvempty">Нет данных для баланса. Заполните остатки склада, заявки клиентов (потребность) и заявки на закупку (приходы).</div></sc-if>
+<sc-if value="{{ dvRows }}" hint-placeholder-val="{{ true }}">
+<div class="dvwrap"><div class="dvhd"><span></span><span>Наименование / группа</span><span class="r">Дата провала/проф.</span><span class="r">Остаток</span><span class="r">Мин. остаток</span><span class="r">В пути</span><span class="r">Запас</span></div>
+<sc-for list="{{ dvRows }}" as="r" hint-placeholder-count="6"><div><div class="{{ r.rowCls }}" onClick="{{ r.toggle }}"><span class="dvexp">{{ r.exp }}</span><span class="dvnm">{{ r.name }}<small>{{ r.group }} · {{ r.unit }}</small></span><span class="dvdate">{{ r.keyDate }}</span><span class="dvnum">{{ r.stock }}</span><span class="dvnum">{{ r.minBal }}</span><span class="dvnum">{{ r.transit }}</span><span class="dvnum">{{ r.cover }}</span></div>
+<sc-if value="{{ r.open }}" hint-placeholder-val=""><div class="dvdrill"><div class="dvdh">Проекция по дням (ключевое окно)</div><div class="dvtl h"><span>Дата</span><span>Остаток на дату</span><span class="r">Приход</span><span class="r">Остаток</span></div><sc-for list="{{ r.drill }}" as="d" hint-placeholder-count="4"><div class="{{ d.cls }}"><span>{{ d.date }}</span><span>расход {{ d.use }} {{ r.unit }}</span><span class="r">{{ d.inc }}</span><span class="r">{{ d.bal }}</span></div></sc-for>
+<sc-if value="{{ r.hasSrc }}" hint-placeholder-val=""><div class="dvdh" style="margin-top:10px">Источники прихода (drill-down)</div><sc-for list="{{ r.srcs }}" as="s" hint-placeholder-count="2"><div class="dvsrc">📦 {{ s.text }}</div></sc-for></sc-if>
+</div></sc-if>
+</div></sc-for></div>
+</sc-if>
+</div>
+</sc-if>
+
 <sc-if value="{{ isCost }}" hint-placeholder-val="">
 <div class="card">
 <div class="sbflt"><div class="field grow"><span class="lbl">🔎 Поиск (продукт / № ЗП)</span><input class="inp" value="{{ sbSearch }}" onInput="{{ onSbSearch }}" placeholder="например, 2014 или 631"></div><div class="field"><span class="lbl">Марка</span><select class="sel" value="{{ sbFltMarka }}" onChange="{{ onFltMarka }}"><option value="">Все марки</option><sc-for list="{{ sbMarkaOpts }}" as="m" hint-placeholder-count="3"><option value="{{ m.value }}">{{ m.label }}</option></sc-for></select></div><div class="field"><span class="lbl">Период с</span><input class="inp sbdate" type="date" value="{{ sbDateFrom }}" onChange="{{ onDateFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp sbdate" type="date" value="{{ sbDateTo }}" onChange="{{ onDateTo }}"></div><button class="btn ghost" onClick="{{ sbResetFlt }}">↺ Сброс</button><button class="btn dark" onClick="{{ toggleCompare }}">⇄ Сравнить марку</button><button class="btn mgxls" onClick="{{ sbExportExcel }}">⬇ Скачать Excel</button></div>
@@ -1902,8 +2183,8 @@ window.dispatchEvent(new Event('fbready'));
 <div class="card">
 <div class="sec">Заявки на закупку</div>
 <div class="kpis"><sc-for list="{{ purchaseKpis }}" as="k" hint-placeholder-count="4"><div class="kpi"><div class="kl">{{ k.label }}</div><div class="kv mono">{{ k.value }}</div></div></sc-for></div>
-<div class="scroll"><table class="preg"><thead><tr><th>№</th><th>Инициатор</th><th>Наименование сырья</th><th>Кол-во</th><th>Категория</th><th>Поставщик</th><th>Сумма ₽</th><th>Согласование</th><th>Статус заказа</th><th>Факт. на склад</th><th></th></tr></thead>
-<tbody><sc-for list="{{ purchaseList }}" as="p" hint-placeholder-count="2"><tr class="clk {{ p.rowCls }}"><td class="mono" onClick="{{ p.open }}">{{ p.no }}</td><td onClick="{{ p.open }}">{{ p.initiator }}</td><td class="nm" onClick="{{ p.open }}">{{ p.material }}</td><td class="right mono nowrap" onClick="{{ p.open }}">{{ p.qty }} {{ p.unit }}</td><td onClick="{{ p.open }}">{{ p.category }}</td><td onClick="{{ p.open }}">{{ p.supplier }}</td><td class="right mono" onClick="{{ p.open }}">{{ p.sumRub }}</td><td onClick="{{ p.open }}"><span class="st {{ p.approvalCls }}">{{ p.approval }}</span></td><td onClick="{{ p.open }}"><span class="st {{ p.statusCls }}">{{ p.status }}</span></td><td class="mono" onClick="{{ p.open }}">{{ p.arriveDate }}</td><td class="right nowrap"><button class="btn xs" onClick="{{ p.print }}">печать</button> <button class="btn x" onClick="{{ p.remove }}">×</button></td></tr></sc-for></tbody></table></div>
+<div class="preqwrap"><div class="preqhd"><span>№ / Дата</span><span>Статус</span><span>Поставщик / Страна</span><span>Базис</span><span class="r">Сумма / Landed ₽</span><span class="r">% накл.</span><span></span></div>
+<sc-for list="{{ purchaseList }}" as="p" hint-placeholder-count="3"><div class="preqrow {{ p.rowCls }}" onClick="{{ p.open }}"><div class="preqid">{{ p.idLine }}<small>{{ p.dateLine }}</small></div><div><span class="st {{ p.statusCls }}">{{ p.status }}</span><sc-if value="{{ p.arriveShow }}" hint-placeholder-val=""><span class="preqarr">⇢ {{ p.arriveDm }}</span></sc-if></div><div class="preqsup">{{ p.flag }} {{ p.supplier }}<small>{{ p.material }}</small></div><div class="preqinc"><sc-if value="{{ p.incShow }}" hint-placeholder-val="x">{{ p.incoterms }}</sc-if></div><div class="preqsum">{{ p.curSum }}<small>{{ p.landed }} ₽</small></div><div class="r"><span class="{{ p.ovCls }}">{{ p.ovTxt }}</span></div><div class="preqact"><button class="btn xs" onClick="{{ p.print }}">печать</button><button class="btn x" onClick="{{ p.remove }}">×</button></div></div></sc-for></div>
 <div class="rowline"><button class="btn dark" onClick="{{ addPurchase }}">+ заявка на закупку</button><span class="hint">Нажмите на строку, чтобы открыть полную карточку заявки.</span></div>
 </div>
 </sc-if>
@@ -1977,11 +2258,21 @@ window.dispatchEvent(new Event('fbready'));
 <div class="ctarch"><div class="ctarchhd"><span class="ctarchttl">🗂 Архив по периодам · {{ ctArchCount }}</span><label class="btn dark ctarchup">➕ Загрузить период<input type="file" accept=".xlsx" class="mgfile" onChange="{{ ctUpload }}"></label></div><sc-for list="{{ ctArchYears }}" as="yg" hint-placeholder-count="1"><div class="{{ yg.yrCls }}"><div class="ctarchyhd" onClick="{{ yg.toggle }}"><span class="ctarchyx">{{ yg.exp }}</span><span class="ctarchy">{{ yg.year }}</span><span class="ctarchyc">{{ yg.count }}</span></div><sc-if value="{{ yg.monsShow }}" hint-placeholder-val="{{ true }}"><div class="ctarchms"><sc-for list="{{ yg.months }}" as="mo" hint-placeholder-count="3"><div class="{{ mo.cls }}" onClick="{{ mo.sel }}"><span class="ctamn">{{ mo.monLabel }}</span><span class="ctamp">{{ mo.period }}</span><span class="ctamb">{{ mo.batchLabel }}</span><sc-if value="{{ mo.canDel }}" hint-placeholder-val=""><span class="ctamdel" onClick="{{ mo.del }}">✕</span></sc-if></div></sc-for></div></sc-if></div></sc-for></div>
 <div class="ctfilter"><div class="field"><span class="lbl">Период с</span><input class="inp sbdate" type="date" value="{{ ctDateFrom }}" onChange="{{ onCtDateFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp sbdate" type="date" value="{{ ctDateTo }}" onChange="{{ onCtDateTo }}"></div><div class="field grow"><span class="lbl">Разрез по готовой продукции</span><select class="sel" value="{{ ctProdFilter }}" onChange="{{ onCtProdFilter }}"><option value="">Вся продукция</option><sc-for list="{{ ctProdOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select></div><div class="field"><span class="lbl">№ партии производства</span><input class="inp w120" type="text" value="{{ ctBatchFilter }}" onInput="{{ onCtBatchFilter }}" placeholder="напр. 13C2610"></div></div>
 <sc-if value="{{ ctFilteredEmpty }}" hint-placeholder-val=""><div class="hint">Под выбранные фильтры не попало ни одной партии — измените период или продукт.</div></sc-if>
-<div class="ctsegrow"><button class="{{ ctSegStruct }}" onClick="{{ ctSetStruct }}">① Структура и цены</button><button class="{{ ctSegDecomp }}" onClick="{{ ctSetDecomp }}">② Состав ГП</button><button class="{{ ctSegPlanfact }}" onClick="{{ ctSetPlanfact }}">③ План-факт расхода</button><button class="{{ ctSegDrift }}" onClick="{{ ctSetDrift }}">④ Дрейф партий</button><button class="btn dark ctgenbtn" onClick="{{ ctGenerate }}"><span>⚙</span> Сформировать отчёт</button><button class="btn ghost" onClick="{{ ctResetFilters }}"><span>✕</span> Очистить</button></div>
+<div class="ctsegrow"><button class="{{ ctSegStruct }}" onClick="{{ ctSetStruct }}">① Структура и цены</button><button class="{{ ctSegDecomp }}" onClick="{{ ctSetDecomp }}">② Состав ГП</button><button class="{{ ctSegPlanfact }}" onClick="{{ ctSetPlanfact }}">③ План-факт расхода</button><button class="{{ ctSegDrift }}" onClick="{{ ctSetDrift }}">④ Дрейф партий</button><button class="{{ ctSegAudit }}" onClick="{{ ctSetAudit }}">⚠ Аудит отклонений периода</button><button class="btn dark ctgenbtn" onClick="{{ ctGenerate }}"><span>⚙</span> Сформировать отчёт</button><button class="btn ghost" onClick="{{ ctResetFilters }}"><span>✕</span> Очистить</button></div>
 <sc-if value="{{ ctNotGenerated }}" hint-placeholder-val=""><div class="hint ctgenhint">Задайте период и разрез по продукции, выберите вид отчёта (① / ② / ③) — и нажмите «Сформировать отчёт».</div></sc-if>
 <sc-if value="{{ ctGenerated }}" hint-placeholder-val=""><div class="ctbtns"><button class="btn mgxls" onClick="{{ ctExcel }}"><span>⬇</span> Excel</button><button class="btn" onClick="{{ ctPrint }}"><span>🖨</span> Распечатать</button><button class="btn" onClick="{{ ctEmail }}"><span>✉</span> Отправить по e-mail</button><button class="{{ ctAnomBtnCls }}" onClick="{{ ctToggleAnom }}">{{ ctAnomBtnLabel }}</button><button class="btn corrbtn" onClick="{{ ctCorrToggle }}">{{ ctCorrBtnLabel }}</button></div>
 <sc-if value="{{ ctHasCorr }}" hint-placeholder-val=""><div class="corrbanner">✓ Применены корректировки стоимости сырья: {{ ctCorrCount }}. Дерево и все отчёты на его базе (включая маржинальность) считаются с учётом корректировок.</div></sc-if>
 <sc-if value="{{ ctCorrOpen }}" hint-placeholder-val=""><div class="corrov" onClick="{{ ctCorrCancel }}"></div><div class="corrdlg"><div class="corrhd"><span class="corrttl">⚙ Корректировка стоимости сырья</span><button class="corrx" onClick="{{ ctCorrCancel }}">✕</button></div><div class="corrsub">Подбор номенклатуры по названию или артикулу. Можно уменьшить/увеличить стоимость сырья глобально, в разрезе продукта или конкретной партии. Корректировки фиксируются и применяются к дереву себестоимости и всем отчётам на его базе.</div><div class="corrsearch"><input class="inp f1" placeholder="Поиск сырья по названию или артикулу…" value="{{ ctCorrSearchVal }}" onInput="{{ onCtCorrSearch }}"><button class="btn dark noshrink" onClick="{{ ctCorrAddBlank }}">＋ Добавить позицию</button></div><sc-if value="{{ ctCorrSuggShow }}" hint-placeholder-val=""><div class="corrsugg"><sc-for list="{{ ctCorrSuggestions }}" as="s" hint-placeholder-count="3"><div class="corrsi" onClick="{{ s.add }}">{{ s.name }}</div></sc-for></div></sc-if><div class="corrrows"><sc-if value="{{ ctCorrEmpty }}" hint-placeholder-val="{{ true }}"><div class="hint">Пока нет корректировок. Найдите сырьё в поиске и нажмите на него, либо «Добавить позицию».</div></sc-if><sc-for list="{{ ctCorrRows }}" as="r" hint-placeholder-count="0"><div class="corrrow"><div class="corrr1"><input class="inp f1" value="{{ r.q }}" onInput="{{ r.onQ }}" placeholder="Сырьё (название / артикул)"><button class="corrdel" onClick="{{ r.remove }}">✕</button></div><div class="corrr2"><span class="corrlbl">Область</span><button class="{{ r.scopeAll }}" onClick="{{ r.setAll }}">Все партии</button><button class="{{ r.scopeProd }}" onClick="{{ r.setProd }}">Продукт</button><button class="{{ r.scopeBatch }}" onClick="{{ r.setBatch }}">Партия</button><sc-if value="{{ r.showProd }}" hint-placeholder-val=""><select class="sel" value="{{ r.product }}" onChange="{{ r.onProduct }}"><option value="">— выберите продукт —</option><sc-for list="{{ ctCorrProdOpts }}" as="o" hint-placeholder-count="2"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select></sc-if><sc-if value="{{ r.showBatch }}" hint-placeholder-val=""><input class="inp corrbi" value="{{ r.batchCode }}" onInput="{{ r.onBatch }}" placeholder="№ партии, напр. 03F26R11"></sc-if></div><div class="corrr3"><span class="corrlbl">Изменение</span><button class="{{ r.modePct }}" onClick="{{ r.setPct }}">± %</button><button class="{{ r.modeUnit }}" onClick="{{ r.setUnit }}">Цена за ед.</button><input class="inp corrvi" type="number" value="{{ r.value }}" onInput="{{ r.onValue }}"><span class="corru">{{ r.valUnit }}</span><span class="corrh">{{ r.hint }}</span></div></div></sc-for></div><div class="corrft"><button class="btn ghost" onClick="{{ ctCorrClearAll }}">🗑 Сбросить все</button><div class="corrft2"><button class="btn" onClick="{{ ctCorrCancel }}">Отмена</button><button class="btn dark" onClick="{{ ctCorrSave }}">✓ Скорректировать и сохранить</button></div></div></div></sc-if>
+<sc-if value="{{ ctIsAudit }}" hint-placeholder-val="">
+<sc-if value="{{ ctAuditBusy }}" hint-placeholder-val=""><div class="audempty"><div class="lcempic">⏳</div>Анализирую отклонения периода…</div></sc-if>
+<sc-if value="{{ ctAuditEmpty }}" hint-placeholder-val=""><div class="audempty"><div class="lcempic">📂</div>Нет данных себестоимости для аудита. Загрузите дерево затрат из 1С на этой вкладке.</div></sc-if>
+<sc-if value="{{ ctAuditReady }}" hint-placeholder-val="">
+<div class="sec">⚠ Аудит отклонений периода · {{ ctAuditPeriod }} · ИИ-сравнение с нормативом базы</div>
+<div class="desc">Многофакторный поиск аномалий: каждый показатель последнего периода сверяется со скользящим средним за предыдущие периоды ({{ ctAuditBase }}). Красным выделены критические отклонения, жёлтым — предупреждения.</div>
+<div class="audbar"><div class="{{ ctAuditCritCls }}"><span class="audkl">Критических</span><span class="audkv">{{ ctAuditCrit }}</span></div><div class="{{ ctAuditWarnCls }}"><span class="audkl">Предупреждений</span><span class="audkv">{{ ctAuditWarn }}</span></div><div class="audkpi"><span class="audkl">Потери / переплата</span><span class="audkv">{{ ctAuditLoss }}</span></div><button class="btn mgxls" onClick="{{ ctAuditExcel }}"><span>⬇</span> Excel</button><button class="btn" onClick="{{ ctReaudit }}"><span>↻</span> Пересчитать</button></div>
+<sc-for list="{{ ctAuditGroups }}" as="g" hint-placeholder-count="5"><div class="audgroup"><div class="audgh"><span class="audgic">{{ g.icon }}</span>{{ g.label }}<span class="audgn">{{ g.n }}</span></div><div class="audtiles"><sc-for list="{{ g.tiles }}" as="t" hint-placeholder-count="2"><div class="{{ t.cls }}"><div class="audtt">{{ t.title }}<span class="{{ t.badgeCls }}">{{ t.badge }}</span></div><div class="audmetric">{{ t.metric }}</div><sc-if value="{{ t.detail }}" hint-placeholder-val="x"><div class="auddetail">{{ t.detail }}</div></sc-if><sc-if value="{{ t.hasSum }}" hint-placeholder-val=""><div class="audsum">{{ t.sum }}</div></sc-if></div></sc-for></div></div></sc-for>
+</sc-if>
+</sc-if>
 <sc-if value="{{ ctIsStruct }}" hint-placeholder-val="">
 <div class="ctkpis"><sc-for list="{{ ctStructKpis }}" as="k" hint-placeholder-count="4"><div class="ctkpi"><div class="ctkl">{{ k.label }}</div><div class="ctkv {{ k.cls }}">{{ k.value }}</div></div></sc-for></div>
 <div class="sec">Структура себестоимости по статьям</div>
@@ -2729,10 +3020,12 @@ class Component extends DCLogic {
     ppScale: 'month', ppFrom: '', ppTo: '', ppNetStock: true, ppNetTransit: true, ppBy: 'raw', ppCur: 'RUB', ppGroup: 'none', procGen: false,
     oneCUrl: '', oneCToken: '', oneCMatch: 'article', oneCAuto: false, oneCBusy: false, oneCStatus: '', oneCErr: '', oneCPreview: null, oneCLastAt: 0, oneCLog: [], oneCFileCur: 'RUB',
     lcData: [], lcMeta: null, lcBusy: false, lcErr: '', lcStatus: '', lcView: 'dash', lcFltMarket: '', lcFltSupplier: '', lcFltStatus: '', lcOnlyAnom: false, lcSrcOpen: false,
+    dvHorizon: 90, dvFrom: '', dvTo: '', dvFltMarket: '', dvFltSupplier: '', dvFltGroup: '', dvExpanded: {}, dvAi: '', dvAiBusy: false, dvScope: 'all',
+    dlBase: {}, dlExtra: [], dlTemplates: [], dlMap: null, dlBusy: '', dlMsg: '', dlErr: '', dlDone: '',
     lc1cUrl: '', lc1cToken: '', lc1cBusy: false,
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {}, cloudLocks: {}, cloudMyAreas: [],
     sbReady: false, sbFltMarka: '', sbFltPeriod: '', sbSearch: '', sbCompare: false, sbCmpMarka: '', sbDateFrom: '', sbDateTo: '', sbSummary: false, sbExpanded: {},
-    mgRevenue: null, mgRevMeta: null, mgErr: '', mgBusy: false, mgPeriod: '', mgGm: null, mgKv: [{ name: 'Конфлекс', pct: 10 }], mgView: 'groups', mgFltGroup: '', mgExpanded: {}, mgManualCost: {},
+    mgRevenue: null, mgRevMeta: null, mgErr: '', mgBusy: false, mgPeriod: '', mgGm: null, mgKv: [{ name: 'Конфлекс', pct: 10 }], mgView: 'groups', mgFltGroup: '', mgExpanded: {}, mgCostMode: 'tree', plSlice: 'nomen', plExpanded: {}, plAi: '', plAiBusy: false, plPlanRev: '', plPlanM2: '', mgManualCost: {},
     chat: [], chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false, navExp: null, catKey: '', compassOpen: false,
     tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '', sales: [], saleDraft: null, saleErr: '', salesTransport: 0, salesTransMode: 'weight', cashStart: 0, payMoves: {}, paySplits: {}, payMoveEdit: '', logistics: [], logDraft: null, logErr: '', payreqs: [], prDraft: null, prErr: '', stmtMsg: '',
     docType: 'invoice', docData: { no: '14', date: '', invBuyer: 'ООО «Печатный двор»', invBuyerInn: 'ИНН 7712345678 / КПП 771201001', invBank: 'АО «Альфа-Банк», р/с 40702810000000012345, БИК 044525593, к/с 30101810200000000593', invItems: 'Чёрнила флексо Cyan | 500 | кг | 480\nЧёрнила флексо Magenta | 300 | кг | 510\nРастворитель этилацетат | 200 | л | 95', empName: 'Иванов Иван Иванович', empPost: 'менеджер по закупкам', empPassport: '45 09 № 123456, выдан ОВД «Тверской» г. Москвы 12.03.2015, код 770-001', supplier: 'ООО «ХимПоставка»', supplierAddr: 'г. Москва, ул. Промышленная, д. 7', goods: 'Пигмент синий (фталоцианиновый) — 500 кг\nРастворитель НефрасС2 — 200 л\nСтабилизатор СТ-4 — 50 кг', term: '10 дней', route: 'Москва — Санкт-Петербург', car: 'Volvo FH, гос. № А123ВС 777', driver: 'Петров Пётр Петрович', driverDoc: 'вод. удостоверение 99 12 345678', cargo: '1200 кг / 4,0 м³, 6 паллет', cargoName: 'Сырьё для производства чернил', rfpSupplier: 'ООО «ХимПоставка»', rfpItems: 'Пигмент синий (фталоцианиновый) — 500 кг\nПигмент жёлтый — 300 кг\nРастворитель НефрасС2 — 200 л', rfpDeadline: '5 рабочих дней' },
@@ -2843,7 +3136,7 @@ class Component extends DCLogic {
   static get STORE_KEY() { return 'inkflow_state_v1'; }
   static get IDLE_MS() { return 35 * 60 * 1000; }
   static get FBCFG() { return { apiKey: 'AIzaSyCOoE74NqK4xkpmzUvzoPmanz8Ej_IW5q8', authDomain: 'shtark-flow.firebaseapp.com', projectId: 'shtark-flow', storageBucket: 'shtark-flow.firebasestorage.app', messagingSenderId: '969786336713', appId: '1:969786336713:web:39bd23af4ca2e281d07418' }; }
-  static get PERSIST() { return ['stock', 'extra', 'orders', 'purchases', 'prices', 'pct', 'added', 'rate', 'loss', 'planFrom', 'planTo', 'recipeOwner', 'whFilled', 'stockUpdatedAt', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth', 'prodPlan', 'planHorizon', 'planStart', 'planExpand', 'planCur', 'ppScale', 'ppFrom', 'ppTo', 'ppNetStock', 'ppNetTransit', 'ppBy', 'ppCur', 'ppGroup', 'oneCUrl', 'oneCMatch', 'oneCAuto', 'oneCLastAt', 'oneCLog', 'lcData', 'lcMeta', 'lc1cUrl']; }
+  static get PERSIST() { return ['stock', 'extra', 'orders', 'purchases', 'prices', 'pct', 'added', 'rate', 'loss', 'planFrom', 'planTo', 'recipeOwner', 'whFilled', 'stockUpdatedAt', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth', 'prodPlan', 'planHorizon', 'planStart', 'planExpand', 'planCur', 'ppScale', 'ppFrom', 'ppTo', 'ppNetStock', 'ppNetTransit', 'ppBy', 'ppCur', 'ppGroup', 'oneCUrl', 'oneCMatch', 'oneCAuto', 'oneCLastAt', 'oneCLog', 'lcData', 'lcMeta', 'lc1cUrl', 'dlTemplates']; }
 
   // ===== Мультикомпанийность: реестр компаний группы =====
   coCfg() {
@@ -2903,7 +3196,7 @@ class Component extends DCLogic {
   areaLabel(id) { const a = this.cloudAreas().find(x => x.id === id); return a ? a.label : id; }
   // Какая область редактируется на данной вкладке (для статус-бара и кнопки «Взять»)
   tabArea(tab) {
-    const m = { wh: 'warehouse', prod: 'orders', sales: 'sales', proc: 'purchases', procplan: 'purchases', prodplan: 'purchases', runrate: 'purchases', turnover: 'purchases', stress: 'purchases', onec: 'purchases', landed: 'purchases', prices: 'prices', calc: 'prices', recipe: 'prices', audit: 'prices', tcalc: 'tcalc', xcalc: 'prices', pay: 'payments', treas30: 'payments', receipts: 'receipts', logi: 'logistics', cparties: 'counterparties', tasks: 'tasks', docs: 'tasks', costtree: 'costtree', cost: 'costko', margin: 'margin' };
+    const m = { wh: 'warehouse', prod: 'orders', sales: 'sales', proc: 'purchases', procplan: 'purchases', prodplan: 'purchases', runrate: 'purchases', turnover: 'purchases', stress: 'purchases', onec: 'purchases', landed: 'purchases', delivery: 'purchases', prices: 'prices', calc: 'prices', recipe: 'prices', audit: 'prices', tcalc: 'tcalc', xcalc: 'prices', pay: 'payments', treas30: 'payments', receipts: 'receipts', logi: 'logistics', cparties: 'counterparties', tasks: 'tasks', docs: 'tasks', costtree: 'costtree', cost: 'costko', margin: 'margin' };
     return m[tab] || null;
   }
   myAreaSet() { const out = new Set(); const lk = this.state.cloudLocks || {}; const now = Date.now(); for (const a in lk) { const l = lk[a]; if (l && l.clientId === this._clientId && (now - (l.ts || 0) < Component.LOCK_TTL)) out.add(a); } return out; }
@@ -3140,10 +3433,10 @@ class Component extends DCLogic {
     const partiaRe = /^(производ|заказ|перемещ|оприход|сборк|комплект|возврат|реализац|№|ка-|\d{2}\.\d{2})/i;
     let curGroup = '', curClient = '', leaves = [];
     // авто-поиск колонок: ищем строку-заголовок с «Вес» и «Выручка»
-    let cQty = 17, cW = 20, cRev = 24;
+    let cQty = 17, cW = 20, cRev = 24, cMgr = -1, cDisc = -1, cBatch = -1;
     for (let i = 0; i < Math.min(rows.length, 8); i++) {
       const r = rows[i] || [];
-      r.forEach((v, idx) => { const t = String(v || '').toLowerCase(); if (t.indexOf('вес') >= 0) cW = idx; else if (t.indexOf('выручка') >= 0) cRev = idx; else if (t.indexOf('количество') >= 0) cQty = idx; });
+      r.forEach((v, idx) => { const t = String(v || '').toLowerCase(); if (t.indexOf('вес') >= 0) cW = idx; else if (t.indexOf('выручка') >= 0) cRev = idx; else if (t.indexOf('количество') >= 0) cQty = idx; else if (t.indexOf('менеджер') >= 0) cMgr = idx; else if (t.indexOf('скидк') >= 0) cDisc = idx; else if (t.indexOf('партия') >= 0 || t.indexOf('партии') >= 0) cBatch = idx; });
     }
     for (const r of rows) {
       const c0 = (r[0] == null ? '' : String(r[0])).trim();
@@ -3151,7 +3444,7 @@ class Component extends DCLogic {
       const weight = this.mgNum(r[cW]); const revenue = this.mgNum(r[cRev]);
       if (!c0 && !nomen) continue;
       if (isGroup(c0)) { curGroup = c0; curClient = ''; continue; }
-      if (nomen) { leaves.push({ group: curGroup, client: curClient, article: c0, nomen, marka: this.mgMarka(c0, nomen), weight, revenue }); continue; }
+      if (nomen) { leaves.push({ group: curGroup, client: curClient, article: c0, nomen, marka: this.mgMarka(c0, nomen), weight, revenue, manager: cMgr >= 0 ? String(r[cMgr] || '').trim() : '', discount: cDisc >= 0 ? this.mgNum(r[cDisc]) : 0, batchNo: cBatch >= 0 ? String(r[cBatch] || '').trim() : '' }); continue; }
       if (c0 && !partiaRe.test(c0)) curClient = c0;
     }
     return leaves.filter(l => l.weight || l.revenue);
@@ -3238,14 +3531,15 @@ class Component extends DCLogic {
     return { mgCostNote: '⚠ Нет дерева себестоимости за этот период. Загрузите выгрузку 1С во вкладке «Анализ себестоимости» — иначе СС берётся из последнего отчёта себестоимости.', mgCostNoteShow: true, mgCostNoteCls: 'mgcost warn' };
   }
   // Единый расчёт строк маржи (используется и для экрана, и для экспорта в Excel)
-  mgEnrich() {
+  mgEnrich(costMode) {
     const S = this.state; const gm = S.mgGm || this.mgDefaultGm();
+    const mode = costMode || S.mgCostMode || 'tree';
     const leaves = (S.mgRevenue || []);
     const totalW = leaves.reduce((a, l) => a + l.weight, 0) || 1;
     const kroshkaW = leaves.filter(l => l.group === 'Клей крошка ШК').reduce((a, l) => a + l.weight, 0) || 1;
     const rate = this.mgNum(gm.rate) || (() => { const recs = (this.sebest && this.sebest.records) || []; for (let i = recs.length - 1; i >= 0; i--) { const rr = this.mgNum(recs[i].rate); if (rr) return rr; } return 0; })();
     const costMap = this.mgCostByMarka(); const ctMap = this.ctCostByMarka(rate); const manual = S.mgManualCost || {};
-    const ccOf = (marka) => { if (manual[marka] != null && manual[marka] !== '') return this.mgNum(manual[marka]); const k = this.mgKey(marka); return ctMap[k] || costMap[k] || 0; };
+    const ccOf = (marka) => { if (manual[marka] != null && manual[marka] !== '') return this.mgNum(manual[marka]); const k = this.mgKey(marka); return mode === 'batch' ? (costMap[k] || ctMap[k] || 0) : (ctMap[k] || costMap[k] || 0); };
     const allPerKg = (this.mgNum(gm.zpKleevar) + this.mgNum(gm.ndfl) + this.mgNum(gm.vznosy) + this.mgNum(gm.travma) + this.mgNum(gm.electro) + this.mgNum(gm.bonus) + this.mgNum(gm.delivery)) / totalW;
     const kroshkaPerKg = (this.mgNum(gm.ya) + this.mgNum(gm.nesterov)) / kroshkaW;
     const kvRuleFor = (client) => { const c = String(client || '').toLowerCase(); for (const k of (S.mgKv || [])) { if (k.name && c.indexOf(String(k.name).toLowerCase()) >= 0) return this.mgNum(k.pct); } return 0; };
@@ -3788,14 +4082,165 @@ class Component extends DCLogic {
   ctClear() { if (this._ctActiveId) { this.ctDeleteArch(this._ctActiveId); } else { this.ctTree = null; this._ctAggCache = null; } this.setState({ ctExpanded: {}, ctErr: '', ctGenerated: false }); }
   ctToggle(k) { this.setState(s => ({ ctExpanded: { ...(s.ctExpanded || {}), [k]: !(s.ctExpanded || {})[k] } })); }
   ctSetExp(k, v) { this.setState(s => ({ ctExpanded: { ...(s.ctExpanded || {}), [k]: v } })); }
-  ctViewName() { const v = this.state.ctView || 'decomp'; return v === 'drift' ? 'Дрейф себестоимости партий' : v === 'planfact' ? 'План-факт расхода сырья' : v === 'decomp' ? 'Декомпозиция себестоимости ГП' : 'Структура себестоимости и цены на сырьё'; }
+  ctViewName() { const v = this.state.ctView || 'decomp'; return v === 'audit' ? 'Аудит отклонений периода' : v === 'drift' ? 'Дрейф себестоимости партий' : v === 'planfact' ? 'План-факт расхода сырья' : v === 'decomp' ? 'Декомпозиция себестоимости ГП' : 'Структура себестоимости и цены на сырьё'; }
+
+  // ===== Аудит отклонений периода: многофакторный поиск аномалий (скользящая средняя = норматив базы) =====
+  ctPackRe() { return /упаков|тар[аы]|короб|пл[её]нк|этикет|канистр|мешк|поддон|паллет|стрейч|скотч|гофро|ведро|бочк|флакон|колпач|крышк/i; }
+  ctRate(n) { return (Number(n) || 0).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 4 }); }
+  ctPeriodAgg(tree, key) {
+    const batches = (tree && tree.batches) || [];
+    const mat = new Map(), prod = new Map(); const pack = this.ctPackRe();
+    for (const b of batches) {
+      let cost = 0, raw = 0, other = 0, pk = 0;
+      for (const c of b.comps) {
+        const s = Number(c.summa) || 0; cost += s;
+        const isDop = c.cat === 'Доп. расходы';
+        const isPack = pack.test((c.name || '') + ' ' + (c.cat || ''));
+        if (isPack) pk += s;
+        if (isDop) other += s; else raw += s;
+        if (!isDop) {
+          if (!mat.has(c.name)) mat.set(c.name, { name: c.name, cat: c.cat, unit: c.unit, tot: 0, totq: 0, prices: [] });
+          const M = mat.get(c.name); M.tot += s; M.totq += (Number(c.qty) || 0); if (Number(c.price) > 0) M.prices.push(Number(c.price));
+        }
+      }
+      if (!prod.has(b.product)) prod.set(b.product, { product: b.product, cost: 0, raw: 0, other: 0, pack: 0, out: 0 });
+      const P = prod.get(b.product); P.cost += cost; P.raw += raw; P.other += other; P.pack += pk; P.out += (Number(b.outQty) || 0);
+    }
+    const mats = {}; for (const M of mat.values()) { const pr = M.prices; mats[M.name] = { name: M.name, cat: M.cat, unit: M.unit, wavg: M.totq ? M.tot / M.totq : 0, min: pr.length ? Math.min(...pr) : 0, max: pr.length ? Math.max(...pr) : 0, totq: M.totq, tot: M.tot, isPack: pack.test((M.name || '') + ' ' + (M.cat || '')) }; }
+    const prods = {}; let packTot = 0, outTot = 0; for (const P of prod.values()) { prods[P.product] = { product: P.product, unit: P.out ? P.cost / P.out : 0, rawPerKg: P.out ? P.raw / P.out : 0, otherPerKg: P.out ? P.other / P.out : 0, packPerKg: P.out ? P.pack / P.out : 0, out: P.out, cost: P.cost }; packTot += P.pack; outTot += P.out; }
+    return { key: key || (tree && tree.period) || '', period: (tree && tree.period) || key || '', cur: (tree && tree.cur) || '€', mats, prods, packPerKgAll: outTot ? packTot / outTot : 0, tree };
+  }
+  async ctRunAudit() {
+    this.setState({ ctView: 'audit', ctGenerated: true, ctAuditBusy: true, ctErr: '' });
+    try {
+      const idx = this.ctArchIndex().slice().sort((a, b) => String(a.key || '').localeCompare(String(b.key || '')));
+      const periods = [];
+      for (const e of idx) { const t = await this.ctArchGetTree(e); if (t && t.batches && t.batches.length) periods.push(this.ctPeriodAgg(t, e.key || e.period || '')); }
+      if (!periods.length && this.ctTree && this.ctTree.batches) periods.push(this.ctPeriodAgg(this.ctTree, this.ctTree.period || ''));
+      const audit = this.ctBuildAudit(periods);
+      this.setState({ ctAudit: audit, ctAuditBusy: false });
+    } catch (e) { this.setState({ ctAuditBusy: false, ctErr: 'Аудит не выполнен: ' + (e.message || e) }); }
+  }
+  ctBuildAudit(periods) {
+    const last = periods[periods.length - 1] || null;
+    const prior = periods.slice(0, -1);
+    const cur = (last && last.cur) || this.ctCurr();
+    const u = (v) => this.ctU(v, cur);
+    const mkTile = (level, title, metric, detail, lossRub) => ({ level, title, metric, detail: detail || '', sum: (lossRub != null && lossRub) ? this.lcRub(Math.abs(lossRub)) : '', badge: level === 'crit' ? 'Критично' : (level === 'warn' ? 'Внимание' : 'Норма'), badgeCls: level, _loss: lossRub || 0 });
+    const baseMat = (name) => { const vs = prior.map(p => p.mats[name] && p.mats[name].wavg).filter(v => v > 0); return vs.length ? vs.reduce((a, c) => a + c, 0) / vs.length : 0; };
+    const baseProd = (prod, field) => { const vs = prior.map(p => p.prods[prod] && p.prods[prod][field]).filter(v => v > 0); return vs.length ? vs.reduce((a, c) => a + c, 0) / vs.length : 0; };
+    const basePackAll = () => { const vs = prior.map(p => p.packPerKgAll).filter(v => v > 0); return vs.length ? vs.reduce((a, c) => a + c, 0) / vs.length : 0; };
+    const hasHist = prior.length > 0;
+    const baseLabel = hasHist ? ('скользящая средняя за ' + prior.length + ' пред. ' + (prior.length === 1 ? 'период' : 'периодов')) : 'база внутри периода (история ещё не накоплена)';
+    const groups = [];
+    const fxTiles = [], rawTiles = [], logiTiles = [], prodTiles = [], effTiles = [];
+
+    // ---- 1. Валютные аномалии (ВЭД, FX) — из данных Landed Cost ----
+    let lcRecs = []; try { lcRecs = this.lcEnrich().recs.filter(r => r.ved); } catch (e) {}
+    for (const r of lcRecs) {
+      const dev = r.rP ? (r.rF - r.rP) / r.rP * 100 : 0;
+      if (Math.abs(dev) > 3) {
+        const loss = (r.rF - r.rP) * r.invCurFact;
+        const level = Math.abs(dev) > 6 ? 'crit' : 'warn';
+        fxTiles.push(mkTile(loss > 0 ? level : 'warn', r.supplier + ' · ' + r.material, (dev > 0 ? '+' : '') + this.lcPct(dev), 'Курс ' + r.cur + ': план ' + this.ctRate(r.rP) + ' → факт ' + this.ctRate(r.rF) + '. ' + (loss > 0 ? 'Курсовая переплата' : 'Курсовая выгода') + ' по инвойсу ' + this.lcNum(r.invCurFact) + ' ' + r.cur + '.', loss));
+      }
+    }
+
+    // ---- 3 + 6. Стоимость сырья и упаковки за единицу ----
+    if (last) {
+      const names = Object.keys(last.mats).sort((a, b) => last.mats[b].tot - last.mats[a].tot);
+      for (const name of names) {
+        const M = last.mats[name]; if (M.wavg <= 0) continue;
+        let base = hasHist ? baseMat(name) : M.min; let curv = M.wavg;
+        if (!base) continue;
+        const dev = (curv - base) / base * 100;
+        const thr = M.isPack ? 8 : 7;
+        if (dev > thr) {
+          const deltaUnit = curv - base; const loss = deltaUnit * M.totq;
+          const level = dev > thr * 2 ? 'crit' : 'warn';
+          const tile = mkTile(level, name + (M.isPack ? ' · упаковка/тара' : ''), '+' + this.lcPct(dev), 'Цена ' + u(base) + '/' + (M.unit || 'ед') + ' → ' + u(curv) + '/' + (M.unit || 'ед') + ' (Δ ' + u(deltaUnit) + '). База: ' + baseLabel + '. Объём периода: ' + this.lcNum(M.totq) + ' ' + (M.unit || 'ед') + '.', null);
+          tile._loss = 0; tile.sum = (cur === '₽') ? this.lcRub(loss) : (this.ctU(loss, cur));
+          (M.isPack ? prodTiles : rawTiles).push(tile);
+        }
+      }
+    }
+
+    // ---- 5. Транспортные аномалии (логистика на единицу) — из Landed Cost ----
+    let lcAll = []; try { lcAll = this.lcEnrich().recs.filter(r => r.delivered && r.qR > 0); } catch (e) {}
+    for (const r of lcAll) {
+      if (!r.dirAvg) continue;
+      const dev = (r.logiPerUnit / r.dirAvg - 1) * 100;
+      if (dev > 12) { const over = (r.logiPerUnit - r.dirAvg) * r.qR; logiTiles.push(mkTile(dev > 24 ? 'crit' : 'warn', r.supplier + ' · ' + (r.dirKey || ''), '+' + this.lcPct(dev), 'Логистика ' + this.lcNum(r.logiPerUnit) + ' ₽/' + (r.unit || 'ед') + ' против нормы ' + this.lcNum(r.dirAvg) + ' ₽/' + (r.unit || 'ед') + ' по маршруту. Вероятно: демередж, простой, смена маршрута.', over)); }
+      else if (dev < -15) { logiTiles.push(mkTile('warn', r.supplier + ' · ' + (r.dirKey || ''), this.lcPct(dev), 'Логистика на ' + this.lcPct(-dev) + ' ниже нормы (' + this.lcNum(r.logiPerUnit) + ' против ' + this.lcNum(r.dirAvg) + ' ₽/ед). Индикатор риска: проверьте надёжность перевозчика и риск срыва сроков.', 0)); }
+    }
+
+    // ---- 2. Производственные потери / перерасход сырья (по партиям дерева) ----
+    if (last && last.tree) {
+      const pmap = new Map();
+      for (const b of last.tree.batches) { if (!pmap.has(b.product)) pmap.set(b.product, []); pmap.get(b.product).push(b); }
+      const wasteCands = [];
+      for (const [product, bs] of pmap) {
+        if (bs.length < 2) continue;
+        const mm = new Map();
+        for (const b of bs) for (const c of b.comps) { if (c.cat === 'Доп. расходы' || !c.qty || !b.outQty) continue; if (!mm.has(c.name)) mm.set(c.name, []); mm.get(c.name).push({ cons: c.qty / b.outQty, out: b.outQty, price: c.price || (last.mats[c.name] ? last.mats[c.name].wavg : 0), unit: c.unit }); }
+        for (const [mname, arr] of mm) {
+          const cs = arr.map(x => x.cons); const avg = cs.reduce((a, c) => a + c, 0) / cs.length; const max = Math.max(...cs);
+          const dev = avg ? (max - avg) / avg * 100 : 0;
+          if (dev > 1.5) { const worst = arr[cs.indexOf(max)]; const excessKg = (max - avg) * worst.out; const loss = excessKg * (worst.price || 0); wasteCands.push({ product, mname, dev, excessKg, loss, unit: worst.unit, cur }); }
+        }
+      }
+      wasteCands.sort((a, b) => b.loss - a.loss);
+      for (const w of wasteCands.slice(0, 8)) { const level = w.dev > 5 ? 'crit' : 'warn'; const t = mkTile(level, w.product + ' · перерасход «' + w.mname + '»', '+' + this.lcPct(w.dev), 'Списано в утиль сверх нормы ' + this.lcNum(w.excessKg) + ' ' + (w.unit || 'кг') + ' (норматив отходов превышен на ' + this.lcPct(w.dev) + '). Проверьте партию/линию выпуска.', null); t.sum = (cur === '₽') ? this.lcRub(w.loss) : this.ctU(w.loss, cur); prodTiles.push(t); }
+    }
+
+    // ---- 4. Себестоимость 1 кг ГП (с разделением причины: сырьё vs производство) ----
+    if (last) {
+      for (const prod of Object.keys(last.prods)) {
+        const P = last.prods[prod]; if (P.unit <= 0) continue;
+        const base = hasHist ? baseProd(prod, 'unit') : 0; if (!base) continue;
+        const dev = (P.unit - base) / base * 100;
+        if (dev > 5) {
+          const rawBase = baseProd(prod, 'rawPerKg'), othBase = baseProd(prod, 'otherPerKg');
+          const dRaw = P.rawPerKg - rawBase, dOth = P.otherPerKg - othBase;
+          const cause = Math.abs(dRaw) >= Math.abs(dOth) ? 'рост цены сырья (Δ ' + u(dRaw) + '/кг)' : 'рост внутренних производственных затрат (Δ ' + u(dOth) + '/кг)';
+          prodTiles.push(mkTile(dev > 10 ? 'crit' : 'warn', prod + ' · себестоимость 1 кг', '+' + this.lcPct(dev), 'СС ' + u(base) + '/кг → ' + u(P.unit) + '/кг. Главная причина: ' + cause + '. База: ' + baseLabel + '.', null));
+        }
+      }
+    }
+
+    // ---- 7. Недозагрузка мощностей (OEE) ----
+    if (hasHist && last) {
+      for (const prod of Object.keys(last.prods)) {
+        const P = last.prods[prod]; const caps = prior.map(p => p.prods[prod] && p.prods[prod].out).filter(v => v > 0);
+        if (!caps.length) continue; const cap = Math.max(...caps);
+        if (cap > 0 && P.out > 0) { const util = P.out / cap * 100; if (util < 75) { const idleKg = cap - P.out; const fixedPerKg = P.otherPerKg || 0; const dilution = idleKg * fixedPerKg; effTiles.push(mkTile(util < 60 ? 'crit' : 'warn', prod + ' · загрузка ' + this.lcPct(util), this.lcPct(util), 'Выпуск ' + this.lcNum(P.out) + ' против мощности ' + this.lcNum(cap) + ' кг (' + this.lcNum(idleKg) + ' кг недовыпуска). Простой утяжелил долю постоянных затрат на 1 кг.', null)); } }
+      }
+    }
+    if (!effTiles.length) effTiles.push({ level: 'ok', title: 'Загрузка мощностей', metric: hasHist ? 'в норме' : 'нет данных', detail: hasHist ? 'Все линии выше 75% плановой мощности.' : 'Для расчёта OEE нужно ≥2 периодов в архиве себестоимости (для оценки плановой мощности).', sum: '', badge: hasHist ? 'Норма' : 'Нет данных', badgeCls: hasHist ? 'ok' : 'warn', _loss: 0 });
+
+    const pushGroup = (id, label, icon, tiles, okMsg) => { if (!tiles.length) tiles = [{ level: 'ok', title: okMsg, metric: 'норма', detail: '', sum: '', badge: 'Норма', badgeCls: 'ok', _loss: 0 }]; groups.push({ id, label, icon, n: tiles.filter(t => t.level !== 'ok').length, tiles }); };
+    pushGroup('fx', 'Валюта (FX)', '$', fxTiles, 'Курсовых отклонений > 3% не выявлено');
+    pushGroup('raw', 'Сырьё', '⚗', rawTiles, 'Рост цен на сырьё в пределах нормы (≤7%)');
+    pushGroup('logi', 'Логистика', '🚚', logiTiles, 'Логистика в пределах рыночного тарифа');
+    pushGroup('prod', 'Производство', '⚙', prodTiles, 'Себестоимость ГП, потери и упаковка в норме');
+    pushGroup('eff', 'Эффективность', '📉', effTiles, 'Загрузка мощностей в норме');
+
+    let critN = 0, warnN = 0, lossRub = 0;
+    for (const g of groups) for (const t of g.tiles) { if (t.level === 'crit') critN++; else if (t.level === 'warn') warnN++; if (t._loss) lossRub += Math.abs(t._loss); }
+    return { at: Date.now(), period: (last && last.period) || '—', baseLabel, periodN: periods.length, groups, critN, warnN, lossRub, cur, hasData: !!last };
+  }
+
   buildCostTree() {
     const S = this.state, set = (p) => this.setState(p), cur = this.ctCurr();
     const co = this.co();
     const base = { isCostTree: S.tab === 'costtree', ctCoName: co.name + ' Flow',
       ctView: S.ctView || 'decomp',
       ctSetStruct: () => set({ ctView: 'struct' }), ctSetDrift: () => set({ ctView: 'drift' }), ctSetPlanfact: () => set({ ctView: 'planfact' }), ctSetDecomp: () => set({ ctView: 'decomp' }),
+      ctSetAudit: () => this.ctRunAudit(),
       ctSegStruct: (S.ctView || 'decomp') === 'struct' ? 'ctseg on' : 'ctseg', ctSegDrift: S.ctView === 'drift' ? 'ctseg on' : 'ctseg', ctSegPlanfact: S.ctView === 'planfact' ? 'ctseg on' : 'ctseg', ctSegDecomp: (S.ctView || 'decomp') === 'decomp' ? 'ctseg on' : 'ctseg',
+      ctSegAudit: S.ctView === 'audit' ? 'ctseg ctsegaud on' : 'ctseg ctsegaud',
+      ctIsAudit: S.ctView === 'audit',
+      ...this.ctAuditVals(),
       ctBusy: !!S.ctBusy, ctErr: S.ctErr || '', ctHasErr: !!S.ctErr,
       ctUpload: (e) => this.ctUpload(e), ctClear: () => this.ctClear(),
       ...this.ctArchVals(),
@@ -3902,6 +4347,41 @@ class Component extends DCLogic {
       ctPfRows: pfRows, ctIsDecomp: isDecomp, ctDecompRows: decompRows };
   }
   // ----- Выгрузка / печать / e-mail -----
+  ctAuditVals() {
+    const S = this.state, A = S.ctAudit;
+    const base = { ctAuditBusy: !!S.ctAuditBusy, ctAuditExcel: () => this.ctAuditExcel(), ctReaudit: () => this.ctRunAudit() };
+    if (!A || !A.hasData) return { ...base, ctAuditReady: false, ctAuditEmpty: !S.ctAuditBusy && !!A && !A.hasData, ctAuditNeedRun: !A && !S.ctAuditBusy };
+    return { ...base, ctAuditReady: true, ctAuditEmpty: false, ctAuditNeedRun: false,
+      ctAuditPeriod: A.period, ctAuditBase: A.baseLabel, ctAuditPeriodN: String(A.periodN),
+      ctAuditCrit: String(A.critN), ctAuditWarn: String(A.warnN), ctAuditLoss: this.lcRub(A.lossRub),
+      ctAuditCritCls: A.critN ? 'audkpi crit' : 'audkpi', ctAuditWarnCls: A.warnN ? 'audkpi warn' : 'audkpi',
+      ctAuditGroups: A.groups.map(g => ({ id: g.id, label: g.label, icon: g.icon, n: g.n ? (g.n + ' откл.') : 'норма',
+        tiles: g.tiles.map(t => ({ cls: 'audtile ' + t.level, badge: t.badge, badgeCls: 'audbadge ' + t.badgeCls, title: t.title, metric: t.metric, detail: t.detail, sum: t.sum, hasSum: !!t.sum })) })) };
+  }
+  ctAuditExcel() {
+    const XLSX = window.XLSX; if (!XLSX) { this.setState({ ctErr: 'Библиотека Excel не загрузилась — обновите страницу.' }); return; }
+    const A = this.state.ctAudit; if (!A || !A.hasData) { try { alert('Сначала запустите аудит.'); } catch (e) {} return; }
+    const st = this.mgXlSt(), coName = this.co().name;
+    const wb = XLSX.utils.book_new();
+    // Лист «Дашборд»: KPI + все аномалии, критичные — жирным с заливкой #FCE4D6
+    const rows = [['Аудит отклонений периода · ' + coName], ['Период: ' + A.period + ' · база: ' + A.baseLabel], [],
+      ['Критических аномалий', A.critN], ['Предупреждений', A.warnN], ['Потери/переплата, ₽', Math.round(A.lossRub)], [],
+      ['Группа', 'Фактор', 'Статус', 'Отклонение', 'Потери/переплата', 'Комментарий']];
+    const meta = [];
+    for (const g of A.groups) for (const t of g.tiles) { if (t.level === 'ok') continue; rows.push([g.label, t.title, t.badge, t.metric, t.sum || '', t.detail]); meta.push(t.level); }
+    if (!meta.length) { rows.push(['—', 'Аномалий не выявлено', 'Норма', '', '', '']); meta.push('ok'); }
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    const C = (r, c) => { const ad = XLSX.utils.encode_cell({ r, c }); if (!ws[ad]) ws[ad] = { t: 's', v: '' }; return ws[ad]; };
+    C(0, 0).s = { font: { name: 'Calibri', sz: 16, bold: true, color: { rgb: st.NAVY } } };
+    C(1, 0).s = { font: { name: 'Calibri', sz: 11, italic: true, color: { rgb: '7F7F7F' } } };
+    for (let i = 0; i < 3; i++) { const r = 3 + i; C(r, 0).s = { font: { bold: true, color: { rgb: '1A1A1A' } }, fill: { fgColor: { rgb: st.SUB } }, border: { bottom: { style: 'thin', color: { rgb: st.GREY } } } }; C(r, 1).s = { font: { bold: true, color: { rgb: i === 0 ? 'B3331F' : st.NAVY } }, alignment: { horizontal: 'right' }, numFmt: '#,##0', border: { bottom: { style: 'thin', color: { rgb: st.GREY } } } }; }
+    const hr = 7; for (let c = 0; c < 6; c++) C(hr, c).s = { font: { bold: true, color: { rgb: 'FFFFFF' } }, fill: { fgColor: { rgb: st.NAVY } }, alignment: { horizontal: 'center', wrapText: true }, border: { bottom: { style: 'thin', color: { rgb: st.GREY } } } };
+    for (let i = 0; i < meta.length; i++) { const r = hr + 1 + i; const crit = meta[i] === 'crit'; const warn = meta[i] === 'warn'; const fill = crit ? 'FCE4D6' : (warn ? 'FFF2CC' : 'E2EFDA');
+      for (let c = 0; c < 6; c++) { const cl = C(r, c); cl.s = { font: { name: 'Calibri', sz: 11, bold: crit, color: { rgb: crit ? 'B3331F' : '000000' } }, fill: { fgColor: { rgb: fill } }, alignment: { horizontal: c === 3 || c === 4 ? 'right' : (c === 2 ? 'center' : 'left'), wrapText: c === 5, vertical: 'top' }, border: { bottom: { style: 'thin', color: { rgb: st.GREY } }, top: { style: 'thin', color: { rgb: st.GREY } } } }; } }
+    ws['!cols'] = [{ wch: 16 }, { wch: 34 }, { wch: 12 }, { wch: 12 }, { wch: 18 }, { wch: 60 }];
+    XLSX.utils.book_append_sheet(wb, ws, 'Дашборд');
+    XLSX.writeFile(wb, 'Аудит отклонений ' + coName + ' ' + (A.period || '') + '.xlsx');
+  }
   ctReportRows() {
     // вернуть {title, sheets:[{title,headers,types,rows,total}], kpis:[{k,v}]} для текущего вида
     const agg = this.ctAgg(); if (!agg) return null; const cur = agg.cur, v = this.state.ctView || 'decomp';
@@ -4633,6 +5113,9 @@ class Component extends DCLogic {
       cal: '<rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/>',
       audit: '<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/><path d="M11 8v6M9.5 9.5h3a1.3 1.3 0 0 1 0 2.6H9.5"/>',
       landed: '<path d="M2 7l10-4 10 4-10 4z"/><path d="M2 7v10l10 4 10-4V7"/><line x1="12" y1="11" x2="12" y2="21"/>',
+      delivery: '<rect x="1" y="6" width="13" height="10" rx="1"/><path d="M14 9h4l3 3v4h-7z"/><circle cx="5" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/>',
+      dataload: '<path d="M12 3v11"/><path d="M8 7l4-4 4 4"/><path d="M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>',
+      pnl: '<path d="M3 3v18h18"/><rect x="6" y="11" width="3" height="7"/><rect x="11" y="7" width="3" height="11"/><rect x="16" y="13" width="3" height="5"/>',
       pay: '<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/>',
       prices: '<path d="M3 7v4.6a2 2 0 0 0 .6 1.4l7.4 7.4a2 2 0 0 0 2.8 0l4.8-4.8a2 2 0 0 0 0-2.8L11.2 5.6A2 2 0 0 0 9.8 5H5a2 2 0 0 0-2 2z"/><circle cx="7.5" cy="9.5" r="1.2"/>',
       wh: '<path d="M3 21V9l9-5 9 5v12"/><path d="M2.5 21h19"/><path d="M8 21v-7h8v7"/><line x1="8" y1="17" x2="16" y2="17"/>',
@@ -4741,10 +5224,10 @@ class Component extends DCLogic {
   // Каталог разделов для настройки прав (без вкладки «Пользователи» — она только у админа)
   permCatalog() {
     return [
-      { label: 'Задачи', tabs: [['tasks', 'Задачи'], ['docs', 'Документы'], ['cal', 'Календарь']] },
+      { label: 'Задачи', tabs: [['tasks', 'Задачи'], ['docs', 'Документы'], ['cal', 'Календарь'], ['dataload', 'Загрузка данных 1С (защищённая)']] },
       { label: 'Производство', tabs: [['prod', 'План производства'], ['prodplan', 'График производства'], ['recipe', 'Рецептуры'], ['tcalc', 'Калькулятор технолога'], ['xcalc', 'Калькулятор X · проекты'], ['catalog', 'Каталоги'], ['prodrep', 'Отчёты производства']] },
-      { label: 'Продажи', tabs: [['sales', 'Продажи ГП'], ['calc', 'Калькулятор'], ['prices', 'Реестр цен']] },
-      { label: 'Закупки', tabs: [['proc', 'План закупок'], ['procplan', 'График закупок'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['cparties', 'Поставщики / Контрагенты']] },
+      { label: 'Продажи', tabs: [['sales', 'Продажи ГП'], ['pnl', 'P&L и маржинальный анализ 360°'], ['calc', 'Калькулятор'], ['prices', 'Реестр цен']] },
+      { label: 'Закупки', tabs: [['proc', 'План закупок'], ['procplan', 'График закупок'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['delivery', 'Доставка · баланс снабжения'], ['cparties', 'Поставщики / Контрагенты']] },
       { label: 'Логистика и склад', tabs: [['wh', 'Склад'], ['receipts', 'Поступления ТМЦ'], ['logi', 'Логистика'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка запасов']] },
       { label: 'Финансы', tabs: [['margin', 'Маржинальный отчёт'], ['cost', 'Себестоимость · КО'], ['costtree', 'Анализ себестоимости'], ['pay', 'Платежи'], ['treas30', 'БДДС 30 дней'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
       { label: 'Настройки', tabs: [['cloud', 'Облако'], ['onec', 'Интеграция 1С']] },
@@ -6140,6 +6623,7 @@ class Component extends DCLogic {
   }
 
   // Сумма заявки на закупку: € без НДС, € с НДС, полная себестоимость ₽.
+  flagOf(country) { const m = { RUS: '🇷🇺', RU: '🇷🇺', CHN: '🇨🇳', CN: '🇨🇳', ARE: '🇦🇪', AE: '🇦🇪', TUR: '🇹🇷', TR: '🇹🇷', IND: '🇮🇳', IN: '🇮🇳', DEU: '🇩🇪', DE: '🇩🇪', KOR: '🇰🇷', KR: '🇰🇷', KAZ: '🇰🇿', BLR: '🇧🇾', ITA: '🇮🇹', IT: '🇮🇹', USA: '🇺🇸', US: '🇺🇸', FRA: '🇫🇷', JPN: '🇯🇵', GBR: '🇬🇧', ESP: '🇪🇸', POL: '🇵🇱', NLD: '🇳🇱', VNM: '🇻🇳', IRN: '🇮🇷', UZB: '🇺🇿', FIN: '🇫🇮' }; const k = String(country || '').trim().toUpperCase(); return m[k] || (k && /внутр|росси|рф/i.test(k) ? '🇷🇺' : ''); }
   purchaseCalc(p, rate, vat) {
     const qty = Number(p.qty) || 0, price = Number(p.priceEur) || 0;
     const eurNoVat = this.excelRound(qty * price, 2);
@@ -7452,6 +7936,498 @@ class Component extends DCLogic {
     XLSX.utils.book_append_sheet(wb, this.mgXlSheet('Капитал в пути · ' + coName, h6, t6, rows6.length ? rows6 : [['—', 'нет партий в пути', '', 0, '', 0]], tot6), 'Капитал в пути');
     XLSX.writeFile(wb, 'План-Факт закупки (Landed Cost) ' + coName + ' ' + new Date().toISOString().slice(0, 10) + '.xlsx');
   }
+  // ===== Отчёт «Доставка»: сквозной баланс снабжения (проекция остатков по дням) =====
+  dvCatOf(name) { if (!this._dvCat) { this._dvCat = new Map((this.catalog && this.catalog.raw ? this.catalog.raw : []).map(r => [this.norm(r.name), r.category || ''])); } return this._dvCat.get(this.norm(name)) || 'Прочее сырьё'; }
+  dvComputeRows() {
+    const S = this.state;
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const from = (S.dvFrom ? this.parseISO(S.dvFrom) : today); from.setHours(0, 0, 0, 0);
+    const horizonDays = Math.max(7, Number(S.dvHorizon) || 90);
+    const to = (S.dvTo ? this.parseISO(S.dvTo) : new Date(from.getTime() + horizonDays * 864e5));
+    const days = Math.min(370, Math.max(1, Math.round((to - from) / 864e5) + 1));
+    const horizonMonths = Math.max(1, Number(S.rrHorizon) || 3);
+    const safetyMonths = Number(S.rrSafetyMonths) != null ? Number(S.rrSafetyMonths) : 1;
+    const leadDef = (Number(S.rrLeadDefault) || 1);
+    const { acc: need } = this.rawNeed(S.orders);
+    const mats = new Map();
+    const ensure = (name) => { const k = this.norm(name); if (!mats.has(k)) mats.set(k, { k, name, daily: 0, stock: Number(S.stock[k] || 0), safety: 0, leadDays: leadDef * 30, arr: [], group: this.dvCatOf(name), unit: this.unitOf ? this.unitOf(name) : 'кг' }); return mats.get(k); };
+    for (const [name, totalNeed] of Object.entries(need)) {
+      const m = ensure(name); const baseRun = totalNeed / horizonMonths;
+      const run = (S.rrRun[m.k] != null && S.rrRun[m.k] !== '') ? Number(S.rrRun[m.k]) : baseRun;
+      m.daily = run / 30;
+      m.safety = (S.rrSafety[m.k] != null && S.rrSafety[m.k] !== '') ? Number(S.rrSafety[m.k]) : run * safetyMonths;
+      m.leadDays = ((S.rrLead[m.k] != null && S.rrLead[m.k] !== '') ? Number(S.rrLead[m.k]) : leadDef) * 30;
+    }
+    const notIncoming = new Set(['новая', 'получено на склад', 'закрыто', 'отменено']);
+    for (const p of (S.purchases || [])) {
+      if (notIncoming.has(p.status)) continue; if (!p.arriveDate) continue;
+      const k = this.norm(p.material); if (!k) continue;
+      const m = mats.has(k) ? mats.get(k) : ensure(p.material || '—');
+      const ved = !!(p.market && !/внутр/i.test(p.market));
+      m.arr.push({ date: p.arriveDate, qty: Number(p.qty) || 0, no: p.no || '—', supplier: (p.supplier || '').trim(), status: (p.status || '').trim() || '—', market: p.market || 'Внутренний', ved, transit: /в пути|таможн|транзит/i.test(p.status || '') });
+    }
+    const fGroup = S.dvFltGroup || '', fSup = S.dvFltSupplier || '', fMkt = S.dvFltMarket || '';
+    const out = [];
+    for (const m of mats.values()) {
+      if (m.daily <= 0 && m.stock <= 0 && !m.arr.length) continue;
+      if (fGroup && m.group !== fGroup) continue;
+      if (fSup && !m.arr.some(a => a.supplier === fSup)) continue;
+      if (fMkt === 'ved' && !m.arr.some(a => a.ved)) continue;
+      if (fMkt === 'dom' && !(m.arr.some(a => !a.ved) || !m.arr.length)) continue;
+      const arrByDay = {}; for (const a of m.arr) { const ad = a.date; if (this.parseISO(ad) >= from && this.parseISO(ad) <= to) arrByDay[ad] = (arrByDay[ad] || 0) + a.qty; }
+      let bal = m.stock, minBal = bal, deficitIdx = -1, shortIdx = -1; const series = [];
+      for (let i = 0; i < days; i++) {
+        const d = new Date(from.getTime() + i * 864e5); const iso = this.ymd(d);
+        const inc = arrByDay[iso] || 0; bal = bal + inc - m.daily;
+        if (bal < minBal) minBal = bal;
+        if (deficitIdx < 0 && bal < 0) deficitIdx = i;
+        if (shortIdx < 0 && bal < m.safety) shortIdx = i;
+        series.push({ iso, inc, use: m.daily, bal });
+      }
+      const transitVol = m.arr.filter(a => a.transit).reduce((s, a) => s + a.qty, 0);
+      const orderedVol = m.arr.filter(a => !a.transit).reduce((s, a) => s + a.qty, 0);
+      const coverDays = m.daily > 0 ? m.stock / m.daily : (m.stock > 0 ? 999 : 0);
+      let level, keyIdx = -1;
+      if (deficitIdx >= 0) { level = 'red'; keyIdx = deficitIdx; }
+      else if (shortIdx >= 0 && shortIdx <= m.leadDays) { level = 'red'; keyIdx = shortIdx; }
+      else if (shortIdx >= 0) { level = 'orange'; keyIdx = shortIdx; }
+      else if (m.daily > 0 && coverDays > 45) { level = 'yellow'; }
+      else if (m.daily <= 0 && m.stock > 0) { level = 'yellow'; }
+      else { level = 'green'; }
+      const keyDate = keyIdx >= 0 ? series[keyIdx].iso : '';
+      out.push({ ...m, series, minBal, deficitIdx, shortIdx, transitVol, orderedVol, coverDays, level, keyDate, keyIdx, arrByDay });
+    }
+    const order = { red: 0, orange: 1, yellow: 2, green: 3 };
+    out.sort((a, b) => (order[a.level] - order[b.level]) || (a.minBal - b.minBal));
+    return { rows: out, from: this.ymd(from), to: this.ymd(to), days };
+  }
+  dvLevelLabel(l) { return ({ red: 'Критич. дефицит', orange: 'Зона риска', yellow: 'Избыток', green: 'Баланс' })[l] || l; }
+  buildDelivery() {
+    const S = this.state, set = (p) => this.setState(p);
+    const R = this.dvComputeRows(); const rows = R.rows;
+    const exp = S.dvExpanded || {};
+    const counts = { red: 0, orange: 0, yellow: 0, green: 0 }; let transitTot = 0;
+    for (const r of rows) { counts[r.level]++; transitTot += r.transitVol; }
+    const fmt = (n) => this.fmt(Number(n) || 0, 0);
+    const base = {
+      isDelivery: true, dvCoName: this.co().name + ' Flow',
+      dvHorizon: String(S.dvHorizon || 90), onDvHorizon: (e) => set({ dvHorizon: e.target.value, dvFrom: '', dvTo: '' }),
+      dvHorizonOpts: [['7', 'Неделя'], ['30', 'Месяц'], ['90', 'Квартал'], ['180', 'Полгода'], ['365', 'Год']].map(([v, l]) => ({ v, l })),
+      dvFrom: S.dvFrom || '', dvTo: S.dvTo || '', onDvFrom: (e) => set({ dvFrom: e.target.value }), onDvTo: (e) => set({ dvTo: e.target.value }),
+      dvFltMarket: S.dvFltMarket || '', onDvMarket: (e) => set({ dvFltMarket: e.target.value }),
+      dvFltGroup: S.dvFltGroup || '', onDvGroup: (e) => set({ dvFltGroup: e.target.value }),
+      dvFltSupplier: S.dvFltSupplier || '', onDvSupplier: (e) => set({ dvFltSupplier: e.target.value }),
+      dvGroupOpts: [...new Set(rows.map(r => r.group))].filter(Boolean).sort((a, b) => a.localeCompare(b, 'ru')),
+      dvSupplierOpts: [...new Set([].concat(...rows.map(r => r.arr.map(a => a.supplier))))].filter(Boolean).sort((a, b) => a.localeCompare(b, 'ru')),
+      dvPeriodLabel: this.dm(this.parseISO(R.from)) + ' — ' + this.dm(this.parseISO(R.to)) + ' (' + R.days + ' дн)',
+      dvPrint: () => this.dvPrint(), dvExcel: () => this.dvExcel(), dvEmail: () => this.dvEmail(), dvRunAi: () => this.dvRunAi(),
+      dvAiBusy: !!S.dvAiBusy, dvAi: S.dvAi || '', dvHasAi: !!S.dvAi,
+      dvKpis: [
+        { label: 'Критич. дефицит', value: String(counts.red), cls: 'dvkpi red' },
+        { label: 'Зона риска', value: String(counts.orange), cls: 'dvkpi orange' },
+        { label: 'Избыток капитала', value: String(counts.yellow), cls: 'dvkpi yellow' },
+        { label: 'В балансе', value: String(counts.green), cls: 'dvkpi green' },
+        { label: 'Объём в пути, кг', value: fmt(transitTot), cls: 'dvkpi' },
+      ],
+      dvEmpty: rows.length === 0,
+    };
+    base.dvRows = rows.map(r => {
+      const open = !!exp[r.k];
+      const keyTl = r.keyIdx >= 0 ? r.series.slice(Math.max(0, r.keyIdx - 2), r.keyIdx + 4) : r.series.filter(s => s.inc > 0).slice(0, 6);
+      const drill = (open ? keyTl : []).map(s => ({ date: this.dm(this.parseISO(s.iso)), inc: s.inc ? '+' + fmt(s.inc) : '—', use: '−' + this.fmt(s.use, 1), bal: fmt(s.bal), cls: s.bal < 0 ? 'dvtl crit' : 'dvtl' }));
+      const srcs = open ? r.arr.slice().sort((a, b) => a.date.localeCompare(b.date)).map(a => ({ text: this.dm(this.parseISO(a.date)) + ' · №' + a.no + ' · ' + (a.supplier || '—') + ' · ' + a.status + (a.ved ? ' · ВЭД' : '') + ' · ' + fmt(a.qty) + ' ' + r.unit })) : [];
+      return {
+        k: r.k, rowCls: 'dvrow ' + r.level, exp: open ? '▾' : '▸', name: r.name, group: r.group, unit: r.unit,
+        stock: fmt(r.stock), minBal: fmt(r.minBal), transit: fmt(r.transitVol), ordered: fmt(r.orderedVol),
+        keyDate: r.keyDate ? this.dm(this.parseISO(r.keyDate)) : (r.level === 'yellow' ? '+' + Math.round(r.coverDays) + ' дн' : 'ОК'),
+        cover: r.coverDays >= 999 ? '∞' : Math.round(r.coverDays) + ' дн',
+        toggle: () => this.setState(st => ({ dvExpanded: { ...(st.dvExpanded || {}), [r.k]: !(st.dvExpanded || {})[r.k] } })),
+        open, drill, srcs, hasSrc: srcs.length > 0,
+      };
+    });
+    return base;
+  }
+  dvVerdictText() {
+    const R = this.dvComputeRows(); const rows = R.rows;
+    const red = rows.filter(r => r.level === 'red'), orange = rows.filter(r => r.level === 'orange'), yellow = rows.filter(r => r.level === 'yellow');
+    let t = 'Отчёт «Доставка» · ' + this.co().name + ' · период ' + this.dm(this.parseISO(R.from)) + '—' + this.dm(this.parseISO(R.to)) + '.\n';
+    t += 'Критический дефицит: ' + red.length + '; зона риска: ' + orange.length + '; избыток: ' + yellow.length + '; в балансе: ' + (rows.length - red.length - orange.length - yellow.length) + '.\n';
+    if (red.length) t += '\nКРИТИЧНО — провал поставок:\n' + red.slice(0, 8).map(r => '• ' + r.name + ': дефицит с ' + (r.keyDate ? this.dm(this.parseISO(r.keyDate)) : '—') + ', минимум ' + this.fmt(r.minBal, 0) + ' ' + r.unit + (r.transitVol ? ', в пути ' + this.fmt(r.transitVol, 0) + ' ' + r.unit : ', поставок в пути нет')).join('\n') + '\n';
+    if (orange.length) t += '\nРИСК — на грани:\n' + orange.slice(0, 6).map(r => '• ' + r.name + ': запас ниже страхового с ' + (r.keyDate ? this.dm(this.parseISO(r.keyDate)) : '—')).join('\n') + '\n';
+    if (yellow.length) t += '\nИЗБЫТОК — заморозка капитала:\n' + yellow.slice(0, 6).map(r => '• ' + r.name + ': запаса на ' + (r.coverDays >= 999 ? '∞' : Math.round(r.coverDays)) + ' дней').join('\n') + '\n';
+    return t;
+  }
+  async dvRunAi() {
+    this.setState({ dvAiBusy: true });
+    const data = this.dvVerdictText();
+    let verdict = '';
+    try {
+      if (this.aiSignedInSilent && this.aiSignedInSilent()) {
+        const prompt = 'Ты — главный аналитик снабжения ERP химзавода. На основе матрицы баланса снабжения ниже дай краткий управленческий вердикт (5–8 предложений): где и когда сырьевой/кассовый провал, из-за чего (ВЭД-задержка, нет заказа, перерасход), и КОНКРЕТНЫЕ рекомендации (перебросить объём с внутреннего поставщика, ускорить таможню, сократить избыточный заказ). По-русски, по делу.\n\n' + data;
+        verdict = await this.aiComplete([{ role: 'user', content: prompt }], { max: 600 });
+      }
+    } catch (e) {}
+    if (!verdict) verdict = this.dvVerdictText() + '\nРекомендации: по позициям с критическим дефицитом — ускорить таможенную очистку партий «в пути» или разместить срочный заказ у резервного внутреннего поставщика; по избыточным — приостановить или сократить ближайшие заказы, чтобы высвободить оборотный капитал. (ИИ-помощник не подключён — показан расчётный вердикт.)';
+    this.setState({ dvAiBusy: false, dvAi: verdict });
+  }
+  dvPrint() {
+    try { document.body.classList.add('dvprint'); } catch (e) {}
+    try { window.print(); } catch (e) {}
+    setTimeout(() => { try { document.body.classList.remove('dvprint'); } catch (e) {} }, 600);
+  }
+  dvEmail() {
+    const subj = 'Отчёт Доставка · баланс снабжения · ' + this.co().name;
+    const body = this.dvVerdictText();
+    try { window.location.href = 'mailto:?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body); } catch (e) {}
+  }
+  dvExcel() {
+    const XLSX = window.XLSX; if (!XLSX) { try { alert('Библиотека Excel не загрузилась.'); } catch (e) {} return; }
+    const R = this.dvComputeRows(); const rows = R.rows; if (!rows.length) { try { alert('Нет данных для экспорта.'); } catch (e) {} return; }
+    const st = this.mgXlSt(), coName = this.co().name, r2 = (n) => Math.round((Number(n) || 0) * 100) / 100;
+    const headers = ['Статус', 'Наименование', 'Группа', 'Остаток', 'Мин. остаток', 'Дата провала/профицита', 'В пути', 'Заказано', 'Запас, дней'];
+    const fillOf = { red: 'FCE4D6', orange: 'FCE4D6', yellow: 'FFF2CC', green: 'E2EFDA' };
+    const aoa = [['Отчёт «Доставка» · баланс снабжения · ' + coName], ['Период: ' + this.dm(this.parseISO(R.from)) + ' — ' + this.dm(this.parseISO(R.to))], [], headers];
+    rows.forEach(r => aoa.push([this.dvLevelLabel(r.level), r.name, r.group, r2(r.stock), r2(r.minBal), r.keyDate ? this.dm(this.parseISO(r.keyDate)) : (r.level === 'yellow' ? '+' + Math.round(r.coverDays) + ' дн' : 'ОК'), r2(r.transitVol), r2(r.orderedVol), r.coverDays >= 999 ? '∞' : Math.round(r.coverDays)]));
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+    const C = (rr, c) => { const ad = XLSX.utils.encode_cell({ r: rr, c }); if (!ws[ad]) ws[ad] = { t: 's', v: '' }; return ws[ad]; };
+    C(0, 0).s = { font: { name: 'Calibri', sz: 16, bold: true, color: { rgb: st.NAVY } } };
+    C(1, 0).s = { font: { name: 'Calibri', sz: 11, italic: true, color: { rgb: '7F7F7F' } } };
+    for (let c = 0; c < headers.length; c++) C(3, c).s = { font: { bold: true, color: { rgb: 'FFFFFF' } }, fill: { fgColor: { rgb: st.NAVY } }, alignment: { horizontal: 'center', wrapText: true }, border: { bottom: { style: 'thin', color: { rgb: st.GREY } } } };
+    for (let i = 0; i < rows.length; i++) { const rr = 4 + i; const lv = rows[i].level; const fill = fillOf[lv]; const crit = lv === 'red';
+      for (let c = 0; c < headers.length; c++) { const cl = C(rr, c); cl.s = { font: { name: 'Calibri', sz: 11, bold: crit, color: { rgb: crit ? 'B3331F' : '000000' } }, fill: { fgColor: { rgb: fill } }, alignment: { horizontal: c === 0 ? 'center' : (c >= 3 ? 'right' : 'left') }, numFmt: (c >= 3 && c !== 5) ? '#,##0' : undefined, border: { bottom: { style: 'thin', color: { rgb: st.GREY } } } }; } }
+    ws['!cols'] = [{ wch: 18 }, { wch: 34 }, { wch: 20 }, { wch: 12 }, { wch: 13 }, { wch: 20 }, { wch: 12 }, { wch: 12 }, { wch: 12 }];
+    const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Доставка');
+    XLSX.writeFile(wb, 'Доставка · баланс снабжения ' + coName + ' ' + new Date().toISOString().slice(0, 10) + '.xlsx');
+  }
+  // ===== Защищённое окно загрузки данных 1С:КА (Блок А базовые + Блок Б кастомные с маппингом) =====
+  dlNorm(s) { return String(s == null ? '' : s).trim().toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' '); }
+  dlAccess() { const u = this.state.currentUser; return !!(u && (u.role === 'admin' || (Array.isArray(u.perms) && u.perms.indexOf('dataload') >= 0))); }
+  dlBaseDefs() {
+    return [
+      { key: 'revenue', label: 'Выручка и Продажи', hint: 'Клиент · номенклатура · объём · сумма', need: [['клиент', 'контрагент', 'покупател'], ['номенклат', 'товар', 'продукт', 'марка'], ['сумма', 'выручка', 'оборот']], needLabel: ['Клиент', 'Номенклатура', 'Сумма'] },
+      { key: 'cost', label: 'Себестоимость выпущенной продукции', hint: 'Продукт · партия · себестоимость', need: [['продукт', 'номенклат', 'марка', 'издели'], ['себест', 'затрат', 'сумма', 'расход']], needLabel: ['Продукт', 'Себестоимость'] },
+      { key: 'purchases', label: 'Закупки и ВЭД', hint: 'Поставщик · сырьё · цена/курс/таможня', need: [['поставщик'], ['номенклат', 'материал', 'сырь', 'товар'], ['сумма', 'цена', 'количеств', 'кол-во']], needLabel: ['Поставщик', 'Номенклатура', 'Сумма/Цена'] },
+      { key: 'warehouse', label: 'Ведомость по товарам на складах', hint: 'Номенклатура · остаток · склад', need: [['номенклат', 'товар', 'материал', 'сырь'], ['остаток', 'количеств', 'кол-во', 'конечн']], needLabel: ['Номенклатура', 'Остаток'] },
+      { key: 'opex', label: 'Доходы и расходы (OPEX / ОСВ)', hint: 'Статья/счёт · обороты · сумма', need: [['стат', 'счет', 'счёт', 'показател', 'наименован'], ['сумма', 'оборот', 'дебет', 'кредит', 'сальдо']], needLabel: ['Статья/Счёт', 'Сумма/Оборот'] },
+      { key: 'bank', label: 'Банковские выписки', hint: 'Дата · контрагент · приход/расход · назначение', need: [['дата', 'период'], ['сумма', 'приход', 'расход', 'поступлен', 'списан', 'дебет', 'кредит']], needLabel: ['Дата', 'Сумма (приход/расход)'] },
+    ];
+  }
+  dlFields() { return [{ v: 'nomen', l: 'Номенклатура' }, { v: 'qty', l: 'Количество' }, { v: 'price', l: 'Цена' }, { v: 'sum', l: 'Сумма' }, { v: 'date', l: 'Дата' }, { v: 'supplier', l: 'Поставщик' }, { v: 'client', l: 'Контрагент' }, { v: 'warehouse', l: 'Склад' }, { v: 'unit', l: 'Ед. изм.' }, { v: 'note', l: 'Примечание' }]; }
+  async dlReadFile(file) {
+    const name = file.name || ''; const ext = (name.split('.').pop() || '').toLowerCase();
+    if (ext === 'csv' || ext === 'txt') {
+      const text = await file.text();
+      const lines = text.split(/\r?\n/).filter(l => l.trim().length);
+      if (!lines.length) return { headers: [], rows: [], n: 0 };
+      const head = lines[0];
+      const delim = head.indexOf('\t') >= 0 ? '\t' : (head.split(';').length > head.split(',').length ? ';' : ',');
+      const parse = (l) => l.split(delim).map(c => c.replace(/^"|"$/g, '').trim());
+      const headers = parse(head); const rows = lines.slice(1).map(parse);
+      return { headers, rows, n: rows.length };
+    }
+    const XLSX = window.XLSX; if (!XLSX) throw new Error('Библиотека Excel не загрузилась — обновите страницу.');
+    const buf = await file.arrayBuffer(); const wb = XLSX.read(buf, { type: 'array' });
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: null });
+    let hr = 0; for (let i = 0; i < Math.min(aoa.length, 15); i++) { const c = (aoa[i] || []).filter(x => x != null && String(x).trim()).length; if (c >= 2) { hr = i; break; } }
+    const headers = (aoa[hr] || []).map(x => String(x == null ? '' : x).trim());
+    const rows = aoa.slice(hr + 1).filter(r => r && r.some(x => x != null && String(x).trim()));
+    return { headers, rows, n: rows.length };
+  }
+  dlValidate(key, headers) {
+    const def = this.dlBaseDefs().find(d => d.key === key); if (!def) return { ok: true, missing: [] };
+    const H = headers.map(h => this.dlNorm(h)); const missing = [];
+    def.need.forEach((grp, i) => { const found = H.some(h => grp.some(s => h.indexOf(s) >= 0)); if (!found) missing.push(def.needLabel[i]); });
+    return { ok: missing.length === 0, missing };
+  }
+  async dlOnBase(key, file) {
+    if (!/\.(xlsx|xls|csv|txt)$/i.test(file.name || '')) { this.setState({ dlErr: '«' + (file.name || 'файл') + '» — поддерживаются .xlsx, .xls, .csv, .txt.' }); return; }
+    this.setState({ dlBusy: key, dlErr: '', dlDone: '' });
+    try {
+      const d = await this.dlReadFile(file); const v = this.dlValidate(key, d.headers);
+      const dlBase = { ...(this.state.dlBase || {}) };
+      dlBase[key] = { fileName: file.name, n: d.n, headers: d.headers, rows: d.rows, status: v.ok ? 'ok' : 'err', missing: v.missing, at: Date.now() };
+      this.setState({ dlBase, dlBusy: '', dlDone: '' });
+    } catch (e) { this.setState({ dlBusy: '', dlErr: 'Ошибка чтения «' + (file.name || '') + '»: ' + (e.message || e) }); }
+  }
+  dlRemoveBase(key) { const dlBase = { ...(this.state.dlBase || {}) }; delete dlBase[key]; this.setState({ dlBase, dlDone: '' }); }
+  dlSigOf(headers) { return headers.map(h => this.dlNorm(h)).filter(Boolean).sort().join('|'); }
+  dlGuessMap(headers) {
+    const map = {}; const H = headers.map(h => this.dlNorm(h));
+    const rules = { nomen: ['номенклат', 'товар', 'материал', 'сырь', 'продукт', 'наименован'], qty: ['кол-во', 'количеств', 'объ[её]м', 'остаток'], price: ['цена', 'тариф', 'ставка'], sum: ['сумма', 'стоимост', 'итого'], date: ['дата', 'период'], supplier: ['поставщик', 'продавец'], client: ['клиент', 'контрагент', 'покупател'], warehouse: ['склад'], unit: ['ед.', 'ед ', 'единиц'] };
+    for (const f of Object.keys(rules)) { const idx = H.findIndex(h => rules[f].some(s => new RegExp(s).test(h))); if (idx >= 0 && !Object.values(map).includes(idx)) map[f] = idx; }
+    return map;
+  }
+  async dlOnExtra(file) {
+    if (!/\.(xlsx|xls|csv|txt)$/i.test(file.name || '')) { this.setState({ dlErr: '«' + (file.name || 'файл') + '» — поддерживаются .xlsx, .xls, .csv, .txt.' }); return; }
+    this.setState({ dlBusy: 'extra', dlErr: '', dlDone: '' });
+    try {
+      const d = await this.dlReadFile(file); const sig = this.dlSigOf(d.headers);
+      const tpl = (this.state.dlTemplates || []).find(t => t.sig === sig);
+      if (tpl) {
+        const extra = [...(this.state.dlExtra || []), { id: 'dx' + Date.now().toString(36), name: tpl.name, fileName: file.name, n: d.n, status: 'ok', map: tpl.map, sig, auto: true }];
+        this.setState({ dlExtra: extra, dlBusy: '', dlDone: '' });
+      } else {
+        this.setState({ dlBusy: '', dlMap: { fileName: file.name, headers: d.headers, rows: d.rows, n: d.n, sig, map: this.dlGuessMap(d.headers), name: file.name.replace(/\.[^.]+$/, ''), save: true } });
+      }
+    } catch (e) { this.setState({ dlBusy: '', dlErr: 'Ошибка чтения «' + (file.name || '') + '»: ' + (e.message || e) }); }
+  }
+  dlMapSet(field, colIdx) { const m = this.state.dlMap; if (!m) return; const map = { ...m.map }; if (colIdx === '' || colIdx == null) delete map[field]; else map[field] = Number(colIdx); this.setState({ dlMap: { ...m, map } }); }
+  dlMapName(v) { const m = this.state.dlMap; if (m) this.setState({ dlMap: { ...m, name: v } }); }
+  dlMapToggleSave() { const m = this.state.dlMap; if (m) this.setState({ dlMap: { ...m, save: !m.save } }); }
+  dlMapCancel() { this.setState({ dlMap: null }); }
+  dlMapApply() {
+    const m = this.state.dlMap; if (!m) return;
+    if (!Object.keys(m.map).length) { this.setState({ dlErr: 'Сопоставьте хотя бы одну колонку.' }); return; }
+    const extra = [...(this.state.dlExtra || []), { id: 'dx' + Date.now().toString(36), name: (m.name || '').trim() || m.fileName, fileName: m.fileName, n: m.n, status: 'ok', map: m.map, sig: m.sig, auto: false }];
+    const patch = { dlExtra: extra, dlMap: null, dlErr: '' };
+    if (m.save) { const tpls = (this.state.dlTemplates || []).filter(t => t.sig !== m.sig); tpls.push({ id: 'tpl' + Date.now().toString(36), name: (m.name || '').trim() || m.fileName, sig: m.sig, map: m.map, fields: Object.keys(m.map).length }); patch.dlTemplates = tpls; try { this.lsSet('dltemplates', JSON.stringify(tpls)); } catch (e) {} }
+    this.setState(patch);
+  }
+  dlDelTemplate(id) { const tpls = (this.state.dlTemplates || []).filter(t => t.id !== id); this.setState({ dlTemplates: tpls }); try { this.lsSet('dltemplates', JSON.stringify(tpls)); } catch (e) {} }
+  dlRemoveExtra(id) { this.setState({ dlExtra: (this.state.dlExtra || []).filter(x => x.id !== id), dlDone: '' }); }
+  dlFindCol(headers, syns) { const H = headers.map(h => this.dlNorm(h)); for (let i = 0; i < H.length; i++) if (syns.some(s => H[i].indexOf(s) >= 0)) return i; return -1; }
+  dlRecalc() {
+    const dlBase = this.state.dlBase || {};
+    const okBase = this.dlBaseDefs().filter(d => dlBase[d.key] && dlBase[d.key].status === 'ok');
+    const okExtra = (this.state.dlExtra || []).filter(x => x.status === 'ok');
+    const okCount = okBase.length + okExtra.length;
+    if (okCount < 1) { this.setState({ dlErr: 'Пересчёт недоступен: загрузите хотя бы один отчёт (зелёный). Можно начать с любого одного.' }); return; }
+    const errBase = this.dlBaseDefs().filter(d => dlBase[d.key] && dlBase[d.key].status === 'err');
+    let fed = 0;
+    // Маршрутизация: ведомость склада → остатки сырья (по совпадению наименований)
+    try {
+      const wh = (this.state.dlBase || {}).warehouse;
+      if (wh && wh.rows && wh.rows.length) {
+        const ni = this.dlFindCol(wh.headers, ['номенклат', 'товар', 'материал', 'сырь', 'наименован']);
+        const qi = this.dlFindCol(wh.headers, ['конечн', 'остаток', 'кол-во', 'количеств']);
+        if (ni >= 0 && qi >= 0) {
+          const stock = { ...(this.state.stock || {}) };
+          for (const r of wh.rows) { const nm = r[ni]; const q = parseFloat(String(r[qi] == null ? '' : r[qi]).replace(/\s/g, '').replace(',', '.')); if (nm && !isNaN(q)) { stock[this.norm(nm)] = q; fed++; } }
+          this.setState({ stock, whFilled: true, stockUpdatedAt: Date.now() });
+        }
+      }
+    } catch (e) {}
+    const when = new Date().toLocaleString('ru-RU');
+    const total = this.dlBaseDefs().length;
+    const warn = errBase.length ? (' Пропущены с ошибкой структуры: ' + errBase.map(d => d.label).join(', ') + '.') : '';
+    this.setState({ dlDone: 'Сквозной пересчёт выполнен ' + when + '. Базовых отчётов: ' + okBase.length + '/' + total + ', доп. форм: ' + okExtra.length + (fed ? ('. Остатки склада обновлены по ' + fed + ' позициям.') : '.') + warn, dlErr: '' });
+    try { this.postSystemNote('📥 Загрузка данных 1С: выполнен сквозной пересчёт аналитики (базовых: ' + okBase.length + '/' + total + (okExtra.length ? ', доп. форм: ' + okExtra.length : '') + ').', this.state.currentUser ? this.state.currentUser.name : 'Система'); } catch (e) {}
+  }
+  buildDataload() {
+    const S = this.state, set = (p) => this.setState(p);
+    if (!this.dlAccess()) return { isDataload: true, dlNoAccess: true };
+    const dlBase = S.dlBase || {}, drag = S.dlDragKey || '';
+    const baseZones = this.dlBaseDefs().map((d, i) => {
+      const st = dlBase[d.key];
+      const status = st ? st.status : 'idle';
+      return {
+        key: d.key, no: String(i + 1), label: d.label, hint: d.hint,
+        zoneCls: 'dlzone' + (status === 'ok' ? ' ok' : status === 'err' ? ' err' : '') + (drag === d.key ? ' drag' : ''),
+        loaded: !!st, status,
+        stCls: 'dlzst ' + (status === 'ok' ? 'ok' : status === 'err' ? 'err' : 'idle'),
+        chkCls: 'dlchk ' + (status === 'ok' ? 'ok' : 'err'), chkMark: status === 'ok' ? '✓' : '✕',
+        statusText: st ? (status === 'ok' ? (st.fileName + ' · строк: ' + st.n) : ('Ошибка структуры: нет ' + (st.missing || []).join(', '))) : 'Перетащите файл или выберите',
+        isOk: status === 'ok', isErr: status === 'err', idle: !st,
+        onFile: (e) => { const f = e.target.files && e.target.files[0]; if (f) this.dlOnBase(d.key, f); if (e.target) e.target.value = ''; },
+        onDrop: (e) => { e.preventDefault(); const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; set({ dlDragKey: '' }); if (f) this.dlOnBase(d.key, f); },
+        onDragOver: (e) => { e.preventDefault(); if (S.dlDragKey !== d.key) set({ dlDragKey: d.key }); },
+        onDragLeave: (e) => { e.preventDefault(); set({ dlDragKey: '' }); },
+        remove: () => this.dlRemoveBase(d.key),
+      };
+    });
+    const baseLoaded = baseZones.filter(z => z.status === 'ok').length;
+    const extraRows = (S.dlExtra || []).map(x => ({ id: x.id, name: x.name, fileName: x.fileName, n: String(x.n), auto: x.auto, tag: x.auto ? 'шаблон' : 'сопоставлено', tagCls: 'dletag ' + (x.auto ? 'ok' : 'map'), remove: () => this.dlRemoveExtra(x.id) }));
+    const allOk = baseLoaded === this.dlBaseDefs().length && (S.dlExtra || []).every(x => x.status === 'ok');
+    const anyOk = baseLoaded >= 1 || (S.dlExtra || []).some(x => x.status === 'ok');
+    const m = S.dlMap;
+    const mapRows = m ? this.dlFields().map(f => ({ v: f.v, label: f.l, sel: (m.map[f.v] != null ? String(m.map[f.v]) : ''), onSel: (e) => this.dlMapSet(f.v, e.target.value) })) : [];
+    const colOpts = m ? m.headers.map((h, i) => ({ v: String(i), label: (h || ('Колонка ' + (i + 1))) })) : [];
+    return {
+      isDataload: true, dlNoAccess: false, dlCoName: this.co().name + ' Flow',
+      dlBaseZones: baseZones, dlBaseLoaded: String(baseLoaded), dlBaseTotal: String(this.dlBaseDefs().length),
+      dlExtraRows: extraRows, dlHasExtra: extraRows.length > 0,
+      dlBusyExtra: S.dlBusy === 'extra',
+      onDlExtraFile: (e) => { const f = e.target.files && e.target.files[0]; if (f) this.dlOnExtra(f); if (e.target) e.target.value = ''; },
+      dlTemplates: (S.dlTemplates || []).map(t => ({ id: t.id, name: t.name, fields: String(t.fields || Object.keys(t.map || {}).length), del: () => this.dlDelTemplate(t.id) })),
+      dlHasTpl: (S.dlTemplates || []).length > 0,
+      dlErr: S.dlErr || '', dlHasErr: !!S.dlErr, dlDone: S.dlDone || '', dlHasDone: !!S.dlDone,
+      dlRecalc: () => this.dlRecalc(), dlRecalcOff: !anyOk,
+      dlProgText: 'Базовые: ' + baseLoaded + '/' + this.dlBaseDefs().length + ' · доп. форм: ' + (S.dlExtra || []).length,
+      // mapping dialog
+      dlMapOpen: !!m, dlMapFile: m ? m.fileName : '', dlMapName: m ? m.name : '', onDlMapName: (e) => this.dlMapName(e.target.value),
+      dlMapSave: m ? !!m.save : true, toggleDlMapSave: () => this.dlMapToggleSave(),
+      dlMapRows: mapRows, dlMapColOpts: colOpts, dlMapApply: () => this.dlMapApply(), dlMapCancel: () => this.dlMapCancel(),
+      dlMapSample: m ? (m.headers.join(' | ')) : '',
+    };
+  }
+  // ===== P&L и маржинальный анализ 360° (многомерный pivot над mgEnrich — единый источник СС) =====
+  plMarketOf(r) { return /[a-z]/i.test(String(r.client || '')) ? 'Импорт / Экспорт' : 'Внутренний рынок'; }
+  plDims() {
+    return {
+      nomen: { label: 'Номенклатура', l1: r => r.group || '—', l2: r => r.marka || '—', l3: r => ((r.client || '—') + ' · ' + (r.nomen || '')) },
+      client: { label: 'Клиент', l1: r => r.client || '—', l2: r => r.marka || '—', l3: r => r.nomen || '—' },
+      manager: { label: 'Менеджер', l1: r => (r.manager && String(r.manager).trim()) || 'Не указан', l2: r => r.client || '—', l3: r => r.marka || '—' },
+      market: { label: 'Рынок', l1: r => this.plMarketOf(r), l2: r => r.client || '—', l3: r => r.marka || '—' },
+    };
+  }
+  plCls(a) { const r2 = a.rev ? a.m2 / a.rev * 100 : 0; if (a.m2 < 0 || r2 < 0) return 'red'; if (r2 >= 15) return 'green'; if (r2 < 7) return 'warn'; return ''; }
+  plGroupBy(list, fn) { const m = new Map(); for (const r of list) { const k = fn(r) || '—'; if (!m.has(k)) m.set(k, []); m.get(k).push(r); } return m; }
+  buildPnl() {
+    const S = this.state, set = (p) => this.setState(p);
+    const hasRev = Array.isArray(S.mgRevenue) && S.mgRevenue.length > 0;
+    const base = { isPnl: true, plCoName: this.co().name + ' Flow', plPeriodVal: S.mgPeriod || '', onPlPeriod: (e) => set({ mgPeriod: e.target.value }) };
+    if (!hasRev) { base.plEmpty = true; base.goMargin = () => set({ tab: 'margin' }); return base; }
+    base.plEmpty = false;
+    const mode = S.mgCostMode || 'tree';
+    const E = this.mgEnrich(mode); const rows = E.rows, rate = E.rate || 0, agg = E.agg;
+    const T = agg(rows);
+    Object.assign(base, this.mgCostSrcVals());
+    base.plCostMode = mode;
+    base.plModeTreeCls = mode !== 'batch' ? 'plsegb on' : 'plsegb'; base.plModeBatchCls = mode === 'batch' ? 'plsegb on' : 'plsegb';
+    base.setModeTree = () => set({ mgCostMode: 'tree' }, () => this.saveMargin && this.saveMargin());
+    base.setModeBatch = () => set({ mgCostMode: 'batch' }, () => this.saveMargin && this.saveMargin());
+    // KPI
+    const rent1 = T.rev ? T.m1 / T.rev * 100 : 0, rent2 = T.rev ? T.m2 / T.rev * 100 : 0;
+    const byMarka = [...this.plGroupBy(rows, r => r.marka || '—').entries()].map(([k, l]) => ({ k, a: agg(l) }));
+    const topProd = byMarka.slice().sort((a, b) => b.a.m2 - a.a.m2)[0];
+    const mgrRows = rows.filter(r => r.manager && String(r.manager).trim());
+    const byMgr = [...this.plGroupBy(mgrRows, r => r.manager).entries()].map(([k, l]) => ({ k, a: agg(l) }));
+    const topMgr = byMgr.slice().sort((a, b) => b.a.m2 - a.a.m2)[0];
+    const skuN = byMarka.length, clientN = new Set(rows.map(r => r.client).filter(Boolean)).size;
+    const discW = rows.reduce((s, r) => s + (this.mgNum(r.discount) || 0) * r.revenue, 0), avgDisc = T.rev ? discW / T.rev : 0;
+    const planRev = this.mgNum(S.plPlanRev), planM2 = this.mgNum(S.plPlanM2);
+    const kpis = [
+      { cls: 'plkpi navy', k: 'Выручка (Gross)', v: this.mgRub(T.rev), e: this.mgEur(rate ? T.rev / rate : 0) },
+      { cls: 'plkpi', k: 'Валовая маржа GM1', v: this.mgRub(T.m1), e: this.mgPct(rent1) + ' рент.', ecls: 'plke ' + (rent1 >= 0 ? 'pos' : 'neg') },
+      { cls: 'plkpi navy2', k: 'Чистая маржа GM2', v: this.mgRub(T.m2), e: this.mgPct(rent2) + ' рент.' },
+      { cls: 'plkpi', k: 'ТОП-продукт по GM2', v: topProd ? topProd.k : '—', e: topProd ? this.mgRub(topProd.a.m2) : '' },
+      { cls: 'plkpi', k: 'Лидер-менеджер', v: topMgr ? topMgr.k : 'нет данных', e: topMgr ? this.mgRub(topMgr.a.m2) + ' GM2' : 'добавьте колонку «менеджер»' },
+      { cls: 'plkpi', k: 'Объём / SKU / клиенты', v: this.mgKg(T.w), e: skuN + ' SKU · ' + clientN + ' клиент.' },
+    ];
+    if (planRev > 0) kpis.push({ cls: 'plkpi', k: 'Выполнение плана выручки', v: this.mgPct(T.rev / planRev * 100), e: (T.rev - planRev >= 0 ? '+' : '') + this.mgRub(T.rev - planRev), ecls: 'plke ' + (T.rev >= planRev ? 'pos' : 'neg') });
+    if (planM2 > 0) kpis.push({ cls: 'plkpi', k: 'Выполнение плана GM2', v: this.mgPct(T.m2 / planM2 * 100), e: (T.m2 - planM2 >= 0 ? '+' : '') + this.mgRub(T.m2 - planM2), ecls: 'plke ' + (T.m2 >= planM2 ? 'pos' : 'neg') });
+    if (avgDisc > 0) kpis.push({ cls: 'plkpi', k: 'Средняя скидка', v: this.mgPct(avgDisc), e: 'взвеш. по выручке' });
+    base.plKpis = kpis;
+    // slices
+    const slice = S.plSlice || 'nomen';
+    base.plSlice = slice;
+    base.plSliceTabs = Object.entries(this.plDims()).map(([id, d]) => ({ id, label: d.label, cls: slice === id ? 'plsegb on' : 'plsegb', go: () => set({ plSlice: id, plExpanded: {} }) }));
+    const D = this.plDims()[slice] || this.plDims().nomen;
+    const exp = S.plExpanded || {};
+    const toggle = (k) => this.setState(st => ({ plExpanded: { ...(st.plExpanded || {}), [k]: !(st.plExpanded || {})[k] } }));
+    const fmtRow = (lvl, key, name, a, hasKids, open, tog) => {
+      const r1 = a.rev ? a.m1 / a.rev * 100 : 0, r2 = a.rev ? a.m2 / a.rev * 100 : 0;
+      const c = this.plCls(a);
+      return {
+        cls: 'plr l' + lvl + (c ? ' ' + c : ''), lvl, name, hasKids, open,
+        x: hasKids ? (open ? '▾' : '▸') : '·',
+        toggle: tog || (() => {}),
+        w: this.mgKg(a.w), rev: this.mgRub(a.rev), ss: this.mgRub(a.ss),
+        m1: this.mgRub(a.m1), r1: this.mgPct(r1), r1cls: 'plnum ' + (r1 >= 0 ? 'pos' : 'neg'),
+        m2: this.mgRub(a.m2), r2: this.mgPct(r2), r2cls: 'plnum ' + (a.m2 < 0 ? 'neg' : (r2 >= 15 ? 'pos' : '')),
+        share: T.rev ? Math.max(2, Math.round(a.rev / T.rev * 100)) : 0, shareTxt: this.mgPct(T.rev ? a.rev / T.rev * 100 : 0),
+      };
+    };
+    const flat = [];
+    const lvl1 = [...this.plGroupBy(rows, D.l1).entries()].map(([k, list]) => ({ k, list, a: agg(list) })).sort((x, y) => y.a.m2 - x.a.m2);
+    for (const g1 of lvl1) {
+      const key1 = slice + '›' + g1.k; const open1 = !!exp[key1];
+      flat.push(fmtRow(1, key1, g1.k, g1.a, true, open1, () => toggle(key1)));
+      if (!open1) continue;
+      const lvl2 = [...this.plGroupBy(g1.list, D.l2).entries()].map(([k, list]) => ({ k, list, a: agg(list) })).sort((x, y) => y.a.m2 - x.a.m2);
+      for (const g2 of lvl2) {
+        const key2 = key1 + '»' + g2.k; const open2 = !!exp[key2];
+        flat.push(fmtRow(2, key2, g2.k, g2.a, true, open2, () => toggle(key2)));
+        if (!open2) continue;
+        const lvl3 = [...this.plGroupBy(g2.list, D.l3).entries()].map(([k, list]) => ({ k, list, a: agg(list) })).sort((x, y) => y.a.rev - x.a.rev);
+        for (const g3 of lvl3) flat.push(fmtRow(3, key2 + '·' + g3.k, g3.k, g3.a, false, false, null));
+      }
+    }
+    base.plRows = flat;
+    base.plTot = { w: this.mgKg(T.w), rev: this.mgRub(T.rev), ss: this.mgRub(T.ss), m1: this.mgRub(T.m1), r1: this.mgPct(rent1), m2: this.mgRub(T.m2), r2: this.mgPct(rent2) };
+    base.plPlanRev = S.plPlanRev || ''; base.onPlPlanRev = (e) => set({ plPlanRev: e.target.value });
+    base.plPlanM2 = S.plPlanM2 || ''; base.onPlPlanM2 = (e) => set({ plPlanM2: e.target.value });
+    base.plPrint = () => this.plPrint(); base.plExcel = () => this.plExcel(); base.plEmail = () => this.plEmail(); base.plRunAi = () => this.plRunAi();
+    base.plAiBusy = !!S.plAiBusy; base.plAi = S.plAi || ''; base.plHasAi = !!S.plAi;
+    base.plExpandAll = () => { const e2 = {}; for (const g1 of lvl1) e2[slice + '›' + g1.k] = true; set({ plExpanded: e2 }); };
+    base.plCollapseAll = () => set({ plExpanded: {} });
+    return base;
+  }
+  plVerdictText() {
+    const S = this.state; const E = this.mgEnrich(S.mgCostMode || 'tree'); const rows = E.rows, rate = E.rate || 0, agg = E.agg; const T = agg(rows);
+    const r2 = (T.rev ? T.m2 / T.rev * 100 : 0), r1 = (T.rev ? T.m1 / T.rev * 100 : 0);
+    const byMarka = [...this.plGroupBy(rows, r => r.marka || '—').entries()].map(([k, l]) => ({ k, a: agg(l) }));
+    const losers = byMarka.filter(x => x.a.m2 < 0).sort((a, b) => a.a.m2 - b.a.m2);
+    const winners = byMarka.slice().sort((a, b) => b.a.m2 - a.a.m2).slice(0, 3);
+    let t = 'P&L 360° · ' + this.co().name + ' · период ' + (S.mgPeriod || '—') + ' · СС: ' + (S.mgCostMode === 'batch' ? 'партионная' : 'дерево СС') + '.\n';
+    t += 'Выручка ' + this.mgRub(T.rev) + ', GM1 ' + this.mgRub(T.m1) + ' (' + this.mgPct(r1) + '), чистая маржа GM2 ' + this.mgRub(T.m2) + ' (' + this.mgPct(r2) + ').\n';
+    t += '\nЛидеры по GM2:\n' + winners.map(w => '• ' + w.k + ': ' + this.mgRub(w.a.m2) + ' (' + this.mgPct(w.a.rev ? w.a.m2 / w.a.rev * 100 : 0) + ')').join('\n') + '\n';
+    if (losers.length) t += '\nУбыточные позиции (GM2 < 0):\n' + losers.slice(0, 6).map(w => '• ' + w.k + ': ' + this.mgRub(w.a.m2)).join('\n') + '\n';
+    return t;
+  }
+  async plRunAi() {
+    this.setState({ plAiBusy: true });
+    let verdict = '';
+    try {
+      if (this.aiSignedInSilent && this.aiSignedInSilent()) {
+        const prompt = 'Ты — финансовый директор химзавода. На основе сводки P&L 360° дай краткий управленческий вердикт (5–8 предложений): рентабельность, какие продукты/клиенты/менеджеры тянут маржу вверх и вниз, что делать (поднять цену, убрать скидку, пересмотреть ассортимент). По-русски, по делу.\n\n' + this.plVerdictText();
+        verdict = await this.aiComplete([{ role: 'user', content: prompt }], { max: 600 });
+      }
+    } catch (e) {}
+    if (!verdict) verdict = this.plVerdictText() + '\nРекомендации: по убыточным позициям — поднять отпускную цену или сократить скидку/бонусы; сфокусировать продажи на ТОП-маржинальных SKU; проверить клиентов с большой выручкой, но низкой GM2. (ИИ-помощник не подключён — показан расчётный вердикт.)';
+    this.setState({ plAiBusy: false, plAi: verdict });
+  }
+  plPrint() { try { document.body.classList.add('plprint'); } catch (e) {} try { window.print(); } catch (e) {} setTimeout(() => { try { document.body.classList.remove('plprint'); } catch (e) {} }, 600); }
+  plEmail() { const subj = 'P&L 360° · ' + this.co().name + ' · ' + (this.state.mgPeriod || ''); try { window.location.href = 'mailto:?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(this.plVerdictText()); } catch (e) {} }
+  plExcel() {
+    const XLSX = window.XLSX; if (!XLSX) { this.setState({ mgErr: 'Библиотека Excel не загрузилась — обновите страницу.' }); return; }
+    const S = this.state; const E = this.mgEnrich(S.mgCostMode || 'tree'); const rows = E.rows, rate = E.rate || 0, agg = E.agg;
+    if (!rows.length) { try { alert('Нет данных для экспорта.'); } catch (e) {} return; }
+    const st = this.mgXlSt(), coName = this.co().name, period = S.mgPeriod || new Date().toISOString().slice(0, 7);
+    const T = agg(rows); const r2 = (n) => Math.round((Number(n) || 0) * 100) / 100; const pc = (a, b) => b ? r2(a / b * 100) : 0;
+    const wb = XLSX.utils.book_new();
+    // ---- Дашборд ----
+    const planRev = this.mgNum(S.plPlanRev), planM2 = this.mgNum(S.plPlanM2);
+    const kp = [
+      ['Выручка (Gross), ₽', r2(T.rev)], ['Выручка, €', r2(rate ? T.rev / rate : 0)], ['Объём, кг', r2(T.w)],
+      ['Себестоимость (COGS), ₽', r2(T.ss)], ['Валовая маржа GM1, ₽', r2(T.m1)], ['Рентабельность GM1, %', pc(T.m1, T.rev)],
+      ['Операц. расходы + КВ, ₽', r2(T.g2 + T.kv)], ['Чистая маржа GM2, ₽', r2(T.m2)], ['Рентабельность GM2, %', pc(T.m2, T.rev)],
+    ];
+    if (planRev > 0) { kp.push(['План выручки, ₽', r2(planRev)]); kp.push(['Выполнение плана выручки, %', pc(T.rev, planRev)]); }
+    if (planM2 > 0) { kp.push(['План GM2, ₽', r2(planM2)]); kp.push(['Выполнение плана GM2, %', pc(T.m2, planM2)]); }
+    const aoa1 = [['P&L и маржинальный анализ 360° · ' + coName], ['Период: ' + period + ' · Себестоимость: ' + (S.mgCostMode === 'batch' ? 'партионная (отчёт СС)' : 'дерево СС за период')], []].concat(kp);
+    const ws1 = XLSX.utils.aoa_to_sheet(aoa1);
+    const C = (r, c) => { const ad = XLSX.utils.encode_cell({ r, c }); if (!ws1[ad]) ws1[ad] = { t: 's', v: '' }; return ws1[ad]; };
+    C(0, 0).s = { font: { name: 'Calibri', sz: 16, bold: true, color: { rgb: st.NAVY } } };
+    C(1, 0).s = { font: { name: 'Calibri', sz: 11, italic: true, color: { rgb: '7F7F7F' } } };
+    for (let i = 0; i < kp.length; i++) { const r = 3 + i; const pct = /%/.test(kp[i][0]); const gm2 = /GM2/.test(kp[i][0]);
+      C(r, 0).s = { font: { bold: true, sz: 11, color: { rgb: '1A1A1A' } }, fill: { fgColor: { rgb: gm2 ? st.GREEN : st.SUB } }, alignment: { horizontal: 'left' }, border: { bottom: { style: 'thin', color: { rgb: st.GREY } } } };
+      C(r, 1).s = { font: { bold: true, sz: 12, color: { rgb: st.NAVY } }, alignment: { horizontal: 'right' }, numFmt: pct ? '0.0"%"' : '#,##0', fill: { fgColor: { rgb: gm2 ? st.GREEN : 'FFFFFF' } }, border: { bottom: { style: 'thin', color: { rgb: st.GREY } } } };
+    }
+    ws1['!cols'] = [{ wch: 36 }, { wch: 18 }]; XLSX.utils.book_append_sheet(wb, ws1, 'Дашборд');
+    // ---- helper: dimension sheet ----
+    const dimSheet = (title, fn, l1label) => {
+      const headers = [l1label, 'Объём, кг', 'Выручка, ₽', 'COGS, ₽', 'GM1, ₽', 'Рент.GM1 %', 'GM2, ₽', 'Рент.GM2 %'];
+      const types = ['text', 'num', 'money', 'money', 'money', 'pct', 'money', 'pct'];
+      const groups = [...this.plGroupBy(rows, fn).entries()].map(([k, l]) => ({ k, a: agg(l) })).sort((a, b) => b.a.m2 - a.a.m2);
+      const body = groups.map(g => [g.k, r2(g.a.w), r2(g.a.rev), r2(g.a.ss), r2(g.a.m1), pc(g.a.m1, g.a.rev), r2(g.a.m2), pc(g.a.m2, g.a.rev)]);
+      const tot = ['ИТОГО', r2(T.w), r2(T.rev), r2(T.ss), r2(T.m1), pc(T.m1, T.rev), r2(T.m2), pc(T.m2, T.rev)];
+      return this.mgXlSheet(title + ' · ' + coName, headers, types, body, tot);
+    };
+    XLSX.utils.book_append_sheet(wb, dimSheet('Маржа по группам', r => r.group || '—', 'Товарная группа'), 'По группам');
+    XLSX.utils.book_append_sheet(wb, dimSheet('Маржа по SKU', r => r.marka || '—', 'SKU / марка'), 'По SKU');
+    XLSX.utils.book_append_sheet(wb, dimSheet('Маржа по клиентам', r => r.client || '—', 'Клиент'), 'По клиентам');
+    XLSX.utils.book_append_sheet(wb, dimSheet('Маржа по менеджерам', r => (r.manager && String(r.manager).trim()) || 'Не указан', 'Менеджер'), 'По менеджерам');
+    XLSX.utils.book_append_sheet(wb, dimSheet('Маржа по рынкам', r => this.plMarketOf(r), 'Рынок'), 'По рынкам');
+    // ---- Детализация ----
+    const dh = ['Группа', 'SKU', 'Клиент', 'Менеджер', 'Номенклатура', 'Объём кг', 'Выручка ₽', 'COGS ₽', 'GM1 ₽', 'GM2 ₽', 'Рент.GM2 %'];
+    const dt = ['text', 'text', 'text', 'text', 'text', 'num', 'money', 'money', 'money', 'money', 'pct'];
+    const dRows = rows.map(r => [r.group, r.marka, r.client || '—', (r.manager && String(r.manager).trim()) || '—', r.nomen, r2(r.weight), r2(r.revenue), r2(r.ss), r2(r.m1), r2(r.m2), pc(r.m2, r.revenue)]);
+    const dTot = ['ИТОГО', '', '', '', '', r2(T.w), r2(T.rev), r2(T.ss), r2(T.m1), r2(T.m2), pc(T.m2, T.rev)];
+    XLSX.utils.book_append_sheet(wb, this.mgXlSheet('Детализация по позициям · ' + coName, dh, dt, dRows, dTot), 'Детализация');
+    XLSX.writeFile(wb, 'P&L 360° ' + coName + ' ' + period + '.xlsx');
+  }
   oneCQuickGet() { this.setState({ tab: 'onec', navOpen: false }); if ((this.state.oneCUrl || '').trim()) this.oneCSync(true); }
   downloadOneCSpec() {
     const L = [
@@ -8388,17 +9364,17 @@ class Component extends DCLogic {
       ['calc', 'Калькулятор'], ['recipe', 'Рецептуры'], ['prod', 'План производства'],
       ['prodplan', 'График производства'], ['procplan', 'Закупки по графику'],
       ['proc', 'План закупок'], ['cal', 'Календарь'], ['wh', 'Склад'], ['cover', 'Сводка'],
-      ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'],
+      ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['delivery', 'Доставка · баланс'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['prodrep', 'Отчёты производства'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
-      ['cost', 'Себестоимость · КО'], ['margin', 'Маржинальный отчёт'], ['costtree', 'Анализ себестоимости'],
-      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
+      ['cost', 'Себестоимость · КО'], ['margin', 'Маржинальный отчёт'], ['costtree', 'Анализ себестоимости'], ['pnl', 'P&L 360°'],
+      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['dataload', 'Загрузка данных 1С'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
     const tabGroups = [
-      { label: 'Задачи', items: ['tasks', 'docs', 'cal'] },
+      { label: 'Задачи', items: ['tasks', 'docs', 'cal', 'dataload'], en: { dataload: 'Загрузка данных 1С' } },
       { label: 'Производство', items: ['prod', 'prodplan', 'recipe', 'tcalc', 'xcalc', 'catalog', 'prodrep'], en: { prodplan: 'График производства' } },
-      { label: 'Продажи', items: ['sales', 'calc', 'prices'] },
-      { label: 'Закупки', items: ['proc', 'procplan', 'runrate', 'audit', 'landed', 'cparties'], en: { procplan: 'График закупок', cparties: 'Поставщики / Контрагенты' } },
+      { label: 'Продажи', items: ['sales', 'pnl', 'calc', 'prices'], en: { pnl: 'P&L и маржа 360°' } },
+      { label: 'Закупки', items: ['proc', 'procplan', 'runrate', 'audit', 'landed', 'delivery', 'cparties'], en: { procplan: 'График закупок', cparties: 'Поставщики / Контрагенты' } },
       { label: 'Логистика и склад', items: ['wh', 'receipts', 'logi', 'turnover', 'cover'], en: { cover: 'Сводка запасов' } },
       { label: 'Финансы', items: ['margin', 'cost', 'costtree', 'pay', 'treas30', 'planfact', 'stress', 'reports'] },
       { label: 'Настройки', items: ['cloud', 'onec', 'users'] },
@@ -8446,6 +9422,9 @@ class Component extends DCLogic {
       runrate: 'Run Rate — план закупок сырья по среднему месячному потреблению: точка заказа, объём докупки и месяц заказа с учётом срока поставки и страхового запаса.',
       audit: 'Аудит закупочных цен по реестру заявок: динамика цен поставщиков по периодам, лучшая/худшая цена, переплаты и стратегия переговоров.',
       landed: 'Полная себестоимость закупки (Landed Cost) для внутреннего рынка и ВЭД: сырьё + логистика + таможня + брокер. Аудит аномалий накладных расходов, OTIF поставщиков, факторный план-факт анализ (цена / логистика / валюта) и капитал «в пути». Загрузка из файла (.xlsx) или из 1С.',
+      delivery: 'Сквозной баланс снабжения: ежедневная проекция остатков сырья (остаток + приход в пути/заказы − потребность производства). 4-уровневая цветовая индикация дефицита/избытка, drill-down до источника, срезы, печать и ИИ-вердикт.',
+      dataload: 'Защищённое окно ручной загрузки данных из 1С:КА: базовые отчёты (выручка, себестоимость, закупки/ВЭД, склад, OPEX/ОСВ, банковские выписки) + гибкая загрузка произвольных форм с конструктором колонок. Сквозной пересчёт запускается даже по одному отчёту. Доступ — только админ/разрешённые роли.',
+      pnl: 'P&L и маржинальный анализ 360°: чистая маржа в разрезах номенклатуры, клиентов и менеджеров. GM1/GM2, рентабельность, переключатель источника СС (дерево периода / факт. партии КО), drill-down, печать/Excel/Email.',
       pay: 'Казначейство: статусы оплат по заказам, кредитный портфель (предоплата vs отсрочка), календарь платежей, долги по поставщикам и сырью, риски срыва поставок.',
       turnover: 'Оборачиваемость запасов: коэффициент и дни оборота, неликвиды («замороженный капитал») и дефицитные риски, сумма замороженных денег.',
       planfact: 'План-факт анализ закупок: отклонения по объёму и цене, разделение причин (рынок vs планирование) и финансовый итог к бюджету.',
@@ -8545,7 +9524,7 @@ class Component extends DCLogic {
       onPrint: () => {}, onExcel: () => {}, onWord: () => {},
       product: S.product, rate: S.rate, loss: S.loss, recipeOwner: S.recipeOwner,
       draftComp: S.draftComp, draftPct: S.draftPct, priceFilter: S.priceFilter,
-      isCost: S.tab === 'cost', isMargin: S.tab === 'margin', isLanded: S.tab === 'landed',
+      isCost: S.tab === 'cost', isMargin: S.tab === 'margin', isLanded: S.tab === 'landed', isDelivery: S.tab === 'delivery', isDataload: S.tab === 'dataload', isPnl: S.tab === 'pnl',
       isTCalc: S.tab === 'tcalc', tcReady: !!S.tcReady, isXCalc: S.tab === 'xcalc',
       isCalc: S.tab === 'calc', isRecipe: S.tab === 'recipe', isProduction: S.tab === 'prod',
       isProdPlan: S.tab === 'prodplan', isProcPlan: S.tab === 'procplan',
@@ -8643,16 +9622,26 @@ class Component extends DCLogic {
         pEur += c.eurNoVat; pRub += c.sumRub;
         if (p.status === 'отгружено') shipped++; if (p.status === 'получено на склад') atWh++;
         const rk = this.purchaseRisk(p);
+        const ddmm = (d) => (d && d.length >= 10) ? (d.slice(8, 10) + '.' + d.slice(5, 7)) : '—';
+        const ved = !!(p.market && !/внутр/i.test(p.market));
+        const goodsRub = c.rubNoVat || 0, extra = (c.transport || 0) + (c.customs || 0);
+        const ov = goodsRub ? extra / goodsRub * 100 : 0;
+        const qtyN = Number(p.qty) || 0, priceN = Number(p.priceEur) || 0;
         return {
           no: p.no, arriveDate: p.arriveDate || '—', supplier: p.supplier || '—', material: p.material || '—',
-          initiator: p.initiator || '—', qty: this.fmt(Number(p.qty) || 0, 2), unit: unitLookup(p.material),
+          initiator: p.initiator || '—', qty: this.fmt(qtyN, 2), unit: unitLookup(p.material),
           category: catLookup(p.material) || '—', sumRub: this.fmt(c.sumRub), currency: p.currency || '₽',
           approval: p.approvalStatus || '—', approvalCls: this.statusCls(p.approvalStatus),
           status: p.status, statusCls: this.statusCls(p.status), eurNoVat: this.fmt(c.eurNoVat), fullRub: this.fmt(c.fullRub),
           rowCls: rk ? ('prisk ' + rk.level) : '',
+          idLine: '#' + (p.no || '—'), dateLine: ddmm(p.orderDate || p.reqDate),
+          ved, flag: this.flagOf(p.country || p.market), incShow: ved, incoterms: ved ? (p.incoterms || p.deliveryTerm || p.terms || '—') : '',
+          curSum: this.fmt(qtyN * priceN) + ' ' + (p.currency || '€'), landed: this.fmt(c.fullRub),
+          ovTxt: ov.toLocaleString('ru-RU', { maximumFractionDigits: 1 }) + '%', ovCls: ov > 12 ? 'preqov hi' : (ov > 0 ? 'preqov' : 'preqov zero'),
+          arriveShow: !!(p.arriveDate && p.arriveDate !== '—'), arriveDm: ddmm(p.arriveDate),
           open: () => set({ editId: p.id }),
-          print: () => set({ printId: p.id }),
-          remove: () => this.askDelete('заявку на закупку № ' + p.no, () => set({ purchases: S.purchases.filter(x => x.id !== p.id), editId: S.editId === p.id ? null : S.editId })),
+          print: (e) => { if (e && e.stopPropagation) e.stopPropagation(); set({ printId: p.id }); },
+          remove: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.askDelete('заявку на закупку № ' + p.no, () => set({ purchases: S.purchases.filter(x => x.id !== p.id), editId: S.editId === p.id ? null : S.editId })); },
         };
       });
       base.purchaseKpis = [
@@ -8963,8 +9952,11 @@ class Component extends DCLogic {
     if (S.tab === 'logi') Object.assign(base, this.buildLogistics());
     if (S.tab === 'cost') Object.assign(base, this.buildSebest());
     if (S.tab === 'margin') Object.assign(base, this.buildMargin());
+    if (S.tab === 'pnl') Object.assign(base, this.buildPnl());
     if (S.tab === 'costtree') Object.assign(base, this.buildCostTree());
     if (S.tab === 'landed') Object.assign(base, this.buildLanded());
+    if (S.tab === 'delivery') Object.assign(base, this.buildDelivery());
+    if (S.tab === 'dataload') Object.assign(base, this.buildDataload());
     if (S.tab === 'tcalc') Object.assign(base, this.buildTCalc(rate));
     if (S.tab === 'xcalc') Object.assign(base, this.buildXCalc(rate));
 
