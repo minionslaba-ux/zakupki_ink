@@ -165,6 +165,32 @@ tbody td.l{text-align:left}
 .mgcost{margin-top:10px;padding:9px 13px;border-radius:9px;font-size:12.5px;line-height:1.45}
 .mgcost.ok{background:#e2efda;border:1px solid #c4dcb0;color:#3a6b1e}
 .mgcost.warn{background:#fce4d6;border:1px solid #f0c2a3;color:#8a4b1e}
+.corrbtn{border-color:#1F4E78;color:#1F4E78}
+.corrbanner{margin-top:10px;padding:9px 13px;border-radius:9px;font-size:12.5px;line-height:1.45;background:#e8f0fa;border:1px solid #bcd3ee;color:#1F4E78}
+.corrov{position:fixed;inset:0;background:rgba(17,35,59,.5);z-index:200}
+.corrdlg{position:fixed;z-index:201;left:50%;top:50%;transform:translate(-50%,-50%);width:min(760px,94vw);max-height:88vh;overflow:auto;background:#fff;border-radius:14px;box-shadow:0 24px 70px rgba(0,0,0,.32);padding:22px 24px}
+.corrhd{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.corrttl{font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;color:#1a3a6e}
+.corrx{border:none;background:#f1efec;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:14px;color:#56534f}
+.corrsub{font-size:12.5px;color:#56534f;line-height:1.5;margin-bottom:14px}
+.corrsearch{display:flex;gap:9px;align-items:center;margin-bottom:8px}
+.corrsugg{border:1px solid #e3e9f2;border-radius:9px;max-height:170px;overflow:auto;margin-bottom:12px}
+.corrsi{padding:8px 12px;font-size:13px;cursor:pointer;border-bottom:1px solid #f1f3f7}
+.corrsi:hover{background:#eef4fb;color:#1F4E78}
+.corrrows{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.corrrow{border:1px solid #e3e9f2;border-radius:11px;padding:12px 13px;background:#fafbfd;display:flex;flex-direction:column;gap:9px}
+.corrr1{display:flex;gap:8px;align-items:center}
+.corrr2,.corrr3{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.corrlbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#9aa7b6;min-width:74px}
+.crsg{font-size:12px;padding:5px 11px;border:1px solid #d9e1ec;background:#fff;border-radius:8px;cursor:pointer;color:#56534f}
+.crsg.on{background:#1F4E78;border-color:#1F4E78;color:#fff;font-weight:600}
+.corrdel{border:none;background:#fbe0e0;color:#c20000;width:30px;height:30px;border-radius:8px;cursor:pointer;noshrink:1}
+.corrvi{width:110px}
+.corrbi{width:190px}
+.corru{font-size:12px;font-weight:700;color:#1F4E78}
+.corrh{font-size:11px;color:#9aa7b6}
+.corrft{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid #eee;padding-top:14px}
+.corrft2{display:flex;gap:9px}
 .ctr.cthd{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#9a9793;font-weight:600;border-bottom:1px solid #dad7d2;padding-bottom:9px}
 .ctc{text-align:right;min-width:0}
 .ctc.l{text-align:left;white-space:normal;word-break:break-word}
@@ -1351,8 +1377,8 @@ table{display:block;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrollin
 </style>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js';
-import { getFirestore, initializeFirestore, doc, getDoc, setDoc, onSnapshot, runTransaction } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
-window.__FB = { initializeApp, getFirestore, initializeFirestore, doc, getDoc, setDoc, onSnapshot, runTransaction };
+import { getFirestore, initializeFirestore, doc, getDoc, setDoc, deleteDoc, onSnapshot, runTransaction } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
+window.__FB = { initializeApp, getFirestore, initializeFirestore, doc, getDoc, setDoc, deleteDoc, onSnapshot, runTransaction };
 window.dispatchEvent(new Event('fbready'));
 </script>
 <script src="letterhead-data.js"></script>
@@ -1380,6 +1406,8 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbcmyk"><div class="sbrun"></div></div>
 <sc-if value="{{ canSwitch }}" hint-placeholder-val=""><div class="coswitch"><button class="cosw-btn" onClick="{{ toggleCoMenu }}" title="Сменить компанию группы"><span class="cosw-chip" style="{{ coChipStyle }}"></span><span class="cosw-name">{{ coName }}</span><span class="cosw-car">▾</span></button><sc-if value="{{ coMenuOpen }}" hint-placeholder-val=""><div class="comenu"><div class="comenu-h">Компания группы</div><sc-for list="{{ coList }}" as="c" hint-placeholder-count="2"><button class="{{ c.cls }}" onClick="{{ c.go }}"><span class="comenu-chip" style="{{ c.chipStyle }}"></span><span class="comenu-tx"><span class="comenu-name">{{ c.coItemName }}</span><span class="comenu-sub">{{ c.coItemSub }}</span></span><sc-if value="{{ c.locked }}" hint-placeholder-val="x"><span class="comenu-lock"><span class="comenu-brick"></span></span></sc-if><sc-if value="{{ c.locked }}" hint-placeholder-val="{{ true }}"><span class="comenu-chk">✓</span></sc-if></button></sc-for></div></sc-if></div></sc-if>
 <button class="{{ oneCBtnCls }}" onClick="{{ oneCQuickGet }}" title="Загрузить остатки и закупочные цены из 1С"><span class="oneclogo">1С</span><span class="onecbtx">{{ oneCBtnText }}</span></button>
+<button class="{{ sbCloudCls }}" onClick="{{ sbCloudClick }}" title="Общая база команды — облачная синхронизация"><span class="oneclogo cloudlogo">☁</span><span class="onecbtx">{{ sbCloudText }}</span></button>
+<button class="{{ sbCloudCls }}" onClick="{{ sbCloudClick }}" title="Общая база команды — облачная синхронизация"><span class="oneclogo cloudlogo">☁</span><span class="onecbtx">{{ sbCloudText }}</span></button>
 <nav class="sbnav"><sc-for list="{{ navGroups }}" as="g" hint-placeholder-count="6"><div class="{{ g.grpCls }}"><div class="{{ g.headCls }}"><button class="sbgname" onClick="{{ g.openCat }}">{{ g.label }}</button><button class="{{ g.chevCls }}" onClick="{{ g.toggleExp }}" title="Свернуть / развернуть">›</button></div><sc-if value="{{ g.expanded }}" hint-placeholder-val="{{ true }}"><div class="sbitems"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="sbtab {{ t.cls }}" onClick="{{ t.go }}"><span class="sbbar"></span>{{ t.icon }}<span class="sblbl">{{ t.label }}</span><sc-if value="{{ t.hasBadge }}" hint-placeholder-val=""><span class="nbadge {{ t.badgeCls }}">{{ t.badge }}</span></sc-if></button></sc-for></div></sc-if></div></sc-for></nav>
 <div class="sbconnect"><div class="sbconh"><span class="sbconspark">✦</span> Коннект</div><button class="sbai sbai2" onClick="{{ aiToggle }}" title="Открыть AI-аналитика АЯ"><span class="sbaiic">✦</span> AI-аналитик АЯ</button><button class="sbai" onClick="{{ runGlobalAudit }}" title="Глубокий AI-аудит производства, снабжения и кассы"><span class="sbaiic">✦</span> Глубокий анализ</button><button class="sbai sbclaude" onClick="{{ copyClaude }}" title="Скопировать сводку данных для вставки в Claude Pro"><span class="sbaiic">📋</span> Контекст для Claude Pro</button></div>
 <button class="sbmap" onClick="{{ openCompass }}" title="Компас — полная карта навигации по всем разделам"><span>🧭</span> Компас · карта навигации</button>
@@ -1804,7 +1832,9 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ ctFilteredEmpty }}" hint-placeholder-val=""><div class="hint">Под выбранные фильтры не попало ни одной партии — измените период или продукт.</div></sc-if>
 <div class="ctsegrow"><button class="{{ ctSegStruct }}" onClick="{{ ctSetStruct }}">① Структура и цены</button><button class="{{ ctSegDecomp }}" onClick="{{ ctSetDecomp }}">② Состав ГП</button><button class="{{ ctSegPlanfact }}" onClick="{{ ctSetPlanfact }}">③ План-факт расхода</button><button class="{{ ctSegDrift }}" onClick="{{ ctSetDrift }}">④ Дрейф партий</button><button class="btn dark ctgenbtn" onClick="{{ ctGenerate }}"><span>⚙</span> Сформировать отчёт</button><button class="btn ghost" onClick="{{ ctResetFilters }}"><span>✕</span> Очистить</button></div>
 <sc-if value="{{ ctNotGenerated }}" hint-placeholder-val=""><div class="hint ctgenhint">Задайте период и разрез по продукции, выберите вид отчёта (① / ② / ③) — и нажмите «Сформировать отчёт».</div></sc-if>
-<sc-if value="{{ ctGenerated }}" hint-placeholder-val=""><div class="ctbtns"><button class="btn mgxls" onClick="{{ ctExcel }}"><span>⬇</span> Excel</button><button class="btn" onClick="{{ ctPrint }}"><span>🖨</span> Распечатать</button><button class="btn" onClick="{{ ctEmail }}"><span>✉</span> Отправить по e-mail</button><button class="{{ ctAnomBtnCls }}" onClick="{{ ctToggleAnom }}">{{ ctAnomBtnLabel }}</button></div>
+<sc-if value="{{ ctGenerated }}" hint-placeholder-val=""><div class="ctbtns"><button class="btn mgxls" onClick="{{ ctExcel }}"><span>⬇</span> Excel</button><button class="btn" onClick="{{ ctPrint }}"><span>🖨</span> Распечатать</button><button class="btn" onClick="{{ ctEmail }}"><span>✉</span> Отправить по e-mail</button><button class="{{ ctAnomBtnCls }}" onClick="{{ ctToggleAnom }}">{{ ctAnomBtnLabel }}</button><button class="btn corrbtn" onClick="{{ ctCorrToggle }}">{{ ctCorrBtnLabel }}</button></div>
+<sc-if value="{{ ctHasCorr }}" hint-placeholder-val=""><div class="corrbanner">✓ Применены корректировки стоимости сырья: {{ ctCorrCount }}. Дерево и все отчёты на его базе (включая маржинальность) считаются с учётом корректировок.</div></sc-if>
+<sc-if value="{{ ctCorrOpen }}" hint-placeholder-val=""><div class="corrov" onClick="{{ ctCorrCancel }}"></div><div class="corrdlg"><div class="corrhd"><span class="corrttl">⚙ Корректировка стоимости сырья</span><button class="corrx" onClick="{{ ctCorrCancel }}">✕</button></div><div class="corrsub">Подбор номенклатуры по названию или артикулу. Можно уменьшить/увеличить стоимость сырья глобально, в разрезе продукта или конкретной партии. Корректировки фиксируются и применяются к дереву себестоимости и всем отчётам на его базе.</div><div class="corrsearch"><input class="inp f1" placeholder="Поиск сырья по названию или артикулу…" value="{{ ctCorrSearchVal }}" onInput="{{ onCtCorrSearch }}"><button class="btn dark noshrink" onClick="{{ ctCorrAddBlank }}">＋ Добавить позицию</button></div><sc-if value="{{ ctCorrSuggShow }}" hint-placeholder-val=""><div class="corrsugg"><sc-for list="{{ ctCorrSuggestions }}" as="s" hint-placeholder-count="3"><div class="corrsi" onClick="{{ s.add }}">{{ s.name }}</div></sc-for></div></sc-if><div class="corrrows"><sc-if value="{{ ctCorrEmpty }}" hint-placeholder-val="{{ true }}"><div class="hint">Пока нет корректировок. Найдите сырьё в поиске и нажмите на него, либо «Добавить позицию».</div></sc-if><sc-for list="{{ ctCorrRows }}" as="r" hint-placeholder-count="0"><div class="corrrow"><div class="corrr1"><input class="inp f1" value="{{ r.q }}" onInput="{{ r.onQ }}" placeholder="Сырьё (название / артикул)"><button class="corrdel" onClick="{{ r.remove }}">✕</button></div><div class="corrr2"><span class="corrlbl">Область</span><button class="{{ r.scopeAll }}" onClick="{{ r.setAll }}">Все партии</button><button class="{{ r.scopeProd }}" onClick="{{ r.setProd }}">Продукт</button><button class="{{ r.scopeBatch }}" onClick="{{ r.setBatch }}">Партия</button><sc-if value="{{ r.showProd }}" hint-placeholder-val=""><select class="sel" value="{{ r.product }}" onChange="{{ r.onProduct }}"><option value="">— выберите продукт —</option><sc-for list="{{ ctCorrProdOpts }}" as="o" hint-placeholder-count="2"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select></sc-if><sc-if value="{{ r.showBatch }}" hint-placeholder-val=""><input class="inp corrbi" value="{{ r.batchCode }}" onInput="{{ r.onBatch }}" placeholder="№ партии, напр. 03F26R11"></sc-if></div><div class="corrr3"><span class="corrlbl">Изменение</span><button class="{{ r.modePct }}" onClick="{{ r.setPct }}">± %</button><button class="{{ r.modeUnit }}" onClick="{{ r.setUnit }}">Цена за ед.</button><input class="inp corrvi" type="number" value="{{ r.value }}" onInput="{{ r.onValue }}"><span class="corru">{{ r.valUnit }}</span><span class="corrh">{{ r.hint }}</span></div></div></sc-for></div><div class="corrft"><button class="btn ghost" onClick="{{ ctCorrClearAll }}">🗑 Сбросить все</button><div class="corrft2"><button class="btn" onClick="{{ ctCorrCancel }}">Отмена</button><button class="btn dark" onClick="{{ ctCorrSave }}">✓ Скорректировать и сохранить</button></div></div></div></sc-if>
 <sc-if value="{{ ctIsStruct }}" hint-placeholder-val="">
 <div class="ctkpis"><sc-for list="{{ ctStructKpis }}" as="k" hint-placeholder-count="4"><div class="ctkpi"><div class="ctkl">{{ k.label }}</div><div class="ctkv {{ k.cls }}">{{ k.value }}</div></div></sc-for></div>
 <div class="sec">Структура себестоимости по статьям</div>
@@ -2711,7 +2741,11 @@ class Component extends DCLogic {
       { id: 'receipts', label: 'Поступления ТМЦ (выписка)', keys: [], cols: ['receipts'] },
       { id: 'logistics', label: 'Логистика', keys: [], cols: ['logistics'] },
       { id: 'counterparties', label: 'Контрагенты', keys: [], cols: ['cparties'] },
-      { id: 'tasks', label: 'Задачи и документы', keys: [], cols: ['tasks'] }
+      { id: 'tasks', label: 'Задачи и документы', keys: [], cols: ['tasks'] },
+      { id: 'costtree', label: 'Анализ себестоимости (дерево)', keys: [], cols: [], ds: true },
+      { id: 'costko', label: 'Себестоимость · КО', keys: [], cols: [], ds: true },
+      { id: 'margin', label: 'Маржинальный отчёт', keys: [], cols: [], ds: true },
+      { id: 'tcalc', label: 'Технологические карты', keys: [], cols: [], ds: true }
     ];
   }
   _areaIndex() { if (this.__abk) return this.__abk; const m = {}; for (const a of this.cloudAreas()) { for (const k of a.keys) m['k:' + k] = a.id; for (const c of a.cols) m['c:' + c] = a.id; } this.__abk = m; return m; }
@@ -2720,7 +2754,7 @@ class Component extends DCLogic {
   areaLabel(id) { const a = this.cloudAreas().find(x => x.id === id); return a ? a.label : id; }
   // Какая область редактируется на данной вкладке (для статус-бара и кнопки «Взять»)
   tabArea(tab) {
-    const m = { wh: 'warehouse', prod: 'orders', sales: 'sales', proc: 'purchases', procplan: 'purchases', prodplan: 'purchases', runrate: 'purchases', turnover: 'purchases', stress: 'purchases', onec: 'purchases', prices: 'prices', calc: 'prices', recipe: 'prices', audit: 'prices', tcalc: 'prices', xcalc: 'prices', pay: 'payments', treas30: 'payments', receipts: 'receipts', logi: 'logistics', cparties: 'counterparties', tasks: 'tasks', docs: 'tasks' };
+    const m = { wh: 'warehouse', prod: 'orders', sales: 'sales', proc: 'purchases', procplan: 'purchases', prodplan: 'purchases', runrate: 'purchases', turnover: 'purchases', stress: 'purchases', onec: 'purchases', prices: 'prices', calc: 'prices', recipe: 'prices', audit: 'prices', tcalc: 'tcalc', xcalc: 'prices', pay: 'payments', treas30: 'payments', receipts: 'receipts', logi: 'logistics', cparties: 'counterparties', tasks: 'tasks', docs: 'tasks', costtree: 'costtree', cost: 'costko', margin: 'margin' };
     return m[tab] || null;
   }
   myAreaSet() { const out = new Set(); const lk = this.state.cloudLocks || {}; const now = Date.now(); for (const a in lk) { const l = lk[a]; if (l && l.clientId === this._clientId && (now - (l.ts || 0) < Component.LOCK_TTL)) out.add(a); } return out; }
@@ -2746,6 +2780,7 @@ class Component extends DCLogic {
   _snapMyAreas() { const mine = this.myAreaSet(); const o = {}; for (const k of Component.PERSIST) { const ar = this.areaOfKey(k); if (ar && mine.has(ar)) o[k] = this.state[k]; } return o; }
   async releaseArea(areaId) {
     if (!this._docRef || !areaId) return;
+    await this.dsFlush();
     if (this._pushT) { clearTimeout(this._pushT); this._pushT = null; await this.cloudPush(); }
     try { await window.__FB.setDoc(this._docRef, { locks: { [areaId]: null } }, { merge: true }); } catch (e) {}
     setTimeout(() => { if (!this.myAreaSet().size) this.stopHeartbeat(); }, 120);
@@ -2753,10 +2788,127 @@ class Component extends DCLogic {
   async releaseAllAreas() {
     if (!this._docRef) return;
     const mine = [...this.myAreaSet()];
+    await this.dsFlush();
     if (this._pushT) { clearTimeout(this._pushT); this._pushT = null; await this.cloudPush(); }
     if (mine.length) { const upd = {}; for (const a of mine) upd[a] = null; try { await window.__FB.setDoc(this._docRef, { locks: upd }, { merge: true }); } catch (e) {} }
     this.stopHeartbeat();
   }
+
+  // ===== Общие наборы данных (себестоимость, маржа, КО, техкарты): gzip + чанки в облаке =====
+  static get DS_CHUNK() { return 700000; }
+  _dsCol() { return 'inkflow'; }
+  _dsRef(suffix) { return window.__FB.doc(this._db, this._dsCol(), this._connectedWs + '~' + suffix); }
+  _b64enc(u8) { let s = ''; const C = 0x8000; for (let i = 0; i < u8.length; i += C) s += String.fromCharCode.apply(null, u8.subarray(i, i + C)); return btoa(s); }
+  _b64dec(b64) { const bin = atob(b64); const u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); return u8; }
+  async _gzip(obj) {
+    const u8 = new TextEncoder().encode(JSON.stringify(obj));
+    if (typeof CompressionStream === 'undefined') return { z: 0, b: this._b64enc(u8) };
+    const blob = await new Response(new Blob([u8]).stream().pipeThrough(new CompressionStream('gzip'))).blob();
+    return { z: 1, b: this._b64enc(new Uint8Array(await blob.arrayBuffer())) };
+  }
+  async _gunzip(b64, z) {
+    const u8 = this._b64dec(b64);
+    if (!z) return JSON.parse(new TextDecoder().decode(u8));
+    const blob = await new Response(new Blob([u8]).stream().pipeThrough(new DecompressionStream('gzip'))).blob();
+    return JSON.parse(await blob.text());
+  }
+  // Записать набор данных: чанки в дочерние документы + запись в реестр главного документа
+  async dsPush(dsId, area, meta, obj) {
+    const fb = window.__FB; if (!fb || !this._docRef || !this._connectedWs) return false;
+    if (!this.myAreaSet().has(area)) return false;
+    try {
+      const packed = await this._gzip(obj);
+      const full = packed.b; const parts = Math.max(1, Math.ceil(full.length / Component.DS_CHUNK));
+      const dataId = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      for (let i = 0; i < parts; i++) await fb.setDoc(this._dsRef(dsId + '~' + dataId + '~p' + i), { b: full.slice(i * Component.DS_CHUNK, (i + 1) * Component.DS_CHUNK) });
+      const prev = (this._dsReg && this._dsReg[dsId]) || null;
+      const entry = { area, meta: meta || {}, z: packed.z, dataId, parts, rev: ((prev && prev.rev) || 0) + 1, at: Date.now(), by: this.state.cloudName || (this.state.currentUser && this.state.currentUser.name) || '—' };
+      await fb.setDoc(this._docRef, { datasets: { [dsId]: entry } }, { merge: true });
+      this._dsReg = this._dsReg || {}; this._dsReg[dsId] = entry; this._dsApplied = this._dsApplied || {}; this._dsApplied[dsId] = entry.rev;
+      if (prev && prev.dataId && prev.dataId !== dataId) this._dsDelParts(dsId, prev.dataId, prev.parts);
+      return true;
+    } catch (e) { this.setState({ cloudErr: 'Не удалось выгрузить данные в облако: ' + (e.message || e) }); return false; }
+  }
+  async _dsDelParts(dsId, dataId, parts) {
+    const fb = window.__FB; if (!fb || !this._connectedWs || !dataId) return;
+    for (let i = 0; i < (parts || 1); i++) { try { await fb.deleteDoc(this._dsRef(dsId + '~' + dataId + '~p' + i)); } catch (e) {} }
+  }
+  async dsGet(entry, dsId) {
+    const fb = window.__FB; if (!fb || !this._connectedWs || !entry || !entry.dataId) return null;
+    try {
+      let b = '';
+      for (let i = 0; i < (entry.parts || 1); i++) { const s = await fb.getDoc(this._dsRef(dsId + '~' + entry.dataId + '~p' + i)); if (!s.exists()) return null; b += (s.data().b || ''); }
+      return await this._gunzip(b, entry.z);
+    } catch (e) { return null; }
+  }
+  async dsDelete(dsId) {
+    const fb = window.__FB; if (!fb || !this._docRef) return;
+    const prev = (this._dsReg && this._dsReg[dsId]) || null;
+    try { await fb.setDoc(this._docRef, { datasets: { [dsId]: null } }, { merge: true }); } catch (e) {}
+    if (this._dsReg) delete this._dsReg[dsId];
+    if (prev && prev.dataId) this._dsDelParts(dsId, prev.dataId, prev.parts);
+  }
+  // Отложенная выгрузка (для частых правок: маржа, техкарты)
+  dsQueuePush(dsId, area, metaFn, objFn) {
+    if (!this.state.cloudConnected || !this.myAreaSet().has(area)) return;
+    this._dsPending = this._dsPending || {}; this._dsT = this._dsT || {};
+    const run = () => { if (this._dsT[dsId]) { this._dsT[dsId] = null; } delete this._dsPending[dsId]; return this.dsPush(dsId, area, metaFn(), objFn()); };
+    this._dsPending[dsId] = run;
+    if (this._dsT[dsId]) clearTimeout(this._dsT[dsId]);
+    this._dsT[dsId] = setTimeout(run, 1300);
+  }
+  async dsFlush() { const p = this._dsPending || {}; for (const id of Object.keys(p)) { if (this._dsT && this._dsT[id]) { clearTimeout(this._dsT[id]); this._dsT[id] = null; } const fn = p[id]; delete p[id]; if (fn) { try { await fn(); } catch (e) {} } } }
+  // Применить реестр наборов данных, пришедший из облака (кроме областей, которые держу я)
+  dsSyncFromRegistry(reg, mine) {
+    this._dsReg = {}; this._dsApplied = this._dsApplied || {};
+    for (const id in reg) { if (reg[id]) this._dsReg[id] = reg[id]; }
+    for (const id in reg) {
+      const e = reg[id];
+      const area = e ? e.area : null;
+      if (area && mine.has(area)) continue;
+      if (!e) { this._dsApplyDeleted(id); continue; }
+      if (this._dsApplied[id] === e.rev) continue;
+      this._dsApplyEntry(id, e);
+    }
+  }
+  async _dsApplyEntry(id, e) {
+    this._dsApplied[id] = e.rev;
+    try {
+      if (id.indexOf('ct:') === 0) { this._dsApplyCostTree(id, e); return; }
+      const obj = await this.dsGet(e, id);
+      if (obj == null) { this._dsApplied[id] = -1; return; }
+      if (id === 'ctcorr') { try { this.lsSet('ctcorr', JSON.stringify(obj)); } catch (_) {} this._ctEffKey = null; this._ctAggCache = null; this.setState({ ctCorr: Array.isArray(obj) ? obj : [] }); }
+      else if (id === 'sebest') { this.sebest = (obj && Array.isArray(obj.records)) ? obj : { records: [] }; try { this.lsSet('sebest', JSON.stringify(this.sebest)); } catch (_) {} this.setState({ sbReady: true }); }
+      else if (id === 'margin') { try { this.lsSet('margin', JSON.stringify(obj)); } catch (_) {} this.setState({ mgRevenue: obj.revenue || null, mgRevMeta: obj.revMeta || null, mgPeriod: obj.period || '', mgGm: obj.gm || null, mgKv: obj.kv || [{ name: 'Конфлекс', pct: 10 }], mgManualCost: obj.manualCost || {} }); }
+      else if (id === 'tcalc') { this.tcalc = obj; try { this.lsSet('tcalc', JSON.stringify(obj)); } catch (_) {} this.setState({ tcReady: true }); }
+      else if (id === 'tcset') { this.tcset = obj; try { this.lsSet('tcset', JSON.stringify(obj)); } catch (_) {} this.forceUpdate(); }
+    } catch (err) { this._dsApplied[id] = -1; }
+  }
+  _dsApplyDeleted(id) {
+    if (id.indexOf('ct:') === 0) {
+      const key = id.slice(3); const localId = 'cl_' + key;
+      const idx = this.ctArchIndex().filter(x => !(x.cloud && x.key === key));
+      this.ctArchSaveIndex(idx); this.ctIdbDel(localId);
+      if (this._ctActiveId === localId) { this._ctActiveId = ''; this.ctTree = null; this._ctAggCache = null; this.loadCtree(); } else this.forceUpdate();
+    }
+  }
+  // Зарегистрировать облачный период себестоимости в локальном архиве (дерево качаем по требованию)
+  _dsApplyCostTree(id, e) {
+    const key = id.slice(3); const m = e.meta || {}; const localId = 'cl_' + key;
+    let idx = this.ctArchIndex();
+    const ent = { id: localId, fileName: m.fileName || 'Дерево себестоимости.xlsx', period: m.period || '', key, y: m.y || key.slice(0, 4), m: m.m || key.slice(5, 7), uploadedAt: m.at || e.at || Date.now(), batchN: m.batchN || 0, cur: m.cur || '€', cloud: true, cloudRev: e.rev };
+    const ex = idx.find(x => x.key === key);
+    if (ex) {
+      if (ex.cloud && ex.cloudRev === e.rev) return;
+      idx = idx.map(x => x.key === key ? ent : x);
+      this.ctIdbDel(localId);
+      if (this._ctActiveId === localId) this._ctActiveId = '';
+    } else idx.push(ent);
+    this.ctArchSaveIndex(idx);
+    this.setState({ ctReady: true });
+    if (!this._ctActiveId) this.loadCtree(); else this.forceUpdate();
+  }
+
   _co() { return this._activeCo || (this.state && this.state.activeCo) || 'ink'; }
   co() { return this.coCfg()[this._co()] || this.coCfg().ink; }
   userCompanies(u) { const a = (u && Array.isArray(u.companies)) ? u.companies.filter(c => this.coCfg()[c]) : []; return a.length ? a : ['ink', 'chem']; }
@@ -2804,6 +2956,7 @@ class Component extends DCLogic {
     this.loadTCalc(cfg);
     this.loadSebest(cfg);
     this.loadCtree();
+    this.loadCtCorr();
     if (cfg.sebest) this.loadMargin(); else this.setState({ mgRevenue: null, mgRevMeta: null });
   }
   // Отчёт себестоимости (КО) — только для компаний с файлом sebest
@@ -2818,7 +2971,7 @@ class Component extends DCLogic {
     };
     fetch(cfg.sebest).then(r => r.json()).then(apply).catch(() => { try { const saved = this.lsGet('sebest'); if (saved) apply(JSON.parse(saved)); else { this.sebest = { records: [] }; this.setState({ sbReady: true }); } } catch (e) { this.sebest = { records: [] }; this.setState({ sbReady: true }); } });
   }
-  saveSebest() { try { this.lsSet('sebest', JSON.stringify(this.sebest)); } catch (e) {} }
+  saveSebest() { try { this.lsSet('sebest', JSON.stringify(this.sebest)); } catch (e) {} this.dsQueuePush('sebest', 'costko', () => ({ records: ((this.sebest && this.sebest.records) || []).length }), () => this.sebest || { records: [] }); }
 
   // ===================== МАРЖИНАЛЬНЫЙ ОТЧЁТ =====================
   mgNum(v) { if (typeof v === 'number') return isFinite(v) ? v : 0; const n = parseFloat(String(v == null ? '' : v).replace(/\u00a0/g, '').replace(/\s/g, '').replace(',', '.')); return isFinite(n) ? n : 0; }
@@ -2866,7 +3019,8 @@ class Component extends DCLogic {
   loadMargin() {
     try { const raw = this.lsGet('margin'); if (raw) { const d = JSON.parse(raw); this.setState({ mgRevenue: d.revenue || null, mgRevMeta: d.revMeta || null, mgPeriod: d.period || '', mgGm: d.gm || null, mgKv: d.kv || [{ name: 'Конфлекс', pct: 10 }], mgManualCost: d.manualCost || {} }); return; } } catch (e) {}
   }
-  saveMargin() { try { const S = this.state; this.lsSet('margin', JSON.stringify({ revenue: S.mgRevenue, revMeta: S.mgRevMeta, period: S.mgPeriod, gm: S.mgGm, kv: S.mgKv, manualCost: S.mgManualCost })); } catch (e) {} }
+  mgBlob() { const S = this.state; return { revenue: S.mgRevenue, revMeta: S.mgRevMeta, period: S.mgPeriod, gm: S.mgGm, kv: S.mgKv, manualCost: S.mgManualCost }; }
+  saveMargin() { try { this.lsSet('margin', JSON.stringify(this.mgBlob())); } catch (e) {} this.dsQueuePush('margin', 'margin', () => ({ period: this.state.mgPeriod || '', file: (this.state.mgRevMeta && this.state.mgRevMeta.file) || '' }), () => this.mgBlob()); }
   async mgReadFile(file) {
     const buf = await file.arrayBuffer();
     if (!window.XLSX) throw new Error('Библиотека чтения Excel не загрузилась — обновите страницу.');
@@ -2904,7 +3058,7 @@ class Component extends DCLogic {
   ctCostByMarka(rate) {
     const out = {}; const t = this.ctTree; if (!t || !Array.isArray(t.batches)) return out;
     const isRub = (t.cur === '₽'); const acc = {};
-    for (const b of t.batches) { if (!b.outQty) continue; const cost = b.comps.reduce((s, c) => s + (c.summa || 0), 0); const k = this.mgKey(this.sbMarka(b.product)); if (!k) continue; if (!acc[k]) acc[k] = { cost: 0, w: 0 }; acc[k].cost += cost; acc[k].w += b.outQty; }
+    for (const b of this.ctEffBatches()) { if (!b.outQty) continue; const cost = b.comps.reduce((s, c) => s + (c.summa || 0), 0); const k = this.mgKey(this.sbMarka(b.product)); if (!k) continue; if (!acc[k]) acc[k] = { cost: 0, w: 0 }; acc[k].cost += cost; acc[k].w += b.outQty; }
     for (const k in acc) { const perKg = acc[k].w ? acc[k].cost / acc[k].w : 0; out[k] = isRub ? perKg : perKg * (Number(rate) || 0); }
     return out;
   }
@@ -3203,15 +3357,92 @@ class Component extends DCLogic {
   }
   ctDateVal(d) { if (!d) return 0; const m = String(d).match(/(\d{2})\.(\d{2})\.(\d{4})/); return m ? (+m[3] * 10000 + +m[2] * 100 + +m[1]) : 0; }
   ctDateValISO(s) { const m = String(s || '').match(/(\d{4})-(\d{2})-(\d{2})/); return m ? (+m[1] * 10000 + +m[2] * 100 + +m[3]) : 0; }
+  // ---- Корректировки стоимости сырья (фиксируются в приложении, влияют на дерево и все отчёты на его базе) ----
+  ctCorrList() { return Array.isArray(this.state.ctCorr) ? this.state.ctCorr : []; }
+  ctCorrMatch(c, comp, batch) {
+    const q = String(c.q || '').trim().toLowerCase(); if (!q) return false;
+    if (String(comp.name || '').toLowerCase().indexOf(q) < 0) return false;
+    if (c.scope === 'product' && c.product && batch.product !== c.product) return false;
+    if (c.scope === 'batch' && c.batchCode && String(batch.code || '').toLowerCase() !== String(c.batchCode).toLowerCase()) return false;
+    return true;
+  }
+  // Применить все корректировки к одной позиции сырья; вернуть скорректированную summa
+  ctCorrSumma(comp, batch) {
+    let s = Number(comp.summa) || 0;
+    for (const c of this.ctCorrList()) {
+      if (!this.ctCorrMatch(c, comp, batch)) continue;
+      const v = Number(c.value) || 0;
+      if (c.mode === 'unit') { s = (Number(comp.qty) || 0) * v; }
+      else { s = s * (1 + v / 100); }
+    }
+    return s;
+  }
+  ctHasCorr() { return this.ctCorrList().length > 0; }
+  // Дерево с применёнными корректировками (кэшируется)
+  ctEffBatches() {
+    const tree = this.ctTree; if (!tree || !Array.isArray(tree.batches)) return [];
+    const corr = this.ctCorrList();
+    const key = (tree.generatedAt || 0) + '|' + JSON.stringify(corr);
+    if (this._ctEffKey === key && this._ctEffBatches) return this._ctEffBatches;
+    let out = tree.batches;
+    if (corr.length) {
+      out = tree.batches.map(b => ({ ...b, comps: b.comps.map(c => { const ns = this.ctCorrSumma(c, b); if (ns === c.summa) return c; return { ...c, summa: ns, origSumma: (c.origSumma != null ? c.origSumma : c.summa), price: (Number(c.qty) ? ns / c.qty : c.price) }; }) }));
+    }
+    this._ctEffKey = key; this._ctEffBatches = out; return out;
+  }
+  loadCtCorr() { let arr = []; try { const r = this.lsGet('ctcorr'); if (r) { const d = JSON.parse(r); if (Array.isArray(d)) arr = d; } } catch (e) {} this._ctEffKey = null; this.setState({ ctCorr: arr }); }
+  saveCtCorr(arr) { try { this.lsSet('ctcorr', JSON.stringify(arr)); } catch (e) {} this._ctEffKey = null; this._ctAggCache = null; this.setState({ ctCorr: arr }); this.dsQueuePush('ctcorr', 'costtree', () => ({ n: (arr || []).length }), () => arr || []); }
+  ctCorrAddRow(name) { const a = (Array.isArray(this.state.ctCorrDraft) ? this.state.ctCorrDraft : []).slice(); a.push({ id: 'cr' + Date.now().toString(36) + Math.floor(Math.random() * 1000), q: name || '', scope: 'all', product: '', batchCode: '', mode: 'pct', value: '' }); this.setState({ ctCorrDraft: a, ctCorrSearch: '' }); }
+  ctCorrSaveDraft() { const draft = (Array.isArray(this.state.ctCorrDraft) ? this.state.ctCorrDraft : []).filter(r => String(r.q || '').trim() && (Number(r.value) || 0) !== 0); this.saveCtCorr(draft); this.setState({ ctCorrOpen: false, ctGenerated: true }); }
+  ctCorrVals() {
+    const S = this.state; const tree = this.ctTree; const corr = this.ctCorrList();
+    const draft = Array.isArray(S.ctCorrDraft) ? S.ctCorrDraft : [];
+    const prodOpts = (tree && tree.batches) ? [...new Set(tree.batches.map(b => b.product))].sort((a, b) => a.localeCompare(b, 'ru')) : [];
+    const q = (S.ctCorrSearch || '').trim().toLowerCase();
+    let matNames = [];
+    if (tree && tree.batches) { const set = new Set(); for (const b of tree.batches) for (const c of b.comps) if (c.cat !== 'Доп. расходы') set.add(c.name); matNames = [...set].sort((a, b) => a.localeCompare(b, 'ru')); }
+    const suggestions = (q ? matNames.filter(n => n.toLowerCase().indexOf(q) >= 0) : matNames).slice(0, 30).map(n => ({ name: n, add: () => this.ctCorrAddRow(n) }));
+    const setDraft = (arr) => this.setState({ ctCorrDraft: arr });
+    const upd = (i, patch) => { const a = draft.slice(); a[i] = { ...a[i], ...patch }; setDraft(a); };
+    const rows = draft.map((r, i) => ({
+      idx: i, q: r.q, label: r.q || '(укажите сырьё)',
+      scopeAll: (r.scope || 'all') === 'all' ? 'crsg on' : 'crsg', scopeProd: r.scope === 'product' ? 'crsg on' : 'crsg', scopeBatch: r.scope === 'batch' ? 'crsg on' : 'crsg',
+      setAll: () => upd(i, { scope: 'all' }), setProd: () => upd(i, { scope: 'product' }), setBatch: () => upd(i, { scope: 'batch' }),
+      showProd: r.scope === 'product', showBatch: r.scope === 'batch',
+      product: r.product || '', onProduct: (e) => upd(i, { product: e.target.value }),
+      batchCode: r.batchCode || '', onBatch: (e) => upd(i, { batchCode: e.target.value }),
+      modePct: (r.mode || 'pct') === 'pct' ? 'crsg on' : 'crsg', modeUnit: r.mode === 'unit' ? 'crsg on' : 'crsg',
+      setPct: () => upd(i, { mode: 'pct' }), setUnit: () => upd(i, { mode: 'unit' }),
+      value: r.value == null ? '' : r.value, onValue: (e) => upd(i, { value: e.target.value }),
+      valUnit: r.mode === 'unit' ? ((tree ? tree.cur : '€') + '/ед') : '%',
+      hint: r.mode === 'unit' ? 'новая цена за единицу' : 'минус — дешевле, плюс — дороже',
+      qList: matNames, onQ: (e) => upd(i, { q: e.target.value }),
+      remove: () => { setDraft(draft.filter((_, j) => j !== i)); }
+    }));
+    return {
+      ctCorrCount: String(corr.length), ctHasCorr: corr.length > 0, ctCorrBtnLabel: corr.length ? ('⚙ Корректировка стоимости · ' + corr.length) : '⚙ Корректировка стоимости сырья',
+      ctCorrOpen: !!S.ctCorrOpen,
+      ctCorrToggle: () => this.setState({ ctCorrOpen: true, ctCorrDraft: corr.map(c => ({ ...c })), ctCorrSearch: '' }),
+      ctCorrCancel: () => this.setState({ ctCorrOpen: false }),
+      ctCorrSearchVal: S.ctCorrSearch || '', onCtCorrSearch: (e) => this.setState({ ctCorrSearch: e.target.value }),
+      ctCorrSuggestions: suggestions, ctCorrSuggShow: !!q,
+      ctCorrAddBlank: () => this.ctCorrAddRow(''),
+      ctCorrRows: rows, ctCorrEmpty: rows.length === 0,
+      ctCorrProdOpts: prodOpts.map(p => ({ value: p, label: p })),
+      ctCorrSave: () => this.ctCorrSaveDraft(),
+      ctCorrClearAll: () => { this.saveCtCorr([]); this.setState({ ctCorrDraft: [], ctCorrOpen: false, ctGenerated: true }); }
+    };
+  }
   ctAgg() {
     const tree = this.ctTree; if (!tree || !tree.batches) return null;
     const S = this.state;
     const dF = (S.ctDateFrom || '').trim(), dT = (S.ctDateTo || '').trim(), pf = S.ctProdFilter || '', bf = (S.ctBatchFilter || '').trim().toLowerCase();
-    const key = tree.generatedAt + '|' + dF + '|' + dT + '|' + pf + '|' + bf;
+    const corrKey = JSON.stringify(this.ctCorrList());
+    const key = tree.generatedAt + '|' + dF + '|' + dT + '|' + pf + '|' + bf + '|' + corrKey;
     if (this._ctAggCache && this._ctAggKey === key) return this._ctAggCache;
     const dFv = dF ? this.ctDateValISO(dF) : 0, dTv = dT ? this.ctDateValISO(dT) : 0;
     const cur = tree.cur || '€';
-    const batches = tree.batches.filter(b => {
+    const batches = this.ctEffBatches().filter(b => {
       if (pf && b.product !== pf) return false;
       if (bf && String(b.code || '').toLowerCase().indexOf(bf) < 0) return false;
       if (dFv || dTv) { const bv = this.ctDateVal(b.date); if (!bv) return false; if (dFv && bv < dFv) return false; if (dTv && bv > dTv) return false; }
@@ -3307,6 +3538,10 @@ class Component extends DCLogic {
     if (t && Array.isArray(t.batches)) return t;
     try { const ls = this.lsGet('ctarch_' + entry.id); if (ls) { const d = JSON.parse(ls); if (d && Array.isArray(d.batches)) { await this.ctIdbPut(entry.id, d); this.lsDel('ctarch_' + entry.id); return d; } } } catch (e) {}
     try { const old = this.lsGet('ctree'); if (old) { const d = JSON.parse(old); if (d && Array.isArray(d.batches)) { await this.ctIdbPut(entry.id, d); return d; } } } catch (e) {}
+    if (entry.cloud && this._dsReg && this._dsReg['ct:' + entry.key]) {
+      const obj = await this.dsGet(this._dsReg['ct:' + entry.key], 'ct:' + entry.key);
+      if (obj && Array.isArray(obj.batches)) { await this.ctIdbPut(entry.id, obj); return obj; }
+    }
     return null;
   }
   // ---- IndexedDB для деревьев себестоимости (большой объём, много периодов) ----
@@ -3364,12 +3599,17 @@ class Component extends DCLogic {
     await this.ctIdbPut(id, tree);
     this.ctArchSaveIndex(idx); try { this.lsSet('ctarch_cur', id); } catch (e) {}
     this.ctTree = tree; this._ctActiveId = id; this._ctAggCache = null;
+    if (this.state.cloudConnected && this.myAreaSet().has('costtree')) {
+      this.dsPush('ct:' + pk.key, 'costtree', { fileName: tree.fileName || '', period: tree.period || '', key: pk.key, y: pk.y, m: pk.m, batchN: tree.batches.length, cur: tree.cur || '€', at: Date.now() }, tree);
+    }
   }
   async ctSelectArch(id) { const e = this.ctArchIndex().find(x => x.id === id); if (!e) return; const t = await this.ctArchGetTree(e); if (t) { this.ctTree = t; this._ctActiveId = id; this._ctAggCache = null; try { this.lsSet('ctarch_cur', id); } catch (_) {} this.setState({ ctGenerated: false, ctExpanded: {} }); } }
   async ctDeleteArch(id) {
     if (!(this.state.currentUser && this.state.currentUser.role === 'admin')) { this.setState({ ctErr: 'Удаление периодов архива доступно только администратору.' }); return; }
+    const delEntry = this.ctArchIndex().find(x => x.id === id);
     await this.ctIdbDel(id); try { this.lsDel('ctarch_' + id); } catch (e) {}
     const idx = this.ctArchIndex().filter(x => x.id !== id); this.ctArchSaveIndex(idx);
+    if (delEntry && delEntry.key && this.state.cloudConnected && this.myAreaSet().has('costtree')) { this.dsDelete('ct:' + delEntry.key); }
     if (this._ctActiveId === id) {
       const e = idx.slice().sort((a, b) => (b.uploadedAt || 0) - (a.uploadedAt || 0))[0];
       if (e) { this.ctTree = await this.ctArchGetTree(e); this._ctActiveId = e.id; try { this.lsSet('ctarch_cur', e.id); } catch (_) {} }
@@ -3410,6 +3650,7 @@ class Component extends DCLogic {
       ctBusy: !!S.ctBusy, ctErr: S.ctErr || '', ctHasErr: !!S.ctErr,
       ctUpload: (e) => this.ctUpload(e), ctClear: () => this.ctClear(),
       ...this.ctArchVals(),
+      ...this.ctCorrVals(),
       ctExcel: () => this.ctExportExcel(), ctPrint: () => this.ctPrintReport(), ctEmail: () => this.ctEmailReport(),
       ctDateFrom: S.ctDateFrom || '', ctDateTo: S.ctDateTo || '', onCtDateFrom: (e) => set({ ctDateFrom: e.target.value, ctGenerated: false }), onCtDateTo: (e) => set({ ctDateTo: e.target.value, ctGenerated: false }),
       ctProdFilter: S.ctProdFilter || '', onCtProdFilter: (e) => set({ ctProdFilter: e.target.value, ctGenerated: false }),
@@ -3485,15 +3726,16 @@ class Component extends DCLogic {
       const batchLocked = !!((this.state.ctBatchFilter || '').trim());
       agg.products.forEach(P => { const pk = 'cp:' + P.product; const pOpen = (prodLocked || batchLocked) ? (exp[pk] !== false) : !!exp[pk];
         const pDop = P.batches.reduce((a, b) => a + b.comps.reduce((s, c) => s + (c.dop || 0), 0), 0);
-        rows.push({ trCls: pOpen ? 'ctmrow on' : 'ctmrow', onClick: () => this.ctSetExp(pk, !pOpen), exp: pOpen ? '−' : '+', expCls: 'ctexp', c1: P.product, k1: 'l nm', c2: this.ctCons(P.totOut) + ' кг', k2: 'mono', c3: '', k3: 'mono', c4: this.ctMoney(P.totCost, cur), k4: 'mono', c5: this.ctMoney(pDop, cur), k5: 'mono', c6: this.ctU(P.totOut ? P.totCost / P.totOut : 0, cur), k6: 'mono gpu', c7: this.ctPct(agg.totalCost ? P.totCost / agg.totalCost * 100 : 0), k7: 'mono' });
-        if (pOpen) P.batches.forEach(b => { const bk = 'cb:' + P.product + '|' + b.code; const bOpen = batchLocked ? (exp[bk] !== false) : !!exp[bk]; const bDop = b.comps.reduce((s, c) => s + (c.dop || 0), 0);
-          rows.push({ trCls: bOpen ? 'ctmrow on' : 'ctmrow', onClick: () => this.ctSetExp(bk, !bOpen), exp: bOpen ? '−' : '+', expCls: 'ctexp', c1: 'Партия производства ' + b.code + ' · ' + b.date, k1: 'l ind1', c2: this.ctCons(b.outQty) + ' кг', k2: 'mono', c3: '', k3: 'mono', c4: this.ctMoney(b.cost, cur), k4: 'mono', c5: this.ctMoney(bDop, cur), k5: 'mono', c6: this.ctU(b.outQty ? b.cost / b.outQty : 0, cur), k6: 'mono gpu', c7: this.ctPct(P.totCost ? b.cost / P.totCost * 100 : 0), k7: 'mono' });
+        const pMatSum = P.batches.reduce((a, b) => a + b.comps.filter(c => c.cat !== 'Доп. расходы').reduce((s, c) => s + c.summa, 0), 0);
+        rows.push({ trCls: pOpen ? 'ctmrow on' : 'ctmrow', onClick: () => this.ctSetExp(pk, !pOpen), exp: pOpen ? '−' : '+', expCls: 'ctexp', c1: P.product, k1: 'l nm', c2: this.ctCons(P.totOut) + ' кг', k2: 'mono', c3: this.ctU(P.totOut ? pMatSum / P.totOut : 0, cur), k3: 'mono matu', c4: this.ctMoney(P.totCost, cur), k4: 'mono', c5: this.ctMoney(pDop, cur), k5: 'mono', c6: this.ctU(P.totOut ? P.totCost / P.totOut : 0, cur), k6: 'mono gpu', c7: this.ctPct(agg.totalCost ? P.totCost / agg.totalCost * 100 : 0), k7: 'mono' });
+        if (pOpen) P.batches.forEach(b => { const bk = 'cb:' + P.product + '|' + b.code; const bOpen = batchLocked ? (exp[bk] !== false) : !!exp[bk]; const bDop = b.comps.reduce((s, c) => s + (c.dop || 0), 0); const bMatSum = b.comps.filter(c => c.cat !== 'Доп. расходы').reduce((s, c) => s + c.summa, 0);
+          rows.push({ trCls: bOpen ? 'ctmrow on' : 'ctmrow', onClick: () => this.ctSetExp(bk, !bOpen), exp: bOpen ? '−' : '+', expCls: 'ctexp', c1: 'Партия производства ' + b.code + ' · ' + b.date, k1: 'l ind1', c2: this.ctCons(b.outQty) + ' кг', k2: 'mono', c3: this.ctU(b.outQty ? bMatSum / b.outQty : 0, cur), k3: 'mono matu', c4: this.ctMoney(b.cost, cur), k4: 'mono', c5: this.ctMoney(bDop, cur), k5: 'mono', c6: this.ctU(b.outQty ? b.cost / b.outQty : 0, cur), k6: 'mono gpu', c7: this.ctPct(P.totCost ? b.cost / P.totCost * 100 : 0), k7: 'mono' });
           if (bOpen) {
             const mats = b.comps.filter(c => c.cat !== 'Доп. расходы');
             const trs = b.comps.filter(c => c.cat === 'Доп. расходы');
             const matSum = mats.reduce((s, m) => s + m.summa, 0);
             const ok = 'co:' + P.product + '|' + b.code; const oOpen = exp[ok] !== false;
-            rows.push({ trCls: oOpen ? 'ctmrow on grp' : 'ctmrow grp', onClick: () => this.ctSetExp(ok, !oOpen), exp: oOpen ? '−' : '+', expCls: 'ctexp', c1: 'Основные затраты · сырьё ' + mats.length, k1: 'l ind2 grpn', c2: '', k2: '', c3: '', k3: '', c4: this.ctMoney(matSum, cur), k4: 'mono', c5: '', k5: '', c6: '', k6: '', c7: this.ctPct(b.cost ? matSum / b.cost * 100 : 0), k7: 'mono' });
+            rows.push({ trCls: oOpen ? 'ctmrow on grp' : 'ctmrow grp', onClick: () => this.ctSetExp(ok, !oOpen), exp: oOpen ? '−' : '+', expCls: 'ctexp', c1: 'Основные затраты · сырьё ' + mats.length, k1: 'l ind2 grpn', c2: '', k2: '', c3: this.ctU(b.outQty ? matSum / b.outQty : 0, cur), k3: 'mono matu', c4: this.ctMoney(matSum, cur), k4: 'mono', c5: '', k5: '', c6: '', k6: '', c7: this.ctPct(b.cost ? matSum / b.cost * 100 : 0), k7: 'mono' });
             if (oOpen) mats.forEach(m => rows.push({ trCls: 'ctsub', onClick: noop, exp: '', expCls: 'ctexp-none', c1: m.name + (m.lotDate ? ' · ' + m.lotDate : ''), k1: 'l ind3', c2: this.ctCons(m.qty) + ' ' + (m.unit || ''), k2: 'mono', c3: this.ctU(m.qty ? m.summa / m.qty : 0, cur), k3: 'mono matu', c4: this.ctMoney(m.summa, cur), k4: 'mono', c5: this.ctMoney(m.dop || 0, cur), k5: 'mono', c6: '', k6: '', c7: this.ctPct(b.cost ? m.summa / b.cost * 100 : 0), k7: 'mono' }));
             if (trs.length) { const tk = 'ct:' + P.product + '|' + b.code; const tOpen = !!exp[tk]; const trSum = trs.reduce((s, t) => s + t.summa, 0);
               rows.push({ trCls: tOpen ? 'ctmrow on grp' : 'ctmrow grp', onClick: () => this.ctToggle(tk), exp: tOpen ? '−' : '+', expCls: 'ctexp', c1: 'Транспортные и доп. расходы · ' + trs.length, k1: 'l ind2 dopn', c2: '', k2: '', c3: '', k3: '', c4: this.ctMoney(trSum, cur), k4: 'mono', c5: this.ctMoney(trSum, cur), k5: 'mono', c6: '', k6: '', c7: this.ctPct(b.cost ? trSum / b.cost * 100 : 0), k7: 'mono' });
@@ -3532,11 +3774,11 @@ class Component extends DCLogic {
     // struct
     if (v === 'decomp') {
       const rows = [];
-      agg.products.forEach(P => { rows.push([P.product, '', r2(P.totOut), '', r2(P.totCost), '', r4(P.totOut ? P.totCost / P.totOut : 0)]);
-        P.batches.forEach(b => { rows.push(['  Партия производства ' + b.code + ' · ' + b.date, '', r2(b.outQty), '', r2(b.cost), '', r4(b.outQty ? b.cost / b.outQty : 0)]);
+      agg.products.forEach(P => { const pMatSum = P.batches.reduce((a, b) => a + b.comps.filter(c => c.cat !== 'Доп. расходы').reduce((s, c) => s + c.summa, 0), 0); rows.push([P.product, '', r2(P.totOut), r4(P.totOut ? pMatSum / P.totOut : 0), r2(P.totCost), '', r4(P.totOut ? P.totCost / P.totOut : 0)]);
+        P.batches.forEach(b => { const bMatSum = b.comps.filter(c => c.cat !== 'Доп. расходы').reduce((s, c) => s + c.summa, 0); rows.push(['  Партия производства ' + b.code + ' · ' + b.date, '', r2(b.outQty), r4(b.outQty ? bMatSum / b.outQty : 0), r2(b.cost), '', r4(b.outQty ? b.cost / b.outQty : 0)]);
           const mats = b.comps.filter(c => c.cat !== 'Доп. расходы');
           const matSum = mats.reduce((s, m) => s + m.summa, 0);
-          rows.push(['    Основные затраты · сырьё ' + mats.length, '', '', '', r2(matSum), '', '']);
+          rows.push(['    Основные затраты · сырьё ' + mats.length, '', '', r4(b.outQty ? matSum / b.outQty : 0), r2(matSum), '', '']);
           mats.forEach(c => rows.push(['      ' + c.name, c.lotDate || '', r4(c.qty), r4(c.qty ? c.summa / c.qty : 0), r2(c.summa), r2(c.dop || 0), '']));
           const trs = b.comps.filter(c => c.cat === 'Доп. расходы');
           if (trs.length) { const trSum = trs.reduce((s, t) => s + t.summa, 0); rows.push(['    Транспортные и доп. расходы', '', '', '', r2(trSum), r2(trSum), '']);
@@ -3849,8 +4091,8 @@ class Component extends DCLogic {
     const rate = Number(this.state.rate) || 83.6892;
     return Object.assign({ vat: this.vat || 0.22, rateEur: rate, rateUsd: 0, rateCny: 0, assumedEur: rate, delivery: 0, gm2: 0, kv: 0, other: 0, markupPct: 0.20, markupRub: 0 }, saved || {});
   }
-  saveTcset() { try { this.lsSet('tcset', JSON.stringify(this.tcset)); } catch (e) {} }
-  saveTCalc() { try { this.lsSet('tcalc', JSON.stringify(this.tcalc)); } catch (e) {} }
+  saveTcset() { try { this.lsSet('tcset', JSON.stringify(this.tcset)); } catch (e) {} this.dsQueuePush('tcset', 'tcalc', () => ({}), () => this.tcset || {}); }
+  saveTCalc() { try { this.lsSet('tcalc', JSON.stringify(this.tcalc)); } catch (e) {} this.dsQueuePush('tcalc', 'tcalc', () => ({ products: ((this.tcalc && this.tcalc.products) || []).length }), () => this.tcalc || {}); }
   tcProd() { const d = this.tcalc; if (!d) return null; return d.products.find(p => p.id === this.state.tcProduct) || d.products[0] || null; }
   tcNum(v) { if (typeof v === 'number') return v; const n = parseFloat(String(v == null ? '' : v).replace(/\s/g, '').replace(',', '.')); return isFinite(n) ? n : 0; }
   tcEur(v) { return this.tcNum(v).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €'; }
@@ -4832,6 +5074,7 @@ class Component extends DCLogic {
       const wsId = (this.state.cloudWsId || 'workspace').trim() || 'workspace';
       this._docRef = fb.doc(this._db, 'inkflow', wsId);
       this._connectedWs = wsId;
+      this._dsReg = {}; this._dsApplied = {}; this._dsPending = {}; this._dsT = {};
       const snap = await fb.getDoc(this._docRef);
       if (!snap.exists() || !snap.data().state) await this.cloudSeed();
       this._unsub = fb.onSnapshot(this._docRef, s => this.onRemote(s), err => this.setState({ cloudErr: 'Ошибка синхронизации: ' + err.message }));
@@ -4872,6 +5115,7 @@ class Component extends DCLogic {
     } else {
       this.setState(patch);
     }
+    this.dsSyncFromRegistry(d.datasets || {}, mine);
   }
 
   startHeartbeat() {
