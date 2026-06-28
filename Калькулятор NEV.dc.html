@@ -435,8 +435,22 @@ tbody td.l{text-align:left}
 .homegl{display:flex;align-items:center;gap:9px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:#0e0e0e;margin-bottom:11px}
 .homebar{width:18px;height:3px;border-radius:2px;background:linear-gradient(90deg,#00aeef 0 25%,#ec0080 25% 50%,#fbe500 50% 75%,#e10000 75% 100%)}
 .homecards{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:12px}
-.homecard{display:flex;align-items:flex-start;gap:12px;text-align:left;cursor:pointer;appearance:none;background:#fff;border:1px solid #e7e4e0;border-radius:14px;padding:15px 16px;transition:border-color .14s,box-shadow .14s,transform .14s}
-.homecard:hover{border-color:#FFD200;box-shadow:0 8px 24px rgba(0,0,0,.08);transform:translateY(-2px)}
+.homecard{display:flex;align-items:flex-start;gap:12px;text-align:left;cursor:pointer;appearance:none;background:#fff;border:1px solid #e7e4e0;border-radius:14px;padding:15px 16px;box-shadow:0 1px 2px rgba(0,0,0,.04);transition:transform .18s ease-out,box-shadow .18s ease-out,border-color .18s ease-out}
+.homecard:hover{border-color:#FFD200;box-shadow:0 14px 36px rgba(14,14,14,.13);transform:translateY(-5px) scale(1.025)}
+.homecard:active{transform:translateY(-2px) scale(1.01)}
+.homecard .homeic{transition:background .18s ease-out,color .18s ease-out}
+.homecard:hover .homeic{background:#2A6FDB;color:#fff}
+.homecard:hover .homename{color:#1a1916}
+.compassbk{position:fixed;inset:0;z-index:1500;background:rgba(14,16,22,.42);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);animation:cmpBk .32s ease}
+@keyframes cmpBk{from{opacity:0;backdrop-filter:blur(0);background:rgba(14,16,22,0)}to{opacity:1}}
+.compasspanel{position:fixed;z-index:1501;left:50%;top:50%;transform:translate(-50%,-50%);width:min(1040px,calc(100vw - 40px));max-height:88vh;background:#f7f6f3;border-radius:20px;box-shadow:0 40px 110px rgba(0,0,0,.45);display:flex;flex-direction:column;overflow:hidden;animation:cmpIn .34s cubic-bezier(.18,1,.3,1)}
+@keyframes cmpIn{from{opacity:0;transform:translate(-50%,-46%) scale(.95)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.compasshd{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 24px;background:#0e0e0e;color:#fff;flex:none}
+.compasstl{display:flex;align-items:center;gap:11px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;letter-spacing:-.01em}
+.compassic2{font-size:21px}
+.compassx{appearance:none;border:none;background:rgba(255,255,255,.1);color:#fff;width:34px;height:34px;border-radius:10px;cursor:pointer;font-size:15px;transition:background .15s}
+.compassx:hover{background:rgba(255,210,0,.28);color:#FFD200}
+.compassbody{padding:22px 24px 26px;overflow-y:auto}
 .homeic{flex:none;width:38px;height:38px;border-radius:10px;background:#0e0e0e;color:#fff;display:flex;align-items:center;justify-content:center}
 .hometx{display:flex;flex-direction:column;gap:3px;min-width:0}
 .homename{font-family:'Montserrat',sans-serif;font-weight:700;font-size:14.5px;color:#0e0e0e}
@@ -998,6 +1012,31 @@ a.wordmark:hover{opacity:.6}
 @keyframes ttIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
 @keyframes ctIn{from{opacity:0;transform:translate(-50%,14px)}to{opacity:1;transform:translate(-50%,0)}}
 .sbgroup{display:flex;flex-direction:column;gap:4px}
+.sbghead{display:flex;align-items:center;border-radius:8px;transition:background .14s}
+.sbghead:hover{background:rgba(255,255,255,.05)}
+.sbghead.act{background:rgba(255,210,0,.1)}
+.sbgname{flex:1;appearance:none;border:none;background:none;cursor:pointer;text-align:left;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#b7b3ad;padding:7px 4px 7px 10px}
+.sbghead.act .sbgname{color:#FFD200}
+.sbgname:hover{color:#fff}
+.sbchev{appearance:none;border:none;background:none;cursor:pointer;color:#6f6b66;font-size:15px;font-weight:700;padding:5px 10px 5px 6px;transition:transform .2s,color .14s;transform:rotate(0deg)}
+.sbchev.open{transform:rotate(90deg);color:#b7b3ad}
+.sbchev:hover{color:#FFD200}
+.sbitems{display:flex;flex-direction:column;gap:2px;animation:sbAcc .22s ease}
+@keyframes sbAcc{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.sbconnect{margin:4px 8px 0;padding:11px 11px 12px;border-radius:13px;background:linear-gradient(155deg,#1b1a23,#141319);border:1px solid #2c2a36;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:7px}
+.sbconnect:before{content:'';position:absolute;left:0;top:0;right:0;height:3px;background:linear-gradient(90deg,#00AEEF,#EC008C,#FFD200,#e10000)}
+.sbconh{display:flex;align-items:center;gap:7px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin:2px 0 2px}
+.sbconspark{color:#8b5cf6;font-size:13px;filter:drop-shadow(0 0 6px rgba(139,92,246,.7))}
+.sbconnect .sbai{margin:0;width:100%}
+.compassbtn{appearance:none;cursor:pointer;display:inline-flex;align-items:center;gap:7px;margin-left:14px;vertical-align:3px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:#1a3a6e;background:#eaf1fc;border:1px solid #c2d6f5;border-radius:9px;padding:7px 14px;transition:all .15s}
+.compassbtn:hover{background:#1a3a6e;color:#fff;border-color:#1a3a6e}
+.compassic{font-size:15px}
+.hamfix{position:fixed;left:14px;top:13px;z-index:1400;width:44px;height:44px;border-radius:12px;background:#0e0e0e;border:1px solid #2a2a2a;cursor:pointer;display:none;flex-direction:column;align-items:center;justify-content:center;gap:4px;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.hamfix span{display:block;width:18px;height:2px;border-radius:2px;background:#FFD200}
+.hamfix:hover{background:#1c1b18}
+.wrap.sbcoll .hamfix{display:flex}
+.wrap.sbcoll .sbreopen{display:none}
+.catcards{margin-top:4px}
 .sbglabel{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6f6b66;padding:0 10px 3px}
 .sbitems{display:flex;flex-direction:column;gap:2px}
 .sbtab{display:flex;align-items:center;gap:9px;width:100%;text-align:left;appearance:none;cursor:pointer;border:none;background:none;color:#c7c4bf;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:13.5px;font-weight:500;padding:8px 10px;border-radius:8px;transition:background .14s,color .14s}
@@ -1236,10 +1275,12 @@ window.dispatchEvent(new Event('fbready'));
 <meta name="apple-mobile-web-app-title" content="Chemicals Flow">
 <script>try{if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}}catch(e){}</script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 </helmet>
 <sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="{{ loaderCls }}" role="status"><div class="si-p1 {{ p1cls }}"><div class="si-in"><div class="si-wm">Shtark</div><div class="si-tag">{{ tagLetters }}</div><div class="si-bar"><div class="si-run"></div></div><div class="si-cap">Корпоративный портал группы компаний</div></div></div><div class="si-p2 {{ p2cls }}"><div class="p2card"><div class="p2left"><div class="p2brand">Shtark Ink <span class="p2flow">Flow</span></div><div class="p2bar"><div class="p2run"></div></div><div class="p2slo">{{ sloganLetters }}</div><a class="p2site" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Официальный сайт Shtark Ink">Официальный сайт →</a><div class="p2chem"><div class="p2brand">Shtark Chemicals <span class="p2flow">Flow</span></div><div class="p2bar"><div class="p2run"></div></div><div class="p2slo p2slochem">{{ chemSloganLetters }}</div><a class="p2site" href="https://shtarkchemicals.com/" target="_blank" rel="noopener" title="Официальный сайт Shtark Chemicals">Официальный сайт →</a></div></div><div class="p2right"><div class="p2ready"><span class="p2dot"></span> Система готова к работе</div><div class="p2h"><span class="p2heb">Единая платформа управления</span><span class="p2hbrand">SHTARK<i class="p2hbar"></i></span></div><sc-if value="{{ needLogin }}" hint-placeholder-val="{{ true }}"><div class="p2form"><div><div class="p2lbl">Логин</div><input class="p2inp" value="{{ loginInput }}" onInput="{{ onLoginInput }}" onKeyDown="{{ onLoginKey }}" placeholder="например, ivanov" autocomplete="username"></div><div><div class="p2lbl">Пароль</div><input class="p2inp" type="password" value="{{ passInput }}" onInput="{{ onPassInput }}" onKeyDown="{{ onLoginKey }}" placeholder="••••••••" autocomplete="current-password"></div><div class="p2err">{{ loginErr }}</div><button class="p2btn" onClick="{{ doLogin }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ openReset }}">Забыли пароль?</button></div><sc-if value="{{ resetOpen }}" hint-placeholder-val=""><div class="p2reset"><div class="p2lbl">Восстановление пароля</div><input class="p2inp" value="{{ resetInput }}" onInput="{{ onResetInput }}" onKeyDown="{{ onResetKey }}" placeholder="ваш e-mail или логин" autocomplete="email"><sc-if value="{{ resetErr }}" hint-placeholder-val=""><div class="p2err">{{ resetErr }}</div></sc-if><sc-if value="{{ resetOk }}" hint-placeholder-val=""><div class="p2ok">{{ resetOk }}</div></sc-if><div class="p2rrow"><button class="p2btn sm" onClick="{{ doReset }}" disabled="{{ resetBusy }}">Прислать новый пароль</button><button class="p2link" onClick="{{ closeReset }}">Отмена</button></div><div class="p2hint">На указанный e-mail придёт новый временный пароль. Если e-mail не привязан — обратитесь к администратору.</div></div></sc-if><div class="p2hint">Введите логин и пароль, выданные администратором</div></sc-if><sc-if value="{{ hasSession }}" hint-placeholder-val=""><div class="p2you">Вы вошли как <b>{{ sessionName }}</b></div><button class="p2btn" onClick="{{ enterWelcome }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ switchUser }}">Войти под другим пользователем</button></sc-if></div></div></div></div></sc-if>
 <div class="wrap {{ wrapCls }}">
+<button class="hamfix" onClick="{{ toggleMenu }}" title="Показать / скрыть меню" aria-label="Меню"><span></span><span></span><span></span></button>
+<sc-if value="{{ compassOpen }}" hint-placeholder-val=""><div class="compassbk" onClick="{{ closeCompass }}"></div><div class="compasspanel"><div class="compasshd"><div class="compasstl"><span class="compassic2">🧭</span> Компас · карта навигации</div><button class="compassx" onClick="{{ closeCompass }}" title="Закрыть">✕</button></div><div class="compassbody"><sc-for list="{{ compassGroups }}" as="g" hint-placeholder-count="6"><div class="homegrp"><div class="homegl"><span class="homebar"></span>{{ g.label }}</div><div class="homecards"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="homecard" onClick="{{ t.go }}"><span class="homeic">{{ t.icon }}</span><span class="hometx"><span class="homename">{{ t.label }}</span><span class="homedesc">{{ t.desc }}</span></span></button></sc-for></div></div></sc-for></div></div></sc-if>
 <div class="mtop"><button class="mburg" onClick="{{ toggleNav }}" aria-label="Меню"><span></span><span></span><span></span></button><span class="mtitle">{{ coName }} <span class="mflow">Flow</span></span></div>
 <div class="navbk {{ navBkCls }}" onClick="{{ closeNav }}"></div>
 <aside class="sidebar" style="{{ sidebarStyle }}">
@@ -1248,21 +1289,20 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbcmyk"><div class="sbrun"></div></div>
 <sc-if value="{{ canSwitch }}" hint-placeholder-val=""><div class="coswitch"><button class="cosw-btn" onClick="{{ toggleCoMenu }}" title="Сменить компанию группы"><span class="cosw-chip" style="{{ coChipStyle }}"></span><span class="cosw-name">{{ coName }}</span><span class="cosw-car">▾</span></button><sc-if value="{{ coMenuOpen }}" hint-placeholder-val=""><div class="comenu"><div class="comenu-h">Компания группы</div><sc-for list="{{ coList }}" as="c" hint-placeholder-count="2"><button class="{{ c.cls }}" onClick="{{ c.go }}"><span class="comenu-chip" style="{{ c.chipStyle }}"></span><span class="comenu-tx"><span class="comenu-name">{{ c.coItemName }}</span><span class="comenu-sub">{{ c.coItemSub }}</span></span><sc-if value="{{ c.locked }}" hint-placeholder-val="x"><span class="comenu-lock"><span class="comenu-brick"></span></span></sc-if><sc-if value="{{ c.locked }}" hint-placeholder-val="{{ true }}"><span class="comenu-chk">✓</span></sc-if></button></sc-for></div></sc-if></div></sc-if>
 <button class="{{ oneCBtnCls }}" onClick="{{ oneCQuickGet }}" title="Загрузить остатки и закупочные цены из 1С"><span class="oneclogo">1С</span><span class="onecbtx">{{ oneCBtnText }}</span></button>
-<button class="sbai" onClick="{{ runGlobalAudit }}" title="Глубокий AI-аудит производства, снабжения и кассы"><span class="sbaiic">✦</span> Глубокий анализ</button>
-<button class="sbai sbai2" onClick="{{ aiToggle }}" title="Открыть AI-аналитика АЯ"><span class="sbaiic">✦</span> AI-аналитик АЯ</button>
-<button class="sbai sbclaude" onClick="{{ copyClaude }}" title="Скопировать сводку данных для вставки в Claude Pro"><span class="sbaiic">📋</span> Скопировать контекст для Claude Pro</button>
-<nav class="sbnav"><sc-for list="{{ navGroups }}" as="g" hint-placeholder-count="6"><div class="sbgroup"><span class="sbglabel">{{ g.label }}</span><div class="sbitems"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="sbtab {{ t.cls }}" onClick="{{ t.go }}"><span class="sbbar"></span>{{ t.icon }}<span class="sblbl">{{ t.label }}</span><sc-if value="{{ t.hasBadge }}" hint-placeholder-val=""><span class="nbadge {{ t.badgeCls }}">{{ t.badge }}</span></sc-if></button></sc-for></div></div></sc-for></nav>
-<button class="sbmap" onClick="{{ goHome }}" title="Карта навигации (стартовая страница)"><span>🗺</span> Карта навигации</button>
+<nav class="sbnav"><sc-for list="{{ navGroups }}" as="g" hint-placeholder-count="6"><div class="{{ g.grpCls }}"><div class="{{ g.headCls }}"><button class="sbgname" onClick="{{ g.openCat }}">{{ g.label }}</button><button class="{{ g.chevCls }}" onClick="{{ g.toggleExp }}" title="Свернуть / развернуть">›</button></div><sc-if value="{{ g.expanded }}" hint-placeholder-val="{{ true }}"><div class="sbitems"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="sbtab {{ t.cls }}" onClick="{{ t.go }}"><span class="sbbar"></span>{{ t.icon }}<span class="sblbl">{{ t.label }}</span><sc-if value="{{ t.hasBadge }}" hint-placeholder-val=""><span class="nbadge {{ t.badgeCls }}">{{ t.badge }}</span></sc-if></button></sc-for></div></sc-if></div></sc-for></nav>
+<div class="sbconnect"><div class="sbconh"><span class="sbconspark">✦</span> Коннект</div><button class="sbai sbai2" onClick="{{ aiToggle }}" title="Открыть AI-аналитика АЯ"><span class="sbaiic">✦</span> AI-аналитик АЯ</button><button class="sbai" onClick="{{ runGlobalAudit }}" title="Глубокий AI-аудит производства, снабжения и кассы"><span class="sbaiic">✦</span> Глубокий анализ</button><button class="sbai sbclaude" onClick="{{ copyClaude }}" title="Скопировать сводку данных для вставки в Claude Pro"><span class="sbaiic">📋</span> Контекст для Claude Pro</button></div>
+<button class="sbmap" onClick="{{ openCompass }}" title="Компас — полная карта навигации по всем разделам"><span>🧭</span> Компас · карта навигации</button>
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
 <sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
-<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки</div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск: контрагент, ИНН, артикул, сырьё, заявка, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">Ничего не найдено</div></sc-if><sc-for list="{{ searchResults }}" as="r" hint-placeholder-count="3"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-if></div></div>
+<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки</div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск: контрагент, ИНН, артикул, сырьё, заявка, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">Ничего не найдено</div></sc-if><sc-for list="{{ searchResults }}" as="r" hint-placeholder-count="3"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava">{{ u.avatar }}<i class="ondot"></i></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div></div></sc-if>
 <div class="desc">{{ tabDesc }}</div>
 <div class="actrow"><sc-if value="{{ aiAnalyzable }}" hint-placeholder-val=""><button class="aianalyze" onClick="{{ analyzeScreen }}" disabled="{{ aiBusy }}"><span class="aiana-ic">✦</span> Сделать AI-анализ данных</button></sc-if></div>
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}"><div class="homehero"><div class="homeh1">Добро пожаловать в {{ coName }} <span class="homeflow">Flow</span></div><div class="homesub">Карта навигации — выберите раздел, чтобы начать работу</div></div><sc-for list="{{ homeGroups }}" as="g" hint-placeholder-count="6"><div class="homegrp"><div class="homegl"><span class="homebar"></span>{{ g.label }}</div><div class="homecards"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="homecard" onClick="{{ t.go }}"><span class="homeic">{{ t.icon }}</span><span class="hometx"><span class="homename">{{ t.label }}</span><span class="homedesc">{{ t.desc }}</span></span></button></sc-for></div></div></sc-for></sc-if>
+<sc-if value="{{ isCat }}" hint-placeholder-val=""><div class="homehero"><div class="homeh1">Карта раздела</div><div class="homesub">Выберите подраздел для перехода</div></div><sc-for list="{{ catGroups }}" as="g" hint-placeholder-count="1"><div class="homegrp"><div class="homegl"><span class="homebar"></span>{{ g.label }}</div><div class="homecards catcards"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="4"><button class="homecard" onClick="{{ t.go }}"><span class="homeic">{{ t.icon }}</span><span class="hometx"><span class="homename">{{ t.label }}</span><span class="homedesc">{{ t.desc }}</span></span></button></sc-for></div></div></sc-for></sc-if>
 <sc-if value="{{ cloudBarText }}" hint-placeholder-val="x"><div class="{{ cloudBarCls }}"><span class="cbdot"></span><span class="cbtxt">{{ cloudBarText }}</span><sc-if value="{{ cloudHasBtn }}" hint-placeholder-val="{{ true }}"><button class="cbbtn" onClick="{{ onCloudBar }}">{{ cloudBarBtn }}</button></sc-if></div></sc-if>
 <sc-if value="{{ isCloud }}" hint-placeholder-val="x">
 <div class="cloudcard">
@@ -2368,7 +2408,7 @@ class Component extends DCLogic {
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {}, cloudLocks: {}, cloudMyAreas: [],
     sbReady: false, sbFltMarka: '', sbFltPeriod: '', sbSearch: '', sbCompare: false, sbCmpMarka: '', sbDateFrom: '', sbDateTo: '', sbSummary: false, sbExpanded: {},
     mgRevenue: null, mgRevMeta: null, mgErr: '', mgBusy: false, mgPeriod: '', mgGm: null, mgKv: [{ name: 'Конфлекс', pct: 10 }], mgView: 'groups', mgFltGroup: '', mgExpanded: {}, mgManualCost: {},
-    chat: [], chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false,
+    chat: [], chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false, navExp: null, catKey: '', compassOpen: false,
     tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '', sales: [], saleDraft: null, saleErr: '', salesTransport: 0, salesTransMode: 'weight', cashStart: 0, payMoves: {}, paySplits: {}, payMoveEdit: '', logistics: [], logDraft: null, logErr: '', payreqs: [], prDraft: null, prErr: '', stmtMsg: '',
     docType: 'invoice', docData: { no: '14', date: '', invBuyer: 'ООО «Печатный двор»', invBuyerInn: 'ИНН 7712345678 / КПП 771201001', invBank: 'АО «Альфа-Банк», р/с 40702810000000012345, БИК 044525593, к/с 30101810200000000593', invItems: 'Чёрнила флексо Cyan | 500 | кг | 480\nЧёрнила флексо Magenta | 300 | кг | 510\nРастворитель этилацетат | 200 | л | 95', empName: 'Иванов Иван Иванович', empPost: 'менеджер по закупкам', empPassport: '45 09 № 123456, выдан ОВД «Тверской» г. Москвы 12.03.2015, код 770-001', supplier: 'ООО «ХимПоставка»', supplierAddr: 'г. Москва, ул. Промышленная, д. 7', goods: 'Пигмент синий (фталоцианиновый) — 500 кг\nРастворитель НефрасС2 — 200 л\nСтабилизатор СТ-4 — 50 кг', term: '10 дней', route: 'Москва — Санкт-Петербург', car: 'Volvo FH, гос. № А123ВС 777', driver: 'Петров Пётр Петрович', driverDoc: 'вод. удостоверение 99 12 345678', cargo: '1200 кг / 4,0 м³, 6 паллет', cargoName: 'Сырьё для производства чернил', rfpSupplier: 'ООО «ХимПоставка»', rfpItems: 'Пигмент синий (фталоцианиновый) — 500 кг\nПигмент жёлтый — 300 кг\nРастворитель НефрасС2 — 200 л', rfpDeadline: '5 рабочих дней' },
     peekIdx: 0, peekDismissed: {}, peekClosed: false, peekToast: '',
@@ -2741,42 +2781,110 @@ class Component extends DCLogic {
     this.setState({ mgGenerated: true, mgErr: '' });
     setTimeout(() => { try { const el = document.querySelector('.mgresults'); if (el) window.scrollTo({ top: window.scrollY + el.getBoundingClientRect().top - 80, behavior: 'smooth' }); } catch (e) {} }, 60);
   }
+  // ===== Премиум Excel-стили (по корпоративному скиллу: Steel Blue / Navy) =====
+  mgXlSt() {
+    const NAVY = '1F4E78', TOTAL = 'D9E1F2', GREEN = 'E2EFDA', RED = 'FCE4D6', GREY = 'D3D3D3', SUB = 'F2F2F2';
+    const bd = { style: 'thin', color: { rgb: GREY } };
+    const dataBorder = { top: bd, bottom: bd, left: bd, right: bd };
+    const totBorder = { top: { style: 'thin', color: { rgb: '000000' } }, bottom: { style: 'double', color: { rgb: '000000' } }, left: bd, right: bd };
+    return { NAVY, TOTAL, GREEN, RED, GREY, SUB, dataBorder, totBorder };
+  }
+  mgXlFmt(t) { return t === 'money' ? '#,##0\\ "₽"' : t === 'eur' ? '#,##0\\ "€"' : t === 'pct' ? '0.0"%"' : t === 'num' ? '#,##0' : ''; }
+  mgXlAlign(t) { return t === 'text' ? 'left' : (t === 'code' ? 'center' : 'right'); }
+  // Построить стилизованный лист: заголовок, шапка (navy), данные (тонкие границы), строка ИТОГО (формулы SUM + двойная граница), автоширина
+  mgXlSheet(title, headers, types, rows, totalRow) {
+    const XLSX = window.XLSX, st = this.mgXlSt();
+    const aoa = [[title], [], headers.slice()];
+    const headRow = 2, dataStart = 3;
+    rows.forEach(r => aoa.push(r.slice()));
+    let totIdx = -1; if (totalRow) { totIdx = aoa.length; aoa.push(totalRow.slice()); }
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+    ws['!ref'] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: aoa.length - 1, c: headers.length - 1 } });
+    const cell = (r, c) => { const ad = XLSX.utils.encode_cell({ r, c }); if (!ws[ad]) ws[ad] = { t: 's', v: '' }; return ws[ad]; };
+    cell(0, 0).s = { font: { name: 'Calibri', sz: 16, bold: true, color: { rgb: st.NAVY } } };
+    for (let c = 0; c < headers.length; c++) cell(headRow, c).s = { font: { name: 'Calibri', sz: 11, bold: true, color: { rgb: 'FFFFFF' } }, fill: { fgColor: { rgb: st.NAVY } }, alignment: { horizontal: 'center', vertical: 'center', wrapText: true }, border: st.dataBorder };
+    for (let i = 0; i < rows.length; i++) for (let c = 0; c < headers.length; c++) { const cl = cell(dataStart + i, c); const s = { font: { name: 'Calibri', sz: 11, color: { rgb: '000000' } }, alignment: { horizontal: this.mgXlAlign(types[c]) }, border: st.dataBorder }; const f = this.mgXlFmt(types[c]); if (f) s.numFmt = f; cl.s = s; }
+    if (totIdx >= 0) for (let c = 0; c < headers.length; c++) { const cl = cell(totIdx, c); const s = { font: { name: 'Calibri', sz: 11, bold: true, color: { rgb: '000000' } }, fill: { fgColor: { rgb: st.TOTAL } }, alignment: { horizontal: this.mgXlAlign(types[c]) }, border: st.totBorder }; const f = this.mgXlFmt(types[c]); if (f) s.numFmt = f; cl.s = s; if ((types[c] === 'money' || types[c] === 'eur' || types[c] === 'num') && rows.length) { const col = XLSX.utils.encode_col(c); cl.t = 'n'; cl.f = 'SUM(' + col + (dataStart + 1) + ':' + col + (dataStart + rows.length) + ')'; } }
+    const widths = headers.map((h, c) => { let m = String(h).length; for (const row of aoa) { const v = row[c]; if (v != null) { const len = (typeof v === 'number') ? v.toLocaleString('ru-RU').length + 2 : String(v).length; if (len > m) m = len; } } return { wch: Math.min(m + 3, 48) }; });
+    ws['!cols'] = widths;
+    return ws;
+  }
   mgExportExcel() {
     const XLSX = window.XLSX; if (!XLSX) { this.setState({ mgErr: 'Библиотека Excel не загрузилась — обновите страницу.' }); return; }
     const S = this.state; if (!Array.isArray(S.mgRevenue) || !S.mgRevenue.length) { this.setState({ mgErr: 'Нет данных для экспорта.' }); return; }
-    const E = this.mgEnrich(); const rows = E.rows, rate = E.rate || 0, agg = E.agg;
+    const E = this.mgEnrich(); const rows = E.rows, rate = E.rate || 0, agg = E.agg, st = this.mgXlSt();
     const T = agg(rows); const r2 = (n) => Math.round((Number(n) || 0) * 100) / 100; const er = (n) => rate ? r2(n / rate) : 0;
+    const pc = (a, b) => b ? r2(a / b * 100) : 0;
     const wb = XLSX.utils.book_new();
     const period = S.mgPeriod || new Date().toISOString().slice(0, 10);
-    // 1. Сводка
-    const svod = [
-      ['МАРЖИНАЛЬНЫЙ ОТЧЁТ — ' + this.co().name], ['Период: ' + (S.mgPeriod || '—')], [],
-      ['Показатель', 'Рубли', 'Евро', 'Уд. ₽/кг'],
+    const groupsData = this.mgGroups().map(g => { const list = rows.filter(r => r.group === g); return list.length ? { g, a: agg(list) } : null; }).filter(Boolean);
+
+    // ---------- Лист 1: Дашборд ----------
+    const C = (r, c, ws) => { const ad = XLSX.utils.encode_cell({ r, c }); if (!ws[ad]) ws[ad] = { t: 's', v: '' }; return ws[ad]; };
+    const dAoa = [
+      ['МАРЖИНАЛЬНЫЙ ОТЧЁТ · ' + this.co().name], ['Период: ' + (S.mgPeriod || '—') + '   ·   Курс EUR/RUB: ' + (rate ? rate.toFixed(4) : '—')], [],
+      ['Ключевые показатели', 'Рубли', 'Евро', 'Уд., ₽/кг'],
       ['Выручка б/НДС', r2(T.rev), er(T.rev), r2(T.w ? T.rev / T.w : 0)],
       ['Себестоимость', r2(T.ss), er(T.ss), r2(T.w ? T.ss / T.w : 0)],
       ['МАРЖА 1 (валовая)', r2(T.m1), er(T.m1), r2(T.w ? T.m1 / T.w : 0)],
-      ['Рентабельность 1, %', r2(T.rev ? T.m1 / T.rev * 100 : 0)],
+      ['Рентабельность 1', pc(T.m1, T.rev), '', ''],
       ['GM2 (операционные расходы)', r2(T.g2), er(T.g2), r2(T.w ? T.g2 / T.w : 0)],
-      ['КВ (комиссионные)', r2(T.kv), er(T.kv)],
+      ['КВ (комиссионные)', r2(T.kv), er(T.kv), ''],
       ['МАРЖА 2 (операционная)', r2(T.m2), er(T.m2), r2(T.w ? T.m2 / T.w : 0)],
-      ['Рентабельность 2, %', r2(T.rev ? T.m2 / T.rev * 100 : 0)], [],
-      ['Отгружено, кг', r2(T.w)], ['Позиций', rows.length], ['Клиентов', new Set(rows.map(r => r.client).filter(Boolean)).size], ['Курс EUR/RUB', rate || '—']
+      ['Рентабельность 2', pc(T.m2, T.rev), '', ''], [],
+      ['Отгружено, кг', r2(T.w), 'Позиций', rows.length], ['Клиентов', new Set(rows.map(r => r.client).filter(Boolean)).size, '', ''], [],
+      ['Разбивка по группам', 'Вес, кг', 'Выручка, ₽', 'Маржа 2, ₽'],
     ];
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(svod), '1. Сводка');
-    // 2. По группам
-    const gr = [['Группа', 'Вес, кг', 'Выручка, ₽', 'СС, ₽', 'Маржа 1, ₽', 'Рент.1, %', 'GM2, ₽', 'КВ, ₽', 'Маржа 2, ₽', 'Рент.2, %']];
-    this.mgGroups().forEach(g => { const list = rows.filter(r => r.group === g); if (!list.length) return; const a = agg(list); gr.push([g, r2(a.w), r2(a.rev), r2(a.ss), r2(a.m1), r2(a.rev ? a.m1 / a.rev * 100 : 0), r2(a.g2), r2(a.kv), r2(a.m2), r2(a.rev ? a.m2 / a.rev * 100 : 0)]); });
-    gr.push(['ИТОГО', r2(T.w), r2(T.rev), r2(T.ss), r2(T.m1), r2(T.rev ? T.m1 / T.rev * 100 : 0), r2(T.g2), r2(T.kv), r2(T.m2), r2(T.rev ? T.m2 / T.rev * 100 : 0)]);
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(gr), '2. По группам');
-    // 3. По маркам
+    const gStart = dAoa.length;
+    groupsData.forEach(x => dAoa.push([x.g, r2(x.a.w), r2(x.a.rev), r2(x.a.m2)]));
+    dAoa.push(['ИТОГО', r2(T.w), r2(T.rev), r2(T.m2)]);
+    const ws1 = XLSX.utils.aoa_to_sheet(dAoa);
+    ws1['!ref'] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: dAoa.length - 1, c: 3 } });
+    ws1['!cols'] = [{ wch: 34 }, { wch: 18 }, { wch: 18 }, { wch: 14 }];
+    ws1['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 3 } }, { s: { r: 1, c: 0 }, e: { r: 1, c: 3 } }];
+    C(0, 0, ws1).s = { font: { name: 'Calibri', sz: 18, bold: true, color: { rgb: st.NAVY } } };
+    C(1, 0, ws1).s = { font: { name: 'Calibri', sz: 11, italic: true, color: { rgb: '595959' } } };
+    const hdr = (r) => { for (let c = 0; c < 4; c++) C(r, c, ws1).s = { font: { name: 'Calibri', sz: 11, bold: true, color: { rgb: 'FFFFFF' } }, fill: { fgColor: { rgb: st.NAVY } }, alignment: { horizontal: c === 0 ? 'left' : 'center', vertical: 'center' }, border: st.dataBorder }; };
+    hdr(3); hdr(15);
+    const moneyFmt = '#,##0\\ "₽"', eurFmt = '#,##0\\ "€"', pctFmt = '0.0"%"';
+    for (let r = 4; r <= 12; r++) {
+      const label = dAoa[r] && dAoa[r][0]; if (!label) continue;
+      const isM = /МАРЖА/.test(label), isRent = /Рентабельн/.test(label);
+      const fill = /МАРЖА 2/.test(label) ? st.GREEN : (isM ? st.SUB : null);
+      C(r, 0, ws1).s = { font: { name: 'Calibri', sz: 11, bold: isM, color: { rgb: '000000' } }, fill: fill ? { fgColor: { rgb: fill } } : undefined, alignment: { horizontal: 'left' }, border: st.dataBorder };
+      C(r, 1, ws1).s = { font: { name: 'Calibri', sz: 11, bold: isM, color: { rgb: isRent ? st.NAVY : '000000' } }, fill: fill ? { fgColor: { rgb: fill } } : undefined, alignment: { horizontal: 'right' }, numFmt: isRent ? pctFmt : moneyFmt, border: st.dataBorder };
+      C(r, 2, ws1).s = { font: { name: 'Calibri', sz: 11, color: { rgb: '000000' } }, fill: fill ? { fgColor: { rgb: fill } } : undefined, alignment: { horizontal: 'right' }, numFmt: eurFmt, border: st.dataBorder };
+      C(r, 3, ws1).s = { font: { name: 'Calibri', sz: 11, color: { rgb: '595959' } }, fill: fill ? { fgColor: { rgb: fill } } : undefined, alignment: { horizontal: 'right' }, numFmt: moneyFmt, border: st.dataBorder };
+    }
+    [14, 15].forEach(r => { [0, 2].forEach(c => { const cl = C(r, c, ws1); if (cl.v !== '') cl.s = { font: { name: 'Calibri', sz: 11, bold: true, color: { rgb: '000000' } }, alignment: { horizontal: c === 0 ? 'left' : 'right' } }; }); C(r, 1, ws1).s = { font: { name: 'Calibri', sz: 11, color: { rgb: '000000' } }, alignment: { horizontal: 'right' }, numFmt: '#,##0' }; C(r, 3, ws1).s = { font: { name: 'Calibri', sz: 11, color: { rgb: '000000' } }, alignment: { horizontal: 'right' }, numFmt: '#,##0' }; });
+    for (let i = 0; i < groupsData.length; i++) { const r = gStart + i; C(r, 0, ws1).s = { font: { name: 'Calibri', sz: 11, color: { rgb: '000000' } }, alignment: { horizontal: 'left' }, border: st.dataBorder }; [[1, '#,##0'], [2, moneyFmt], [3, moneyFmt]].forEach(([c, f]) => C(r, c, ws1).s = { font: { name: 'Calibri', sz: 11, color: { rgb: '000000' } }, alignment: { horizontal: 'right' }, numFmt: f, border: st.dataBorder }); }
+    const tr = gStart + groupsData.length;
+    C(tr, 0, ws1).s = { font: { name: 'Calibri', sz: 11, bold: true }, fill: { fgColor: { rgb: st.TOTAL } }, alignment: { horizontal: 'left' }, border: st.totBorder };
+    [[1, '#,##0'], [2, moneyFmt], [3, moneyFmt]].forEach(([c, f]) => { const cl = C(tr, c, ws1); cl.s = { font: { name: 'Calibri', sz: 11, bold: true }, fill: { fgColor: { rgb: st.TOTAL } }, alignment: { horizontal: 'right' }, numFmt: f, border: st.totBorder }; const col = XLSX.utils.encode_col(c); cl.t = 'n'; cl.f = 'SUM(' + col + (gStart + 1) + ':' + col + (gStart + groupsData.length) + ')'; });
+    XLSX.utils.book_append_sheet(wb, ws1, 'Дашборд');
+
+    // ---------- Лист 2: По группам ----------
+    const grHeaders = ['Группа', 'Вес, кг', 'Выручка, ₽', 'СС, ₽', 'Маржа 1, ₽', 'Рент.1', 'GM2, ₽', 'КВ, ₽', 'Маржа 2, ₽', 'Рент.2'];
+    const grTypes = ['text', 'num', 'money', 'money', 'money', 'pct', 'money', 'money', 'money', 'pct'];
+    const grRows = groupsData.map(x => [x.g, r2(x.a.w), r2(x.a.rev), r2(x.a.ss), r2(x.a.m1), pc(x.a.m1, x.a.rev), r2(x.a.g2), r2(x.a.kv), r2(x.a.m2), pc(x.a.m2, x.a.rev)]);
+    const grTot = ['ИТОГО', r2(T.w), r2(T.rev), r2(T.ss), r2(T.m1), pc(T.m1, T.rev), r2(T.g2), r2(T.kv), r2(T.m2), pc(T.m2, T.rev)];
+    XLSX.utils.book_append_sheet(wb, this.mgXlSheet('Маржа по группам · ' + (S.mgPeriod || period), grHeaders, grTypes, grRows, grTot), 'По группам');
+
+    // ---------- Лист 3: По маркам ----------
     const mkMap = new Map(); rows.forEach(r => { if (!mkMap.has(r.marka)) mkMap.set(r.marka, []); mkMap.get(r.marka).push(r); });
-    const mk = [['Марка', 'Группа', 'Вес, кг', 'Выручка, ₽', 'Цена ₽/кг', 'СС ₽/кг', 'СС, ₽', 'Маржа 1, ₽', 'Уд.маржа1 ₽/кг', 'Рент.1 %', 'GM2, ₽', 'КВ, ₽', 'Маржа 2, ₽', 'Рент.2 %']];
-    [...mkMap.entries()].sort((a, b) => agg(b[1]).rev - agg(a[1]).rev).forEach(([marka, list]) => { const a = agg(list); mk.push([marka, list[0].group, r2(a.w), r2(a.rev), r2(a.w ? a.rev / a.w : 0), r2(list[0].ccKg), r2(a.ss), r2(a.m1), r2(a.w ? a.m1 / a.w : 0), r2(a.rev ? a.m1 / a.rev * 100 : 0), r2(a.g2), r2(a.kv), r2(a.m2), r2(a.rev ? a.m2 / a.rev * 100 : 0)]); });
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(mk), '3. По маркам');
-    // 4. Детализация
-    const dt = [['Группа', 'Клиент', 'Марка', 'Номенклатура', 'Вес, кг', 'Выручка, ₽', 'СС ₽/кг', 'СС, ₽', 'GM2, ₽', 'КВ, ₽', 'Маржа 1, ₽', 'Маржа 2, ₽']];
-    rows.forEach(r => dt.push([r.group, r.client, r.marka, r.nomen, r2(r.weight), r2(r.revenue), r2(r.ccKg), r2(r.ss), r2(r.gm2), r2(r.kv), r2(r.m1), r2(r.m2)]));
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(dt), '4. Детализация');
+    const mkHeaders = ['Марка', 'Группа', 'Вес, кг', 'Выручка, ₽', 'Цена, ₽/кг', 'СС, ₽/кг', 'СС, ₽', 'Маржа 1, ₽', 'Уд.маржа 1', 'Рент.1', 'GM2, ₽', 'КВ, ₽', 'Маржа 2, ₽', 'Рент.2'];
+    const mkTypes = ['text', 'text', 'num', 'money', 'money', 'money', 'money', 'money', 'money', 'pct', 'money', 'money', 'money', 'pct'];
+    const mkRows = [...mkMap.entries()].sort((a, b) => agg(b[1]).rev - agg(a[1]).rev).map(([marka, list]) => { const a = agg(list); return [marka, list[0].group, r2(a.w), r2(a.rev), r2(a.w ? a.rev / a.w : 0), r2(list[0].ccKg), r2(a.ss), r2(a.m1), r2(a.w ? a.m1 / a.w : 0), pc(a.m1, a.rev), r2(a.g2), r2(a.kv), r2(a.m2), pc(a.m2, a.rev)]; });
+    const mkTot = ['ИТОГО', '', r2(T.w), r2(T.rev), '', '', r2(T.ss), r2(T.m1), '', pc(T.m1, T.rev), r2(T.g2), r2(T.kv), r2(T.m2), pc(T.m2, T.rev)];
+    XLSX.utils.book_append_sheet(wb, this.mgXlSheet('Маржа по маркам · ' + (S.mgPeriod || period), mkHeaders, mkTypes, mkRows, mkTot), 'По маркам');
+
+    // ---------- Лист 4: Детализация ----------
+    const dtHeaders = ['Группа', 'Клиент', 'Марка', 'Номенклатура', 'Вес, кг', 'Выручка, ₽', 'СС, ₽/кг', 'СС, ₽', 'GM2, ₽', 'КВ, ₽', 'Маржа 1, ₽', 'Маржа 2, ₽'];
+    const dtTypes = ['text', 'text', 'text', 'text', 'num', 'money', 'money', 'money', 'money', 'money', 'money', 'money'];
+    const dtRows = rows.map(r => [r.group, r.client, r.marka, r.nomen, r2(r.weight), r2(r.revenue), r2(r.ccKg), r2(r.ss), r2(r.gm2), r2(r.kv), r2(r.m1), r2(r.m2)]);
+    const dtTot = ['ИТОГО', '', '', '', r2(T.w), r2(T.rev), '', r2(T.ss), r2(T.g2), r2(T.kv), r2(T.m1), r2(T.m2)];
+    XLSX.utils.book_append_sheet(wb, this.mgXlSheet('Детализация по позициям · ' + (S.mgPeriod || period), dtHeaders, dtTypes, dtRows, dtTot), 'Детализация');
+
     XLSX.writeFile(wb, 'Маржинальный отчёт ' + period + '.xlsx');
   }
   buildMargin() {
@@ -3505,17 +3613,26 @@ class Component extends DCLogic {
   // Каталог разделов для настройки прав (без вкладки «Пользователи» — она только у админа)
   permCatalog() {
     return [
-      { label: 'FLOW', tabs: [['prodplan', 'Production Schedule'], ['procplan', 'Procurement Plan']] },
-      { label: 'Команда', tabs: [['tasks', 'Задачи'], ['docs', 'Документы']] },
-      { label: 'Производство', tabs: [['tcalc', 'Калькулятор технолога'], ['xcalc', 'Калькулятор X · проекты'], ['calc', 'Калькулятор'], ['recipe', 'Рецептуры'], ['prod', 'План производства'], ['sales', 'Продажи ГП'], ['catalog', 'Каталоги']] },
-      { label: 'Планирование закупок', tabs: [['runrate', 'Run Rate'], ['proc', 'План закупок'], ['cal', 'Календарь'], ['logi', 'Логистика']] },
-      { label: 'Цены и поставщики', tabs: [['margin', 'Маржинальный отчёт'], ['cost', 'Себестоимость · КО'], ['audit', 'Аудит цен'], ['pay', 'Платежи'], ['treas30', 'БДДС 30 дней'], ['prices', 'Реестр цен'], ['cparties', 'Контрагенты']] },
-      { label: 'Запасы', tabs: [['wh', 'Склад'], ['receipts', 'Поступления ТМЦ'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка']] },
-      { label: 'Контроль и сценарии', tabs: [['planfact', 'План-факт'], ['prodrep', 'Отчёты производства'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
-      { label: 'Система', tabs: [['cloud', 'Облако'], ['onec', 'Интеграция 1С']] },
+      { label: 'Задачи', tabs: [['tasks', 'Задачи'], ['docs', 'Документы'], ['cal', 'Календарь']] },
+      { label: 'Производство', tabs: [['prod', 'План производства'], ['prodplan', 'График производства'], ['recipe', 'Рецептуры'], ['tcalc', 'Калькулятор технолога'], ['xcalc', 'Калькулятор X · проекты'], ['catalog', 'Каталоги'], ['prodrep', 'Отчёты производства']] },
+      { label: 'Продажи', tabs: [['sales', 'Продажи ГП'], ['calc', 'Калькулятор'], ['prices', 'Реестр цен']] },
+      { label: 'Закупки', tabs: [['proc', 'План закупок'], ['procplan', 'График закупок'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['cparties', 'Поставщики / Контрагенты']] },
+      { label: 'Логистика и склад', tabs: [['wh', 'Склад'], ['receipts', 'Поступления ТМЦ'], ['logi', 'Логистика'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка запасов']] },
+      { label: 'Финансы', tabs: [['margin', 'Маржинальный отчёт'], ['cost', 'Себестоимость · КО'], ['pay', 'Платежи'], ['treas30', 'БДДС 30 дней'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
+      { label: 'Настройки', tabs: [['cloud', 'Облако'], ['onec', 'Интеграция 1С']] },
     ];
   }
   allTabIds() { return this.permCatalog().reduce((a, g) => a.concat(g.tabs.map(t => t[0])), []); }
+  // Аккордеон бокового меню + плашки категорий в рабочей зоне
+  groupOfTab(tab) { const g = this.permCatalog().find(gr => gr.tabs.some(t => t[0] === tab)); return g ? g.label : ''; }
+  navExpMap() {
+    if (this.state.navExp) return this.state.navExp;
+    let m = null; try { m = JSON.parse(this.lsGet('navexp') || 'null'); } catch (e) { m = null; }
+    if (!m || typeof m !== 'object') { m = {}; const ag = this.groupOfTab(this.state.tab) || (this.permCatalog()[0] && this.permCatalog()[0].label); if (ag) m[ag] = true; }
+    return m;
+  }
+  toggleGroup(label) { const m = { ...this.navExpMap() }; m[label] = !m[label]; this.setState({ navExp: m }); try { this.lsSet('navexp', JSON.stringify(m)); } catch (e) {} }
+  openCategory(label) { const m = { ...this.navExpMap() }; m[label] = true; this.setState({ navExp: m, tab: 'cat', catKey: label, navOpen: false }); try { this.lsSet('navexp', JSON.stringify(m)); } catch (e) {} }
   // Вкладки, доступные только в конкретной компании (id вкладки -> список компаний)
   coOnlyTabs() { return { cost: ['chem'], margin: ['chem'] }; }
   tabInCompany(id, co) { const m = this.coOnlyTabs()[id]; return !m || m.indexOf(co || this._co()) >= 0; }
@@ -6713,26 +6830,25 @@ class Component extends DCLogic {
     ];
     const tabLabels = Object.fromEntries(tabsDef);
     const tabGroups = [
-      { label: 'FLOW', items: ['prodplan', 'procplan'], en: { prodplan: 'Production Schedule', procplan: 'Procurement Plan' } },
-      { label: 'Команда', items: ['tasks', 'docs'] },
-      { label: 'Производство', items: ['tcalc', 'xcalc', 'calc', 'recipe', 'prod', 'sales', 'catalog'] },
-      { label: 'Планирование закупок', items: ['runrate', 'proc', 'cal', 'logi'] },
-      { label: 'Цены и поставщики', items: ['margin', 'cost', 'audit', 'pay', 'treas30', 'prices', 'cparties'] },
-      { label: 'Запасы', items: ['wh', 'receipts', 'turnover', 'cover'] },
-      { label: 'Контроль и сценарии', items: ['planfact', 'prodrep', 'stress', 'reports'] },
-      { label: 'Система', items: ['cloud', 'onec', 'users'] },
+      { label: 'Задачи', items: ['tasks', 'docs', 'cal'] },
+      { label: 'Производство', items: ['prod', 'prodplan', 'recipe', 'tcalc', 'xcalc', 'catalog', 'prodrep'], en: { prodplan: 'График производства' } },
+      { label: 'Продажи', items: ['sales', 'calc', 'prices'] },
+      { label: 'Закупки', items: ['proc', 'procplan', 'runrate', 'audit', 'cparties'], en: { procplan: 'График закупок', cparties: 'Поставщики / Контрагенты' } },
+      { label: 'Логистика и склад', items: ['wh', 'receipts', 'logi', 'turnover', 'cover'], en: { cover: 'Сводка запасов' } },
+      { label: 'Финансы', items: ['margin', 'cost', 'pay', 'treas30', 'planfact', 'stress', 'reports'] },
+      { label: 'Настройки', items: ['cloud', 'onec', 'users'] },
     ];
     const allowed = this.allowedTabs(S.currentUser);
     const allowSet = new Set(allowed);
     // если текущий раздел недоступен (админ урезал права) — мягко перебрасываем на доступный
-    if (S.currentUser && !allowSet.has(S.tab)) {
+    if (S.currentUser && S.tab !== 'cat' && !allowSet.has(S.tab)) {
       const fb = allowSet.has('home') ? 'home' : (allowSet.has('calc') ? 'calc' : (allowed[0] || 'home'));
       if (fb !== S.tab) { clearTimeout(this._redirT); this._redirT = setTimeout(() => this.setState({ tab: fb }), 0); }
     }
     const ta = this.myTaskAlertState();
-    const navGroups = tabGroups.map(g => ({
-      label: g.label,
-      items: g.items.filter(id => allowSet.has(id)).map(id => {
+    const navExp = this.navExpMap();
+    const navGroups = tabGroups.map(g => {
+      const items = g.items.filter(id => allowSet.has(id)).map(id => {
         const it = { label: (g.en && g.en[id]) || tabLabels[id], icon: this.tabIcon(id), cls: S.tab === id ? 'on' : '', go: () => set({ tab: id, navOpen: false }) };
         if (id === 'tasks') {
           if (ta.level) it.cls += ' tnav-' + ta.level;
@@ -6740,8 +6856,12 @@ class Component extends DCLogic {
           it.go = () => { this._taskSeenSnap = Number(this.state.tasksSeenAt) || 0; set({ tab: 'tasks', navOpen: false }); clearTimeout(this._taskSeenT); this._taskSeenT = setTimeout(() => this.markTasksSeen(), 4000); };
         }
         return it;
-      }),
-    })).filter(g => g.items.length);
+      });
+      if (!items.length) return null;
+      const expanded = !!navExp[g.label];
+      const activeHere = (S.tab === 'cat' && S.catKey === g.label) || items.some(i => i.cls.indexOf('on') >= 0);
+      return { label: g.label, items, expanded, grpCls: expanded ? 'sbgroup open' : 'sbgroup', chevCls: expanded ? 'sbchev open' : 'sbchev', headCls: activeHere ? 'sbghead act' : 'sbghead', openCat: () => this.openCategory(g.label), toggleExp: () => this.toggleGroup(g.label) };
+    }).filter(Boolean);
     const descs = {
       cost: 'Отчёт фактической себестоимости по партиям выпуска ГП: курс, потери, СС за кг и за партию в EUR и RUB. Фильтр по марке и периоду, сравнение одной марки в разные периоды.',
       margin: 'Маржинальный отчёт для учредителей. Загрузите файлы из 1С по шагам — приложение посчитает выручку, себестоимость, GM2, КВ и маржу 1/2 по группам и маркам.',
@@ -6775,6 +6895,7 @@ class Component extends DCLogic {
       label: g.label,
       items: g.items.filter(id => allowSet.has(id)).map(id => ({ icon: this.tabIcon(id), label: (g.en && g.en[id]) || tabLabels[id], desc: descs[id] || '', go: () => set({ tab: id, navOpen: false }) })),
     })).filter(g => g.items.length);
+    const catGroup = homeGroups.find(g => g.label === S.catKey) || null;
 
     const productOptions = this.data.products.map(p => p.name);
     const ownerOptions = [...new Set([...this.data.products.map(p => p.name), ...this.data.semi_products.map(s => s.name)])];
@@ -6809,6 +6930,9 @@ class Component extends DCLogic {
       ...L, ...Rt,
       ready: true, navGroups, tabDesc: descs[S.tab], productOptions, ownerOptions, componentOptions,
       isHome: S.tab === 'home', homeGroups, goHome: () => set({ tab: 'home', navOpen: false }), isUsers: S.tab === 'users',
+      isCat: S.tab === 'cat', catGroups: catGroup ? [catGroup] : [], catCards: catGroup ? catGroup.items : [],
+      compassOpen: !!S.compassOpen, openCompass: () => set({ compassOpen: true, navOpen: false }), closeCompass: () => set({ compassOpen: false }),
+      compassGroups: homeGroups.map(g => ({ label: g.label, items: g.items.map(it => ({ icon: it.icon, label: it.label, desc: it.desc, go: () => { it.go(); set({ compassOpen: false }); } })) })),
       userName: S.currentUser ? S.currentUser.name : '', userInitial: (S.currentUser && S.currentUser.name) ? S.currentUser.name.trim().charAt(0).toUpperCase() : '?',
       userRoleLabel: S.currentUser ? this.roleName(S.currentUser.role) : '',
       userRoleCls: (S.currentUser && S.currentUser.role === 'admin') ? 'srole adm' : 'srole', logout: () => this.askFarewell(),
@@ -6829,6 +6953,7 @@ class Component extends DCLogic {
       ...this.buildAssistant(),
       wrapCls: _viewonly + (S.cwOpen ? ' cwfocus' : '') + (S.sbCollapsed ? ' sbcoll' : ''),
       sbCollapsed: !!S.sbCollapsed, toggleSb: () => set({ sbCollapsed: !S.sbCollapsed }),
+      toggleMenu: () => { if (S.isMobile) set({ navOpen: !S.navOpen }); else set({ sbCollapsed: !S.sbCollapsed }); },
       cloudBarCls: cbCls, cloudBarText: cbText, cloudBarBtn: cbBtn, cloudHasBtn: !!cbBtn, onCloudBar: cbAct,
       isCloud: S.tab === 'cloud', cloudConnected: S.cloudConnected, cloudNotConnected: !S.cloudConnected,
       cloudAreaRows: this.cloudAreas().map(a => {
