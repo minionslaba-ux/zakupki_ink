@@ -3,6 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<script>
+/* Второй контур шлюза: прямой доступ к приложению без секретного ключа → фейковый 404. */
+(function () {
+  var SECRET_KEY = 'shtark-erp-2026';
+  function param(n) { try { return new URLSearchParams(location.search).get(n); } catch (e) { return null; } }
+  var hash = (location.hash || '').replace(/^#/, '');
+  var supplied = param('k') || param('key') || hash || (hash.indexOf('key=') === 0 ? hash.slice(4) : '');
+  var stored = false; try { stored = sessionStorage.getItem('sf_access') === SECRET_KEY; } catch (e) {}
+  if (supplied === SECRET_KEY || stored) { try { sessionStorage.setItem('sf_access', SECRET_KEY); } catch (e) {} return; }
+  try { document.title = '404 Not Found'; } catch (e) {}
+  document.documentElement.innerHTML = '<head><meta charset="utf-8"><title>404 Not Found</title><style>body{background:#fff;color:#000;font-family:-apple-system,\'Segoe UI\',Arial,sans-serif;margin:0}.e{max-width:700px;padding:40px 32px}h1{font-size:28px;font-weight:700;margin:0 0 10px}hr{border:0;border-top:1px solid #ddd;margin:14px 0}address{font-style:normal;color:#555;font-size:13px}p{font-size:15px;margin:8px 0}</style></head><body><div class="e"><h1>404 Not Found</h1><p>The requested URL was not found on this server.</p><hr><address>nginx</address></div></body>';
+  try { window.stop(); } catch (e) {}
+})();
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -401,6 +417,53 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .banner{padding:11px 14px;border-radius:8px;font-size:12.5px;font-weight:500;line-height:1.45;margin-top:12px;border-left:3px solid}
 .banner.ok{background:#eaf7fd;border-color:#00aeef;color:#0a4d63}
 .banner.err{background:#fbe0e0;border-color:#e10000;color:#b00000}
+.banner.warn{background:#fff6e8;border-color:#e8a33d;color:#8a5a00}
+.lcsrc{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin-top:6px}
+.lcsrccard{flex:1;min-width:260px;border:1px solid #e7e4e0;border-radius:11px;padding:16px 18px;background:#faf9f7;display:flex;flex-direction:column;gap:10px}
+.lcsrch{display:flex;align-items:center;gap:9px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;color:#1a1916}
+.lcsrcd{font-size:12.5px;color:#56534f;line-height:1.5}
+.lcsrcb{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:auto}
+.lcnum{font-family:'IBM Plex Mono',monospace;text-align:right}
+.lckpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:1px;background:#dfe6ef;border-radius:11px;overflow:hidden;margin-top:18px;border:1px solid #cdd8e6}
+.lckpi{background:#fff;padding:15px 17px;display:flex;flex-direction:column;gap:5px}
+.lckpi.navy{background:#1F4E78}
+.lckl{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#8a8782;font-weight:700}
+.lckpi.navy .lckl{color:#b8cce4}
+.lckv{font-size:22px;font-weight:800;letter-spacing:-.01em;color:#1a1916;font-family:'IBM Plex Mono',monospace}
+.lckpi.navy .lckv{color:#fff}
+.lcksub{font-size:11.5px;color:#9a9793;font-weight:600}
+.lckpi.navy .lcksub{color:#9fb6d0}
+.lckv.pos{color:#1F8A5B}.lckv.neg{color:#c0322b}
+.lctabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.lctab{appearance:none;border:1px solid #e7e4e0;background:#faf9f7;border-radius:9px;padding:8px 16px;font:inherit;font-size:13px;font-weight:700;color:#56534f;cursor:pointer}
+.lctab.on{background:#1F4E78;color:#fff;border-color:#1F4E78}
+.lctbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.lctbl th{text-align:right;font-size:10px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:#7488a0;padding:8px 8px;border-bottom:2px solid #cdd8e6;white-space:nowrap;background:#f4f7fb}
+.lctbl th.l{text-align:left}
+.lctbl td{padding:7px 8px;border-bottom:1px solid #eef0f3;text-align:right;white-space:nowrap}
+.lctbl td.l{text-align:left;white-space:normal}
+.lctbl tbody tr:hover{background:#f8fafc}
+.lctbl tr.anom td{background:#FCE4D6}
+.lctbl tr.anom td:first-child{box-shadow:inset 3px 0 0 #c0322b}
+.lctbl tr.good td{background:#f3faf5}
+.lctot td{font-weight:800;background:#D9E1F2 !important;border-top:2px solid #1F4E78;border-bottom:2px solid #1F4E78}
+.lctag{display:inline-block;font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;letter-spacing:.02em}
+.lctag.ved{background:#e7eefb;color:#234a9e}.lctag.dom{background:#eef0f3;color:#56534f}
+.lctag.ok{background:#E2EFDA;color:#3a6b1f}.lctag.late{background:#fff1d8;color:#8a5a00}.lctag.fail{background:#FCE4D6;color:#c0322b}.lctag.part{background:#fde8d0;color:#a05a14}
+.lcbar{height:9px;border-radius:5px;background:#eef0f3;overflow:hidden;min-width:80px}
+.lcbar > span{display:block;height:100%}
+.lcfac{display:flex;align-items:center;gap:6px;justify-content:flex-end}
+.lcfacpos{color:#c0322b;font-weight:700}.lcfacneg{color:#1F8A5B;font-weight:700}
+.lcanorow{display:flex;gap:12px;align-items:flex-start;border:1px solid #f1c4c0;background:#fff7f6;border-radius:10px;padding:13px 15px;margin-top:10px}
+.lcanoic{font-size:18px;line-height:1}
+.lcanomain{flex:1;min-width:0}
+.lcanott{font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;color:#1a1916}
+.lcanotx{font-size:12.5px;color:#56534f;line-height:1.5;margin-top:3px}
+.lcanosum{font-family:'IBM Plex Mono',monospace;font-weight:800;color:#c0322b;white-space:nowrap}
+.lcempty{padding:42px 22px;text-align:center;color:#9a9793}
+.lcempic{font-size:38px;margin-bottom:10px}
+.lcverdict{border:1px solid #cdd8e6;border-left:4px solid #1F4E78;background:#f4f7fb;border-radius:9px;padding:14px 16px;margin-top:16px;font-size:13px;line-height:1.55;color:#22384f}
+.lcverdict b{color:#1F4E78}
 .ostat{font-weight:600}
 .ostat.acc{color:#0080b0;border-color:#9fd9ef;background:#f4fbfe}
 .ostat.work{color:#7a6a00;border-color:#e6d98a;background:#fdfbf0}
@@ -1406,8 +1469,6 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbcmyk"><div class="sbrun"></div></div>
 <sc-if value="{{ canSwitch }}" hint-placeholder-val=""><div class="coswitch"><button class="cosw-btn" onClick="{{ toggleCoMenu }}" title="Сменить компанию группы"><span class="cosw-chip" style="{{ coChipStyle }}"></span><span class="cosw-name">{{ coName }}</span><span class="cosw-car">▾</span></button><sc-if value="{{ coMenuOpen }}" hint-placeholder-val=""><div class="comenu"><div class="comenu-h">Компания группы</div><sc-for list="{{ coList }}" as="c" hint-placeholder-count="2"><button class="{{ c.cls }}" onClick="{{ c.go }}"><span class="comenu-chip" style="{{ c.chipStyle }}"></span><span class="comenu-tx"><span class="comenu-name">{{ c.coItemName }}</span><span class="comenu-sub">{{ c.coItemSub }}</span></span><sc-if value="{{ c.locked }}" hint-placeholder-val="x"><span class="comenu-lock"><span class="comenu-brick"></span></span></sc-if><sc-if value="{{ c.locked }}" hint-placeholder-val="{{ true }}"><span class="comenu-chk">✓</span></sc-if></button></sc-for></div></sc-if></div></sc-if>
 <button class="{{ oneCBtnCls }}" onClick="{{ oneCQuickGet }}" title="Загрузить остатки и закупочные цены из 1С"><span class="oneclogo">1С</span><span class="onecbtx">{{ oneCBtnText }}</span></button>
-<button class="{{ sbCloudCls }}" onClick="{{ sbCloudClick }}" title="Общая база команды — облачная синхронизация"><span class="oneclogo cloudlogo">☁</span><span class="onecbtx">{{ sbCloudText }}</span></button>
-<button class="{{ sbCloudCls }}" onClick="{{ sbCloudClick }}" title="Общая база команды — облачная синхронизация"><span class="oneclogo cloudlogo">☁</span><span class="onecbtx">{{ sbCloudText }}</span></button>
 <nav class="sbnav"><sc-for list="{{ navGroups }}" as="g" hint-placeholder-count="6"><div class="{{ g.grpCls }}"><div class="{{ g.headCls }}"><button class="sbgname" onClick="{{ g.openCat }}">{{ g.label }}</button><button class="{{ g.chevCls }}" onClick="{{ g.toggleExp }}" title="Свернуть / развернуть">›</button></div><sc-if value="{{ g.expanded }}" hint-placeholder-val="{{ true }}"><div class="sbitems"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="sbtab {{ t.cls }}" onClick="{{ t.go }}"><span class="sbbar"></span>{{ t.icon }}<span class="sblbl">{{ t.label }}</span><sc-if value="{{ t.hasBadge }}" hint-placeholder-val=""><span class="nbadge {{ t.badgeCls }}">{{ t.badge }}</span></sc-if></button></sc-for></div></sc-if></div></sc-for></nav>
 <div class="sbconnect"><div class="sbconh"><span class="sbconspark">✦</span> Коннект</div><button class="sbai sbai2" onClick="{{ aiToggle }}" title="Открыть AI-аналитика АЯ"><span class="sbaiic">✦</span> AI-аналитик АЯ</button><button class="sbai" onClick="{{ runGlobalAudit }}" title="Глубокий AI-аудит производства, снабжения и кассы"><span class="sbaiic">✦</span> Глубокий анализ</button><button class="sbai sbclaude" onClick="{{ copyClaude }}" title="Скопировать сводку данных для вставки в Claude Pro"><span class="sbaiic">📋</span> Контекст для Claude Pro</button></div>
 <button class="sbmap" onClick="{{ openCompass }}" title="Компас — полная карта навигации по всем разделам"><span>🧭</span> Компас · карта навигации</button>
@@ -1523,6 +1584,92 @@ window.dispatchEvent(new Event('fbready'));
 </sc-if>
 <div class="tcactions"><button class="btn ghost" onClick="{{ mgClear }}">↺ Сбросить выручку</button></div>
 </div>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ isLanded }}" hint-placeholder-val="">
+<div class="card">
+<div class="sec">📦 Полная себестоимость закупки · Landed Cost · {{ lcCoName }}</div>
+<div class="desc">Сырьё + логистика + таможня + брокер по каждой партии. Внутренний рынок и ВЭД. Загрузите данные из файла 1С (.xlsx) или подтяните напрямую из 1С.</div>
+<div class="lcsrc">
+<div class="lcsrccard">
+<div class="lcsrch"><span class="oneclogo">1С</span> Загрузка файла (.xlsx)</div>
+<div class="lcsrcd">Выгрузка партий закупки из 1С/Excel: поставщик, страна, материал, кол-во заказ/факт, цена план/факт, курс план/факт, логистика, таможня, брокер, даты плана/факта.</div>
+<div class="lcsrcb"><label class="btn dark"><span class="oneclogo">1С</span> Загрузить .xlsx<input type="file" accept=".xlsx" style="display:none" onChange="{{ onLcFile }}"></label><button class="btn" onClick="{{ lcDownloadTemplate }}"><span>↓</span> Шаблон</button></div>
+</div>
+<div class="lcsrccard">
+<div class="lcsrch">🔗 Прямая загрузка из 1С</div>
+<div class="lcsrcd">HTTP-сервис 1С (ERP). Укажите адрес и доступ — приложение получит партии закупки одним запросом.</div>
+<div class="fg"><input class="inp" value="{{ lc1cUrl }}" onInput="{{ onLc1cUrl }}" placeholder="https://host/base/hs/shtark/purchases"></div>
+<div class="lcsrcb"><button class="btn dark" onClick="{{ lcFetch1c }}" disabled="{{ lc1cBusy }}">{{ lc1cBtnText }}</button><button class="btn ghost" onClick="{{ lcLoadDemo }}">Демо-данные</button></div>
+</div>
+</div>
+<sc-if value="{{ lcHasErr }}" hint-placeholder-val=""><div class="banner err">{{ lcErr }}</div></sc-if>
+<sc-if value="{{ lcHasStatus }}" hint-placeholder-val=""><div class="banner ok">{{ lcStatus }}</div></sc-if>
+</div>
+
+<sc-if value="{{ lcEmpty }}" hint-placeholder-val="{{ true }}">
+<div class="card"><div class="lcempty"><div class="lcempic">📦</div><div>Данные закупок не загружены. Загрузите файл из 1С, подключите HTTP-сервис или нажмите «Демо-данные», чтобы увидеть аналитику Landed Cost.</div></div></div>
+</sc-if>
+
+<sc-if value="{{ lcReady }}" hint-placeholder-val="">
+<div class="card">
+<div class="lckpis">
+<div class="lckpi navy"><span class="lckl">Landed Cost · факт</span><span class="lckv">{{ lcKpiLanded }}</span><span class="lcksub">{{ lcKpiBatches }} партий · {{ lcKpiPeriod }}</span></div>
+<div class="lckpi"><span class="lckl">Накладные расходы</span><span class="lckv">{{ lcKpiOverhead }}</span><span class="lcksub">{{ lcKpiExtraRub }} ₽ лог.+там.+брокер</span></div>
+<div class="lckpi"><span class="lckl">Валютный фактор (ВЭД)</span><span class="{{ lcKpiFxCls }}">{{ lcKpiFx }}</span><span class="lcksub">{{ lcKpiFxNote }}</span></div>
+<div class="lckpi"><span class="lckl">OTIF поставок</span><span class="lckv">{{ lcKpiOtif }}</span><span class="lcksub">{{ lcKpiOtifNote }}</span></div>
+<div class="lckpi"><span class="lckl">Аномалии расходов</span><span class="{{ lcKpiAnomCls }}">{{ lcKpiAnom }}</span><span class="lcksub">переплата {{ lcKpiAnomSum }} ₽</span></div>
+<div class="lckpi"><span class="lckl">Капитал «в пути»</span><span class="lckv">{{ lcKpiTransit }}</span><span class="lcksub">{{ lcKpiTransitN }} партий в пути/на таможне</span></div>
+</div>
+<div class="lcverdict">{{ lcVerdict }}</div>
+<div class="genrow"><button class="btn dark" onClick="{{ lcExportExcel }}"><span>↓</span> Экспорт в Excel (премиум-отчёт)</button><button class="btn x" onClick="{{ lcClear }}" title="Очистить данные">✕</button></div>
+</div>
+
+<div class="card">
+<div class="lctabs"><sc-for list="{{ lcViews }}" as="v" hint-placeholder-count="5"><button class="{{ v.cls }}" onClick="{{ v.go }}">{{ v.label }}</button></sc-for></div>
+<div class="toolbar">
+<div class="field"><span class="lbl">Рынок</span><select class="sel" value="{{ lcFltMarket }}" onChange="{{ onLcFltMarket }}"><option value="">Все</option><option value="FOREIGN_VED">ВЭД</option><option value="DOMESTIC">Внутренний</option></select></div>
+<div class="field"><span class="lbl">Поставщик</span><select class="sel" value="{{ lcFltSupplier }}" onChange="{{ onLcFltSupplier }}"><option value="">Все</option><sc-for list="{{ lcSupplierOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for></select></div>
+<div class="field"><span class="lbl">Статус</span><select class="sel" value="{{ lcFltStatus }}" onChange="{{ onLcFltStatus }}"><option value="">Все</option><sc-for list="{{ lcStatusOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for></select></div>
+<div class="field"><span class="lbl">Только аномалии</span><button class="{{ lcAnomBtnCls }}" onClick="{{ toggleLcAnom }}">{{ lcAnomBtnText }}</button></div>
+</div>
+
+<sc-if value="{{ lcIsBatches }}" hint-placeholder-val="{{ true }}">
+<div class="mgtblwrap"><table class="lctbl"><thead><tr><th class="l">№ / Партия</th><th class="l">Поставщик</th><th class="l">Рынок</th><th class="l">Материал</th><th>Кол-во факт</th><th>Сырьё, ₽</th><th>Логистика</th><th>Таможня</th><th>Брокер</th><th>Landed, ₽</th><th>Уд. ₽/ед</th><th>% накл.</th><th>OTIF</th></tr></thead>
+<tbody><sc-for list="{{ lcBatchRows }}" as="r" hint-placeholder-count="8"><tr class="{{ r.cls }}"><td class="l">{{ r.no }}</td><td class="l">{{ r.supplier }}</td><td class="l"><span class="{{ r.mktCls }}">{{ r.mkt }}</span></td><td class="l">{{ r.material }}</td><td class="lcnum">{{ r.qty }}</td><td class="lcnum">{{ r.invoice }}</td><td class="lcnum">{{ r.logi }}</td><td class="lcnum">{{ r.customs }}</td><td class="lcnum">{{ r.broker }}</td><td class="lcnum">{{ r.landed }}</td><td class="lcnum">{{ r.unit }}</td><td class="lcnum">{{ r.overhead }}</td><td><span class="{{ r.otifCls }}">{{ r.otif }}</span></td></tr></sc-for></tbody>
+<tfoot><tr class="lctot"><td class="l">ИТОГО · {{ lcBatchN }}</td><td></td><td></td><td></td><td class="lcnum">{{ lcTotQty }}</td><td class="lcnum">{{ lcTotInvoice }}</td><td class="lcnum">{{ lcTotLogi }}</td><td class="lcnum">{{ lcTotCustoms }}</td><td class="lcnum">{{ lcTotBroker }}</td><td class="lcnum">{{ lcTotLanded }}</td><td></td><td class="lcnum">{{ lcTotOverhead }}</td><td></td></tr></tfoot>
+</table></div>
+</sc-if>
+
+<sc-if value="{{ lcIsFactor }}" hint-placeholder-val="">
+<div class="desc">Отклонение фактической Landed Cost от планового бюджета, пересчитанного на фактически принятый объём (гибкий план), по каждой партии. Разложено на 3 фактора; их сумма равна полному отклонению. Положительное = потери, отрицательное = экономия.</div>
+<div class="mgtblwrap"><table class="lctbl"><thead><tr><th class="l">№ / Партия</th><th class="l">Поставщик</th><th>Гибкий план, ₽</th><th>Факт Landed, ₽</th><th>Δ цена</th><th>Δ логист./там.</th><th>Δ валюта</th><th>Итог Δ, ₽</th></tr></thead>
+<tbody><sc-for list="{{ lcFactorRows }}" as="r" hint-placeholder-count="8"><tr class="{{ r.cls }}"><td class="l">{{ r.no }}</td><td class="l">{{ r.supplier }}</td><td class="lcnum">{{ r.plan }}</td><td class="lcnum">{{ r.fact }}</td><td class="lcnum"><span class="{{ r.fPriceCls }}">{{ r.fPrice }}</span></td><td class="lcnum"><span class="{{ r.fLogiCls }}">{{ r.fLogi }}</span></td><td class="lcnum"><span class="{{ r.fFxCls }}">{{ r.fFx }}</span></td><td class="lcnum"><span class="{{ r.fTotCls }}">{{ r.fTot }}</span></td></tr></sc-for></tbody>
+<tfoot><tr class="lctot"><td class="l">ИТОГО</td><td></td><td class="lcnum">{{ lcFTotPlan }}</td><td class="lcnum">{{ lcFTotFact }}</td><td class="lcnum">{{ lcFTotPrice }}</td><td class="lcnum">{{ lcFTotLogi }}</td><td class="lcnum">{{ lcFTotFx }}</td><td class="lcnum">{{ lcFTotDev }}</td></tr></tfoot>
+</table></div>
+</sc-if>
+
+<sc-if value="{{ lcIsAnom }}" hint-placeholder-val="">
+<sc-if value="{{ lcAnomEmpty }}" hint-placeholder-val=""><div class="lcempty"><div class="lcempic">✅</div><div>Аномалий накладных расходов не выявлено: по всем направлениям расходы в пределах нормы (+10% к скользящей средней).</div></div></sc-if>
+<sc-for list="{{ lcAnomRows }}" as="a" hint-placeholder-count="3"><div class="lcanorow"><span class="lcanoic">⚠️</span><div class="lcanomain"><div class="lcanott">{{ a.title }}</div><div class="lcanotx">{{ a.text }}</div></div><span class="lcanosum">+{{ a.sum }} ₽</span></div></sc-for>
+</sc-if>
+
+<sc-if value="{{ lcIsOtif }}" hint-placeholder-val="">
+<div class="desc">Надёжность поставщиков: точно в срок И точно в объёме. Рейтинг = доля OTIF-партий.</div>
+<div class="mgtblwrap"><table class="lctbl"><thead><tr><th class="l">Поставщик</th><th class="l">Страна</th><th>Партий</th><th>В срок</th><th>В объёме</th><th>OTIF</th><th class="l">Рейтинг</th></tr></thead>
+<tbody><sc-for list="{{ lcOtifRows }}" as="r" hint-placeholder-count="5"><tr class="{{ r.cls }}"><td class="l">{{ r.supplier }}</td><td class="l">{{ r.country }}</td><td class="lcnum">{{ r.n }}</td><td class="lcnum">{{ r.onTime }}</td><td class="lcnum">{{ r.inFull }}</td><td class="lcnum">{{ r.otif }}</td><td class="l"><div class="lcfac"><div class="lcbar"><span style="{{ r.barStyle }}"></span></div><span class="lcnum">{{ r.rating }}</span></div></td></tr></sc-for></tbody>
+</table></div>
+</sc-if>
+
+<sc-if value="{{ lcIsTransit }}" hint-placeholder-val="">
+<div class="desc">Оборотный капитал, замороженный в партиях со статусом «В пути» и «Таможня», по срокам нахождения.</div>
+<div class="mgtblwrap"><table class="lctbl"><thead><tr><th class="l">№ / Партия</th><th class="l">Поставщик</th><th class="l">Статус</th><th class="l">Срок в пути</th><th>Landed, ₽</th></tr></thead>
+<tbody><sc-for list="{{ lcTransitRows }}" as="r" hint-placeholder-count="5"><tr><td class="l">{{ r.no }}</td><td class="l">{{ r.supplier }}</td><td class="l"><span class="{{ r.statCls }}">{{ r.status }}</span></td><td class="l">{{ r.bucket }}</td><td class="lcnum">{{ r.landed }}</td></tr></sc-for></tbody>
+<tfoot><tr class="lctot"><td class="l">ИТОГО в пути</td><td></td><td></td><td class="l">{{ lcTransitBreak }}</td><td class="lcnum">{{ lcTransitTot }}</td></tr></tfoot>
+</table></div>
+</sc-if>
 </div>
 </sc-if>
 </sc-if>
@@ -2581,6 +2728,8 @@ class Component extends DCLogic {
     prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planProduct: '', planFilter: '', planCur: 'RUB',
     ppScale: 'month', ppFrom: '', ppTo: '', ppNetStock: true, ppNetTransit: true, ppBy: 'raw', ppCur: 'RUB', ppGroup: 'none', procGen: false,
     oneCUrl: '', oneCToken: '', oneCMatch: 'article', oneCAuto: false, oneCBusy: false, oneCStatus: '', oneCErr: '', oneCPreview: null, oneCLastAt: 0, oneCLog: [], oneCFileCur: 'RUB',
+    lcData: [], lcMeta: null, lcBusy: false, lcErr: '', lcStatus: '', lcView: 'dash', lcFltMarket: '', lcFltSupplier: '', lcFltStatus: '', lcOnlyAnom: false, lcSrcOpen: false,
+    lc1cUrl: '', lc1cToken: '', lc1cBusy: false,
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {}, cloudLocks: {}, cloudMyAreas: [],
     sbReady: false, sbFltMarka: '', sbFltPeriod: '', sbSearch: '', sbCompare: false, sbCmpMarka: '', sbDateFrom: '', sbDateTo: '', sbSummary: false, sbExpanded: {},
     mgRevenue: null, mgRevMeta: null, mgErr: '', mgBusy: false, mgPeriod: '', mgGm: null, mgKv: [{ name: 'Конфлекс', pct: 10 }], mgView: 'groups', mgFltGroup: '', mgExpanded: {}, mgManualCost: {},
@@ -2637,7 +2786,7 @@ class Component extends DCLogic {
     this.cloudRestore();
     // Авто-выход по неактивности (35 минут): любое действие продлевает сессию
     this._lastAct = Date.now();
-    this._markAct = () => { this._lastAct = Date.now(); const sc = this.state.chScene; if (sc === 'bored' || sc === 'leave' || sc === 'gone') this.setState({ chScene: '' }); if (this.state.currentUser) { try { const s = JSON.parse(this.lsGet('session_v1') || 'null'); if (s && s.id && (!s.ts || Date.now() - s.ts > 60000)) this.lsSet('session_v1', JSON.stringify({ id: s.id, ts: Date.now() })); } catch (e) {} } };
+    this._markAct = () => { this._lastAct = Date.now(); const sc = this.state.chScene; if (sc === 'bored' || sc === 'leave' || sc === 'gone') this.setState({ chScene: '' }); if (this.state.currentUser) { try { const s = JSON.parse(this.lsGet('session_v1') || 'null'); if (s && s.id && (!s.ts || Date.now() - s.ts > 60000)) this.lsSet('session_v1', JSON.stringify({ id: s.id, ts: Date.now() })); } catch (e) {} this.sessCheckNow(); } };
     ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.addEventListener(ev, this._markAct, { passive: true }));
     // Персонажи Ая и Макс: сценарий «Спасение от скуки» (30 c → Скука, +15 c → Макс уводит)
     this._chInt = setInterval(() => {
@@ -2694,7 +2843,7 @@ class Component extends DCLogic {
   static get STORE_KEY() { return 'inkflow_state_v1'; }
   static get IDLE_MS() { return 35 * 60 * 1000; }
   static get FBCFG() { return { apiKey: 'AIzaSyCOoE74NqK4xkpmzUvzoPmanz8Ej_IW5q8', authDomain: 'shtark-flow.firebaseapp.com', projectId: 'shtark-flow', storageBucket: 'shtark-flow.firebasestorage.app', messagingSenderId: '969786336713', appId: '1:969786336713:web:39bd23af4ca2e281d07418' }; }
-  static get PERSIST() { return ['stock', 'extra', 'orders', 'purchases', 'prices', 'pct', 'added', 'rate', 'loss', 'planFrom', 'planTo', 'recipeOwner', 'whFilled', 'stockUpdatedAt', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth', 'prodPlan', 'planHorizon', 'planStart', 'planExpand', 'planCur', 'ppScale', 'ppFrom', 'ppTo', 'ppNetStock', 'ppNetTransit', 'ppBy', 'ppCur', 'ppGroup', 'oneCUrl', 'oneCMatch', 'oneCAuto', 'oneCLastAt', 'oneCLog']; }
+  static get PERSIST() { return ['stock', 'extra', 'orders', 'purchases', 'prices', 'pct', 'added', 'rate', 'loss', 'planFrom', 'planTo', 'recipeOwner', 'whFilled', 'stockUpdatedAt', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth', 'prodPlan', 'planHorizon', 'planStart', 'planExpand', 'planCur', 'ppScale', 'ppFrom', 'ppTo', 'ppNetStock', 'ppNetTransit', 'ppBy', 'ppCur', 'ppGroup', 'oneCUrl', 'oneCMatch', 'oneCAuto', 'oneCLastAt', 'oneCLog', 'lcData', 'lcMeta', 'lc1cUrl']; }
 
   // ===== Мультикомпанийность: реестр компаний группы =====
   coCfg() {
@@ -2735,7 +2884,7 @@ class Component extends DCLogic {
       { id: 'warehouse', label: 'Склад и запасы', keys: ['stock', 'extra', 'whFilled', 'stockUpdatedAt'], cols: [] },
       { id: 'orders', label: 'Заявки клиентов', keys: ['orders'], cols: [] },
       { id: 'sales', label: 'Продажи ГП', keys: [], cols: ['sales'] },
-      { id: 'purchases', label: 'Закупки и планирование', keys: ['purchases', 'planFrom', 'planTo', 'prodPlan', 'planHorizon', 'planStart', 'planExpand', 'planCur', 'ppScale', 'ppFrom', 'ppTo', 'ppNetStock', 'ppNetTransit', 'ppBy', 'ppCur', 'ppGroup', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth', 'oneCUrl', 'oneCMatch', 'oneCAuto', 'oneCLastAt', 'oneCLog'], cols: [] },
+      { id: 'purchases', label: 'Закупки и планирование', keys: ['purchases', 'planFrom', 'planTo', 'prodPlan', 'planHorizon', 'planStart', 'planExpand', 'planCur', 'ppScale', 'ppFrom', 'ppTo', 'ppNetStock', 'ppNetTransit', 'ppBy', 'ppCur', 'ppGroup', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth', 'oneCUrl', 'oneCMatch', 'oneCAuto', 'oneCLastAt', 'oneCLog', 'lcData', 'lcMeta'], cols: [] },
       { id: 'prices', label: 'Цены и рецептуры', keys: ['prices', 'pct', 'added', 'rate', 'loss', 'recipeOwner'], cols: [] },
       { id: 'payments', label: 'Платежи (казначейство)', keys: [], cols: ['payreqs'] },
       { id: 'receipts', label: 'Поступления ТМЦ (выписка)', keys: [], cols: ['receipts'] },
@@ -2754,7 +2903,7 @@ class Component extends DCLogic {
   areaLabel(id) { const a = this.cloudAreas().find(x => x.id === id); return a ? a.label : id; }
   // Какая область редактируется на данной вкладке (для статус-бара и кнопки «Взять»)
   tabArea(tab) {
-    const m = { wh: 'warehouse', prod: 'orders', sales: 'sales', proc: 'purchases', procplan: 'purchases', prodplan: 'purchases', runrate: 'purchases', turnover: 'purchases', stress: 'purchases', onec: 'purchases', prices: 'prices', calc: 'prices', recipe: 'prices', audit: 'prices', tcalc: 'tcalc', xcalc: 'prices', pay: 'payments', treas30: 'payments', receipts: 'receipts', logi: 'logistics', cparties: 'counterparties', tasks: 'tasks', docs: 'tasks', costtree: 'costtree', cost: 'costko', margin: 'margin' };
+    const m = { wh: 'warehouse', prod: 'orders', sales: 'sales', proc: 'purchases', procplan: 'purchases', prodplan: 'purchases', runrate: 'purchases', turnover: 'purchases', stress: 'purchases', onec: 'purchases', landed: 'purchases', prices: 'prices', calc: 'prices', recipe: 'prices', audit: 'prices', tcalc: 'tcalc', xcalc: 'prices', pay: 'payments', treas30: 'payments', receipts: 'receipts', logi: 'logistics', cparties: 'counterparties', tasks: 'tasks', docs: 'tasks', costtree: 'costtree', cost: 'costko', margin: 'margin' };
     return m[tab] || null;
   }
   myAreaSet() { const out = new Set(); const lk = this.state.cloudLocks || {}; const now = Date.now(); for (const a in lk) { const l = lk[a]; if (l && l.clientId === this._clientId && (now - (l.ts || 0) < Component.LOCK_TTL)) out.add(a); } return out; }
@@ -2914,14 +3063,14 @@ class Component extends DCLogic {
   userCompanies(u) { const a = (u && Array.isArray(u.companies)) ? u.companies.filter(c => this.coCfg()[c]) : []; return a.length ? a : ['ink', 'chem']; }
 
   // localStorage с разделением по компаниям (INK = legacy-ключи, остальные — со своим префиксом)
-  lsGlobal() { return { users_v1: 1, session_v1: 1, welcome_photo: 1, emailcfg: 1, aicfg: 1, cloud_v1: 1, daily_motiv: 1, active_co: 1 }; }
+  lsGlobal() { return { users_v1: 1, session_v1: 1, sf_token: 1, welcome_photo: 1, emailcfg: 1, aicfg: 1, cloud_v1: 1, daily_motiv: 1, active_co: 1 }; }
   lsKey(name) { return (this.lsGlobal()[name] ? 'inkflow_' : (this._co() === 'ink' ? 'inkflow_' : this._co() + '_')) + name; }
   lsGet(name) { try { return localStorage.getItem(this.lsKey(name)); } catch (e) { return null; } }
   lsSet(name, val) { try { localStorage.setItem(this.lsKey(name), val); } catch (e) {} }
   lsDel(name) { try { localStorage.removeItem(this.lsKey(name)); } catch (e) {} }
 
   companyBlank() {
-    return { stock: {}, extra: [], orders: [], purchases: [], prices: {}, pct: {}, added: {}, rate: (Number(this.state.rate) || 83.6892), loss: 0, planFrom: '', planTo: '', recipeOwner: '', whFilled: false, stockUpdatedAt: 0, rrHorizon: 3, rrSafetyMonths: 1, rrLeadDefault: 1, rrRun: {}, rrLead: {}, rrSafety: {}, turnoverDays: 90, stressGrowth: 30, prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planCur: 'RUB', ppScale: 'month', ppFrom: '', ppTo: '', ppNetStock: true, ppNetTransit: true, ppBy: 'raw', ppCur: 'RUB', ppGroup: 'none', oneCUrl: '', oneCMatch: 'article', oneCAuto: false, oneCLastAt: 0, oneCLog: [] };
+    return { stock: {}, extra: [], orders: [], purchases: [], prices: {}, pct: {}, added: {}, rate: (Number(this.state.rate) || 83.6892), loss: 0, planFrom: '', planTo: '', recipeOwner: '', whFilled: false, stockUpdatedAt: 0, rrHorizon: 3, rrSafetyMonths: 1, rrLeadDefault: 1, rrRun: {}, rrLead: {}, rrSafety: {}, turnoverDays: 90, stressGrowth: 30, prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planCur: 'RUB', ppScale: 'month', ppFrom: '', ppTo: '', ppNetStock: true, ppNetTransit: true, ppBy: 'raw', ppCur: 'RUB', ppGroup: 'none', oneCUrl: '', oneCMatch: 'article', oneCAuto: false, oneCLastAt: 0, oneCLog: [], lcData: [], lcMeta: null };
   }
   // Применить компанию: переключить namespace, перечитать срезы и состояние, подгрузить каталог/данные
   applyCompany(co) {
@@ -4483,6 +4632,7 @@ class Component extends DCLogic {
       proc: '<circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.4a1 1 0 0 0 1 .8h8.7a1 1 0 0 0 1-.8L21 7H6"/>',
       cal: '<rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/>',
       audit: '<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/><path d="M11 8v6M9.5 9.5h3a1.3 1.3 0 0 1 0 2.6H9.5"/>',
+      landed: '<path d="M2 7l10-4 10 4-10 4z"/><path d="M2 7v10l10 4 10-4V7"/><line x1="12" y1="11" x2="12" y2="21"/>',
       pay: '<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/>',
       prices: '<path d="M3 7v4.6a2 2 0 0 0 .6 1.4l7.4 7.4a2 2 0 0 0 2.8 0l4.8-4.8a2 2 0 0 0 0-2.8L11.2 5.6A2 2 0 0 0 9.8 5H5a2 2 0 0 0-2 2z"/><circle cx="7.5" cy="9.5" r="1.2"/>',
       wh: '<path d="M3 21V9l9-5 9 5v12"/><path d="M2.5 21h19"/><path d="M8 21v-7h8v7"/><line x1="8" y1="17" x2="16" y2="17"/>',
@@ -4533,6 +4683,9 @@ class Component extends DCLogic {
         const app = fb.initializeApp(Component.FBCFG, 'inkflow-users-' + Date.now());
         let db; try { db = fb.initializeFirestore(app, { experimentalForceLongPolling: true }); } catch (e) { db = fb.getFirestore(app); }
         this._usersFb = fb; this._usersRef = fb.doc(db, 'inkflow', 'users');
+        this._sessFb = fb; this._sessRef = fb.doc(db, 'inkflow', 'sessions');
+        if (this.state.currentUser) this.sessRestore(this.state.currentUser);
+        if (!this._sessTimer) this._sessTimer = setInterval(() => this.sessCheckNow(), 30000);
         fb.onSnapshot(this._usersRef, s => {
           const d = s.exists() ? (s.data() || {}) : {};
           const cloud = Array.isArray(d.list) ? d.list : [];
@@ -4591,7 +4744,7 @@ class Component extends DCLogic {
       { label: 'Задачи', tabs: [['tasks', 'Задачи'], ['docs', 'Документы'], ['cal', 'Календарь']] },
       { label: 'Производство', tabs: [['prod', 'План производства'], ['prodplan', 'График производства'], ['recipe', 'Рецептуры'], ['tcalc', 'Калькулятор технолога'], ['xcalc', 'Калькулятор X · проекты'], ['catalog', 'Каталоги'], ['prodrep', 'Отчёты производства']] },
       { label: 'Продажи', tabs: [['sales', 'Продажи ГП'], ['calc', 'Калькулятор'], ['prices', 'Реестр цен']] },
-      { label: 'Закупки', tabs: [['proc', 'План закупок'], ['procplan', 'График закупок'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['cparties', 'Поставщики / Контрагенты']] },
+      { label: 'Закупки', tabs: [['proc', 'План закупок'], ['procplan', 'График закупок'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['cparties', 'Поставщики / Контрагенты']] },
       { label: 'Логистика и склад', tabs: [['wh', 'Склад'], ['receipts', 'Поступления ТМЦ'], ['logi', 'Логистика'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка запасов']] },
       { label: 'Финансы', tabs: [['margin', 'Маржинальный отчёт'], ['cost', 'Себестоимость · КО'], ['costtree', 'Анализ себестоимости'], ['pay', 'Платежи'], ['treas30', 'БДДС 30 дней'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
       { label: 'Настройки', tabs: [['cloud', 'Облако'], ['onec', 'Интеграция 1С']] },
@@ -4634,19 +4787,65 @@ class Component extends DCLogic {
     const cos = this.userCompanies(u); let co = this._co(); if (cos.indexOf(co) < 0) co = cos[0];
     if (co !== this._co()) this.applyCompany(co);
     const allowed = this.allowedTabs(u);
-    this.setState({ currentUser: u, loginErr: '', passInput: '', tab: 'home', cloudName: u.name || this.state.cloudName }, () => this.beginWelcome());
+    this.setState({ currentUser: u, loginErr: '', passInput: '', tab: 'home', cloudName: u.name || this.state.cloudName }, () => { this.beginWelcome(); this.sessClaim(u); });
+  }
+
+  // ===== Контроль параллельных сессий (одно устройство на пользователя; админы — без ограничений) =====
+  sessGenToken() { return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10); }
+  sessExempt(u) { return !u || u.role === 'admin'; }
+  sessClaim(u) {
+    if (this.sessExempt(u)) { this._myToken = ''; return; }
+    const tok = this.sessGenToken(); this._myToken = tok;
+    try { this.lsSet('sf_token', tok); } catch (e) {}
+    if (this._sessFb && this._sessRef) { try { this._sessFb.setDoc(this._sessRef, { [u.id]: tok }, { merge: true }).catch(() => {}); } catch (e) {} }
+    this.sessWatch(u);
+  }
+  sessRestore(u) {
+    if (this.sessExempt(u)) return;
+    let tok = ''; try { tok = this.lsGet('sf_token') || ''; } catch (e) {}
+    if (tok) { this._myToken = tok; this.sessWatch(u); } else this.sessClaim(u);
+  }
+  sessWatch(u) {
+    if (this.sessExempt(u) || !this._sessFb || !this._sessRef) return;
+    this.sessStopWatch();
+    try {
+      this._sessUnsub = this._sessFb.onSnapshot(this._sessRef, s => {
+        const cu = this.state.currentUser; if (!cu || cu.id !== u.id) return;
+        const d = (s && s.exists && s.exists()) ? (s.data() || {}) : {};
+        const cur = d[u.id];
+        if (cur && this._myToken && cur !== this._myToken) this.sessKicked();
+      }, () => {});
+    } catch (e) {}
+  }
+  sessStopWatch() { if (this._sessUnsub) { try { this._sessUnsub(); } catch (e) {} this._sessUnsub = null; } }
+  sessCheckNow() {
+    const cu = this.state.currentUser; if (this.sessExempt(cu) || !this._sessFb || !this._sessRef || !this._myToken) return;
+    const now = Date.now(); if (this._sessLastChk && now - this._sessLastChk < 4000) return; this._sessLastChk = now;
+    try { this._sessFb.getDoc(this._sessRef).then(s => { const d = (s && s.exists()) ? (s.data() || {}) : {}; const cur = d[cu.id]; if (cur && this._myToken && cur !== this._myToken) this.sessKicked(); }).catch(() => {}); } catch (e) {}
+  }
+  sessKicked() {
+    if (this._sessKicking) return; this._sessKicking = true;
+    this.sessStopWatch();
+    try { this.releaseAllAreas(); } catch (e) {}
+    try { this.stopPresence(); } catch (e) {}
+    try { this.lsDel('session_v1'); } catch (e) {}
+    try { this.lsDel('sf_token'); } catch (e) {}
+    this._myToken = '';
+    this.setState({ currentUser: null, loading: true, loaderHide: false, loaderPhase: 'p2', showWelcome: false, showFarewell: false, loginInput: '', passInput: '', tab: 'home', userDraft: null, navOpen: false, loginErr: 'Вход выполнен на другом устройстве — эта сессия завершена. Если это были вы — войдите снова.' }, () => { this._sessKicking = false; });
   }
   // Авто-выход по неактивности: завершаем сессию и требуем повторный вход
   expireSession() {
     if (!this.state.currentUser) return;
     try { this.releaseAllAreas(); } catch (e) {}
     this.stopPresence();
+    this.sessStopWatch(); try { this.lsDel('sf_token'); } catch (e) {} this._myToken = '';
     try { this.lsDel('session_v1'); } catch (e) {}
     this.setState({ currentUser: null, loading: true, loaderHide: false, loaderPhase: 'p2', showWelcome: false, showFarewell: false, loginInput: '', passInput: '', tab: 'home', userDraft: null, navOpen: false, loginErr: 'Сессия завершена из-за неактивности (более 35 минут). Войдите снова.' });
   }
   doLogout() {
     try { this.releaseAllAreas(); } catch (e) {}
     this.stopPresence();
+    this.sessStopWatch(); try { this.lsDel('sf_token'); } catch (e) {} this._myToken = '';
     try { this.lsDel('session_v1'); } catch (e) {}
     this.setState({ currentUser: null, loading: true, loaderHide: false, loaderPhase: 'p2', showWelcome: false, showFarewell: false, loginInput: '', passInput: '', loginErr: '', tab: 'home', userDraft: null, userErr: '' });
   }
@@ -6864,6 +7063,395 @@ class Component extends DCLogic {
     const log = [{ at: Date.now(), note }, ...(this.state.oneCLog || [])].slice(0, 40);
     this.setState({ stock, extra, prices, whFilled: true, oneCLastAt: Date.now(), oneCLog: log, stockUpdatedAt: Date.now(), oneCStatus: note });
   }
+  // ===== Модуль «Landed Cost · ВЭД» (полная себестоимость закупки) =====
+  lcRub(n) { return Math.round(Number(n) || 0).toLocaleString('ru-RU') + ' ₽'; }
+  lcNum(n) { return (Number(n) || 0).toLocaleString('ru-RU', { maximumFractionDigits: 0 }); }
+  lcPct(n) { return (Number(n) || 0).toLocaleString('ru-RU', { maximumFractionDigits: 1 }) + '%'; }
+  lcSign(n) { const v = Math.round(Number(n) || 0); return (v > 0 ? '+' : '') + v.toLocaleString('ru-RU') + ' ₽'; }
+  lcDays(a, b) { if (!a || !b) return null; const d = (new Date(b) - new Date(a)) / 86400000; return isNaN(d) ? null : Math.round(d); }
+  lcMarketLabel(m) { return m === 'FOREIGN_VED' ? 'ВЭД' : 'Внутр.'; }
+  // Обогащение партий расчётами Landed Cost / факторов / OTIF
+  lcEnrich() {
+    const data = Array.isArray(this.state.lcData) ? this.state.lcData : [];
+    const today = new Date();
+    // средняя логистика на единицу по направлению (страна → склад) для аудита аномалий
+    const dir = {};
+    const recs0 = data.map(r => {
+      const qO = Number(r.qtyOrdered) || 0, qR = Number(r.qtyReceived) || 0;
+      const pP = Number(r.pricePlan) || 0, pF = Number(r.priceFact) || 0;
+      const rP = Number(r.ratePlan) || 1, rF = Number(r.rateFact) || 1;
+      const logiF = Number(r.logiFact) || 0, custF = Number(r.customsFact) || 0, brokF = Number(r.brokerFact) || 0;
+      const logiP = Number(r.logiPlan) || 0, custP = Number(r.customsPlan) || 0, brokP = Number(r.brokerPlan) || 0;
+      const ved = r.market === 'FOREIGN_VED';
+      const cur = ved ? (r.currency || 'CNY') : 'RUB';
+      const invCurFact = pF * qR, invCurPlan = pP * qO;
+      const invRubFact = ved ? invCurFact * rF : invCurFact;
+      const invRubPlan = ved ? invCurPlan * rP : invCurPlan;
+      const extraFact = logiF + custF + brokF, extraPlan = logiP + custP + brokP;
+      const landedFact = invRubFact + extraFact, landedPlan = invRubPlan + extraPlan;
+      const unitLanded = qR ? landedFact / qR : 0;
+      const overhead = invRubFact ? extraFact / invRubFact * 100 : 0;
+      const logiPerUnit = qR ? logiF / qR : 0;
+      const extraPlanPU = qO ? extraPlan / qO : 0;
+      const landedPlanFlex = (ved ? pP * qR * rP : pP * qR) + extraPlanPU * qR;
+      const dirKey = (r.country || '—') + ' → склад';
+      if (qR > 0) { if (!dir[dirKey]) dir[dirKey] = { sum: 0, qty: 0 }; dir[dirKey].sum += logiF; dir[dirKey].qty += qR; }
+      const onTime = (r.dateFact && r.datePlan) ? (new Date(r.dateFact) <= new Date(r.datePlan)) : (r.dateFact ? true : null);
+      const inFull = qO ? qR >= qO - 1e-6 : null;
+      const delivered = /принято|получено|склад|закрыт/i.test(r.status || '') || !!r.dateFact;
+      const otif = (onTime === true) && (inFull === true);
+      const otifStatus = !delivered ? 'PENDING' : (otif ? 'OTIF_OK' : ((inFull === false && onTime === false) ? 'FAIL' : (onTime === false ? 'LATE' : 'INCOMPLETE')));
+      // факторный анализ план→факт
+      const priceFactor = (pF - pP) * qR * (ved ? rP : 1);
+      const logiPerPlan = qO ? extraPlan / qO : 0, logiPerFact = qR ? extraFact / qR : 0;
+      const logiFactor = (logiPerFact - logiPerPlan) * qR;
+      const fxFactor = ved ? (rF - rP) * invCurFact : 0;
+      const totDev = landedFact - landedPlanFlex;
+      const inTransit = /в пути|таможн|транзит/i.test(r.status || '');
+      const transitDays = inTransit ? this.lcDays(r.orderDate || r.shipDate, this.ymd(today)) : null;
+      return { ...r, qO, qR, pP, pF, rP, rF, logiF, custF, brokF, ved, cur, invCurFact, invRubFact, invRubPlan, extraFact, extraPlan, landedFact, landedPlan, landedPlanFlex, unitLanded, overhead, logiPerUnit, dirKey, onTime, inFull, delivered, otif, otifStatus, priceFactor, logiFactor, fxFactor, totDev, inTransit, transitDays };
+    });
+    // аномалии: логистика на единицу выше средней по направлению > 10%
+    const recs = recs0.map(r => {
+      const d = dir[r.dirKey]; const avg = d && d.qty ? d.sum / d.qty : 0;
+      const isAnom = avg > 0 && r.logiPerUnit > avg * 1.10 && r.qR > 0;
+      const overpay = isAnom ? (r.logiPerUnit - avg) * r.qR : 0;
+      return { ...r, dirAvg: avg, isAnom, overpay };
+    });
+    return { recs, dir };
+  }
+  lcFiltered(recs) {
+    const S = this.state;
+    return recs.filter(r => {
+      if (S.lcFltMarket && r.market !== S.lcFltMarket) return false;
+      if (S.lcFltSupplier && r.supplier !== S.lcFltSupplier) return false;
+      if (S.lcFltStatus && r.status !== S.lcFltStatus) return false;
+      if (S.lcOnlyAnom && !r.isAnom) return false;
+      return true;
+    });
+  }
+  lcMut(arr, meta) {
+    this.setState({ lcData: arr, lcMeta: meta || this.state.lcMeta, lcErr: '' });
+    try { this.lsSet('lcdata', JSON.stringify(arr)); } catch (e) {}
+  }
+  lcClear() { this.setState({ lcData: [], lcMeta: null, lcStatus: '', lcErr: '' }); try { this.lsSet('lcdata', '[]'); } catch (e) {} }
+  toggleLcAnom() { this.setState({ lcOnlyAnom: !this.state.lcOnlyAnom }); }
+  lcLoadDemo() {
+    const T = (d) => { const x = new Date(); x.setDate(x.getDate() + d); return this.ymd(x); };
+    const rows = [
+      { no: 'ЗК-204', supplier: 'Jinan Yudong Tech', country: 'CHN', market: 'FOREIGN_VED', incoterms: 'FOB', status: 'Принято', material: 'Смола эпоксидная YD-128', unit: 'кг', orderDate: T(-58), datePlan: T(-12), dateFact: T(-9), qtyOrdered: 18000, qtyReceived: 18000, pricePlan: 12.4, priceFact: 12.9, currency: 'CNY', ratePlan: 12.6, rateFact: 13.1, logiPlan: 410000, logiFact: 432000, customsPlan: 290000, customsFact: 305000, brokerPlan: 45000, brokerFact: 45000 },
+      { no: 'ЗК-205', supplier: 'Jinan Yudong Tech', country: 'CHN', market: 'FOREIGN_VED', incoterms: 'FOB', status: 'Принято', material: 'Отвердитель T-31', unit: 'кг', orderDate: T(-44), datePlan: T(-6), dateFact: T(-2), qtyOrdered: 6000, qtyReceived: 5400, pricePlan: 28.0, priceFact: 28.6, currency: 'CNY', ratePlan: 12.6, rateFact: 13.25, logiPlan: 180000, logiFact: 360000, customsPlan: 140000, customsFact: 152000, brokerPlan: 30000, brokerFact: 38000 },
+      { no: 'ЗК-206', supplier: 'Sibur Trade', country: 'RUS', market: 'DOMESTIC', incoterms: '', status: 'Принято', material: 'Растворитель 646', unit: 'кг', orderDate: T(-30), datePlan: T(-18), dateFact: T(-18), qtyOrdered: 9000, qtyReceived: 9000, pricePlan: 96, priceFact: 94, currency: 'RUB', ratePlan: 1, rateFact: 1, logiPlan: 70000, logiFact: 68000, customsPlan: 0, customsFact: 0, brokerPlan: 0, brokerFact: 0 },
+      { no: 'ЗК-207', supplier: 'Kazan Org Synthesis', country: 'RUS', market: 'DOMESTIC', incoterms: '', status: 'Принято', material: 'Пигмент диоксид титана', unit: 'кг', orderDate: T(-26), datePlan: T(-14), dateFact: T(-10), qtyOrdered: 4000, qtyReceived: 4000, pricePlan: 285, priceFact: 298, currency: 'RUB', ratePlan: 1, rateFact: 1, logiPlan: 52000, logiFact: 95000, customsPlan: 0, customsFact: 0, brokerPlan: 0, brokerFact: 0 },
+      { no: 'ЗК-208', supplier: 'Wuxi Chemical', country: 'CHN', market: 'FOREIGN_VED', incoterms: 'CIF', status: 'Таможня', material: 'Пластификатор DOP', unit: 'кг', orderDate: T(-22), datePlan: T(8), dateFact: '', qtyOrdered: 22000, qtyReceived: 0, pricePlan: 9.8, priceFact: 9.8, currency: 'CNY', ratePlan: 12.7, rateFact: 13.3, logiPlan: 520000, logiFact: 540000, customsPlan: 380000, customsFact: 0, brokerPlan: 60000, brokerFact: 60000 },
+      { no: 'ЗК-209', supplier: 'Wuxi Chemical', country: 'CHN', market: 'FOREIGN_VED', incoterms: 'CIF', status: 'В пути', material: 'Стабилизатор Ca/Zn', unit: 'кг', orderDate: T(-12), datePlan: T(20), dateFact: '', qtyOrdered: 8000, qtyReceived: 0, pricePlan: 41, priceFact: 41, currency: 'CNY', ratePlan: 12.7, rateFact: 13.1, logiPlan: 260000, logiFact: 260000, customsPlan: 210000, customsFact: 0, brokerPlan: 35000, brokerFact: 35000 },
+      { no: 'ЗК-210', supplier: 'Nizhnekamskneftekhim', country: 'RUS', market: 'DOMESTIC', incoterms: '', status: 'В пути', material: 'Каучук СКД', unit: 'кг', orderDate: T(-40), datePlan: T(-2), dateFact: '', qtyOrdered: 12000, qtyReceived: 0, pricePlan: 178, priceFact: 178, currency: 'RUB', ratePlan: 1, rateFact: 1, logiPlan: 120000, logiFact: 120000, customsPlan: 0, customsFact: 0, brokerPlan: 0, brokerFact: 0 },
+      { no: 'ЗК-211', supplier: 'Sibur Trade', country: 'RUS', market: 'DOMESTIC', incoterms: '', status: 'Принято', material: 'Полиэтиленгликоль ПЭГ-400', unit: 'кг', orderDate: T(-20), datePlan: T(-8), dateFact: T(-8), qtyOrdered: 5000, qtyReceived: 5000, pricePlan: 142, priceFact: 139, currency: 'RUB', ratePlan: 1, rateFact: 1, logiPlan: 44000, logiFact: 43000, customsPlan: 0, customsFact: 0, brokerPlan: 0, brokerFact: 0 },
+    ];
+    this.lcMut(rows, { src: 'demo', at: Date.now(), period: 'демо' });
+    this.setState({ lcStatus: 'Загружены демонстрационные данные (8 партий). Замените их выгрузкой из 1С или файлом.', lcErr: '' });
+  }
+  lcDownloadTemplate() {
+    const XLSX = window.XLSX; if (!XLSX) { this.setState({ lcErr: 'Библиотека Excel не загрузилась — обновите страницу.' }); return; }
+    const headers = ['№ партии', 'Поставщик', 'Страна (RUS/CHN/…)', 'Рынок (Внутренний/ВЭД)', 'Инкотермс', 'Статус', 'Материал', 'Ед.', 'Дата заказа', 'Дата прихода план', 'Дата прихода факт', 'Кол-во заказ', 'Кол-во факт', 'Цена план (вал.)', 'Цена факт (вал.)', 'Валюта', 'Курс план', 'Курс факт', 'Логистика план ₽', 'Логистика факт ₽', 'Таможня план ₽', 'Таможня факт ₽', 'Брокер план ₽', 'Брокер факт ₽'];
+    const ex = ['ЗК-204', 'Jinan Yudong Tech', 'CHN', 'ВЭД', 'FOB', 'Принято', 'Смола эпоксидная YD-128', 'кг', '2026-04-01', '2026-05-15', '2026-05-18', 18000, 18000, 12.4, 12.9, 'CNY', 12.6, 13.1, 410000, 432000, 290000, 305000, 45000, 45000];
+    const ws = XLSX.utils.aoa_to_sheet([headers, ex]);
+    ws['!cols'] = headers.map(h => ({ wch: Math.max(12, h.length + 2) }));
+    const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Закупки');
+    XLSX.writeFile(wb, 'Шаблон закупок (Landed Cost).xlsx');
+  }
+  lcNorm(s) { return String(s == null ? '' : s).trim().toLowerCase().replace(/ё/g, 'е'); }
+  async onLcFile(e) {
+    const file = e.target && e.target.files && e.target.files[0]; if (e.target) e.target.value = '';
+    if (!file) return;
+    if (!/\.xlsx$/i.test(file.name || '')) { this.setState({ lcErr: '«' + (file.name || 'файл') + '» — нужен .xlsx.' }); return; }
+    this.setState({ lcBusy: true, lcErr: '', lcStatus: '' });
+    try {
+      const XLSX = window.XLSX; if (!XLSX) throw new Error('Библиотека чтения Excel не загрузилась — обновите страницу.');
+      const buf = await file.arrayBuffer();
+      const wb = XLSX.read(buf, { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: null });
+      const rows = this.lcParseAoa(aoa);
+      if (!rows.length) throw new Error('Не удалось распознать ни одной партии. Скачайте шаблон и проверьте заголовки колонок.');
+      this.lcMut(rows, { src: 'file', file: file.name, at: Date.now(), period: this.lcPeriodOf(rows) });
+      this.setState({ lcBusy: false, lcStatus: 'Загружено партий: ' + rows.length + ' (' + file.name + ').', lcErr: '' });
+    } catch (err) { this.setState({ lcBusy: false, lcErr: 'Ошибка чтения файла: ' + (err.message || err) }); }
+  }
+  lcPeriodOf(rows) {
+    const ds = rows.map(r => r.dateFact || r.datePlan || r.orderDate).filter(Boolean).sort();
+    if (!ds.length) return '';
+    return (ds[0] || '').slice(0, 7);
+  }
+  lcExcelDate(v) {
+    if (v == null || v === '') return '';
+    if (typeof v === 'number') { const d = new Date(Math.round((v - 25569) * 86400000)); return isNaN(d) ? '' : this.ymd(d); }
+    const s = String(v).trim();
+    const m = s.match(/^(\d{1,2})[.\/](\d{1,2})[.\/](\d{2,4})$/);
+    if (m) { const y = m[3].length === 2 ? '20' + m[3] : m[3]; return y + '-' + m[2].padStart(2, '0') + '-' + m[1].padStart(2, '0'); }
+    const d = new Date(s); return isNaN(d) ? s.slice(0, 10) : this.ymd(d);
+  }
+  lcParseAoa(aoa) {
+    if (!Array.isArray(aoa) || !aoa.length) return [];
+    let hr = -1;
+    for (let i = 0; i < Math.min(aoa.length, 12); i++) { const row = (aoa[i] || []).map(c => this.lcNorm(c)); if (row.some(c => /постав/.test(c)) && row.some(c => /матери|номенк|сырь/.test(c))) { hr = i; break; } }
+    if (hr < 0) hr = 0;
+    const head = (aoa[hr] || []).map(c => this.lcNorm(c));
+    const find = (...keys) => { for (let i = 0; i < head.length; i++) { const h = head[i]; if (keys.some(k => h.includes(k))) return i; } return -1; };
+    const ci = {
+      no: find('партии', '№ зп', 'номер', '№'), supplier: find('постав'), country: find('страна'),
+      market: find('рынок'), incoterms: find('инкотермс', 'incoterm'), status: find('статус'),
+      material: find('матери', 'номенк', 'сырь'), unit: find('ед.', 'ед '),
+      orderDate: find('дата заказа', 'заказа'), datePlan: find('приход', 'план'), dateFact: find('факт'),
+      qtyOrdered: find('заказ', 'кол-во заказ'), qtyReceived: find('кол-во факт', 'факт кол', 'принято', 'получено'),
+      pricePlan: find('цена план'), priceFact: find('цена факт'), currency: find('валюта'),
+      ratePlan: find('курс план'), rateFact: find('курс факт'),
+      logiPlan: find('логист'), logiFact: find('логист'), customsPlan: find('таможн'), customsFact: find('таможн'), brokerPlan: find('брокер'), brokerFact: find('брокер'),
+    };
+    // повторный поиск пар план/факт по подписи
+    const findPair = (word) => { const out = []; for (let i = 0; i < head.length; i++) { if (head[i].includes(word)) out.push(i); } return out; };
+    const logiP = findPair('логист'), custP = findPair('таможн'), brokP = findPair('брокер');
+    const num = (v) => { if (v == null || v === '') return 0; const n = parseFloat(String(v).replace(/\s/g, '').replace(/[^\d.,-]/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
+    const get = (row, idx) => idx >= 0 ? row[idx] : null;
+    const mkMarket = (v) => { const s = this.lcNorm(v); return /вэд|вед|импорт|foreign|ved/.test(s) ? 'FOREIGN_VED' : 'DOMESTIC'; };
+    const out = [];
+    for (let i = hr + 1; i < aoa.length; i++) {
+      const row = aoa[i] || []; const sup = get(row, ci.supplier), mat = get(row, ci.material);
+      if (!sup && !mat) continue;
+      const r = {
+        no: String(get(row, ci.no) || ('ЗК-' + (out.length + 1))).trim(),
+        supplier: String(sup || '').trim(), country: String(get(row, ci.country) || '').trim().toUpperCase(),
+        market: mkMarket(get(row, ci.market)), incoterms: String(get(row, ci.incoterms) || '').trim(),
+        status: String(get(row, ci.status) || 'Принято').trim(), material: String(mat || '').trim(),
+        unit: String(get(row, ci.unit) || 'кг').trim(),
+        orderDate: this.lcExcelDate(get(row, ci.orderDate)), datePlan: this.lcExcelDate(get(row, ci.datePlan)), dateFact: this.lcExcelDate(get(row, ci.dateFact)),
+        qtyOrdered: num(get(row, ci.qtyOrdered)), qtyReceived: num(get(row, ci.qtyReceived)),
+        pricePlan: num(get(row, ci.pricePlan)), priceFact: num(get(row, ci.priceFact)), currency: String(get(row, ci.currency) || 'RUB').trim().toUpperCase(),
+        ratePlan: num(get(row, ci.ratePlan)) || 1, rateFact: num(get(row, ci.rateFact)) || 1,
+        logiPlan: num(get(row, logiP[0])), logiFact: num(get(row, logiP[1] != null ? logiP[1] : logiP[0])),
+        customsPlan: num(get(row, custP[0])), customsFact: num(get(row, custP[1] != null ? custP[1] : custP[0])),
+        brokerPlan: num(get(row, brokP[0])), brokerFact: num(get(row, brokP[1] != null ? brokP[1] : brokP[0])),
+      };
+      if (!r.qtyReceived && r.qtyOrdered && /принято|получено|склад|закрыт/i.test(r.status)) r.qtyReceived = r.qtyOrdered;
+      out.push(r);
+    }
+    return out;
+  }
+  async lcFetch1c() {
+    const S = this.state; const url = (S.lc1cUrl || '').trim();
+    if (!url) { this.setState({ lcErr: 'Укажите адрес HTTP-сервиса 1С.' }); return; }
+    this.setState({ lc1cBusy: true, lcErr: '', lcStatus: '' });
+    try {
+      const headers = { 'Accept': 'application/json' };
+      const tok = (S.lc1cToken || '').trim(); if (tok) headers['Authorization'] = /^(Basic|Bearer)/i.test(tok) ? tok : ('Basic ' + btoa(tok));
+      const res = await fetch(url, { headers });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const json = await res.json();
+      const arr = Array.isArray(json) ? json : (json.purchases || json.rows || json.data || []);
+      const rows = this.lc1cMap(arr);
+      if (!rows.length) throw new Error('Сервис вернул пустой список партий.');
+      this.lcMut(rows, { src: '1c', url, at: Date.now(), period: this.lcPeriodOf(rows) });
+      this.setState({ lc1cBusy: false, lcStatus: 'Из 1С загружено партий: ' + rows.length + '.', lcErr: '' });
+    } catch (err) {
+      this.setState({ lc1cBusy: false, lcErr: 'Не удалось получить данные из 1С: ' + (err.message || err) + '. Проверьте адрес, доступ и CORS HTTP-сервиса. Можно загрузить выгрузку файлом (.xlsx).' });
+    }
+  }
+  lc1cMap(arr) {
+    const num = (v) => { const n = parseFloat(v); return isNaN(n) ? 0 : n; };
+    const mk = (v) => /вэд|вед|импорт|foreign|ved/i.test(String(v || '')) ? 'FOREIGN_VED' : 'DOMESTIC';
+    return (arr || []).map((o, i) => ({
+      no: String(o.no || o.number || o.НомерПартии || ('ЗК-' + (i + 1))),
+      supplier: String(o.supplier || o.Поставщик || ''), country: String(o.country || o.Страна || '').toUpperCase(),
+      market: mk(o.market || o.market_type || o.Рынок), incoterms: String(o.incoterms || o.incoterms_basis || o.Инкотермс || ''),
+      status: String(o.status || o.Статус || 'Принято'), material: String(o.material || o.Номенклатура || o.Материал || ''),
+      unit: String(o.unit || o.Ед || 'кг'),
+      orderDate: this.lcExcelDate(o.orderDate || o.order_date || o.ДатаЗаказа), datePlan: this.lcExcelDate(o.datePlan || o.plan_date || o.ДатаПриходаПлан), dateFact: this.lcExcelDate(o.dateFact || o.fact_date || o.ДатаПриходаФакт),
+      qtyOrdered: num(o.qtyOrdered || o.quantity_ordered || o.КоличествоЗаказ), qtyReceived: num(o.qtyReceived || o.quantity_received || o.КоличествоФакт),
+      pricePlan: num(o.pricePlan || o.price_plan || o.ЦенаПлан), priceFact: num(o.priceFact || o.price_fact || o.price_per_unit_currency || o.ЦенаФакт),
+      currency: String(o.currency || o.Валюта || 'RUB').toUpperCase(),
+      ratePlan: num(o.ratePlan || o.exchange_rate_plan || o.КурсПлан) || 1, rateFact: num(o.rateFact || o.exchange_rate_fact || o.КурсФакт) || 1,
+      logiPlan: num(o.logiPlan || o.ЛогистикаПлан), logiFact: num(o.logiFact || o.logistics || o.ЛогистикаФакт),
+      customsPlan: num(o.customsPlan || o.ТаможняПлан), customsFact: num(o.customsFact || o.customs || o.ТаможняФакт),
+      brokerPlan: num(o.brokerPlan || o.БрокерПлан), brokerFact: num(o.brokerFact || o.broker || o.БрокерФакт),
+    }));
+  }
+  lcTransitBucket(days) { if (days == null) return 'н/д'; if (days <= 15) return 'до 15 дней'; if (days <= 30) return '15–30 дней'; return '> 30 дней'; }
+  buildLanded() {
+    const S = this.state, set = (p) => this.setState(p);
+    const co = this.co();
+    const E = this.lcEnrich();
+    const recs = E.recs;
+    const base = {
+      isLanded: true, lcCoName: co.name + ' Flow',
+      lcEmpty: recs.length === 0, lcReady: recs.length > 0,
+      lcHasErr: !!S.lcErr, lcErr: S.lcErr, lcHasStatus: !!S.lcStatus && !S.lcErr, lcStatus: S.lcStatus,
+      lc1cUrl: S.lc1cUrl || '', onLc1cUrl: (e) => set({ lc1cUrl: e.target.value }),
+      lc1cBusy: !!S.lc1cBusy, lc1cBtnText: S.lc1cBusy ? 'Загрузка…' : 'Получить из 1С',
+      onLcFile: (e) => this.onLcFile(e), lcFetch1c: () => this.lcFetch1c(), lcLoadDemo: () => this.lcLoadDemo(),
+      lcDownloadTemplate: () => this.lcDownloadTemplate(), lcClear: () => this.lcClear(), lcExportExcel: () => this.lcExportExcel(),
+    };
+    if (!recs.length) return base;
+    const view = S.lcView || 'dash';
+    const flt = this.lcFiltered(recs);
+    const sum = (a, k) => a.reduce((s, r) => s + (Number(r[k]) || 0), 0);
+    const delivered = recs.filter(r => r.delivered);
+    // KPI
+    const totLanded = sum(delivered, 'landedFact');
+    const totExtra = sum(delivered, 'extraFact');
+    const totInv = sum(delivered, 'invRubFact');
+    const overheadAll = totInv ? totExtra / totInv * 100 : 0;
+    const fxTot = sum(recs, 'fxFactor');
+    const otifPool = recs.filter(r => r.delivered);
+    const otifOk = otifPool.filter(r => r.otif).length;
+    const otifPct = otifPool.length ? otifOk / otifPool.length * 100 : 0;
+    const anoms = recs.filter(r => r.isAnom);
+    const anomSum = sum(anoms, 'overpay');
+    const transit = recs.filter(r => r.inTransit);
+    const transitTot = sum(transit, 'landedPlan');
+    base.lcKpiLanded = this.lcRub(totLanded);
+    base.lcKpiBatches = String(delivered.length);
+    base.lcKpiPeriod = (S.lcMeta && S.lcMeta.period) || '—';
+    base.lcKpiOverhead = this.lcPct(overheadAll);
+    base.lcKpiExtraRub = this.lcNum(totExtra);
+    base.lcKpiFx = this.lcSign(fxTot);
+    base.lcKpiFxCls = fxTot > 0 ? 'lckv neg' : (fxTot < 0 ? 'lckv pos' : 'lckv');
+    base.lcKpiFxNote = fxTot > 0 ? 'потери на курсе' : (fxTot < 0 ? 'выгода по курсу' : 'нейтрально');
+    base.lcKpiOtif = this.lcPct(otifPct);
+    base.lcKpiOtifNote = otifOk + ' из ' + otifPool.length + ' в срок и в объёме';
+    base.lcKpiAnom = String(anoms.length);
+    base.lcKpiAnomCls = anoms.length ? 'lckv neg' : 'lckv pos';
+    base.lcKpiAnomSum = this.lcNum(anomSum);
+    base.lcKpiTransit = this.lcRub(transitTot);
+    base.lcKpiTransitN = String(transit.length);
+    // вердикт
+    const vparts = [];
+    vparts.push('Полная себестоимость закупок (Landed Cost) за период — ' + this.lcRub(totLanded) + ', из них накладные расходы (логистика + таможня + брокер) — ' + this.lcPct(overheadAll) + '.');
+    if (fxTot > 0) vparts.push('Валютный фактор по ВЭД дал потери ' + this.lcRub(fxTot) + ' из-за роста курса между датой контракта и оплаты.');
+    else if (fxTot < 0) vparts.push('Валютный фактор по ВЭД принёс выгоду ' + this.lcRub(-fxTot) + '.');
+    if (anoms.length) vparts.push('Выявлено ' + anoms.length + ' аномалий накладных расходов, переплата — ' + this.lcRub(anomSum) + '. См. вкладку «Аномалии».');
+    else vparts.push('Аномалий накладных расходов не выявлено.');
+    vparts.push('OTIF поставщиков — ' + this.lcPct(otifPct) + '; в пути/на таможне заморожено ' + this.lcRub(transitTot) + '.');
+    base.lcVerdict = vparts.join(' ');
+    // views
+    base.lcViews = [['batches', 'Партии · Landed'], ['factor', 'Факторный анализ'], ['anom', 'Аномалии'], ['otif', 'OTIF'], ['transit', 'Капитал в пути']].map(([id, label]) => ({ label, cls: view === id ? 'lctab on' : 'lctab', go: () => set({ lcView: id }) }));
+    base.lcView = view;
+    base.lcIsBatches = view === 'dash' || view === 'batches';
+    base.lcIsFactor = view === 'factor'; base.lcIsAnom = view === 'anom'; base.lcIsOtif = view === 'otif'; base.lcIsTransit = view === 'transit';
+    // filters
+    base.lcFltMarket = S.lcFltMarket || ''; base.onLcFltMarket = (e) => set({ lcFltMarket: e.target.value });
+    base.lcFltSupplier = S.lcFltSupplier || ''; base.onLcFltSupplier = (e) => set({ lcFltSupplier: e.target.value });
+    base.lcFltStatus = S.lcFltStatus || ''; base.onLcFltStatus = (e) => set({ lcFltStatus: e.target.value });
+    base.lcSupplierOpts = [...new Set(recs.map(r => r.supplier))].filter(Boolean);
+    base.lcStatusOpts = [...new Set(recs.map(r => r.status))].filter(Boolean);
+    base.lcAnomBtnCls = S.lcOnlyAnom ? 'lctab on' : 'lctab'; base.lcAnomBtnText = S.lcOnlyAnom ? 'Вкл' : 'Выкл'; base.toggleLcAnom = () => this.toggleLcAnom();
+    // batches table
+    const otifTag = (st) => ({ OTIF_OK: ['OTIF', 'lctag ok'], LATE: ['Срыв срока', 'lctag late'], INCOMPLETE: ['Недопоставка', 'lctag part'], FAIL: ['Срыв', 'lctag fail'], PENDING: ['—', 'lctag dom'] }[st] || ['—', 'lctag dom']);
+    base.lcBatchRows = flt.map(r => {
+      const [otxt, ocls] = otifTag(r.otifStatus);
+      return { no: r.no, supplier: r.supplier, mkt: this.lcMarketLabel(r.market), mktCls: r.ved ? 'lctag ved' : 'lctag dom',
+        material: r.material, qty: this.lcNum(r.qR), invoice: this.lcNum(r.invRubFact), logi: this.lcNum(r.logiF), customs: this.lcNum(r.custF), broker: this.lcNum(r.brokF),
+        landed: this.lcNum(r.landedFact), unit: r.qR ? this.lcNum(r.unitLanded) : '—', overhead: this.lcPct(r.overhead),
+        otif: otxt, otifCls: ocls, cls: r.isAnom ? 'anom' : (r.otifStatus === 'OTIF_OK' ? 'good' : '') };
+    });
+    base.lcBatchN = String(flt.length);
+    base.lcTotQty = this.lcNum(sum(flt, 'qR')); base.lcTotInvoice = this.lcNum(sum(flt, 'invRubFact'));
+    base.lcTotLogi = this.lcNum(sum(flt, 'logiF')); base.lcTotCustoms = this.lcNum(sum(flt, 'custF')); base.lcTotBroker = this.lcNum(sum(flt, 'brokF'));
+    base.lcTotLanded = this.lcNum(sum(flt, 'landedFact'));
+    const fDel = flt.filter(r => r.delivered); const fInv = sum(fDel, 'invRubFact'); base.lcTotOverhead = this.lcPct(fInv ? sum(fDel, 'extraFact') / fInv * 100 : 0);
+    // factor table (только принятые партии — у которых есть факт для сравнения)
+    const fc = (n) => (n > 0 ? 'lcfacpos' : (n < 0 ? 'lcfacneg' : ''));
+    const fltF = flt.filter(r => r.delivered);
+    base.lcFactorRows = fltF.map(r => ({ no: r.no, supplier: r.supplier, plan: this.lcNum(r.landedPlanFlex), fact: this.lcNum(r.landedFact),
+      fPrice: this.lcSign(r.priceFactor), fPriceCls: fc(r.priceFactor), fLogi: this.lcSign(r.logiFactor), fLogiCls: fc(r.logiFactor),
+      fFx: this.lcSign(r.fxFactor), fFxCls: fc(r.fxFactor), fTot: this.lcSign(r.totDev), fTotCls: fc(r.totDev), cls: r.totDev > 0 ? 'anom' : (r.totDev < 0 ? 'good' : '') }));
+    base.lcFTotPlan = this.lcNum(sum(fltF, 'landedPlanFlex')); base.lcFTotFact = this.lcNum(sum(fltF, 'landedFact'));
+    base.lcFTotPrice = this.lcSign(sum(fltF, 'priceFactor')); base.lcFTotLogi = this.lcSign(sum(fltF, 'logiFactor')); base.lcFTotFx = this.lcSign(sum(fltF, 'fxFactor')); base.lcFTotDev = this.lcSign(sum(fltF, 'totDev'));
+    // anomalies
+    base.lcAnomEmpty = anoms.length === 0;
+    base.lcAnomRows = anoms.map(r => ({ title: 'Партия ' + r.no + ' · ' + r.supplier + ' · ' + r.material,
+      text: 'Логистика ' + this.lcNum(r.logiPerUnit) + ' ₽/' + (r.unit || 'ед') + ' против средней ' + this.lcNum(r.dirAvg) + ' ₽/' + (r.unit || 'ед') + ' по направлению «' + r.dirKey + '» (+' + this.lcPct((r.dirAvg ? (r.logiPerUnit / r.dirAvg - 1) * 100 : 0)) + '). Вероятная причина: сверхнормативное хранение/демередж или смена маршрута.',
+      sum: this.lcNum(r.overpay) }));
+    // OTIF by supplier
+    const supMap = new Map();
+    for (const r of otifPool) { const k = r.supplier; if (!supMap.has(k)) supMap.set(k, { supplier: k, country: r.country, n: 0, onTime: 0, inFull: 0, otif: 0 }); const s = supMap.get(k); s.n++; if (r.onTime) s.onTime++; if (r.inFull) s.inFull++; if (r.otif) s.otif++; }
+    base.lcOtifRows = [...supMap.values()].sort((a, b) => b.n - a.n).map(s => { const rating = s.n ? s.otif / s.n * 100 : 0; const col = rating >= 90 ? '#1F8A5B' : (rating >= 70 ? '#e8a33d' : '#c0322b');
+      return { supplier: s.supplier, country: s.country || '—', n: String(s.n), onTime: String(s.onTime), inFull: String(s.inFull), otif: String(s.otif), rating: this.lcPct(rating), barStyle: 'width:' + Math.max(4, Math.round(rating)) + '%;background:' + col, cls: rating < 70 ? 'anom' : (rating >= 90 ? 'good' : '') }; });
+    // transit
+    const statTag = (st) => /таможн/i.test(st) ? 'lctag late' : 'lctag ved';
+    base.lcTransitRows = transit.sort((a, b) => (b.transitDays || 0) - (a.transitDays || 0)).map(r => ({ no: r.no, supplier: r.supplier, status: r.status, statCls: statTag(r.status), bucket: r.transitDays != null ? (r.transitDays + ' дн · ' + this.lcTransitBucket(r.transitDays)) : this.lcTransitBucket(null), landed: this.lcNum(r.landedPlan) }));
+    const b1 = transit.filter(r => r.transitDays != null && r.transitDays <= 15), b2 = transit.filter(r => r.transitDays != null && r.transitDays > 15 && r.transitDays <= 30), b3 = transit.filter(r => r.transitDays != null && r.transitDays > 30);
+    base.lcTransitBreak = 'до 15: ' + this.lcNum(sum(b1, 'landedPlan')) + ' · 15–30: ' + this.lcNum(sum(b2, 'landedPlan')) + ' · >30: ' + this.lcNum(sum(b3, 'landedPlan'));
+    base.lcTransitTot = this.lcNum(transitTot);
+    return base;
+  }
+  lcExportExcel() {
+    const XLSX = window.XLSX; if (!XLSX) { this.setState({ lcErr: 'Библиотека Excel не загрузилась — обновите страницу.' }); return; }
+    const E = this.lcEnrich(); const recs = E.recs;
+    if (!recs.length) { try { alert('Нет данных для экспорта.'); } catch (e) {} return; }
+    const st = this.mgXlSt(), coName = this.co().name, S = this.state;
+    const r2 = (n) => Math.round((Number(n) || 0) * 100) / 100;
+    const sum = (a, k) => a.reduce((s, r) => s + (Number(r[k]) || 0), 0);
+    const delivered = recs.filter(r => r.delivered);
+    const totLanded = sum(delivered, 'landedFact'), totExtra = sum(delivered, 'extraFact'), totInv = sum(delivered, 'invRubFact');
+    const overheadAll = totInv ? totExtra / totInv * 100 : 0;
+    const fxTot = sum(recs, 'fxFactor');
+    const otifPool = recs.filter(r => r.delivered), otifOk = otifPool.filter(r => r.otif).length, otifPct = otifPool.length ? otifOk / otifPool.length * 100 : 0;
+    const anoms = recs.filter(r => r.isAnom), anomSum = sum(anoms, 'overpay');
+    const transit = recs.filter(r => r.inTransit), transitTot = sum(transit, 'landedPlan');
+    const wb = XLSX.utils.book_new();
+    // ---- Лист 1: Дашборд ----
+    const kpis = [
+      ['Landed Cost (факт), ₽', r2(totLanded)], ['Накладные расходы, ₽', r2(totExtra)], ['% накладных от стоимости сырья', r2(overheadAll)],
+      ['Валютный фактор (потери +/выгода −), ₽', r2(fxTot)], ['OTIF поставок, %', r2(otifPct)], ['Аномалии накладных расходов, шт', anoms.length],
+      ['Переплата по аномалиям, ₽', r2(anomSum)], ['Капитал в пути/на таможне, ₽', r2(transitTot)], ['Партий принято', delivered.length],
+    ];
+    const aoa1 = [['План-Факт анализ и аудит закупок · ' + coName], ['Период: ' + ((S.lcMeta && S.lcMeta.period) || '—')], []].concat(kpis);
+    const ws1 = XLSX.utils.aoa_to_sheet(aoa1);
+    const C = (r, c) => { const ad = XLSX.utils.encode_cell({ r, c }); if (!ws1[ad]) ws1[ad] = { t: 's', v: '' }; return ws1[ad]; };
+    C(0, 0).s = { font: { name: 'Calibri', sz: 16, bold: true, color: { rgb: st.NAVY } } };
+    C(1, 0).s = { font: { name: 'Calibri', sz: 11, italic: true, color: { rgb: '7F7F7F' } } };
+    for (let i = 0; i < kpis.length; i++) { const r = 3 + i; const sig = /потер|аномал|переплат/i.test(kpis[i][0]); const good = /OTIF|выгода/i.test(kpis[i][0]);
+      C(r, 0).s = { font: { name: 'Calibri', sz: 11, bold: true, color: { rgb: '1A1A1A' } }, fill: { fgColor: { rgb: st.SUB } }, border: { bottom: { style: 'thin', color: { rgb: st.GREY } } }, alignment: { horizontal: 'left' } };
+      const cl = C(r, 1); const isPct = /%/.test(kpis[i][0]); const isCnt = /шт|Партий/.test(kpis[i][0]);
+      cl.s = { font: { name: 'Calibri', sz: 12, bold: true, color: { rgb: st.NAVY } }, alignment: { horizontal: 'right' }, numFmt: isCnt ? '0' : (isPct ? '0.0"%"' : '#,##0\\ "₽"'), border: { bottom: { style: 'thin', color: { rgb: st.GREY } } } };
+    }
+    ws1['!cols'] = [{ wch: 42 }, { wch: 20 }];
+    XLSX.utils.book_append_sheet(wb, ws1, 'Дашборд');
+    // ---- Лист 2: План-Факт по партиям ----
+    const h2 = ['№ партии', 'Поставщик', 'Страна', 'Рынок', 'Инкотермс', 'Материал', 'Кол-во факт', 'Сырьё ₽', 'Логистика ₽', 'Таможня ₽', 'Брокер ₽', 'Landed ₽', 'Уд. ₽/ед', '% накл.', 'OTIF'];
+    const t2 = ['code', 'text', 'code', 'code', 'code', 'text', 'num', 'money', 'money', 'money', 'money', 'money', 'moneyu', 'pct', 'code'];
+    const otStr = { OTIF_OK: 'OTIF', LATE: 'срыв срока', INCOMPLETE: 'недопоставка', FAIL: 'срыв', PENDING: '—' };
+    const rows2 = recs.map(r => [r.no, r.supplier, r.country, this.lcMarketLabel(r.market), r.incoterms || '—', r.material, r2(r.qR), r2(r.invRubFact), r2(r.logiF), r2(r.custF), r2(r.brokF), r2(r.landedFact), r2(r.unitLanded), r2(r.overhead), otStr[r.otifStatus] || '—']);
+    const tot2 = ['ИТОГО', '', '', '', '', '', r2(sum(recs, 'qR')), r2(sum(recs, 'invRubFact')), r2(sum(recs, 'logiF')), r2(sum(recs, 'custF')), r2(sum(recs, 'brokF')), r2(sum(recs, 'landedFact')), '', '', ''];
+    XLSX.utils.book_append_sheet(wb, this.mgXlSheet('План-Факт по партиям · ' + coName, h2, t2, rows2, tot2), 'План-Факт по партиям');
+    // ---- Лист 3: Факторный анализ ----
+    const h3 = ['№ партии', 'Поставщик', 'Гибкий план Landed ₽', 'Факт Landed ₽', 'Δ Цена ₽', 'Δ Логистика/Таможня ₽', 'Δ Валюта ₽', 'Итог Δ ₽'];
+    const t3 = ['code', 'text', 'money', 'money', 'money', 'money', 'money', 'money'];
+    const rows3 = delivered.map(r => [r.no, r.supplier, r2(r.landedPlanFlex), r2(r.landedFact), r2(r.priceFactor), r2(r.logiFactor), r2(r.fxFactor), r2(r.totDev)]);
+    const tot3 = ['ИТОГО', '', r2(sum(delivered, 'landedPlanFlex')), r2(sum(delivered, 'landedFact')), r2(sum(delivered, 'priceFactor')), r2(sum(delivered, 'logiFactor')), r2(sum(delivered, 'fxFactor')), r2(sum(delivered, 'totDev'))];
+    XLSX.utils.book_append_sheet(wb, this.mgXlSheet('Факторный анализ отклонений · ' + coName, h3, t3, rows3, tot3), 'Факторный анализ');
+    // ---- Лист 4: Аномалии ----
+    const h4 = ['№ партии', 'Поставщик', 'Направление', 'Материал', 'Логистика ₽/ед', 'Средняя ₽/ед', 'Превышение %', 'Переплата ₽'];
+    const t4 = ['code', 'text', 'text', 'text', 'moneyu', 'moneyu', 'pct', 'money'];
+    const rows4 = anoms.map(r => [r.no, r.supplier, r.dirKey, r.material, r2(r.logiPerUnit), r2(r.dirAvg), r2(r.dirAvg ? (r.logiPerUnit / r.dirAvg - 1) * 100 : 0), r2(r.overpay)]);
+    const tot4 = ['ИТОГО', '', '', '', '', '', '', r2(anomSum)];
+    XLSX.utils.book_append_sheet(wb, this.mgXlSheet('Аномалии накладных расходов · ' + coName, h4, t4, rows4.length ? rows4 : [['—', 'аномалий не выявлено', '', '', 0, 0, 0, 0]], tot4), 'Аномалии');
+    // ---- Лист 5: OTIF ----
+    const supMap = new Map();
+    for (const r of otifPool) { const k = r.supplier; if (!supMap.has(k)) supMap.set(k, { supplier: k, country: r.country, n: 0, onTime: 0, inFull: 0, otif: 0 }); const s = supMap.get(k); s.n++; if (r.onTime) s.onTime++; if (r.inFull) s.inFull++; if (r.otif) s.otif++; }
+    const h5 = ['Поставщик', 'Страна', 'Партий', 'В срок', 'В объёме', 'OTIF', 'Рейтинг %'];
+    const t5 = ['text', 'code', 'num', 'num', 'num', 'num', 'pct'];
+    const rows5 = [...supMap.values()].sort((a, b) => b.n - a.n).map(s => [s.supplier, s.country || '—', s.n, s.onTime, s.inFull, s.otif, r2(s.n ? s.otif / s.n * 100 : 0)]);
+    const tot5 = ['ИТОГО', '', sum([...supMap.values()], 'n'), sum([...supMap.values()], 'onTime'), sum([...supMap.values()], 'inFull'), sum([...supMap.values()], 'otif'), ''];
+    XLSX.utils.book_append_sheet(wb, this.mgXlSheet('OTIF по поставщикам · ' + coName, h5, t5, rows5, tot5), 'OTIF');
+    // ---- Лист 6: Капитал в пути ----
+    const h6 = ['№ партии', 'Поставщик', 'Статус', 'Дней в пути', 'Срок', 'Landed ₽'];
+    const t6 = ['code', 'text', 'code', 'num', 'text', 'money'];
+    const rows6 = transit.map(r => [r.no, r.supplier, r.status, r.transitDays == null ? 0 : r.transitDays, this.lcTransitBucket(r.transitDays), r2(r.landedPlan)]);
+    const tot6 = ['ИТОГО', '', '', '', '', r2(transitTot)];
+    XLSX.utils.book_append_sheet(wb, this.mgXlSheet('Капитал в пути · ' + coName, h6, t6, rows6.length ? rows6 : [['—', 'нет партий в пути', '', 0, '', 0]], tot6), 'Капитал в пути');
+    XLSX.writeFile(wb, 'План-Факт закупки (Landed Cost) ' + coName + ' ' + new Date().toISOString().slice(0, 10) + '.xlsx');
+  }
   oneCQuickGet() { this.setState({ tab: 'onec', navOpen: false }); if ((this.state.oneCUrl || '').trim()) this.oneCSync(true); }
   downloadOneCSpec() {
     const L = [
@@ -7800,7 +8388,7 @@ class Component extends DCLogic {
       ['calc', 'Калькулятор'], ['recipe', 'Рецептуры'], ['prod', 'План производства'],
       ['prodplan', 'График производства'], ['procplan', 'Закупки по графику'],
       ['proc', 'План закупок'], ['cal', 'Календарь'], ['wh', 'Склад'], ['cover', 'Сводка'],
-      ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'],
+      ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['prodrep', 'Отчёты производства'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
       ['cost', 'Себестоимость · КО'], ['margin', 'Маржинальный отчёт'], ['costtree', 'Анализ себестоимости'],
       ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['home', 'Карта навигации'],
@@ -7810,7 +8398,7 @@ class Component extends DCLogic {
       { label: 'Задачи', items: ['tasks', 'docs', 'cal'] },
       { label: 'Производство', items: ['prod', 'prodplan', 'recipe', 'tcalc', 'xcalc', 'catalog', 'prodrep'], en: { prodplan: 'График производства' } },
       { label: 'Продажи', items: ['sales', 'calc', 'prices'] },
-      { label: 'Закупки', items: ['proc', 'procplan', 'runrate', 'audit', 'cparties'], en: { procplan: 'График закупок', cparties: 'Поставщики / Контрагенты' } },
+      { label: 'Закупки', items: ['proc', 'procplan', 'runrate', 'audit', 'landed', 'cparties'], en: { procplan: 'График закупок', cparties: 'Поставщики / Контрагенты' } },
       { label: 'Логистика и склад', items: ['wh', 'receipts', 'logi', 'turnover', 'cover'], en: { cover: 'Сводка запасов' } },
       { label: 'Финансы', items: ['margin', 'cost', 'costtree', 'pay', 'treas30', 'planfact', 'stress', 'reports'] },
       { label: 'Настройки', items: ['cloud', 'onec', 'users'] },
@@ -7857,6 +8445,7 @@ class Component extends DCLogic {
       reports: 'Отчёты по производству и закупкам с выгрузкой в CSV.',
       runrate: 'Run Rate — план закупок сырья по среднему месячному потреблению: точка заказа, объём докупки и месяц заказа с учётом срока поставки и страхового запаса.',
       audit: 'Аудит закупочных цен по реестру заявок: динамика цен поставщиков по периодам, лучшая/худшая цена, переплаты и стратегия переговоров.',
+      landed: 'Полная себестоимость закупки (Landed Cost) для внутреннего рынка и ВЭД: сырьё + логистика + таможня + брокер. Аудит аномалий накладных расходов, OTIF поставщиков, факторный план-факт анализ (цена / логистика / валюта) и капитал «в пути». Загрузка из файла (.xlsx) или из 1С.',
       pay: 'Казначейство: статусы оплат по заказам, кредитный портфель (предоплата vs отсрочка), календарь платежей, долги по поставщикам и сырью, риски срыва поставок.',
       turnover: 'Оборачиваемость запасов: коэффициент и дни оборота, неликвиды («замороженный капитал») и дефицитные риски, сумма замороженных денег.',
       planfact: 'План-факт анализ закупок: отклонения по объёму и цене, разделение причин (рынок vs планирование) и финансовый итог к бюджету.',
@@ -7956,7 +8545,7 @@ class Component extends DCLogic {
       onPrint: () => {}, onExcel: () => {}, onWord: () => {},
       product: S.product, rate: S.rate, loss: S.loss, recipeOwner: S.recipeOwner,
       draftComp: S.draftComp, draftPct: S.draftPct, priceFilter: S.priceFilter,
-      isCost: S.tab === 'cost', isMargin: S.tab === 'margin',
+      isCost: S.tab === 'cost', isMargin: S.tab === 'margin', isLanded: S.tab === 'landed',
       isTCalc: S.tab === 'tcalc', tcReady: !!S.tcReady, isXCalc: S.tab === 'xcalc',
       isCalc: S.tab === 'calc', isRecipe: S.tab === 'recipe', isProduction: S.tab === 'prod',
       isProdPlan: S.tab === 'prodplan', isProcPlan: S.tab === 'procplan',
@@ -8375,6 +8964,7 @@ class Component extends DCLogic {
     if (S.tab === 'cost') Object.assign(base, this.buildSebest());
     if (S.tab === 'margin') Object.assign(base, this.buildMargin());
     if (S.tab === 'costtree') Object.assign(base, this.buildCostTree());
+    if (S.tab === 'landed') Object.assign(base, this.buildLanded());
     if (S.tab === 'tcalc') Object.assign(base, this.buildTCalc(rate));
     if (S.tab === 'xcalc') Object.assign(base, this.buildXCalc(rate));
 
