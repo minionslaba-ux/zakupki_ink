@@ -5191,6 +5191,7 @@ class Component extends DCLogic {
     if (!this.state.currentUser) return;
     if (this.state.loaderHide) return;
     this.setState({ loaderHide: true });
+    this.reqNotify();
     if (this.state.cloudConnected) this.startPresence();
     this._loaderT2 = setTimeout(() => this.setState({ loading: false }), 650);
   }
@@ -5441,6 +5442,7 @@ class Component extends DCLogic {
     if (co !== this._co()) this.applyCompany(co);
     const allowed = this.allowedTabs(u);
     this.setState({ currentUser: u, loginErr: '', passInput: '', tab: 'home', cloudName: u.name || this.state.cloudName }, () => { this.beginWelcome(); this.sessClaim(u); });
+    this.reqNotify();
   }
 
   // ===== Контроль параллельных сессий (одно устройство на пользователя; админы — без ограничений) =====
@@ -6044,7 +6046,26 @@ class Component extends DCLogic {
               const last = fresh[fresh.length - 1]; const who = String(last.author || '').split(' · ')[0];
               patch.peekToast = '💬 ' + fresh.length + (fresh.length === 1 ? ' новое сообщение' : (fresh.length < 5 ? ' новых сообщения' : ' новых сообщений')) + ' в чате команды' + (who ? ' · ' + who : '');
               clearTimeout(this._peekToastT); this._peekToastT = setTimeout(() => this.setState({ peekToast: '' }), 5000);
+              this.notifyDesktop('💬 ' + (who || 'Чат команды'), String(last.text || 'Новое сообщение в чате'));
             }
+          }
+        }
+      }
+    } catch (e) {}
+    // Новые задачи, поручённые мне → системное уведомление рабочего стола.
+    try {
+      const cu = this.state.currentUser;
+      if (cu) {
+        const incomingTasks = Array.isArray(d.tasks) ? d.tasks : (this.state.tasks || []);
+        const mineTask = (t) => Array.isArray(t.executors) && t.executors.some(e => e.id === cu.id) && t.authorId !== cu.id;
+        const maxC = incomingTasks.reduce((mx, t) => Math.max(mx, t.createdAt || 0), 0);
+        if (!this._taskBaselined) { this._taskBaselined = true; this._taskNotifyTs = maxC; }
+        else {
+          const freshT = incomingTasks.filter(t => (t.createdAt || 0) > (this._taskNotifyTs || 0) && mineTask(t));
+          this._taskNotifyTs = Math.max(this._taskNotifyTs || 0, maxC);
+          if (freshT.length) {
+            const t0 = freshT[freshT.length - 1];
+            this.notifyDesktop('📋 Новая задача', (t0.title || '') + (t0.author ? ' · от ' + t0.author : ''));
           }
         }
       }
@@ -6133,6 +6154,24 @@ class Component extends DCLogic {
   }
   // Пользователь посмотрел чат — гасим бейдж/пульс.
   markChatSeen() { const now = Date.now(); this._chatNotifyTs = now; this.setState({ chatSeenAt: now }); try { this.lsSet('chat_seen', String(now)); } catch (e) {} }
+  // ===== Системные уведомления рабочего стола (когда вкладка свёрнута / в фоне) =====
+  // Запросить разрешение (вызывается из жеста пользователя — вход, открытие чата).
+  reqNotify() {
+    try {
+      if (!('Notification' in window)) return;
+      if (Notification.permission === 'default') { Notification.requestPermission().catch(() => {}); }
+    } catch (e) {}
+  }
+  // Показать всплывающую плашку ОС. Только когда вкладка не на переднем плане — на самом сайте уже есть АЯ и бейдж.
+  notifyDesktop(title, body) {
+    try {
+      if (!('Notification' in window) || Notification.permission !== 'granted') return;
+      if (!document.hidden) return;
+      const n = new Notification(title, { body: String(body || '').slice(0, 180), icon: 'icon-192.png', badge: 'icon-192.png', tag: 'shtarkflow', renotify: true });
+      n.onclick = () => { try { window.focus(); } catch (e) {} try { n.close(); } catch (e) {} };
+      setTimeout(() => { try { n.close(); } catch (e) {} }, 12000);
+    } catch (e) {}
+  }
   sendChat() {
     const text = (this.state.chatInput || '').trim();
     if (!text) return;
@@ -9880,7 +9919,7 @@ class Component extends DCLogic {
       navCls: S.navOpen ? 'sbon' : '', navBkCls: S.navOpen ? 'bkopen' : '',
       sidebarStyle: S.isMobile ? { position: 'fixed', left: S.navOpen ? '0' : '-274px', top: 0, bottom: 0, width: '264px', transition: 'left .26s ease', zIndex: 200, overflowY: 'auto', boxShadow: S.navOpen ? '0 0 60px rgba(0,0,0,.5)' : 'none' } : null,
       toggleNav: () => this.setState({ navOpen: !S.navOpen }), closeNav: () => this.setState({ navOpen: false }),
-      chatOpen: !!S.chatOpen, chatToggle: () => { const opening = !S.chatOpen; this.setState({ chatOpen: opening }); if (opening) this.markChatSeen(); }, chatClose: () => this.setState({ chatOpen: false }),
+      chatOpen: !!S.chatOpen, chatToggle: () => { const opening = !S.chatOpen; this.setState({ chatOpen: opening }); if (opening) { this.markChatSeen(); this.reqNotify(); } }, chatClose: () => this.setState({ chatOpen: false }),
       chatMsgs: this.chatMsgsView(), chatEmpty: this.chatMsgsView().length === 0, chatCount: (S.chat || []).length,
       chatUnread: String(this.chatUnreadCount()), chatHasUnread: this.chatUnreadCount() > 0, chatFabCls: this.chatUnreadCount() > 0 ? 'chatfab pulse' : 'chatfab',
       ...this.chatRoomVals(),
