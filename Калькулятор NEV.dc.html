@@ -582,6 +582,83 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .dletag{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;text-align:center}
 .dletag.ok{background:#E2EFDA;color:#3a6b1f}.dletag.map{background:#fdeccb;color:#8a5a00}
 .dlrecalc{margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding-top:16px;border-top:1px solid #eee}
+.rceng{margin-top:16px;border:1px solid #dfe7f1;border-radius:13px;background:linear-gradient(180deg,#f6f9fd,#fff 80px);padding:15px 17px}
+.rcenghd{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.rcengttl{font-size:14.5px;font-weight:800;color:#1a2b3c}
+.rcauto{appearance:none;cursor:pointer;font:inherit;font-size:11px;font-weight:700;border-radius:20px;padding:5px 12px 5px 9px;display:inline-flex;align-items:center;gap:7px;border:1px solid #d6e3f1;background:#fff;color:#8a8782}
+.rcauto.on{border-color:#2a8a4a;color:#2a6b2a;background:#f1faf3}
+.rcautodot{width:8px;height:8px;border-radius:50%;background:#c0bdb8}
+.rcauto.on .rcautodot{background:#2a8a4a;box-shadow:0 0 0 0 rgba(42,138,74,.5);animation:rcpulse 2s ease-in-out infinite}
+@keyframes rcpulse{0%,100%{box-shadow:0 0 0 0 rgba(42,138,74,.5)}50%{box-shadow:0 0 0 5px rgba(42,138,74,0)}}
+.rcforcewrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.rcforce{appearance:none;border:none;border-radius:11px;font:inherit;font-size:13.5px;font-weight:800;padding:11px 18px;cursor:pointer;background:linear-gradient(135deg,#1F4E78,#2A6FDB);color:#fff;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 18px rgba(31,78,120,.28)}
+.rcforce:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.rcforce:disabled{opacity:.55;cursor:default;transform:none;filter:none}
+.rcloader{margin-top:12px;display:flex;align-items:center;gap:12px;background:#15233a;border:1px solid #2A6FDB;border-radius:11px;padding:13px 16px}
+.rcspin{width:20px;height:20px;border:2.5px solid rgba(159,196,245,.3);border-top-color:#9fc4f5;border-radius:50%;animation:rcsp .7s linear infinite;flex:none}
+@keyframes rcsp{to{transform:rotate(360deg)}}
+.rcstep{font-size:13px;font-weight:700;color:#eaf1fb}
+.rclogrow.force{border-color:#2A6FDB;background:#f4f8fe}
+.aphd{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:6px}
+.aprefr{font-size:12px;color:#8a8782}
+.aphdbtns{display:flex;gap:9px;flex-wrap:wrap}
+.apsliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:14px;align-items:end}
+.apsl label{display:block;font-size:12px;color:#56534f;margin-bottom:6px}
+.apsl label b{color:#1F4E78;font-size:13px}
+.apsl input[type=range]{width:100%;accent-color:#2A6FDB}
+.apsimgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.apsimcard{border:1px solid #e7e4e0;border-radius:11px;padding:13px 15px;background:#fbfaf8}
+.apsiml{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:#8a8782;margin-bottom:6px}
+.apbig{font-size:22px;font-weight:800;color:#1a2b3c;font-family:'IBM Plex Mono',monospace}
+.apbig.pos{color:#2a8a4a}.apbig.neg{color:#c0322b}
+.apverdict{margin-top:14px;background:#15233a;border:1px solid #2A6FDB;border-radius:12px;padding:14px 16px;font-size:13px;line-height:1.6;color:#eaf1fb;white-space:pre-wrap;text-wrap:pretty}
+.aptbl{margin-top:12px;border:1px solid #e7e4e0;border-radius:11px;overflow:hidden}
+.aptblhd,.aptblrow{display:grid;grid-template-columns:2fr 1fr 1.6fr 1.8fr 1fr auto;gap:10px;align-items:center;padding:10px 14px}
+.aptblhd{background:#f6f3ef;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.02em;color:#8a8782}
+.aptblrow{border-top:1px solid #f0ece6;font-size:13px;transition:background .12s ease}
+.aptblrow:hover{background:#fbfaf8}
+.aptblrow.apfloor{grid-template-columns:2fr 1fr 1.4fr 1.4fr}
+.aptbl .aptblhd:has(+ .aptblrow.apfloor),.aptblrow.apfloor{grid-template-columns:2fr 1fr 1.4fr 1.4fr}
+.apmat{font-weight:600;color:#2b2926}
+.apfp{font-weight:800;color:#1F4E78}
+.apmkt{font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:20px}
+.apmkt.ved{background:#e6e0f5;color:#5b3fa0}.apmkt.dom{background:#dcefe9;color:#1c7a5e}
+.apgm2{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:13px;color:#56534f}
+.apempty{margin-top:12px;padding:18px;text-align:center;color:#2a8a4a;font-size:13px;background:#f4faf5;border:1px solid #d8ecd8;border-radius:10px}
+.apalerts{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.apalert{display:flex;gap:12px;align-items:flex-start;border:1px solid #e7e4e0;border-left-width:4px;border-radius:10px;padding:11px 14px;background:#fff}
+.apalert.over{border-left-color:#d8941a;background:#fdfaf3}
+.apalert.blocked{border-left-color:#c0322b;background:#fdf6f5}
+.apaicon{font-size:17px}
+.apamain{flex:1;min-width:0}
+.apatitle{font-size:13.5px;font-weight:700;color:#2b2926}
+.apaco{font-size:10px;font-weight:800;color:#1F4E78;background:#eef4fb;border-radius:20px;padding:1px 8px;margin-left:4px}
+.apareason{font-size:12px;color:#8a6a1c;margin-top:3px}
+.apalert.blocked .apareason{color:#c0322b}
+.apseclog{display:flex;flex-direction:column;gap:5px}
+.apsecrow{display:flex;gap:12px;font-size:12px;padding:6px 0;border-bottom:1px dashed #ece8e2}
+.apsecwhen{color:#9a9793;white-space:nowrap}
+.apsectext{color:#56534f}
+.apinvcard{border:1.5px solid #2A6FDB;background:linear-gradient(180deg,#f4f8fe,#fff 90px)}
+.apinvhd{display:flex;align-items:center;gap:10px}
+.apinvic{font-size:22px}
+.apinvttl{font-size:15px;font-weight:800;color:#1a2b3c}
+.apinvbody{font-size:13px;color:#56534f;line-height:1.55;margin:9px 0 12px}
+.apinvbtns{display:flex;gap:9px;flex-wrap:wrap}
+.rcengsub{font-size:11.5px;color:#56657a;margin-top:4px;line-height:1.5}
+.rcchain{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.rcnode{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid #d6e3f1;border-radius:9px;padding:6px 11px;font-size:12px;font-weight:600;color:#1F4E78;position:relative}
+.rcnode:not(:last-child):after{content:'→';position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:#b3c4d8;font-weight:700;font-size:12px}
+.rcnode.true{border-color:#f0c98a;background:#fff8ee}
+.rcnnum{width:18px;height:18px;border-radius:50%;background:#1F4E78;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.rcnode.true .rcnnum{background:#c8851a}
+.rclog{margin-top:14px;border-top:1px dashed #dfe7f1;padding-top:11px}
+.rclogttl{font-size:11px;font-weight:700;color:#8a8782;text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px}
+.rclogrow{padding:7px 11px;background:#fff;border:1px solid #eee;border-radius:8px;margin-bottom:6px}
+.rclogtop{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.rclogev{font-size:12.5px;font-weight:700;color:#1F4E78}
+.rclogwhen{font-size:11px;color:#9a9793}
+.rclogchain{font-size:11.5px;color:#56534f;margin-top:3px;line-height:1.45}
 .dlbig{appearance:none;border:none;border-radius:11px;font:inherit;font-size:14px;font-weight:700;padding:13px 22px;cursor:pointer;background:#1F4E78;color:#fff;display:inline-flex;align-items:center;gap:8px}
 .dlbig:disabled{background:#cdd3db;color:#fff;cursor:not-allowed}
 .dlbig:not(:disabled):hover{background:#163a5c}
@@ -695,6 +772,13 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .plplan input{width:120px}
 .plhint2{font-size:11.5px;color:#9a9793;margin-top:8px}
 .pltbl{margin-top:14px;border:1px solid #e3e6ea;border-radius:11px;overflow:hidden}
+.plmethod{display:flex;align-items:center;gap:9px;padding:8px 14px;font-size:11.5px;font-weight:700;border-bottom:1px solid #e3e6ea}
+.plmethod.batch{background:#eef4fb;color:#1F4E78}
+.plmethod.fifo{background:#fff5e9;color:#9a5a1c}
+.plmic{font-size:14px}
+.plmcol{margin-left:auto;font-size:10px;font-weight:700;opacity:.8;text-transform:uppercase;letter-spacing:.03em}
+.plmk{font-size:10px;font-weight:700;color:#9a5a1c;background:#fff3e2;border-radius:20px;padding:1px 8px;margin-left:8px;white-space:nowrap;flex-shrink:0}
+.plr.l1 .plmk,.plr.l2 .plmk{display:none}
 .plhd,.plr{display:grid;grid-template-columns:minmax(220px,2.4fr) 88px 110px 96px 70px 96px 70px 64px;gap:8px;align-items:center}
 .plhd{background:#f4f7fb;padding:9px 14px;font-size:9.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#7488a0;border-bottom:2px solid #cdd8e6}
 .plhd .r,.plr .r{text-align:right;justify-self:end}
@@ -1146,6 +1230,31 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .ai-summary-box.true .aisb-txt{animation:aisbPulse 1.3s ease-in-out infinite}
 @keyframes aisbPulse{0%,100%{opacity:.6}50%{opacity:1}}
 .aianalyze:disabled{opacity:.55;cursor:default;transform:none}
+.dbirow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.dbiverdict{margin-top:14px;background:#15233a;border:1px solid #2A6FDB;border-radius:13px;padding:15px 17px}
+.dbivttl{font-size:12px;font-weight:800;letter-spacing:.03em;color:#9fc4f5;margin-bottom:8px}
+.dbivtxt{font-size:13.5px;line-height:1.62;color:#eaf1fb;white-space:pre-wrap;text-wrap:pretty}
+.dbilist{display:flex;flex-direction:column;gap:11px;margin-top:14px}
+.dbicard{border:1px solid #e7e4e0;border-left-width:4px;border-radius:11px;padding:13px 15px;background:#fff}
+.dbicard.dbi-red{border-left-color:#c0322b;background:#fdf6f5}
+.dbicard.dbi-orange{border-left-color:#d8941a;background:#fdfaf3}
+.dbicard.dbi-green{border-left-color:#2a8a4a;background:#f4faf5}
+.dbihead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px}
+.dbicont{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#1F4E78;background:#eef4fb;border-radius:20px;padding:3px 11px}
+.dbieff{font-size:13px;font-weight:800;color:#c0322b;font-family:'IBM Plex Mono',monospace}
+.dbisym{font-size:13px;font-weight:700;color:#2b2926;line-height:1.45;margin-bottom:5px}
+.dbidrill{font-size:12px;color:#6b665f;line-height:1.5;margin-bottom:4px}
+.dbiinterp{font-size:13px;color:#1c1b18;line-height:1.55;margin-bottom:5px;text-wrap:pretty}
+.dbirec{font-size:12.5px;font-weight:600;color:#2a6b2a;line-height:1.5}
+.dbigrowth{margin-top:16px;border:1px solid #d8ecd8;border-radius:12px;background:#f4faf5;padding:13px 15px}
+.dbigttl{font-size:12.5px;font-weight:800;color:#2a6b2a;margin-bottom:10px}
+.dbigrow{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px dashed #d8ecd8}
+.dbigrow:last-child{border-bottom:none}
+.dbigrank{width:24px;height:24px;border-radius:50%;background:#2a8a4a;color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none}
+.dbigmain{flex:1;min-width:0}
+.dbigact{font-size:13px;font-weight:600;color:#2b2926;line-height:1.4}
+.dbigmeta{font-size:11px;color:#8a8782;margin-top:2px}
+.dbigeff{font-size:14px;font-weight:800;color:#2a8a4a;font-family:'IBM Plex Mono',monospace;white-space:nowrap}
 .aiana-ic{color:#0e0e0e;font-size:14px}
 .aichip{text-align:left;appearance:none;cursor:pointer;font:inherit;font-size:13px;font-weight:600;color:#0e0e0e;background:#fff;border:1px solid #e7e4e0;border-radius:11px;padding:11px 13px;line-height:1.4;transition:all .14s}
 .aichip:hover{border-color:#FFD200;background:#fffbe8}
@@ -1535,6 +1644,9 @@ a.wordmark:hover{opacity:.6}
 .cloudtoast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:1460;background:#0f3d24;color:#eafaf0;border:1px solid #2f9e63;border-radius:13px;padding:13px 18px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 14px 40px rgba(15,61,36,.4);animation:ctIn .26s ease;max-width:90vw}
 .cloudtoast .clic{font-size:17px;filter:drop-shadow(0 0 5px rgba(80,220,140,.7))}
 .cloudtoast small{display:block;font-weight:500;color:#9fd9b6;font-size:11.5px;margin-top:1px}
+.recalctoast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:1461;background:#15233a;color:#eaf1fb;border:1px solid #2A6FDB;border-radius:13px;padding:13px 18px;font-size:13.5px;font-weight:600;box-shadow:0 14px 40px rgba(0,0,0,.36);display:flex;align-items:center;gap:11px;max-width:min(560px,92vw);animation:ctIn .3s ease}
+.recalctoast .rclic{font-size:17px;filter:drop-shadow(0 0 5px rgba(80,150,240,.7))}
+.onstars{position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);font-size:8px;letter-spacing:-1px;color:#e8a93a;text-shadow:0 1px 2px rgba(0,0,0,.35);white-space:nowrap;line-height:1}
 .cvbar{display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap}
 .cvgrp{display:inline-flex;background:#f0eee9;border-radius:9px;padding:3px;gap:2px}
 .cvseg{appearance:none;border:none;background:none;border-radius:7px;padding:7px 14px;font:inherit;font-size:12.5px;font-weight:700;color:#56534f;cursor:pointer;white-space:nowrap}
@@ -1865,7 +1977,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки</div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск: контрагент, ИНН, артикул, сырьё, заявка, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">Ничего не найдено</div></sc-if><sc-for list="{{ searchResults }}" as="r" hint-placeholder-count="3"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
-<sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava" title="{{ u.tip }}" onContextMenu="{{ u.onCtx }}">{{ u.avatar }}<i class="ondot"></i></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div><button class="ratebtn onrate" onClick="{{ goRating }}"><span>🏆</span> Рейтинг по задачам</button></div></sc-if>
+<sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava" title="{{ u.tip }}" onContextMenu="{{ u.onCtx }}">{{ u.avatar }}<i class="ondot"></i><sc-if value="{{ u.hasStars }}" hint-placeholder-val=""><span class="onstars" title="KPI {{ u.starsLabel }}">{{ u.starsLabel }}</span></sc-if></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div><button class="ratebtn onrate" onClick="{{ goRating }}"><span>🏆</span> Рейтинг по задачам</button></div></sc-if>
 <div class="desc">{{ tabDesc }}</div>
 <div class="actrow"><sc-if value="{{ aiAnalyzable }}" hint-placeholder-val=""><button class="aianalyze" onClick="{{ analyzeScreen }}" disabled="{{ aiBusy }}"><span class="aiana-ic">✦</span> Сделать AI-анализ данных</button></sc-if></div>
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}"><div class="homehero"><div class="homeh1">Добро пожаловать в {{ coName }} <span class="homeflow">Flow</span></div><div class="homesub">Карта навигации — выберите раздел, чтобы начать работу</div></div><sc-for list="{{ homeGroups }}" as="g" hint-placeholder-count="6"><div class="homegrp"><div class="homegl"><span class="homebar"></span>{{ g.label }}</div><div class="homecards"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="homecard" onClick="{{ t.go }}"><span class="homeic">{{ t.icon }}</span><span class="hometx"><span class="homename">{{ t.label }}</span><span class="homedesc">{{ t.desc }}</span></span></button></sc-for></div></div></sc-for></sc-if>
@@ -1897,6 +2009,23 @@ window.dispatchEvent(new Event('fbready'));
 <div class="desc">АЯ соберёт данные из плана-факта (перерасход сырья), казначейства (баланс кассы, оплаты, кассовые разрывы) и курса евро — и выдаст сводный инженерно-финансовый вердикт.</div>
 <button class="aianalyze" onClick="{{ runGlobalAudit }}"><span class="aiana-ic">✦</span> Запустить глубокий анализ</button>
 <sc-if value="{{ auditHas }}" hint-placeholder-val=""><div class="ai-summary-box {{ auditBusy }}"><div class="aisb-ttl">✦ Сводный инженерно-финансовый вердикт АЯ</div><div class="aisb-txt">{{ auditSummary }}</div></div></sc-if>
+</div>
+<div class="card">
+<div class="sec">🧠 Семантическая интерпретация · глубокое бурение до первопричин</div>
+<div class="desc">Движок спускается по ID партий и сделок до первичных таблиц (накладные расходы, скидки), отделяет симптом от причины и выдаёт смысловой вердикт для директора. Работает без API-ключа — на ваших данных.</div>
+<div class="dbirow"><button class="aianalyze" onClick="{{ runDeepBI }}"><span class="aiana-ic">🧠</span> Запустить семантический аудит</button><sc-if value="{{ deepBIHas }}" hint-placeholder-val=""><button class="btn mgxls" onClick="{{ deepBIExcel }}">⬇ Excel · AI_Insights</button></sc-if></div>
+<sc-if value="{{ deepBIHas }}" hint-placeholder-val="">
+<div class="dbiverdict"><div class="dbivttl">✦ Смысловой вердикт для директора · период {{ deepBIPeriod }} · риск ≈ {{ deepBITotal }}</div><div class="dbivtxt">{{ deepBIVerdict }}</div></div>
+<sc-if value="{{ deepBIEmpty }}" hint-placeholder-val=""><div class="hint">Значимых аномалий не выявлено — загрузите отчёты ВЭД (Landed Cost) и продаж для глубокого бурения.</div></sc-if>
+<div class="dbilist"><sc-for list="{{ deepBIInsights }}" as="i" hint-placeholder-count="2"><div class="dbicard {{ i.levelCls }}">
+<div class="dbihead"><span class="dbicont">{{ i.contour }}</span><sc-if value="{{ i.hasEff }}" hint-placeholder-val=""><span class="dbieff">{{ i.effRub }} · {{ i.effEur }}</span></sc-if></div>
+<div class="dbisym">⚠ Симптом: {{ i.symptom }}</div>
+<div class="dbidrill">🔎 Бурение: {{ i.drill }}</div>
+<div class="dbiinterp">🧠 Первопричина: {{ i.interpretation }}</div>
+<div class="dbirec">✅ Рекомендация: {{ i.recommendation }}</div>
+</div></sc-for></div>
+<sc-if value="{{ deepBIHasGrowth }}" hint-placeholder-val=""><div class="dbigrowth"><div class="dbigttl">📈 Точки роста · ранжированы по чистой марже в евро</div><sc-for list="{{ deepBIGrowth }}" as="g" hint-placeholder-count="2"><div class="dbigrow"><span class="dbigrank">{{ g.rank }}</span><div class="dbigmain"><div class="dbigact">{{ g.action }}</div><div class="dbigmeta">{{ g.contour }} · затраты: {{ g.effort }} · {{ g.ratio }}</div></div><span class="dbigeff">{{ g.eff }}</span></div></sc-for></div></sc-if>
+</sc-if>
 </div>
 <div class="card">
 <div class="sec"><span class="oneclogo">1С</span> Вариант 1 · Загрузка файла из 1С (проще всего)</div>
@@ -2086,8 +2215,9 @@ window.dispatchEvent(new Event('fbready'));
 <div class="dvtools" style="margin:0"><button class="btn" onClick="{{ plExpandAll }}">Развернуть</button><button class="btn" onClick="{{ plCollapseAll }}">Свернуть</button></div>
 </div>
 <div class="pltbl">
+<div class="{{ plMethodCls }}"><span class="plmic">📦</span><span>{{ plMethodLabel }}</span><span class="plmcol">5-й уровень: {{ plDrillCol }}</span></div>
 <div class="plhd"><span>Срез / drill-down</span><span class="r">Объём</span><span class="r">{{ plHVyr }}</span><span class="r">{{ plHCogs }}</span><span class="r">GM1 %</span><span class="r">{{ plHGm2 }}</span><span class="r">GM2 %</span><span class="r">Доля</span></div>
-<sc-for list="{{ plRows }}" as="r" hint-placeholder-count="8"><div class="{{ r.cls }}" onClick="{{ r.toggle }}"><span class="plnm"><span class="plx">{{ r.x }}</span><span class="pltx">{{ r.name }}</span></span><span class="plnum dim">{{ r.w }}</span><span class="plnum">{{ r.rev }}</span><span class="plnum dim">{{ r.ss }}</span><span class="{{ r.r1cls }}">{{ r.r1 }}</span><span class="plnum">{{ r.m2 }}</span><span class="{{ r.r2cls }}">{{ r.r2 }}</span><span class="r"><span class="plbar"><span style="width:{{ r.share }}%"></span></span></span></div></sc-for>
+<sc-for list="{{ plRows }}" as="r" hint-placeholder-count="8"><div class="{{ r.cls }}" onClick="{{ r.toggle }}"><span class="plnm"><span class="plx">{{ r.x }}</span><span class="pltx">{{ r.name }}</span><sc-if value="{{ r.hasMk }}" hint-placeholder-val=""><span class="plmk">{{ r.mk }}</span></sc-if></span><span class="plnum dim">{{ r.w }}</span><span class="plnum">{{ r.rev }}</span><span class="plnum dim">{{ r.ss }}</span><span class="{{ r.r1cls }}">{{ r.r1 }}</span><span class="plnum">{{ r.m2 }}</span><span class="{{ r.r2cls }}">{{ r.r2 }}</span><span class="r"><span class="plbar"><span style="width:{{ r.share }}%"></span></span></span></div></sc-for>
 <div class="pltot"><span>ИТОГО</span><span class="r">{{ plTot.w }}</span><span class="r">{{ plTot.rev }}</span><span class="r">{{ plTot.ss }}</span><span class="r">{{ plTot.r1 }}</span><span class="r">{{ plTot.m2 }}</span><span class="r">{{ plTot.r2 }}</span><span class="r"></span></div>
 </div>
 <sc-if value="{{ plHasAi }}" hint-placeholder-val=""><div class="plverdict">{{ plAi }}</div></sc-if>
@@ -2100,6 +2230,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="card"><div class="dl404"><h1>404 Not Found</h1><p>The requested URL was not found on this server.</p><hr><div class="addr">nginx</div></div></div>
 </sc-if>
 <sc-if value="{{ dlCoName }}" hint-placeholder-val="">
+<sc-if value="{{ apInvHas }}" hint-placeholder-val=""><div class="card apinvcard"><div class="apinvhd"><span class="apinvic">🤖</span><div class="apinvttl">ИИ-Коннект распознал новый инвойс</div></div><div class="apinvbody">Поставщик: <b>{{ apInvSupplier }}</b> · позиций: <b>{{ apInvLines }}</b> · сумма: <b>{{ apInvTotal }}</b>. Данные очищены от шума и сопоставлены с номенклатурой. Подтвердите распределение в раздел «Закупки».</div><div class="apinvbtns"><button class="btn dark" onClick="{{ apInvConfirm }}">✓ Подтвердить и распределить</button><button class="btn" onClick="{{ apInvDismiss }}">Отклонить</button></div></div></sc-if>
 <div class="card">
 <div class="sec">📥 Загрузка данных из 1С:КА · {{ dlCoName }}</div>
 <div class="desc">Ежедневная загрузка базовых отчётов и произвольных форм. Поддерживаются .xlsx, .xls, .csv, .txt. Доступ — только для администраторов и ролей с правом загрузки.</div>
@@ -2121,6 +2252,14 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ dlHasErr }}" hint-placeholder-val=""><div class="banner err">{{ dlErr }}</div></sc-if>
 <sc-if value="{{ dlHasDone }}" hint-placeholder-val=""><div class="banner ok">{{ dlDone }}</div></sc-if>
 <div class="dlrecalc"><button class="dlbig" onClick="{{ dlRecalc }}" disabled="{{ dlRecalcOff }}"><span>⚙</span> Запустить сквозной пересчёт аналитики</button><span class="dlprog">{{ dlProgText }}</span></div>
+<div class="rceng">
+<div class="rcenghd"><span class="rcengttl">⚙ Движок сквозного пересчёта</span><button class="{{ autoCls }}" onClick="{{ toggleAuto }}" title="Включить/выключить непрерывный фоновый пересчёт"><span class="rcautodot"></span>{{ autoLabel }}</button></div>
+<div class="rcengsub">Гибридный режим: автономный фоновый пересчёт 24/7 (debounce 300мс на любое микро-изменение) + ручной полный аудит. Закрытые периоды не затрагиваются.</div>
+<div class="rcforcewrap"><button class="rcforce" onClick="{{ forceRecalc }}" disabled="{{ recalcRunning }}"><span>🚀</span> Запустить сквозной пересчёт и ИИ-анализ</button><button class="btn xs" onClick="{{ recalcRunNow }}" disabled="{{ recalcRunning }}">Авто-пересчёт сейчас</button></div>
+<sc-if value="{{ recalcRunning }}" hint-placeholder-val=""><div class="rcloader"><div class="rcspin"></div><div class="rcstep">{{ recalcStep }}</div></div></sc-if>
+<div class="rcchain"><sc-for list="{{ recalcChain }}" as="c" hint-placeholder-count="6"><div class="rcnode {{ c.hasEffect }}"><span class="rcnnum">{{ c.n }}</span><span class="rcnlbl">{{ c.label }}</span></div></sc-for></div>
+<sc-if value="{{ recalcHasLog }}" hint-placeholder-val=""><div class="rclog"><div class="rclogttl">Журнал пересчётов</div><sc-for list="{{ recalcLog }}" as="l" hint-placeholder-count="2"><div class="{{ l.modeCls }}"><div class="rclogtop"><span class="rclogev">{{ l.event }}</span><span class="rclogwhen">{{ l.when }}</span></div><div class="rclogchain">{{ l.chain }}</div></div></sc-for></div></sc-if>
+</div>
 </div>
 <sc-if value="{{ dlMapOpen }}" hint-placeholder-val=""><div class="dlmapbg" onClick="{{ dlMapCancel }}"></div><div class="dlmap">
 <div class="dlmaph">Сопоставление колонок</div>
@@ -2177,6 +2316,56 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 </div>
 </div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ isAutopilot }}" hint-placeholder-val="">
+<sc-if value="{{ apNoAccess }}" hint-placeholder-val="{{ true }}">
+<div class="card"><div class="dl404"><h1>404 Not Found</h1><p>The requested URL was not found on this server.</p><hr><div class="addr">nginx</div></div></div>
+</sc-if>
+<sc-if value="{{ apCoName }}" hint-placeholder-val="">
+<div class="card">
+<div class="sec">🤖 ИИ-Автопилот · AI Control Core 24/7 · {{ apCoName }}</div>
+<div class="desc">Автономное ядро управления: распознаёт инвойсы, симулирует сценарии, роботизирует закупки дефицитов, защищает маржу динамическим ценообразованием и отслеживает заблокированные задачи. Работает в связке с фоновым движком пересчёта.</div>
+<div class="aphd"><span class="aprefr">Последний прогон: {{ apRefreshed }}</span><div class="aphdbtns"><button class="btn dark" onClick="{{ apRunNow }}">⟳ Прогнать автопилот</button><button class="btn mgxls" onClick="{{ apExcel }}">⬇ AI_Autopilot_Report</button></div></div>
+</div>
+
+<div class="card">
+<div class="sec">② Цифровой двойник · Стресс-тест 360°</div>
+<div class="desc">Сдвиньте макро-параметры — фоновый движок мгновенно прогонит модель бизнеса на 30–60 дней вперёд и выдаст предиктивный вердикт.</div>
+<div class="apsliders">
+<div class="apsl"><label>Курс EUR/CNY: <b>{{ apFx }}%</b></label><input type="range" min="-20" max="20" step="1" value="{{ apFx }}" onInput="{{ onApFx }}"></div>
+<div class="apsl"><label>Тарифы логистики: <b>{{ apLogi }}%</b></label><input type="range" min="-20" max="40" step="1" value="{{ apLogi }}" onInput="{{ onApLogi }}"></div>
+<div class="apsl"><label>Объём продаж: <b>{{ apSales }}%</b></label><input type="range" min="-40" max="40" step="1" value="{{ apSales }}" onInput="{{ onApSales }}"></div>
+<div class="apsl"><label>Горизонт: <b>{{ apHorizon }} дн</b></label><input type="range" min="30" max="60" step="1" value="{{ apHorizon }}" onInput="{{ onApHorizon }}"></div>
+<button class="{{ apLiveCls }}" onClick="{{ apToggleLive }}"><span class="rcautodot"></span>Live-пересчёт</button>
+</div>
+<sc-if value="{{ apSimHas }}" hint-placeholder-val="">
+<div class="apsimgrid"><div class="apsimcard"><div class="apsiml">Δ прибыли (сценарий vs база)</div><div class="{{ apSimProfitCls }}">{{ apSimProfit }}</div></div><div class="apsimcard"><div class="apsiml">GM2 сценария</div><div class="{{ apSimGm2Cls }}">{{ apSimGm2 }}</div></div><div class="apsimcard"><div class="apsiml">Дефицит сырья</div><div class="apbig">{{ apSimDeficit }}</div></div></div>
+<div class="apverdict">{{ apSimVerdict }}</div>
+</sc-if>
+</div>
+
+<div class="card">
+<div class="sec">③ Роботизированные закупки · автовыкуп дефицитов</div>
+<sc-if value="{{ apHasDrafts }}" hint-placeholder-val=""><div class="aptbl"><div class="aptblhd"><span>Сырьё</span><span>Объём</span><span>Поставщик (OTIF)</span><span>Landed Cost план</span><span>Закрыть к</span><span></span></div><sc-for list="{{ apDrafts }}" as="d" hint-placeholder-count="2"><div class="aptblrow"><span class="apmat"><span class="{{ d.vedCls }}">{{ d.vedLabel }}</span> {{ d.material }}</span><span class="mono">{{ d.qty }}</span><span>{{ d.supplier }} · {{ d.otif }}</span><span class="mono">{{ d.landedRub }} · {{ d.landedEur }}</span><span>{{ d.cover }}</span><button class="btn xs dark" onClick="{{ d.push }}">→ Логисту</button></div></sc-for></div></sc-if>
+<sc-if value="{{ apHasDrafts }}" hint-placeholder-val="x"><div class="apempty">✓ Дефицитов сырья не обнаружено — план снабжения сбалансирован.</div></sc-if>
+</div>
+
+<div class="card">
+<div class="sec">④ Динамическое ценообразование · Floor Price (норматив GM2 {{ apGm2Target }}%)</div>
+<div class="desc">Минимально допустимая цена продажи 1 кг = Себестоимость ÷ (1 − целевой GM2). Менеджер не сможет утвердить счёт ниже floor — счёт блокируется, событие пишется в журнал безопасности.</div>
+<div class="apgm2"><label>Целевой норматив GM2, %</label><input class="inp num w120" type="number" min="0" max="80" value="{{ apGm2Target }}" onInput="{{ onApGm2 }}"></div>
+<sc-if value="{{ apHasFloor }}" hint-placeholder-val=""><div class="aptbl"><div class="aptblhd"><span>Продукт</span><span>СС 1 кг</span><span>Floor ₽/кг</span><span>Floor €/кг</span></div><sc-for list="{{ apFloorRows }}" as="f" hint-placeholder-count="3"><div class="aptblrow apfloor"><span class="apmat">{{ f.product }}</span><span class="mono">{{ f.costKg }}</span><span class="mono apfp">{{ f.floorRub }}</span><span class="mono">{{ f.floorEur }}</span></div></sc-for></div></sc-if>
+</div>
+
+<div class="card">
+<div class="sec">⑤ Умный HR-трекинг задач</div>
+<sc-if value="{{ apHasAlerts }}" hint-placeholder-val=""><div class="apalerts"><sc-for list="{{ apAlerts }}" as="a" hint-placeholder-count="2"><div class="{{ a.cls }}"><span class="apaicon">{{ a.icon }}</span><div class="apamain"><div class="apatitle">{{ a.title }} <span class="apaco">{{ a.company }}</span></div><div class="apareason">{{ a.reason }} · исполнитель: {{ a.exec }}</div></div></div></sc-for></div></sc-if>
+<sc-if value="{{ apHasAlerts }}" hint-placeholder-val="x"><div class="apempty">✓ Заблокированных и просроченных задач не обнаружено.</div></sc-if>
+</div>
+
+<sc-if value="{{ apHasSecLog }}" hint-placeholder-val=""><div class="card"><div class="sec">🔒 Журнал безопасности</div><div class="apseclog"><sc-for list="{{ apSecLog }}" as="e" hint-placeholder-count="2"><div class="apsecrow"><span class="apsecwhen">{{ e.when }}</span><span class="apsectext">{{ e.text }}</span></div></sc-for></div></div></sc-if>
 </sc-if>
 </sc-if>
 
@@ -3302,6 +3491,7 @@ window.dispatchEvent(new Event('fbready'));
 </sc-if>
 <sc-if value="{{ trackToastHas }}" hint-placeholder-val=""><div class="tracktoast"><span class="tticon">👁</span><span>{{ trackToast }}</span></div></sc-if>
 <sc-if value="{{ cloudToastHas }}" hint-placeholder-val=""><div class="cloudtoast"><span class="clic">☁✓</span><span>{{ cloudToast }}</span></div></sc-if>
+<sc-if value="{{ recalcToastHas }}" hint-placeholder-val=""><div class="recalctoast"><span class="rclic">⚙</span><span>{{ recalcToast }}</span></div></sc-if>
 <sc-if value="{{ claudeToast }}" hint-placeholder-val=""><div class="claudetoast"><span class="cticon">📋</span>Данные для Claude Pro скопированы в буфер! Вставьте их в ваш рабочий чат Claude (Ctrl+V)</div></sc-if>
 <sc-if value="{{ aiOpen }}" hint-placeholder-val="">
 <div class="aibackdrop" onClick="{{ aiClose }}"></div>
@@ -3334,6 +3524,7 @@ class Component extends DCLogic {
     aiOpen: false, aiInput: '', aiBusy: false, aiMessages: [], aiModel: 'gpt-4o-mini', aiKey: '', aiBase: '', aiModelName: '', aiKeyEdit: '', aiBaseEdit: '', aiModelEdit: '', aiCfgOpen: false,
     rrHorizon: 3, rrSafetyMonths: 1, rrLeadDefault: 1, rrRun: {}, rrLead: {}, rrSafety: {}, auditSku: '',
     turnoverDays: 90, turnoverGen: false, planfactGen: false, stressGrowth: 30, stressGen: false, calcExpanded: {}, treasuryGen: false,
+    apGm2Target: 15, apFx: 0, apLogi: 0, apSales: 0, apHorizon: 45, apSim: null, apLive: false, apDrafts: [], apAlerts: [], apInvoice: null, apSecurityLog: [], apRefreshedAt: 0,
     prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planProduct: '', planFilter: '', planCur: 'RUB',
     ppScale: 'month', ppFrom: '', ppTo: '', ppNetStock: true, ppNetTransit: true, ppBy: 'raw', ppCur: 'RUB', ppGroup: 'none', procGen: false,
     oneCUrl: '', oneCToken: '', oneCMatch: 'article', oneCAuto: false, oneCBusy: false, oneCStatus: '', oneCErr: '', oneCPreview: null, oneCLastAt: 0, oneCLog: [], oneCFileCur: 'RUB',
@@ -3349,7 +3540,7 @@ class Component extends DCLogic {
     chat: [], chatRooms: [], chatRoom: 'general', privModal: null, chatInput: '', chatOpen: false, chatSeenAt: 0, tgLink: '', tgEdit: '', navOpen: false, isMobile: false, navExp: null, catKey: '', compassOpen: false,
     tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', ratingOpen: false, ratingExp: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '', sales: [], saleDraft: null, saleErr: '', salesTransport: 0, salesTransMode: 'weight', cashStart: 0, payMoves: {}, paySplits: {}, payMoveEdit: '', logistics: [], logDraft: null, logErr: '', payreqs: [], prDraft: null, prErr: '', stmtMsg: '',
     docType: 'invoice', docData: { no: '14', date: '', invBuyer: 'ООО «Печатный двор»', invBuyerInn: 'ИНН 7712345678 / КПП 771201001', invBank: 'АО «Альфа-Банк», р/с 40702810000000012345, БИК 044525593, к/с 30101810200000000593', invItems: 'Чёрнила флексо Cyan | 500 | кг | 480\nЧёрнила флексо Magenta | 300 | кг | 510\nРастворитель этилацетат | 200 | л | 95', empName: 'Иванов Иван Иванович', empPost: 'менеджер по закупкам', empPassport: '45 09 № 123456, выдан ОВД «Тверской» г. Москвы 12.03.2015, код 770-001', supplier: 'ООО «ХимПоставка»', supplierAddr: 'г. Москва, ул. Промышленная, д. 7', goods: 'Пигмент синий (фталоцианиновый) — 500 кг\nРастворитель НефрасС2 — 200 л\nСтабилизатор СТ-4 — 50 кг', term: '10 дней', route: 'Москва — Санкт-Петербург', car: 'Volvo FH, гос. № А123ВС 777', driver: 'Петров Пётр Петрович', driverDoc: 'вод. удостоверение 99 12 345678', cargo: '1200 кг / 4,0 м³, 6 паллет', cargoName: 'Сырьё для производства чернил', rfpSupplier: 'ООО «ХимПоставка»', rfpItems: 'Пигмент синий (фталоцианиновый) — 500 кг\nПигмент жёлтый — 300 кг\nРастворитель НефрасС2 — 200 л', rfpDeadline: '5 рабочих дней' },
-    peekIdx: 0, peekDismissed: {}, peekClosed: false, peekOpen: false, peekToast: '', cloudToast: '',
+    peekIdx: 0, peekDismissed: {}, peekClosed: false, peekOpen: false, peekToast: '', cloudToast: '', recalcToast: '', recalcLog: [], autoRecalc: true, recalcRunning: false, recalcStep: '',
     tgToken: '', tgChatId: '', tgFwd: false, tgEditToken: '', tgEditChatId: '', tgStatus: '',
     cloudHistory: [], cloudName: '', cloudCfgText: '', cloudWsId: 'workspace',
   };
@@ -3389,10 +3580,14 @@ class Component extends DCLogic {
     try { tasksSeenAt = Number(this.lsGet('tasks_seen')) || 0; } catch (e) {}
     let chatSeenAt = 0;
     try { chatSeenAt = Number(this.lsGet('chat_seen')) || 0; } catch (e) {}
+    let recalcLog = [];
+    try { recalcLog = JSON.parse(this.lsGet('recalc_log') || '[]'); if (!Array.isArray(recalcLog)) recalcLog = []; } catch (e) {}
+    let autoRecalc = true;
+    try { const v = this.lsGet('auto_recalc'); if (v === '0') autoRecalc = false; } catch (e) {}
     try { tgLink = this.lsGet('tg') || ''; } catch (e) {}
     let tgBot = {};
     try { tgBot = JSON.parse(this.lsGet('tgbot') || '{}') || {}; } catch (e) {}
-    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, tasksSeenAt, chatSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '', taskTemplateId: emailCfg.taskTemplateId || '', notifyTasks: !!emailCfg.notifyTasks, appUrl: emailCfg.appUrl || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
+    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, tasksSeenAt, chatSeenAt, recalcLog, autoRecalc, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '', taskTemplateId: emailCfg.taskTemplateId || '', notifyTasks: !!emailCfg.notifyTasks, appUrl: emailCfg.appUrl || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
     // Двухфазный экран входа: фаза 1 (загрузка) → фаза 2 (логотип слева + кнопка «Войти»)
     this._loaderT1 = setTimeout(() => this.setState({ loaderPhase: 'p2' }), 3400);
     // Слоган под логотипом перепечатывается каждые 10 c (remount по tick → анимация проигрывается заново)
@@ -3485,7 +3680,7 @@ class Component extends DCLogic {
         inn: '7707083893', kpp: '770701001', addr: '123022, г. Москва, ул. Промышленная, д. 12',
         tel: '+7 (495) 123-45-67', email: 'info@shtarkink.com',
         subtitle: 'Производство спиртовых красок для печати на гибкой упаковке',
-        catalog: 'catalog.json', data: 'nev_data.json', tcalcLive: true },
+        catalog: 'catalog.json', data: 'nev_data.json', tcalcLive: true, costMethod: 'fifo' },
       chem: { id: 'chem', name: 'Shtark Chemicals', wm1: 'Shtark', wm2: 'Chemicals', wm2ls: '.26em', accent: '#2A6FDB',
         site: 'https://shtarkchemicals.com/', host: 'shtarkchemicals.com', logo: 'loader-logo-chem.png',
         caption: 'Производство клеёв для ламинации и полиуретановых систем',
@@ -3494,7 +3689,7 @@ class Component extends DCLogic {
         inn: '—', kpp: '—', addr: 'г. Москва (укажите реквизиты)',
         tel: '+7 (495) 000-00-00', email: 'info@shtarkchemicals.com',
         subtitle: 'Производство адгезивов, ПУ-систем и связующих',
-        catalog: 'catalog-chem.json', data: 'nev-chem.json', tcalc: 'tcalc-chem.json', sebest: 'sebest-chem.json' }
+        catalog: 'catalog-chem.json', data: 'nev-chem.json', tcalc: 'tcalc-chem.json', sebest: 'sebest-chem.json', costMethod: 'batch' }
     };
   }
   coOrder() { return ['ink', 'chem']; }
@@ -3834,6 +4029,50 @@ class Component extends DCLogic {
   }
   mgClear() { this.setState({ mgRevenue: null, mgRevMeta: null, mgGm: null, mgErr: '', mgExpanded: {} }, () => this.saveMargin()); }
   // Средняя СС ₽/кг по марке из отчёта Себестоимость (взвешенная по весу) + ручные правки
+  // ===== Гибридный учёт: метод оценки себестоимости в разрезе компаний =====
+  costMethod() { return (this.co() || {}).costMethod || 'batch'; }
+  isFifo() { return this.costMethod() === 'fifo'; }
+  inventoryMethodLabel() { return this.isFifo() ? 'Метод оценки стоимости запасов: FIFO по хронологии выпусков' : 'Метод оценки стоимости запасов: Партионный учёт (Landed Cost)'; }
+  drilldownColLabel() { return this.isFifo() ? 'Временной блок списания (FIFO)' : 'Номер партии закупки (Landed Cost)'; }
+  // FIFO-приходы сырья из поступлений ТМЦ (1С:КА), отсортированные по дате (ASC = первый пришёл)
+  fifoLots(materialKey) {
+    const lots = [];
+    for (const rc of (this.state.receipts || [])) {
+      const ts = rc.date ? this.parseISO(rc.date).getTime() : (rc.createdAt || 0);
+      for (const ln of (rc.lines || [])) {
+        if (this.norm(ln.material) !== materialKey) continue;
+        const qty = Number(ln.qty) || 0; if (qty <= 0) continue;
+        const unit = Number(ln.priceRub != null ? ln.priceRub : (ln.price != null ? ln.price : 0)) || 0;
+        lots.push({ qty, unit, ts, date: rc.date || '' });
+      }
+    }
+    return lots.sort((a, b) => a.ts - b.ts);
+  }
+  // FIFO-списание: средневзвешенная ₽/кг сырья + маркер «[FIFO] от ДД.ММ.ГГГГ»
+  fifoUnitCost(materialKey, needKg) {
+    const lots = this.fifoLots(materialKey); if (!lots.length) return { unit: 0, marker: '' };
+    let remaining = needKg > 0 ? needKg : 1, spent = 0, taken = 0, firstDate = '';
+    for (const lot of lots) {
+      if (remaining <= 1e-9) break;
+      const take = Math.min(lot.qty, remaining);
+      spent += take * lot.unit; taken += take; remaining -= take;
+      if (!firstDate) firstDate = lot.date;
+    }
+    if (remaining > 1e-9) { const last = lots[lots.length - 1].unit; spent += remaining * last; taken += remaining; }
+    return { unit: taken ? spent / taken : 0, marker: firstDate ? ('[FIFO] Списание по приходу от ' + this.dmFull(firstDate)) : '' };
+  }
+  // FIFO-себестоимость ₽/кг по марке ГП (по рецептуре + хронологии приходов сырья)
+  fifoCostByMarka() {
+    const out = {}; if (!this.isFifo()) return out;
+    const prods = (this.data && this.data.products) ? this.data.products.map(p => p.name || p) : [];
+    const lossF = (Number(this.state.loss) || 0) / 100;
+    for (const p of prods) {
+      let cost = 0;
+      try { for (const ln of this.recipeLinesFor(p)) { const fc = this.fifoUnitCost(this.norm(ln.component), 0); cost += (ln.pct || 0) * fc.unit; } } catch (e) {}
+      if (cost > 0) out[this.mgKey(this.sbMarka(p))] = cost;
+    }
+    return out;
+  }
   mgCostByMarka() {
     const out = {}; const recs = (this.sebest && this.sebest.records) || [];
     const acc = {};
@@ -3933,9 +4172,9 @@ class Component extends DCLogic {
     const S = this.state, set = (p) => this.setState(p);
     return {
       cvRubCls: S.curMode !== 'EUR' ? 'cvseg on' : 'cvseg', cvEurCls: S.curMode === 'EUR' ? 'cvseg on' : 'cvseg',
-      setCurRub: () => set({ curMode: 'RUB' }), setCurEur: () => set({ curMode: 'EUR' }),
+      setCurRub: () => { set({ curMode: 'RUB' }); this.scheduleAutoRecalc('RATES_OR_VAT_CHANGE'); }, setCurEur: () => { set({ curMode: 'EUR' }); this.scheduleAutoRecalc('RATES_OR_VAT_CHANGE'); },
       cvVatWithCls: S.vatMode === 'WITH' ? 'cvseg on' : 'cvseg', cvVatNoCls: S.vatMode !== 'WITH' ? 'cvseg on' : 'cvseg',
-      setVatWith: () => set({ vatMode: 'WITH' }), setVatNo: () => set({ vatMode: 'WITHOUT' }),
+      setVatWith: () => { set({ vatMode: 'WITH' }); this.scheduleAutoRecalc('RATES_OR_VAT_CHANGE'); }, setVatNo: () => { set({ vatMode: 'WITHOUT' }); this.scheduleAutoRecalc('RATES_OR_VAT_CHANGE'); },
       cvUnitAbsCls: S.unitMode !== 'PERKG' ? 'cvseg on' : 'cvseg', cvUnitKgCls: S.unitMode === 'PERKG' ? 'cvseg on' : 'cvseg',
       setUnitAbs: () => set({ unitMode: 'ABS' }), setUnitKg: () => set({ unitMode: 'PERKG' }),
       cvUnitOn: S.unitMode === 'PERKG',
@@ -3948,8 +4187,8 @@ class Component extends DCLogic {
     const totalW = leaves.reduce((a, l) => a + l.weight, 0) || 1;
     const kroshkaW = leaves.filter(l => l.group === 'Клей крошка ШК').reduce((a, l) => a + l.weight, 0) || 1;
     const rate = this.mgNum(gm.rate) || (() => { const recs = (this.sebest && this.sebest.records) || []; for (let i = recs.length - 1; i >= 0; i--) { const rr = this.mgNum(recs[i].rate); if (rr) return rr; } return 0; })();
-    const costMap = this.mgCostByMarka(); const ctMap = this.ctCostByMarka(rate); const manual = S.mgManualCost || {};
-    const ccOf = (marka) => { if (manual[marka] != null && manual[marka] !== '') return this.mgNum(manual[marka]); const k = this.mgKey(marka); return mode === 'batch' ? (costMap[k] || ctMap[k] || 0) : (ctMap[k] || costMap[k] || 0); };
+    const costMap = this.mgCostByMarka(); const ctMap = this.ctCostByMarka(rate); const fifoMap = this.fifoCostByMarka(); const manual = S.mgManualCost || {};
+    const ccOf = (marka) => { if (manual[marka] != null && manual[marka] !== '') return this.mgNum(manual[marka]); const k = this.mgKey(marka); if (this.isFifo()) return (fifoMap[k] || ctMap[k] || costMap[k] || 0); return mode === 'batch' ? (costMap[k] || ctMap[k] || 0) : (ctMap[k] || costMap[k] || 0); };
     const allPerKg = (this.mgNum(gm.zpKleevar) + this.mgNum(gm.ndfl) + this.mgNum(gm.vznosy) + this.mgNum(gm.travma) + this.mgNum(gm.electro) + this.mgNum(gm.bonus) + this.mgNum(gm.delivery)) / totalW;
     const kroshkaPerKg = (this.mgNum(gm.ya) + this.mgNum(gm.nesterov)) / kroshkaW;
     const kvRuleFor = (client) => { const c = String(client || '').toLowerCase(); for (const k of (S.mgKv || [])) { if (k.name && c.indexOf(String(k.name).toLowerCase()) >= 0) return this.mgNum(k.pct); } return 0; };
@@ -5525,7 +5764,7 @@ class Component extends DCLogic {
     if (this.myAreaSet().size) this.queueCloudPush();
   }
 
-  componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); this.xStopListeners(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); clearInterval(this._peekInt); clearTimeout(this._peekToastT); clearTimeout(this._peekFirstT); clearInterval(this._peekRemindInt); clearTimeout(this._peekHideT); clearTimeout(this._purgeT); clearInterval(this._purgeInt); clearInterval(this._chInt); clearTimeout(this._chLeaveT); clearTimeout(this._coffeeT); clearInterval(this._clockInt); clearInterval(this._badgeInt); if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
+  componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); this.xStopListeners(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); clearInterval(this._peekInt); clearTimeout(this._peekToastT); clearTimeout(this._peekFirstT); clearInterval(this._peekRemindInt); clearTimeout(this._peekHideT); clearTimeout(this._purgeT); clearInterval(this._purgeInt); clearInterval(this._chInt); clearTimeout(this._chLeaveT); clearTimeout(this._coffeeT); clearInterval(this._clockInt); clearInterval(this._badgeInt); clearTimeout(this._recalcToastT); if (this._dbTimers) { for (const k in this._dbTimers) clearTimeout(this._dbTimers[k]); this._dbTimers = {}; } this._pendingEvents = null; this._recalcQueued = null; if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
 
   loaderVals() {
     const T = 'ENGINEERED FOR EXCELLENCE.';
@@ -5665,6 +5904,7 @@ class Component extends DCLogic {
       delivery: '<rect x="1" y="6" width="13" height="10" rx="1"/><path d="M14 9h4l3 3v4h-7z"/><circle cx="5" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/>',
       dataload: '<path d="M12 3v11"/><path d="M8 7l4-4 4 4"/><path d="M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>',
       filearch: '<rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><line x1="10" y1="12" x2="14" y2="12"/>',
+      autopilot: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3"/><path d="M12 18v3"/><path d="M3 12h3"/><path d="M18 12h3"/>',
       pnl: '<path d="M3 3v18h18"/><rect x="6" y="11" width="3" height="7"/><rect x="11" y="7" width="3" height="11"/><rect x="16" y="13" width="3" height="5"/>',
       pay: '<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/>',
       prices: '<path d="M3 7v4.6a2 2 0 0 0 .6 1.4l7.4 7.4a2 2 0 0 0 2.8 0l4.8-4.8a2 2 0 0 0 0-2.8L11.2 5.6A2 2 0 0 0 9.8 5H5a2 2 0 0 0-2 2z"/><circle cx="7.5" cy="9.5" r="1.2"/>',
@@ -5802,7 +6042,7 @@ class Component extends DCLogic {
     if (!user) return [];
     const co = this._co();
     const all = this.allTabIds().filter(id => this.tabInCompany(id, co));
-    if (user.role === 'admin') return ['home'].concat(all, ['users', 'filearch']);
+    if (user.role === 'admin') return ['home'].concat(all, ['users', 'filearch', 'autopilot']);
     const perms = Array.isArray(user.perms) ? user.perms : all;
     // Новые разделы доступны по умолчанию всем (добавлены позже — их нет в старых perms)
     const always = ['tcalc', 'xcalc', 'prodplan', 'procplan', 'onec', 'tasks', 'docs', 'cparties', 'receipts', 'sales', 'treas30', 'logi', 'prodrep', 'costtree'];
@@ -6508,7 +6748,8 @@ class Component extends DCLogic {
   presenceList() {
     const S = this.state, now = Date.now(), out = [], seen = new Set();
     const meId = S.currentUser ? S.currentUser.id : '';
-    const add = (name, photo, self, uid) => { const initial = (name || '?').trim().charAt(0).toUpperCase(); const src = this.avatarForName(name, photo); const avatar = src ? React.createElement('img', { className: 'onimg', src, alt: '' }) : React.createElement('span', { className: 'onini' }, initial); const id = uid || this.userIdByName(name); out.push({ name: name || '—', avatar, self: !!self, id, canDm: !self && !!id, tip: self ? 'Это вы' : 'ПКМ — приватный чат с «' + (name || '') + '»', onCtx: (e) => { if (e && e.preventDefault) e.preventDefault(); if (!self && id) this.openPrivateWith(id, name); } }); };
+    let starsMap = {}; try { const rd = this.taskRatingData(); for (const r of rd) starsMap[r.id] = r.stars; } catch (e) {}
+    const add = (name, photo, self, uid) => { const initial = (name || '?').trim().charAt(0).toUpperCase(); const src = this.avatarForName(name, photo); const avatar = src ? React.createElement('img', { className: 'onimg', src, alt: '' }) : React.createElement('span', { className: 'onini' }, initial); const id = uid || this.userIdByName(name); const stars = starsMap[id] || 0; out.push({ name: name || '—', avatar, self: !!self, id, stars, hasStars: stars > 0, starsLabel: '★'.repeat(stars), tip: (self ? 'Это вы' : 'ПКМ — приватный чат с «' + (name || '') + '»') + (stars ? ' · KPI ' + stars + '★' : ''), canDm: !self && !!id, onCtx: (e) => { if (e && e.preventDefault) e.preventDefault(); if (!self && id) this.openPrivateWith(id, name); } }); };
     if (S.currentUser) { add(S.currentUser.name, this.userAvatar(S.currentUser.name) || S.welcomePhoto || 'welcome-photo.png', true, meId); seen.add(this._clientId); }
     if (S.cloudConnected && S.cloudPresence) {
       for (const cid of Object.keys(S.cloudPresence)) {
@@ -6701,6 +6942,7 @@ class Component extends DCLogic {
       try { window.__FB.setDoc(this._docRef, { tasks: next }, { merge: true }).catch(() => {}); } catch (e) {}
     }
     setTimeout(() => this.updateAppBadge(), 50);
+    if (!this._recalcing) this.scheduleAutoRecalc('TASK_FACT');
   }
   // Автоудаление: выполненные задачи, завершённые 70+ дней назад, убираются из программы и облака.
   purgeOldTasks() {
@@ -8098,6 +8340,7 @@ class Component extends DCLogic {
     const sale = { id: d.id || ('sl_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), no: (d.no || '').trim(), date: d.date || this.ymd(new Date()), client, product: d.product || '', qty: Number(d.qty) || 0, price: Number(d.price) || 0, currency: d.currency || 'RUB', rate: Number(d.rate) || 1, createdAt: d.createdAt || Date.now() };
     this.writeSales([sale, ...(S.sales || []).filter(x => x.id !== sale.id)]);
     this.setState({ saleDraft: null, saleErr: '' });
+    setTimeout(() => this.triggerGlobalRecalculation('NEW_SALES'), 60);
   }
   buildSales() {
     const S = this.state, set = (p) => this.setState(p);
@@ -8160,6 +8403,7 @@ class Component extends DCLogic {
     this.applyReceiptStock(r);
     this.setState({ recDraft: null, recErr: '' });
     this.postSystemNote('📥 Поступление на склад от «' + supplier + '»: ' + lines.length + ' позиц., обновлены остатки', S.currentUser ? S.currentUser.name : '—');
+    setTimeout(() => this.triggerGlobalRecalculation('NEW_RECEIPT'), 60);
   }
   buildReceipts() {
     const S = this.state, set = (p) => this.setState(p);
@@ -8652,6 +8896,7 @@ class Component extends DCLogic {
   lcMut(arr, meta) {
     this.setState({ lcData: arr, lcMeta: meta || this.state.lcMeta, lcErr: '' });
     try { this.lsSet('lcdata', JSON.stringify(arr)); } catch (e) {}
+    if (meta && meta.src && meta.src !== 'demo') setTimeout(() => this.triggerGlobalRecalculation('NEW_LANDED_COST'), 60);
   }
   lcClear() { this.setState({ lcData: [], lcMeta: null, lcStatus: '', lcErr: '' }); try { this.lsSet('lcdata', '[]'); } catch (e) {} }
   toggleLcAnom() { this.setState({ lcOnlyAnom: !this.state.lcOnlyAnom }); }
@@ -9160,7 +9405,7 @@ class Component extends DCLogic {
       const head = lines[0];
       const delim = head.indexOf('\t') >= 0 ? '\t' : (head.split(';').length > head.split(',').length ? ';' : ',');
       const parse = (l) => l.split(delim).map(c => c.replace(/^"|"$/g, '').trim());
-      const headers = parse(head); const rows = lines.slice(1).map(parse);
+      const headers = parse(head); const rows = lines.slice(1).map(parse).filter(r => !this.dlIsNoiseRow(r));
       return { headers, rows, n: rows.length };
     }
     const XLSX = window.XLSX; if (!XLSX) throw new Error('Библиотека Excel не загрузилась — обновите страницу.');
@@ -9169,7 +9414,7 @@ class Component extends DCLogic {
     const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: null });
     let hr = 0; for (let i = 0; i < Math.min(aoa.length, 15); i++) { const c = (aoa[i] || []).filter(x => x != null && String(x).trim()).length; if (c >= 2) { hr = i; break; } }
     const headers = (aoa[hr] || []).map(x => String(x == null ? '' : x).trim());
-    const rows = aoa.slice(hr + 1).filter(r => r && r.some(x => x != null && String(x).trim()));
+    const rows = aoa.slice(hr + 1).filter(r => r && r.some(x => x != null && String(x).trim()) && !this.dlIsNoiseRow(r));
     return { headers, rows, n: rows.length };
   }
   dlValidate(key, headers) {
@@ -9192,11 +9437,69 @@ class Component extends DCLogic {
   }
   dlRemoveBase(key) { const dlBase = { ...(this.state.dlBase || {}) }; delete dlBase[key]; this.setState({ dlBase, dlDone: '' }); }
   dlSigOf(headers) { return headers.map(h => this.dlNorm(h)).filter(Boolean).sort().join('|'); }
-  dlGuessMap(headers) {
+  dlGuessMap(headers, rows) {
     const map = {}; const H = headers.map(h => this.dlNorm(h));
-    const rules = { nomen: ['номенклат', 'товар', 'материал', 'сырь', 'продукт', 'наименован'], qty: ['кол-во', 'количеств', 'объ[её]м', 'остаток'], price: ['цена', 'тариф', 'ставка'], sum: ['сумма', 'стоимост', 'итого'], date: ['дата', 'период'], supplier: ['поставщик', 'продавец'], client: ['клиент', 'контрагент', 'покупател'], warehouse: ['склад'], unit: ['ед.', 'ед ', 'единиц'] };
+    // Семантические правила: рус + англ синонимы по смыслу слова
+    const rules = {
+      nomen: ['номенклат', 'товар', 'материал', 'сырь', 'продукт', 'наименован', 'издели', 'позиц', 'марка', 'item', 'product', 'material', 'name', 'goods', 'sku'],
+      qty: ['кол-во', 'количеств', 'объ[её]м', 'остаток', 'вес', 'масса', 'qty', 'quantity', 'amount', 'volume', 'weight', 'кг', 'шт'],
+      price: ['цена', 'тариф', 'ставка', 'price', 'rate', 'unit price', 'цена за'],
+      sum: ['сумма', 'стоимост', 'итого', 'sum', 'total', 'cost', 'value', 'amount rub'],
+      date: ['дата', 'период', 'date', 'period', 'день'],
+      supplier: ['поставщик', 'продавец', 'фабрик', 'vendor', 'supplier', 'seller'],
+      client: ['клиент', 'контрагент', 'покупател', 'заказчик', 'client', 'customer', 'buyer'],
+      warehouse: ['склад', 'warehouse', 'store'],
+      unit: ['ед.', 'ед ', 'единиц', 'unit', 'uom'],
+    };
     for (const f of Object.keys(rules)) { const idx = H.findIndex(h => rules[f].some(s => new RegExp(s).test(h))); if (idx >= 0 && !Object.values(map).includes(idx)) map[f] = idx; }
+    // Семантический добор по ТИПУ данных в колонке (если по названию не нашли)
+    if (rows && rows.length) {
+      const stats = headers.map((_, i) => this.dlColStats(rows, i));
+      const used = () => new Set(Object.values(map));
+      const free = (i) => !used().has(i);
+      // Номенклатура: самая «текстовая» длинная колонка
+      if (map.nomen == null) { let best = -1, bestLen = 0; stats.forEach((s, i) => { if (free(i) && s.txtShare > 0.6 && s.avgLen > bestLen) { bestLen = s.avgLen; best = i; } }); if (best >= 0) map.nomen = best; }
+      // Дата: колонка с датами
+      if (map.date == null) { const i = stats.findIndex((s, i) => free(i) && s.dateShare > 0.5); if (i >= 0) map.date = i; }
+      // Сумма: числовая колонка с наибольшими значениями
+      if (map.sum == null) { let best = -1, bestAbs = 0; stats.forEach((s, i) => { if (free(i) && s.numShare > 0.7 && s.avgAbs > bestAbs) { bestAbs = s.avgAbs; best = i; } }); if (best >= 0) map.sum = best; }
+      // Количество: целочисленная числовая колонка меньшего масштаба
+      if (map.qty == null) { let best = -1, bestScore = 0; stats.forEach((s, i) => { if (free(i) && s.numShare > 0.7) { const score = s.intShare * (1 / (1 + Math.log10(1 + s.avgAbs))); if (score > bestScore) { bestScore = score; best = i; } } }); if (best >= 0) map.qty = best; }
+      // Цена: оставшаяся числовая колонка
+      if (map.price == null) { const i = stats.findIndex((s, i) => free(i) && s.numShare > 0.7); if (i >= 0) map.price = i; }
+    }
     return map;
+  }
+  // Профиль колонки: доли типов и масштаб (для семантического маппинга без участия человека)
+  dlColStats(rows, idx) {
+    let tot = 0, num = 0, dateN = 0, txt = 0, sumAbs = 0, intN = 0, lenSum = 0;
+    for (const r of (rows || []).slice(0, 50)) {
+      const v = r ? r[idx] : null; if (v == null || String(v).trim() === '') continue; tot++;
+      const s = String(v).trim();
+      const cleaned = s.replace(/[\s₽€%]/g, '').replace(',', '.');
+      const n = parseFloat(cleaned);
+      const isNum = /^-?[\d.]+$/.test(cleaned) && isFinite(n);
+      if (isNum) { num++; sumAbs += Math.abs(n); if (Math.abs(n - Math.round(n)) < 1e-9) intN++; }
+      else if (/^\d{1,4}[.\-/]\d{1,2}[.\-/]\d{1,4}/.test(s) || (/^\d{5}$/.test(s) && +s > 30000 && +s < 90000)) dateN++;
+      else { txt++; lenSum += s.length; }
+    }
+    return { tot, numShare: tot ? num / tot : 0, dateShare: tot ? dateN / tot : 0, txtShare: tot ? txt / tot : 0, avgAbs: num ? sumAbs / num : 0, intShare: num ? intN / num : 0, avgLen: txt ? lenSum / txt : 0 };
+  }
+  // Фильтрация шума: пустые строки, итоговые подвалы, бухгалтерские разделители
+  dlIsNoiseRow(row) {
+    if (!row) return true;
+    const cells = row.map(x => (x == null ? '' : String(x).trim()));
+    const nonEmpty = cells.filter(Boolean);
+    if (!nonEmpty.length) return true;
+    const joined = this.dlNorm(nonEmpty.join(' '));
+    // подвалы/итоги/служебные строки
+    if (/^(итого|всего|итог|подытог|баланс|оборот|сальдо|в том числе|примечани|подпис|исполнител|ответствен|главный бухгалтер|руководител|м\.п\.|страница|стр\.)/.test(joined)) {
+      // если это строка-итог (мало заполненных ячеек или явное «итого») — шум
+      if (nonEmpty.length <= 3 || /^(итого|всего|итог|подытог)/.test(joined)) return true;
+    }
+    // строка-разделитель из одного символа (---, ===)
+    if (nonEmpty.every(c => /^[-=_.*]+$/.test(c))) return true;
+    return false;
   }
   async dlOnExtra(file) {
     if (!/\.(xlsx|xls|csv|txt)$/i.test(file.name || '')) { this.setState({ dlErr: '«' + (file.name || 'файл') + '» — поддерживаются .xlsx, .xls, .csv, .txt.' }); return; }
@@ -9209,8 +9512,11 @@ class Component extends DCLogic {
         this.setState({ dlExtra: extra, dlBusy: '', dlDone: '' });
         this.archiveFile(file, { category: 'custom', category_label: tpl.name || 'Доп. форма', source: 'block_b', rows: d.n });
       } else {
+        // ИИ-Коннект: попытка распознать инвойс поставщика → плашка подтверждения
+        const inv = this.apDetectInvoice(d.headers, d.rows);
+        if (inv && inv.confident) { inv.fileName = file.name; inv.supplierGuess = file.name.replace(/\.[^.]+$/, ''); this._faPendingFile = file; this.setState({ dlBusy: '', apInvoice: inv }); this.apBeep(); return; }
         this._faPendingFile = file;
-        this.setState({ dlBusy: '', dlMap: { fileName: file.name, headers: d.headers, rows: d.rows, n: d.n, sig, map: this.dlGuessMap(d.headers), name: file.name.replace(/\.[^.]+$/, ''), save: true } });
+        this.setState({ dlBusy: '', dlMap: { fileName: file.name, headers: d.headers, rows: d.rows, n: d.n, sig, map: this.dlGuessMap(d.headers, d.rows), name: file.name.replace(/\.[^.]+$/, ''), save: true } });
       }
     } catch (e) { this.setState({ dlBusy: '', dlErr: 'Ошибка чтения «' + (file.name || '') + '»: ' + (e.message || e) }); }
   }
@@ -9230,6 +9536,168 @@ class Component extends DCLogic {
   dlDelTemplate(id) { const tpls = (this.state.dlTemplates || []).filter(t => t.id !== id); this.setState({ dlTemplates: tpls }); try { this.lsSet('dltemplates', JSON.stringify(tpls)); } catch (e) {} }
   dlRemoveExtra(id) { this.setState({ dlExtra: (this.state.dlExtra || []).filter(x => x.id !== id), dlDone: '' }); }
   dlFindCol(headers, syns) { const H = headers.map(h => this.dlNorm(h)); for (let i = 0; i < H.length; i++) if (syns.some(s => H[i].indexOf(s) >= 0)) return i; return -1; }
+  // ============================================================
+  // ДВИЖОК СКВОЗНОГО ПЕРЕРАСЧЁТА (Data Calculation Core)
+  // Event-Driven каскад: Закупки → Склад → Производство → Доставка → Продажи → Финансы → KPI
+  // ============================================================
+  recalcGraph() {
+    return {
+      purchases:  { label: 'Закупки → Landed Cost', reports: ['Анализ себестоимости (план)', 'Landed Cost / ВЭД'], next: ['stock'] },
+      stock:      { label: 'Склад (остатки сырья)', reports: ['Ведомость склада'], next: ['production'] },
+      production: { label: 'Производство (план выпуска)', reports: ['План производства', 'План закупок', 'Плановая СС 1 кг'], next: ['delivery', 'sales'] },
+      delivery:   { label: 'Доставка (баланс снабжения)', reports: ['Доставка · проекция остатков по дням'], effects: ['deficitTasks'], next: [] },
+      sales:      { label: 'Продажи (выручка)', reports: ['Реестр продаж'], next: ['finance'] },
+      finance:    { label: 'Финансы (маржа, P&L)', reports: ['Маржинальный анализ 360°', 'P&L · курсовые разницы', 'GM1 / GM2 на 1 кг'], next: ['kpi'] },
+      kpi:        { label: 'Рейтинг и KPI', reports: ['Рейтинг KPI', '★ звёзды у аватарок'], effects: ['kpiStars'], next: [] },
+      rates:      { label: 'Курсы ЦБ / контур НДС', reports: ['Маржинальность', 'P&L', 'Landed Cost', 'Себестоимость'], next: ['finance'] },
+    };
+  }
+  recalcEventMap() {
+    return {
+      NEW_PURCHASE: 'purchases', NEW_LANDED_COST: 'purchases',
+      NEW_RECEIPT: 'stock', STOCK_CHANGE: 'stock',
+      NEW_PRODUCTION_PLAN: 'production',
+      NEW_SALES: 'sales',
+      RATES_OR_VAT_CHANGE: 'rates',
+      NEW_FACT_DOCS: 'kpi', TASK_FACT: 'kpi',
+      FULL_RECALC: 'purchases',
+    };
+  }
+  recalcEventLabel(ev) {
+    return ({ NEW_PURCHASE: 'Новая закупка / партия в пути', NEW_LANDED_COST: 'Загрузка Landed Cost', NEW_RECEIPT: 'Поступление на склад', STOCK_CHANGE: 'Изменение остатков', NEW_PRODUCTION_PLAN: 'Изменение плана выпуска', NEW_SALES: 'Новые продажи', RATES_OR_VAT_CHANGE: 'Смена курса / контура НДС', NEW_FACT_DOCS: 'Факт. документы 1С:КА', TASK_FACT: 'Факт по задачам', FULL_RECALC: 'Полный сквозной пересчёт' })[ev] || ev;
+  }
+  recalcOpenPeriod() { return (this.sebest && this.sebest.period) || (new Date()).toISOString().slice(0, 7); }
+  isPeriodClosed(period) { if (!period) return false; const open = this.recalcOpenPeriod(); return String(period).slice(0, 7) < String(open).slice(0, 7); }
+  // ===== Утилиты стабилизации (debounce / задержки / уступка потока) =====
+  rcDebounce(key, fn, ms) { this._dbTimers = this._dbTimers || {}; clearTimeout(this._dbTimers[key]); this._dbTimers[key] = setTimeout(() => { delete this._dbTimers[key]; try { fn(); } catch (e) {} }, ms); }
+  rcDelay(ms) { return new Promise(r => setTimeout(r, ms)); }
+  rcNextTick() { return new Promise(r => (typeof queueMicrotask === 'function' ? queueMicrotask(r) : setTimeout(r, 0))); }
+  // ===== КОНТУР А: автономный фоновый пересчёт 24/7 (debounced, coalesced) =====
+  // Любое микро-изменение (чат, задачи, планы, ползунки курсов, подгрузка файлов) → сюда.
+  // Debounce 300мс гасит спам; события коалесцируются; берётся самый «верхний» вход графа.
+  scheduleAutoRecalc(event) {
+    if (this.state.autoRecalc === false) return;            // фоновый режим можно выключить вручную
+    this._pendingEvents = this._pendingEvents || new Set();
+    this._pendingEvents.add(event || 'FULL_RECALC');
+    this.rcDebounce('autoRecalc', () => {
+      const evs = [...(this._pendingEvents || [])]; this._pendingEvents = new Set();
+      if (!evs.length) return;
+      const entry = this.rcPickHighestEntry(evs);
+      this.runCascade(entry, { mode: 'auto', events: evs });
+    }, 300);
+  }
+  // Самый «верхний» по цепочке вход среди коалесцированных событий (Закупки выше Продаж и т.д.)
+  rcPickHighestEntry(events) {
+    const rank = { purchases: 0, rates: 0, stock: 1, production: 2, delivery: 3, sales: 4, finance: 5, kpi: 6 };
+    let best = 'kpi', bestRank = 99;
+    for (const ev of events) { const n = this.recalcEventMap()[ev] || 'purchases'; const r = (rank[n] == null ? 9 : rank[n]); if (r < bestRank) { bestRank = r; best = n; } }
+    return best;
+  }
+  // Совместимость со старыми вызовами (receipts/sales/landed/dataload) → автономный путь
+  triggerGlobalRecalculation(event) { return this.scheduleAutoRecalc(event); }
+  // ===== ГЛАВНЫЙ АСИНХРОННЫЙ КОНТРОЛЛЕР: строгая последовательность слоёв =====
+  // Защита от рекурсии (_recalcing) + очередь (_recalcQueued): пересчёт, запрошенный ВО ВРЕМЯ
+  // пересчёта, не зацикливает браузер, а откладывается на следующий цикл.
+  async runCascade(entry, opts) {
+    opts = opts || {};
+    if (this._recalcing) { this._recalcQueued = { entry, opts }; return null; }
+    this._recalcing = true;
+    let summary = null;
+    try {
+      const graph = this.recalcGraph();
+      const order = [], seen = {}; const queue = [entry || 'purchases'];
+      while (queue.length) { const n = queue.shift(); if (!n || seen[n] || !graph[n]) continue; seen[n] = 1; order.push(n); for (const nx of (graph[n].next || [])) if (!seen[nx]) queue.push(nx); }
+      const reports = [], effectsRun = [];
+      // Строгая последовательность: каждый слой полностью завершается до следующего (нет race condition:
+      // слой Продаж не стартует, пока слой Закупок не сформировал Landed Cost).
+      for (const n of order) {
+        const node = graph[n];
+        for (const r of (node.reports || [])) reports.push(r);
+        for (const eff of (node.effects || [])) {
+          if (eff === 'deficitTasks') { const r = await this.recalcDeliveryDeficitsAsync(); if (r) effectsRun.push(r); }
+        }
+        await this.rcNextTick(); // уступаем поток между слоями — изоляция и отзывчивость UI
+      }
+      try { this.apRefresh(); } catch (e) {} // ИИ-Автопилот: автозакупки + HR-трекинг после каскада
+      const ev = (opts.events && opts.events[0]) || 'FULL_RECALC';
+      const logEntry = { at: Date.now(), event: ev, eventLabel: (opts.mode === 'force' ? 'Принудительный полный пересчёт' : this.recalcEventLabel(ev)), entry: entry, chain: order.map(n => graph[n].label), reports: [...new Set(reports)], nodes: order.length, mode: opts.mode || 'auto' };
+      const log = [logEntry, ...((this.state.recalcLog) || [])].slice(0, 40);
+      this.setState({ recalcLog: log, recalcTick: (this.state.recalcTick || 0) + 1, recalcLastAt: logEntry.at });
+      try { this.lsSet('recalc_log', JSON.stringify(log)); } catch (e) {}
+      if (opts.mode !== 'force') this.pushRecalcToast('⚙ Авто-пересчёт 24/7: ' + logEntry.eventLabel + ' → ' + order.length + ' контур(ов)' + (effectsRun.length ? (' · ' + effectsRun.join('; ')) : ''));
+      summary = logEntry;
+    } catch (e) { } finally {
+      this._recalcing = false;
+      if (this._recalcQueued) { const q = this._recalcQueued; this._recalcQueued = null; setTimeout(() => this.runCascade(q.entry, q.opts), 0); }
+    }
+    return summary;
+  }
+  async recalcDeliveryDeficitsAsync() { await this.rcNextTick(); return this.recalcDeliveryDeficits(); }
+  // ===== КОНТУР Б: ручная кнопка «🚀 Сквозной пересчёт и ИИ-анализ» (Reset & Full Audit) =====
+  // Пошаговый визуальный лоадер, блокировка кнопки, тяжёлый факторный анализ заново, тост по завершении.
+  async forceGlobalRecalc() {
+    if (this.state.recalcRunning) return;
+    this.setState({ recalcRunning: true, recalcStep: 'Инициализация…', tab: 'onec' });
+    const steps = [
+      ['Шаг 1: Кросс-курсы ЦБ и контур НДС…', async () => {}],
+      ['Шаг 2: Landed Cost сырья (ВЭД, факторный анализ)…', async () => { try { this.lcEnrich(); } catch (e) {} }],
+      ['Шаг 3: Себестоимость 1 кг и остатки склада…', async () => {}],
+      ['Шаг 4: Баланс снабжения «Доставка» + авто-задачи…', async () => { await this.recalcDeliveryDeficitsAsync(); }],
+      ['Шаг 5: Маржа GM1/GM2 и P&L (курсовые разницы)…', async () => {}],
+      ['Шаг 6: Рейтинг и KPI · звёзды у аватарок…', async () => {}],
+      ['Шаг 7: Семантический ИИ-аудит до первопричин…', async () => { try { const bi = this.executeDeepBusinessIntelligence(); this.setState({ deepBI: bi }); } catch (e) {} }],
+    ];
+    for (const [label, fn] of steps) {
+      this.setState({ recalcStep: label });
+      await this.rcDelay(440);
+      try { await fn(); } catch (e) {}
+    }
+    await this.runCascade('purchases', { mode: 'force', events: ['FULL_RECALC'] });
+    this.setState({ recalcRunning: false, recalcStep: '' });
+    this.pushRecalcToast('🚀 Полный сквозной пересчёт и ИИ-аудит завершены ✓');
+    try { this.postSystemNote('🚀 Запущен принудительный сквозной пересчёт всего графа данных + ИИ-аудит. Все метрики и KPI актуализированы.', this.state.currentUser ? this.state.currentUser.name : 'Система'); } catch (e) {}
+  }
+  toggleAutoRecalc() { const on = !(this.state.autoRecalc !== false); this.setState({ autoRecalc: on }); try { this.lsSet('auto_recalc', on ? '1' : '0'); } catch (e) {} if (on) this.scheduleAutoRecalc('FULL_RECALC'); }
+  pushRecalcToast(text) { this.setState({ recalcToast: text }); clearTimeout(this._recalcToastT); this._recalcToastT = setTimeout(() => this.setState({ recalcToast: '' }), 5200); }
+  // Кросс-эффект: дефицит в «Доставке» → авто-задача логисту «Срочно дозаказать сырьё» (идемпотентно)
+  recalcDeliveryDeficits() {
+    let R; try { R = this.dvComputeRows(); } catch (e) { return ''; }
+    const rows = (R && R.rows) || [];
+    const todayStr = this.ymd(new Date());
+    const reds = rows.filter(r => r.level === 'red' && r.keyDate && r.keyDate >= todayStr);
+    const redKeys = new Set(reds.map(r => 'deficit:' + this._co() + ':' + r.k));
+    const tasks = (this.state.tasks || []).slice();
+    const users = (this.state.users || []).filter(u => u.active !== false);
+    const logist = users.find(u => u.role !== 'admin' && Array.isArray(u.perms) && (u.perms.indexOf('delivery') >= 0 || u.perms.indexOf('procplan') >= 0)) || users.find(u => u.role === 'admin') || this.state.currentUser;
+    if (!logist) return '';
+    let created = 0, updated = 0, closed = 0, changed = false;
+    const next = tasks.filter(t => {
+      if (!t.autoKey || !String(t.autoKey).startsWith('deficit:')) return true;
+      if (this.taskDone(t)) return true;
+      if (redKeys.has(t.autoKey)) return true;
+      closed++; changed = true; return false;
+    });
+    for (const r of reds) {
+      const autoKey = 'deficit:' + this._co() + ':' + r.k;
+      const exist = next.find(t => t.autoKey === autoKey && !this.taskDone(t));
+      const short = Math.max(0, Math.ceil(-r.minBal));
+      const desc = 'Автоматически: по плану выпуска остаток «' + r.name + '» уходит в минус ' + this.dm(this.parseISO(r.keyDate)) + '. Дефицит ≈ ' + short.toLocaleString('ru-RU') + ' ' + (r.unit || 'кг') + '. Покрытие текущим запасом: ' + (r.coverDays >= 999 ? '∞' : Math.round(r.coverDays) + ' дн') + '. Оформите дозаказ с учётом срока поставки.';
+      if (exist) { if (exist.due !== r.keyDate || exist.desc !== desc) { exist.due = r.keyDate; exist.desc = desc; updated++; changed = true; } }
+      else {
+        next.unshift({ id: 't_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), autoKey, company_id: this._co(), title: 'Срочно дозаказать сырьё: ' + r.name, executors: [{ id: logist.id, name: logist.name }], authorId: '', author: 'АЯ · Движок пересчёта', assigned_to: logist.id, co_executors: [], observers: [], due: r.keyDate, dueTime: '', desc, priority: 'Срочный', status: 'Новая', rejectReason: '', thread: [], createdAt: Date.now(), doneAt: 0 });
+        created++; changed = true;
+      }
+    }
+    if (changed) {
+      this.writeTasks(next.slice(0, 600));
+      if (created) this.postSystemNote('🤖 АЯ · Движок пересчёта: обнаружен дефицит сырья по плану — поставлено срочных задач логисту «' + logist.name + '»: ' + created + (closed ? (', снято неактуальных: ' + closed) : '') + '.', 'АЯ');
+    }
+    const parts = [];
+    if (created) parts.push('создано задач по дефициту: ' + created);
+    if (updated) parts.push('обновлено: ' + updated);
+    if (closed) parts.push('снято: ' + closed);
+    return parts.join(', ');
+  }
   dlRecalc() {
     const dlBase = this.state.dlBase || {};
     const okBase = this.dlBaseDefs().filter(d => dlBase[d.key] && dlBase[d.key].status === 'ok');
@@ -9264,6 +9732,7 @@ class Component extends DCLogic {
     const warn = errBase.length ? (' Пропущены с ошибкой структуры: ' + errBase.map(d => d.label).join(', ') + '.') : '';
     this.setState({ dlDone: 'Сквозной пересчёт выполнен ' + when + '. Базовых отчётов: ' + okBase.length + '/' + total + ', доп. форм: ' + okExtra.length + (fed ? ('. Остатки склада обновлены по ' + fed + ' позициям.') : '.') + (sbFed ? (' Себестоимость-КО: загружено партий ' + sbFed + '.') : '') + warn, dlErr: '' });
     try { this.postSystemNote('📥 Загрузка данных 1С: выполнен сквозной пересчёт аналитики (базовых: ' + okBase.length + '/' + total + (okExtra.length ? ', доп. форм: ' + okExtra.length : '') + ').', this.state.currentUser ? this.state.currentUser.name : 'Система'); } catch (e) {}
+    setTimeout(() => this.triggerGlobalRecalculation('FULL_RECALC'), 60);
   }
   // ===== Архив загруженных файлов (только админ, мультикомпанийный) =====
   // Хранилище оригиналов: отдельная IndexedDB (бинарные Blob), индекс метаданных — в localStorage (глобально, с company_id).
@@ -9436,6 +9905,20 @@ class Component extends DCLogic {
       dlErr: S.dlErr || '', dlHasErr: !!S.dlErr, dlDone: S.dlDone || '', dlHasDone: !!S.dlDone,
       dlRecalc: () => this.dlRecalc(), dlRecalcOff: !anyOk,
       dlProgText: 'Базовые: ' + baseLoaded + '/' + this.dlBaseDefs().length + ' · доп. форм: ' + (S.dlExtra || []).length,
+      // Движок сквозного пересчёта
+      recalcChain: Object.keys(this.recalcGraph()).filter(k => k !== 'rates').map((k, i) => ({ k, n: i + 1, label: this.recalcGraph()[k].label, hasEffect: !!(this.recalcGraph()[k].effects || []).length })),
+      recalcLog: (S.recalcLog || []).slice(0, 6).map(e => ({ when: new Date(e.at).toLocaleString('ru-RU'), event: e.eventLabel, chain: (e.chain || []).join(' → '), nodes: String(e.nodes), reports: (e.reports || []).join(', '), modeCls: e.mode === 'force' ? 'rclogrow force' : 'rclogrow' })),
+      recalcHasLog: (S.recalcLog || []).length > 0,
+      recalcRunNow: () => this.scheduleAutoRecalc('FULL_RECALC'),
+      apInvHas: !!S.apInvoice,
+      apInvSupplier: S.apInvoice ? (S.apInvoice.supplier === '—' ? S.apInvoice.supplierGuess : S.apInvoice.supplier) : '',
+      apInvLines: S.apInvoice ? String(S.apInvoice.lines) : '0',
+      apInvTotal: S.apInvoice ? (Math.round(S.apInvoice.total).toLocaleString('ru-RU')) : '',
+      apInvConfirm: () => this.apConfirmInvoice(), apInvDismiss: () => this.apDismissInvoice(),
+      forceRecalc: () => this.forceGlobalRecalc(),
+      recalcRunning: !!S.recalcRunning, recalcStep: S.recalcStep || '',
+      autoOn: S.autoRecalc !== false, autoCls: S.autoRecalc !== false ? 'rcauto on' : 'rcauto', toggleAuto: () => this.toggleAutoRecalc(),
+      autoLabel: S.autoRecalc !== false ? 'Автономный режим 24/7: ВКЛ' : 'Автономный режим 24/7: ВЫКЛ',
       // mapping dialog
       dlMapOpen: !!m, dlMapFile: m ? m.fileName : '', dlMapName: m ? m.name : '', onDlMapName: (e) => this.dlMapName(e.target.value),
       dlMapSave: m ? !!m.save : true, toggleDlMapSave: () => this.dlMapToggleSave(),
@@ -9445,6 +9928,21 @@ class Component extends DCLogic {
   }
   // ===== P&L и маржинальный анализ 360° (многомерный pivot над mgEnrich — единый источник СС) =====
   plMarketOf(r) { return /[a-z]/i.test(String(r.client || '')) ? 'Импорт / Экспорт' : 'Внутренний рынок'; }
+  // Маркер 5-го уровня drill-down: партия закупки (Компания №1) или [FIFO]-метка (Компания №2)
+  plLeafMarker(list) {
+    if (!list || !list.length) return '';
+    const r0 = list[0];
+    if (this.isFifo()) {
+      const mk = this.mgKey(this.sbMarka(r0.marka || r0.nomen || ''));
+      const prods = (this.data && this.data.products) ? this.data.products.map(p => p.name || p) : [];
+      const prod = prods.find(p => this.mgKey(this.sbMarka(p)) === mk);
+      if (prod) { try { const ln = (this.recipeLinesFor(prod) || [])[0]; if (ln) { const fc = this.fifoUnitCost(this.norm(ln.component), 0); if (fc.marker) return fc.marker; } } catch (e) {} }
+      return '[FIFO] списание по хронологии приходов';
+    }
+    const recs = (this.sebest && this.sebest.records) || []; const mk = this.mgKey(this.sbMarka(r0.marka || ''));
+    const rec = recs.find(x => this.mgKey(this.sbMarka(x.product)) === mk && x.batch);
+    return rec ? ('Партия ' + rec.batch + (rec.release ? ' · ' + this.dmFull(rec.release) : '')) : '';
+  }
   plDims() {
     return {
       nomen: { label: 'Номенклатура', l1: r => r.group || '—', l2: r => r.marka || '—', l3: r => ((r.client || '—') + ' · ' + (r.nomen || '')) },
@@ -9525,10 +10023,11 @@ class Component extends DCLogic {
         flat.push(fmtRow(2, key2, g2.k, g2.a, true, open2, () => toggle(key2)));
         if (!open2) continue;
         const lvl3 = [...this.plGroupBy(g2.list, D.l3).entries()].map(([k, list]) => ({ k, list, a: agg(list) })).sort((x, y) => y.a.rev - x.a.rev);
-        for (const g3 of lvl3) flat.push(fmtRow(3, key2 + '·' + g3.k, g3.k, g3.a, false, false, null));
+        for (const g3 of lvl3) { const row = fmtRow(3, key2 + '·' + g3.k, g3.k, g3.a, false, false, null); const mk = this.plLeafMarker(g3.list); row.mk = mk; row.hasMk = !!mk; flat.push(row); }
       }
     }
     base.plRows = flat;
+    base.plMethodLabel = this.inventoryMethodLabel(); base.plMethodCls = this.isFifo() ? 'plmethod fifo' : 'plmethod batch'; base.plDrillCol = this.drilldownColLabel();
     base.plTot = { w: this.mgKg(T.w), rev: this.cvFmtW(TD.rev, T.w), ss: this.cvFmtW(TD.ss, T.w), m1: this.cvFmtW(TD.m1, T.w), r1: this.mgPct(TD.r1), m2: this.cvFmtW(TD.m2, T.w), r2: this.mgPct(TD.r2) };
     base.plHVyr = this.cvColHead('Выручка'); base.plHCogs = this.cvColHead('COGS'); base.plHGm2 = this.cvUnitOn() ? ('GM2 ' + this.cvUnitSuffix()) : 'GM2 ' + this.cvSym();
     base.plPlanRev = S.plPlanRev || ''; base.onPlPlanRev = (e) => set({ plPlanRev: e.target.value });
@@ -9581,12 +10080,13 @@ class Component extends DCLogic {
     ];
     if (planRev > 0) { kp.push(['План выручки, ₽', r2(planRev)]); kp.push(['Выполнение плана выручки, %', pc(T.rev, planRev)]); }
     if (planM2 > 0) { kp.push(['План GM2, ₽', r2(planM2)]); kp.push(['Выполнение плана GM2, %', pc(T.m2, planM2)]); }
-    const aoa1 = [['P&L и маржинальный анализ 360° · ' + coName], ['Период: ' + period + ' · Себестоимость: ' + (S.mgCostMode === 'batch' ? 'партионная (отчёт СС)' : 'дерево СС за период')], []].concat(kp);
+    const aoa1 = [['P&L и маржинальный анализ 360° · ' + coName], ['Период: ' + period + ' · Себестоимость: ' + (S.mgCostMode === 'batch' ? 'партионная (отчёт СС)' : 'дерево СС за период')], [this.inventoryMethodLabel()], []].concat(kp);
     const ws1 = XLSX.utils.aoa_to_sheet(aoa1);
     const C = (r, c) => { const ad = XLSX.utils.encode_cell({ r, c }); if (!ws1[ad]) ws1[ad] = { t: 's', v: '' }; return ws1[ad]; };
     C(0, 0).s = { font: { name: 'Calibri', sz: 16, bold: true, color: { rgb: st.NAVY } } };
     C(1, 0).s = { font: { name: 'Calibri', sz: 11, italic: true, color: { rgb: '7F7F7F' } } };
-    for (let i = 0; i < kp.length; i++) { const r = 3 + i; const pct = /%/.test(kp[i][0]); const gm2 = /GM2/.test(kp[i][0]);
+    C(2, 0).s = { font: { name: 'Calibri', sz: 11, bold: true, color: { rgb: this.isFifo() ? '9A5A1C' : '1F4E78' } }, fill: { fgColor: { rgb: this.isFifo() ? 'FFF2CC' : 'D9E1F2' } } };
+    for (let i = 0; i < kp.length; i++) { const r = 4 + i; const pct = /%/.test(kp[i][0]); const gm2 = /GM2/.test(kp[i][0]);
       C(r, 0).s = { font: { bold: true, sz: 11, color: { rgb: '1A1A1A' } }, fill: { fgColor: { rgb: gm2 ? st.GREEN : st.SUB } }, alignment: { horizontal: 'left' }, border: { bottom: { style: 'thin', color: { rgb: st.GREY } } } };
       C(r, 1).s = { font: { bold: true, sz: 12, color: { rgb: st.NAVY } }, alignment: { horizontal: 'right' }, numFmt: pct ? '0.0"%"' : '#,##0', fill: { fgColor: { rgb: gm2 ? st.GREEN : 'FFFFFF' } }, border: { bottom: { style: 'thin', color: { rgb: st.GREY } } } };
     }
@@ -9731,6 +10231,412 @@ class Component extends DCLogic {
       this.setState({ prodAiBusy: false, prodAiSummary: (/limit|rate/i.test(m) ? 'Исчерпан дневной лимит бесплатных запросов OpenRouter — попробуйте завтра или смените ключ/модель в ⚙.' : (/key|ключ|no-key/i.test(m) ? '⚙ Укажите ваш API-ключ OpenRouter в настройках (⚙).' : 'Не удалось получить ответ от АЯ: ' + m)) });
     }
   }
+  // ============================================================
+  // AI SEMANTIC INTERPRETER & DEEP DRILLING (executeDeepBusinessIntelligence)
+  // Детерминированный движок «Симптом → Глубокое бурение → Первопричина → Вердикт».
+  // Работает без API-ключа: спускается по ID партий/сделок до первичных таблиц и
+  // выдаёт смысловой вердикт + ранжированные точки роста по чистой марже в евро.
+  // ============================================================
+  diMoney(rub) { const v = Math.round(Number(rub) || 0); return v.toLocaleString('ru-RU') + ' ₽'; }
+  diEur(rub) { const r = Number(this.state.rate) || this.cvRateEur() || 90; const e = (Number(rub) || 0) / (r || 90); return Math.round(e).toLocaleString('ru-RU') + ' €'; }
+  executeDeepBusinessIntelligence() {
+    const S = this.state; const rate = Number(S.rate) || this.cvRateEur() || 90;
+    const insights = []; const period = (this.sebest && this.sebest.period) || new Date().toISOString().slice(0, 7);
+    // ---------- КОНТУР 1: ЗАКУПКИ / ЛОГИСТИКА — бурение до purchase_additional_costs ----------
+    let lc = { recs: [] }; try { lc = this.lcEnrich(); } catch (e) {}
+    const anoms = (lc.recs || []).filter(r => r.isAnom && r.overpay > 0).sort((a, b) => b.overpay - a.overpay);
+    for (const r of anoms.slice(0, 3)) {
+      const groups = [['логистике (фрахт/хранение)', r.logiF], ['таможенным платежам', r.custF], ['услугам брокера', r.brokF]].sort((a, b) => b[1] - a[1]);
+      const cause = groups[0];
+      const priceTxt = Math.abs(r.priceFactor) < r.overpay * 0.2 ? 'НЕ связано с ценой фабрики' : ('частично связано с ценой (' + this.diMoney(r.priceFactor) + ')');
+      const fxTxt = !r.ved ? 'курс неприменим (внутренний рынок)' : (Math.abs(r.fxFactor) < r.overpay * 0.2 ? 'НЕ связано с курсом' : ('частично курс ' + this.diMoney(r.fxFactor) + ')'));
+      insights.push({
+        id: 'lc_' + r.no, contour: 'Закупки и логистика', level: 'red',
+        symptom: 'Рост Landed Cost «' + (r.material || '—') + '» — накладные ' + Math.round(r.overhead) + '% к стоимости сырья (партия ' + (r.no || '—') + ')',
+        drill: 'Спуск по ID партии ' + (r.no || '—') + ' → purchase_additional_costs: логистика ' + this.diMoney(r.logiF) + ', таможня ' + this.diMoney(r.custF) + ', брокер ' + this.diMoney(r.brokF) + '. Норма по направлению «' + r.dirKey + '»: ' + Math.round(r.dirAvg).toLocaleString('ru-RU') + ' ₽/ед, факт: ' + Math.round(r.logiPerUnit).toLocaleString('ru-RU') + ' ₽/ед.',
+        interpretation: 'Удорожание партии ' + (r.no || '—') + ' (' + (r.material || '') + ') ' + priceTxt + ' и ' + fxTxt + '. Первопричина — сверхнормативные расходы по ' + cause[0] + ' у поставщика «' + (r.supplier || '—') + '»: ' + Math.round(r.logiPerUnit).toLocaleString('ru-RU') + ' ₽/ед против нормы ' + Math.round(r.dirAvg).toLocaleString('ru-RU') + ' ₽/ед. Переплата ' + this.diMoney(r.overpay) + ' (' + this.diEur(r.overpay) + ').',
+        recommendation: 'Запросить у поставщика/брокера обоснование сверхнорматива по партии ' + (r.no || '—') + ', выставить претензию на ' + this.diMoney(r.overpay) + ', зафиксировать норму простоя в контракте.',
+        effectRub: r.overpay, effectEur: r.overpay / rate,
+      });
+    }
+    // Валютный фактор ВЭД (FX P&L)
+    const fxLoss = (lc.recs || []).reduce((s, r) => s + (r.ved ? Math.max(0, r.fxFactor) : 0), 0);
+    if (fxLoss > 0) insights.push({ id: 'fx', contour: 'Финансы · валюта', level: fxLoss > 50000 ? 'orange' : 'green', symptom: 'Курсовые потери ВЭД ' + this.diMoney(fxLoss), drill: 'Сумма положительных fxFactor = (курс оплаты − курс контракта) × сумма инвойса по партиям ВЭД.', interpretation: 'Рост курса между датой контракта и датой оплаты увеличил рублёвую стоимость импортных партий на ' + this.diMoney(fxLoss) + '. Это курсовая разница (FX P&L), а не удорожание сырья — в себестоимость не размывается.', recommendation: 'Ускорить оплату инвойсов после оприходования / рассмотреть валютное хеджирование форвардом.', effectRub: fxLoss, effectEur: fxLoss / rate });
+    // OTIF поставщиков
+    const fails = (lc.recs || []).filter(r => ['FAIL', 'LATE', 'INCOMPLETE'].includes(r.otifStatus));
+    if (fails.length) {
+      const bySup = {}; for (const r of fails) { const k = r.supplier || '—'; bySup[k] = (bySup[k] || 0) + 1; }
+      const worst = Object.entries(bySup).sort((a, b) => b[1] - a[1])[0];
+      insights.push({ id: 'otif', contour: 'Снабжение · надёжность', level: 'orange', symptom: 'Нарушения OTIF: ' + fails.length + ' поставк(и) не в срок/не в полном объёме', drill: 'Сверка плановых/фактических дат и qty_ordered vs qty_received по партиям.', interpretation: 'Самый ненадёжный поставщик — «' + worst[0] + '» (' + worst[1] + ' срыв(ов)). Низкий OTIF создаёт риск дефицита сырья и срыва плана производства.', recommendation: 'Снизить долю заказов у «' + worst[0] + '», ввести страховой запас, добавить альтернативного поставщика.', effectRub: 0, effectEur: 0 });
+    }
+    // ---------- КОНТУР 2: ПРОДАЖИ / KPI — бурение до спецификаций сделок и скидок ----------
+    const sales = (S.sales || []).filter(s => (Number(s.qty) || 0) > 0);
+    if (sales.length >= 3) {
+      const byProd = {};
+      for (const s of sales) { const p = s.product || '—'; const q = Number(s.qty) || 0; const priceRub = (Number(s.price) || 0) * (Number(s.rate) || 1); if (!byProd[p]) byProd[p] = { q: 0, val: 0 }; byProd[p].q += q; byProd[p].val += priceRub * q; }
+      const wavg = {}; for (const p in byProd) wavg[p] = byProd[p].q ? byProd[p].val / byProd[p].q : 0;
+      const discounts = sales.map(s => { const p = s.product || '—'; const q = Number(s.qty) || 0; const priceRub = (Number(s.price) || 0) * (Number(s.rate) || 1); const w = wavg[p] || 0; const disc = w > 0 ? (w - priceRub) / w : 0; const lost = Math.max(0, (w - priceRub) * q); return { s, p, q, priceRub, w, disc, lost }; }).filter(x => x.disc > 0.12 && x.lost > 0).sort((a, b) => b.lost - a.lost);
+      for (const d of discounts.slice(0, 2)) {
+        insights.push({ id: 'disc_' + (d.s.id || d.p), contour: 'Продажи и KPI', level: 'red', symptom: 'Скидка ' + Math.round(d.disc * 100) + '% к средней цене по «' + d.p + '» (клиент «' + (d.s.client || '—') + '»)', drill: 'Спуск до спецификации сделки: цена ' + Math.round(d.priceRub).toLocaleString('ru-RU') + ' ₽/кг против средней ' + Math.round(d.w).toLocaleString('ru-RU') + ' ₽/кг по продукту; объём ' + d.q.toLocaleString('ru-RU') + ' кг.', interpretation: 'По сделке с «' + (d.s.client || '—') + '» предоставлена скидка ' + Math.round(d.disc * 100) + '% на «' + d.p + '». Выполнение плана по выручке достигнуто за счёт цены — но компания недополучила чистой маржи ≈ ' + this.diEur(d.lost) + ' (' + this.diMoney(d.lost) + '). Выполнение плана по выручке «ложное»: прибыль в евро потеряна.', recommendation: 'Проверить санкционированность скидки; при отсутствии согласования — пересчитать KPI менеджера и заблокировать ИИ-премию по этой сделке.', effectRub: d.lost, effectEur: d.lost / rate });
+      }
+    }
+    // ---------- КОНТУР 3: ПРОИЗВОДСТВО — перерасход сырья (план-факт) ----------
+    try {
+      const pf = this.buildPlanFact(rate);
+      const over = (pf.pfRowsRaw || []).filter(r => r.planVol > 0 && r.actVol > r.planVol * 1.05).map(r => ({ ...r, over: r.actVol - r.planVol })).sort((a, b) => b.over - a.over);
+      if (over.length) { const t = over[0]; insights.push({ id: 'prod', contour: 'Производство', level: 'orange', symptom: 'Перерасход сырья по ' + over.length + ' позиц., лидер — «' + (t.name || t.material || '—') + '»', drill: 'Сверка план vs факт расхода по техкартам выпуска.', interpretation: 'По «' + (t.name || t.material || '—') + '» фактический расход превысил норматив на ' + Math.round(t.over).toLocaleString('ru-RU') + ' ед. Это прямой удар по себестоимости 1 кг и марже.', recommendation: 'Проверить техкарту/настройку оборудования, провести инвентаризацию остатков по позиции.', effectRub: 0, effectEur: 0 }); }
+    } catch (e) {}
+    // ---------- КОНТУР 4: КАССА ----------
+    // ---------- FIFO: переход на дорогую выгрузку (только Компания №2) ----------
+    if (this.isFifo()) {
+      try {
+        const prods = (this.data && this.data.products) ? this.data.products.map(p => p.name || p) : [];
+        for (const p of prods.slice(0, 40)) {
+          const lns = this.recipeLinesFor(p) || []; if (!lns.length) continue;
+          const mk = this.norm(lns[0].component); const lots = this.fifoLots(mk);
+          if (lots.length < 2) continue;
+          const oldU = lots[0].unit, newU = lots[lots.length - 1].unit;
+          if (oldU > 0 && newU > oldU * 1.12) {
+            const jump = (newU - oldU) / oldU * 100;
+            insights.push({ id: 'fifo_' + mk, contour: 'Себестоимость · FIFO', level: 'orange', symptom: 'СС 1 кг «' + p + '» выросла на ' + Math.round(jump) + '% (метод FIFO)', drill: 'Хронология приходов «' + lns[0].component + '»: старый ' + Math.round(oldU).toLocaleString('ru-RU') + ' ₽/кг (' + this.dmFull(lots[0].date) + ') → свежий ' + Math.round(newU).toLocaleString('ru-RU') + ' ₽/кг (' + this.dmFull(lots[lots.length - 1].date) + ').', interpretation: 'Внимание: Себестоимость 1 кг продукции выросла на ' + Math.round(jump) + '%, так как система полностью списала старые дешёвые запасы сырья и перешла на расчёт по FIFO из более дорогой выгрузки 1С от ' + this.dmFull(lots[lots.length - 1].date) + '.', recommendation: 'Пересмотреть Floor Price с учётом нового FIFO-слоя; проверить цены свежей партии.', effectRub: 0, effectEur: 0 });
+            break;
+          }
+        }
+      } catch (e) {}
+    }
+    // ---------- КОНТУР 4: КАССА ----------
+    try { const cg = this.cashGapInfo(); if (cg && cg.gap) insights.push({ id: 'cash', contour: 'Казначейство', level: 'red', symptom: 'Кассовый разрыв в горизонте планирования', drill: 'Проекция баланса кассы: входящие оплаты vs обязательства по заявкам на платёж.', interpretation: 'Прогноз показывает уход баланса кассы в минус. Риск неисполнения обязательств перед поставщиками.', recommendation: 'Сместить даты платежей, ускорить поступления от ТОП-клиентов, открыть кредитную линию.', effectRub: 0, effectEur: 0 }); } catch (e) {}
+    // Ранжирование инсайтов по эффекту (€) и уровню
+    const lvlW = { red: 0, orange: 1, green: 2 };
+    insights.sort((a, b) => (b.effectEur - a.effectEur) || (lvlW[a.level] - lvlW[b.level]));
+    // Точки роста — ранжированы по чистой марже € (макс эффект / мин затраты сверху)
+    const growthPoints = insights.filter(i => i.effectEur > 0).map(i => ({
+      action: i.recommendation, contour: i.contour, effectEur: i.effectEur, effectRub: i.effectRub,
+      effort: i.contour.indexOf('логистик') >= 0 || i.contour.indexOf('Продажи') >= 0 ? 'низкие' : 'средние',
+    }));
+    growthPoints.sort((a, b) => b.effectEur - a.effectEur);
+    growthPoints.forEach((g, i) => { g.rank = i + 1; g.ratio = g.effort === 'низкие' ? 'высокий ROI' : 'средний ROI'; });
+    // Сводный смысловой вердикт для директора
+    const totalEur = insights.reduce((s, i) => s + (i.effectEur || 0), 0);
+    let verdict = '';
+    if (!insights.length) verdict = 'Сквозной аудит не выявил значимых аномалий: Landed Cost, маржа и план-факт в пределах нормы. Данных для глубокого бурения пока недостаточно — загрузите отчёты ВЭД/продаж за период.';
+    else {
+      const top = insights.slice(0, 3);
+      verdict = 'Сквозной семантический аудит за период ' + period + ' выявил ' + insights.length + ' причинно-следственных аномали(й) на сумму риска ≈ ' + Math.round(totalEur).toLocaleString('ru-RU') + ' €.\n\n';
+      top.forEach((i, n) => { verdict += (n + 1) + '. [' + i.contour + '] ' + i.interpretation + '\n\n'; });
+      if (growthPoints.length) verdict += 'Первоочередное действие (макс. эффект при мин. затратах): ' + growthPoints[0].action + ' — потенциал ' + Math.round(growthPoints[0].effectEur).toLocaleString('ru-RU') + ' € чистой маржи.';
+    }
+    return { generatedAt: Date.now(), period, insights, growthPoints, ai_interpretation_verdict: verdict, totalEur };
+  }
+  runDeepBI() {
+    const bi = this.executeDeepBusinessIntelligence();
+    this.setState({ tab: 'onec', deepBI: bi });
+    try { this.postSystemNote('✦ Семантический аудит: выявлено аномалий ' + bi.insights.length + ', риск ≈ ' + Math.round(bi.totalEur).toLocaleString('ru-RU') + ' €.', 'АЯ'); } catch (e) {}
+  }
+  // Excel-выгрузка «AI_Insights» — широкие объединённые ячейки с переносом текста (аналитическая записка)
+  deepBIExcel() {
+    const XLSX = window.XLSX; if (!XLSX) { try { alert('Библиотека Excel не загрузилась.'); } catch (e) {} return; }
+    const bi = this.state.deepBI || this.executeDeepBusinessIntelligence();
+    const st = this.mgXlSt();
+    const navyHdr = { font: { bold: true, color: { rgb: 'FFFFFF' }, sz: 12 }, fill: { fgColor: { rgb: '1F4E78' } }, alignment: { horizontal: 'left', vertical: 'center', wrapText: true }, border: { top: { style: 'thin', color: { rgb: 'D3D3D3' } }, bottom: { style: 'thin', color: { rgb: 'D3D3D3' } }, left: { style: 'thin', color: { rgb: 'D3D3D3' } }, right: { style: 'thin', color: { rgb: 'D3D3D3' } } } };
+    const wrap = (bg) => ({ alignment: { wrapText: true, vertical: 'top', horizontal: 'left' }, font: { sz: 11 }, fill: bg ? { fgColor: { rgb: bg } } : undefined, border: navyHdr.border });
+    const lvlBg = { red: 'FCE4D6', orange: 'FFF2CC', green: 'E2EFDA' };
+    const ws = {}; const merges = []; let R = 0;
+    const put = (r, c, v, s) => { ws[XLSX.utils.encode_cell({ r, c })] = { v: v == null ? '' : v, t: typeof v === 'number' ? 'n' : 's', s }; };
+    const wide = (label, value, s) => { put(R, 0, label, navyHdr); put(R, 1, value, s); merges.push({ s: { r: R, c: 1 }, e: { r: R, c: 6 } }); R++; };
+    // Заголовок
+    put(R, 0, 'AI SEMANTIC INSIGHTS · Глубокий аудит бизнеса · ' + this.co().name, { font: { bold: true, sz: 14, color: { rgb: '1F4E78' } } }); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: 6 } }); R += 2;
+    wide('Период', bi.period, wrap()); wide('Риск (евро)', Math.round(bi.totalEur) + ' €', wrap('FCE4D6')); wide('Аномалий', String(bi.insights.length), wrap()); R++;
+    // Вердикт
+    put(R, 0, 'СМЫСЛОВОЙ ВЕРДИКТ ДЛЯ ДИРЕКТОРА', navyHdr); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: 6 } }); R++;
+    const verdictLines = bi.ai_interpretation_verdict.split('\n').filter(x => x.trim());
+    for (const ln of verdictLines) { put(R, 0, ln, wrap()); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: 6 } }); ws['!rows'] = ws['!rows'] || []; ws['!rows'][R] = { hpt: Math.max(20, Math.ceil(ln.length / 95) * 15) }; R++; }
+    R++;
+    // Инсайты — таблица «Симптом → Первопричина → Рекомендация»
+    const cols = ['Контур', 'Симптом', 'Глубокое бурение', 'Интерпретация (первопричина)', 'Рекомендация', 'Эффект ₽', 'Эффект €'];
+    cols.forEach((c, i) => put(R, i, c, navyHdr)); R++;
+    for (const i of bi.insights) {
+      const bg = lvlBg[i.level]; const row = R;
+      put(R, 0, i.contour, wrap(bg)); put(R, 1, i.symptom, wrap(bg)); put(R, 2, i.drill, wrap(bg)); put(R, 3, i.interpretation, wrap(bg)); put(R, 4, i.recommendation, wrap(bg));
+      put(R, 5, Math.round(i.effectRub || 0), { ...wrap(bg), numFmt: '#,##0\\ "₽"' }); put(R, 6, Math.round(i.effectEur || 0), { ...wrap(bg), numFmt: '#,##0\\ "€"' });
+      ws['!rows'] = ws['!rows'] || []; ws['!rows'][row] = { hpt: Math.max(38, Math.ceil(i.interpretation.length / 60) * 15) }; R++;
+    }
+    R++;
+    // Точки роста
+    put(R, 0, 'ТОЧКИ РОСТА (ранжированы по чистой марже €)', navyHdr); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: 6 } }); R++;
+    ['#', 'Действие', 'Контур', 'Затраты', 'ROI', 'Эффект €'].forEach((c, i) => put(R, i, c, navyHdr)); R++;
+    for (const g of bi.growthPoints) { put(R, 0, g.rank, wrap('E2EFDA')); put(R, 1, g.action, wrap('E2EFDA')); put(R, 2, g.contour, wrap('E2EFDA')); put(R, 3, g.effort, wrap('E2EFDA')); put(R, 4, g.ratio, wrap('E2EFDA')); put(R, 5, Math.round(g.effectEur), { ...wrap('E2EFDA'), numFmt: '#,##0\\ "€"' }); ws['!rows'] = ws['!rows'] || []; ws['!rows'][R] = { hpt: Math.max(26, Math.ceil((g.action || '').length / 70) * 15) }; R++; }
+    ws['!ref'] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: R, c: 6 } });
+    ws['!merges'] = merges;
+    ws['!cols'] = [{ wch: 20 }, { wch: 34 }, { wch: 40 }, { wch: 48 }, { wch: 40 }, { wch: 14 }, { wch: 14 }];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'AI_Insights');
+    XLSX.writeFile(wb, 'AI_Insights ' + this.co().name + ' ' + bi.period + '.xlsx');
+  }
+  // ============================================================
+  // AI CONTROL CORE 24/7 — Автономный ИИ-Автопилот (5 контуров)
+  // ============================================================
+  apTargetGm2() { return Number(this.state.apGm2Target) || 15; }       // целевой норматив GM2, %
+  apRate() { return Number(this.state.rate) || this.cvRateEur() || 90; }
+  // ----- КОНТУР 4: ДИНАМИЧЕСКОЕ ЦЕНООБРАЗОВАНИЕ (Floor Price) -----
+  // Себестоимость 1 кг ГП (₽): сырьё по costOf(€)·курс + логистическая надбавка ₽/кг
+  apCostKg(product) {
+    const lossF = (Number(this.state.loss) || 0) / 100;
+    let eurKg = 0; try { eurKg = this.costOf(product, lossF) || 0; } catch (e) {}
+    let landRub = 0; try { landRub = this.productLandCost(product) || 0; } catch (e) {}
+    return eurKg * this.apRate() + landRub;
+  }
+  // Минимально допустимая цена продажи: СС / (1 − целевой GM2)
+  apFloorPrice(product) {
+    const cost = this.apCostKg(product); const g = this.apTargetGm2() / 100;
+    const floorRub = g < 0.99 ? cost / (1 - g) : cost;
+    return { product, costKg: cost, targetGm2: this.apTargetGm2(), floorRub, floorEur: floorRub / this.apRate() };
+  }
+  // Проверка маржи сделки: блокировать «Утвердить счёт», если GM2 < норматива
+  apCheckMargin(product, priceRub, qty) {
+    const cost = this.apCostKg(product); const price = Number(priceRub) || 0;
+    const gm2pct = price > 0 ? (price - cost) / price * 100 : -100;
+    const blocked = gm2pct < this.apTargetGm2();
+    const fl = this.apFloorPrice(product);
+    return { product, gm2pct, blocked, floorRub: fl.floorRub, costKg: cost, target: this.apTargetGm2(), qty: Number(qty) || 0, lossEur: blocked ? Math.max(0, (fl.floorRub - price)) * (Number(qty) || 0) / this.apRate() : 0 };
+  }
+  // Запись в Журнал безопасности администратора
+  apSecLog(entry) {
+    const log = [{ at: Date.now(), ...entry }, ...((this.state.apSecurityLog) || [])].slice(0, 60);
+    this.setState({ apSecurityLog: log }); try { this.lsSet('ap_seclog', JSON.stringify(log)); } catch (e) {}
+  }
+  // ----- КОНТУР 3: РОБОТИЗИРОВАННЫЕ ЗАКУПКИ (авто-выкуп дефицитов) -----
+  // Лучший поставщик по историческому OTIF (из Landed Cost), затем по контрагентам
+  apBestSupplier(materialKey) {
+    let recs = []; try { recs = (this.lcEnrich().recs || []); } catch (e) {}
+    const bySup = {};
+    for (const r of recs) { if (this.norm(r.material) !== materialKey) continue; const s = r.supplier || '—'; if (!bySup[s]) bySup[s] = { ok: 0, n: 0, priceSum: 0, q: 0 }; bySup[s].n++; if (r.otifStatus === 'OTIF_OK') bySup[s].ok++; bySup[s].priceSum += (r.pF || 0) * (r.qR || 0); bySup[s].q += (r.qR || 0); }
+    const arr = Object.entries(bySup).map(([s, d]) => ({ supplier: s, otif: d.n ? d.ok / d.n * 100 : 0, avgPrice: d.q ? d.priceSum / d.q : 0, n: d.n })).sort((a, b) => b.otif - a.otif || a.avgPrice - b.avgPrice);
+    return arr[0] || null;
+  }
+  // Сгенерировать черновики «Заказ поставщику» по красным дефицитам отчёта «Доставка»
+  apGenerateProcurementDrafts() {
+    let R; try { R = this.dvComputeRows(); } catch (e) { return []; }
+    const reds = ((R && R.rows) || []).filter(r => r.level === 'red' && r.keyDate);
+    const rate = this.apRate(); const drafts = [];
+    for (const r of reds) {
+      const need = Math.max(0, Math.ceil(-r.minBal) + Math.ceil(r.safety || 0)); // покрыть провал + страховой
+      if (need <= 0) continue;
+      const sup = this.apBestSupplier(r.k);
+      const priceKg = sup && sup.avgPrice ? sup.avgPrice : (this.rawPrice ? (this.rawPrice(r.name) || 0) : 0);
+      const overheadNorm = 0.12; // плановые накладные ~12%
+      const landedPlanRub = need * priceKg * rate * (1 + overheadNorm);
+      drafts.push({
+        id: 'po:' + this._co() + ':' + r.k, company_id: this._co(), market_type: sup && /CHN|CNY/.test(sup.supplier || '') ? 'FOREIGN_VED' : 'DOMESTIC',
+        material: r.name, material_key: r.k, qty_kg: need, unit: r.unit || 'кг',
+        supplier: sup ? sup.supplier : 'нет истории — выбрать вручную', supplier_otif: sup ? Math.round(sup.otif) : null,
+        price_per_kg: priceKg, landed_cost_plan_rub: Math.round(landedPlanRub), landed_cost_plan_eur: Math.round(landedPlanRub / rate),
+        cover_date: r.keyDate, status: 'Черновик ИИ', created_at: Date.now(),
+      });
+    }
+    return drafts;
+  }
+  // ----- КОНТУР 2: ЦИФРОВОЙ ДВОЙНИК — СТРЕСС-ТЕСТ 360° -----
+  // Прогон модели на 30–60 дней при сдвиге макро-параметров → ai_simulation_results
+  apRunSimulation() {
+    const S = this.state; const rate = this.apRate();
+    const fx = Number(S.apFx) || 0, logi = Number(S.apLogi) || 0, sales = Number(S.apSales) || 0; // %
+    const horizon = Math.max(30, Math.min(60, Number(S.apHorizon) || 45));
+    // База: текущие продажи → выручка/маржа
+    const lossF = (Number(S.loss) || 0) / 100; const list = (S.sales || []);
+    let baseRev = 0, baseCost = 0;
+    for (const s of list) { const q = Number(s.qty) || 0; const pr = (Number(s.price) || 0) * (Number(s.rate) || 1); baseRev += q * pr; baseCost += this.apCostKg(s.product) * q; }
+    if (!list.length) { // нет продаж — берём план производства как прокси
+      try { const agg = this.aggProducts(S.orders); for (const row of agg) { const kg = Number(row.kg) || 0; const c = this.apCostKg(row.product); baseCost += c * kg; baseRev += c * kg / (1 - this.apTargetGm2() / 100); } } catch (e) {}
+    }
+    const baseMargin = baseRev - baseCost;
+    // Сценарий: объём ×(1+sales%), себестоимость растёт от курса (доля импорта) и логистики
+    const volK = 1 + sales / 100;
+    const importShare = 0.6; // доля импортного сырья в себестоимости
+    const costK = 1 + (fx / 100) * importShare + (logi / 100) * 0.15; // логистика ~15% себестоимости
+    const newRev = baseRev * volK;            // цена не меняем (защита маржи — отдельный контур)
+    const newCost = baseCost * volK * costK;
+    const newMargin = newRev - newCost;
+    const profitDeltaEur = (newMargin - baseMargin) / rate;
+    const newGm2pct = newRev > 0 ? newMargin / newRev * 100 : 0;
+    // Когда маржа упадёт ниже норматива (линейная проекция к горизонту)
+    let marginDropDate = '';
+    if (newGm2pct < this.apTargetGm2()) { const d = new Date(); d.setDate(d.getDate() + Math.round(horizon * 0.4)); marginDropDate = this.ymd(d); }
+    // Дефицит сырья под план при росте продаж
+    let deficitDate = '', deficitMaterial = '';
+    try {
+      const R = this.dvComputeRows(); const rows = (R.rows || []);
+      const scaled = rows.map(r => { const newDaily = (r.daily || 0) * volK; const cover = newDaily > 0 ? (r.stock || 0) / newDaily : 999; return { name: r.name, cover, keyDate: r.keyDate, level: r.level }; }).filter(r => r.cover < horizon).sort((a, b) => a.cover - b.cover);
+      if (scaled.length) { const w = scaled[0]; const d = new Date(); d.setDate(d.getDate() + Math.round(w.cover)); deficitDate = this.ymd(d); deficitMaterial = w.name; }
+    } catch (e) {}
+    const dir = profitDeltaEur >= 0 ? 'заработает' : 'потеряет';
+    let verdict = 'Сценарий: курс ' + (fx >= 0 ? '+' : '') + fx + '%, логистика ' + (logi >= 0 ? '+' : '') + logi + '%, продажи ' + (sales >= 0 ? '+' : '') + sales + '% на горизонте ' + horizon + ' дн.\n';
+    verdict += 'Чистая маржа GM2 сценария: ' + newGm2pct.toFixed(1) + '% (норматив ' + this.apTargetGm2() + '%). Компания ' + dir + ' ≈ ' + Math.abs(Math.round(profitDeltaEur)).toLocaleString('ru-RU') + ' € против базового сценария.\n';
+    if (marginDropDate) verdict += '⚠ Маржинальность пробьёт норматив ориентировочно ' + this.dm(this.parseISO(marginDropDate)) + ' — требуется пересмотр цен (Floor Price) или закупочной политики.\n';
+    if (deficitDate) verdict += '⚠ Дефицит сырья «' + deficitMaterial + '» под недельный план ожидается ' + this.dm(this.parseISO(deficitDate)) + ' — запустить авто-выкуп.\n';
+    if (!marginDropDate && !deficitDate) verdict += '✓ Бизнес-модель устойчива к этому сценарию: маржа выше норматива, дефицита сырья нет.';
+    return { scenario: { fx_pct: fx, logistics_pct: logi, sales_pct: sales, horizon_days: horizon }, base_margin_eur: Math.round(baseMargin / rate), scenario_margin_eur: Math.round(newMargin / rate), profit_delta_eur: Math.round(profitDeltaEur), scenario_gm2_pct: Math.round(newGm2pct * 10) / 10, target_gm2_pct: this.apTargetGm2(), margin_drop_date: marginDropDate, deficit_date: deficitDate, deficit_material: deficitMaterial, ai_verdict: verdict, generated_at: Date.now() };
+  }
+  // ----- КОНТУР 5: УМНЫЙ HR-ТРЕКИНГ ЗАДАЧ -----
+  // Задачи «В работе» с просроченным дедлайном; если в логах чата ждут ответа смежника > 4ч → алерт админу
+  apSmartTaskScan() {
+    const tasks = this.getUnifiedUserTasks({ id: '__all__', role: 'admin' }); // все задачи доступных компаний
+    const now = Date.now(); const alerts = [];
+    for (const t of tasks) {
+      if (t.status !== 'В работе' && t.status !== 'Принята') continue;
+      const dl = this.taskDeadlineTs ? this.taskDeadlineTs(t) : 0;
+      const overdue = dl && now > dl;
+      const soon = dl && !overdue && (dl - now) < 2 * 86400000;
+      if (!overdue && !soon) continue;
+      const thread = t.thread || []; const last = thread[thread.length - 1];
+      const waitHrs = last ? (now - (last.ts || now)) / 3600000 : null;
+      const waitTxt = /жду|ждём|ожида|когда|ответ|подскаж|@/i.test((last && last.text) || '');
+      let reason = overdue ? 'дедлайн сорван' : 'дедлайн близко';
+      if (waitTxt && waitHrs != null && waitHrs > 4) reason = 'заблокирована: нет ответа в чате задачи > ' + Math.round(waitHrs) + ' ч';
+      alerts.push({ id: t.id, title: t.title, exec: this.taskExecNames(t), reason, blocked: waitTxt && waitHrs > 4, overdue, company: this.coShort(this.taskCo(t)) });
+    }
+    return alerts.sort((a, b) => (b.blocked ? 1 : 0) - (a.blocked ? 1 : 0) || (b.overdue ? 1 : 0) - (a.overdue ? 1 : 0)).slice(0, 12);
+  }
+  // ----- КОНТУР 1: АВТО-ПАРСИНГ ИНВОЙСОВ -----
+  // Распознать структуру инвойса поставщика по заголовкам/данным (семантический маппинг + тип данных)
+  apDetectInvoice(headers, rows) {
+    const map = this.dlGuessMap(headers, rows);
+    const H = headers.map(h => this.dlNorm(h));
+    const hasSupplier = map.supplier != null || H.some(h => /поставщик|продавец|seller|vendor|shipper|инвойс|invoice|счёт|счет/.test(h));
+    const hasItems = map.nomen != null && (map.qty != null || map.price != null || map.sum != null);
+    if (!hasItems) return null;
+    // имя поставщика — из колонки или из «шумной» первой строки/имени файла
+    let supplier = '';
+    if (map.supplier != null) { for (const r of rows) { const v = r[map.supplier]; if (v && String(v).trim()) { supplier = String(v).trim(); break; } } }
+    const items = rows.map(r => ({
+      nomenclature: map.nomen != null ? String(r[map.nomen] == null ? '' : r[map.nomen]).trim() : '',
+      qty: map.qty != null ? (parseFloat(String(r[map.qty]).replace(',', '.')) || 0) : 0,
+      price_per_unit: map.price != null ? (parseFloat(String(r[map.price]).replace(',', '.')) || 0) : 0,
+      total: map.sum != null ? (parseFloat(String(r[map.sum]).replace(/[^\d.,-]/g, '').replace(',', '.')) || 0) : 0,
+    })).filter(it => it.nomenclature && (it.qty || it.total));
+    if (!items.length) return null;
+    const totalSum = items.reduce((s, it) => s + (it.total || it.qty * it.price_per_unit), 0);
+    return { confident: hasSupplier && items.length >= 1, supplier: supplier || '—', items, lines: items.length, total: totalSum, map };
+  }
+  // Подтвердить распознанный инвойс → распределить по purchase_orders / purchase_order_items
+  apConfirmInvoice() {
+    const inv = this.state.apInvoice; if (!inv) return;
+    const cu = this.state.currentUser;
+    const created = inv.items.map((it, i) => ({
+      id: 'p_' + Date.now().toString(36) + i.toString(36), no: String(this.nextNo(this.state.purchases)),
+      reqDate: this.ymd(new Date()), orderDate: '', arriveDate: '', supplier: inv.supplier === '—' ? (inv.supplierGuess || 'Поставщик (инвойс)') : inv.supplier,
+      material: it.nomenclature, qty: Math.round(it.qty) || 0, priceEur: it.price_per_unit || 0, currency: '€', curRate: 0,
+      transport: 0, customs: 0, prepay: 0, status: 'новая', approvalStatus: 'на рассмотрении', priceApproval: '',
+      market: /\b(chn|china|cny|кита)/i.test(inv.supplier) ? 'ВЭД' : 'Внутренний', comment: 'ИИ-Коннект: распознано из инвойса', initiator: cu ? cu.name : '', paid: 0,
+    }));
+    this.setState({ purchases: [...(this.state.purchases || []), ...created], apInvoice: null });
+    try { this.lsSet('purchases', JSON.stringify([...(this.state.purchases || []), ...created])); } catch (e) {}
+    this.postSystemNote('🤖 ИИ-Коннект: инвойс от «' + inv.supplier + '» распознан и распределён в Закупки — позиций: ' + created.length + '.', 'АЯ');
+    this.scheduleAutoRecalc('NEW_PURCHASE');
+  }
+  apDismissInvoice() { this.setState({ apInvoice: null }); }
+  // Оркестратор автопилота: прогон контуров 24/7 (вызывается из runCascade). Идемпотентно, без рекурсии.
+  apRefresh() {
+    if (this._apBusy) return; this._apBusy = true;
+    try {
+      const drafts = this.apGenerateProcurementDrafts();
+      const alerts = this.apSmartTaskScan();
+      const sim = (this.state.apSim && this.state.apLive) ? this.apRunSimulation() : this.state.apSim;
+      const prevN = (this.state.apDrafts || []).length;
+      this.setState({ apDrafts: drafts, apAlerts: alerts, apSim: sim, apRefreshedAt: Date.now() });
+      // звуковой сигнал + системная заметка при НОВЫХ авто-заказах
+      if (drafts.length > prevN) { this.apBeep(); this.postSystemNote('🤖 ИИ-Автопилот: сформированы черновики автозакупки по дефициту сырья — ' + drafts.length + ' поз. Проверьте в разделе «ИИ-Автопилот».', 'АЯ'); }
+    } catch (e) {}
+    this._apBusy = false;
+  }
+  apBeep() { try { const ctx = new (window.AudioContext || window.webkitAudioContext)(); const o = ctx.createOscillator(); const g = ctx.createGain(); o.connect(g); g.connect(ctx.destination); o.type = 'sine'; o.frequency.value = 880; g.gain.setValueAtTime(0.0001, ctx.currentTime); g.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.35); o.start(); o.stop(ctx.currentTime + 0.36); } catch (e) {} }
+  // Авто-задача логисту по черновику закупки (звук + пульсация меню)
+  apPushDraftToLogist(draft) {
+    const users = (this.state.users || []).filter(u => u.active !== false);
+    const logist = users.find(u => u.role !== 'admin' && Array.isArray(u.perms) && (u.perms.indexOf('delivery') >= 0 || u.perms.indexOf('procplan') >= 0 || u.perms.indexOf('proc') >= 0)) || users.find(u => u.role === 'admin') || this.state.currentUser;
+    if (!logist) return;
+    const autoKey = 'autopo:' + draft.material_key;
+    if ((this.state.tasks || []).some(t => t.autoKey === autoKey && !this.taskDone(t))) { this.pushRecalcToast('Задача по закупке «' + draft.material + '» уже стоит у логиста.'); return; }
+    const desc = 'ИИ-Автопилот сформировал проект «Заказ поставщику»:\n• Сырьё: ' + draft.material + '\n• Объём: ' + draft.qty_kg.toLocaleString('ru-RU') + ' ' + draft.unit + ' (перекрытие провала + страховой запас)\n• Поставщик (лучший OTIF): ' + draft.supplier + (draft.supplier_otif != null ? ' (' + draft.supplier_otif + '% OTIF)' : '') + '\n• Плановая Landed Cost: ' + draft.landed_cost_plan_rub.toLocaleString('ru-RU') + ' ₽ (' + draft.landed_cost_plan_eur.toLocaleString('ru-RU') + ' €)\n• Закрыть дефицит к: ' + this.dm(this.parseISO(draft.cover_date)) + '\nПроверьте и оформите заказ.';
+    const task = { id: 't_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), autoKey, company_id: this._co(), title: '🤖 Оформить закупку: ' + draft.material + ' · ' + draft.qty_kg.toLocaleString('ru-RU') + ' ' + draft.unit, executors: [{ id: logist.id, name: logist.name }], authorId: '', author: 'ИИ-Автопилот', assigned_to: logist.id, co_executors: [], observers: [], due: draft.cover_date, dueTime: '', desc, priority: 'Срочный', status: 'Новая', rejectReason: '', thread: [], createdAt: Date.now(), doneAt: 0 };
+    this.writeTasks([task, ...(this.state.tasks || [])].slice(0, 600));
+    this.apBeep(); this.pushRecalcToast('🤖 Проект закупки «' + draft.material + '» отправлен логисту «' + logist.name + '» ✓');
+  }
+  apToggleLive() { const on = !this.state.apLive; this.setState({ apLive: on, apSim: on ? this.apRunSimulation() : this.state.apSim }); }
+  apSetSlider(key, v) { this.setState({ [key]: Number(v) }, () => { if (this.state.apLive) this.rcDebounce('apSim', () => this.setState({ apSim: this.apRunSimulation() }), 250); }); }
+  // Excel: премиальный лист AI_Autopilot_Report (зоны прибыли — пастельно-зелёный #E2EFDA)
+  apExcel() {
+    const XLSX = window.XLSX; if (!XLSX) { try { alert('Библиотека Excel не загрузилась.'); } catch (e) {} return; }
+    const GREEN = 'E2EFDA', RED = 'FCE4D6', NAVY = '1F4E78', GREY = 'D3D3D3';
+    const bd = { style: 'thin', color: { rgb: GREY } }; const border = { top: bd, bottom: bd, left: bd, right: bd };
+    const hdr = { font: { bold: true, color: { rgb: 'FFFFFF' }, sz: 11 }, fill: { fgColor: { rgb: NAVY } }, alignment: { horizontal: 'center', vertical: 'center', wrapText: true }, border };
+    const cell = (bg, bold) => ({ alignment: { wrapText: true, vertical: 'top' }, font: { sz: 10, bold: !!bold }, fill: bg ? { fgColor: { rgb: bg } } : undefined, border });
+    const ws = {}; const merges = []; let R = 0;
+    const put = (r, c, v, s) => { ws[XLSX.utils.encode_cell({ r, c })] = { v: v == null ? '' : v, t: typeof v === 'number' ? 'n' : 's', s }; };
+    put(R, 0, '🤖 AI AUTOPILOT REPORT · ' + this.co().name + ' · ' + new Date().toLocaleString('ru-RU'), { font: { bold: true, sz: 14, color: { rgb: NAVY } } }); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: 5 } }); R += 2;
+    // Стресс-тест
+    const sim = this.state.apSim || this.apRunSimulation();
+    put(R, 0, 'ЦИФРОВОЙ ДВОЙНИК · СТРЕСС-ТЕСТ 360°', hdr); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: 5 } }); R++;
+    for (const ln of (sim.ai_verdict || '').split('\n').filter(Boolean)) { put(R, 0, ln, cell(sim.profit_delta_eur >= 0 ? GREEN : RED)); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: 5 } }); ws['!rows'] = ws['!rows'] || []; ws['!rows'][R] = { hpt: Math.max(18, Math.ceil(ln.length / 90) * 14) }; R++; }
+    R++;
+    // Автозакупки
+    put(R, 0, 'РОБОТИЗИРОВАННЫЕ ЗАКУПКИ (автовыкуп дефицитов)', hdr); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: 5 } }); R++;
+    ['Сырьё', 'Объём', 'Поставщик (OTIF)', 'Landed Cost план ₽', 'Landed Cost €', 'Закрыть к'].forEach((c, i) => put(R, i, c, hdr)); R++;
+    for (const d of (this.state.apDrafts || [])) { put(R, 0, d.material, cell(GREEN)); put(R, 1, d.qty_kg + ' ' + d.unit, cell(GREEN)); put(R, 2, d.supplier + (d.supplier_otif != null ? ' (' + d.supplier_otif + '%)' : ''), cell(GREEN)); put(R, 3, d.landed_cost_plan_rub, { ...cell(GREEN), numFmt: '#,##0\\ "₽"' }); put(R, 4, d.landed_cost_plan_eur, { ...cell(GREEN), numFmt: '#,##0\\ "€"' }); put(R, 5, this.dm(this.parseISO(d.cover_date)), cell(GREEN)); R++; }
+    R++;
+    // Динамическое ценообразование — floor price (зоны прибыли зелёным)
+    put(R, 0, 'ДИНАМИЧЕСКОЕ ЦЕНООБРАЗОВАНИЕ · Floor Price (норматив GM2 ' + this.apTargetGm2() + '%)', hdr); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: 5 } }); R++;
+    ['Продукт', 'СС 1 кг ₽', 'Floor ₽/кг', 'Floor €/кг', '', ''].forEach((c, i) => put(R, i, c, hdr)); R++;
+    const prods = (this.data && this.data.products) ? this.data.products.map(p => p.name || p).slice(0, 30) : [];
+    for (const p of prods) { const f = this.apFloorPrice(p); if (!(f.costKg > 0)) continue; put(R, 0, p, cell(GREEN)); put(R, 1, Math.round(f.costKg), { ...cell(GREEN), numFmt: '#,##0\\ "₽"' }); put(R, 2, Math.round(f.floorRub), { ...cell(GREEN, true), numFmt: '#,##0\\ "₽"' }); put(R, 3, Math.round(f.floorEur), { ...cell(GREEN), numFmt: '#,##0\\ "€"' }); R++; }
+    ws['!ref'] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: R, c: 5 } });
+    ws['!merges'] = merges; ws['!cols'] = [{ wch: 34 }, { wch: 16 }, { wch: 28 }, { wch: 18 }, { wch: 16 }, { wch: 14 }];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'AI_Autopilot_Report');
+    XLSX.writeFile(wb, 'AI_Autopilot_Report ' + this.co().name + '.xlsx');
+  }
+  buildAutopilot() {
+    const S = this.state, set = (p) => this.setState(p);
+    if (!(S.currentUser && S.currentUser.role === 'admin')) return { isAutopilot: true, apNoAccess: true };
+    const rate = this.apRate();
+    const sim = S.apSim;
+    const prods = (this.data && this.data.products) ? this.data.products.map(p => p.name || p) : [];
+    const floorRows = prods.map(p => this.apFloorPrice(p)).filter(f => f.costKg > 0).sort((a, b) => b.floorRub - a.floorRub).slice(0, 14)
+      .map(f => ({ product: f.product, costKg: Math.round(f.costKg).toLocaleString('ru-RU') + ' ₽', floorRub: Math.round(f.floorRub).toLocaleString('ru-RU') + ' ₽/кг', floorEur: Math.round(f.floorEur).toLocaleString('ru-RU') + ' €/кг' }));
+    const drafts = (S.apDrafts || []).map(d => ({
+      material: d.material, qty: d.qty_kg.toLocaleString('ru-RU') + ' ' + d.unit, supplier: d.supplier, otif: d.supplier_otif != null ? d.supplier_otif + '%' : '—',
+      landedRub: d.landed_cost_plan_rub.toLocaleString('ru-RU') + ' ₽', landedEur: d.landed_cost_plan_eur.toLocaleString('ru-RU') + ' €', cover: this.dm(this.parseISO(d.cover_date)),
+      vedCls: d.market_type === 'FOREIGN_VED' ? 'apmkt ved' : 'apmkt dom', vedLabel: d.market_type === 'FOREIGN_VED' ? 'ВЭД' : 'РФ',
+      push: () => this.apPushDraftToLogist(d),
+    }));
+    const alerts = (S.apAlerts || []).map(a => ({ title: a.title, exec: a.exec, reason: a.reason, company: a.company, cls: a.blocked ? 'apalert blocked' : (a.overdue ? 'apalert over' : 'apalert'), icon: a.blocked ? '🔗' : (a.overdue ? '⏰' : '⚠') }));
+    return {
+      isAutopilot: true, apNoAccess: false, apCoName: this.co().name,
+      apRefreshed: S.apRefreshedAt ? this.fmtDateTime(S.apRefreshedAt) : 'ещё не запускался',
+      apRunNow: () => { this.apRefresh(); this.setState({ apSim: this.apRunSimulation() }); },
+      apExcel: () => this.apExcel(),
+      // Контур 2: Digital Twin
+      apFx: S.apFx, apLogi: S.apLogi, apSales: S.apSales, apHorizon: S.apHorizon, apGm2Target: S.apGm2Target,
+      onApFx: (e) => this.apSetSlider('apFx', e.target.value), onApLogi: (e) => this.apSetSlider('apLogi', e.target.value), onApSales: (e) => this.apSetSlider('apSales', e.target.value),
+      onApHorizon: (e) => this.apSetSlider('apHorizon', e.target.value), onApGm2: (e) => this.apSetSlider('apGm2Target', e.target.value),
+      apLive: !!S.apLive, apLiveCls: S.apLive ? 'rcauto on' : 'rcauto', apToggleLive: () => this.apToggleLive(),
+      apSimHas: !!sim,
+      apSimVerdict: sim ? sim.ai_verdict : '',
+      apSimProfit: sim ? ((sim.profit_delta_eur >= 0 ? '+' : '') + sim.profit_delta_eur.toLocaleString('ru-RU') + ' €') : '',
+      apSimProfitCls: sim ? (sim.profit_delta_eur >= 0 ? 'apbig pos' : 'apbig neg') : 'apbig',
+      apSimGm2: sim ? (sim.scenario_gm2_pct + '%') : '', apSimGm2Cls: sim ? (sim.scenario_gm2_pct >= this.apTargetGm2() ? 'apbig pos' : 'apbig neg') : 'apbig',
+      apSimDeficit: sim && sim.deficit_date ? (sim.deficit_material + ' · ' + this.dm(this.parseISO(sim.deficit_date))) : 'нет',
+      // Контур 3
+      apDrafts: drafts, apHasDrafts: drafts.length > 0,
+      // Контур 4
+      apFloorRows: floorRows, apHasFloor: floorRows.length > 0,
+      // Контур 5
+      apAlerts: alerts, apHasAlerts: alerts.length > 0,
+      // Контур 1 / журнал безопасности
+      apSecLog: (S.apSecurityLog || []).slice(0, 8).map(e => ({ when: this.fmtDateTime(e.at), text: e.text || '', who: e.who || '' })),
+      apHasSecLog: (S.apSecurityLog || []).length > 0,
+    };
+  }
   buildOneC() {
     const S = this.state, set = (p) => this.setState(p);
     const pv = S.oneCPreview;
@@ -9754,6 +10660,16 @@ class Component extends DCLogic {
       runGlobalAudit: () => this.runGlobalAiAudit(),
       runFullScan: () => this.runFullDbScreening(),
       auditSummary: S.prodAiSummary || '', auditHas: !!S.prodAiSummary, auditBusy: !!S.prodAiBusy,
+      runDeepBI: () => this.runDeepBI(), deepBIExcel: () => this.deepBIExcel(),
+      deepBIHas: !!S.deepBI,
+      deepBIVerdict: S.deepBI ? S.deepBI.ai_interpretation_verdict : '',
+      deepBIPeriod: S.deepBI ? S.deepBI.period : '',
+      deepBITotal: S.deepBI ? (Math.round(S.deepBI.totalEur).toLocaleString('ru-RU') + ' €') : '',
+      deepBICount: S.deepBI ? String(S.deepBI.insights.length) : '0',
+      deepBIEmpty: S.deepBI ? S.deepBI.insights.length === 0 : false,
+      deepBIInsights: S.deepBI ? S.deepBI.insights.map(i => ({ contour: i.contour, level: i.level, levelCls: 'dbi-' + i.level, symptom: i.symptom, drill: i.drill, interpretation: i.interpretation, recommendation: i.recommendation, effRub: this.diMoney(i.effectRub), effEur: this.diEur(i.effectRub), hasEff: i.effectRub > 0 })) : [],
+      deepBIGrowth: S.deepBI ? S.deepBI.growthPoints.map(g => ({ rank: g.rank, action: g.action, contour: g.contour, effort: g.effort, ratio: g.ratio, eff: Math.round(g.effectEur).toLocaleString('ru-RU') + ' €' })) : [],
+      deepBIHasGrowth: S.deepBI ? S.deepBI.growthPoints.length > 0 : false,
       onImport1C: (e) => { const f = e.target.files && e.target.files[0]; if (f) this.import1CFile(f); e.target.value = ''; },
       oneCFileCur: S.oneCFileCur || 'RUB', oneCFileCurOpts: [['RUB', '₽ (пересчёт в €)'], ['EUR', '€']].map(([v, label]) => ({ v, label })), onOneCFileCur: (e) => set({ oneCFileCur: e.target.value }),
     };
@@ -10552,7 +11468,7 @@ class Component extends DCLogic {
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['delivery', 'Доставка · баланс'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['prodrep', 'Отчёты производства'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
       ['cost', 'Себестоимость · КО'], ['margin', 'Маржинальный отчёт'], ['costtree', 'Анализ себестоимости'], ['pnl', 'P&L 360°'],
-      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['dataload', 'Загрузка данных 1С'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['filearch', 'Архив файлов'], ['home', 'Карта навигации'],
+      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['dataload', 'Загрузка данных 1С'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['filearch', 'Архив файлов'], ['autopilot', 'ИИ-Автопилот'], ['home', 'Карта навигации'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
     const tabGroups = [
@@ -10562,7 +11478,7 @@ class Component extends DCLogic {
       { label: 'Закупки', items: ['proc', 'procplan', 'runrate', 'audit', 'landed', 'delivery', 'cparties'], en: { procplan: 'График закупок', cparties: 'Поставщики / Контрагенты' } },
       { label: 'Логистика и склад', items: ['wh', 'receipts', 'logi', 'turnover', 'cover'], en: { cover: 'Сводка запасов' } },
       { label: 'Финансы', items: ['margin', 'cost', 'costtree', 'pay', 'treas30', 'planfact', 'stress', 'reports'] },
-      { label: 'Настройки', items: ['cloud', 'onec', 'users', 'filearch'], en: { filearch: 'Архив загруженных файлов' } },
+      { label: 'Настройки', items: ['cloud', 'onec', 'users', 'filearch', 'autopilot'], en: { filearch: 'Архив загруженных файлов', autopilot: 'ИИ-Автопилот (AI Control Core)' } },
     ];
     const allowed = this.allowedTabs(S.currentUser);
     const allowSet = new Set(allowed);
@@ -10622,6 +11538,7 @@ class Component extends DCLogic {
       tasks: 'Постановка задач коллегам: исполнитель, срок, приоритет. Виды «Мои задачи» и «Поручено мной»; АЯ напоминает о просроченных.',
       users: 'Управление доступом: добавление сотрудников, выдача логинов и паролей, роли и блокировка учётных записей.',
       filearch: 'Защищённый архив всех загруженных в систему файлов (только для администраторов). Жёсткое разделение по компаниям, хронологическое дерево Год → Месяц → Неделя → День, календарь загрузок, живой поиск по метаданным и скачивание оригиналов.',
+      autopilot: 'AI Control Core 24/7 — автономный ИИ-Автопилот (только для администраторов): авто-парсинг инвойсов, цифровой двойник «Стресс-тест 360°», роботизированные закупки дефицитов, динамическое ценообразование (Floor Price) и умный HR-трекинг задач. Работает в связке с фоновым движком пересчёта.',
       docs: 'Документы: счета, спецификации и сопроводительные формы с реквизитами компании, печать и выгрузка.',
       sales: 'Продажи готовой продукции: заявки и отгрузки клиентам, объём и выручка — основа для маржи и плана производства.',
       cparties: 'Справочник контрагентов и поставщиков: реквизиты, страна/ВЭД, условия оплаты и рейтинг надёжности (OTIF).',
@@ -10668,6 +11585,7 @@ class Component extends DCLogic {
       ...L, ...Rt,
       ready: true, navGroups, tabDesc: descs[S.tab] || '', productOptions, ownerOptions, componentOptions,
       cloudToast: S.cloudToast || '', cloudToastHas: !!S.cloudToast,
+      recalcToast: S.recalcToast || '', recalcToastHas: !!S.recalcToast,
       isHome: S.tab === 'home', homeGroups, goHome: () => set({ tab: 'home', navOpen: false }), isUsers: S.tab === 'users',
       isCat: S.tab === 'cat', catGroups: catGroup ? [catGroup] : [], catCards: catGroup ? catGroup.items : [],
       compassOpen: !!S.compassOpen, openCompass: () => set({ compassOpen: true, navOpen: false }), closeCompass: () => set({ compassOpen: false }),
@@ -10981,8 +11899,8 @@ class Component extends DCLogic {
 
     // ---- План производства: заявки клиентов ----
     if (S.tab === 'prod') {
-      const updOrder = (oid, patch) => set({ orders: S.orders.map(o => o.id === oid ? { ...o, ...patch } : o) });
-      const updItem = (oid, ii, patch) => set({ orders: S.orders.map(o => o.id !== oid ? o : { ...o, items: o.items.map((it, j) => j === ii ? { ...it, ...patch } : it) }) });
+      const updOrder = (oid, patch) => { set({ orders: S.orders.map(o => o.id === oid ? { ...o, ...patch } : o) }); this.scheduleAutoRecalc('NEW_PRODUCTION_PLAN'); };
+      const updItem = (oid, ii, patch) => { set({ orders: S.orders.map(o => o.id !== oid ? o : { ...o, items: o.items.map((it, j) => j === ii ? { ...it, ...patch } : it) }) }); this.scheduleAutoRecalc('NEW_PRODUCTION_PLAN'); };
       base.orderCards = S.orders.map(o => {
         let sub = 0;
         const items = (o.items || []).map((it, ii) => {
@@ -11154,6 +12072,7 @@ class Component extends DCLogic {
     if (S.tab === 'delivery') Object.assign(base, this.buildDelivery());
     if (S.tab === 'dataload') Object.assign(base, this.buildDataload());
     if (S.tab === 'filearch') Object.assign(base, this.buildFileArch());
+    if (S.tab === 'autopilot') Object.assign(base, this.buildAutopilot());
     if (S.tab === 'tcalc') Object.assign(base, this.buildTCalc(rate));
     if (S.tab === 'xcalc') Object.assign(base, this.buildXCalc(rate));
 
