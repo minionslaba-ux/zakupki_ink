@@ -4473,7 +4473,10 @@ class Component extends DCLogic {
     const I = h.idx, nameC = I.name != null ? I.name : 1;
     let period = '';
     for (let i = 0; i < h.hdr; i++) { const s = (aoa[i] || []).map(c => String(c == null ? '' : c)).join(' '); const m = s.match(/с\s+(\d{2}\.\d{2}\.\d{4})\s+по\s+(\d{2}\.\d{2}\.\d{4})/); if (m) { period = m[1] + ' — ' + m[2]; break; } }
-    const batchRe = /Производство без заказа\s+(\d{1,2}[A-Za-zА-Яа-я]\w*)\s/, dateRe = /от\s+(\d{2}\.\d{2}\.\d{4})/;
+    // Партия ГП в выгрузке 1С: «Производство без заказа <КОД> от ДД.ММ.ГГГГ [ЧЧ:ММ:СС]».
+    // КОД может быть чисто числовым («0744»), буквенно-цифровым («1А034») или с разделителями («БП-0744»).
+    // Захватываем первый токен после «без заказа» (опц. №), исключая служебное «от».
+    const batchRe = /Производство\s+без\s+заказа\s+№?\s*(?!от[\s.])([^\s]+)/i, dateRe = /от\s+(\d{2}\.\d{2}\.\d{4})/;
     const batches = []; let cur = null, eur = 0, rub = 0;
     for (let i = h.hdr + 1; i < aoa.length; i++) { const row = aoa[i] || [];
       const name = String(row[nameC] == null ? '' : row[nameC]).trim(); if (!name) continue;
@@ -6073,8 +6076,9 @@ class Component extends DCLogic {
   }
   toggleGroup(label) { const m = { ...this.navExpMap() }; m[label] = !m[label]; this.setState({ navExp: m }); try { this.lsSet('navexp', JSON.stringify(m)); } catch (e) {} }
   openCategory(label) { const m = { ...this.navExpMap() }; m[label] = true; this.setState({ navExp: m, tab: 'cat', catKey: label, navOpen: false }); try { this.lsSet('navexp', JSON.stringify(m)); } catch (e) {} }
-  // Вкладки, доступные только в конкретной компании (id вкладки -> список компаний)
-  coOnlyTabs() { return { cost: ['chem'], margin: ['chem'] }; }
+  // Вкладки, доступные только в конкретной компании (id вкладки -> список компаний).
+  // Состав отчётов ИНК и Кемикалз идентичен; различие только в методе учёта (ИНК — FIFO, Кемикалз — партионный).
+  coOnlyTabs() { return {}; }
   tabInCompany(id, co) { const m = this.coOnlyTabs()[id]; return !m || m.indexOf(co || this._co()) >= 0; }
   // Разрешённые вкладки для пользователя. Админ — всё. Закупщик — по perms (нет поля = доступ ко всему, для старых записей).
   allowedTabs(user) {
