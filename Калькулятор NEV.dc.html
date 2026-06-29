@@ -111,6 +111,7 @@ tbody td.l{text-align:left}
 .mguprow{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .mgupbtn{position:relative;overflow:hidden;cursor:pointer}
 .mgfile{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.sbimp{position:relative;overflow:hidden;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
 .mgok{font-size:12.5px;font-weight:700;color:#1f8a5b}
 .mggmgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:12px}
 .mggmf{display:flex;flex-direction:column;gap:4px}
@@ -2196,7 +2197,10 @@ window.dispatchEvent(new Event('fbready'));
 
 <sc-if value="{{ isCost }}" hint-placeholder-val="">
 <div class="card">
-<div class="sbflt"><div class="field grow"><span class="lbl">🔎 Поиск (продукт / № ЗП)</span><input class="inp" value="{{ sbSearch }}" onInput="{{ onSbSearch }}" placeholder="например, 2014 или 631"></div><div class="field"><span class="lbl">Марка</span><select class="sel" value="{{ sbFltMarka }}" onChange="{{ onFltMarka }}"><option value="">Все марки</option><sc-for list="{{ sbMarkaOpts }}" as="m" hint-placeholder-count="3"><option value="{{ m.value }}">{{ m.label }}</option></sc-for></select></div><div class="field"><span class="lbl">Период с</span><input class="inp sbdate" type="date" value="{{ sbDateFrom }}" onChange="{{ onDateFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp sbdate" type="date" value="{{ sbDateTo }}" onChange="{{ onDateTo }}"></div><button class="btn ghost" onClick="{{ sbResetFlt }}">↺ Сброс</button><button class="btn dark" onClick="{{ toggleCompare }}">⇄ Сравнить марку</button><button class="btn mgxls" onClick="{{ sbExportExcel }}">⬇ Скачать Excel</button><button class="btn" onClick="{{ sbExportCsv }}">⬇ CSV</button></div>
+<div class="sbflt"><div class="field grow"><span class="lbl">🔎 Поиск (продукт / № ЗП)</span><input class="inp" value="{{ sbSearch }}" onInput="{{ onSbSearch }}" placeholder="например, 2014 или 631"></div><div class="field"><span class="lbl">Марка</span><select class="sel" value="{{ sbFltMarka }}" onChange="{{ onFltMarka }}"><option value="">Все марки</option><sc-for list="{{ sbMarkaOpts }}" as="m" hint-placeholder-count="3"><option value="{{ m.value }}">{{ m.label }}</option></sc-for></select></div><div class="field"><span class="lbl">Период с</span><input class="inp sbdate" type="date" value="{{ sbDateFrom }}" onChange="{{ onDateFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp sbdate" type="date" value="{{ sbDateTo }}" onChange="{{ onDateTo }}"></div><button class="btn ghost" onClick="{{ sbResetFlt }}">↺ Сброс</button><button class="btn dark" onClick="{{ toggleCompare }}">⇄ Сравнить марку</button><button class="btn mgxls" onClick="{{ sbExportExcel }}">⬇ Скачать Excel</button><button class="btn" onClick="{{ sbExportCsv }}">⬇ CSV</button><label class="btn dark sbimp"><span class="oneclogo">1С</span> Загрузить отчёт КО<input type="file" accept=".xlsx,.xls,.csv,.txt" class="mgfile" onChange="{{ onSbImport }}"></label></div>
+<sc-if value="{{ sbImpBusy }}" hint-placeholder-val=""><div class="hint">Обработка файла…</div></sc-if>
+<sc-if value="{{ sbImpHasMsg }}" hint-placeholder-val=""><div class="banner ok">{{ sbImpMsg }}</div></sc-if>
+<sc-if value="{{ sbImpHasErr }}" hint-placeholder-val=""><div class="banner err">{{ sbImpErr }}</div></sc-if>
 <label class="{{ sbSummaryCls }}" onClick="{{ toggleSummary }}"><span class="sbchkbox"></span> Свод средней себестоимости по периодам (помесячно)</label>
 <div class="sbkpis"><div class="sbkpi"><div class="sbkl">Партий</div><div class="sbkv">{{ sbCount }} / {{ sbTotalAll }}</div></div><div class="sbkpi"><div class="sbkl">Вес ГП</div><div class="sbkv">{{ sbKWeight }}</div></div><div class="sbkpi"><div class="sbkl">Σ себестоимость €</div><div class="sbkv">{{ sbKEur }}</div></div><div class="sbkpi"><div class="sbkl">Σ себестоимость ₽</div><div class="sbkv">{{ sbKRub }}</div></div><div class="sbkpi"><div class="sbkl">Ср. СС кг ₽</div><div class="sbkv">{{ sbKAvgKg }}</div></div><div class="sbkpi"><div class="sbkl">Ср. потери</div><div class="sbkv">{{ sbKLoss }}</div></div></div>
 <sc-if value="{{ sbCompare }}" hint-placeholder-val="">
@@ -3322,7 +3326,7 @@ class Component extends DCLogic {
     lc1cUrl: '', lc1cToken: '', lc1cBusy: false,
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {}, cloudLocks: {}, cloudMyAreas: [],
     curMode: 'RUB', vatMode: 'WITHOUT', unitMode: 'ABS',
-    sbReady: false, sbFltMarka: '', sbFltPeriod: '', sbSearch: '', sbCompare: false, sbCmpMarka: '', sbDateFrom: '', sbDateTo: '', sbSummary: false, sbExpanded: {},
+    sbReady: false, sbFltMarka: '', sbFltPeriod: '', sbSearch: '', sbCompare: false, sbCmpMarka: '', sbDateFrom: '', sbDateTo: '', sbSummary: false, sbExpanded: {}, sbImpBusy: false, sbImpErr: '', sbImpMsg: '',
     mgRevenue: null, mgRevMeta: null, mgErr: '', mgBusy: false, mgPeriod: '', mgGm: null, mgKv: [{ name: 'Конфлекс', pct: 10 }], mgView: 'groups', mgFltGroup: '', mgExpanded: {}, mgCostMode: 'tree', plSlice: 'nomen', plExpanded: {}, plAi: '', plAiBusy: false, plPlanRev: '', plPlanM2: '', mgManualCost: {},
     chat: [], chatRooms: [], chatRoom: 'general', privModal: null, chatInput: '', chatOpen: false, chatSeenAt: 0, tgLink: '', tgEdit: '', navOpen: false, isMobile: false, navExp: null, catKey: '', compassOpen: false,
     tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', ratingOpen: false, ratingExp: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '', sales: [], saleDraft: null, saleErr: '', salesTransport: 0, salesTransMode: 'weight', cashStart: 0, payMoves: {}, paySplits: {}, payMoveEdit: '', logistics: [], logDraft: null, logErr: '', payreqs: [], prDraft: null, prErr: '', stmtMsg: '',
@@ -4988,6 +4992,82 @@ class Component extends DCLogic {
     const factEur = rate ? kgRub / rate : 0;
     return { weight, consumed, rate, batchEur, lossKg, lossPct, batchRub, kgRub, factEur };
   }
+  // ===== Импорт отчёта «Себестоимость ШК» (выгрузка 1С по партиям, формат КО) =====
+  // Поиск колонки по обязательным подстрокам (все must должны входить) с исключениями (ни одна excl).
+  sbCol(H, must, excl) { for (let i = 0; i < H.length; i++) { const h = H[i]; if (excl && excl.some(s => h.indexOf(s) >= 0)) continue; if (must.every(s => h.indexOf(s) >= 0)) return i; } return -1; }
+  // Дата: серийный номер Excel или строка → ISO ГГГГ-ММ-ДД
+  sbDateISO(v) {
+    if (v == null || v === '') return '';
+    const sNum = Number(v);
+    if (typeof v === 'number' || (isFinite(sNum) && /^\d+(\.\d+)?$/.test(String(v).trim()) && sNum > 20000 && sNum < 90000)) {
+      const ms = Math.round((sNum - 25569) * 86400000); const d = new Date(ms);
+      if (!isNaN(d)) return d.toISOString().slice(0, 10);
+    }
+    const str = String(v).trim();
+    let m = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/); if (m) return m[1] + '-' + String(m[2]).padStart(2, '0') + '-' + String(m[3]).padStart(2, '0');
+    m = str.match(/^(\d{1,2})[.\/](\d{1,2})[.\/](\d{2,4})/); if (m) { let y = m[3]; if (y.length === 2) y = '20' + y; return y + '-' + String(m[2]).padStart(2, '0') + '-' + String(m[1]).padStart(2, '0'); }
+    return '';
+  }
+  // Колонки шаблона «Себестоимость ШК»
+  sbTplCols(headers) {
+    const H = headers.map(h => this.dlNorm(h));
+    return {
+      transfer: this.sbCol(H, ['дата передачи']),
+      release: this.sbCol(H, ['дата выпуск']),
+      rate: this.sbCol(H, ['курс']),
+      batch: this.sbCol(H, ['зп']),
+      product: this.sbCol(H, ['продукт']),
+      weight: this.sbCol(H, ['вес']),
+      consumed: this.sbCol(H, ['израсходовано'], ['polyether', 'пропиленглик', 'propylene', 'puranol']),
+      cc1c: this.sbCol(H, ['сс 1с']),
+      ccBatchEur: this.sbCol(H, ['сс партии', 'eur']),
+      note: this.sbCol(H, ['примечан']),
+    };
+  }
+  // Разбор строк файла в записи отчёта Себестоимость-КО
+  sbParseRows(headers, rows) {
+    const ci = this.sbTplCols(headers);
+    const num = (v) => { const n = parseFloat(String(v == null ? '' : v).replace(/[₽€\s\u00a0]/g, '').replace(',', '.')); return isFinite(n) ? n : 0; };
+    const txt = (v) => String(v == null ? '' : v).trim();
+    const recs = [];
+    for (const r of (rows || [])) {
+      const product = ci.product >= 0 ? txt(r[ci.product]) : '';
+      const batch = ci.batch >= 0 ? txt(r[ci.batch]) : '';
+      const weight = ci.weight >= 0 ? num(r[ci.weight]) : 0;
+      if (!product && !batch) continue;
+      if (!product && !weight) continue;
+      recs.push({
+        transfer: ci.transfer >= 0 ? this.sbDateISO(r[ci.transfer]) : '',
+        release: ci.release >= 0 ? this.sbDateISO(r[ci.release]) : '',
+        rate: ci.rate >= 0 ? num(r[ci.rate]) : 0,
+        batch, product, weight,
+        consumed: ci.consumed >= 0 ? num(r[ci.consumed]) : 0,
+        cc1c: ci.cc1c >= 0 ? num(r[ci.cc1c]) : 0,
+        ccBatchEur: ci.ccBatchEur >= 0 ? num(r[ci.ccBatchEur]) : 0,
+        note: ci.note >= 0 ? txt(r[ci.note]) : '',
+      });
+    }
+    return { recs, ci };
+  }
+  async sbImportFile(file) {
+    if (!file) return;
+    if (!/\.(xlsx|xls|csv|txt)$/i.test(file.name || '')) { this.setState({ sbImpErr: '«' + (file.name || 'файл') + '» — поддерживаются .xlsx, .xls, .csv, .txt.', sbImpMsg: '' }); return; }
+    this.setState({ sbImpBusy: true, sbImpErr: '', sbImpMsg: '' });
+    try {
+      const d = await this.dlReadFile(file);
+      const { recs, ci } = this.sbParseRows(d.headers, d.rows);
+      if (ci.product < 0 || ci.release < 0) { this.setState({ sbImpBusy: false, sbImpErr: 'Не найдены ключевые колонки (Продукт и/или Дата выпуска). Убедитесь, что это отчёт «Себестоимость ШК» (шапка: Дата выпуска · № ЗП · Продукт · Вес · СС Партии EUR · курс).' }); return; }
+      if (!recs.length) { this.setState({ sbImpBusy: false, sbImpErr: 'В файле не найдено ни одной партии с продуктом.' }); return; }
+      this.sebest = { records: recs };
+      this.saveSebest();
+      const periods = [...new Set(recs.map(r => (r.release || '').slice(0, 7)).filter(Boolean))].sort();
+      const span = periods.length ? (' · периоды: ' + periods[0] + (periods.length > 1 ? '…' + periods[periods.length - 1] : '')) : '';
+      this.setState({ sbReady: true, sbImpBusy: false, sbImpErr: '', sbImpMsg: 'Загружено партий: ' + recs.length + ' из «' + file.name + '»' + span + '.' });
+      try { this.archiveFile(file, { category: 'cost', category_label: 'Себестоимость ШК (отчёт КО)', source: 'sebest_import', rows: recs.length }); } catch (e) {}
+      try { this.postSystemNote('📥 Себестоимость-КО: загружен отчёт «' + file.name + '» — партий: ' + recs.length + span + '.', this.state.currentUser ? this.state.currentUser.name : 'Система'); } catch (e) {}
+      this.forceUpdate();
+    } catch (e) { this.setState({ sbImpBusy: false, sbImpErr: 'Ошибка чтения «' + (file.name || '') + '»: ' + (e.message || e) }); }
+  }
   // CSV-выгрузка отчёта Себестоимость (КО): по текущим фильтрам, разделитель «;», десятичная запятая, UTF-8 BOM.
   sbExportCsv() {
     const recs = (this.sebest && Array.isArray(this.sebest.records)) ? this.sebest.records : [];
@@ -5109,6 +5189,8 @@ class Component extends DCLogic {
       onFltMarka: (e) => set({ sbFltMarka: e.target.value }), onDateFrom: (e) => set({ sbDateFrom: e.target.value }), onDateTo: (e) => set({ sbDateTo: e.target.value }),
       onSbSearch: (e) => set({ sbSearch: e.target.value }), sbResetFlt: () => set({ sbFltMarka: '', sbDateFrom: '', sbDateTo: '', sbSearch: '' }),
       sbExportExcel: () => this.sbExportExcel(), sbExportCsv: () => this.sbExportCsv(),
+      onSbImport: (e) => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) this.sbImportFile(f); },
+      sbImpBusy: !!S.sbImpBusy, sbImpErr: S.sbImpErr || '', sbImpHasErr: !!S.sbImpErr, sbImpMsg: S.sbImpMsg || '', sbImpHasMsg: !!S.sbImpMsg,
       sbSummary: !!S.sbSummary, sbFlat: !S.sbSummary, toggleSummary: () => set({ sbSummary: !S.sbSummary }), sbSummaryCls: S.sbSummary ? 'sbchk on' : 'sbchk',
       sbPeriods: periodGroups, sbPeriodsCount: String(periodGroups.length),
       sbCount: String(filtered.length), sbTotalAll: String(recs.length),
@@ -8924,6 +9006,7 @@ class Component extends DCLogic {
     return [
       { key: 'revenue', label: 'Выручка и Продажи', hint: 'Клиент · номенклатура · объём · сумма', need: [['клиент', 'контрагент', 'покупател'], ['номенклат', 'товар', 'продукт', 'марка'], ['сумма', 'выручка', 'оборот']], needLabel: ['Клиент', 'Номенклатура', 'Сумма'] },
       { key: 'cost', label: 'Себестоимость выпущенной продукции', hint: 'Продукт · партия · себестоимость', need: [['продукт', 'номенклат', 'марка', 'издели'], ['себест', 'затрат', 'сумма', 'расход']], needLabel: ['Продукт', 'Себестоимость'] },
+      { key: 'costko', label: 'Себестоимость ШК · отчёт КО (по партиям)', hint: 'Дата выпуска · № ЗП · продукт · вес ГП · СС партии EUR · курс', need: [['дата выпуск', 'выпуск'], ['зп', 'парти'], ['продукт', 'номенклат'], ['сс партии', 'себест', 'сс кг']], needLabel: ['Дата выпуска', '№ ЗП', 'Продукт', 'СС партии (EUR)'] },
       { key: 'purchases', label: 'Закупки и ВЭД', hint: 'Поставщик · сырьё · цена/курс/таможня', need: [['поставщик'], ['номенклат', 'материал', 'сырь', 'товар'], ['сумма', 'цена', 'количеств', 'кол-во']], needLabel: ['Поставщик', 'Номенклатура', 'Сумма/Цена'] },
       { key: 'warehouse', label: 'Ведомость по товарам на складах', hint: 'Номенклатура · остаток · склад', need: [['номенклат', 'товар', 'материал', 'сырь'], ['остаток', 'количеств', 'кол-во', 'конечн']], needLabel: ['Номенклатура', 'Остаток'] },
       { key: 'opex', label: 'Доходы и расходы (OPEX / ОСВ)', hint: 'Статья/счёт · обороты · сумма', need: [['стат', 'счет', 'счёт', 'показател', 'наименован'], ['сумма', 'оборот', 'дебет', 'кредит', 'сальдо']], needLabel: ['Статья/Счёт', 'Сумма/Оборот'] },
@@ -9017,7 +9100,15 @@ class Component extends DCLogic {
     const okCount = okBase.length + okExtra.length;
     if (okCount < 1) { this.setState({ dlErr: 'Пересчёт недоступен: загрузите хотя бы один отчёт (зелёный). Можно начать с любого одного.' }); return; }
     const errBase = this.dlBaseDefs().filter(d => dlBase[d.key] && dlBase[d.key].status === 'err');
-    let fed = 0;
+    let fed = 0, sbFed = 0;
+    // Маршрутизация: Себестоимость ШК (отчёт КО) → отчёт Себестоимость-КО по партиям
+    try {
+      const ck = (this.state.dlBase || {}).costko;
+      if (ck && ck.rows && ck.rows.length) {
+        const { recs, ci } = this.sbParseRows(ck.headers, ck.rows);
+        if (recs.length && ci.product >= 0 && ci.release >= 0) { this.sebest = { records: recs }; this.saveSebest(); this.setState({ sbReady: true }); sbFed = recs.length; }
+      }
+    } catch (e) {}
     // Маршрутизация: ведомость склада → остатки сырья (по совпадению наименований)
     try {
       const wh = (this.state.dlBase || {}).warehouse;
@@ -9034,7 +9125,7 @@ class Component extends DCLogic {
     const when = new Date().toLocaleString('ru-RU');
     const total = this.dlBaseDefs().length;
     const warn = errBase.length ? (' Пропущены с ошибкой структуры: ' + errBase.map(d => d.label).join(', ') + '.') : '';
-    this.setState({ dlDone: 'Сквозной пересчёт выполнен ' + when + '. Базовых отчётов: ' + okBase.length + '/' + total + ', доп. форм: ' + okExtra.length + (fed ? ('. Остатки склада обновлены по ' + fed + ' позициям.') : '.') + warn, dlErr: '' });
+    this.setState({ dlDone: 'Сквозной пересчёт выполнен ' + when + '. Базовых отчётов: ' + okBase.length + '/' + total + ', доп. форм: ' + okExtra.length + (fed ? ('. Остатки склада обновлены по ' + fed + ' позициям.') : '.') + (sbFed ? (' Себестоимость-КО: загружено партий ' + sbFed + '.') : '') + warn, dlErr: '' });
     try { this.postSystemNote('📥 Загрузка данных 1С: выполнен сквозной пересчёт аналитики (базовых: ' + okBase.length + '/' + total + (okExtra.length ? ', доп. форм: ' + okExtra.length : '') + ').', this.state.currentUser ? this.state.currentUser.name : 'Система'); } catch (e) {}
   }
   // ===== Архив загруженных файлов (только админ, мультикомпанийный) =====
