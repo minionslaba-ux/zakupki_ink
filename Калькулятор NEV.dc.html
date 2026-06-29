@@ -422,6 +422,10 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .banner.ok{background:#eaf7fd;border-color:#00aeef;color:#0a4d63}
 .banner.err{background:#fbe0e0;border-color:#e10000;color:#b00000}
 .banner.warn{background:#fff6e8;border-color:#e8a33d;color:#8a5a00}
+.banner.aifb{background:#eef4ff;border-color:#2A6FDB;color:#1a3a6e;display:flex;align-items:center;gap:9px}
+.banner.aifb .aifbic{font-size:16px}
+.banner.aifb.true .aifbic{animation:aifbpulse 1.1s ease-in-out infinite}
+@keyframes aifbpulse{0%,100%{opacity:.45}50%{opacity:1}}
 .lcsrc{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin-top:6px}
 .lcsrccard{flex:1;min-width:260px;border:1px solid #e7e4e0;border-radius:11px;padding:16px 18px;background:#faf9f7;display:flex;flex-direction:column;gap:10px}
 .lcsrch{display:flex;align-items:center;gap:9px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;color:#1a1916}
@@ -2297,6 +2301,7 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ dlHasExtra }}" hint-placeholder-val=""><div class="dlextra"><sc-for list="{{ dlExtraRows }}" as="x" hint-placeholder-count="2"><div class="dlerow"><span class="dlchk ok">✓</span><span class="dlenm">{{ x.name }}<small>{{ x.fileName }}</small></span><span class="dlenm">строк: {{ x.n }}</span><span class="{{ x.tagCls }}">{{ x.tag }}</span><button class="dlbtn rm" onClick="{{ x.remove }}">Убрать</button></div></sc-for></div></sc-if>
 <sc-if value="{{ dlHasTpl }}" hint-placeholder-val=""><div class="dlprog" style="margin-top:12px">Сохранённые шаблоны распознавания:</div><div class="dltmpls"><sc-for list="{{ dlTemplates }}" as="t" hint-placeholder-count="2"><span class="dltmpl"><b>{{ t.name }}</b> · {{ t.fields }} полей<button onClick="{{ t.del }}" title="Удалить шаблон">✕</button></span></sc-for></div></sc-if>
 <sc-if value="{{ dlHasErr }}" hint-placeholder-val=""><div class="banner err">{{ dlErr }}</div></sc-if>
+<sc-if value="{{ dlFallbackHas }}" hint-placeholder-val=""><div class="banner aifb {{ dlFallbackBusy }}"><span class="aifbic">🤖</span><span>{{ dlFallbackMsg }}</span></div></sc-if>
 <sc-if value="{{ dlHasDone }}" hint-placeholder-val=""><div class="banner ok">{{ dlDone }}</div></sc-if>
 <div class="dlrecalc"><button class="dlbig" onClick="{{ dlRecalc }}" disabled="{{ dlRecalcOff }}"><span>⚙</span> Запустить сквозной пересчёт аналитики</button><span class="dlprog">{{ dlProgText }}</span></div>
 <div class="rceng">
@@ -9575,9 +9580,22 @@ class Component extends DCLogic {
   aiSim(a, b) { a = this.dlNorm(a); b = this.dlNorm(b); return 0.6 * this.aiDice(a, b) + 0.4 * (1 - this.aiLev(a, b) / (Math.max(a.length, b.length) || 1)); }
   aiRulesFor(field) { const rec = (this.aiMatrix()[field]) || {}; return [...(rec.global || []), ...(rec[this.aiScope()] || [])]; }
   aiClassify(word, threshold) { threshold = threshold == null ? 0.66 : threshold; const w = this.dlNorm(word); if (!w) return null; let best = null; const M = this.aiMatrix(); for (const field in M) { for (const rule of this.aiRulesFor(field)) { const sim = this.aiSim(w, rule.word); const score = sim * (0.5 + 0.5 * (rule.weight || 0.7)); if (!best || score > best.score) best = { field, score, matchedWord: rule.word }; } } return (best && best.score >= threshold) ? best : null; }
-  trainSemanticCore(userWord, systemField) {
+  trainSemanticCore(userWord, systemField, opts) {
+    opts = opts || {};
     const w = this.dlNorm(userWord); if (!w || !systemField) return null;
     const M = this.aiMatrix(); if (!M[systemField]) M[systemField] = { global: [], company_1: [], company_2: [] };
+    // opts.global — записать правило СРАЗУ в глобальную базу с максимальным доверием (вердикт внешнего ИИ)
+    if (opts.global) {
+      M[systemField].global = M[systemField].global || [];
+      const g = M[systemField].global.find(r => r.word === w);
+      if (g) { g.weight = 1.0; g.hits = (g.hits || 0) + 1; g.lastSeen = Date.now(); g.trainedBy = opts.by || g.trainedBy; }
+      else M[systemField].global.push({ word: w, weight: 1.0, hits: 1, lastSeen: Date.now(), trainedBy: opts.by || 'external-ai' });
+      // снять дубликат из локального скоупа, если был
+      for (const sc of ['company_1', 'company_2']) if (M[systemField][sc]) M[systemField][sc] = M[systemField][sc].filter(r => r.word !== w);
+      this.aiSaveMatrix();
+      if (!opts.silent) { try { this.secLog('SELF_LEARN', { detail: 'глобальное правило «' + userWord + '» → [' + systemField + '] (внешний ИИ)' }); } catch (e) {} }
+      return { word: userWord, field: systemField, scope: 'global' };
+    }
     const scope = this.aiScope(); const list = M[systemField][scope] = M[systemField][scope] || [];
     const ex = list.find(r => r.word === w);
     if (ex) { ex.weight = 1.0; ex.hits = (ex.hits || 0) + 1; ex.lastSeen = Date.now(); }
@@ -9585,8 +9603,99 @@ class Component extends DCLogic {
     const r2 = M[systemField][scope].find(r => r.word === w);
     if (r2 && r2.hits >= 3 && r2.weight >= 1 && !(M[systemField].global || []).some(g => g.word === w)) { M[systemField].global = M[systemField].global || []; M[systemField].global.push({ ...r2, trainedBy: r2.trainedBy + ' → global' }); M[systemField][scope] = M[systemField][scope].filter(r => r.word !== w); }
     this.aiSaveMatrix();
-    try { this.secLog('SELF_LEARN', { detail: 'слово «' + userWord + '» → [' + systemField + ']' }); } catch (e) {}
+    if (!opts.silent) { try { this.secLog('SELF_LEARN', { detail: 'слово «' + userWord + '» → [' + systemField + ']' }); } catch (e) {} }
     return { word: userWord, field: systemField };
+  }
+  // ============================================================
+  // AI FALLBACK & AUTO-INGESTION CORE — каскадное «спасение» нераспознанных файлов
+  // Внутреннее ядро не справилось за 5 итераций → эскалация к старшему внешнему ИИ →
+  // он возвращает {identified_category, mapping_schema} → авто-приём + авто-обучение
+  // глобальной матрицы → в следующий раз файл распознаётся локально без внешнего API.
+  // ============================================================
+  // Каталог системных полей и 5 базовых категорий (контекст для внешнего ИИ)
+  aiSystemFieldsCatalog() {
+    return {
+      categories: [
+        { key: 'revenue', label: 'Выручка и Продажи', signals: 'клиент/контрагент, номенклатура, объём, сумма выручки' },
+        { key: 'cost', label: 'Себестоимость выпущенной продукции', signals: 'продукт, партия, себестоимость, выпуск' },
+        { key: 'purchases', label: 'Закупки и ВЭД', signals: 'поставщик, сырьё, цена, курс, таможня' },
+        { key: 'warehouse', label: 'Ведомость склада (остатки)', signals: 'номенклатура, остаток, склад' },
+        { key: 'opex', label: 'OPEX / ОСВ (операционные расходы)', signals: 'статья/счёт, обороты, сумма' },
+        { key: 'custom', label: 'Кастомная форма', signals: 'не подходит ни под одну базовую' },
+      ],
+      systemFields: ['nomenclature', 'raw_material_name', 'sku', 'quantity', 'unit_price', 'total_revenue', 'cogs', 'landed_cost', 'supplier', 'client', 'doc_date'],
+      // системное поле → внутренний alias маппинга dlGuessMap
+      fieldAlias: { nomenclature: 'nomen', raw_material_name: 'nomen', sku: 'nomen', quantity: 'qty', unit_price: 'price', total_revenue: 'sum', cogs: 'sum', landed_cost: 'sum', supplier: 'supplier', client: 'client', doc_date: 'date' },
+    };
+  }
+  // Достаточно ли внутреннего распознавания? (ключевые поля номенклатуры + минимум одна метрика)
+  dlMapIsConfident(map) { return map && map.nomen != null && (map.qty != null || map.sum != null || map.price != null); }
+  /**
+   * АСИНХРОННАЯ ФУНКЦИЯ СПАСЕНИЯ ДАННЫХ.
+   * @param {object} fileData — { fileName, headers, rows, sig }
+   * @param {string} companyId — 'ink' | 'chem'
+   * @returns {Promise<{ok:boolean, category?, mapping?, reason?}>}
+   */
+  async executeExternalAiFallback(fileData, companyId) {
+    const cat = this.aiSystemFieldsCatalog();
+    const t0 = Date.now();
+    // нет внешнего ключа → отказ (caller покажет ручной маппинг / письмо-отказ)
+    if (!this.hasAI()) return { ok: false, reason: 'no-external-ai' };
+    const sampleRows = (fileData.rows || []).slice(0, 6).map(r => (r || []).map(c => (c == null ? '' : String(c))));
+    const sys = 'Ты — старший ИИ-аналитик ERP-системы Shtark Flow (группа из 2 производственных компаний: ИНК — спиртовые краски, FIFO; Кемикалз — клеи/ПУ-системы, партионный учёт). Внутренний парсер НЕ смог распознать загруженный файл. Определи его по СМЫСЛУ. Базовые категории: ' + cat.categories.map(c => c.key + ' (' + c.label + ': ' + c.signals + ')').join('; ') + '. Системные поля для маппинга: ' + cat.systemFields.join(', ') + '. Верни СТРОГО валидный JSON без текста вокруг: {"identified_category":"<ключ категории>","confidence":<0..1>,"mapping_schema":[{"file_column":"<точный заголовок из файла>","system_field":"<системное поле>"}]}.';
+    const user = 'Файл: «' + (fileData.fileName || '') + '»\nЗаголовки колонок (как в файле): ' + JSON.stringify(fileData.headers) + '\nПримеры строк: ' + JSON.stringify(sampleRows);
+    let raw;
+    try {
+      const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
+      raw = await withTimeout(this.aiComplete([{ role: 'system', content: sys }, { role: 'user', content: user }], { max: 900 }), 60000);
+    } catch (e) { return { ok: false, reason: 'external-error', error: (e && e.message) || String(e) }; }
+    // Валидация JSON-ответа
+    const norm = this.aiNormalizeVerdict(raw);
+    let parsed = null;
+    try {
+      const text = String(raw || '');
+      const m = text.match(/```(?:json)?\s*([\s\S]*?)```/i) || text.match(/(\{[\s\S]*\})/);
+      parsed = m ? JSON.parse(m[1]) : (/^\s*\{/.test(text.trim()) ? JSON.parse(text.trim()) : null);
+    } catch (e) { parsed = null; }
+    if (!parsed || !parsed.identified_category || !Array.isArray(parsed.mapping_schema) || !parsed.mapping_schema.length) {
+      return { ok: false, reason: 'invalid-json', raw: norm.summary };
+    }
+    const catKey = String(parsed.identified_category).toLowerCase().trim();
+    const known = cat.categories.find(c => c.key === catKey) ? catKey : 'custom';
+    const catLabel = (cat.categories.find(c => c.key === known) || {}).label || 'Кастомная форма';
+    // ── ДЕЙСТВИЕ 2 (критично): авто-обучение глобальной матрицы по mapping_schema ──
+    const learned = []; const internalMap = {};
+    for (const pair of parsed.mapping_schema) {
+      const col = pair.file_column != null ? String(pair.file_column) : '';
+      const sf = pair.system_field != null ? String(pair.system_field).trim() : '';
+      if (!col || !sf) continue;
+      // индекс колонки в файле по точному/нормализованному совпадению
+      let ci = fileData.headers.indexOf(col);
+      if (ci < 0) ci = fileData.headers.findIndex(h => this.dlNorm(h) === this.dlNorm(col));
+      this.trainSemanticCore(col, sf, { global: true, silent: true, by: 'external-ai → global' });
+      learned.push({ col, sf });
+      const alias = cat.fieldAlias[sf];
+      if (alias && ci >= 0 && internalMap[alias] == null) internalMap[alias] = ci;
+    }
+    // ── ДЕЙСТВИЕ 1: бесшовный приём данных + движок 24/7 + уведомление со звуком ──
+    if (known !== 'custom' && this.dlBaseDefs().find(d => d.key === known)) {
+      const dlBase = { ...(this.state.dlBase || {}) };
+      dlBase[known] = { fileName: fileData.fileName, n: fileData.rows.length, headers: fileData.headers, rows: fileData.rows, status: 'ok', missing: [], at: Date.now(), aiIngested: true };
+      this.setState({ dlBase });
+    } else {
+      const extra = [...(this.state.dlExtra || []), { id: 'dx' + Date.now().toString(36), name: catLabel + ' (ИИ)', fileName: fileData.fileName, n: fileData.rows.length, status: 'ok', map: internalMap, sig: fileData.sig, auto: true, aiIngested: true }];
+      const tpls = (this.state.dlTemplates || []).filter(t => t.sig !== fileData.sig);
+      tpls.push({ id: 'tpl' + Date.now().toString(36), name: catLabel + ' (ИИ)', sig: fileData.sig, map: internalMap, fields: Object.keys(internalMap).length, aiLearned: true });
+      this.setState({ dlExtra: extra, dlTemplates: tpls });
+      try { this.lsSet('dltemplates', JSON.stringify(tpls)); } catch (e) {}
+    }
+    if (this._faPendingFile) { try { this.archiveFile(this._faPendingFile, { category: known, category_label: catLabel, source: 'ai_fallback', rows: fileData.rows.length }); } catch (e) {} this._faPendingFile = null; }
+    this.scheduleAutoRecalc('NEW_FACT_DOCS');
+    this.apBeep();
+    try { this.postSystemNote('🤖 ИИ-Оркестратор: файл «' + (fileData.fileName || '') + '» автоматически распознан как «' + catLabel + '» и внесён в базу. Карта сопоставления сохранена в матрицу обучения — система обучена.', 'АЯ'); } catch (e) {}
+    // ── Детальное логирование в Журнале безопасности ──
+    try { this.secLog('AI_FALLBACK_LEARN', { file: fileData.fileName, category: catLabel, learned: learned.length, ms: Date.now() - t0, provider: this._lastModel || (/anthropic/i.test(this.state.aiBase || '') ? 'Anthropic Claude' : 'внешний ИИ') }); } catch (e) {}
+    return { ok: true, category: known, categoryLabel: catLabel, mapping: parsed.mapping_schema, learned: learned.length, confidence: parsed.confidence };
   }
   aiLearnStats() {
     const M = this.aiMatrix(); let global = 0, local = 0, learned = 0; const since = Date.now() - 30 * 86400000;
@@ -9675,8 +9784,18 @@ class Component extends DCLogic {
         // ИИ-Коннект: попытка распознать инвойс поставщика → плашка подтверждения
         const inv = this.apDetectInvoice(d.headers, d.rows);
         if (inv && inv.confident) { inv.fileName = file.name; inv.supplierGuess = file.name.replace(/\.[^.]+$/, ''); this._faPendingFile = file; this.setState({ dlBusy: '', apInvoice: inv }); this.apBeep(); return; }
+        const guess = this.dlGuessMap(d.headers, d.rows);
+        // ── AI FALLBACK: внутреннее ядро не распознало структуру → эскалация к внешнему ИИ ──
+        if (!this.dlMapIsConfident(guess) && this.hasAI()) {
+          this._faPendingFile = file;
+          this.setState({ dlBusy: '', dlFallbackBusy: true, dlFallbackMsg: '🤖 Внутреннее ядро не распознало «' + file.name + '». Активирован внешний ИИ-Оркестратор…' });
+          const res = await this.executeExternalAiFallback({ fileName: file.name, headers: d.headers, rows: d.rows, sig }, this._co());
+          if (res && res.ok) { this.setState({ dlFallbackBusy: false, dlFallbackMsg: '✓ Файл автоматически распознан как «' + res.categoryLabel + '» и внесён в базу. Сохранено правил: ' + res.learned + '. Система обучена.' }); return; }
+          // внешний ИИ не помог → ручной маппинг (текущее поведение)
+          this.setState({ dlFallbackBusy: false, dlFallbackMsg: '' });
+        }
         this._faPendingFile = file;
-        this.setState({ dlBusy: '', dlMap: { fileName: file.name, headers: d.headers, rows: d.rows, n: d.n, sig, map: this.dlGuessMap(d.headers, d.rows), name: file.name.replace(/\.[^.]+$/, ''), save: true } });
+        this.setState({ dlBusy: '', dlMap: { fileName: file.name, headers: d.headers, rows: d.rows, n: d.n, sig, map: guess, name: file.name.replace(/\.[^.]+$/, ''), save: true } });
       }
     } catch (e) { this.setState({ dlBusy: '', dlErr: 'Ошибка чтения «' + (file.name || '') + '»: ' + (e.message || e) }); }
   }
@@ -10065,6 +10184,7 @@ class Component extends DCLogic {
       dlTemplates: (S.dlTemplates || []).map(t => ({ id: t.id, name: t.name, fields: String(t.fields || Object.keys(t.map || {}).length), del: () => this.dlDelTemplate(t.id) })),
       dlHasTpl: (S.dlTemplates || []).length > 0,
       dlErr: S.dlErr || '', dlHasErr: !!S.dlErr, dlDone: S.dlDone || '', dlHasDone: !!S.dlDone,
+      dlFallbackBusy: !!S.dlFallbackBusy, dlFallbackMsg: S.dlFallbackMsg || '', dlFallbackHas: !!S.dlFallbackMsg,
       dlRecalc: () => this.dlRecalc(), dlRecalcOff: !anyOk,
       dlProgText: 'Базовые: ' + baseLoaded + '/' + this.dlBaseDefs().length + ' · доп. форм: ' + (S.dlExtra || []).length,
       // Движок сквозного пересчёта
@@ -10643,6 +10763,7 @@ class Component extends DCLogic {
       DATA_THEFT_ATTEMPT: { level: 'crit', label: 'Критично', desc: 'Копирование данных в приватном чате (Ctrl+C / ПКМ)', status: 'Перехвачено' },
       AI_SELF_DESTRUCT_LOG: { level: 'info', label: 'Инфо', desc: 'Авто-удаление приватного чата (48 ч) / общего (30 дн)', status: 'Выполнено' },
       SELF_LEARN: { level: 'info', label: 'Обучение', desc: 'Самообучение семантического ядра', status: 'Точность повышена' },
+      AI_FALLBACK_LEARN: { level: 'info', label: 'Авто-обучение', desc: 'Внешний ИИ-Оркестратор: автономное распознавание и обучение', status: 'Обучено автономно' },
     };
   }
   // Зарегистрировать инцидент безопасности (типизированный JSON-обработчик)
@@ -10654,7 +10775,10 @@ class Component extends DCLogic {
       id: 'sec_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), ts: Date.now(), type,
       userId: payload.userId || (cu ? cu.id : '—'), userName: payload.userName || (cu ? cu.name : '—'),
       level: meta.level, levelLabel: meta.label,
-      description: payload.detail ? meta.desc + ' · ' + payload.detail : meta.desc, status: meta.status,
+      description: type === 'AI_FALLBACK_LEARN'
+        ? ('Внутреннее ядро не распознало файл «' + (payload.file || '—') + '». Активирован внешний ИИ-Оркестратор (' + (payload.provider || 'внешний ИИ') + '). Файл успешно идентифицирован как «' + (payload.category || '—') + '». Карта маппинга (' + (payload.learned || 0) + ' полей) автоматически сохранена в локальную матрицу обучения. Система успешно обучена в автономном режиме за ' + (payload.ms != null ? (payload.ms / 1000).toFixed(1) + ' с' : '—') + '.')
+        : (payload.detail ? meta.desc + ' · ' + payload.detail : meta.desc),
+      status: meta.status,
     };
     const log = [entry, ...((this.state.securityLog) || [])].slice(0, 500);
     this.setState({ securityLog: log }); try { this.lsSet('security_log', JSON.stringify(log)); } catch (e) {}

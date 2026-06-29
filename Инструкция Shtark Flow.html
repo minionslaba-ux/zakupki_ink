@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shtark Flow — Инструкция пользователя</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+:root{--navy:#1F4E78;--blue:#2A6FDB;--ink:#1a2330;--gray:#5b6678;--line:#e3e7ee;--red:#E4002B;--yellow:#FFC400;--green:#2a8a4a;--soft:#f4f6fa}
+html,body{background:#5a6376;font-family:'Montserrat',sans-serif;color:var(--ink);line-height:1.55}
+.doc{display:flex;flex-direction:column;align-items:center;gap:20px;padding:24px}
+.page{width:794px;min-height:1123px;background:#fff;box-shadow:0 12px 40px rgba(0,0,0,.3);position:relative;padding:54px 60px 70px;display:flex;flex-direction:column}
+.cmyk{position:absolute;top:0;left:0;right:0;height:6px;display:flex}
+.cmyk i{flex:1}.cmyk .ic{background:#00AEEF}.cmyk .im{background:#EC008C}.cmyk .iy{background:#FFF200}.cmyk .ik{background:#1a1a1a}
+.phead{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:22px}
+.phead .b{font-weight:900;font-size:16px;letter-spacing:-.4px}
+.phead .b b{color:var(--red)}
+.phead .pn{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9aa3b2;font-weight:600}
+.pfoot{position:absolute;left:60px;right:60px;bottom:30px;display:flex;justify-content:space-between;font-size:10.5px;color:#aab2c0;border-top:1px solid var(--line);padding-top:8px}
+h1.docttl{font-size:40px;font-weight:900;letter-spacing:-1.2px;line-height:1.05;margin-bottom:6px}
+.sec-h{font-size:21px;font-weight:800;color:var(--navy);margin:6px 0 12px;display:flex;align-items:center;gap:11px}
+.sec-h .nbox{width:30px;height:30px;border-radius:8px;background:var(--navy);color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.sub-h{font-size:15.5px;font-weight:800;color:var(--ink);margin:16px 0 7px}
+p.t{font-size:13.5px;color:#2c3645;margin-bottom:9px}
+p.t b{color:var(--ink)}
+.muted{color:var(--gray)}
+ol.steps{list-style:none;counter-reset:s;margin:8px 0 12px}
+ol.steps li{counter-increment:s;position:relative;padding-left:34px;margin-bottom:9px;font-size:13.5px;color:#2c3645}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:-1px;width:23px;height:23px;border-radius:50%;background:#eef3fb;color:var(--navy);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+ul.dot{list-style:none;margin:6px 0 12px}
+ul.dot li{position:relative;padding-left:18px;margin-bottom:7px;font-size:13.5px;color:#2c3645}
+ul.dot li::before{content:'';position:absolute;left:3px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.shot{border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(20,40,80,.12);margin:12px 0}
+.shot img{display:block;width:100%}
+.cap{font-size:11px;color:#9aa3b2;margin:-6px 0 14px;font-style:italic}
+.callout{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:9px;background:#f7faff;padding:13px 16px;margin:12px 0;font-size:13px;color:#2c3645}
+.callout.warn{border-left-color:var(--yellow);background:#fffaf0}
+.callout.tip{border-left-color:var(--green);background:#f4faf5}
+.callout b{color:var(--ink)}
+.kbd{font-family:'IBM Plex Mono',monospace;font-size:11.5px;background:#1a2330;color:#fff;padding:2px 7px;border-radius:5px}
+.path{font-family:'IBM Plex Mono',monospace;font-size:12px;background:#eef1f6;color:var(--navy);padding:2px 7px;border-radius:5px;font-weight:600}
+.toc{display:flex;flex-direction:column;gap:2px;margin-top:14px}
+.toc a{display:flex;justify-content:space-between;gap:10px;text-decoration:none;color:var(--ink);font-size:14px;padding:9px 2px;border-bottom:1px solid var(--line)}
+.toc a .tn{color:var(--blue);font-weight:800;font-family:'IBM Plex Mono',monospace;margin-right:10px}
+.toc a .tp{color:#9aa3b2;font-family:'IBM Plex Mono',monospace;font-size:12px}
+.cover-i{display:flex;flex-direction:column;justify-content:center;flex:1;background:radial-gradient(120% 80% at 90% 0%, #2a3c5c, #11151c 70%);margin:-54px -60px 0;padding:90px 60px;color:#fff}
+.cover-i .logo{font-size:74px;font-weight:900;letter-spacing:-2px;line-height:.9}
+.cover-i .logo b{color:var(--red)}
+.cover-i .eng{font-size:14px;font-weight:800;letter-spacing:.3em;color:var(--red);margin:14px 0 22px}
+.cover-i h2{font-size:30px;font-weight:800;color:#fff;line-height:1.15;max-width:560px}
+.cover-i .meta{margin-top:26px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#8893a6}
+.cover-i .cmykbar{display:flex;height:9px;width:320px;border-radius:3px;overflow:hidden;margin:22px 0}
+.cover-i .cmykbar i{flex:1}
+.role{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+.rolecard{border:1px solid var(--line);border-radius:10px;padding:13px 15px;background:#fbfcfe}
+.rolecard h4{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.rolecard p{font-size:12.5px;color:var(--gray)}
+.faq{border-top:1px solid var(--line);padding-top:11px;margin-top:11px}
+.faq .q{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:3px}
+.faq .a{font-size:13px;color:#2c3645;margin-bottom:12px}
+@media print{
+  @page{size:A4;margin:0}
+  html,body{background:#fff}
+  .doc{display:block;padding:0;gap:0}
+  .page{width:100%;min-height:100vh;box-shadow:none;break-after:page;page-break-after:always}
+  .page:last-child{break-after:auto;page-break-after:auto}
+  .shot,.callout,.rolecard{break-inside:avoid}
+  .sub-h,.sec-h{break-after:avoid}
+}
+</style>
+</head>
+<body>
+<div class="doc">
+
+<!-- COVER -->
+<section class="page">
+  <div class="cmyk"><i class="ic"></i><i class="im"></i><i class="iy"></i><i class="ik"></i></div>
+  <div class="cover-i">
+    <div class="logo">Shtark <b>Flow</b></div>
+    <div class="eng">ENGINEERED FOR EXCELLENCE</div>
+    <div class="cmykbar"><i style="background:#00AEEF"></i><i style="background:#EC008C"></i><i style="background:#FFF200"></i><i style="background:#1a1a1a"></i></div>
+    <h2>Инструкция пользователя корпоративного портала</h2>
+    <div class="meta">Версия 2026 · Производство и ВЭД · Группа компаний</div>
+  </div>
+</section>
+
+<!-- TOC -->
+<section class="page">
+  <div class="cmyk"><i class="ic"></i><i class="im"></i><i class="iy"></i><i class="ik"></i></div>
+  <div class="phead"><div class="b">Shtark <b>Flow</b> · Инструкция</div><div class="pn">Содержание</div></div>
+  <h1 class="docttl">Содержание</h1>
+  <div class="toc">
+    <a href="#s1"><span><span class="tn">01</span>Вход, роли и главный экран</span><span class="tp">с. 3</span></a>
+    <a href="#s2"><span><span class="tn">02</span>Загрузка данных 1С + распознавание PDF</span><span class="tp">с. 4</span></a>
+    <a href="#s3"><span><span class="tn">03</span>Приём входящих писем (почтовый робот)</span><span class="tp">с. 5</span></a>
+    <a href="#s4"><span><span class="tn">04</span>Анализ себестоимости (партии и FIFO)</span><span class="tp">с. 6</span></a>
+    <a href="#s5"><span><span class="tn">05</span>Маржинальность: валюта, НДС, на 1 кг</span><span class="tp">с. 7</span></a>
+    <a href="#s6"><span><span class="tn">06</span>Доставка — баланс снабжения</span><span class="tp">с. 8</span></a>
+    <a href="#s7"><span><span class="tn">07</span>ИИ-Автопилот</span><span class="tp">с. 9</span></a>
+    <a href="#s8"><span><span class="tn">08</span>Семантический и внешний ИИ-аудит</span><span class="tp">с. 10</span></a>
+    <a href="#s9"><span><span class="tn">09</span>Журнал безопасности и доступ</span><span class="tp">с. 11</span></a>
+    <a href="#s10"><span><span class="tn">10</span>Для администратора: деплой и данные</span><span class="tp">с. 12</span></a>
+  </div>
+  <div class="callout tip" style="margin-top:24px"><b>Как читать инструкцию.</b> Разделы 01–09 — для всех пользователей. Раздел 10 — технический, для администратора (деплой, ключи, сохранность данных). Доступ к финансовым и админ-разделам зависит от вашей роли.</div>
+  <div class="pfoot"><span>Shtark Flow · Инструкция пользователя</span><span>2</span></div>
+</section>
+
+<!-- 01 -->
+<section class="page" id="s1">
+  <div class="cmyk"><i class="ic"></i><i class="im"></i><i class="iy"></i><i class="ik"></i></div>
+  <div class="phead"><div class="b">Shtark <b>Flow</b> · Инструкция</div><div class="pn">01 · Вход и навигация</div></div>
+  <div class="sec-h"><span class="nbox">1</span>Вход, роли и главный экран</div>
+  <p class="t">Откройте адрес портала в браузере. После заставки нажмите <b>«Войти»</b> и введите логин и пароль, выданные администратором. Если пароль забыт — кнопка восстановления отправит письмо на ваш e-mail (если почта настроена администратором).</p>
+  <div class="shot"><img src="shots/01-home.png" alt="Главный экран"></div>
+  <div class="cap">Главный экран: панель курсов ЦБ, поиск, кто сейчас в системе, карта навигации.</div>
+  <p class="sub-h">Что на главном экране</p>
+  <ul class="dot">
+    <li><b>Панель курсов</b> — EUR, USD, CNY, INR с динамикой и часами Москва / Пекин / Лондон.</li>
+    <li><b>Поиск</b> — единая строка по контрагентам, ИНН, артикулам, сырью, заявкам, сотрудникам.</li>
+    <li><b>«Сейчас в программе»</b> — коллеги онлайн; звёзды у аватарок — рейтинг KPI.</li>
+    <li><b>Карта навигации</b> — плитки разделов; меню открывается кнопкой <span class="kbd">≡</span> слева вверху.</li>
+  </ul>
+  <div class="role">
+    <div class="rolecard"><h4>Сотрудник</h4><p>Задачи, документы, календарь, чат. Финансовые разделы — по разрешению.</p></div>
+    <div class="rolecard"><h4>Администратор</h4><p>Все разделы: загрузка данных, себестоимость, маржа, Автопилот, журнал безопасности, архив файлов.</p></div>
+  </div>
+  <div class="callout"><b>Переключение компании.</b> Если у вас доступ к нескольким юрлицам группы, компания переключается в верхнем меню. Состав отчётов одинаков; различается метод учёта себестоимости.</div>
+  <div class="pfoot"><span>Shtark Flow · Инструкция пользователя</span><span>3</span></div>
+</section>
+
+<!-- 02 -->
+<section class="page" id="s2">
+  <div class="cmyk"><i class="ic"></i><i class="im"></i><i class="iy"></i><i class="ik"></i></div>
+  <div class="phead"><div class="b">Shtark <b>Flow</b> · Инструкция</div><div class="pn">02 · Загрузка данных</div></div>
+  <div class="sec-h"><span class="nbox">2</span>Загрузка данных 1С + распознавание PDF</div>
+  <p class="t">Раздел <span class="path">Загрузка данных 1С</span> (меню → «Загрузка данных 1С») — защищённое окно загрузки. Доступен администратору и разрешённым ролям. <b>Здесь же находится окно распознавания PDF.</b></p>
+  <div class="shot"><img src="shots/01-c.png" alt="Окно загрузки данных"></div>
+  <div class="cap">Семь базовых отчётов 1С:КА. В каждую зону можно перетащить файл .xlsx, .csv или .pdf.</div>
+  <p class="sub-h">Как загрузить отчёт</p>
+  <ol class="steps">
+    <li>Найдите нужную плитку (Выручка, Себестоимость, Закупки/ВЭД, Склад, OPEX, Банковские выписки).</li>
+    <li>Перетащите файл в плитку <b>или</b> нажмите кнопку <span class="kbd">Файл</span> и выберите его.</li>
+    <li>Для PDF система извлечёт таблицу из текстового слоя автоматически. Для нестандартной формы откроется <b>конструктор колонок</b> — проверьте сопоставление и подтвердите.</li>
+    <li>Внизу нажмите <b>«Запустить сквозной пересчёт»</b> — обновится вся связанная аналитика.</li>
+  </ol>
+  <div class="callout warn"><b>Где именно распознаётся PDF.</b> Бросьте PDF в любую из семи зон или в блок «дополнительных форм». Поддерживаются <b>цифровые PDF</b> (с текстовым слоем). Если PDF — это скан без текста, его распознаёт OCR-модуль почтового робота (см. раздел 03) либо внешний ИИ-сервис.</div>
+  <div class="callout tip"><b>Самообучение.</b> Если вы вручную поправили распознавание колонки, система это запомнит и в следующий раз распознает похожую шапку сама. Поддерживаемые форматы: <span class="kbd">.xlsx .xls .csv .txt .pdf</span></div>
+  <div class="pfoot"><span>Shtark Flow · Инструкция пользователя</span><span>4</span></div>
+</section>
+
+<!-- 03 -->
+<section class="page" id="s3">
+  <div class="cmyk"><i class="ic"></i><i class="im"></i><i class="iy"></i><i class="ik"></i></div>
+  <div class="phead"><div class="b">Shtark <b>Flow</b> · Инструкция</div><div class="pn">03 · Почтовый робот</div></div>
+  <div class="sec-h"><span class="nbox">3</span>Приём входящих писем (почтовый робот)</div>
+  <p class="t">Почтовый робот <b>ИИ-Коннект</b> позволяет присылать документы по e-mail — он сам их распознаёт и заносит в нужную компанию. Это серверный модуль; настраивает его администратор один раз.</p>
+  <p class="sub-h">Как это работает для пользователя</p>
+  <ol class="steps">
+    <li>Отправьте письмо с вложением (Excel, PDF, Word) на рабочий адрес компании.</li>
+    <li>Робот распознаёт документ (до 5 попыток разбора) и заносит данные в учёт.</li>
+    <li>В <b>чат команды</b> приходит сообщение со звуком: «Документ распознан и отражён».</li>
+    <li>Если распознать не удалось — вам придёт ответное письмо с просьбой загрузить файл вручную через окно загрузки (раздел 02).</li>
+  </ol>
+  <p class="sub-h">Настройка приёма писем (администратор)</p>
+  <p class="t">Входящая почта обрабатывается серверным воркером (Node.js, IMAP), который разворачивается отдельно от статического сайта. Два ящика привязаны к двум компаниям:</p>
+  <ul class="dot">
+    <li><b>Ящик №1</b> → Компания №1 (партионный учёт себестоимости).</li>
+    <li><b>Ящик №2</b> → Компания №2 (FIFO по выпускам).</li>
+  </ul>
+  <div class="callout"><b>Что нужно для запуска.</b> Доступ к почтовым ящикам (IMAP-логин/пароль) и ключ почтовой отправки (NodeMailer) указываются в переменных окружения сервера, <b>не в коде</b>. Пошагово — в файле <span class="path">DEPLOY.md</span> и в разделе 10 этой инструкции.</div>
+  <div class="callout warn"><b>Важно.</b> В самом портале (в разделе «Интеграции») настраивается <b>исходящая</b> почта — уведомления о задачах и восстановление пароля (через EmailJS). Приём <b>входящих</b> писем — это отдельный серверный робот.</div>
+  <div class="pfoot"><span>Shtark Flow · Инструкция пользователя</span><span>5</span></div>
+</section>
+
+<!-- 04 -->
+<section class="page" id="s4">
+  <div class="cmyk"><i class="ic"></i><i class="im"></i><i class="iy"></i><i class="ik"></i></div>
+  <div class="phead"><div class="b">Shtark <b>Flow</b> · Инструкция</div><div class="pn">04 · Себестоимость</div></div>
+  <div class="sec-h"><span class="nbox">4</span>Анализ себестоимости (партии и FIFO)</div>
+  <p class="t">Раздел <span class="path">Анализ себестоимости</span> — ядро всей управленческой отчётности. Себестоимость считается здесь один раз и используется маржой, рентабельностью и план-фактом.</p>
+  <div class="shot"><img src="shots/02-e.png" alt="Анализ себестоимости"></div>
+  <div class="cap">Дерево затрат из 1С: продукт → партия производства → аналитика → сырьё.</div>
+  <p class="sub-h">Как построить</p>
+  <ol class="steps">
+    <li>Выгрузите из 1С отчёт «Дерево себестоимости» за период (.xlsx) с детализацией по партиям.</li>
+    <li>Загрузите файл — система разберёт партии и сырьё, построит дерево и средневзвешенную СС 1 кг.</li>
+    <li>Загрузки хранятся в <b>архиве по периодам</b> (год → месяц); повторная загрузка месяца обновляет данные.</li>
+  </ol>
+  <div class="callout tip"><b>Два метода учёта.</b> Состав отчётов в обеих компаниях одинаков. Различие — в методе: <b>Кемикалз — партионный</b> (по фактическим партиям), <b>ИНК — FIFO</b> (списание по хронологии приходов). Партия готовой продукции распознаётся из записи вида «Производство без заказа <b>0744</b> от 24.06.2026» — номер партии 0744.</div>
+  <div class="callout"><b>Совет.</b> Период себестоимости и период маржи должны совпадать. Если маржинальный отчёт за июнь — загрузите дерево себестоимости тоже за июнь, иначе система предупредит о несовпадении.</div>
+  <div class="pfoot"><span>Shtark Flow · Инструкция пользователя</span><span>6</span></div>
+</section>
+
+<!-- 05 -->
+<section class="page" id="s5">
+  <div class="cmyk"><i class="ic"></i><i class="im"></i><i class="iy"></i><i class="ik"></i></div>
+  <div class="phead"><div class="b">Shtark <b>Flow</b> · Инструкция</div><div class="pn">05 · Маржинальность</div></div>
+  <div class="sec-h"><span class="nbox">5</span>Маржинальность: валюта, НДС, на 1 кг</div>
+  <p class="t">Раздел <span class="path">Маржинальность</span> показывает валовую (GM1) и чистую (GM2) маржу. В верхней панели — три сквозных переключателя, которые мгновенно пересчитывают все цифры.</p>
+  <p class="sub-h">Переключатели</p>
+  <ul class="dot">
+    <li><b>RUB / EUR</b> — валюта отображения по курсу ЦБ на дату операции. Процент маржи одинаков в обеих валютах.</li>
+    <li><b>С НДС / Без НДС</b> — очистка от НДС по ставке сделки (20 % РФ, 0 % экспорт, таможенный НДС при импорте).</li>
+    <li><b>Абсолютные / на 1 кг</b> — удельные показатели: денежные суммы делятся на физический вес (₽/кг, €/кг).</li>
+  </ul>
+  <p class="sub-h">Как пользоваться</p>
+  <ol class="steps">
+    <li>Укажите период (например «июнь 2026») — система подтянет себестоимость за тот же месяц.</li>
+    <li>Выберите валюту, контур НДС и режим (абсолютные / на 1 кг) — таблица и KPI пересчитаются мгновенно.</li>
+    <li>Кликните строку, чтобы раскрыть drill-down: группа → продукт → … → партия (или FIFO-блок).</li>
+    <li>Кнопка <b>Excel</b> выгрузит отчёт с пометкой режима в шапке.</li>
+  </ol>
+  <div class="callout"><b>Курсовые разницы.</b> Разница курса между оприходованием и оплатой не «прячется» в себестоимости — она выносится отдельной строкой финансового результата (FX P&amp;L).</div>
+  <div class="pfoot"><span>Shtark Flow · Инструкция пользователя</span><span>7</span></div>
+</section>
+
+<!-- 06 -->
+<section class="page" id="s6">
+  <div class="cmyk"><i class="ic"></i><i class="im"></i><i class="iy"></i><i class="ik"></i></div>
+  <div class="phead"><div class="b">Shtark <b>Flow</b> · Инструкция</div><div class="pn">06 · Доставка</div></div>
+  <div class="sec-h"><span class="nbox">6</span>Доставка — баланс снабжения</div>
+  <p class="t">Раздел <span class="path">Доставка</span> показывает, хватит ли сырья под план производства на 45 дней вперёд, и заранее подсвечивает дефицит.</p>
+  <div class="shot"><img src="shots/01-e.png" alt="Отчёт Доставка"></div>
+  <div class="cap">KPI сверху (критич. дефицит, зона риска, избыток капитала) и таблица сырья с подсветкой.</div>
+  <p class="sub-h">Как читать</p>
+  <ul class="dot">
+    <li><b>Тепловая карта</b>: красный — дефицит, оранжевый — риск задержки, жёлтый — избыток (замороженный капитал), зелёный — баланс.</li>
+    <li><b>Клик по строке</b> раскрывает источники: даты приходов, первичный документ, партию / FIFO-блок.</li>
+    <li><b>Клик по красной ячейке</b> — ИИ-вердикт упущенной выгоды: сколько маржи под угрозой и что заказать.</li>
+  </ul>
+  <p class="sub-h">Фильтры и выгрузка</p>
+  <ol class="steps">
+    <li>Задайте горизонт, период, рынок и группу сырья в верхних фильтрах.</li>
+    <li>Используйте кнопки <b>Excel</b>, <b>Печать</b> или <b>«На почту»</b> для отчёта.</li>
+  </ol>
+  <div class="callout tip"><b>Автоматика.</b> Когда остаток уходит в минус, система сама ставит срочную задачу логисту «Дозаказать сырьё» — см. ИИ-Автопилот (раздел 07).</div>
+  <div class="pfoot"><span>Shtark Flow · Инструкция пользователя</span><span>8</span></div>
+</section>
+
+<!-- 07 -->
+<section class="page" id="s7">
+  <div class="cmyk"><i class="ic"></i><i class="im"></i><i class="iy"></i><i class="ik"></i></div>
+  <div class="phead"><div class="b">Shtark <b>Flow</b> · Инструкция</div><div class="pn">07 · ИИ-Автопилот</div></div>
+  <div class="sec-h"><span class="nbox">7</span>ИИ-Автопилот <span class="muted" style="font-size:13px;font-weight:600">· только администратор</span></div>
+  <p class="t">Раздел <span class="path">ИИ-Автопилот</span> — автономное ядро 24/7. Содержит пять контуров.</p>
+  <div class="shot"><img src="shots/01-d.png" alt="Стресс-тест 360"></div>
+  <div class="cap">Цифровой двойник: сдвигаете макро-параметры — модель прогнозирует прибыль и дефицит.</div>
+  <ul class="dot">
+    <li><b>Авто-парсинг инвойсов</b> — распознанный счёт поставщика распределяется в «Закупки».</li>
+    <li><b>Цифровой двойник (Стресс-тест 360°)</b> — ползунки «курс / логистика / продажи / горизонт» и предиктивный вердикт.</li>
+    <li><b>Роботизированные закупки</b> — на дефицит формируется проект «Заказ поставщику»; кнопка «→ Логисту».</li>
+    <li><b>Динамическое ценообразование (Floor Price)</b> — минимальная цена; сделку ниже неё система блокирует.</li>
+    <li><b>Умный HR-трекинг</b> — просроченные и заблокированные задачи на отдельной панели.</li>
+  </ul>
+  <div class="callout"><b>Прогон.</b> Кнопка <b>«Прогнать автопилот»</b> пересчитывает все контуры; <b>«AI_Autopilot_Report»</b> — выгрузка в Excel со статистикой автоматизации.</div>
+  <div class="pfoot"><span>Shtark Flow · Инструкция пользователя</span><span>9</span></div>
+</section>
+
+<!-- 08 -->
+<section class="page" id="s8">
+  <div class="cmyk"><i class="ic"></i><i class="im"></i><i class="iy"></i><i class="ik"></i></div>
+  <div class="phead"><div class="b">Shtark <b>Flow</b> · Инструкция</div><div class="pn">08 · ИИ-аудит</div></div>
+  <div class="sec-h"><span class="nbox">8</span>Семантический и внешний ИИ-аудит</div>
+  <p class="t">В разделе <span class="path">Интеграция 1С</span> доступен <b>семантический аудит</b> — он спускается по данным до первопричин и выдаёт смысловой вердикт. Работает без интернета и без ключа.</p>
+  <ol class="steps">
+    <li>Нажмите <b>«Запустить семантический аудит»</b> — система найдёт аномалии (переплаты, скидки, перерасход) и точки роста.</li>
+    <li>Результат можно выгрузить кнопкой <b>«Excel · AI_Insights»</b>.</li>
+  </ol>
+  <div class="shot"><img src="shots/07-ext-ai.png" alt="Внешний ИИ-аудит"></div>
+  <div class="cap">Сложную аномалию можно эскалировать во внешнюю нейросеть с риск-скорингом.</div>
+  <p class="sub-h">Внешний ИИ (по необходимости)</p>
+  <ol class="steps">
+    <li>Для сверхглубокого анализа нажмите <b>«Эскалировать во внешний ИИ»</b>.</li>
+    <li>Система оценит сложность аномалии и при необходимости обратится к OpenAI, Anthropic Claude или DeepSeek.</li>
+    <li>Вернётся вердикт с риск-скорингом и точками роста в евро.</li>
+  </ol>
+  <div class="callout warn"><b>Ключ внешнего ИИ.</b> Указывается в панели «AI-аналитик» → <span class="kbd">⚙</span> либо через серверless-прокси (безопасно, ключ не виден браузеру). Подробно — раздел 10 и <span class="path">DEPLOY.md</span>.</div>
+  <div class="pfoot"><span>Shtark Flow · Инструкция пользователя</span><span>10</span></div>
+</section>
+
+<!-- 09 -->
+<section class="page" id="s9">
+  <div class="cmyk"><i class="ic"></i><i class="im"></i><i class="iy"></i><i class="ik"></i></div>
+  <div class="phead"><div class="b">Shtark <b>Flow</b> · Инструкция</div><div class="pn">09 · Безопасность</div></div>
+  <div class="sec-h"><span class="nbox">9</span>Журнал безопасности и доступ</div>
+  <p class="t">Раздел <span class="path">Журнал безопасности</span> (только администратор) фиксирует инциденты в реальном времени.</p>
+  <div class="shot"><img src="shots/02-d.png" alt="Журнал безопасности"></div>
+  <div class="cap">Таблица инцидентов: параллельные сессии, нарушения периметра, защита данных в чатах.</div>
+  <ul class="dot">
+    <li><b>Параллельные сессии</b> — вход с другого устройства перехватывается.</li>
+    <li><b>Нарушение периметра</b> — попытка открыть закрытый раздел (отдаётся «404»).</li>
+    <li><b>Защита данных</b> — копирование (<span class="kbd">Ctrl+C</span> / ПКМ) в приватных чатах блокируется.</li>
+    <li><b>Авто-удаление переписок</b> — приватный чат 48 ч, общий 30 дней.</li>
+  </ul>
+  <p class="t">Критические события подсвечены красным. Поиск по ID или имени сотрудника — в строке сверху.</p>
+  <div class="callout tip"><b>Доступ.</b> Финансовые и админ-разделы (себестоимость, маржа, Автопилот, журнал, архив) видит только администратор. Для остальных эти адреса возвращают «404» — это штатное поведение защиты.</div>
+  <div class="pfoot"><span>Shtark Flow · Инструкция пользователя</span><span>11</span></div>
+</section>
+
+<!-- 10 -->
+<section class="page" id="s10">
+  <div class="cmyk"><i class="ic"></i><i class="im"></i><i class="iy"></i><i class="ik"></i></div>
+  <div class="phead"><div class="b">Shtark <b>Flow</b> · Инструкция</div><div class="pn">10 · Администратору</div></div>
+  <div class="sec-h"><span class="nbox">10</span>Для администратора: деплой и данные</div>
+  <p class="t">Портал развёрнут на статической платформе (GitHub Pages). Главное правило: <b>обновление кода не должно затирать боевые данные</b>.</p>
+  <p class="sub-h">Разделение кода и данных</p>
+  <ul class="dot">
+    <li><b>В репозитории</b> — только код и стили (HTML, скрипты, CSS). Никаких файлов с данными.</li>
+    <li><b>В облаке</b> (Firebase / Supabase + Storage) — архив файлов, логи, задачи, чаты, KPI, настройки админа, ключи ИИ.</li>
+    <li><span class="kbd">git push</span> обновляет только интерфейс — боевая база и настройки остаются нетронутыми.</li>
+  </ul>
+  <p class="sub-h">Ключи и переменные окружения</p>
+  <ul class="dot">
+    <li>API-ключи внешних ИИ (<span class="kbd">ANTHROPIC_API_KEY</span>, <span class="kbd">OPENAI_API_KEY</span>, <span class="kbd">DEEPSEEK_API_KEY</span>, <span class="kbd">OCR_API_KEY</span>) — в Environment Variables серверless-прокси, не в коде.</li>
+    <li>Фронтенд зовёт собственный прокси <span class="path">/api/ai</span> — браузер ключа не видит.</li>
+    <li>В <span class="path">.gitignore</span> — <span class="kbd">.env</span>, <span class="kbd">serviceAccount*.json</span>.</li>
+  </ul>
+  <div class="callout"><b>Полное руководство</b> с архитектурной схемой, примером прокси и пошаговой настройкой GitHub Secrets / Env Vars — в файле <span class="path">DEPLOY.md</span> в репозитории проекта.</div>
+  <div class="faq">
+    <div class="q">Потеряются ли данные при обновлении сайта?</div>
+    <div class="a">Нет. Данные живут в облаке, а не в коде. Деплой нового интерфейса их не затрагивает.</div>
+    <div class="q">Куда вписать ключ внешнего ИИ?</div>
+    <div class="a">Быстро — в панели «AI-аналитик» → ⚙. Безопасно для прода — в Env Vars прокси (DEPLOY.md).</div>
+  </div>
+  <div class="pfoot"><span>Shtark Flow · Engineered for Excellence</span><span>12</span></div>
+</section>
+
+</div>
+</body>
+</html>

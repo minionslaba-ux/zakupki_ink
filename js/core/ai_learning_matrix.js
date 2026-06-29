@@ -252,3 +252,92 @@ export class AiLearningMatrix {
 
   _save() { if (this.ctx.save) this.ctx.save(this.matrix); this.promoteToGlobal(); }
 }
+
+/**
+ * ════════════════════════════════════════════════════════════════════════
+ *  AI FALLBACK & AUTO-INGESTION CORE — каскадное «спасение» нераспознанных файлов
+ * ════════════════════════════════════════════════════════════════════════
+ * Внутренний семантический парсер + локальная матрица `ai_semantic_weights` за
+ * 5 итераций НЕ распознали структуру (категорию) файла → эскалация к старшему
+ * внешнему ИИ → он возвращает {identified_category, mapping_schema} → данные
+ * бесшовно вносятся в базу, движок 24/7 запускается, а карта сопоставления
+ * АВТОМАТИЧЕСКИ записывается в глобальную матрицу с максимальным весом. В
+ * следующий раз такой же файл распознаётся локально — без платного API.
+ *
+ * @param {object} fileData — { fileName, headers:string[], rows:any[][], sig }
+ * @param {string} companyId — 'company_1' | 'company_2'
+ * @param {object} deps — {
+ *   orchestrator: AiOrchestrator,    // внешний ИИ (см. ai_orchestrator.js)
+ *   matrix:       AiLearningMatrix,  // локальная база знаний
+ *   systemFields: string[], categories: [{key,label}],
+ *   ingest:       (category, fileData, internalMap) => void,  // приём в базу
+ *   recompute:    () => void,        // движок пересчёта 24/7
+ *   notifyChat:   (text) => void,    // радостное уведомление со звуком
+ *   securityLog:  (msg) => void,     // детальная запись в Журнал безопасности
+ *   fieldAlias?:  { [systemField]: internalMapKey },
+ * }
+ * @returns {Promise<{ok:boolean, category?:string, learned?:number, reason?:string}>}
+ */
+export async function executeExternalAiFallback(fileData, companyId, deps) {
+  const t0 = Date.now();
+  const cats = (deps.categories || []).map((c) => c.key + ' (' + c.label + ')').join('; ');
+  // 1) Запрос к старшему внешнему ИИ: матрица файла как ДАННЫЕ, контекст — как промпт
+  let verdict;
+  try {
+    verdict = await deps.orchestrator.dispatch({
+      type: 'reason',
+      system: 'Ты — старший ИИ-аналитик ERP Shtark Flow. Внутренний парсер не распознал файл. Определи категорию по смыслу. Категории: ' + cats +
+              '. Системные поля: ' + (deps.systemFields || []).join(', ') +
+              '. Верни строго JSON {"identified_category":"<ключ>","confidence":<0..1>,"mapping_schema":[{"file_column":"<заголовок>","system_field":"<поле>"}]}.',
+      prompt: 'Файл «' + fileData.fileName + '». Заголовки: ' + JSON.stringify(fileData.headers) +
+              '. Примеры строк: ' + JSON.stringify((fileData.rows || []).slice(0, 6)),
+      max: 900,
+    });
+  } catch (e) { return { ok: false, reason: 'external-error', error: (e && e.message) || String(e) }; }
+
+  // 2) Валидация структурированного ответа
+  const j = verdict && verdict.matrix ? verdict.matrix : verdict;
+  let schema = (j && j.mapping_schema) || null;
+  let category = (j && j.identified_category) || null;
+  if (!schema && verdict && verdict.raw) {
+    try { const p = JSON.parse((verdict.raw.match(/\{[\s\S]*\}/) || [])[0]); schema = p.mapping_schema; category = p.identified_category; } catch (e) {}
+  }
+  if (!category || !Array.isArray(schema) || !schema.length) return { ok: false, reason: 'invalid-json' };
+
+  // 3) КРИТИЧНО: авто-обучение глобальной матрицы по mapping_schema
+  const fieldAlias = deps.fieldAlias || {};
+  const internalMap = {};
+  let learned = 0;
+  for (const pair of schema) {
+    const col = pair.file_column != null ? String(pair.file_column) : '';
+    const sf = pair.system_field != null ? String(pair.system_field).trim() : '';
+    if (!col || !sf) continue;
+    // записать как ГЛОБАЛЬНОЕ правило с максимальным доверием (опыт обеих компаний)
+    deps.matrix.trainSemanticCore(col, sf, companyId, 'external-ai → global');
+    if (deps.matrix.matrix[sf]) {
+      deps.matrix.matrix[sf].global = deps.matrix.matrix[sf].global || [];
+      const g = deps.matrix.matrix[sf].global.find((r) => r.word === String(col).toLowerCase().trim());
+      if (!g) deps.matrix.matrix[sf].global.push({ word: String(col).toLowerCase().trim(), weight: 1, hits: 1, lastSeen: Date.now(), trainedBy: 'external-ai → global' });
+    }
+    const ci = fileData.headers.indexOf(col);
+    const alias = fieldAlias[sf];
+    if (alias && ci >= 0 && internalMap[alias] == null) internalMap[alias] = ci;
+    learned++;
+  }
+  deps.matrix._save();
+
+  // 4) Бесшовный приём + движок 24/7 + уведомление со звуком
+  try { deps.ingest(category, fileData, internalMap); } catch (e) {}
+  try { deps.recompute(); } catch (e) {}
+  try { deps.notifyChat('🤖 Файл «' + fileData.fileName + '» распознан внешним ИИ как «' + category + '» и внесён в базу. Система обучена.'); } catch (e) {}
+
+  // 5) Детальная запись в Журнал безопасности
+  try {
+    deps.securityLog('Внутреннее ядро не распознало файл «' + fileData.fileName + '». Активирован внешний ИИ-Оркестратор. ' +
+      'Файл успешно идентифицирован как [' + category + ']. Карта маппинга (' + learned + ' полей) автоматически сохранена ' +
+      'в локальную матрицу обучения. Система успешно обучена в автономном режиме за ' + ((Date.now() - t0) / 1000).toFixed(1) + ' с.');
+  } catch (e) {}
+
+  return { ok: true, category, learned, confidence: j.confidence, ms: Date.now() - t0 };
+}
+
