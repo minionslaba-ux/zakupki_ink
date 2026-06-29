@@ -751,6 +751,9 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .onstat{font-size:9.5px;font-weight:600;color:#1f8a4c}
 .chatfab{position:fixed;right:22px;bottom:78px;z-index:1200;display:flex;align-items:center;gap:9px;background:#0e0e0e;color:#fff;border-radius:30px;padding:13px 19px;cursor:pointer;box-shadow:0 8px 26px rgba(0,0,0,.28);font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;transition:transform .14s,box-shadow .14s}
 .chatfab:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.34)}
+.chatfab.pulse{animation:chatPulse 1.5s ease-in-out infinite}
+@keyframes chatPulse{0%,100%{box-shadow:0 8px 24px rgba(0,0,0,.28),0 0 0 0 rgba(255,210,0,.55)}50%{box-shadow:0 8px 24px rgba(0,0,0,.28),0 0 0 13px rgba(255,210,0,0)}}
+.chatfabbadge{position:absolute;top:-7px;right:-7px;min-width:21px;height:21px;border-radius:11px;background:#e5484d;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;box-shadow:0 2px 7px rgba(0,0,0,.35);border:2px solid #0e0e0e}
 .chatfabic{font-size:16px;line-height:1}
 .tgfab{position:fixed;right:22px;bottom:134px;z-index:1200;width:46px;height:46px;border-radius:50%;background:#229ED9;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(34,158,217,.5);transition:transform .14s}
 .tgfab:hover{transform:translateY(-2px)}
@@ -2953,7 +2956,7 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ showWelcome }}" hint-placeholder-val=""><div class="weloverlay"><div class="welcard"><div class="welduo"><div class="welbot"><span class="welbotav aya">✦</span><span class="welbotname">Ая</span></div><div class="welbot"><span class="welbotav max">🤖</span><span class="welbotname">Макс</span></div></div><div class="welhi">Привет, {{ welName }}! 👋</div><div class="welai">{{ welGreeting }}</div><div class="welthanks">Удачного дня и продуктивной смены — <b>Ая и Макс</b>. Спасибо, что работаете в <b>{{ coName }} Flow</b>.</div><button class="welbtn" onClick="{{ startWork }}">Начать работу <span class="p2arr">→</span></button></div></div></sc-if>
 <sc-if value="{{ showFarewell }}" hint-placeholder-val=""><div class="weloverlay"><div class="welcard"><label class="welphoto">{{ welPhotoImg }}</label><div class="welai">{{ farewellText }}</div><div class="welthanks">До скорой встречи в <b>Shtark Chemicals Flow</b>!</div><div class="welrow"><button class="welstay" onClick="{{ cancelFarewell }}">Остаться</button><button class="welbtn" onClick="{{ doLogout }}">Выйти <span class="p2arr">→</span></button></div></div></div></sc-if>
 <sc-if value="{{ tgHasLink }}" hint-placeholder-val=""><a class="tgfab" href="{{ tgLink }}" target="_blank" rel="noopener" title="Telegram-чат компании"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M9.8 15.6 9.6 19c.4 0 .6-.2.8-.4l1.9-1.8 3.9 2.9c.7.4 1.2.2 1.4-.7l2.6-12.2c.2-1-.4-1.4-1.1-1.2L2.4 9.7c-1 .4-1 .9-.2 1.2l4.3 1.3 9.9-6.2c.5-.3.9-.1.5.2z"/></svg></a></sc-if>
-<div class="chatfab" onClick="{{ chatToggle }}" title="Общий чат команды"><span class="chatfabic">💬</span><span class="chatfabtx">Чат команды</span></div>
+<div class="{{ chatFabCls }}" onClick="{{ chatToggle }}" title="Общий чат команды"><span class="chatfabic">💬</span><span class="chatfabtx">Чат команды</span><sc-if value="{{ chatHasUnread }}" hint-placeholder-val=""><span class="chatfabbadge">{{ chatUnread }}</span></sc-if></div>
 <sc-if value="{{ chatOpen }}" hint-placeholder-val="">
 <div class="chatpanel">
 <div class="chathead"><div class="chl">💬 {{ chatRoomTitle }}</div><div class="chr"><sc-if value="{{ tgHasLink }}" hint-placeholder-val=""><a class="tgbtn" href="{{ tgLink }}" target="_blank" rel="noopener" title="Открыть в Telegram"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M9.8 15.6 9.6 19c.4 0 .6-.2.8-.4l1.9-1.8 3.9 2.9c.7.4 1.2.2 1.4-.7l2.6-12.2c.2-1-.4-1.4-1.1-1.2L2.4 9.7c-1 .4-1 .9-.2 1.2l4.3 1.3 9.9-6.2c.5-.3.9-.1.5.2z"/></svg> Telegram</a></sc-if><button class="aix" onClick="{{ chatClose }}">✕</button></div></div>
@@ -3087,7 +3090,7 @@ class Component extends DCLogic {
     curMode: 'RUB', vatMode: 'WITHOUT', unitMode: 'ABS',
     sbReady: false, sbFltMarka: '', sbFltPeriod: '', sbSearch: '', sbCompare: false, sbCmpMarka: '', sbDateFrom: '', sbDateTo: '', sbSummary: false, sbExpanded: {},
     mgRevenue: null, mgRevMeta: null, mgErr: '', mgBusy: false, mgPeriod: '', mgGm: null, mgKv: [{ name: 'Конфлекс', pct: 10 }], mgView: 'groups', mgFltGroup: '', mgExpanded: {}, mgCostMode: 'tree', plSlice: 'nomen', plExpanded: {}, plAi: '', plAiBusy: false, plPlanRev: '', plPlanM2: '', mgManualCost: {},
-    chat: [], chatRooms: [], chatRoom: 'general', privModal: null, chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false, navExp: null, catKey: '', compassOpen: false,
+    chat: [], chatRooms: [], chatRoom: 'general', privModal: null, chatInput: '', chatOpen: false, chatSeenAt: 0, tgLink: '', tgEdit: '', navOpen: false, isMobile: false, navExp: null, catKey: '', compassOpen: false,
     tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '', sales: [], saleDraft: null, saleErr: '', salesTransport: 0, salesTransMode: 'weight', cashStart: 0, payMoves: {}, paySplits: {}, payMoveEdit: '', logistics: [], logDraft: null, logErr: '', payreqs: [], prDraft: null, prErr: '', stmtMsg: '',
     docType: 'invoice', docData: { no: '14', date: '', invBuyer: 'ООО «Печатный двор»', invBuyerInn: 'ИНН 7712345678 / КПП 771201001', invBank: 'АО «Альфа-Банк», р/с 40702810000000012345, БИК 044525593, к/с 30101810200000000593', invItems: 'Чёрнила флексо Cyan | 500 | кг | 480\nЧёрнила флексо Magenta | 300 | кг | 510\nРастворитель этилацетат | 200 | л | 95', empName: 'Иванов Иван Иванович', empPost: 'менеджер по закупкам', empPassport: '45 09 № 123456, выдан ОВД «Тверской» г. Москвы 12.03.2015, код 770-001', supplier: 'ООО «ХимПоставка»', supplierAddr: 'г. Москва, ул. Промышленная, д. 7', goods: 'Пигмент синий (фталоцианиновый) — 500 кг\nРастворитель НефрасС2 — 200 л\nСтабилизатор СТ-4 — 50 кг', term: '10 дней', route: 'Москва — Санкт-Петербург', car: 'Volvo FH, гос. № А123ВС 777', driver: 'Петров Пётр Петрович', driverDoc: 'вод. удостоверение 99 12 345678', cargo: '1200 кг / 4,0 м³, 6 паллет', cargoName: 'Сырьё для производства чернил', rfpSupplier: 'ООО «ХимПоставка»', rfpItems: 'Пигмент синий (фталоцианиновый) — 500 кг\nПигмент жёлтый — 300 кг\nРастворитель НефрасС2 — 200 л', rfpDeadline: '5 рабочих дней' },
     peekIdx: 0, peekDismissed: {}, peekClosed: false, peekOpen: false, peekToast: '', cloudToast: '',
@@ -3128,10 +3131,12 @@ class Component extends DCLogic {
     try { emailCfg = JSON.parse(this.lsGet('emailcfg') || '{}') || {}; } catch (e) {}
     let tasksSeenAt = 0;
     try { tasksSeenAt = Number(this.lsGet('tasks_seen')) || 0; } catch (e) {}
+    let chatSeenAt = 0;
+    try { chatSeenAt = Number(this.lsGet('chat_seen')) || 0; } catch (e) {}
     try { tgLink = this.lsGet('tg') || ''; } catch (e) {}
     let tgBot = {};
     try { tgBot = JSON.parse(this.lsGet('tgbot') || '{}') || {}; } catch (e) {}
-    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, tasksSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '', taskTemplateId: emailCfg.taskTemplateId || '', notifyTasks: !!emailCfg.notifyTasks, appUrl: emailCfg.appUrl || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
+    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, tasksSeenAt, chatSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '', taskTemplateId: emailCfg.taskTemplateId || '', notifyTasks: !!emailCfg.notifyTasks, appUrl: emailCfg.appUrl || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
     // Двухфазный экран входа: фаза 1 (загрузка) → фаза 2 (логотип слева + кнопка «Войти»)
     this._loaderT1 = setTimeout(() => this.setState({ loaderPhase: 'p2' }), 3400);
     // Слоган под логотипом перепечатывается каждые 10 c (remount по tick → анимация проигрывается заново)
@@ -6019,6 +6024,31 @@ class Component extends DCLogic {
     if (d.emailCfg && typeof d.emailCfg === 'object') { patch.emailCfg = d.emailCfg; try { this.lsSet('emailcfg', JSON.stringify(d.emailCfg)); } catch (e) {} }
     if (typeof d.tgLink === 'string') patch.tgLink = d.tgLink;
     if (d.tgBot && typeof d.tgBot === 'object') { patch.tgToken = d.tgBot.token || ''; patch.tgChatId = d.tgBot.chatId || ''; patch.tgFwd = !!d.tgBot.fwd; }
+    // Новые сообщения чата от коллег → уведомление АЯ + пульсирующий бейдж на кнопке «Чат команды».
+    try {
+      const cu = this.state.currentUser;
+      if (cu) {
+        const mineMsg = (m) => m.authorId ? m.authorId === cu.id : m.author === cu.name;
+        const all = [];
+        for (const m of (Array.isArray(d.chat) ? d.chat : (this.state.chat || []))) all.push(m);
+        const rooms = Array.isArray(d.chatRooms) ? d.chatRooms : (this.state.chatRooms || []);
+        for (const r of rooms) { const inRoom = r && ((r.members || []).indexOf(cu.id) >= 0 || r.creatorId === cu.id); if (inRoom) for (const m of (r.msgs || [])) all.push(m); }
+        const maxTs = all.reduce((mx, m) => Math.max(mx, m.ts || 0), 0);
+        if (!this._chatBaselined) { this._chatBaselined = true; this._chatNotifyTs = maxTs; }
+        else {
+          const fresh = all.filter(m => (m.ts || 0) > (this._chatNotifyTs || 0) && !mineMsg(m));
+          this._chatNotifyTs = Math.max(this._chatNotifyTs || 0, maxTs);
+          if (fresh.length) {
+            if (this.state.chatOpen) { patch.chatSeenAt = Date.now(); try { this.lsSet('chat_seen', String(patch.chatSeenAt)); } catch (e) {} }
+            else {
+              const last = fresh[fresh.length - 1]; const who = String(last.author || '').split(' · ')[0];
+              patch.peekToast = '💬 ' + fresh.length + (fresh.length === 1 ? ' новое сообщение' : (fresh.length < 5 ? ' новых сообщения' : ' новых сообщений')) + ' в чате команды' + (who ? ' · ' + who : '');
+              clearTimeout(this._peekToastT); this._peekToastT = setTimeout(() => this.setState({ peekToast: '' }), 5000);
+            }
+          }
+        }
+      }
+    } catch (e) {}
     if (d.state) {
       this._applyingRemote = true;
       for (const k of Component.PERSIST) { if (d.state[k] === undefined) continue; const ar = this.areaOfKey(k); if (ar && mine.has(ar)) continue; patch[k] = d.state[k]; }
@@ -6091,6 +6121,18 @@ class Component extends DCLogic {
   }
 
   // ===== Общий чат команды =====
+  // Непрочитанные сообщения (общий чат + приватные беседы пользователя) после момента последнего просмотра.
+  chatUnreadCount() {
+    const S = this.state, cu = S.currentUser; if (!cu) return 0;
+    const seen = Number(S.chatSeenAt) || 0;
+    const mine = (m) => m.authorId ? m.authorId === cu.id : m.author === cu.name;
+    let n = 0;
+    for (const m of (S.chat || [])) if ((m.ts || 0) > seen && !mine(m)) n++;
+    try { for (const r of this.visibleRooms()) for (const m of (r.msgs || [])) if ((m.ts || 0) > seen && !mine(m)) n++; } catch (e) {}
+    return n;
+  }
+  // Пользователь посмотрел чат — гасим бейдж/пульс.
+  markChatSeen() { const now = Date.now(); this._chatNotifyTs = now; this.setState({ chatSeenAt: now }); try { this.lsSet('chat_seen', String(now)); } catch (e) {} }
   sendChat() {
     const text = (this.state.chatInput || '').trim();
     if (!text) return;
@@ -9838,8 +9880,9 @@ class Component extends DCLogic {
       navCls: S.navOpen ? 'sbon' : '', navBkCls: S.navOpen ? 'bkopen' : '',
       sidebarStyle: S.isMobile ? { position: 'fixed', left: S.navOpen ? '0' : '-274px', top: 0, bottom: 0, width: '264px', transition: 'left .26s ease', zIndex: 200, overflowY: 'auto', boxShadow: S.navOpen ? '0 0 60px rgba(0,0,0,.5)' : 'none' } : null,
       toggleNav: () => this.setState({ navOpen: !S.navOpen }), closeNav: () => this.setState({ navOpen: false }),
-      chatOpen: !!S.chatOpen, chatToggle: () => this.setState({ chatOpen: !S.chatOpen }), chatClose: () => this.setState({ chatOpen: false }),
+      chatOpen: !!S.chatOpen, chatToggle: () => { const opening = !S.chatOpen; this.setState({ chatOpen: opening }); if (opening) this.markChatSeen(); }, chatClose: () => this.setState({ chatOpen: false }),
       chatMsgs: this.chatMsgsView(), chatEmpty: this.chatMsgsView().length === 0, chatCount: (S.chat || []).length,
+      chatUnread: String(this.chatUnreadCount()), chatHasUnread: this.chatUnreadCount() > 0, chatFabCls: this.chatUnreadCount() > 0 ? 'chatfab pulse' : 'chatfab',
       ...this.chatRoomVals(),
       chatInput: S.chatInput || '', onChatInput: (e) => this.setState({ chatInput: e.target.value }),
       onChatKey: (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.sendChat(); } }, chatSend: () => this.sendChat(),
