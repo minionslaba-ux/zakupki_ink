@@ -645,6 +645,24 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .apinvttl{font-size:15px;font-weight:800;color:#1a2b3c}
 .apinvbody{font-size:13px;color:#56534f;line-height:1.55;margin:9px 0 12px}
 .apinvbtns{display:flex;gap:9px;flex-wrap:wrap}
+.sechd{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.secsearch{border:1px solid #d6d2cc;border-radius:9px;padding:8px 12px;font-size:13px;min-width:260px;font-family:inherit}
+.sectbl{margin-top:12px;border:1px solid #e7e4e0;border-radius:11px;overflow:hidden}
+.sechead,.secrow{display:grid;grid-template-columns:160px 1.5fr 110px 2.2fr 130px;gap:10px;align-items:center;padding:9px 14px}
+.sechead{background:#f6f3ef;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:#8a8782}
+.secrow{border-top:1px solid #f0ece6;font-size:12.5px;transition:transform .12s ease,box-shadow .12s ease;background:#fff}
+.secrow:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.07)}
+.secrow.crit{color:#c0322b;background:#fdf6f5}
+.secrow.warn{background:#fdfaf3}
+.sects{font-family:'IBM Plex Mono',monospace;color:#8a8782;font-size:11px}
+.secuser{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.secbadge{font-size:10px;font-weight:800;border-radius:20px;padding:2px 9px;text-align:center}
+.secbadge.l-crit{background:#fce0de;color:#c0322b}
+.secbadge.l-warn{background:#fdeccb;color:#9a5a1c}
+.secbadge.l-info{background:#e3eef9;color:#1F4E78}
+.secstatus{font-weight:700;font-size:11.5px}
+.secdesc{overflow:hidden;text-overflow:ellipsis}
+.secempty{padding:24px;text-align:center;color:#9a9793}
 .rcengsub{font-size:11.5px;color:#56657a;margin-top:4px;line-height:1.5}
 .rcchain{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
 .rcnode{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid #d6e3f1;border-radius:9px;padding:6px 11px;font-size:12px;font-weight:600;color:#1F4E78;position:relative}
@@ -2241,12 +2259,12 @@ window.dispatchEvent(new Event('fbready'));
 <div class="dlzn"><span class="dlznum">{{ z.no }}</span>{{ z.label }}</div>
 <div class="dlzh">{{ z.hint }}</div>
 <div class="{{ z.stCls }}"><sc-if value="{{ z.isOk }}" hint-placeholder-val=""><span class="{{ z.chkCls }}">{{ z.chkMark }}</span></sc-if><sc-if value="{{ z.isErr }}" hint-placeholder-val=""><span class="{{ z.chkCls }}">{{ z.chkMark }}</span></sc-if>{{ z.statusText }}</div>
-<div class="dlza"><label class="dlbtn">📎 Файл<input type="file" accept=".xlsx,.xls,.csv,.txt" style="display:none" onChange="{{ z.onFile }}"></label></div>
+<div class="dlza"><label class="dlbtn">📎 Файл<input type="file" accept=".xlsx,.xls,.csv,.txt,.pdf" style="display:none" onChange="{{ z.onFile }}"></label></div>
 </div>
 </sc-for></div>
 <div class="dlsec"><span class="dlchip">Блок Б</span> Загрузка дополнительных форм аналитики</div>
 <div class="desc">Расчёты логистов, спецификации, прайсы, ручные корректировки. Если структура файла неизвестна — откроется конструктор сопоставления колонок; можно сохранить как шаблон.</div>
-<div class="dlza"><label class="dlbtn">＋ Добавить форму<input type="file" accept=".xlsx,.xls,.csv,.txt" style="display:none" onChange="{{ onDlExtraFile }}"></label><sc-if value="{{ dlBusyExtra }}" hint-placeholder-val=""><span class="dlprog">Чтение…</span></sc-if></div>
+<div class="dlza"><label class="dlbtn">＋ Добавить форму<input type="file" accept=".xlsx,.xls,.csv,.txt,.pdf" style="display:none" onChange="{{ onDlExtraFile }}"></label><sc-if value="{{ dlBusyExtra }}" hint-placeholder-val=""><span class="dlprog">Чтение…</span></sc-if></div>
 <sc-if value="{{ dlHasExtra }}" hint-placeholder-val=""><div class="dlextra"><sc-for list="{{ dlExtraRows }}" as="x" hint-placeholder-count="2"><div class="dlerow"><span class="dlchk ok">✓</span><span class="dlenm">{{ x.name }}<small>{{ x.fileName }}</small></span><span class="dlenm">строк: {{ x.n }}</span><span class="{{ x.tagCls }}">{{ x.tag }}</span><button class="dlbtn rm" onClick="{{ x.remove }}">Убрать</button></div></sc-for></div></sc-if>
 <sc-if value="{{ dlHasTpl }}" hint-placeholder-val=""><div class="dlprog" style="margin-top:12px">Сохранённые шаблоны распознавания:</div><div class="dltmpls"><sc-for list="{{ dlTemplates }}" as="t" hint-placeholder-count="2"><span class="dltmpl"><b>{{ t.name }}</b> · {{ t.fields }} полей<button onClick="{{ t.del }}" title="Удалить шаблон">✕</button></span></sc-for></div></sc-if>
 <sc-if value="{{ dlHasErr }}" hint-placeholder-val=""><div class="banner err">{{ dlErr }}</div></sc-if>
@@ -2366,6 +2384,23 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 
 <sc-if value="{{ apHasSecLog }}" hint-placeholder-val=""><div class="card"><div class="sec">🔒 Журнал безопасности</div><div class="apseclog"><sc-for list="{{ apSecLog }}" as="e" hint-placeholder-count="2"><div class="apsecrow"><span class="apsecwhen">{{ e.when }}</span><span class="apsectext">{{ e.text }}</span></div></sc-for></div></div></sc-if>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ isSecLog }}" hint-placeholder-val="">
+<sc-if value="{{ secNoAccess }}" hint-placeholder-val="{{ true }}">
+<div class="card"><div class="dl404"><h1>404 Not Found</h1><p>The requested URL was not found on this server.</p><hr><div class="addr">nginx</div></div></div>
+</sc-if>
+<sc-if value="{{ secCoName }}" hint-placeholder-val="">
+<div class="card">
+<div class="sechd"><span class="sec">🔒 Журнал безопасности · Audit Trail</span><input class="secsearch" value="{{ secSearch }}" onInput="{{ onSecSearch }}" placeholder="Поиск по ID или имени сотрудника…"></div>
+<div class="desc">Скрытый модуль аудита. Фиксирует параллельные сессии, нарушения периметра, попытки копирования данных в приватных чатах и авто-удаление переписок. Всего событий: {{ secTotal }} · критических: {{ secCrit }}.</div>
+<div class="sectbl">
+<div class="sechead"><span>Таймстамп</span><span>Пользователь</span><span>Угроза</span><span>Описание действия</span><span>Статус</span></div>
+<sc-if value="{{ secEmpty }}" hint-placeholder-val=""><div class="secempty">Событий безопасности не зафиксировано.</div></sc-if>
+<sc-for list="{{ secRows }}" as="r" hint-placeholder-count="4"><div class="{{ r.rowCls }}"><span class="sects">{{ r.when }}</span><span class="secuser">{{ r.user }}</span><span class="{{ r.levelCls }}">{{ r.level }}</span><span class="secdesc">{{ r.desc }}</span><span class="secstatus">{{ r.status }}</span></div></sc-for>
+</div>
+</div>
 </sc-if>
 </sc-if>
 
@@ -3402,7 +3437,7 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ tgHasLink }}" hint-placeholder-val=""><a class="tgfab" href="{{ tgLink }}" target="_blank" rel="noopener" title="Telegram-чат компании"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M9.8 15.6 9.6 19c.4 0 .6-.2.8-.4l1.9-1.8 3.9 2.9c.7.4 1.2.2 1.4-.7l2.6-12.2c.2-1-.4-1.4-1.1-1.2L2.4 9.7c-1 .4-1 .9-.2 1.2l4.3 1.3 9.9-6.2c.5-.3.9-.1.5.2z"/></svg></a></sc-if>
 <div class="{{ chatFabCls }}" onClick="{{ chatToggle }}" title="Общий чат команды"><span class="chatfabic">💬</span><span class="chatfabtx">Чат команды</span><sc-if value="{{ chatHasUnread }}" hint-placeholder-val=""><span class="chatfabbadge">{{ chatUnread }}</span></sc-if></div>
 <sc-if value="{{ chatOpen }}" hint-placeholder-val="">
-<div class="chatpanel">
+<div class="chatpanel" data-private-chat="{{ chatPrivFlag }}">
 <div class="chathead"><div class="chl">💬 {{ chatRoomTitle }}</div><div class="chr"><sc-if value="{{ tgHasLink }}" hint-placeholder-val=""><a class="tgbtn" href="{{ tgLink }}" target="_blank" rel="noopener" title="Открыть в Telegram"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M9.8 15.6 9.6 19c.4 0 .6-.2.8-.4l1.9-1.8 3.9 2.9c.7.4 1.2.2 1.4-.7l2.6-12.2c.2-1-.4-1.4-1.1-1.2L2.4 9.7c-1 .4-1 .9-.2 1.2l4.3 1.3 9.9-6.2c.5-.3.9-.1.5.2z"/></svg> Telegram</a></sc-if><button class="aix" onClick="{{ chatClose }}">✕</button></div></div>
 <div class="chrooms"><sc-for list="{{ chatRoomTabs }}" as="r" hint-placeholder-count="1"><button class="{{ r.cls }}" onClick="{{ r.go }}">{{ r.label }}</button></sc-for><button class="chprivbtn" onClick="{{ openPrivModal }}">＋ Приватная беседа</button></div>
 <sc-if value="{{ chatRoomMembers }}" hint-placeholder-val=""><div class="chmembers">Участники: {{ chatRoomMembers }}</div></sc-if>
@@ -3524,7 +3559,7 @@ class Component extends DCLogic {
     aiOpen: false, aiInput: '', aiBusy: false, aiMessages: [], aiModel: 'gpt-4o-mini', aiKey: '', aiBase: '', aiModelName: '', aiKeyEdit: '', aiBaseEdit: '', aiModelEdit: '', aiCfgOpen: false,
     rrHorizon: 3, rrSafetyMonths: 1, rrLeadDefault: 1, rrRun: {}, rrLead: {}, rrSafety: {}, auditSku: '',
     turnoverDays: 90, turnoverGen: false, planfactGen: false, stressGrowth: 30, stressGen: false, calcExpanded: {}, treasuryGen: false,
-    apGm2Target: 15, apFx: 0, apLogi: 0, apSales: 0, apHorizon: 45, apSim: null, apLive: false, apDrafts: [], apAlerts: [], apInvoice: null, apSecurityLog: [], apRefreshedAt: 0,
+    apGm2Target: 15, apFx: 0, apLogi: 0, apSales: 0, apHorizon: 45, apSim: null, apLive: false, apDrafts: [], apAlerts: [], apInvoice: null, apSecurityLog: [], apRefreshedAt: 0, securityLog: [], secSearch: '',
     prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planProduct: '', planFilter: '', planCur: 'RUB',
     ppScale: 'month', ppFrom: '', ppTo: '', ppNetStock: true, ppNetTransit: true, ppBy: 'raw', ppCur: 'RUB', ppGroup: 'none', procGen: false,
     oneCUrl: '', oneCToken: '', oneCMatch: 'article', oneCAuto: false, oneCBusy: false, oneCStatus: '', oneCErr: '', oneCPreview: null, oneCLastAt: 0, oneCLog: [], oneCFileCur: 'RUB',
@@ -3584,10 +3619,12 @@ class Component extends DCLogic {
     try { recalcLog = JSON.parse(this.lsGet('recalc_log') || '[]'); if (!Array.isArray(recalcLog)) recalcLog = []; } catch (e) {}
     let autoRecalc = true;
     try { const v = this.lsGet('auto_recalc'); if (v === '0') autoRecalc = false; } catch (e) {}
+    let securityLog = [];
+    try { securityLog = JSON.parse(this.lsGet('security_log') || '[]'); if (!Array.isArray(securityLog)) securityLog = []; } catch (e) {}
     try { tgLink = this.lsGet('tg') || ''; } catch (e) {}
     let tgBot = {};
     try { tgBot = JSON.parse(this.lsGet('tgbot') || '{}') || {}; } catch (e) {}
-    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, tasksSeenAt, chatSeenAt, recalcLog, autoRecalc, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '', taskTemplateId: emailCfg.taskTemplateId || '', notifyTasks: !!emailCfg.notifyTasks, appUrl: emailCfg.appUrl || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
+    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, tasksSeenAt, chatSeenAt, recalcLog, autoRecalc, securityLog, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '', taskTemplateId: emailCfg.taskTemplateId || '', notifyTasks: !!emailCfg.notifyTasks, appUrl: emailCfg.appUrl || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
     // Двухфазный экран входа: фаза 1 (загрузка) → фаза 2 (логотип слева + кнопка «Войти»)
     this._loaderT1 = setTimeout(() => this.setState({ loaderPhase: 'p2' }), 3400);
     // Слоган под логотипом перепечатывается каждые 10 c (remount по tick → анимация проигрывается заново)
@@ -5809,6 +5846,7 @@ class Component extends DCLogic {
     if (this.state.loaderHide) return;
     this.setState({ loaderHide: true });
     this.reqNotify();
+    try { this.installSecurityInterceptors(); } catch (e) {}
     if (this.state.cloudConnected) this.startPresence();
     this._loaderT2 = setTimeout(() => this.setState({ loading: false }), 650);
   }
@@ -5905,6 +5943,7 @@ class Component extends DCLogic {
       dataload: '<path d="M12 3v11"/><path d="M8 7l4-4 4 4"/><path d="M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>',
       filearch: '<rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><line x1="10" y1="12" x2="14" y2="12"/>',
       autopilot: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3"/><path d="M12 18v3"/><path d="M3 12h3"/><path d="M18 12h3"/>',
+      seclog: '<path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/>',
       pnl: '<path d="M3 3v18h18"/><rect x="6" y="11" width="3" height="7"/><rect x="11" y="7" width="3" height="11"/><rect x="16" y="13" width="3" height="5"/>',
       pay: '<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/>',
       prices: '<path d="M3 7v4.6a2 2 0 0 0 .6 1.4l7.4 7.4a2 2 0 0 0 2.8 0l4.8-4.8a2 2 0 0 0 0-2.8L11.2 5.6A2 2 0 0 0 9.8 5H5a2 2 0 0 0-2 2z"/><circle cx="7.5" cy="9.5" r="1.2"/>',
@@ -6042,7 +6081,7 @@ class Component extends DCLogic {
     if (!user) return [];
     const co = this._co();
     const all = this.allTabIds().filter(id => this.tabInCompany(id, co));
-    if (user.role === 'admin') return ['home'].concat(all, ['users', 'filearch', 'autopilot']);
+    if (user.role === 'admin') return ['home'].concat(all, ['users', 'filearch', 'autopilot', 'seclog']);
     const perms = Array.isArray(user.perms) ? user.perms : all;
     // Новые разделы доступны по умолчанию всем (добавлены позже — их нет в старых perms)
     const always = ['tcalc', 'xcalc', 'prodplan', 'procplan', 'onec', 'tasks', 'docs', 'cparties', 'receipts', 'sales', 'treas30', 'logi', 'prodrep', 'costtree'];
@@ -6099,6 +6138,7 @@ class Component extends DCLogic {
   }
   sessKicked() {
     if (this._sessKicking) return; this._sessKicking = true;
+    try { this.secLog('PARALLEL_SESSION_ATTEMPT', { detail: 'сессия завершена на этом устройстве' }); } catch (e) {}
     this.sessStopWatch();
     try { this.releaseAllAreas(); } catch (e) {}
     try { this.stopPresence(); } catch (e) {}
@@ -9398,6 +9438,7 @@ class Component extends DCLogic {
   dlFields() { return [{ v: 'nomen', l: 'Номенклатура' }, { v: 'qty', l: 'Количество' }, { v: 'price', l: 'Цена' }, { v: 'sum', l: 'Сумма' }, { v: 'date', l: 'Дата' }, { v: 'supplier', l: 'Поставщик' }, { v: 'client', l: 'Контрагент' }, { v: 'warehouse', l: 'Склад' }, { v: 'unit', l: 'Ед. изм.' }, { v: 'note', l: 'Примечание' }]; }
   async dlReadFile(file) {
     const name = file.name || ''; const ext = (name.split('.').pop() || '').toLowerCase();
+    if (ext === 'pdf') return this.dlReadPdf(file);
     if (ext === 'csv' || ext === 'txt') {
       const text = await file.text();
       const lines = text.split(/\r?\n/).filter(l => l.trim().length);
@@ -9417,6 +9458,46 @@ class Component extends DCLogic {
     const rows = aoa.slice(hr + 1).filter(r => r && r.some(x => x != null && String(x).trim()) && !this.dlIsNoiseRow(r));
     return { headers, rows, n: rows.length };
   }
+  // Лениво подгрузить PDF.js (один раз)
+  dlLoadPdfJs() {
+    if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+    if (this._pdfjsP) return this._pdfjsP;
+    this._pdfjsP = new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+      s.onload = () => { try { window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; } catch (e) {} res(window.pdfjsLib); };
+      s.onerror = () => rej(new Error('PDF.js не загрузился (нет интернета или CDN заблокирован)'));
+      document.head.appendChild(s);
+    });
+    return this._pdfjsP;
+  }
+  // Двухэтапный парсинг PDF: текстовый слой (PDF.js) → группировка в строки/колонки по координатам
+  async dlReadPdf(file) {
+    const pdfjs = await this.dlLoadPdfJs();
+    const data = new Uint8Array(await file.arrayBuffer());
+    const pdf = await pdfjs.getDocument({ data }).promise;
+    const lines = [];
+    for (let p = 1; p <= pdf.numPages; p++) {
+      const page = await pdf.getPage(p);
+      const content = await page.getTextContent();
+      const byRow = {};
+      for (const it of content.items) {
+        const y = Math.round((it.transform[5] || 0) / 3) * 3; // квантование Y → строка
+        (byRow[y] = byRow[y] || []).push({ x: it.transform[4] || 0, s: (it.str || '').trim() });
+      }
+      Object.keys(byRow).map(Number).sort((a, b) => b - a).forEach(y => {
+        const cells = byRow[y].sort((a, b) => a.x - b.x).map(c => c.s).filter(Boolean);
+        if (cells.length) lines.push(cells);
+      });
+    }
+    const clean = lines.filter(r => !this.dlIsNoiseRow(r));
+    if (!clean.length) throw new Error('В PDF не найден текстовый слой (вероятно скан). Для сканов используется OCR-модуль почтового робота; загрузите Excel/CSV или цифровой PDF.');
+    // нормализуем ширину строк по самой широкой
+    const w = clean.reduce((m, r) => Math.max(m, r.length), 0);
+    const norm = clean.map(r => { const c = r.slice(); while (c.length < w) c.push(''); return c; });
+    const headers = norm[0]; const rows = norm.slice(1);
+    return { headers, rows, n: rows.length };
+  }
   dlValidate(key, headers) {
     const def = this.dlBaseDefs().find(d => d.key === key); if (!def) return { ok: true, missing: [] };
     const H = headers.map(h => this.dlNorm(h)); const missing = [];
@@ -9424,7 +9505,7 @@ class Component extends DCLogic {
     return { ok: missing.length === 0, missing };
   }
   async dlOnBase(key, file) {
-    if (!/\.(xlsx|xls|csv|txt)$/i.test(file.name || '')) { this.setState({ dlErr: '«' + (file.name || 'файл') + '» — поддерживаются .xlsx, .xls, .csv, .txt.' }); return; }
+    if (!/\.(xlsx|xls|csv|txt|pdf)$/i.test(file.name || '')) { this.setState({ dlErr: '«' + (file.name || 'файл') + '» — поддерживаются .xlsx, .xls, .csv, .txt, .pdf.' }); return; }
     this.setState({ dlBusy: key, dlErr: '', dlDone: '' });
     try {
       const d = await this.dlReadFile(file); const v = this.dlValidate(key, d.headers);
@@ -9502,7 +9583,7 @@ class Component extends DCLogic {
     return false;
   }
   async dlOnExtra(file) {
-    if (!/\.(xlsx|xls|csv|txt)$/i.test(file.name || '')) { this.setState({ dlErr: '«' + (file.name || 'файл') + '» — поддерживаются .xlsx, .xls, .csv, .txt.' }); return; }
+    if (!/\.(xlsx|xls|csv|txt|pdf)$/i.test(file.name || '')) { this.setState({ dlErr: '«' + (file.name || 'файл') + '» — поддерживаются .xlsx, .xls, .csv, .txt, .pdf.' }); return; }
     this.setState({ dlBusy: 'extra', dlErr: '', dlDone: '' });
     try {
       const d = await this.dlReadFile(file); const sig = this.dlSigOf(d.headers);
@@ -10404,6 +10485,55 @@ class Component extends DCLogic {
   apSecLog(entry) {
     const log = [{ at: Date.now(), ...entry }, ...((this.state.apSecurityLog) || [])].slice(0, 60);
     this.setState({ apSecurityLog: log }); try { this.lsSet('ap_seclog', JSON.stringify(log)); } catch (e) {}
+  }
+  // ===== Журнал безопасности (Audit Trail): типизированные инциденты =====
+  secThreatMeta() {
+    return {
+      PARALLEL_SESSION_ATTEMPT: { level: 'crit', label: 'Критично', desc: 'Параллельная сессия: вход со второго устройства', status: 'Перехвачено' },
+      PERIMETER_VIOLATION: { level: 'warn', label: 'Предупреждение', desc: 'Попытка открыть закрытый модуль без прав', status: 'Заблокировано' },
+      DATA_THEFT_ATTEMPT: { level: 'crit', label: 'Критично', desc: 'Копирование данных в приватном чате (Ctrl+C / ПКМ)', status: 'Перехвачено' },
+      AI_SELF_DESTRUCT_LOG: { level: 'info', label: 'Инфо', desc: 'Авто-удаление приватного чата (48 ч) / общего (30 дн)', status: 'Выполнено' },
+    };
+  }
+  // Зарегистрировать инцидент безопасности (типизированный JSON-обработчик)
+  secLog(type, payload) {
+    payload = payload || {};
+    const meta = this.secThreatMeta()[type] || { level: 'info', label: 'Инфо', desc: type, status: '—' };
+    const cu = this.state.currentUser;
+    const entry = {
+      id: 'sec_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), ts: Date.now(), type,
+      userId: payload.userId || (cu ? cu.id : '—'), userName: payload.userName || (cu ? cu.name : '—'),
+      level: meta.level, levelLabel: meta.label,
+      description: payload.detail ? meta.desc + ' · ' + payload.detail : meta.desc, status: meta.status,
+    };
+    const log = [entry, ...((this.state.securityLog) || [])].slice(0, 500);
+    this.setState({ securityLog: log }); try { this.lsSet('security_log', JSON.stringify(log)); } catch (e) {}
+    return entry;
+  }
+  // Аппаратные перехватчики кражи данных в приватных чатах (вызывается в componentDidMount)
+  installSecurityInterceptors() {
+    if (this._secInstalled) return; this._secInstalled = true;
+    const inPriv = (el) => !!(el && el.closest && el.closest('[data-private-chat="1"]'));
+    this._secCopy = (e) => { if (inPriv(e.target)) { e.preventDefault(); this.secLog('DATA_THEFT_ATTEMPT', { detail: 'copy' }); } };
+    this._secCtx = (e) => { if (inPriv(e.target)) { e.preventDefault(); this.secLog('DATA_THEFT_ATTEMPT', { detail: 'context-menu' }); } };
+    this._secKey = (e) => { if ((e.ctrlKey || e.metaKey) && String(e.key).toLowerCase() === 'c' && inPriv(document.activeElement)) this.secLog('DATA_THEFT_ATTEMPT', { detail: 'hotkey' }); };
+    document.addEventListener('copy', this._secCopy, true);
+    document.addEventListener('contextmenu', this._secCtx, true);
+    document.addEventListener('keydown', this._secKey, true);
+  }
+  buildSecLog() {
+    const S = this.state, set = (p) => this.setState(p);
+    if (!(S.currentUser && S.currentUser.role === 'admin')) return { isSecLog: true, secNoAccess: true };
+    const q = (S.secSearch || '').trim().toLowerCase();
+    const rows = (S.securityLog || []).filter(e => !q || String(e.userId).toLowerCase().includes(q) || String(e.userName).toLowerCase().includes(q))
+      .map(e => ({ when: new Date(e.ts).toLocaleString('ru-RU'), user: e.userName + ' · ' + e.userId, level: e.levelLabel, levelCls: 'secbadge l-' + e.level, desc: e.description, status: e.status, rowCls: 'secrow' + (e.level === 'crit' ? ' crit' : (e.level === 'warn' ? ' warn' : '')) }));
+    return {
+      isSecLog: true, secNoAccess: false, secCoName: this.co().name,
+      secSearch: S.secSearch || '', onSecSearch: (e) => set({ secSearch: e.target.value }),
+      secRows: rows, secEmpty: rows.length === 0, secTotal: String((S.securityLog || []).length),
+      secCrit: String((S.securityLog || []).filter(e => e.level === 'crit').length),
+      secDemo: () => { this.secLog('PERIMETER_VIOLATION', { detail: 'демо-событие' }); },
+    };
   }
   // ----- КОНТУР 3: РОБОТИЗИРОВАННЫЕ ЗАКУПКИ (авто-выкуп дефицитов) -----
   // Лучший поставщик по историческому OTIF (из Landed Cost), затем по контрагентам
@@ -11468,7 +11598,7 @@ class Component extends DCLogic {
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['delivery', 'Доставка · баланс'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['prodrep', 'Отчёты производства'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
       ['cost', 'Себестоимость · КО'], ['margin', 'Маржинальный отчёт'], ['costtree', 'Анализ себестоимости'], ['pnl', 'P&L 360°'],
-      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['dataload', 'Загрузка данных 1С'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['filearch', 'Архив файлов'], ['autopilot', 'ИИ-Автопилот'], ['home', 'Карта навигации'],
+      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['dataload', 'Загрузка данных 1С'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['filearch', 'Архив файлов'], ['autopilot', 'ИИ-Автопилот'], ['seclog', 'Журнал безопасности'], ['home', 'Карта навигации'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
     const tabGroups = [
@@ -11478,7 +11608,7 @@ class Component extends DCLogic {
       { label: 'Закупки', items: ['proc', 'procplan', 'runrate', 'audit', 'landed', 'delivery', 'cparties'], en: { procplan: 'График закупок', cparties: 'Поставщики / Контрагенты' } },
       { label: 'Логистика и склад', items: ['wh', 'receipts', 'logi', 'turnover', 'cover'], en: { cover: 'Сводка запасов' } },
       { label: 'Финансы', items: ['margin', 'cost', 'costtree', 'pay', 'treas30', 'planfact', 'stress', 'reports'] },
-      { label: 'Настройки', items: ['cloud', 'onec', 'users', 'filearch', 'autopilot'], en: { filearch: 'Архив загруженных файлов', autopilot: 'ИИ-Автопилот (AI Control Core)' } },
+      { label: 'Настройки', items: ['cloud', 'onec', 'users', 'filearch', 'autopilot', 'seclog'], en: { filearch: 'Архив загруженных файлов', autopilot: 'ИИ-Автопилот (AI Control Core)', seclog: 'Журнал безопасности' } },
     ];
     const allowed = this.allowedTabs(S.currentUser);
     const allowSet = new Set(allowed);
@@ -11539,6 +11669,7 @@ class Component extends DCLogic {
       users: 'Управление доступом: добавление сотрудников, выдача логинов и паролей, роли и блокировка учётных записей.',
       filearch: 'Защищённый архив всех загруженных в систему файлов (только для администраторов). Жёсткое разделение по компаниям, хронологическое дерево Год → Месяц → Неделя → День, календарь загрузок, живой поиск по метаданным и скачивание оригиналов.',
       autopilot: 'AI Control Core 24/7 — автономный ИИ-Автопилот (только для администраторов): авто-парсинг инвойсов, цифровой двойник «Стресс-тест 360°», роботизированные закупки дефицитов, динамическое ценообразование (Floor Price) и умный HR-трекинг задач. Работает в связке с фоновым движком пересчёта.',
+      seclog: 'Скрытый журнал безопасности (Audit Trail) — только для администраторов. Фиксирует инциденты: параллельные сессии, попытки открыть закрытые модули, копирование данных в приватных чатах (Ctrl+C / ПКМ), авто-удаление чатов. Критические угрозы подсвечены, есть живой поиск по сотруднику.',
       docs: 'Документы: счета, спецификации и сопроводительные формы с реквизитами компании, печать и выгрузка.',
       sales: 'Продажи готовой продукции: заявки и отгрузки клиентам, объём и выручка — основа для маржи и плана производства.',
       cparties: 'Справочник контрагентов и поставщиков: реквизиты, страна/ВЭД, условия оплаты и рейтинг надёжности (OTIF).',
@@ -11603,6 +11734,7 @@ class Component extends DCLogic {
       toggleNav: () => this.setState({ navOpen: !S.navOpen }), closeNav: () => this.setState({ navOpen: false }),
       chatOpen: !!S.chatOpen, chatToggle: () => { const opening = !S.chatOpen; this.setState({ chatOpen: opening }); if (opening) { this.markChatSeen(); this.reqNotify(); } }, chatClose: () => this.setState({ chatOpen: false }),
       chatMsgs: this.chatMsgsView(), chatEmpty: this.chatMsgsView().length === 0, chatCount: (S.chat || []).length,
+      chatPrivFlag: (S.chatRoom && S.chatRoom !== 'general') ? '1' : '0',
       chatUnread: String(this.chatUnreadCount()), chatHasUnread: this.chatUnreadCount() > 0, chatFabCls: this.chatUnreadCount() > 0 ? 'chatfab pulse' : 'chatfab',
       ...this.chatRoomVals(),
       chatInput: S.chatInput || '', onChatInput: (e) => this.setState({ chatInput: e.target.value }),
@@ -12073,6 +12205,7 @@ class Component extends DCLogic {
     if (S.tab === 'dataload') Object.assign(base, this.buildDataload());
     if (S.tab === 'filearch') Object.assign(base, this.buildFileArch());
     if (S.tab === 'autopilot') Object.assign(base, this.buildAutopilot());
+    if (S.tab === 'seclog') Object.assign(base, this.buildSecLog());
     if (S.tab === 'tcalc') Object.assign(base, this.buildTCalc(rate));
     if (S.tab === 'xcalc') Object.assign(base, this.buildXCalc(rate));
 
