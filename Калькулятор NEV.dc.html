@@ -1292,6 +1292,71 @@ a.wordmark:hover{opacity:.6}
 .tmodes{margin-left:auto;display:flex;gap:0;border:1px solid #e7e4e0;border-radius:9px;overflow:hidden}
 .tmbtn{appearance:none;cursor:pointer;font:inherit;font-weight:600;font-size:12.5px;padding:7px 13px;background:#fff;color:#56534f;border:none}
 .tmbtn.on{background:#0e0e0e;color:#fff}
+.ratebtn{appearance:none;cursor:pointer;font:inherit;font-weight:700;font-size:12.5px;padding:7px 15px;border-radius:9px;background:#fff;color:#1F4E78;border:1.5px solid #1F4E78;display:inline-flex;align-items:center;gap:7px;margin-left:auto;transition:transform .14s ease,box-shadow .14s ease,background .14s ease}
+.ratebtn:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(31,78,120,.22);background:#f3f7fb}
+.tvrow .tmodes{margin-left:10px}
+.ratepanel{border:1px solid #dfe7f1;border-radius:14px;background:linear-gradient(180deg,#f7fafd 0%,#fff 120px);padding:18px 20px;margin-bottom:16px}
+.ratehead{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.ratetitle{font-size:17px;font-weight:800;color:#1a2b3c;letter-spacing:-.01em}
+.ratectrl{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.ratesel{padding:7px 10px;font-size:12.5px;min-width:150px}
+.ratelink{appearance:none;border:none;background:none;color:#8a8782;font-weight:700;cursor:pointer;font-size:12.5px}
+.ratelink:hover{color:#c0322b}
+.rateformula{margin-top:10px;font-size:12px;line-height:1.55;color:#56657a;background:#eef4fb;border:1px solid #d6e3f1;border-radius:9px;padding:9px 13px}
+.rateformula b{color:#1F4E78}
+.ratepodium{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.rpod{display:flex;flex-direction:column;align-items:center;gap:5px;padding:16px 10px 14px;border:1px solid #e6eef7;border-radius:12px;background:#fff;position:relative}
+.rpod:first-child{background:linear-gradient(180deg,#fffaf0,#fff);border-color:#f0e2c0}
+.rpodmedal{font-size:26px;line-height:1}
+.rpodava{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;overflow:hidden;position:relative}
+.rpodava .frava-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
+.rpodname{font-size:13px;font-weight:700;color:#2b2926;text-align:center;line-height:1.2;margin-top:2px}
+.rpodkpi{font-size:20px;font-weight:800;color:#1F4E78;font-family:'IBM Plex Mono',monospace}
+.rpodbonus{font-size:11px;font-weight:700;color:#3a6b2a;background:#e2efda;border-radius:20px;padding:3px 10px;margin-top:2px}
+.ratelist{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.frrow{border:1px solid #e7e4e0;border-radius:11px;background:#fff;overflow:hidden;transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease}
+.frrow:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.08);border-color:#d4cfc8}
+.frrow.top{border-color:#dbe7f7}
+.frrow.open{box-shadow:0 10px 26px rgba(0,0,0,.1);border-color:#cbd9ea}
+.frhead{display:flex;align-items:center;gap:14px;padding:12px 16px;cursor:pointer}
+.frrank{font-size:18px;font-weight:800;min-width:30px;text-align:center;color:#8a8782}
+.frava{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;overflow:hidden;position:relative;flex:none}
+.frava .frava-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.frwho{flex:1;min-width:0}
+.frname{font-size:14px;font-weight:700;color:#2b2926}
+.frstars{display:flex;gap:1px;margin-top:2px}
+.fstar{color:#e0ddd7;font-size:13px}
+.fstar.on{color:#e8a93a}
+.frmetrics{display:flex;gap:8px}
+.frm{font-size:12px;font-weight:700;font-family:'IBM Plex Mono',monospace;padding:2px 8px;border-radius:20px}
+.frm.ok{color:#2a7a2a;background:#e6f3e6}.frm.warn{color:#9a6a1c;background:#fdf0dd}.frm.bad{color:#c0322b;background:#fbe6e4}
+.frkpiwrap{display:flex;align-items:center;gap:9px;min-width:160px}
+.frkpi{flex:1;height:8px;border-radius:5px;background:#eee9e2;overflow:hidden}
+.frkpibar{height:100%;border-radius:5px;background:#1F4E78}
+.frkpi.hi .frkpibar{background:#2a8a4a}.frkpi.mid .frkpibar{background:#2A6FDB}.frkpi.lo .frkpibar{background:#d08a2a}
+.frkpival{font-size:15px;font-weight:800;color:#1a2b3c;font-family:'IBM Plex Mono',monospace;min-width:42px;text-align:right}
+.frchev{color:#b3aea7;font-size:13px;transition:transform .2s ease}
+.frrow.open .frchev{transform:rotate(180deg)}
+.frbody{padding:4px 16px 16px;border-top:1px solid #f0ece6}
+.frstats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:14px}
+.frstat{border:1px solid #ece8e2;border-radius:9px;padding:9px 11px;background:#fbfaf8}
+.frstat.ok{background:#f1f8f1;border-color:#d8ecd8}.frstat.warn{background:#fdf7ee;border-color:#f0e2c8}.frstat.bad{background:#fcefee;border-color:#f2d8d5}
+.frsl{font-size:10.5px;font-weight:600;color:#8a8782;text-transform:uppercase;letter-spacing:.03em;line-height:1.3}
+.frsv{font-size:18px;font-weight:800;color:#2b2926;font-family:'IBM Plex Mono',monospace;margin-top:3px}
+.frslack.pos{color:#2a7a2a}.frslack.neg{color:#c0322b}
+.frtrend{margin-top:14px;border:1px solid #ece8e2;border-radius:10px;padding:12px 14px;background:#fff}
+.frtl{font-size:11px;font-weight:700;color:#8a8782;text-transform:uppercase;letter-spacing:.03em;margin-bottom:10px}
+.frbars{display:flex;gap:14px;align-items:flex-end;height:84px}
+.frbcol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:3px}
+.frbtrack{flex:1;width:100%;max-width:44px;display:flex;align-items:flex-end;justify-content:center}
+.frhbar{width:100%;max-width:44px;border-radius:5px 5px 2px 2px;background:#2A6FDB;min-height:4px}
+.frhbar.hi{background:#2a8a4a}.frhbar.mid{background:#2A6FDB}.frhbar.lo{background:#d08a2a}
+.frbval{font-size:11px;font-weight:700;color:#56534f;font-family:'IBM Plex Mono',monospace}
+.frblbl{font-size:10px;color:#9a9793}
+.frbonus{margin-top:14px;display:flex;gap:11px;align-items:flex-start;border:1px solid #d8ecd8;background:#f1f8f1;border-radius:10px;padding:12px 14px}
+.frbonusic{font-size:20px;line-height:1.2}
+.frbonustx{font-size:12.5px;line-height:1.55;color:#3a5240}
+.frbonustx b{color:#2a6b2a}
 .tcalhead{display:flex;align-items:center;gap:10px;margin:4px 0 12px}
 .tcalm{font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;min-width:150px}
 .tcalgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px}
@@ -1720,6 +1785,10 @@ table{display:block;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrollin
 .fagrid{grid-template-columns:1fr}
 .facol-side{position:static;flex-direction:row;flex-wrap:wrap}
 .facal,.fastat{flex:1;min-width:240px}
+.frstats{grid-template-columns:1fr 1fr}
+.ratepodium{grid-template-columns:1fr}
+.frmetrics{display:none}
+.frkpiwrap{min-width:110px}
 .card{padding:15px 13px}
 .scroll{max-height:62vh}
 .nav{gap:3px;padding:4px}
@@ -2664,7 +2733,43 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 <div class="card">
 <div class="kpis"><sc-for list="{{ taskKpis }}" as="k" hint-placeholder-count="4"><div class="kpi {{ k.cls }}"><div class="kl">{{ k.label }}</div><div class="kv mono">{{ k.value }}</div></div></sc-for></div>
-<div class="tvrow"><sc-for list="{{ taskViews }}" as="v" hint-placeholder-count="3"><button class="{{ v.cls }}" onClick="{{ v.go }}">{{ v.label }} · {{ v.n }}</button></sc-for><span class="tmodes"><button class="{{ taskModeList }}" onClick="{{ setTaskList }}">Список</button><button class="{{ taskModeCal }}" onClick="{{ setTaskCal }}">Календарь</button></span></div>
+<div class="tvrow"><sc-for list="{{ taskViews }}" as="v" hint-placeholder-count="3"><button class="{{ v.cls }}" onClick="{{ v.go }}">{{ v.label }} · {{ v.n }}</button></sc-for><button class="ratebtn" onClick="{{ toggleRating }}"><span>🏆</span> Рейтинг по задачам</button><span class="tmodes"><button class="{{ taskModeList }}" onClick="{{ setTaskList }}">Список</button><button class="{{ taskModeCal }}" onClick="{{ setTaskCal }}">Календарь</button></span></div>
+<sc-if value="{{ ratingOpen }}" hint-placeholder-val="">
+<div class="ratepanel">
+<div class="ratehead"><div class="ratetitle">🏆 Рейтинг сотрудников по задачам</div><div class="ratectrl"><select class="sel ratesel" value="{{ ratingPeriod }}" onChange="{{ onRatingPeriod }}"><sc-for list="{{ ratingMonths }}" as="m" hint-placeholder-count="3"><option value="{{ m.v }}">{{ m.label }}</option></sc-for></select><button class="btn mgxls" onClick="{{ ratingExport }}">⬇ Аудит KPI · Excel</button><button class="ratelink" onClick="{{ toggleRating }}">✕ Закрыть</button></div></div>
+<div class="rateformula">Формула прозрачного рейтинга: <b>KPI = (выполнено в срок ÷ решённых) × 70 + коэффициент скорости × 30</b>. Коэффициент скорости = норматив ÷ факт (закрыл вдвое быстрее дедлайна — максимум). Звёзды ★ присваиваются по квантилям KPI.</div>
+<sc-if value="{{ ratingHasLeaders }}" hint-placeholder-val=""><div class="ratepodium"><sc-for list="{{ ratingLeaders }}" as="r" hint-placeholder-count="3"><div class="rpod"><div class="rpodmedal">{{ r.medal }}</div><div class="rpodava {{ r.tone }}"><sc-if value="{{ r.hasPhoto }}" hint-placeholder-val="">{{ r.photoImg }}</sc-if><sc-if value="{{ r.noPhoto }}" hint-placeholder-val="x"><span class="rpodini">{{ r.ini }}</span></sc-if></div><div class="rpodname">{{ r.name }}</div><div class="rpodkpi">{{ r.kpi }}</div><sc-if value="{{ r.hasBonus }}" hint-placeholder-val=""><div class="rpodbonus">+{{ r.bonusPct }}% · {{ r.bonusFix }} ₽</div></sc-if></div></sc-for></div></sc-if>
+<sc-if value="{{ ratingHasData }}" hint-placeholder-val="{{ true }}">
+<div class="ratelist"><sc-for list="{{ ratingRows }}" as="r" hint-placeholder-count="4">
+<div class="{{ r.rowCls }}">
+<div class="frhead" onClick="{{ r.toggle }}">
+<div class="frrank">{{ r.medal }}</div>
+<div class="frava {{ r.tone }}"><sc-if value="{{ r.hasPhoto }}" hint-placeholder-val="">{{ r.photoImg }}</sc-if><sc-if value="{{ r.noPhoto }}" hint-placeholder-val="x"><span class="frini">{{ r.ini }}</span></sc-if></div>
+<div class="frwho"><div class="frname">{{ r.name }}</div><div class="frstars"><sc-for list="{{ r.stars }}" as="s" hint-placeholder-count="5"><span class="{{ s.on }}">★</span></sc-for></div></div>
+<div class="frmetrics"><span class="frm ok">✓ {{ r.onTime }}</span><span class="frm warn">◐ {{ r.late }}</span><span class="frm bad">✕ {{ r.failed }}</span></div>
+<div class="frkpiwrap"><div class="{{ r.kpiCls }}"><div class="frkpibar" style="{{ r.kpiBarStyle }}"></div></div><div class="frkpival">{{ r.kpi }}</div></div>
+<div class="frchev">▾</div>
+</div>
+<sc-if value="{{ r.expanded }}" hint-placeholder-val=""><div class="frbody">
+<div class="frstats">
+<div class="frstat"><div class="frsl">Всего назначено</div><div class="frsv">{{ r.assigned }}</div></div>
+<div class="frstat ok"><div class="frsl">Выполнено в срок</div><div class="frsv">{{ r.onTime }}</div></div>
+<div class="frstat warn"><div class="frsl">С опозданием</div><div class="frsv">{{ r.late }}</div></div>
+<div class="frstat bad"><div class="frsl">Просрочено / провалено</div><div class="frsv">{{ r.failed }}</div></div>
+<div class="frstat"><div class="frsl">Ср. время закрытия</div><div class="frsv">{{ r.avgDur }}</div></div>
+<div class="frstat"><div class="frsl">Запас до дедлайна</div><div class="frsv {{ r.slackCls }}">{{ r.avgSlack }}</div></div>
+<div class="frstat"><div class="frsl">Коэф. скорости</div><div class="frsv">{{ r.speedPct }}</div></div>
+<div class="frstat"><div class="frsl">Итоговый KPI</div><div class="frsv">{{ r.kpi }}</div></div>
+</div>
+<div class="frtrend"><div class="frtl">Динамика KPI · 4 мес.</div><div class="frbars"><sc-for list="{{ r.hist }}" as="h" hint-placeholder-count="4"><div class="frbcol"><div class="frbtrack"><div class="{{ h.barCls }}" style="{{ h.barStyle }}"></div></div><div class="frbval">{{ h.kpi }}</div><div class="frblbl">{{ h.label }}</div></div></sc-for></div></div>
+<sc-if value="{{ ratingIsAdmin }}" hint-placeholder-val=""><sc-if value="{{ r.hasBonus }}" hint-placeholder-val=""><div class="frbonus"><div class="frbonusic">🤖</div><div class="frbonustx"><b>Рекомендация ИИ по премированию.</b> Сотрудник в ТОП-3 месяца (место {{ r.rank }}, KPI {{ r.kpi }}). Рекомендуемая надбавка к сдельной части: <b>+{{ r.bonusPct }}%</b>, ориентир фиксированной премии: <b>{{ r.bonusFix }} ₽</b>. Данные готовы к передаче в блок «Финансы».</div></div></sc-if></sc-if>
+</div></sc-if>
+</div>
+</sc-for></div>
+</sc-if>
+<sc-if value="{{ ratingNoData }}" hint-placeholder-val="x"><div class="repempty"><div class="reIcon">🏆</div><div class="reMsg">Пока нет завершённых задач для расчёта рейтинга. Как только сотрудники начнут выполнять и закрывать задачи — здесь появится прозрачный лидерборд с декомпозицией баллов.</div></div></sc-if>
+</div>
+</sc-if>
 <sc-if value="{{ isTaskList }}" hint-placeholder-val="{{ true }}">
 <sc-if value="{{ taskEmpty }}" hint-placeholder-val=""><div class="repempty"><div class="reIcon">📋</div><div class="reMsg">{{ taskEmptyMsg }}</div></div></sc-if>
 <div class="tlist"><sc-for list="{{ taskRows }}" as="t" hint-placeholder-count="3"><div class="tcard {{ t.rowCls }}">
@@ -3219,7 +3324,7 @@ class Component extends DCLogic {
     sbReady: false, sbFltMarka: '', sbFltPeriod: '', sbSearch: '', sbCompare: false, sbCmpMarka: '', sbDateFrom: '', sbDateTo: '', sbSummary: false, sbExpanded: {},
     mgRevenue: null, mgRevMeta: null, mgErr: '', mgBusy: false, mgPeriod: '', mgGm: null, mgKv: [{ name: 'Конфлекс', pct: 10 }], mgView: 'groups', mgFltGroup: '', mgExpanded: {}, mgCostMode: 'tree', plSlice: 'nomen', plExpanded: {}, plAi: '', plAiBusy: false, plPlanRev: '', plPlanM2: '', mgManualCost: {},
     chat: [], chatRooms: [], chatRoom: 'general', privModal: null, chatInput: '', chatOpen: false, chatSeenAt: 0, tgLink: '', tgEdit: '', navOpen: false, isMobile: false, navExp: null, catKey: '', compassOpen: false,
-    tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '', sales: [], saleDraft: null, saleErr: '', salesTransport: 0, salesTransMode: 'weight', cashStart: 0, payMoves: {}, paySplits: {}, payMoveEdit: '', logistics: [], logDraft: null, logErr: '', payreqs: [], prDraft: null, prErr: '', stmtMsg: '',
+    tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', ratingOpen: false, ratingExp: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '', sales: [], saleDraft: null, saleErr: '', salesTransport: 0, salesTransMode: 'weight', cashStart: 0, payMoves: {}, paySplits: {}, payMoveEdit: '', logistics: [], logDraft: null, logErr: '', payreqs: [], prDraft: null, prErr: '', stmtMsg: '',
     docType: 'invoice', docData: { no: '14', date: '', invBuyer: 'ООО «Печатный двор»', invBuyerInn: 'ИНН 7712345678 / КПП 771201001', invBank: 'АО «Альфа-Банк», р/с 40702810000000012345, БИК 044525593, к/с 30101810200000000593', invItems: 'Чёрнила флексо Cyan | 500 | кг | 480\nЧёрнила флексо Magenta | 300 | кг | 510\nРастворитель этилацетат | 200 | л | 95', empName: 'Иванов Иван Иванович', empPost: 'менеджер по закупкам', empPassport: '45 09 № 123456, выдан ОВД «Тверской» г. Москвы 12.03.2015, код 770-001', supplier: 'ООО «ХимПоставка»', supplierAddr: 'г. Москва, ул. Промышленная, д. 7', goods: 'Пигмент синий (фталоцианиновый) — 500 кг\nРастворитель НефрасС2 — 200 л\nСтабилизатор СТ-4 — 50 кг', term: '10 дней', route: 'Москва — Санкт-Петербург', car: 'Volvo FH, гос. № А123ВС 777', driver: 'Петров Пётр Петрович', driverDoc: 'вод. удостоверение 99 12 345678', cargo: '1200 кг / 4,0 м³, 6 паллет', cargoName: 'Сырьё для производства чернил', rfpSupplier: 'ООО «ХимПоставка»', rfpItems: 'Пигмент синий (фталоцианиновый) — 500 кг\nПигмент жёлтый — 300 кг\nРастворитель НефрасС2 — 200 л', rfpDeadline: '5 рабочих дней' },
     peekIdx: 0, peekDismissed: {}, peekClosed: false, peekOpen: false, peekToast: '', cloudToast: '',
     tgToken: '', tgChatId: '', tgFwd: false, tgEditToken: '', tgEditChatId: '', tgStatus: '',
@@ -6501,6 +6606,87 @@ class Component extends DCLogic {
     this.setState({ taskCommentInput: '' });
     this.forwardToTelegram({ author: (cu ? cu.name : '—') + ' · задача «' + t.title + '»', text: text });
   }
+  // ===== Рейтинг и KPI сотрудников по задачам =====
+  taskDeadlineTs(t) { if (!t.due) return 0; let due = this.parseISO(t.due).getTime(); if (t.dueTime) { const p = String(t.dueTime).split(':'); due += ((+p[0] || 0) * 60 + (+p[1] || 0)) * 60000; } else { due += 23 * 3600000 + 59 * 60000; } return due; }
+  // Прозрачная формула: KPI = (в_срок / решённых) * 70 + коэффициент_скорости * 30. Звёзды 1–5 — по квантилям KPI.
+  taskRatingData() {
+    const S = this.state;
+    const users = (S.users || []).filter(u => u.active !== false);
+    const allTasks = (S.tasks || []);
+    const period = S.ratingPeriod || '';
+    const inPeriod = (t) => { if (!period) return true; const ref = t.doneAt ? new Date(t.doneAt) : (t.due ? this.parseISO(t.due) : new Date(t.createdAt || 0)); const k = ref.getFullYear() + '-' + String(ref.getMonth() + 1).padStart(2, '0'); return k === period; };
+    const MShort = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
+    const rows = users.map(u => {
+      const mine = allTasks.filter(t => this.isTaskExec(t, u.id) && inPeriod(t));
+      const assigned = mine.length;
+      let onTime = 0, late = 0, failed = 0, speedSum = 0, speedN = 0, durSum = 0, durN = 0, slackSum = 0, slackN = 0;
+      const onTimeIds = [], lateIds = [], failedIds = [];
+      for (const t of mine) {
+        const dl = this.taskDeadlineTs(t);
+        if (t.status === 'Выполнена' && t.doneAt) {
+          const inTime = !dl || t.doneAt <= dl;
+          if (inTime) { onTime++; onTimeIds.push(t.id); } else { late++; lateIds.push(t.id); }
+          if (t.createdAt) { const dur = (t.doneAt - t.createdAt) / 3600000; if (dur >= 0) { durSum += dur; durN++; } }
+          if (dl && t.createdAt && dl > t.createdAt) {
+            const norm = dl - t.createdAt, fact = Math.max(60000, t.doneAt - t.createdAt);
+            speedSum += Math.max(0, Math.min(1, (norm / fact) / 2)); speedN++;
+            slackSum += (dl - t.doneAt) / 3600000; slackN++;
+          }
+        } else if (t.status === 'Отклонена') { failed++; failedIds.push(t.id); }
+        else if (this.taskOverdue(t)) { failed++; failedIds.push(t.id); }
+      }
+      const resolved = onTime + late + failed;
+      const speedCoef = speedN ? (speedSum / speedN) : (resolved ? onTime / resolved : 0);
+      const kpi = resolved ? Math.round(((onTime / resolved) * 70 + speedCoef * 30) * 10) / 10 : 0;
+      const avgDur = durN ? durSum / durN : 0;
+      const avgSlack = slackN ? slackSum / slackN : 0;
+      const hist = [];
+      for (let i = 3; i >= 0; i--) {
+        const dref = new Date(); dref.setDate(1); dref.setMonth(dref.getMonth() - i);
+        const mk = dref.getFullYear() + '-' + String(dref.getMonth() + 1).padStart(2, '0');
+        const mm = allTasks.filter(t => this.isTaskExec(t, u.id));
+        let o = 0, r = 0, ss = 0, sn = 0;
+        for (const t of mm) {
+          if (!t.doneAt) continue; const ref = new Date(t.doneAt);
+          const tk = ref.getFullYear() + '-' + String(ref.getMonth() + 1).padStart(2, '0'); if (tk !== mk) continue;
+          const dl = this.taskDeadlineTs(t);
+          if (t.status === 'Выполнена') { r++; if (!dl || t.doneAt <= dl) o++; if (dl && t.createdAt && dl > t.createdAt) { ss += Math.max(0, Math.min(1, ((dl - t.createdAt) / Math.max(60000, t.doneAt - t.createdAt)) / 2)); sn++; } }
+        }
+        const sc = sn ? ss / sn : (r ? o / r : 0);
+        hist.push({ mk, label: MShort[dref.getMonth()], kpi: r ? Math.round(((o / r) * 70 + sc * 30)) : 0 });
+      }
+      return { id: u.id, name: u.name, photo: u.photo || '', role: u.role, assigned, onTime, late, failed, resolved, speedCoef, kpi, avgDur, avgSlack, onTimeIds, lateIds, failedIds, hist, hasData: resolved > 0 };
+    });
+    rows.sort((a, b) => b.kpi - a.kpi || b.onTime - a.onTime);
+    const rated = rows.filter(r => r.hasData).map(r => r.kpi).sort((a, b) => a - b);
+    const starFor = (r) => { if (!r.hasData || !rated.length) return 0; const below = rated.filter(k => k <= r.kpi).length; return Math.max(1, Math.ceil(below / rated.length * 5)); };
+    rows.forEach((r, i) => { r.rank = i + 1; r.stars = starFor(r); });
+    return rows;
+  }
+  taskBonusFor(r) {
+    if (!r || r.rank > 3 || !r.hasData || r.kpi < 50) return null;
+    const baseP = { 1: 15, 2: 10, 3: 7 }[r.rank] || 0;
+    const pct = Math.round(baseP * (r.kpi / 100) * 10) / 10;
+    const baseFix = { 1: 15000, 2: 10000, 3: 7000 }[r.rank] || 0;
+    const fix = Math.round(baseFix * (r.kpi / 100) / 500) * 500;
+    return { pct, fix, place: r.rank };
+  }
+  ratingExportExcel() {
+    const XLSX = window.XLSX; if (!XLSX) { try { alert('Библиотека Excel не загрузилась — обновите страницу.'); } catch (e) {} return; }
+    const data = this.taskRatingData();
+    if (!data.length) { try { alert('Нет данных для экспорта.'); } catch (e) {} return; }
+    const st = this.mgXlSt(), coName = this.co().name;
+    const wb = XLSX.utils.book_new();
+    const r1 = (n) => Math.round((Number(n) || 0) * 10) / 10;
+    const headers = ['Место', 'Сотрудник', 'Звёзды', 'Назначено', 'В срок', 'С опозданием', 'Провалено', 'Ср. время, ч', 'Коэф. скорости', 'KPI (0–100)', 'Премия %', 'Премия ₽'];
+    const types = ['code', 'text', 'code', 'num', 'num', 'num', 'num', 'num1', 'num1', 'num1', 'pct', 'money'];
+    const rows = data.map(r => { const b = this.taskBonusFor(r); return [r.rank, r.name, '★'.repeat(r.stars) || '—', r.assigned, r.onTime, r.late, r.failed, r1(r.avgDur), r1(r.speedCoef), r.kpi, b ? b.pct : 0, b ? b.fix : 0]; });
+    const ws = this.mgXlSheet('Аудит KPI сотрудников · ' + coName + (this.state.ratingPeriod ? ' · ' + this.state.ratingPeriod : ''), headers, types, rows, null);
+    const range = XLSX.utils.decode_range(ws['!ref']); const dataStart = 3;
+    data.forEach((r, i) => { const b = this.taskBonusFor(r); if (!b) return; for (let c = range.s.c; c <= range.e.c; c++) { const ad = XLSX.utils.encode_cell({ r: dataStart + i, c }); const cl = ws[ad]; if (cl) { cl.s = { ...(cl.s || {}), fill: { fgColor: { rgb: st.GREEN } }, font: { ...((cl.s && cl.s.font) || {}), bold: true } }; } } });
+    XLSX.utils.book_append_sheet(wb, ws, 'Аудит KPI');
+    XLSX.writeFile(wb, 'Аудит KPI ' + coName + ' ' + (this.state.ratingPeriod || new Date().toISOString().slice(0, 7)) + '.xlsx');
+  }
   buildTasks() {
     const S = this.state, set = (p) => this.setState(p);
     const cu = S.currentUser; const cid = cu ? cu.id : '';
@@ -6581,9 +6767,42 @@ class Component extends DCLogic {
     const shiftMonth = (delta) => { let y = cy, m = cm + delta; while (m < 1) { m += 12; y--; } while (m > 12) { m -= 12; y++; } set({ taskCalKey: y + '-' + String(m).padStart(2, '0') }); };
     const toggleExec = (id) => { const dd = this.state.taskDraft || this.emptyTaskDraft(); const cur = Array.isArray(dd.executorIds) ? dd.executorIds.slice() : []; const i = cur.indexOf(id); if (i >= 0) cur.splice(i, 1); else cur.push(id); set({ taskDraft: { ...dd, executorIds: cur }, taskErr: '' }); };
     const upd = (patch) => set({ taskDraft: { ...(this.state.taskDraft || this.emptyTaskDraft()), ...patch }, taskErr: '' });
+    // ===== Рейтинг по задачам (лидерборд + drill-down) =====
+    const ratingOpen = !!S.ratingOpen;
+    const ratingMonths = (() => { const out = [{ v: '', label: 'За всё время' }]; const now = new Date(); for (let i = 0; i < 6; i++) { const dd = new Date(now.getFullYear(), now.getMonth() - i, 1); out.push({ v: dd.getFullYear() + '-' + String(dd.getMonth() + 1).padStart(2, '0'), label: MONr[dd.getMonth()] + ' ' + dd.getFullYear() }); } return out; })();
+    let ratingRows = [], ratingLeaders = [], ratingHasData = false;
+    if (ratingOpen) {
+      const data = this.taskRatingData();
+      ratingHasData = data.some(r => r.hasData);
+      const medal = { 1: '🥇', 2: '🥈', 3: '🥉' };
+      ratingRows = data.map(r => {
+        const stars = [1, 2, 3, 4, 5].map(n => ({ on: n <= r.stars ? 'fstar on' : 'fstar' }));
+        const histMax = Math.max(1, ...r.hist.map(h => h.kpi));
+        const bonus = this.taskBonusFor(r);
+        return {
+          id: r.id, rank: r.rank, medal: medal[r.rank] || ('#' + r.rank), isTop: r.rank <= 3 && r.hasData,
+          name: r.name, role: r.role === 'admin' ? 'Администратор' : 'Сотрудник',
+          ini: this.taskInitials(r.name), tone: 'av ' + this.avatarTone(r.name),
+          photoImg: r.photo ? React.createElement('img', { className: 'frava-img', src: r.photo, alt: '' }) : null, hasPhoto: !!r.photo, noPhoto: !r.photo,
+          kpi: r.hasData ? r.kpi.toFixed(1) : '—', kpiNum: r.kpi, kpiBarStyle: { width: Math.max(2, Math.min(100, r.kpi)) + '%' },
+          kpiCls: r.kpi >= 80 ? 'frkpi hi' : (r.kpi >= 55 ? 'frkpi mid' : 'frkpi lo'),
+          stars, hasData: r.hasData,
+          assigned: r.assigned, onTime: r.onTime, late: r.late, failed: r.failed,
+          avgDur: r.avgDur ? r.avgDur.toFixed(1) + ' ч' : '—',
+          slack: r.slack, avgSlack: r.avgSlack ? (r.avgSlack >= 0 ? '+' : '') + r.avgSlack.toFixed(1) + ' ч' : '—', slackCls: r.avgSlack >= 0 ? 'frslack pos' : 'frslack neg',
+          speedPct: Math.round(r.speedCoef * 100) + '%',
+          rowCls: 'frrow' + (S.ratingExp === r.id ? ' open' : '') + (r.rank <= 3 && r.hasData ? ' top' : ''),
+          expanded: S.ratingExp === r.id,
+          toggle: () => set({ ratingExp: S.ratingExp === r.id ? '' : r.id }),
+          hist: r.hist.map(h => ({ label: h.label, kpi: h.kpi, barStyle: { height: Math.max(4, h.kpi / histMax * 100) + '%' }, barCls: 'frhbar' + (h.kpi >= 80 ? ' hi' : (h.kpi >= 55 ? ' mid' : ' lo')) })),
+          bonus, hasBonus: !!bonus, bonusPct: bonus ? bonus.pct.toFixed(1).replace('.0', '') : '', bonusFix: bonus ? bonus.fix.toLocaleString('ru-RU') : '',
+        };
+      });
+      ratingLeaders = ratingRows.filter(r => r.isTop).slice(0, 3);
+    }
     return {
       isTasks: true,
-      taskMode: mode, isTaskList: mode === 'list', isTaskCal: mode === 'calendar',
+      taskMode: mode, isTaskList: mode === 'list' && !ratingOpen, isTaskCal: mode === 'calendar' && !ratingOpen,
       taskModeList: mode === 'list' ? 'tmbtn on' : 'tmbtn', taskModeCal: mode === 'calendar' ? 'tmbtn on' : 'tmbtn',
       setTaskList: () => set({ taskMode: 'list' }), setTaskCal: () => set({ taskMode: 'calendar' }),
       taskWeekdays: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map((dd, i) => ({ d: dd, key: 'wd' + i, cls: i >= 5 ? 'tcalwd off' : 'tcalwd' })),
@@ -6604,6 +6823,11 @@ class Component extends DCLogic {
       taskIsEdit: !!d.id, taskFormTitle: d.id ? 'Редактирование задачи' : 'Новая задача · поручить коллегам',
       cancelTaskEdit: () => set({ taskDraft: null, taskErr: '' }), taskHasDraft: !!d.id,
       taskErr: S.taskErr || '', taskHasErr: !!S.taskErr, taskNoUsers: users.length === 0,
+      ratingOpen, ratingIsAdmin: isAdmin,
+      toggleRating: () => set({ ratingOpen: !S.ratingOpen, ratingExp: '' }),
+      ratingPeriod: S.ratingPeriod || '', onRatingPeriod: (e) => set({ ratingPeriod: e.target.value, ratingExp: '' }),
+      ratingMonths, ratingRows, ratingLeaders, ratingHasData, ratingHasLeaders: ratingLeaders.length > 0, ratingNoData: ratingOpen && !ratingHasData,
+      ratingExport: () => this.ratingExportExcel(),
     };
   }
   forwardToTelegram(msg) {
