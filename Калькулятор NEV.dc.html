@@ -1284,6 +1284,21 @@ a.wordmark:hover{opacity:.6}
 .tthinput{display:flex;gap:7px;align-items:center}
 .tthinput .inp{flex:1}
 .tcdue{font-size:12px;font-weight:600;color:#56534f}
+.cobadge{font-size:10.5px;font-weight:800;letter-spacing:.01em;padding:2px 9px;border-radius:20px;white-space:nowrap;text-transform:none}
+.cobadge.co-ink{background:#fff3c4;color:#7a5c00;box-shadow:inset 0 0 0 1px #f0d97a}
+.cobadge.co-chem{background:#e2ecfb;color:#1d4f99;box-shadow:inset 0 0 0 1px #bcd3f2}
+.colegrow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:2px 0 4px}
+.colegttl{font-size:11.5px;font-weight:700;color:#9a9793}
+.coleg{font-size:10.5px;font-weight:800;padding:2px 10px;border-radius:20px;position:relative;padding-left:20px}
+.coleg:before{content:'';position:absolute;left:8px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%}
+.coleg.co-ink{background:#fff3c4;color:#7a5c00}.coleg.co-ink:before{background:#e8b800}
+.coleg.co-chem{background:#e2ecfb;color:#1d4f99}.coleg.co-chem:before{background:#2A6FDB}
+.tcard.task-foreign{opacity:.93;border-style:dashed}
+.execchip.obs.on{background:#2A6FDB;border-color:#2A6FDB}
+.execchip.obs.on .pcbox{background:#fff;border-color:#fff}
+.execchip.obs.on .pcbox:after{border-color:#2A6FDB}
+.tchip.co-ink{box-shadow:inset 3px 0 0 #e8b800}
+.tchip.co-chem{box-shadow:inset 3px 0 0 #2A6FDB}
 .tcdue.due-soon{color:#9a6a00}
 .tcdue.due-over{color:#c0322b}
 .tcact{display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex:none}
@@ -2728,6 +2743,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="tform">
 <div class="fg full"><label>Название задачи</label><input class="inp" value="{{ tdTitle }}" onInput="{{ onTdTitle }}" placeholder="Например: согласовать договор с поставщиком"></div>
 <div class="fg full"><label>Исполнители (можно несколько)</label><div class="execpick"><sc-for list="{{ taskExecChips }}" as="u" hint-placeholder-count="4"><button class="{{ u.cls }}" onClick="{{ u.toggle }}"><span class="pcbox"></span>{{ u.label }}</button></sc-for></div></div>
+<div class="fg full"><label>Наблюдатели (видят задачу, без действий)</label><div class="execpick"><sc-for list="{{ taskObsChips }}" as="u" hint-placeholder-count="4"><button class="{{ u.cls }}" onClick="{{ u.toggle }}"><span class="pcbox"></span>{{ u.label }}</button></sc-for></div></div>
 <div class="fg"><label>Срок · дата</label><input class="inp" type="date" value="{{ tdDue }}" onInput="{{ onTdDue }}"></div>
 <div class="fg"><label>Срок · время</label><input class="inp" type="time" value="{{ tdDueTime }}" onInput="{{ onTdDueTime }}"></div>
 <div class="fg"><label>Приоритет</label><select class="sel" value="{{ tdPriority }}" onChange="{{ onTdPriority }}"><sc-for list="{{ tdPriorityOpts }}" as="p" hint-placeholder-count="3"><option value="{{ p.v }}">{{ p.label }}</option></sc-for></select></div>
@@ -2738,7 +2754,8 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 <div class="card">
 <div class="kpis"><sc-for list="{{ taskKpis }}" as="k" hint-placeholder-count="4"><div class="kpi {{ k.cls }}"><div class="kl">{{ k.label }}</div><div class="kv mono">{{ k.value }}</div></div></sc-for></div>
-<div class="tvrow"><sc-for list="{{ taskViews }}" as="v" hint-placeholder-count="3"><button class="{{ v.cls }}" onClick="{{ v.go }}">{{ v.label }} · {{ v.n }}</button></sc-for><button class="ratebtn" onClick="{{ toggleRating }}"><span>🏆</span> Рейтинг по задачам</button><span class="tmodes"><button class="{{ taskModeList }}" onClick="{{ setTaskList }}">Список</button><button class="{{ taskModeCal }}" onClick="{{ setTaskCal }}">Календарь</button></span></div>
+<div class="tvrow"><sc-for list="{{ taskViews }}" as="v" hint-placeholder-count="3"><button class="{{ v.cls }}" onClick="{{ v.go }}">{{ v.label }} · {{ v.n }}</button></sc-for><button class="ratebtn" onClick="{{ toggleRating }}"><span>🏆</span> Рейтинг по задачам</button><button class="ratebtn" onClick="{{ taskExportExcel }}"><span>⬇</span> Реестр · Excel</button><span class="tmodes"><button class="{{ taskModeList }}" onClick="{{ setTaskList }}">Список</button><button class="{{ taskModeCal }}" onClick="{{ setTaskCal }}">Календарь</button></span></div>
+<sc-if value="{{ taskMultiCo }}" hint-placeholder-val=""><div class="colegrow"><span class="colegttl">Сводно по компаниям:</span><sc-for list="{{ coLegend }}" as="c" hint-placeholder-count="2"><span class="{{ c.cls }}">{{ c.name }}</span></sc-for></div></sc-if>
 <sc-if value="{{ ratingOpen }}" hint-placeholder-val="">
 <div class="ratepanel">
 <div class="ratehead"><div class="ratetitle">🏆 Рейтинг сотрудников по задачам</div><div class="ratectrl"><select class="sel ratesel" value="{{ ratingPeriod }}" onChange="{{ onRatingPeriod }}"><sc-for list="{{ ratingMonths }}" as="m" hint-placeholder-count="3"><option value="{{ m.v }}">{{ m.label }}</option></sc-for></select><button class="btn mgxls" onClick="{{ ratingExport }}">⬇ Аудит KPI · Excel</button><button class="ratelink" onClick="{{ toggleRating }}">✕ Закрыть</button></div></div>
@@ -2779,15 +2796,16 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ taskEmpty }}" hint-placeholder-val=""><div class="repempty"><div class="reIcon">📋</div><div class="reMsg">{{ taskEmptyMsg }}</div></div></sc-if>
 <div class="tlist"><sc-for list="{{ taskRows }}" as="t" hint-placeholder-count="3"><div class="tcard {{ t.rowCls }}">
 <div class="tcmain">
-<div class="tctop"><span class="tprio {{ t.prioCls }}">{{ t.priority }}</span><span class="tcstatus {{ t.statusCls }}">{{ t.status }}</span><span class="tcdue {{ t.dueCls }}">⏱ {{ t.due }}</span></div>
+<div class="tctop"><sc-if value="{{ t.showCo }}" hint-placeholder-val=""><span class="{{ t.coBadgeCls }}">{{ t.coBadge }}</span></sc-if><span class="tprio {{ t.prioCls }}">{{ t.priority }}</span><span class="tcstatus {{ t.statusCls }}">{{ t.status }}</span><span class="tcdue {{ t.dueCls }}">⏱ {{ t.due }}</span></div>
 <div class="tctitle">{{ t.title }}</div>
 <sc-if value="{{ t.hasDesc }}" hint-placeholder-val=""><div class="tcdesc">{{ t.desc }}</div></sc-if>
 <div class="tcmeta">Исполнители: <b>{{ t.execNames }}</b> · Поставил: {{ t.author }}</div>
 <sc-if value="{{ t.isRejected }}" hint-placeholder-val=""><div class="trej">⛔ Отказ: {{ t.rejectReason }}</div></sc-if>
 <sc-if value="{{ t.rejecting }}" hint-placeholder-val=""><div class="trejform"><input class="inp" value="{{ t.rejectInput }}" onInput="{{ t.onRejectInput }}" placeholder="Причина отказа…"><button class="btn xs dark" onClick="{{ t.confirmReject }}">Отклонить</button><button class="tlink" onClick="{{ t.cancelReject }}">Отмена</button></div></sc-if>
-<div class="tcthread"><button class="tthtoggle" onClick="{{ t.toggleThread }}">💬 Обсуждение · {{ t.threadCount }}</button><sc-if value="{{ t.threadOpen }}" hint-placeholder-val=""><div class="tthbox"><sc-for list="{{ t.thread }}" as="m" hint-placeholder-count="2"><div class="tthmsg {{ m.me }}"><span class="tthwho">{{ m.author }}</span><span class="tthtxt">{{ m.text }}</span><span class="tthwhen">{{ m.when }}</span></div></sc-for><div class="tthinput"><input class="inp" value="{{ t.commentInput }}" onInput="{{ t.onComment }}" onKeyDown="{{ t.onCommentKey }}" placeholder="Написать в обсуждение…"><button class="btn xs dark" onClick="{{ t.sendComment }}">Отпр.</button></div></div></sc-if></div>
+<div class="tcthread"><button class="tthtoggle" onClick="{{ t.toggleThread }}">💬 Обсуждение · {{ t.threadCount }}</button><sc-if value="{{ t.threadOpen }}" hint-placeholder-val=""><div class="tthbox"><sc-for list="{{ t.thread }}" as="m" hint-placeholder-count="2"><div class="tthmsg {{ m.me }}"><span class="tthwho">{{ m.author }}</span><span class="tthtxt">{{ m.text }}</span><span class="tthwhen">{{ m.when }}</span></div></sc-for><sc-if value="{{ t.canComment }}" hint-placeholder-val="{{ true }}"><div class="tthinput"><input class="inp" value="{{ t.commentInput }}" onInput="{{ t.onComment }}" onKeyDown="{{ t.onCommentKey }}" placeholder="Написать в обсуждение…"><button class="btn xs dark" onClick="{{ t.sendComment }}">Отпр.</button></div></sc-if></div></sc-if></div>
 </div>
 <div class="tcact">
+<sc-if value="{{ t.isForeign }}" hint-placeholder-val=""><button class="btn xs" onClick="{{ t.foreignSwitch }}" title="Действия доступны в компании {{ t.foreignName }}">↪ Открыть в {{ t.foreignName }}</button></sc-if>
 <sc-if value="{{ t.canAccept }}" hint-placeholder-val=""><button class="btn xs" onClick="{{ t.accept }}">Принять</button></sc-if>
 <sc-if value="{{ t.canStart }}" hint-placeholder-val=""><button class="btn xs" onClick="{{ t.start }}">В работу</button></sc-if>
 <sc-if value="{{ t.canDone }}" hint-placeholder-val=""><button class="btn xs dark" onClick="{{ t.done }}">Выполнено</button></sc-if>
@@ -3246,9 +3264,9 @@ window.dispatchEvent(new Event('fbready'));
 <div class="cwbody">
 <sc-if value="{{ cwIsGroups }}" hint-placeholder-val="{{ true }}">
 <sc-if value="{{ cwEmptyAll }}" hint-placeholder-val=""><div class="cwempty">На сегодня и ближайшую неделю задач нет 🎉</div></sc-if>
-<sc-for list="{{ cwGroups }}" as="g" hint-placeholder-count="3"><sc-if value="{{ g.has }}" hint-placeholder-val=""><div class="cwgrp {{ g.cls }}"><div class="cwgl">{{ g.label }} · {{ g.count }}</div><sc-for list="{{ g.tasks }}" as="t" hint-placeholder-count="2"><div class="cwtask"><sc-if value="{{ t.canComplete }}" hint-placeholder-val=""><button class="cwcheck" onClick="{{ t.complete }}" title="Отметить выполненной"></button></sc-if><span class="cwtside {{ t.statusCls }}"></span><button class="cwtopen" onClick="{{ t.open }}"><span class="cwtmain"><span class="cwtt">{{ t.title }}</span><span class="cwtmeta"><span class="cwst {{ t.statusCls }}">{{ t.status }}</span></span></span><span class="cwavs"><sc-for list="{{ t.avatars }}" as="a" hint-placeholder-count="1"><span class="{{ a.cls }}" title="{{ a.title }}">{{ a.ini }}</span></sc-for></span></button></div></sc-for></div></sc-if></sc-for>
+<sc-for list="{{ cwGroups }}" as="g" hint-placeholder-count="3"><sc-if value="{{ g.has }}" hint-placeholder-val=""><div class="cwgrp {{ g.cls }}"><div class="cwgl">{{ g.label }} · {{ g.count }}</div><sc-for list="{{ g.tasks }}" as="t" hint-placeholder-count="2"><div class="cwtask"><sc-if value="{{ t.canComplete }}" hint-placeholder-val=""><button class="cwcheck" onClick="{{ t.complete }}" title="Отметить выполненной"></button></sc-if><span class="cwtside {{ t.statusCls }}"></span><button class="cwtopen" onClick="{{ t.open }}"><span class="cwtmain"><span class="cwtt">{{ t.title }}</span><span class="cwtmeta"><span class="cwst {{ t.statusCls }}">{{ t.status }}</span><sc-if value="{{ t.showCo }}" hint-placeholder-val=""><span class="{{ t.coBadgeCls }}">{{ t.coBadge }}</span></sc-if></span></span><span class="cwavs"><sc-for list="{{ t.avatars }}" as="a" hint-placeholder-count="1"><span class="{{ a.cls }}" title="{{ a.title }}">{{ a.ini }}</span></sc-for></span></button></div></sc-for></div></sc-if></sc-for>
 </sc-if>
-<sc-if value="{{ cwNotGroups }}" hint-placeholder-val=""><div class="cwgrp"><div class="cwgl">{{ cwDayLabel }}</div><sc-if value="{{ cwDayEmpty }}" hint-placeholder-val=""><div class="cwempty">На этот день задач нет.</div></sc-if><sc-for list="{{ cwDayList }}" as="t" hint-placeholder-count="2"><div class="cwtask"><sc-if value="{{ t.canComplete }}" hint-placeholder-val=""><button class="cwcheck" onClick="{{ t.complete }}" title="Отметить выполненной"></button></sc-if><span class="cwtside {{ t.statusCls }}"></span><button class="cwtopen" onClick="{{ t.open }}"><span class="cwtmain"><span class="cwtt">{{ t.title }}</span><span class="cwtmeta"><span class="cwst {{ t.statusCls }}">{{ t.status }}</span></span></span><span class="cwavs"><sc-for list="{{ t.avatars }}" as="a" hint-placeholder-count="1"><span class="{{ a.cls }}" title="{{ a.title }}">{{ a.ini }}</span></sc-for></span></button></div></sc-for></div></sc-if>
+<sc-if value="{{ cwNotGroups }}" hint-placeholder-val=""><div class="cwgrp"><div class="cwgl">{{ cwDayLabel }}</div><sc-if value="{{ cwDayEmpty }}" hint-placeholder-val=""><div class="cwempty">На этот день задач нет.</div></sc-if><sc-for list="{{ cwDayList }}" as="t" hint-placeholder-count="2"><div class="cwtask"><sc-if value="{{ t.canComplete }}" hint-placeholder-val=""><button class="cwcheck" onClick="{{ t.complete }}" title="Отметить выполненной"></button></sc-if><span class="cwtside {{ t.statusCls }}"></span><button class="cwtopen" onClick="{{ t.open }}"><span class="cwtmain"><span class="cwtt">{{ t.title }}</span><span class="cwtmeta"><span class="cwst {{ t.statusCls }}">{{ t.status }}</span><sc-if value="{{ t.showCo }}" hint-placeholder-val=""><span class="{{ t.coBadgeCls }}">{{ t.coBadge }}</span></sc-if></span></span><span class="cwavs"><sc-for list="{{ t.avatars }}" as="a" hint-placeholder-count="1"><span class="{{ a.cls }}" title="{{ a.title }}">{{ a.ini }}</span></sc-for></span></button></div></sc-for></div></sc-if>
 </div>
 </sc-if>
 <sc-if value="{{ cwIsPulse }}" hint-placeholder-val=""><div class="cwbody">
@@ -5507,7 +5525,7 @@ class Component extends DCLogic {
     if (this.myAreaSet().size) this.queueCloudPush();
   }
 
-  componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); clearInterval(this._peekInt); clearTimeout(this._peekToastT); clearTimeout(this._peekFirstT); clearInterval(this._peekRemindInt); clearTimeout(this._peekHideT); clearTimeout(this._purgeT); clearInterval(this._purgeInt); clearInterval(this._chInt); clearTimeout(this._chLeaveT); clearTimeout(this._coffeeT); clearInterval(this._clockInt); clearInterval(this._badgeInt); if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
+  componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); this.xStopListeners(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); clearInterval(this._peekInt); clearTimeout(this._peekToastT); clearTimeout(this._peekFirstT); clearInterval(this._peekRemindInt); clearTimeout(this._peekHideT); clearTimeout(this._purgeT); clearInterval(this._purgeInt); clearInterval(this._chInt); clearTimeout(this._chLeaveT); clearTimeout(this._coffeeT); clearInterval(this._clockInt); clearInterval(this._badgeInt); if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
 
   loaderVals() {
     const T = 'ENGINEERED FOR EXCELLENCE.';
@@ -6359,6 +6377,7 @@ class Component extends DCLogic {
       this._unsub = fb.onSnapshot(this._docRef, s => this.onRemote(s), err => this.setState({ cloudErr: 'Ошибка синхронизации: ' + err.message }));
       this.setState({ cloudConnected: true, cloudStatus: 'Онлайн' });
       this.startPresence();
+      try { this.xStartListeners(); } catch (e) {}
     } catch (e) { this.setState({ cloudErr: 'Не удалось подключиться: ' + e.message, cloudStatus: '' }); }
   }
 
@@ -6597,11 +6616,80 @@ class Component extends DCLogic {
   }
 
   // ===== Задачи: постановка задач коллегам =====
-  emptyTaskDraft() { return { id: '', title: '', executorIds: [], due: '', dueTime: '', desc: '', priority: 'Обычный' }; }
+  emptyTaskDraft() { return { id: '', title: '', executorIds: [], observerIds: [], due: '', dueTime: '', desc: '', priority: 'Обычный' }; }
   // Совместимость + мульти-исполнители
   taskExecutors(t) { if (Array.isArray(t.executors) && t.executors.length) return t.executors; if (t.executorId) return [{ id: t.executorId, name: t.executor || '—' }]; return []; }
   taskExecIds(t) { return this.taskExecutors(t).map(e => e.id); }
   isTaskExec(t, cid) { return this.taskExecIds(t).indexOf(cid) >= 0; }
+  // ===== Сквозная мультикомпанийность задач =====
+  // Участие в задаче: создатель / главный исполнитель / соисполнитель / наблюдатель.
+  taskCreatorId(t) { return t.authorId || t.creator_id || t.createdBy || ''; }
+  taskCoExecIds(t) { return Array.isArray(t.co_executors) ? t.co_executors : []; }
+  taskObservers(t) { return Array.isArray(t.observers) ? t.observers : []; }
+  isTaskParticipant(t, uid) {
+    if (!uid || !t) return false;
+    if (this.taskCreatorId(t) === uid) return true;
+    if (this.isTaskExec(t, uid)) return true;
+    if (t.assigned_to === uid) return true;
+    if (this.taskCoExecIds(t).indexOf(uid) >= 0) return true;
+    if (this.taskObservers(t).indexOf(uid) >= 0) return true;
+    return false;
+  }
+  // Компания задачи (company_id) с откатом на компанию-источник.
+  taskCo(t) { return (t && (t.company_id || t._co)) || this._co(); }
+  coShort(co) { const cc = this.coCfg()[co]; if (!cc) return co; return cc.id === 'ink' ? 'Shtark INK' : (cc.id === 'chem' ? 'Shtark Chemicals' : cc.name); }
+  coLegal(co) { const cc = this.coCfg()[co]; return cc ? (cc.legalFull || cc.name) : co; }
+  coBadgeCls(co) { return 'cobadge co-' + co; }
+  // localStorage-ключ для ПРОИЗВОЛЬНОЙ компании (не только активной)
+  lsKeyFor(co, name) { return (this.lsGlobal()[name] ? 'inkflow_' : (co === 'ink' ? 'inkflow_' : co + '_')) + name; }
+  // Задачи конкретной компании: активная — из state, прочие — из кэша/localStorage
+  xReadTasks(co) {
+    if (co === this._co()) return this.state.tasks || [];
+    if (this._xTasks && this._xTasks[co]) return this._xTasks[co];
+    try { const v = localStorage.getItem(this.lsKeyFor(co, 'tasks')); const a = v ? JSON.parse(v) : []; return Array.isArray(a) ? a : []; } catch (e) { return []; }
+  }
+  // СКВОЗНОЙ агрегатор: объединяет задачи всех доступных пользователю компаний.
+  // Рядовой сотрудник — только задачи со своим участием; админ — все задачи обеих компаний.
+  getUnifiedUserTasks(user) {
+    user = user || this.state.currentUser;
+    const active = this._co();
+    const cos = user ? this.userCompanies(user).slice() : [active];
+    cos.sort((a, b) => (a === active ? -1 : 0) - (b === active ? -1 : 0)); // активная — первой (приоритет при дедупе)
+    const seen = {}; const out = [];
+    for (const co of cos) {
+      for (const t of this.xReadTasks(co)) {
+        if (!t || !t.id || seen[t.id]) continue; seen[t.id] = 1;
+        out.push({ ...t, _co: co, company_id: t.company_id || co });
+      }
+    }
+    if (user && user.role === 'admin') return out;
+    const uid = user ? user.id : '';
+    return out.filter(t => this.isTaskParticipant(t, uid));
+  }
+  // Вторичные слушатели облака: тянем задачи ДРУГИХ доступных компаний (помимо активной),
+  // чтобы сводный список/календарь были полными независимо от текущего таба компании.
+  xStartListeners() {
+    const fb = window.__FB; if (!fb || !this._db) return;
+    const user = this.state.currentUser; if (!user) return;
+    const others = this.userCompanies(user).filter(c => c !== this._co());
+    this.xStopListeners();
+    this._xUnsub = {}; this._xTasks = this._xTasks || {};
+    for (const co of others) {
+      try {
+        const ref = fb.doc(this._db, 'inkflow', this.coWsId(co));
+        this._xUnsub[co] = fb.onSnapshot(ref, s => {
+          const dd = s.exists() ? (s.data() || {}) : {};
+          if (Array.isArray(dd.tasks)) {
+            this._xTasks[co] = dd.tasks;
+            try { localStorage.setItem(this.lsKeyFor(co, 'tasks'), JSON.stringify(dd.tasks)); } catch (e) {}
+            if (this.state.tab === 'tasks' || this.state.tab === 'home') this.forceUpdate();
+            try { setTimeout(() => this.updateAppBadge(), 50); } catch (e) {}
+          }
+        }, () => {});
+      } catch (e) {}
+    }
+  }
+  xStopListeners() { if (this._xUnsub) { for (const k in this._xUnsub) { try { this._xUnsub[k](); } catch (e) {} } } this._xUnsub = {}; }
   taskExecNames(t) { const a = this.taskExecutors(t); return a.length ? a.map(e => e.name).join(', ') : '—'; }
   taskDone(t) { return t.status === 'Выполнена' || t.status === 'Отклонена'; }
   taskDueLabel(t) { if (!t.due) return 'без срока'; return this.dmFull(t.due) + (t.dueTime ? ' ' + t.dueTime : ''); }
@@ -6637,9 +6725,10 @@ class Component extends DCLogic {
     const ids = Array.isArray(d.executorIds) ? d.executorIds : [];
     if (!ids.length) { this.setState({ taskErr: 'Выберите хотя бы одного исполнителя' }); return; }
     const execs = ids.map(id => { const u = (S.users || []).find(x => x.id === id); return { id, name: u ? u.name : '—' }; });
+    const observers = Array.isArray(d.observerIds) ? d.observerIds.filter(x => ids.indexOf(x) < 0) : [];
     const cu = S.currentUser;
     if (d.id) {
-      const next = (S.tasks || []).map(t => t.id === d.id ? { ...t, title: title.slice(0, 200), executors: execs, executorId: undefined, executor: undefined, due: d.due || '', dueTime: d.dueTime || '', desc: (d.desc || '').slice(0, 1000), priority: d.priority || 'Обычный' } : t);
+      const next = (S.tasks || []).map(t => t.id === d.id ? { ...t, title: title.slice(0, 200), executors: execs, executorId: undefined, executor: undefined, assigned_to: ids[0] || '', co_executors: ids.slice(1), observers, due: d.due || '', dueTime: d.dueTime || '', desc: (d.desc || '').slice(0, 1000), priority: d.priority || 'Обычный', company_id: t.company_id || this._co() } : t);
       this.writeTasks(next);
       this.setState({ taskDraft: null, taskErr: '' });
       this.postSystemNote('✏️ Задача обновлена: «' + title + '» — исполнители: ' + execs.map(e => e.name).join(', '), cu ? cu.name : '—');
@@ -6649,7 +6738,9 @@ class Component extends DCLogic {
     const task = {
       id: 't_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5),
       title: title.slice(0, 200), executors: execs,
-      authorId: cu ? cu.id : '', author: cu ? cu.name : '—', due: d.due || '', dueTime: d.dueTime || '', desc: (d.desc || '').slice(0, 1000),
+      company_id: this._co(),
+      authorId: cu ? cu.id : '', author: cu ? cu.name : '—', assigned_to: ids[0] || '', co_executors: ids.slice(1), observers,
+      due: d.due || '', dueTime: d.dueTime || '', desc: (d.desc || '').slice(0, 1000),
       priority: d.priority || 'Обычный', status: 'Новая', rejectReason: '', thread: [], createdAt: Date.now(), doneAt: 0,
     };
     this.writeTasks([task, ...(S.tasks || [])].slice(0, 500));
@@ -6770,6 +6861,36 @@ class Component extends DCLogic {
     XLSX.utils.book_append_sheet(wb, ws, 'Аудит KPI');
     XLSX.writeFile(wb, 'Аудит KPI ' + coName + ' ' + (this.state.ratingPeriod || new Date().toISOString().slice(0, 7)) + '.xlsx');
   }
+  // Выгрузка сводного списка задач (с колонкой «Юрлицо/Компания»)
+  tasksExportExcel() {
+    const XLSX = window.XLSX; if (!XLSX) { try { alert('Библиотека Excel не загрузилась — обновите страницу.'); } catch (e) {} return; }
+    const cu = this.state.currentUser;
+    const data = this.getUnifiedUserTasks(cu);
+    if (!data.length) { try { alert('Нет задач для экспорта.'); } catch (e) {} return; }
+    const nm = (id) => { const u = (this.state.users || []).find(x => x.id === id); return u ? u.name : (id || ''); };
+    const sorted = data.slice().sort((a, b) => ((a.due || '9999') + (a.dueTime || '')).localeCompare((b.due || '9999') + (b.dueTime || '')));
+    const headers = ['Юрлицо/Компания', 'Задача', 'Статус', 'Приоритет', 'Постановщик', 'Исполнители', 'Соисполнители', 'Наблюдатели', 'Срок', 'Время', 'Описание'];
+    const types = ['text', 'text', 'code', 'code', 'text', 'text', 'text', 'text', 'code', 'code', 'text'];
+    const rows = sorted.map(t => [
+      this.coLegal(this.taskCo(t)),
+      t.title || '', t.status || 'Новая', t.priority || 'Обычный',
+      t.author || nm(this.taskCreatorId(t)),
+      this.taskExecutors(t).map(e => e.name).join(', '),
+      this.taskCoExecIds(t).map(nm).join(', '),
+      this.taskObservers(t).map(nm).join(', '),
+      t.due ? this.dmFull(t.due) : '', t.dueTime || '', (t.desc || '').slice(0, 500),
+    ]);
+    const st = this.mgXlSt();
+    const ws = this.mgXlSheet('Реестр задач · сводно по компаниям группы', headers, types, rows, null);
+    // подсветка просроченных строк мягким красным
+    try {
+      const range = XLSX.utils.decode_range(ws['!ref']); const dataStart = 3;
+      sorted.forEach((t, i) => { if (!this.taskOverdue(t)) return; for (let c = range.s.c; c <= range.e.c; c++) { const ad = XLSX.utils.encode_cell({ r: dataStart + i, c }); const cl = ws[ad]; if (cl) cl.s = { ...(cl.s || {}), fill: { fgColor: { rgb: st.RED } } }; } });
+    } catch (e) {}
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Задачи');
+    XLSX.writeFile(wb, 'Реестр задач (сводно) ' + new Date().toISOString().slice(0, 10) + '.xlsx');
+  }
   buildTasks() {
     const S = this.state, set = (p) => this.setState(p);
     const cu = S.currentUser; const cid = cu ? cu.id : '';
@@ -6779,13 +6900,15 @@ class Component extends DCLogic {
     const users = (S.users || []).filter(u => u.active !== false);
     const view = S.taskView || 'mine';
     const today = new Date(); today.setHours(0, 0, 0, 0); const t0 = today.getTime();
-    const all = (S.tasks || []);
+    const activeCo = this._co();
+    const all = this.getUnifiedUserTasks(cu); // сквозной список по всем доступным компаниям
+    const multiCo = cu ? this.userCompanies(cu).length > 1 : false;
     const active = (t) => !this.taskDone(t);
     const mineN = all.filter(t => this.isTaskExec(t, cid) && active(t)).length;
-    const assignedN = all.filter(t => t.authorId === cid && active(t)).length;
+    const assignedN = all.filter(t => this.taskCreatorId(t) === cid && active(t)).length;
     let list = all;
     if (view === 'mine') list = all.filter(t => this.isTaskExec(t, cid));
-    else if (view === 'assigned') list = all.filter(t => t.authorId === cid);
+    else if (view === 'assigned') list = all.filter(t => this.taskCreatorId(t) === cid);
     list = list.slice().sort((a, b) => {
       const ad = this.taskDone(a), bd = this.taskDone(b); if (ad !== bd) return ad ? 1 : -1;
       const au = (a.due || '9999') + (a.dueTime || ''), bu = (b.due || '9999') + (b.dueTime || ''); if (au !== bu) return au < bu ? -1 : 1;
@@ -6794,19 +6917,22 @@ class Component extends DCLogic {
     const stCls = { 'Новая': 'st-new', 'Принята': 'st-acc', 'В работе': 'st-prog', 'Выполнена': 'st-done', 'Отклонена': 'st-rej' };
     const seenCut = this._taskSeenSnap != null ? this._taskSeenSnap : (Number(S.tasksSeenAt) || 0);
     const rows = list.map(t => {
+      const tco = this.taskCo(t); const foreign = tco !== activeCo;
       const overdue = this.taskOverdue(t);
       const dueSoon = !overdue && t.due && active(t) && (this.parseISO(t.due).getTime() - t0) / 86400000 <= 1;
-      const canManage = isAdmin || t.authorId === cid;
-      const isExec = this.isTaskExec(t, cid);
+      const canManage = (isAdmin || this.taskCreatorId(t) === cid) && !foreign;
+      const isExec = this.isTaskExec(t, cid) && !foreign;
       const thread = (t.thread || []).map(m => ({ id: m.id, author: m.author || '—', text: m.text || '', when: this.fmtDateTime(m.ts), me: m.authorId === cid ? 'tcm-me' : '' }));
       return {
         id: t.id, title: t.title, desc: t.desc || '', hasDesc: !!(t.desc && t.desc.trim()),
         execNames: this.taskExecNames(t), author: t.author || '—',
+        showCo: multiCo, coBadge: this.coShort(tco), coBadgeCls: this.coBadgeCls(tco),
+        isForeign: foreign, foreignName: this.coShort(tco), foreignSwitch: () => this.switchCompany(tco),
         due: this.taskDueLabel(t), dueCls: overdue ? 'due-over' : (dueSoon ? 'due-soon' : ''),
         status: t.status || 'Новая', statusCls: stCls[t.status] || 'st-new',
         isRejected: t.status === 'Отклонена', rejectReason: t.rejectReason || '',
         priority: t.priority || 'Обычный', prioCls: t.priority === 'Срочный' ? 'pr-hot' : (t.priority === 'Высокий' ? 'pr-high' : 'pr-norm'),
-        rowCls: (overdue ? 'task-over' : '') + (isExec && (t.createdAt || 0) > seenCut ? ' tnew' : ''),
+        rowCls: (overdue ? 'task-over' : '') + (foreign ? ' task-foreign' : '') + (isExec && (t.createdAt || 0) > seenCut ? ' tnew' : ''),
         canAccept: isExec && t.status === 'Новая', accept: () => this.setTaskStatus(t.id, 'Принята'),
         canStart: isExec && (t.status === 'Новая' || t.status === 'Принята'), start: () => this.setTaskStatus(t.id, 'В работе'),
         canDone: isExec && (t.status === 'Принята' || t.status === 'В работе'), done: () => this.setTaskStatus(t.id, 'Выполнена'),
@@ -6814,15 +6940,15 @@ class Component extends DCLogic {
         rejecting: S.taskRejecting === t.id, rejectInput: S.taskRejecting === t.id ? (S.taskRejectReason || '') : '',
         onRejectInput: (e) => set({ taskRejectReason: e.target.value, taskErr: '' }), confirmReject: () => this.confirmReject(t.id), cancelReject: () => this.cancelReject(),
         canReopen: (this.taskDone(t)) && canManage, reopen: () => this.setTaskStatus(t.id, 'Новая'),
-        canEdit: canManage, edit: () => set({ taskDraft: { id: t.id, title: t.title, executorIds: this.taskExecIds(t), due: t.due || '', dueTime: t.dueTime || '', desc: t.desc || '', priority: t.priority || 'Обычный' }, taskErr: '' }),
+        canEdit: canManage, edit: () => set({ taskDraft: { id: t.id, title: t.title, executorIds: this.taskExecIds(t), observerIds: this.taskObservers(t), due: t.due || '', dueTime: t.dueTime || '', desc: t.desc || '', priority: t.priority || 'Обычный' }, taskErr: '' }),
         canRemove: canManage, remove: () => this.askDelete('задачу «' + t.title + '»', () => this.writeTasks((this.state.tasks || []).filter(x => x.id !== t.id))),
         threadOpen: S.taskOpenThread === t.id, threadCount: (t.thread || []).length, toggleThread: () => this.toggleTaskThread(t.id),
-        thread, commentInput: S.taskOpenThread === t.id ? (S.taskCommentInput || '') : '',
+        thread, canComment: !foreign, commentInput: S.taskOpenThread === t.id ? (S.taskCommentInput || '') : '',
         onComment: (e) => set({ taskCommentInput: e.target.value }), sendComment: () => this.addTaskComment(t.id),
         onCommentKey: (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.addTaskComment(t.id); } },
       };
     });
-    const overdueN = all.filter(t => this.taskOverdue(t) && (this.isTaskExec(t, cid) || t.authorId === cid)).length;
+    const overdueN = all.filter(t => this.taskOverdue(t) && (this.isTaskExec(t, cid) || this.taskCreatorId(t) === cid)).length;
     const mode = S.taskMode || 'list';
     const MONr = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
     const calKey = S.taskCalKey || (today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0'));
@@ -6839,8 +6965,9 @@ class Component extends DCLogic {
       const ds = calKey + '-' + String(dd).padStart(2, '0');
       const its = (dayMap[ds] || []).map(t => {
         const over = this.taskOverdue(t);
-        const canManage = isAdmin || t.authorId === cid;
-        return { id: t.id, title: (t.dueTime ? t.dueTime + ' ' : '') + t.title, chipCls: 'tchip ' + (stCls[t.status] || 'st-new') + (over ? ' over' : ''), open: canManage ? (() => set({ taskDraft: { id: t.id, title: t.title, executorIds: this.taskExecIds(t), due: t.due || '', dueTime: t.dueTime || '', desc: t.desc || '', priority: t.priority || 'Обычный' }, taskErr: '' })) : (() => {}) };
+        const tco = this.taskCo(t); const foreign = tco !== activeCo;
+        const canManage = (isAdmin || this.taskCreatorId(t) === cid);
+        return { id: t.id, title: (t.dueTime ? t.dueTime + ' ' : '') + t.title, chipCls: 'tchip co-' + tco + ' ' + (stCls[t.status] || 'st-new') + (over ? ' over' : ''), coTip: multiCo ? this.coShort(tco) : '', open: foreign ? (() => this.switchCompany(tco)) : (canManage ? (() => set({ taskDraft: { id: t.id, title: t.title, executorIds: this.taskExecIds(t), observerIds: this.taskObservers(t), due: t.due || '', dueTime: t.dueTime || '', desc: t.desc || '', priority: t.priority || 'Обычный' }, taskErr: '' })) : (() => {})) };
       });
       cells.push({ blank: false, key: ds, day: dd, dayCls: 'tcell' + (ds === todayStr ? ' today' : '') + (this.isOffDay(ds) ? ' toff' : ''), tasks: its, hasTasks: its.length > 0, canAdd: true, qadd: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.openQuickAdd(ds); } });
     }
@@ -6849,6 +6976,8 @@ class Component extends DCLogic {
     const monthCount = list.filter(t => t.due && t.due.slice(0, 7) === calKey).length;
     const shiftMonth = (delta) => { let y = cy, m = cm + delta; while (m < 1) { m += 12; y--; } while (m > 12) { m -= 12; y++; } set({ taskCalKey: y + '-' + String(m).padStart(2, '0') }); };
     const toggleExec = (id) => { const dd = this.state.taskDraft || this.emptyTaskDraft(); const cur = Array.isArray(dd.executorIds) ? dd.executorIds.slice() : []; const i = cur.indexOf(id); if (i >= 0) cur.splice(i, 1); else cur.push(id); set({ taskDraft: { ...dd, executorIds: cur }, taskErr: '' }); };
+    const toggleObs = (id) => { const dd = this.state.taskDraft || this.emptyTaskDraft(); const cur = Array.isArray(dd.observerIds) ? dd.observerIds.slice() : []; const i = cur.indexOf(id); if (i >= 0) cur.splice(i, 1); else cur.push(id); set({ taskDraft: { ...dd, observerIds: cur }, taskErr: '' }); };
+    const obsIds = Array.isArray(d.observerIds) ? d.observerIds : [];
     const upd = (patch) => set({ taskDraft: { ...(this.state.taskDraft || this.emptyTaskDraft()), ...patch }, taskErr: '' });
     // ===== Рейтинг по задачам (лидерборд + drill-down) =====
     const ratingOpen = !!S.ratingOpen;
@@ -6897,6 +7026,9 @@ class Component extends DCLogic {
       taskKpis: [{ label: 'Мне поручено', value: mineN, cls: '' }, { label: 'Поставил я', value: assignedN, cls: '' }, { label: 'Просрочено', value: overdueN, cls: overdueN ? 'kpiBad' : '' }, { label: 'Всего', value: all.length, cls: '' }],
       tdTitle: d.title, onTdTitle: (e) => upd({ title: e.target.value }),
       taskExecChips: users.map(u => ({ id: u.id, label: u.name, cls: draftIds.indexOf(u.id) >= 0 ? 'execchip on' : 'execchip', toggle: () => toggleExec(u.id) })),
+      taskObsChips: users.map(u => ({ id: u.id, label: u.name, cls: obsIds.indexOf(u.id) >= 0 ? 'execchip obs on' : 'execchip obs', toggle: () => toggleObs(u.id) })),
+      taskMultiCo: multiCo, coLegend: this.coOrder().map(id => ({ id, name: this.coShort(id), cls: 'coleg co-' + id })),
+      taskExportExcel: () => this.tasksExportExcel(),
       tdDue: d.due, onTdDue: (e) => upd({ due: e.target.value }),
       tdDueTime: d.dueTime, onTdDueTime: (e) => upd({ dueTime: e.target.value }),
       tdDesc: d.desc, onTdDesc: (e) => upd({ desc: e.target.value }),
@@ -8161,7 +8293,9 @@ class Component extends DCLogic {
     if (!cu || S.loading) return { cwShow: false, cwOpen: false, cwHasBadge: false, cwBadge: '', cwToggle: () => {}, cwClose: () => {} };
     const cid = cu.id; const set = (p) => this.setState(p);
     const today = new Date(); today.setHours(0, 0, 0, 0); const t0 = today.getTime(); const todayStr = this.ymd(today);
-    const mine = (S.tasks || []).filter(t => this.isTaskExec(t, cid) || t.authorId === cid);
+    const activeCo = this._co(); const multiCo = this.userCompanies(cu).length > 1;
+    const unified = this.getUnifiedUserTasks(cu);
+    const mine = cu.role === 'admin' ? unified.filter(t => this.isTaskExec(t, cid) || this.taskCreatorId(t) === cid) : unified;
     const todayCount = mine.filter(t => !this.taskDone(t) && t.due === todayStr).length;
     const MONr = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
     const calKey = S.cwMonth || (today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0'));
@@ -8178,14 +8312,17 @@ class Component extends DCLogic {
     }
     while (cells.length % 7) cells.push({ key: 'z' + cells.length, day: '', dayCls: 'cwc blank', hasDot: false, pick: () => {} });
     const weeks = []; for (let i = 0; i < cells.length; i += 7) weeks.push({ key: 'w' + i, days: cells.slice(i, i + 7) });
-    const item = (t) => ({
+    const item = (t) => {
+      const tco = this.taskCo(t); const foreign = tco !== activeCo;
+      return {
       id: t.id, title: (t.dueTime ? t.dueTime + ' · ' : '') + t.title,
+      showCo: multiCo, coBadge: this.coShort(tco), coBadgeCls: this.coBadgeCls(tco),
       status: t.status || 'Новая', statusCls: ({ 'Новая': 'st-new', 'Принята': 'st-acc', 'В работе': 'st-prog', 'Выполнена': 'st-done', 'Отклонена': 'st-rej' })[t.status] || 'st-new',
       avatars: this.taskExecutors(t).slice(0, 4).map(e => ({ ini: this.taskInitials(e.name), cls: 'cwav ' + this.avatarTone(e.name), title: e.name })),
-      canComplete: !this.taskDone(t) && this.isTaskExec(t, cid),
+      canComplete: !this.taskDone(t) && this.isTaskExec(t, cid) && !foreign,
       complete: (e) => { try { const r = e.currentTarget.getBoundingClientRect(); this.cwConfetti(r.left + r.width / 2, r.top + r.height / 2); } catch (x) {} this.setState({ cwBump: Date.now() }); clearTimeout(this._cwBumpT); this._cwBumpT = setTimeout(() => this.setState({ cwBump: 0 }), 700); this.setTaskStatus(t.id, 'Выполнена'); },
-      open: () => set({ tab: 'tasks', taskMode: 'list', taskView: this.isTaskExec(t, cid) ? 'mine' : 'assigned', navOpen: false, cwOpen: false }),
-    });
+      open: () => { if (foreign) { this.switchCompany(tco); return; } set({ tab: 'tasks', taskMode: 'list', taskView: this.isTaskExec(t, cid) ? 'mine' : 'assigned', navOpen: false, cwOpen: false }); },
+    }; };
     const isToday = selDay === todayStr;
     const overdue = mine.filter(t => this.taskOverdue(t)).map(item);
     const todayTasks = mine.filter(t => !this.taskDone(t) && t.due === todayStr && !this.taskOverdue(t)).map(item);
