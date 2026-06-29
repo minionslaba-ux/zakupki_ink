@@ -1273,6 +1273,21 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .dbigact{font-size:13px;font-weight:600;color:#2b2926;line-height:1.4}
 .dbigmeta{font-size:11px;color:#8a8782;margin-top:2px}
 .dbigeff{font-size:14px;font-weight:800;color:#2a8a4a;font-family:'IBM Plex Mono',monospace;white-space:nowrap}
+.dbiext{margin-top:16px;border:1px solid #cfe0f5;border-radius:13px;background:linear-gradient(180deg,#f3f8fe,#fff 70px);padding:15px 17px}
+.dbiexthd{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.dbiextttl{font-size:14.5px;font-weight:800;color:#1a2b3c}
+.dbiextsub{font-size:11.5px;color:#56657a;margin-top:5px;line-height:1.5}
+.dbiextbtns{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:11px}
+.dbiextcard{margin-top:13px;background:#0f1b2e;border:1px solid #2A6FDB;border-radius:12px;padding:15px 17px}
+.dbiextrow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.dbiextprov{font-size:11.5px;font-weight:700;color:#9fc4f5;text-transform:uppercase;letter-spacing:.04em}
+.dbiext-risk{font-size:12px;font-weight:800;border-radius:20px;padding:3px 11px;background:rgba(255,255,255,.1);color:#cfd8e6}
+.dbiext-risk.lo{background:#1f5132;color:#9fe3b6}.dbiext-risk.mid{background:#5a4a1c;color:#f0d290}.dbiext-risk.hi{background:#5a2420;color:#f3b4ad}
+.dbiextsum{font-size:13.5px;line-height:1.62;color:#eaf1fb;white-space:pre-wrap;text-wrap:pretty}
+.dbiextg{margin-top:12px;display:flex;flex-direction:column;gap:7px}
+.dbiextgrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 11px;background:rgba(255,255,255,.05);border-radius:8px}
+.dbiextga{font-size:12.5px;color:#dbe6f5;line-height:1.4}
+.dbiextge{font-size:13px;font-weight:800;color:#9fe3b6;font-family:'IBM Plex Mono',monospace;white-space:nowrap}
 .aiana-ic{color:#0e0e0e;font-size:14px}
 .aichip{text-align:left;appearance:none;cursor:pointer;font:inherit;font-size:13px;font-weight:600;color:#0e0e0e;background:#fff;border:1px solid #e7e4e0;border-radius:11px;padding:11px 13px;line-height:1.4;transition:all .14s}
 .aichip:hover{border-color:#FFD200;background:#fffbe8}
@@ -2043,6 +2058,20 @@ window.dispatchEvent(new Event('fbready'));
 <div class="dbirec">✅ Рекомендация: {{ i.recommendation }}</div>
 </div></sc-for></div>
 <sc-if value="{{ deepBIHasGrowth }}" hint-placeholder-val=""><div class="dbigrowth"><div class="dbigttl">📈 Точки роста · ранжированы по чистой марже в евро</div><sc-for list="{{ deepBIGrowth }}" as="g" hint-placeholder-count="2"><div class="dbigrow"><span class="dbigrank">{{ g.rank }}</span><div class="dbigmain"><div class="dbigact">{{ g.action }}</div><div class="dbigmeta">{{ g.contour }} · затраты: {{ g.effort }} · {{ g.ratio }}</div></div><span class="dbigeff">{{ g.eff }}</span></div></sc-for></div></sc-if>
+<div class="dbiext">
+<div class="dbiexthd"><span class="dbiextttl">🌐 Сверхглубокий внешний ИИ-аудит · Мульти-ИИ оркестрация</span></div>
+<div class="dbiextsub">Сложную многофакторную аномалию можно эскалировать во внешнюю нейросеть (OpenAI · Anthropic Claude · DeepSeek). Ключ — в панели «AI-аналитик» → ⚙ или серверless-прокси (см. DEPLOY.md).</div>
+<div class="dbiextbtns"><button class="aianalyze" onClick="{{ orchestrateExt }}" disabled="{{ deepBIExtBusy }}"><span class="aiana-ic">🌐</span> Эскалировать во внешний ИИ</button><sc-if value="{{ deepBIExtForce }}" hint-placeholder-val=""><button class="btn" onClick="{{ orchestrateExtForce }}">Запустить принудительно</button></sc-if></div>
+<sc-if value="{{ deepBIExtBusy }}" hint-placeholder-val=""><div class="hint">🌐 Внешний ИИ проводит сверхглубокий аудит матрицы аномалии…</div></sc-if>
+<sc-if value="{{ deepBIExtHasMsg }}" hint-placeholder-val=""><div class="banner warn">{{ deepBIExtMsg }}</div></sc-if>
+<sc-if value="{{ deepBIExtHas }}" hint-placeholder-val="">
+<div class="dbiextcard">
+<div class="dbiextrow"><span class="dbiextprov">Провайдер: {{ deepBIExtProvider }}</span><sc-if value="{{ deepBIExtRiskHas }}" hint-placeholder-val=""><span class="{{ deepBIExtRiskCls }}">Риск-скоринг: {{ deepBIExtRisk }}</span></sc-if></div>
+<div class="dbiextsum">{{ deepBIExtSummary }}</div>
+<sc-if value="{{ deepBIExtHasGrowth }}" hint-placeholder-val=""><div class="dbiextg"><sc-for list="{{ deepBIExtGrowth }}" as="g" hint-placeholder-count="2"><div class="dbiextgrow"><span class="dbiextga">{{ g.action }}</span><span class="dbiextge">{{ g.eff }}</span></div></sc-for></div></sc-if>
+</div>
+</sc-if>
+</div>
 </sc-if>
 </div>
 <div class="card">
@@ -3557,6 +3586,7 @@ class Component extends DCLogic {
     planFrom: '', planTo: '', importMsg: '', importOk: null, whFilled: false, repFrom: '', repTo: '',
     catKind: 'raw', catFilter: '', catCategory: '', catReady: false, rates: null, ratesErr: '', dlOpen: false, confirmDel: null,
     aiOpen: false, aiInput: '', aiBusy: false, aiMessages: [], aiModel: 'gpt-4o-mini', aiKey: '', aiBase: '', aiModelName: '', aiKeyEdit: '', aiBaseEdit: '', aiModelEdit: '', aiCfgOpen: false,
+    deepBIExternal: null, deepBIExtBusy: false, deepBIExtMsg: '', deepBIExtForce: false,
     rrHorizon: 3, rrSafetyMonths: 1, rrLeadDefault: 1, rrRun: {}, rrLead: {}, rrSafety: {}, auditSku: '',
     turnoverDays: 90, turnoverGen: false, planfactGen: false, stressGrowth: 30, stressGen: false, calcExpanded: {}, treasuryGen: false,
     apGm2Target: 15, apFx: 0, apLogi: 0, apSales: 0, apHorizon: 45, apSim: null, apLive: false, apDrafts: [], apAlerts: [], apInvoice: null, apSecurityLog: [], apRefreshedAt: 0, securityLog: [], secSearch: '',
@@ -6451,6 +6481,20 @@ class Component extends DCLogic {
     const key = this.state.aiKey;
     if (key) {
       const base = (this.state.aiBase || 'https://openrouter.ai/api/v1').replace(/\/+$/, '');
+      // ── Мульти-ИИ: Anthropic Claude использует /v1/messages (другой формат) ──
+      if (/anthropic\.com/i.test(base)) {
+        const sysMsg = (messages.find(m => m.role === 'system') || {}).content || 'Ты — главный финансовый аналитик ERP-системы Shtark Flow. Отвечай по делу, числами и фактами.';
+        const userMsgs = messages.filter(m => m.role !== 'system').map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: String(m.content || '') }));
+        const ah = { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' };
+        const model = this.state.aiModelName || 'claude-sonnet-4-20250514';
+        let ar, ad;
+        try { ar = await fetch(base + '/messages', { method: 'POST', headers: ah, body: JSON.stringify({ model, max_tokens: opts.max || 900, system: sysMsg, messages: userMsgs.length ? userMsgs : [{ role: 'user', content: ' ' }] }) }); }
+        catch (e) { throw new Error('нет связи с Anthropic (' + base + ') — нужен серверless-прокси или флаг CORS'); }
+        ad = await ar.json().catch(() => ({}));
+        if (!ar.ok || ad.error) throw new Error((ad.error && (ad.error.message || JSON.stringify(ad.error))) || ('Anthropic HTTP ' + ar.status));
+        this._lastModel = model;
+        return (ad.content && ad.content[0] && ad.content[0].text) || '';
+      }
       const headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key };
       try { headers['HTTP-Referer'] = location.origin; headers['X-Title'] = 'Shtark Chemicals Flow'; } catch (e) {}
       // Список моделей для перебора: выбранная пользователем + живые бесплатные из каталога OpenRouter
@@ -10451,6 +10495,74 @@ class Component extends DCLogic {
     this.setState({ tab: 'onec', deepBI: bi });
     try { this.postSystemNote('✦ Семантический аудит: выявлено аномалий ' + bi.insights.length + ', риск ≈ ' + Math.round(bi.totalEur).toLocaleString('ru-RU') + ' €.', 'АЯ'); } catch (e) {}
   }
+  // ===== МУЛЬТИ-ИИ ОРКЕСТРАЦИЯ: эскалация сложной аномалии во внешний ИИ =====
+  // Строит JSON-матрицу самой тяжёлой аномалии и оценивает её сложность (0..1).
+  aiBuildAnomalyMatrix(bi) {
+    bi = bi || this.state.deepBI; if (!bi || !bi.insights || !bi.insights.length) return null;
+    const reds = bi.insights.filter(i => i.level === 'red');
+    const top = (reds[0] || bi.insights[0]);
+    const factors = []; const t = (top.contour + ' ' + top.interpretation).toLowerCase();
+    if (/цен|price/.test(t)) factors.push('price');
+    if (/логист|фрахт|хранени|logist/.test(t)) factors.push('logistics');
+    if (/курс|валют|fx/.test(t)) factors.push('fx');
+    if (/таможн|брокер|пошлин/.test(t)) factors.push('customs');
+    if (/скидк|discount/.test(t)) factors.push('discount');
+    const crossModule = new Set(bi.insights.map(i => i.contour)).size > 1;
+    return {
+      period: bi.period, contour: top.contour, symptom: top.symptom, interpretation: top.interpretation,
+      factors: factors.length ? factors : ['mixed'],
+      nonlinear: /скачок|нелинейн|резк|аномал/i.test(top.symptom + ' ' + top.interpretation),
+      crossModule, deviationPct: top.overhead || 0, effectEur: Math.round(top.effectEur || 0),
+      totalRiskEur: Math.round(bi.totalEur || 0), insightsCount: bi.insights.length,
+      growthPoints: (bi.growthPoints || []).slice(0, 5).map(g => ({ action: g.action, effectEur: Math.round(g.effectEur || 0) })),
+      allInsights: bi.insights.slice(0, 6).map(i => ({ contour: i.contour, level: i.level, symptom: i.symptom, effectRub: Math.round(i.effectRub || 0) })),
+    };
+  }
+  aiComplexityScore(m) {
+    if (!m) return 0; let s = 0;
+    if ((m.factors || []).length >= 3) s += 0.35;
+    if (m.nonlinear) s += 0.25;
+    if (m.crossModule) s += 0.2;
+    if (Math.abs(m.deviationPct || 0) > 25) s += 0.15;
+    if ((m.insightsCount || 0) >= 4) s += 0.15;
+    return Math.min(1, s);
+  }
+  // Эскалация во внешний ИИ (мульти-провайдер через aiComplete: OpenAI / Anthropic / DeepSeek / OpenRouter / прокси)
+  async orchestrateAnomalyAudit(opts) {
+    opts = opts || {};
+    const bi = this.state.deepBI || this.executeDeepBusinessIntelligence();
+    if (!this.state.deepBI) this.setState({ deepBI: bi });
+    const matrix = this.aiBuildAnomalyMatrix(bi);
+    if (!matrix) { this.setState({ deepBIExtMsg: 'Нет аномалий для внешнего аудита — сначала запустите семантический аудит.' }); return; }
+    const complexity = this.aiComplexityScore(matrix);
+    if (!this.hasAI()) { this.setState({ deepBIExtMsg: '⚙ Укажите ключ внешнего ИИ (OpenAI / Anthropic / DeepSeek) в панели «AI-аналитик» → ⚙, либо настройте серверless-прокси (см. DEPLOY.md).' }); return; }
+    if (complexity < 0.6 && !opts.force) { this.setState({ deepBIExtMsg: 'Сложность аномалии ' + Math.round(complexity * 100) + '% — обработано внутренним движком, внешний ИИ не требуется. Можно запустить принудительно.', deepBIExtForce: true }); return; }
+    this.setState({ deepBIExtBusy: true, deepBIExtMsg: '', deepBIExternal: null, deepBIExtForce: false });
+    const sys = 'Ты — внешний независимый ИИ-аудитор уровня финансового директора. Проводишь сверхглубокий причинно-следственный аудит аномалии ERP-системы химического/красочного производства. Ответь СТРОГО валидным JSON по схеме: {"summary": "смысловой вердикт для директора, 3-5 предложений", "growth_points": [{"action": "конкретное действие", "effect_eur": число}], "risk_score": число_0_до_1}. Только JSON, без текста вокруг.';
+    const userMsg = 'JSON-матрица аномалии (данные для сверхглубокого аудита):\n' + JSON.stringify(matrix, null, 1);
+    try {
+      const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
+      const raw = await withTimeout(this.aiComplete([{ role: 'system', content: sys }, { role: 'user', content: userMsg }], { max: 1200 }), 60000);
+      const ext = this.aiNormalizeVerdict(raw);
+      ext.provider = this._lastModel || (/anthropic/i.test(this.state.aiBase || '') ? 'Anthropic Claude' : (this.state.aiModelName || 'внешний ИИ'));
+      ext.complexity = complexity;
+      this.setState({ deepBIExtBusy: false, deepBIExternal: ext, deepBIExtMsg: '' });
+      try { this.postSystemNote('🌐 Внешний ИИ-аудит выполнен (' + ext.provider + '): риск-скоринг ' + (ext.risk_score != null ? Math.round(ext.risk_score * 100) + '%' : '—') + '.', 'АЯ'); } catch (e) {}
+      try { this.secLog('SELF_LEARN', { detail: 'внешний ИИ-аудит аномалии · ' + ext.provider }); } catch (e) {}
+    } catch (e) {
+      const m = (e && e.message) || 'ошибка';
+      this.setState({ deepBIExtBusy: false, deepBIExtMsg: m === 'timeout' ? 'Внешний ИИ не ответил за минуту — попробуйте ещё раз или смените провайдера.' : ('Внешний ИИ недоступен: ' + m + '. Проверьте ключ/прокси (DEPLOY.md).') });
+    }
+  }
+  // Нормализация ответа внешнего ИИ (JSON / ```-блок / свободный текст) в единый объект
+  aiNormalizeVerdict(raw) {
+    const text = String(raw || '').trim(); let json = null;
+    const m = text.match(/```(?:json)?\s*([\s\S]*?)```/i) || text.match(/(\{[\s\S]*\})/);
+    if (m) { try { json = JSON.parse(m[1]); } catch (e) {} }
+    if (!json && /^\s*\{/.test(text)) { try { json = JSON.parse(text); } catch (e) {} }
+    if (json) return { ok: true, summary: json.summary || json.verdict || '', growth_points: Array.isArray(json.growth_points) ? json.growth_points : [], risk_score: typeof json.risk_score === 'number' ? json.risk_score : null, raw: text };
+    return { ok: true, summary: text, growth_points: [], risk_score: null, raw: text };
+  }
   // Excel-выгрузка «AI_Insights» — широкие объединённые ячейки с переносом текста (аналитическая записка)
   deepBIExcel() {
     const XLSX = window.XLSX; if (!XLSX) { try { alert('Библиотека Excel не загрузилась.'); } catch (e) {} return; }
@@ -10842,6 +10954,16 @@ class Component extends DCLogic {
       auditSummary: S.prodAiSummary || '', auditHas: !!S.prodAiSummary, auditBusy: !!S.prodAiBusy,
       runDeepBI: () => this.runDeepBI(), deepBIExcel: () => this.deepBIExcel(),
       deepBIHas: !!S.deepBI,
+      orchestrateExt: () => this.orchestrateAnomalyAudit(), orchestrateExtForce: () => this.orchestrateAnomalyAudit({ force: true }),
+      deepBIExtBusy: !!S.deepBIExtBusy, deepBIExtMsg: S.deepBIExtMsg || '', deepBIExtHasMsg: !!S.deepBIExtMsg, deepBIExtForce: !!S.deepBIExtForce,
+      deepBIExtHas: !!S.deepBIExternal,
+      deepBIExtProvider: S.deepBIExternal ? (S.deepBIExternal.provider || 'внешний ИИ') : '',
+      deepBIExtSummary: S.deepBIExternal ? S.deepBIExternal.summary : '',
+      deepBIExtRisk: (S.deepBIExternal && S.deepBIExternal.risk_score != null) ? (Math.round(S.deepBIExternal.risk_score * 100) + '%') : '',
+      deepBIExtRiskCls: (S.deepBIExternal && S.deepBIExternal.risk_score != null) ? (S.deepBIExternal.risk_score >= 0.66 ? 'dbiext-risk hi' : (S.deepBIExternal.risk_score >= 0.33 ? 'dbiext-risk mid' : 'dbiext-risk lo')) : 'dbiext-risk',
+      deepBIExtRiskHas: !!(S.deepBIExternal && S.deepBIExternal.risk_score != null),
+      deepBIExtGrowth: (S.deepBIExternal && Array.isArray(S.deepBIExternal.growth_points)) ? S.deepBIExternal.growth_points.slice(0, 6).map(g => ({ action: g.action || '', eff: (typeof g.effect_eur === 'number' ? Math.round(g.effect_eur).toLocaleString('ru-RU') + ' €' : '') })) : [],
+      deepBIExtHasGrowth: !!(S.deepBIExternal && Array.isArray(S.deepBIExternal.growth_points) && S.deepBIExternal.growth_points.length),
       deepBIVerdict: S.deepBI ? S.deepBI.ai_interpretation_verdict : '',
       deepBIPeriod: S.deepBI ? S.deepBI.period : '',
       deepBITotal: S.deepBI ? (Math.round(S.deepBI.totalEur).toLocaleString('ru-RU') + ' €') : '',
