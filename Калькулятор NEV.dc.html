@@ -700,6 +700,19 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .dlmapsample{margin-top:12px;border:1px solid #eee;border-radius:8px;padding:8px 10px;font-size:11px;color:#8a8782;font-family:'IBM Plex Mono',monospace;overflow:auto;white-space:nowrap}
 .dlmapfoot{display:flex;gap:10px;align-items:center;margin-top:16px;flex-wrap:wrap}
 .dlmapchk{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#56534f}
+.dlplace{max-width:680px}
+.dlplsugg{margin:2px 0 12px;background:#eef4fb;border:1px solid #d2e0f1;border-radius:9px;padding:9px 12px;font-size:13px;color:#1F4E78}
+.dlplsugg b{font-weight:800}
+.dlplconf{font-size:11px;color:#5b7da8;margin-left:6px}
+.dlplprev{border:1px solid #eee;border-radius:9px;overflow:auto;max-height:180px;margin-bottom:14px}
+.dlpltbl{border-collapse:collapse;width:100%;font-size:11.5px}
+.dlpltbl th{background:#f6f3ef;color:#56534f;font-weight:700;text-align:left;padding:6px 9px;white-space:nowrap;position:sticky;top:0}
+.dlpltbl td{padding:5px 9px;border-top:1px solid #f0ece6;color:#2b2926;white-space:nowrap;max-width:200px;overflow:hidden;text-overflow:ellipsis}
+.dlplrow{display:flex;align-items:center;gap:12px}
+.dlplrow .dlmapf{min-width:120px;font-weight:600;color:#2b2926}
+.dlplrow .sel{flex:1}
+.btn.ai{background:linear-gradient(135deg,#1F4E78,#2A6FDB);color:#fff;border:none}
+.btn.ai:hover{filter:brightness(1.07)}
 .fatabs{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
 .fatab{display:flex;flex-direction:column;align-items:flex-start;gap:1px;border:1.5px solid #e1ddd7;background:#fbfaf8;border-radius:10px;padding:9px 16px;cursor:pointer;min-width:150px;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
 .fatab b{font-size:13.5px;font-weight:700;color:#2b2926}
@@ -1038,6 +1051,8 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .p2arr{transition:transform .2s ease;font-size:19px}
 .p2btn:hover .p2arr{transform:translateX(6px)}
 .p2hint{font-size:12.5px;color:rgba(255,255,255,.55);font-weight:500}
+.p2dev{margin-top:14px;padding-top:13px;border-top:1px solid rgba(255,255,255,.1);font-size:11.5px;color:rgba(255,255,255,.42);font-weight:500;letter-spacing:.01em}
+.p2dev b{color:rgba(255,255,255,.72);font-weight:700}
 .p2form{display:flex;flex-direction:column;gap:11px;width:100%;max-width:330px}
 .p2lbl{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:5px}
 .p2inp{appearance:none;width:100%;box-sizing:border-box;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:13px 15px;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:15px;color:#fff;outline:none;transition:border-color .15s,background .15s}
@@ -1994,7 +2009,7 @@ window.dispatchEvent(new Event('fbready'));
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 </helmet>
-<sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="{{ loaderCls }}" role="status"><div class="si-p1 {{ p1cls }}"><div class="si-in"><div class="si-wm">Shtark</div><div class="si-tag">{{ tagLetters }}</div><div class="si-bar"><div class="si-run"></div></div><div class="si-cap">Корпоративный портал группы компаний</div></div></div><div class="si-p2 {{ p2cls }}"><div class="p2card"><div class="p2left"><div class="p2brand">Shtark Ink <span class="p2flow">Flow</span></div><div class="p2bar"><div class="p2run"></div></div><div class="p2slo">{{ sloganLetters }}</div><a class="p2site" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Официальный сайт Shtark Ink">Официальный сайт →</a><div class="p2chem"><div class="p2brand">Shtark Chemicals <span class="p2flow">Flow</span></div><div class="p2bar"><div class="p2run"></div></div><div class="p2slo p2slochem">{{ chemSloganLetters }}</div><a class="p2site" href="https://shtarkchemicals.com/" target="_blank" rel="noopener" title="Официальный сайт Shtark Chemicals">Официальный сайт →</a></div></div><div class="p2right"><div class="p2ready"><span class="p2dot"></span> Система готова к работе</div><div class="p2h"><span class="p2heb">Единая платформа управления</span><span class="p2hbrand">SHTARK<i class="p2hbar"></i></span></div><sc-if value="{{ needLogin }}" hint-placeholder-val="{{ true }}"><div class="p2form"><div><div class="p2lbl">Логин</div><input class="p2inp" value="{{ loginInput }}" onInput="{{ onLoginInput }}" onKeyDown="{{ onLoginKey }}" placeholder="например, ivanov" autocomplete="username"></div><div><div class="p2lbl">Пароль</div><input class="p2inp" type="password" value="{{ passInput }}" onInput="{{ onPassInput }}" onKeyDown="{{ onLoginKey }}" placeholder="••••••••" autocomplete="current-password"></div><div class="p2err">{{ loginErr }}</div><button class="p2btn" onClick="{{ doLogin }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ openReset }}">Забыли пароль?</button></div><sc-if value="{{ resetOpen }}" hint-placeholder-val=""><div class="p2reset"><div class="p2lbl">Восстановление пароля</div><input class="p2inp" value="{{ resetInput }}" onInput="{{ onResetInput }}" onKeyDown="{{ onResetKey }}" placeholder="ваш e-mail или логин" autocomplete="email"><sc-if value="{{ resetErr }}" hint-placeholder-val=""><div class="p2err">{{ resetErr }}</div></sc-if><sc-if value="{{ resetOk }}" hint-placeholder-val=""><div class="p2ok">{{ resetOk }}</div></sc-if><div class="p2rrow"><button class="p2btn sm" onClick="{{ doReset }}" disabled="{{ resetBusy }}">Прислать новый пароль</button><button class="p2link" onClick="{{ closeReset }}">Отмена</button></div><div class="p2hint">На указанный e-mail придёт новый временный пароль. Если e-mail не привязан — обратитесь к администратору.</div></div></sc-if><div class="p2hint">Введите логин и пароль, выданные администратором</div></sc-if><sc-if value="{{ hasSession }}" hint-placeholder-val=""><div class="p2you">Вы вошли как <b>{{ sessionName }}</b></div><button class="p2btn" onClick="{{ enterWelcome }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ switchUser }}">Войти под другим пользователем</button></sc-if></div></div></div></div></sc-if>
+<sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="{{ loaderCls }}" role="status"><div class="si-p1 {{ p1cls }}"><div class="si-in"><div class="si-wm">Shtark</div><div class="si-tag">{{ tagLetters }}</div><div class="si-bar"><div class="si-run"></div></div><div class="si-cap">Корпоративный портал группы компаний</div></div></div><div class="si-p2 {{ p2cls }}"><div class="p2card"><div class="p2left"><div class="p2brand">Shtark Ink <span class="p2flow">Flow</span></div><div class="p2bar"><div class="p2run"></div></div><div class="p2slo">{{ sloganLetters }}</div><a class="p2site" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Официальный сайт Shtark Ink">Официальный сайт →</a><div class="p2chem"><div class="p2brand">Shtark Chemicals <span class="p2flow">Flow</span></div><div class="p2bar"><div class="p2run"></div></div><div class="p2slo p2slochem">{{ chemSloganLetters }}</div><a class="p2site" href="https://shtarkchemicals.com/" target="_blank" rel="noopener" title="Официальный сайт Shtark Chemicals">Официальный сайт →</a></div></div><div class="p2right"><div class="p2ready"><span class="p2dot"></span> Система готова к работе</div><div class="p2h"><span class="p2heb">Единая платформа управления</span><span class="p2hbrand">SHTARK<i class="p2hbar"></i></span></div><sc-if value="{{ needLogin }}" hint-placeholder-val="{{ true }}"><div class="p2form"><div><div class="p2lbl">Логин</div><input class="p2inp" value="{{ loginInput }}" onInput="{{ onLoginInput }}" onKeyDown="{{ onLoginKey }}" placeholder="например, ivanov" autocomplete="username"></div><div><div class="p2lbl">Пароль</div><input class="p2inp" type="password" value="{{ passInput }}" onInput="{{ onPassInput }}" onKeyDown="{{ onLoginKey }}" placeholder="••••••••" autocomplete="current-password"></div><div class="p2err">{{ loginErr }}</div><button class="p2btn" onClick="{{ doLogin }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ openReset }}">Забыли пароль?</button></div><sc-if value="{{ resetOpen }}" hint-placeholder-val=""><div class="p2reset"><div class="p2lbl">Восстановление пароля</div><input class="p2inp" value="{{ resetInput }}" onInput="{{ onResetInput }}" onKeyDown="{{ onResetKey }}" placeholder="ваш e-mail или логин" autocomplete="email"><sc-if value="{{ resetErr }}" hint-placeholder-val=""><div class="p2err">{{ resetErr }}</div></sc-if><sc-if value="{{ resetOk }}" hint-placeholder-val=""><div class="p2ok">{{ resetOk }}</div></sc-if><div class="p2rrow"><button class="p2btn sm" onClick="{{ doReset }}" disabled="{{ resetBusy }}">Прислать новый пароль</button><button class="p2link" onClick="{{ closeReset }}">Отмена</button></div><div class="p2hint">На указанный e-mail придёт новый временный пароль. Если e-mail не привязан — обратитесь к администратору.</div></div></sc-if><div class="p2hint">Введите логин и пароль, выданные администратором</div><div class="p2dev">Разработка и сопровождение системы: <b>Моисеенко Константин</b></div></sc-if><sc-if value="{{ hasSession }}" hint-placeholder-val=""><div class="p2you">Вы вошли как <b>{{ sessionName }}</b></div><button class="p2btn" onClick="{{ enterWelcome }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ switchUser }}">Войти под другим пользователем</button></sc-if></div></div></div></div></sc-if>
 <div class="wrap {{ wrapCls }}">
 <button class="hamfix" onClick="{{ toggleMenu }}" title="Показать / скрыть меню" aria-label="Меню"><span></span><span></span><span></span></button>
 <sc-if value="{{ compassOpen }}" hint-placeholder-val=""><div class="compassbk" onClick="{{ closeCompass }}"></div><div class="compasspanel"><div class="compasshd"><div class="compasstl"><span class="compassic2">🧭</span> Компас · карта навигации</div><button class="compassx" onClick="{{ closeCompass }}" title="Закрыть">✕</button></div><div class="compassbody"><sc-for list="{{ compassGroups }}" as="g" hint-placeholder-count="6"><div class="homegrp"><div class="homegl"><span class="homebar"></span>{{ g.label }}</div><div class="homecards"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="homecard" onClick="{{ t.go }}"><span class="homeic">{{ t.icon }}</span><span class="hometx"><span class="homename">{{ t.label }}</span><span class="homedesc">{{ t.desc }}</span></span></button></sc-for></div></div></sc-for></div></div></sc-if>
@@ -2322,6 +2337,15 @@ window.dispatchEvent(new Event('fbready'));
 <div class="dlmaprow" style="margin-top:12px"><span class="dlmapf">Название шаблона</span><span class="dlmaparr">→</span><input class="inp" value="{{ dlMapName }}" onInput="{{ onDlMapName }}" placeholder="напр. Прайс Логиста ТЭК"></div>
 <div class="dlmapfoot"><label class="dlmapchk"><input type="checkbox" checked="{{ dlMapSave }}" onChange="{{ toggleDlMapSave }}"> Сохранить как шаблон для автораспознавания</label></div>
 <div class="dlmapfoot"><button class="btn dark" onClick="{{ dlMapApply }}">Применить сопоставление</button><button class="btn" onClick="{{ dlMapCancel }}">Отмена</button></div>
+</div></sc-if>
+<sc-if value="{{ dlPlaceOpen }}" hint-placeholder-val=""><div class="dlmapbg" onClick="{{ dlPlaceCancel }}"></div><div class="dlmap dlplace">
+<div class="dlmaph">Данные распознаны — куда их поместить?</div>
+<div class="dlmaps">Файл «{{ dlPlaceFile }}» распознан ({{ dlPlaceN }} строк). Выберите раздел или отчёт для размещения — либо доверьте выбор системе.</div>
+<div class="dlplsugg">🧭 Алгоритм системы предлагает: <b>{{ dlPlaceDetLabel }}</b> <span class="dlplconf">совпадение {{ dlPlaceDetConf }}</span></div>
+<div class="dlplprev"><table class="dlpltbl"><thead><tr><sc-for list="{{ dlPlaceHeaders }}" as="h" hint-placeholder-count="4"><th>{{ h }}</th></sc-for></tr></thead><tbody><sc-for list="{{ dlPlacePreview }}" as="row" hint-placeholder-count="3"><tr><sc-for list="{{ row }}" as="c" hint-placeholder-count="4"><td>{{ c }}</td></sc-for></tr></sc-for></tbody></table></div>
+<div class="dlplrow"><span class="dlmapf">Раздел / отчёт</span><select class="sel" value="{{ dlPlaceChoice }}" onChange="{{ onDlPlaceChoice }}"><sc-for list="{{ dlPlaceCats }}" as="c" hint-placeholder-count="6"><option value="{{ c.key }}">{{ c.label }}</option></sc-for></select></div>
+<sc-if value="{{ dlPlaceIsCustom }}" hint-placeholder-val=""><div class="dlmapfoot"><label class="dlmapchk"><input type="checkbox" checked="{{ dlPlaceSaveTpl }}" onChange="{{ dlPlaceToggleSave }}"> Запомнить как шаблон для автораспознавания</label></div></sc-if>
+<div class="dlmapfoot"><button class="btn dark" onClick="{{ dlPlaceApply }}">✓ Внести в выбранный раздел</button><button class="btn ai" onClick="{{ dlPlaceAuto }}">⚙ Внести по алгоритму системы</button><button class="btn" onClick="{{ dlPlaceCancel }}">Отмена</button></div>
 </div></sc-if>
 </sc-if>
 </sc-if>
@@ -3617,7 +3641,7 @@ class Component extends DCLogic {
     oneCUrl: '', oneCToken: '', oneCMatch: 'article', oneCAuto: false, oneCBusy: false, oneCStatus: '', oneCErr: '', oneCPreview: null, oneCLastAt: 0, oneCLog: [], oneCFileCur: 'RUB',
     lcData: [], lcMeta: null, lcBusy: false, lcErr: '', lcStatus: '', lcView: 'dash', lcFltMarket: '', lcFltSupplier: '', lcFltStatus: '', lcOnlyAnom: false, lcSrcOpen: false,
     dvHorizon: 90, dvFrom: '', dvTo: '', dvFltMarket: '', dvFltSupplier: '', dvFltGroup: '', dvExpanded: {}, dvAi: '', dvAiBusy: false, dvScope: 'all',
-    dlBase: {}, dlExtra: [], dlTemplates: [], dlMap: null, dlBusy: '', dlMsg: '', dlErr: '', dlDone: '',
+    dlBase: {}, dlExtra: [], dlTemplates: [], dlMap: null, dlPlace: null, dlBusy: '', dlMsg: '', dlErr: '', dlDone: '',
     faCo: '', faSearch: '', faDay: '', faExp: {}, faCalY: new Date().getFullYear(), faCalM: new Date().getMonth(), faTick: 0,
     lc1cUrl: '', lc1cToken: '', lc1cBusy: false,
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {}, cloudLocks: {}, cloudMyAreas: [],
@@ -9657,14 +9681,34 @@ class Component extends DCLogic {
   }
   async dlOnBase(key, file) {
     if (!/\.(xlsx|xls|csv|txt|pdf)$/i.test(file.name || '')) { this.setState({ dlErr: '«' + (file.name || 'файл') + '» — поддерживаются .xlsx, .xls, .csv, .txt, .pdf.' }); return; }
-    this.setState({ dlBusy: key, dlErr: '', dlDone: '' });
+    this.setState({ dlBusy: key, dlErr: '', dlDone: '', dlFallbackMsg: '' });
     try {
       const d = await this.dlReadFile(file); const v = this.dlValidate(key, d.headers);
-      const dlBase = { ...(this.state.dlBase || {}) };
-      dlBase[key] = { fileName: file.name, n: d.n, headers: d.headers, rows: d.rows, status: v.ok ? 'ok' : 'err', missing: v.missing, at: Date.now() };
-      this.setState({ dlBase, dlBusy: '', dlDone: '' });
       const def = this.dlBaseDefs().find(x => x.key === key);
-      this.archiveFile(file, { category: key, category_label: def ? def.label : this.faCatLabel(key), source: 'block_a', rows: d.n });
+      if (v.ok) {
+        // Структура совпала с дропзоной → принимаем напрямую
+        const dlBase = { ...(this.state.dlBase || {}) };
+        dlBase[key] = { fileName: file.name, n: d.n, headers: d.headers, rows: d.rows, status: 'ok', missing: v.missing, at: Date.now() };
+        this.setState({ dlBase, dlBusy: '', dlDone: '' });
+        this.archiveFile(file, { category: key, category_label: def ? def.label : this.faCatLabel(key), source: 'block_a', rows: d.n });
+        return;
+      }
+      // Структура НЕ совпала: ядро не распознало форму для этой дропзоны → эскалация / ручное размещение
+      const sig = this.dlSigOf(d.headers);
+      this._faPendingFile = file;
+      if (this.hasAI()) {
+        // Синяя плашка: внутреннее ядро не справилось → внешний ИИ-Оркестратор (автономный приём + обучение)
+        this.setState({ dlBusy: '', dlFallbackBusy: true, dlFallbackMsg: 'Файл не подходит под «' + (def ? def.label : key) + '». Внутреннее ядро не распознало структуру — эскалация к внешнему ИИ-Оркестратору…' });
+        const res = await this.executeExternalAiFallback({ fileName: file.name, headers: d.headers, rows: d.rows, sig }, this._co());
+        if (res && res.ok) { this.setState({ dlFallbackBusy: false, dlFallbackMsg: '✓ Внешний ИИ распознал «' + file.name + '» как «' + res.categoryLabel + '» и внёс в базу. Сохранено правил: ' + res.learned + '. Система обучена.' }); return; }
+        // Внешний ИИ не справился → ручное размещение с подсказкой
+        this.setState({ dlBusy: '', dlFallbackBusy: false, dlFallbackMsg: 'Внешний ИИ не справился (' + ((res && res.reason) || 'ошибка') + '). Укажите раздел вручную ниже.' });
+      } else {
+        this.setState({ dlBusy: '', dlFallbackBusy: false, dlFallbackMsg: 'Файл не подходит под «' + (def ? def.label : key) + '». Внутреннее ядро не распознало структуру. Чтобы файлы распознавались автоматически — подключите внешний ИИ (панель «AI-аналитик» → ⚙) или укажите раздел вручную ниже.' });
+      }
+      // Диалог размещения: распознанные данные + «куда поместить» + «по алгоритму системы»
+      const guess = this.dlGuessMap(d.headers, d.rows);
+      this.dlOpenPlace({ fileName: file.name, headers: d.headers, rows: d.rows, n: d.n, sig, map: guess, name: file.name.replace(/\.[^.]+$/, ''), saveTpl: true, source: 'block_a' });
     } catch (e) { this.setState({ dlBusy: '', dlErr: 'Ошибка чтения «' + (file.name || '') + '»: ' + (e.message || e) }); }
   }
   dlRemoveBase(key) { const dlBase = { ...(this.state.dlBase || {}) }; delete dlBase[key]; this.setState({ dlBase, dlDone: '' }); }
@@ -9902,12 +9946,12 @@ class Component extends DCLogic {
         if (!this.dlSemanticConfident(d.headers, d.rows)) {
           this._faPendingFile = file;
           if (this.hasAI()) {
-            this.setState({ dlBusy: '', dlFallbackBusy: true, dlFallbackMsg: '🤖 Внутреннее ядро не распознало «' + file.name + '». Активирован внешний ИИ-Оркестратор…' });
+            this.setState({ dlBusy: '', dlFallbackBusy: true, dlFallbackMsg: 'Внутреннее ядро не распознало «' + file.name + '». Активирован внешний ИИ-Оркестратор…' });
             const res = await this.executeExternalAiFallback({ fileName: file.name, headers: d.headers, rows: d.rows, sig }, this._co());
             if (res && res.ok) { this.setState({ dlFallbackBusy: false, dlFallbackMsg: '✓ Файл автоматически распознан как «' + res.categoryLabel + '» и внесён в базу. Сохранено правил: ' + res.learned + '. Система обучена.' }); return; }
-            this.setState({ dlBusy: '', dlFallbackBusy: false, dlFallbackMsg: '🤖 Внешний ИИ не справился (' + ((res && res.reason) || 'ошибка') + '). Сопоставьте колонки вручную ниже — система запомнит ваш выбор.' });
+            this.setState({ dlBusy: '', dlFallbackBusy: false, dlFallbackMsg: 'Внешний ИИ не справился (' + ((res && res.reason) || 'ошибка') + '). Сопоставьте колонки вручную ниже — система запомнит ваш выбор.' });
           } else {
-            this.setState({ dlBusy: '', dlFallbackBusy: false, dlFallbackMsg: '🤖 Внутреннее ядро не распознало «' + file.name + '». Чтобы файл распознавался автоматически внешним ИИ — укажите ключ в панели «AI-аналитик» → ⚙ (OpenAI / Anthropic / DeepSeek) или настройте прокси (DEPLOY.md). Сейчас сопоставьте колонки вручную ниже — система это запомнит.' });
+            this.setState({ dlBusy: '', dlFallbackBusy: false, dlFallbackMsg: 'Внутреннее ядро не распознало «' + file.name + '». Чтобы файл распознавался автоматически внешним ИИ — укажите ключ в панели «AI-аналитик» → ⚙ (OpenAI / Anthropic / DeepSeek) или настройте прокси (DEPLOY.md). Сейчас сопоставьте колонки вручную ниже — система это запомнит.' });
           }
         } else { this.setState({ dlFallbackMsg: '' }); }
         this._faPendingFile = file;
@@ -9922,13 +9966,57 @@ class Component extends DCLogic {
   dlMapApply() {
     const m = this.state.dlMap; if (!m) return;
     if (!Object.keys(m.map).length) { this.setState({ dlErr: 'Сопоставьте хотя бы одну колонку.' }); return; }
-    const extra = [...(this.state.dlExtra || []), { id: 'dx' + Date.now().toString(36), name: (m.name || '').trim() || m.fileName, fileName: m.fileName, n: m.n, status: 'ok', map: m.map, sig: m.sig, auto: false }];
-    const patch = { dlExtra: extra, dlMap: null, dlErr: '' };
-    if (m.save) { const tpls = (this.state.dlTemplates || []).filter(t => t.sig !== m.sig); tpls.push({ id: 'tpl' + Date.now().toString(36), name: (m.name || '').trim() || m.fileName, sig: m.sig, map: m.map, fields: Object.keys(m.map).length }); patch.dlTemplates = tpls; try { this.lsSet('dltemplates', JSON.stringify(tpls)); } catch (e) {} }
-    this.setState(patch);
     // Самообучение: каждое ручное сопоставление аналитика обучает семантическое ядро
     try { const fmap = { nomen: 'nomenclature', qty: 'quantity', price: 'unit_price', sum: 'total_revenue', date: 'doc_date', supplier: 'supplier', client: 'client' }; for (const f in m.map) { const h = m.headers[m.map[f]]; const sysF = fmap[f]; if (h && sysF && !this.aiClassify(h)) this.trainSemanticCore(h, sysF); } } catch (e) {}
-    if (this._faPendingFile) { this.archiveFile(this._faPendingFile, { category: 'custom', category_label: (m.name || '').trim() || m.fileName, source: 'block_b', rows: m.n }); this._faPendingFile = null; }
+    // После ручного распознавания → диалог «куда поместить эти данные?»
+    this.dlOpenPlace({ fileName: m.fileName, headers: m.headers, rows: m.rows, n: m.n, sig: m.sig, map: m.map, name: (m.name || '').trim() || m.fileName, saveTpl: !!m.save, source: 'manual' });
+  }
+  // ───── Определение раздела/отчёта по СМЫСЛУ (подсказка + режим «по алгоритму системы») ─────
+  dlDetectCategory(headers, rows) {
+    const H = (headers || []).map(h => this.dlNorm(h));
+    let best = null;
+    for (const def of this.dlBaseDefs()) {
+      let hit = 0; const total = def.need.length;
+      for (const grp of def.need) if (grp.some(s => H.some(h => h.indexOf(s) >= 0))) hit++;
+      const conf = total ? hit / total : 0;
+      if (!best || conf > best.confidence) best = { key: def.key, label: def.label, confidence: conf };
+    }
+    if (!best || best.confidence < 0.6) return { key: 'custom', label: 'Кастомная форма / прочее', confidence: best ? best.confidence : 0 };
+    return best;
+  }
+  dlCatEvent(key) { return ({ revenue: 'NEW_SALES', purchases: 'NEW_PURCHASE', cost: 'NEW_LANDED_COST', costko: 'NEW_LANDED_COST', warehouse: 'NEW_RECEIPT', opex: 'NEW_FACT_DOCS', bank: 'NEW_FACT_DOCS' })[key] || 'NEW_FACT_DOCS'; }
+  // Открыть диалог размещения распознанных данных
+  dlOpenPlace(rec) {
+    const det = this.dlDetectCategory(rec.headers, rec.rows);
+    const preview = (rec.rows || []).slice(0, 4).map(r => (r || []).map(c => (c == null ? '' : String(c))));
+    this.setState({ dlMap: null, dlPlace: { ...rec, detected: det, choice: det.key, preview } });
+  }
+  dlPlaceChoice(v) { const p = this.state.dlPlace; if (p) this.setState({ dlPlace: { ...p, choice: v } }); }
+  dlPlaceToggleSave() { const p = this.state.dlPlace; if (p) this.setState({ dlPlace: { ...p, saveTpl: !p.saveTpl } }); }
+  dlPlaceCancel() { this._faPendingFile = null; this.setState({ dlPlace: null }); }
+  dlPlaceAuto() { const p = this.state.dlPlace; if (!p) return; this.dlPlaceApply((p.detected && p.detected.key) || 'custom', true); }
+  dlPlaceApply(catKey, bySystem) {
+    const p = this.state.dlPlace; if (!p) return;
+    const key = catKey || p.choice || 'custom';
+    const baseDef = this.dlBaseDefs().find(d => d.key === key);
+    let doneMsg;
+    if (baseDef) {
+      const dlBase = { ...(this.state.dlBase || {}) };
+      dlBase[key] = { fileName: p.fileName, n: p.n, headers: p.headers, rows: p.rows, status: 'ok', missing: [], at: Date.now(), placed: true, bySystem: !!bySystem };
+      this.setState({ dlBase, dlPlace: null, dlErr: '' });
+      doneMsg = '✓ «' + p.fileName + '» внесён в раздел «' + baseDef.label + '»' + (bySystem ? ' (по алгоритму системы).' : '.');
+    } else {
+      const nm = (p.name || '').trim() || p.fileName;
+      const extra = [...(this.state.dlExtra || []), { id: 'dx' + Date.now().toString(36), name: nm, fileName: p.fileName, n: p.n, status: 'ok', map: p.map || {}, sig: p.sig, auto: false }];
+      const patch = { dlExtra: extra, dlPlace: null, dlErr: '' };
+      if (p.saveTpl && p.sig && p.map && Object.keys(p.map).length) { const tpls = (this.state.dlTemplates || []).filter(t => t.sig !== p.sig); tpls.push({ id: 'tpl' + Date.now().toString(36), name: nm, sig: p.sig, map: p.map, fields: Object.keys(p.map).length }); patch.dlTemplates = tpls; try { this.lsSet('dltemplates', JSON.stringify(tpls)); } catch (e) {} }
+      this.setState(patch);
+      doneMsg = '✓ «' + p.fileName + '» внесён как доп. форма «' + nm + '».';
+    }
+    this.setState({ dlDone: doneMsg });
+    if (this._faPendingFile) { try { this.archiveFile(this._faPendingFile, { category: key, category_label: baseDef ? baseDef.label : ((p.name || '').trim() || p.fileName), source: bySystem ? 'auto_place' : (p.source || 'manual_place'), rows: p.n }); } catch (e) {} this._faPendingFile = null; }
+    this.scheduleAutoRecalc(this.dlCatEvent(key));
+    try { this.postSystemNote('📥 ' + doneMsg + (bySystem ? ' Раздел определён автоматически по смыслу данных.' : ''), this.state.currentUser ? this.state.currentUser.name : 'Система'); } catch (e) {}
   }
   dlDelTemplate(id) { const tpls = (this.state.dlTemplates || []).filter(t => t.id !== id); this.setState({ dlTemplates: tpls }); try { this.lsSet('dltemplates', JSON.stringify(tpls)); } catch (e) {} }
   dlRemoveExtra(id) { this.setState({ dlExtra: (this.state.dlExtra || []).filter(x => x.id !== id), dlDone: '' }); }
@@ -10301,6 +10389,24 @@ class Component extends DCLogic {
       dlHasTpl: (S.dlTemplates || []).length > 0,
       dlErr: S.dlErr || '', dlHasErr: !!S.dlErr, dlDone: S.dlDone || '', dlHasDone: !!S.dlDone,
       dlFallbackBusy: !!S.dlFallbackBusy, dlFallbackMsg: S.dlFallbackMsg || '', dlFallbackHas: !!S.dlFallbackMsg,
+      // ── Диалог размещения распознанных данных ──
+      dlPlaceOpen: !!S.dlPlace,
+      dlPlaceFile: S.dlPlace ? S.dlPlace.fileName : '',
+      dlPlaceN: S.dlPlace ? String(S.dlPlace.n) : '0',
+      dlPlaceDetLabel: S.dlPlace ? S.dlPlace.detected.label : '',
+      dlPlaceDetConf: S.dlPlace ? (Math.round(S.dlPlace.detected.confidence * 100) + '%') : '',
+      dlPlaceIsCustom: S.dlPlace ? (S.dlPlace.choice === 'custom') : false,
+      dlPlaceSaveTpl: S.dlPlace ? !!S.dlPlace.saveTpl : false,
+      dlPlaceChoice: S.dlPlace ? S.dlPlace.choice : 'custom',
+      dlPlaceCats: this.dlBaseDefs().map(d => ({ key: d.key, label: d.label, sel: S.dlPlace && S.dlPlace.choice === d.key, isDet: S.dlPlace && S.dlPlace.detected.key === d.key }))
+        .concat([{ key: 'custom', label: 'Кастомная форма / прочее', sel: S.dlPlace && S.dlPlace.choice === 'custom', isDet: S.dlPlace && S.dlPlace.detected.key === 'custom' }]),
+      dlPlaceHeaders: S.dlPlace ? S.dlPlace.headers : [],
+      dlPlacePreview: S.dlPlace ? S.dlPlace.preview : [],
+      onDlPlaceChoice: (e) => this.dlPlaceChoice(e.target.value),
+      dlPlaceToggleSave: () => this.dlPlaceToggleSave(),
+      dlPlaceApply: () => this.dlPlaceApply(S.dlPlace ? S.dlPlace.choice : 'custom', false),
+      dlPlaceAuto: () => this.dlPlaceAuto(),
+      dlPlaceCancel: () => this.dlPlaceCancel(),
       dlRecalc: () => this.dlRecalc(), dlRecalcOff: !anyOk,
       dlProgText: 'Базовые: ' + baseLoaded + '/' + this.dlBaseDefs().length + ' · доп. форм: ' + (S.dlExtra || []).length,
       // Движок сквозного пересчёта
