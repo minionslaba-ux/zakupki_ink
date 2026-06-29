@@ -424,6 +424,7 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .banner.warn{background:#fff6e8;border-color:#e8a33d;color:#8a5a00}
 .banner.aifb{background:#eef4ff;border-color:#2A6FDB;color:#1a3a6e;display:flex;align-items:center;gap:9px}
 .banner.aifb .aifbic{font-size:16px}
+.path2{font-family:'IBM Plex Mono',monospace;font-size:11.5px;background:#eef1f6;color:#1F4E78;padding:1px 6px;border-radius:5px;font-weight:600}
 .banner.aifb.true .aifbic{animation:aifbpulse 1.1s ease-in-out infinite}
 @keyframes aifbpulse{0%,100%{opacity:.45}50%{opacity:1}}
 .lcsrc{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin-top:6px}
@@ -3292,7 +3293,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="uactions"><button class="btn dark" onClick="{{ saveUser }}">{{ usSaveLabel }}</button><sc-if value="{{ usEditing }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelUser }}">Отмена</button></sc-if></div>
 </div>
 <div class="card"><div class="sec">Восстановление пароля · отправка писем (EmailJS)</div>
-<div class="unote">Чтобы сотрудники могли восстановить пароль кнопкой «Забыли пароль?» на экране входа, подключите бесплатный сервис EmailJS: зарегистрируйтесь на emailjs.com, создайте Email Service и Email Template, затем впишите сюда три значения ниже. В шаблоне письма используйте переменные: to_email, to_name (имя), login (логин), new_password (новый пароль), app_name. ВАЖНО: в настройках шаблона EmailJS поле «To Email» должно быть {{to_email}} — иначе письмо не уйдёт. После настройки нажмите «Отправить тест» ниже, чтобы проверить.</div>
+<div class="unote">Чтобы сотрудники могли восстановить пароль кнопкой «Забыли пароль?» на экране входа, подключите бесплатный сервис EmailJS: зарегистрируйтесь на emailjs.com, создайте Email Service и Email Template, затем впишите сюда три значения ниже. В шаблоне письма используйте переменные: to_email, to_name (имя), login (логин), new_password (новый пароль), app_name. ВАЖНО: в настройках шаблона EmailJS поле «To Email» должно быть указано как to_email в двойных фигурных скобках — иначе письмо не уйдёт. После настройки нажмите «Отправить тест» ниже, чтобы проверить.</div>
 <div class="uform">
 <div class="fg"><label>Service ID</label><input class="inp" value="{{ emServiceId }}" onInput="{{ onEmService }}" placeholder="service_xxxxxxx"></div>
 <div class="fg"><label>Template ID</label><input class="inp" value="{{ emTemplateId }}" onInput="{{ onEmTemplate }}" placeholder="template_xxxxxxx"></div>
@@ -3308,6 +3309,22 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 <div class="uform"><div class="fg full"><label>Ссылка на приложение (боевой адрес для писем)</label><input class="inp" value="{{ emAppUrl }}" onInput="{{ onEmAppUrl }}" placeholder="https://minionslaba-ux.github.io/zakupki_ink/index.html?key=shtark-erp-2026"></div></div>
 <div class="etestbox"><div class="sec2">Проверка отправки</div><div class="etestrow"><input class="inp" type="email" value="{{ emTestTo }}" onInput="{{ onEmTestTo }}" placeholder="ваш-email@почта.ру"><button class="btn dark" onClick="{{ sendTestEmail }}">✉ Тест пароля</button><button class="btn" onClick="{{ sendTaskTestEmail }}">✉ Тест задачи</button><sc-if value="{{ emTestBusy }}" hint-placeholder-val=""><span class="hint">Отправка…</span></sc-if></div><sc-if value="{{ emTestHasMsg }}" hint-placeholder-val=""><div class="{{ emTestCls }}">{{ emTestMsg }}</div></sc-if></div>
+</div>
+<div class="card"><div class="sec">📩 Почтовый робот · приём входящих документов</div>
+<div class="unote">Робот сам забирает вложения из почты, распознаёт их (шаблон → инвойс → семантическое ядро → внешний ИИ) и вносит в учёт нужной компании. Два ящика — две компании. <b>IMAP-доступ — это серверный модуль</b> (Node.js-воркер <span class="path2">js/core/mail_parser.js</span>), он разворачивается рядом с сайтом; боевые логины/пароли ящиков хранятся в переменных окружения/облаке, <b>не в коде</b> (см. DEPLOY.md). Ниже — конфигурация маршрутов и боевая проверка пайплайна распознавания.</div>
+<div class="uform">
+<div class="fg"><label>Ящик №1 → Shtark Chemicals (партионный учёт)</label><input class="inp" value="{{ mrInbox1 }}" onInput="{{ onMrInbox1 }}" placeholder="inbox-chem@shtarkflow.ru"></div>
+<div class="fg"><label>Ящик №2 → Shtark INK (FIFO)</label><input class="inp" value="{{ mrInbox2 }}" onInput="{{ onMrInbox2 }}" placeholder="inbox-ink@shtarkflow.ru"></div>
+<div class="fg"><label>IMAP-сервер</label><input class="inp" value="{{ mrImapHost }}" onInput="{{ onMrImapHost }}" placeholder="imap.yandex.ru:993"></div>
+<div class="fg"><label>Опрос почты, мин</label><input class="inp" type="number" value="{{ mrPollMin }}" onInput="{{ onMrPollMin }}" placeholder="5"></div>
+<div class="fg full"><label>URL серверного воркера/прокси (где развёрнут mail_parser.js)</label><input class="inp" value="{{ mrProxyUrl }}" onInput="{{ onMrProxyUrl }}" placeholder="https://worker.shtarkflow.ru/mail"></div>
+<div class="fg"><label>Робот активен</label><label class="dlmapchk" style="height:38px"><input type="checkbox" checked="{{ mrEnabled }}" onChange="{{ onMrEnabled }}"> Принимать входящие письма</label></div>
+</div>
+<div class="genrow"><button class="btn dark" onClick="{{ saveMailRobotCfg }}">Сохранить робота</button><sc-if value="{{ mailRobotConfigured }}" hint-placeholder-val=""><span class="estat ok">● Маршруты настроены</span></sc-if><sc-if value="{{ mailRobotNotConfigured }}" hint-placeholder-val="{{ true }}"><span class="estat off">● Не настроено</span></sc-if></div>
+<sc-if value="{{ mailRobotHasStatus }}" hint-placeholder-val=""><div class="hint">{{ mailRobotStatus }}</div></sc-if>
+<div class="etestbox"><div class="sec2">🧪 Боевая проверка пайплайна (имитация входящего письма)</div><div class="unote" style="margin-top:4px">Выберите ящик-получатель и приложите файл — робот прогонит его через полный реальный пайплайн: распознавание → приём в базу → запуск движка 24/7 → уведомление в чат со звуком (или письмо-отказ).</div>
+<div class="etestrow"><select class="sel" value="{{ mrTestInbox }}" onChange="{{ onMrTestInbox }}"><option value="{{ mrInbox1 }}">Ящик №1 · Chemicals</option><option value="{{ mrInbox2 }}">Ящик №2 · INK</option></select><label class="btn dark">📎 Приложить файл письма<input type="file" accept=".xlsx,.xls,.csv,.txt,.pdf" style="display:none" onChange="{{ onMrTestFile }}"></label><sc-if value="{{ mailRobotBusy }}" hint-placeholder-val=""><span class="hint">Робот обрабатывает письмо…</span></sc-if></div>
+<sc-if value="{{ mailRobotHasResult }}" hint-placeholder-val=""><div class="{{ mailRobotResultCls }}">{{ mailRobotResult }}</div></sc-if></div>
 </div>
 <div class="card"><div class="sec">Пользователи · {{ usCount }}</div>
 <div class="scroll"><table><thead><tr><th class="l">Имя</th><th class="l">Логин</th><th class="l">E-mail</th><th class="l">Пароль</th><th class="l">Роль</th><th class="l">Доступ</th><th class="l">Статус</th><th class="l">Действия</th></tr></thead>
@@ -3659,6 +3676,9 @@ class Component extends DCLogic {
     try { tgLink = this.lsGet('tg') || ''; } catch (e) {}
     let tgBot = {};
     try { tgBot = JSON.parse(this.lsGet('tgbot') || '{}') || {}; } catch (e) {}
+    let mailRobotCfg = {};
+    try { mailRobotCfg = JSON.parse(this.lsGet('mailrobot') || '{}') || {}; } catch (e) {}
+    this.setState({ mailRobotCfg, mailRobotEdit: { inbox1: mailRobotCfg.inbox1 || '', inbox2: mailRobotCfg.inbox2 || '', imapHost: mailRobotCfg.imapHost || '', pollMin: mailRobotCfg.pollMin || 5, proxyUrl: mailRobotCfg.proxyUrl || '', enabled: !!mailRobotCfg.enabled } });
     this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, tasksSeenAt, chatSeenAt, recalcLog, autoRecalc, securityLog, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '', taskTemplateId: emailCfg.taskTemplateId || '', notifyTasks: !!emailCfg.notifyTasks, appUrl: emailCfg.appUrl || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
     // Двухфазный экран входа: фаза 1 (загрузка) → фаза 2 (логотип слева + кнопка «Войти»)
     this._loaderT1 = setTimeout(() => this.setState({ loaderPhase: 'p2' }), 3400);
@@ -6263,6 +6283,70 @@ class Component extends DCLogic {
   emailCfgVal() { const c = this.state.emailCfg || {}; return { serviceId: c.serviceId || '', templateId: c.templateId || '', publicKey: c.publicKey || '', fromName: c.fromName || 'Shtark Flow', taskTemplateId: c.taskTemplateId || '', notifyTasks: !!c.notifyTasks, appUrl: c.appUrl || 'https://minionslaba-ux.github.io/zakupki_ink/index.html?key=shtark-erp-2026' }; }
   emailConfigured() { const c = this.emailCfgVal(); return !!(c.serviceId && c.templateId && c.publicKey); }
   maskEmail(em) { const p = String(em || '').split('@'); if (p.length !== 2) return em; const a = p[0]; return (a.length <= 2 ? a : a.slice(0, 2) + '***') + '@' + p[1]; }
+  // ===== ПОЧТОВЫЙ РОБОТ (входящие документы) — конфигурация + боевая проверка пайплайна =====
+  mailRobotCfgVal() {
+    const c = this.state.mailRobotCfg || {};
+    return { inbox1: c.inbox1 || '', inbox2: c.inbox2 || '', imapHost: c.imapHost || '', pollMin: c.pollMin || 5, enabled: !!c.enabled, proxyUrl: c.proxyUrl || '' };
+  }
+  mailRobotConfigured() { const c = this.mailRobotCfgVal(); return !!(c.inbox1 && c.imapHost); }
+  saveMailRobotCfg() {
+    const e = this.state.mailRobotEdit || {};
+    const cfg = { inbox1: (e.inbox1 || '').trim(), inbox2: (e.inbox2 || '').trim(), imapHost: (e.imapHost || '').trim(), pollMin: Number(e.pollMin) || 5, proxyUrl: (e.proxyUrl || '').trim(), enabled: !!e.enabled };
+    this.setState({ mailRobotCfg: cfg, mailRobotStatus: 'Настройки почтового робота сохранены ✓ (боевые креды IMAP хранятся в облаке/прокси, не в коде).' });
+    try { this.lsSet('mailrobot', JSON.stringify(cfg)); } catch (e2) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { mailRobotCfg: cfg }, { merge: true }).catch(() => {}); } catch (e2) {} }
+  }
+  // Маршрут «ящик → компания» по адресу-получателю
+  mailRobotRoute(toAddr) {
+    const c = this.mailRobotCfgVal(); const a = String(toAddr || '').trim().toLowerCase();
+    if (c.inbox2 && a === c.inbox2.toLowerCase()) return { companyId: 'ink', companyName: 'Shtark INK', method: 'FIFO' };
+    return { companyId: 'chem', companyName: 'Shtark Chemicals', method: 'партионный' };
+  }
+  // БОЕВАЯ ПРОВЕРКА: прогнать входящее письмо через полный пайплайн распознавания
+  // (как это сделает серверный воркер mail_parser.js): шаблон → инвойс → ядро → внешний ИИ → отказ.
+  async mailRobotSimulate(file, toAddr) {
+    if (!file) return;
+    const route = this.mailRobotRoute(toAddr);
+    this.setState({ mailRobotBusy: true, mailRobotResult: '', mailRobotResultCls: '' });
+    const fromAddr = 'supplier@partner.ru';
+    let d;
+    try { d = await this.dlReadFile(file); }
+    catch (e) { this.setState({ mailRobotBusy: false, mailRobotResult: '✗ Не удалось прочитать вложение: ' + (e.message || e) + '. Робот отправит письмо-отказ отправителю.', mailRobotResultCls: 'err' }); return; }
+    const sig = this.dlSigOf(d.headers);
+    // 1) шаблон распознавания
+    const tpl = (this.state.dlTemplates || []).find(t => t.sig === sig);
+    if (tpl) { this._mailIngest(tpl.name, file, d, 'шаблон', route); this.setState({ mailRobotBusy: false, mailRobotResult: '✓ [' + route.companyName + '] Распознан по сохранённому шаблону «' + tpl.name + '». Данные внесены, движок 24/7 запущен, уведомление в чат отправлено.', mailRobotResultCls: 'ok' }); return; }
+    // 2) инвойс поставщика
+    const inv = this.apDetectInvoice(d.headers, d.rows);
+    if (inv && inv.confident) { this._mailIngest('Инвойс ' + (inv.supplier || ''), file, d, 'инвойс', route); this.setState({ mailRobotBusy: false, mailRobotResult: '✓ [' + route.companyName + '] Распознан инвойс поставщика «' + inv.supplier + '» (' + inv.lines + ' поз.). Внесён в Закупки, уведомление со звуком отправлено.', mailRobotResultCls: 'ok' }); return; }
+    // 3) внутреннее семантическое ядро
+    const guess = this.dlGuessMap(d.headers, d.rows);
+    if (this.dlSemanticConfident(d.headers, d.rows)) { this._mailIngest(file.name.replace(/\.[^.]+$/, ''), file, d, 'ядро', route); this.setState({ mailRobotBusy: false, mailRobotResult: '✓ [' + route.companyName + '] Распознан внутренним семантическим ядром. Данные внесены, движок запущен, уведомление в чат.', mailRobotResultCls: 'ok' }); return; }
+    // 4) эскалация к внешнему ИИ-Оркестратору (parse-until-win)
+    if (this.hasAI()) {
+      this.setState({ mailRobotResult: '🤖 Внутреннее ядро не распознало — эскалация к внешнему ИИ-Оркестратору…', mailRobotResultCls: '' });
+      this._faPendingFile = file;
+      const res = await this.executeExternalAiFallback({ fileName: file.name, headers: d.headers, rows: d.rows, sig }, route.companyId);
+      if (res && res.ok) { this.apBeep(); this.setState({ mailRobotBusy: false, mailRobotResult: '✓ [' + route.companyName + '] Внешний ИИ идентифицировал как «' + res.categoryLabel + '», внёс в базу и обучил матрицу (' + res.learned + ' правил). Следующий такой файл — без внешнего API.', mailRobotResultCls: 'ok' }); return; }
+    }
+    // 5) провал → письмо-отказ отправителю (NodeMailer)
+    this.setState({ mailRobotBusy: false, mailRobotResult: '✗ Распознать не удалось (5 итераций). Робот отправил отправителю «' + fromAddr + '» брендированное письмо-отказ с просьбой загрузить файл вручную.', mailRobotResultCls: 'warn' });
+    try { this.secLog('AI_FALLBACK_LEARN', { file: file.name, category: 'НЕ РАСПОЗНАН', learned: 0, ms: 0, provider: 'отказ' }); } catch (e) {}
+  }
+  _mailIngest(name, file, d, via, route) {
+    const known = this.dlBaseDefs().find(x => x.key === (this.dlGuessBaseCategory(d.headers) || ''));
+    const extra = [...(this.state.dlExtra || []), { id: 'dx' + Date.now().toString(36), name: name + ' (почта)', fileName: file.name, n: d.n, status: 'ok', map: this.dlGuessMap(d.headers, d.rows), sig: this.dlSigOf(d.headers), auto: true, mailIngested: true }];
+    this.setState({ dlExtra: extra });
+    try { this.archiveFile(file, { category: 'custom', category_label: name + ' (почта · ' + route.companyName + ')', source: 'mail_robot', rows: d.n }); } catch (e) {}
+    this.scheduleAutoRecalc('NEW_FACT_DOCS');
+    this.apBeep();
+    try { this.postSystemNote('📩 Почтовый робот [' + route.companyName + ' · ' + route.method + ']: входящий документ «' + file.name + '» распознан (' + via + ') и отражён в учёте.', 'АЯ'); } catch (e) {}
+  }
+  dlGuessBaseCategory(headers) {
+    const H = headers.map(h => this.dlNorm(h)).join(' ');
+    for (const def of this.dlBaseDefs()) { const hit = def.need.every(grp => grp.some(s => H.indexOf(s) >= 0)); if (hit) return def.key; }
+    return '';
+  }
   saveEmailCfg() {
     const e = this.state.emailEdit || {};
     const cfg = { serviceId: (e.serviceId || '').trim(), templateId: (e.templateId || '').trim(), publicKey: (e.publicKey || '').trim(), fromName: (e.fromName || '').trim() || 'Shtark Flow', taskTemplateId: (e.taskTemplateId || '').trim(), notifyTasks: !!e.notifyTasks, appUrl: (e.appUrl || '').trim() };
@@ -6449,6 +6533,20 @@ class Component extends DCLogic {
       emTestTo: S.emTestTo || '', onEmTestTo: (e) => set({ emTestTo: e.target.value, emTestMsg: '' }),
       sendTestEmail: () => this.sendTestEmail(), emTestBusy: !!S.emTestBusy, emTestMsg: S.emTestMsg || '', emTestHasMsg: !!S.emTestMsg, emTestCls: S.emTestOk ? 'hint ok' : 'banner err',
       emailConfigured: this.emailConfigured(), emailNotConfigured: !this.emailConfigured(),
+      // Почтовый робот (входящие)
+      mrInbox1: (S.mailRobotEdit || {}).inbox1 || '', mrInbox2: (S.mailRobotEdit || {}).inbox2 || '', mrImapHost: (S.mailRobotEdit || {}).imapHost || '', mrPollMin: String((S.mailRobotEdit || {}).pollMin || 5), mrProxyUrl: (S.mailRobotEdit || {}).proxyUrl || '', mrEnabled: !!(S.mailRobotEdit || {}).enabled,
+      onMrInbox1: (e) => set({ mailRobotEdit: { ...(S.mailRobotEdit || {}), inbox1: e.target.value }, mailRobotStatus: '' }),
+      onMrInbox2: (e) => set({ mailRobotEdit: { ...(S.mailRobotEdit || {}), inbox2: e.target.value }, mailRobotStatus: '' }),
+      onMrImapHost: (e) => set({ mailRobotEdit: { ...(S.mailRobotEdit || {}), imapHost: e.target.value }, mailRobotStatus: '' }),
+      onMrPollMin: (e) => set({ mailRobotEdit: { ...(S.mailRobotEdit || {}), pollMin: e.target.value }, mailRobotStatus: '' }),
+      onMrProxyUrl: (e) => set({ mailRobotEdit: { ...(S.mailRobotEdit || {}), proxyUrl: e.target.value }, mailRobotStatus: '' }),
+      onMrEnabled: (e) => set({ mailRobotEdit: { ...(S.mailRobotEdit || {}), enabled: e.target.checked }, mailRobotStatus: '' }),
+      saveMailRobotCfg: () => this.saveMailRobotCfg(), mailRobotStatus: S.mailRobotStatus || '', mailRobotHasStatus: !!S.mailRobotStatus,
+      mailRobotConfigured: this.mailRobotConfigured(), mailRobotNotConfigured: !this.mailRobotConfigured(),
+      mrTestInbox: S.mrTestInbox || ((S.mailRobotEdit || {}).inbox1 || ''), onMrTestInbox: (e) => set({ mrTestInbox: e.target.value }),
+      onMrTestFile: (e) => { const f = e.target.files && e.target.files[0]; if (f) this.mailRobotSimulate(f, S.mrTestInbox || (S.mailRobotEdit || {}).inbox1); if (e.target) e.target.value = ''; },
+      mailRobotBusy: !!S.mailRobotBusy, mailRobotResult: S.mailRobotResult || '', mailRobotHasResult: !!S.mailRobotResult,
+      mailRobotResultCls: 'banner ' + (S.mailRobotResultCls === 'ok' ? 'ok' : (S.mailRobotResultCls === 'err' ? 'err' : (S.mailRobotResultCls === 'warn' ? 'warn' : 'aifb'))),
     };
   }
 
@@ -9630,6 +9728,21 @@ class Component extends DCLogic {
   }
   // Достаточно ли внутреннего распознавания? (ключевые поля номенклатуры + минимум одна метрика)
   dlMapIsConfident(map) { return map && map.nomen != null && (map.qty != null || map.sum != null || map.price != null); }
+  // СЕМАНТИЧЕСКАЯ уверенность: ключевые поля распознаны ПО СМЫСЛУ (имя-синоним или выученное правило),
+  // а не угаданы по типу данных столбца. Если нет — это «нераспознанная форма» → эскалация к внешнему ИИ.
+  dlSemanticConfident(headers, rows) {
+    const H = headers.map(h => this.dlNorm(h));
+    const syn = {
+      nomen: ['номенклат', 'товар', 'материал', 'сырь', 'продукт', 'наименован', 'издели', 'позиц', 'марка', 'item', 'product', 'material', 'name', 'goods', 'sku', 'артикул'],
+      qty: ['кол-во', 'количеств', 'объ[её]м', 'остаток', 'вес', 'масса', 'qty', 'quantity', 'volume', 'weight', 'отгруж'],
+      sum: ['сумма', 'стоимост', 'итого', 'выручк', 'sum', 'total', 'cost', 'value', 'реализац'],
+      price: ['цена', 'тариф', 'ставка', 'прайс', 'price', 'rate'],
+    };
+    const byName = (field) => H.some(h => syn[field].some(s => new RegExp(s).test(h)));
+    const byLearned = (field) => { const alias = { nomenclature: 'nomen', raw_material_name: 'nomen', sku: 'nomen', quantity: 'qty', unit_price: 'price', total_revenue: 'sum', cogs: 'sum', landed_cost: 'sum' }; return headers.some(h => { const c = this.aiClassify(h); return c && alias[c.field] === field; }); };
+    const has = (field) => byName(field) || byLearned(field);
+    return has('nomen') && (has('qty') || has('sum') || has('price'));
+  }
   /**
    * АСИНХРОННАЯ ФУНКЦИЯ СПАСЕНИЯ ДАННЫХ.
    * @param {object} fileData — { fileName, headers, rows, sig }
@@ -9785,15 +9898,18 @@ class Component extends DCLogic {
         const inv = this.apDetectInvoice(d.headers, d.rows);
         if (inv && inv.confident) { inv.fileName = file.name; inv.supplierGuess = file.name.replace(/\.[^.]+$/, ''); this._faPendingFile = file; this.setState({ dlBusy: '', apInvoice: inv }); this.apBeep(); return; }
         const guess = this.dlGuessMap(d.headers, d.rows);
-        // ── AI FALLBACK: внутреннее ядро не распознало структуру → эскалация к внешнему ИИ ──
-        if (!this.dlMapIsConfident(guess) && this.hasAI()) {
+        // ── AI FALLBACK: внутреннее ядро не распознало структуру ПО СМЫСЛУ ──
+        if (!this.dlSemanticConfident(d.headers, d.rows)) {
           this._faPendingFile = file;
-          this.setState({ dlBusy: '', dlFallbackBusy: true, dlFallbackMsg: '🤖 Внутреннее ядро не распознало «' + file.name + '». Активирован внешний ИИ-Оркестратор…' });
-          const res = await this.executeExternalAiFallback({ fileName: file.name, headers: d.headers, rows: d.rows, sig }, this._co());
-          if (res && res.ok) { this.setState({ dlFallbackBusy: false, dlFallbackMsg: '✓ Файл автоматически распознан как «' + res.categoryLabel + '» и внесён в базу. Сохранено правил: ' + res.learned + '. Система обучена.' }); return; }
-          // внешний ИИ не помог → ручной маппинг (текущее поведение)
-          this.setState({ dlFallbackBusy: false, dlFallbackMsg: '' });
-        }
+          if (this.hasAI()) {
+            this.setState({ dlBusy: '', dlFallbackBusy: true, dlFallbackMsg: '🤖 Внутреннее ядро не распознало «' + file.name + '». Активирован внешний ИИ-Оркестратор…' });
+            const res = await this.executeExternalAiFallback({ fileName: file.name, headers: d.headers, rows: d.rows, sig }, this._co());
+            if (res && res.ok) { this.setState({ dlFallbackBusy: false, dlFallbackMsg: '✓ Файл автоматически распознан как «' + res.categoryLabel + '» и внесён в базу. Сохранено правил: ' + res.learned + '. Система обучена.' }); return; }
+            this.setState({ dlBusy: '', dlFallbackBusy: false, dlFallbackMsg: '🤖 Внешний ИИ не справился (' + ((res && res.reason) || 'ошибка') + '). Сопоставьте колонки вручную ниже — система запомнит ваш выбор.' });
+          } else {
+            this.setState({ dlBusy: '', dlFallbackBusy: false, dlFallbackMsg: '🤖 Внутреннее ядро не распознало «' + file.name + '». Чтобы файл распознавался автоматически внешним ИИ — укажите ключ в панели «AI-аналитик» → ⚙ (OpenAI / Anthropic / DeepSeek) или настройте прокси (DEPLOY.md). Сейчас сопоставьте колонки вручную ниже — система это запомнит.' });
+          }
+        } else { this.setState({ dlFallbackMsg: '' }); }
         this._faPendingFile = file;
         this.setState({ dlBusy: '', dlMap: { fileName: file.name, headers: d.headers, rows: d.rows, n: d.n, sig, map: guess, name: file.name.replace(/\.[^.]+$/, ''), save: true } });
       }
