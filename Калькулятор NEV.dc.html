@@ -1388,7 +1388,7 @@ a.wordmark:hover{opacity:.6}
 .chmembers{font-size:10.5px;color:#8a8782;padding:3px 12px 5px;background:#fbfbff;border-bottom:1px solid #ececff}
 .chatbody.secret .chtext{user-select:none;-webkit-user-select:none}
 .privbg{position:fixed;inset:0;background:rgba(15,18,22,.45);backdrop-filter:blur(4px);z-index:1500;display:flex;align-items:center;justify-content:center;padding:18px}
-.privcard{background:#fff;border-radius:14px;max-width:440px;width:100%;max-height:84vh;overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.32);padding:20px 22px}
+.privcard{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1501;background:#fff;border-radius:14px;max-width:440px;width:calc(100% - 36px);max-height:84vh;overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.32);padding:20px 22px}
 .privh{font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;color:#1a1916;margin-bottom:4px}
 .privs{font-size:12px;color:#56534f;margin-bottom:14px;line-height:1.5}
 .privlbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#8a8782;margin:12px 0 6px}
@@ -1665,7 +1665,6 @@ window.dispatchEvent(new Event('fbready'));
 </script>
 <script src="letterhead-data.js"></script>
 <script>window.addEventListener('error',function(e){if(!e.filename&&(e.message==='Script error.'||e.message==='Script error')){e.preventDefault();e.stopImmediatePropagation();return true;}},true);window.addEventListener('unhandledrejection',function(e){var m=e&&e.reason&&(e.reason.message||e.reason);if(typeof m==='string'&&/puter|popup|signin|sign-in/i.test(m)){e.preventDefault();}});</script>
-<script src="https://js.puter.com/v2/"></script>
 <link rel="icon" href="icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
@@ -1784,19 +1783,19 @@ window.dispatchEvent(new Event('fbready'));
 <div class="mgresults">
 <sc-if value="{{ mgNoCost }}" hint-placeholder-val=""><div class="banner warn">{{ mgNoCostMsg }}</div></sc-if>
 <div class="card">
-<div class="mgrhead"><div class="mgrtitle">Маржинальный отчёт <span class="mgrper">{{ mgPeriodVal }}</span></div><div class="cvbar"><div class="cvgrp"><button class="{{ cvRubCls }}" onClick="{{ setCurRub }}">RUB ₽</button><button class="{{ cvEurCls }}" onClick="{{ setCurEur }}">EUR €</button></div><div class="cvgrp"><button class="{{ cvVatWithCls }}" onClick="{{ setVatWith }}">С НДС</button><button class="{{ cvVatNoCls }}" onClick="{{ setVatNo }}">Без НДС</button></div><button class="btn mgxls" onClick="{{ mgExportExcel }}">⬇ Скачать Excel</button></div></div>
+<div class="mgrhead"><div class="mgrtitle">Маржинальный отчёт <span class="mgrper">{{ mgPeriodVal }}</span></div><div class="cvbar"><div class="cvgrp"><button class="{{ cvRubCls }}" onClick="{{ setCurRub }}">RUB ₽</button><button class="{{ cvEurCls }}" onClick="{{ setCurEur }}">EUR €</button></div><div class="cvgrp"><button class="{{ cvVatWithCls }}" onClick="{{ setVatWith }}">С НДС</button><button class="{{ cvVatNoCls }}" onClick="{{ setVatNo }}">Без НДС</button></div><div class="cvgrp"><button class="{{ cvUnitAbsCls }}" onClick="{{ setUnitAbs }}">Абсолют.</button><button class="{{ cvUnitKgCls }}" onClick="{{ setUnitKg }}">На 1 кг</button></div><button class="btn mgxls" onClick="{{ mgExportExcel }}">⬇ Скачать Excel</button></div></div>
 <div class="mgkpis"><sc-for list="{{ mgKpis }}" as="k" hint-placeholder-count="6"><div class="mgkpi mghi{{ k.hi }}"><div class="mgkk">{{ k.k }}</div><div class="mgkv">{{ k.v }}</div><div class="mgke">{{ k.e }}</div><div class="mgku">{{ k.u }}</div></div></sc-for></div>
 <div class="mgmeta"><sc-for list="{{ mgMeta }}" as="m" hint-placeholder-count="4"><div class="mgmt"><span class="mgmtl">{{ m.k }}</span><span class="mgmtv">{{ m.v }}</span></div></sc-for></div>
 </div>
 <div class="card">
 <div class="mgvtabs"><button class="{{ groupsBtnCls }}" onClick="{{ showGroups }}">По группам</button><button class="{{ markaBtnCls }}" onClick="{{ showMarka }}">По маркам</button></div>
 <sc-if value="{{ isGroupsView }}" hint-placeholder-val="{{ true }}">
-<div class="mgtblwrap"><table class="mgtbl"><thead><tr><th class="l">Группа</th><th>Вес</th><th>Выручка</th><th>Себестоимость</th><th>Маржа 1</th><th>Рент. 1</th><th>Маржа 2</th><th>Рент. 2</th></tr></thead>
+<div class="mgtblwrap"><table class="mgtbl"><thead><tr><th class="l">Группа</th><th>Вес</th><th>{{ mgHVyr }}</th><th>{{ mgHSs }}</th><th>{{ mgHM1 }}</th><th>Рент. 1</th><th>{{ mgHM2 }}</th><th>Рент. 2</th></tr></thead>
 <tbody><sc-for list="{{ mgGroupRows }}" as="g" hint-placeholder-count="3"><tr><td class="l mgg">{{ g.group }}</td><td class="mono">{{ g.weightS }}</td><td class="mono">{{ g.revS }}</td><td class="mono">{{ g.ssS }}</td><td class="mono mgpos">{{ g.m1S }}</td><td class="mono">{{ g.rent1 }}</td><td class="mono"><span class="{{ g.m2neg }}">{{ g.m2S }}</span></td><td class="mono">{{ g.rent2 }}</td></tr></sc-for></tbody></table></div>
 </sc-if>
 <sc-if value="{{ isMarkaView }}" hint-placeholder-val="">
 <div class="sbflt"><div class="field"><span class="lbl">Группа</span><select class="sel" value="{{ mgFltGroup }}" onChange="{{ onFltGroup }}"><option value="">Все группы</option><sc-for list="{{ mgGroupOpts }}" as="g" hint-placeholder-count="3"><option value="{{ g.value }}">{{ g.label }}</option></sc-for></select></div></div>
-<div class="mgtblwrap"><table class="mgtbl"><thead><tr><th class="l">Марка</th><th>Вес</th><th>Выручка</th><th>Цена ₽/кг</th><th>СС ₽/кг</th><th>Маржа 1</th><th>Уд. маржа 1</th><th>Рент.1</th><th>Маржа 2</th><th></th></tr></thead>
+<div class="mgtblwrap"><table class="mgtbl"><thead><tr><th class="l">Марка</th><th>Вес</th><th>{{ mgHVyr }}</th><th>{{ mgHPrice }}</th><th>{{ mgHSsKg }}</th><th>{{ mgHM1 }}</th><th>{{ mgHUdM1 }}</th><th>Рент.1</th><th>{{ mgHM2 }}</th><th></th></tr></thead>
 <tbody><sc-for list="{{ mgMarkaRows }}" as="m" hint-placeholder-count="6"><tr class="{{ m.rowCls }}"><td class="l"><span class="mgpx" onClick="{{ m.toggle }}">{{ m.expIcon }}</span> <span class="mgmk">{{ m.marka }}</span></td><td class="mono">{{ m.weightS }}</td><td class="mono">{{ m.revS }}</td><td class="mono">{{ m.revKg }}</td><td><sc-if value="{{ m.noCost }}" hint-placeholder-val="{{ true }}"><input class="sbin w82 mono sbinput" value="{{ m.costInput }}" onChange="{{ m.onCost }}" placeholder="впишите СС"></sc-if><sc-if value="{{ m.noCost }}" hint-placeholder-val=""><span class="mono sbcalc2">{{ m.ccKgS }}</span></sc-if></td><td class="mono mgpos">{{ m.m1S }}</td><td class="mono">{{ m.m1Kg }}</td><td class="mono">{{ m.rent1 }}</td><td class="mono"><span class="{{ m.m2neg }}">{{ m.m2S }}</span></td><td><span class="mgpx" onClick="{{ m.toggle }}">{{ m.expIcon }}</span></td></tr>
 <sc-if value="{{ m.expanded }}" hint-placeholder-val=""><tr class="mgsub"><td colspan="10"><div class="mgsubwrap"><sc-for list="{{ m.clients }}" as="c" hint-placeholder-count="2"><div class="mgsubrow"><span class="mgsubc">{{ c.client }}</span><span class="mgsubn">{{ c.nomen }}</span><span class="mono mgsubw">{{ c.weightS }}</span><span class="mono mgsubr">{{ c.revS }}</span><span class="mono mgsubm">М1 {{ c.m1S }}</span><span class="mono"><span class="{{ c.m2neg }}">М2 {{ c.m2S }}</span></span></div></sc-for></div></td></tr></sc-if>
 </sc-for></tbody></table></div>
@@ -1834,7 +1833,7 @@ window.dispatchEvent(new Event('fbready'));
 
 <sc-if value="{{ lcReady }}" hint-placeholder-val="">
 <div class="card">
-<div class="pltoolbar" style="margin:0 0 14px"><div class="cvbar"><span class="cvlbl">Валюта</span><div class="cvgrp"><button class="{{ cvRubCls }}" onClick="{{ setCurRub }}">RUB ₽</button><button class="{{ cvEurCls }}" onClick="{{ setCurEur }}">EUR €</button></div><div class="cvgrp"><button class="{{ cvVatWithCls }}" onClick="{{ setVatWith }}">С НДС</button><button class="{{ cvVatNoCls }}" onClick="{{ setVatNo }}">Без НДС</button></div></div></div>
+<div class="pltoolbar" style="margin:0 0 14px"><div class="cvbar"><span class="cvlbl">Валюта</span><div class="cvgrp"><button class="{{ cvRubCls }}" onClick="{{ setCurRub }}">RUB ₽</button><button class="{{ cvEurCls }}" onClick="{{ setCurEur }}">EUR €</button></div><div class="cvgrp"><button class="{{ cvVatWithCls }}" onClick="{{ setVatWith }}">С НДС</button><button class="{{ cvVatNoCls }}" onClick="{{ setVatNo }}">Без НДС</button></div><span class="cvlbl">Метрика</span><div class="cvgrp"><button class="{{ cvUnitAbsCls }}" onClick="{{ setUnitAbs }}">Абсолют.</button><button class="{{ cvUnitKgCls }}" onClick="{{ setUnitKg }}">На 1 кг</button></div></div></div>
 <div class="lckpis">
 <div class="lckpi navy"><span class="lckl">Landed Cost · факт</span><span class="lckv">{{ lcKpiLanded }}</span><span class="lcksub">{{ lcKpiBatches }} партий · {{ lcKpiPeriod }}</span></div>
 <div class="lckpi"><span class="lckl">Накладные расходы</span><span class="lckv">{{ lcKpiOverhead }}</span><span class="lcksub">{{ lcKpiExtraRub }} лог.+там.+брокер</span></div>
@@ -1904,7 +1903,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="plkpis"><sc-for list="{{ plKpis }}" as="k" hint-placeholder-count="6"><div class="{{ k.cls }}"><span class="plkk">{{ k.k }}</span><span class="plkv">{{ k.v }}</span><span class="{{ k.ecls }}">{{ k.e }}</span></div></sc-for></div>
 <sc-if value="{{ mgCostNoteShow }}" hint-placeholder-val=""><div class="{{ mgCostNoteCls }}">{{ mgCostNote }}</div></sc-if>
 <div class="pltoolbar">
-<div class="cvbar"><span class="cvlbl">Валюта</span><div class="cvgrp"><button class="{{ cvRubCls }}" onClick="{{ setCurRub }}">RUB ₽</button><button class="{{ cvEurCls }}" onClick="{{ setCurEur }}">EUR €</button></div><div class="cvgrp"><button class="{{ cvVatWithCls }}" onClick="{{ setVatWith }}">С НДС</button><button class="{{ cvVatNoCls }}" onClick="{{ setVatNo }}">Без НДС</button></div></div>
+<div class="cvbar"><span class="cvlbl">Валюта</span><div class="cvgrp"><button class="{{ cvRubCls }}" onClick="{{ setCurRub }}">RUB ₽</button><button class="{{ cvEurCls }}" onClick="{{ setCurEur }}">EUR €</button></div><div class="cvgrp"><button class="{{ cvVatWithCls }}" onClick="{{ setVatWith }}">С НДС</button><button class="{{ cvVatNoCls }}" onClick="{{ setVatNo }}">Без НДС</button></div><span class="cvlbl">Метрика</span><div class="cvgrp"><button class="{{ cvUnitAbsCls }}" onClick="{{ setUnitAbs }}">Абсолют.</button><button class="{{ cvUnitKgCls }}" onClick="{{ setUnitKg }}">На 1 кг</button></div></div>
 <div class="field"><span class="lbl">Период</span><input class="inp" value="{{ plPeriodVal }}" onInput="{{ onPlPeriod }}" placeholder="июнь 2026"></div>
 <div class="field"><span class="lbl">Себестоимость</span><div class="plseg"><button class="{{ plModeTreeCls }}" onClick="{{ setModeTree }}">Дерево СС</button><button class="{{ plModeBatchCls }}" onClick="{{ setModeBatch }}">Партионная</button></div></div>
 <div class="plplan">План выручки ₽<input class="inp num" value="{{ plPlanRev }}" onInput="{{ onPlPlanRev }}"></div>
@@ -1918,7 +1917,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="dvtools" style="margin:0"><button class="btn" onClick="{{ plExpandAll }}">Развернуть</button><button class="btn" onClick="{{ plCollapseAll }}">Свернуть</button></div>
 </div>
 <div class="pltbl">
-<div class="plhd"><span>Срез / drill-down</span><span class="r">Объём</span><span class="r">Выручка</span><span class="r">COGS</span><span class="r">GM1 %</span><span class="r">GM2 ₽</span><span class="r">GM2 %</span><span class="r">Доля</span></div>
+<div class="plhd"><span>Срез / drill-down</span><span class="r">Объём</span><span class="r">{{ plHVyr }}</span><span class="r">{{ plHCogs }}</span><span class="r">GM1 %</span><span class="r">{{ plHGm2 }}</span><span class="r">GM2 %</span><span class="r">Доля</span></div>
 <sc-for list="{{ plRows }}" as="r" hint-placeholder-count="8"><div class="{{ r.cls }}" onClick="{{ r.toggle }}"><span class="plnm"><span class="plx">{{ r.x }}</span><span class="pltx">{{ r.name }}</span></span><span class="plnum dim">{{ r.w }}</span><span class="plnum">{{ r.rev }}</span><span class="plnum dim">{{ r.ss }}</span><span class="{{ r.r1cls }}">{{ r.r1 }}</span><span class="plnum">{{ r.m2 }}</span><span class="{{ r.r2cls }}">{{ r.r2 }}</span><span class="r"><span class="plbar"><span style="width:{{ r.share }}%"></span></span></span></div></sc-for>
 <div class="pltot"><span>ИТОГО</span><span class="r">{{ plTot.w }}</span><span class="r">{{ plTot.rev }}</span><span class="r">{{ plTot.ss }}</span><span class="r">{{ plTot.r1 }}</span><span class="r">{{ plTot.m2 }}</span><span class="r">{{ plTot.r2 }}</span><span class="r"></span></div>
 </div>
@@ -3085,13 +3084,13 @@ class Component extends DCLogic {
     dlBase: {}, dlExtra: [], dlTemplates: [], dlMap: null, dlBusy: '', dlMsg: '', dlErr: '', dlDone: '',
     lc1cUrl: '', lc1cToken: '', lc1cBusy: false,
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {}, cloudLocks: {}, cloudMyAreas: [],
-    curMode: 'RUB', vatMode: 'WITHOUT',
+    curMode: 'RUB', vatMode: 'WITHOUT', unitMode: 'ABS',
     sbReady: false, sbFltMarka: '', sbFltPeriod: '', sbSearch: '', sbCompare: false, sbCmpMarka: '', sbDateFrom: '', sbDateTo: '', sbSummary: false, sbExpanded: {},
     mgRevenue: null, mgRevMeta: null, mgErr: '', mgBusy: false, mgPeriod: '', mgGm: null, mgKv: [{ name: 'Конфлекс', pct: 10 }], mgView: 'groups', mgFltGroup: '', mgExpanded: {}, mgCostMode: 'tree', plSlice: 'nomen', plExpanded: {}, plAi: '', plAiBusy: false, plPlanRev: '', plPlanM2: '', mgManualCost: {},
     chat: [], chatRooms: [], chatRoom: 'general', privModal: null, chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false, navExp: null, catKey: '', compassOpen: false,
     tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '', sales: [], saleDraft: null, saleErr: '', salesTransport: 0, salesTransMode: 'weight', cashStart: 0, payMoves: {}, paySplits: {}, payMoveEdit: '', logistics: [], logDraft: null, logErr: '', payreqs: [], prDraft: null, prErr: '', stmtMsg: '',
     docType: 'invoice', docData: { no: '14', date: '', invBuyer: 'ООО «Печатный двор»', invBuyerInn: 'ИНН 7712345678 / КПП 771201001', invBank: 'АО «Альфа-Банк», р/с 40702810000000012345, БИК 044525593, к/с 30101810200000000593', invItems: 'Чёрнила флексо Cyan | 500 | кг | 480\nЧёрнила флексо Magenta | 300 | кг | 510\nРастворитель этилацетат | 200 | л | 95', empName: 'Иванов Иван Иванович', empPost: 'менеджер по закупкам', empPassport: '45 09 № 123456, выдан ОВД «Тверской» г. Москвы 12.03.2015, код 770-001', supplier: 'ООО «ХимПоставка»', supplierAddr: 'г. Москва, ул. Промышленная, д. 7', goods: 'Пигмент синий (фталоцианиновый) — 500 кг\nРастворитель НефрасС2 — 200 л\nСтабилизатор СТ-4 — 50 кг', term: '10 дней', route: 'Москва — Санкт-Петербург', car: 'Volvo FH, гос. № А123ВС 777', driver: 'Петров Пётр Петрович', driverDoc: 'вод. удостоверение 99 12 345678', cargo: '1200 кг / 4,0 м³, 6 паллет', cargoName: 'Сырьё для производства чернил', rfpSupplier: 'ООО «ХимПоставка»', rfpItems: 'Пигмент синий (фталоцианиновый) — 500 кг\nПигмент жёлтый — 300 кг\nРастворитель НефрасС2 — 200 л', rfpDeadline: '5 рабочих дней' },
-    peekIdx: 0, peekDismissed: {}, peekClosed: false, peekToast: '', cloudToast: '',
+    peekIdx: 0, peekDismissed: {}, peekClosed: false, peekOpen: false, peekToast: '', cloudToast: '',
     tgToken: '', tgChatId: '', tgFwd: false, tgEditToken: '', tgEditChatId: '', tgStatus: '',
     cloudHistory: [], cloudName: '', cloudCfgText: '', cloudWsId: 'workspace',
   };
@@ -3151,8 +3150,22 @@ class Component extends DCLogic {
       else if (sc === 'bored' && idle > 45000) { this.setScene('leave'); clearTimeout(this._chLeaveT); this._chLeaveT = setTimeout(() => { if (this.state.chScene === 'leave') this.setState({ chScene: 'gone' }); }, 5200); }
     }, 2000);
     this._idleInt = setInterval(() => { if (this.state.currentUser && Date.now() - this._lastAct > Component.IDLE_MS) this.expireSession(); }, 15000);
-    // Ротация облачка АЯ: если рисков несколько — показываем их по очереди
-    this._peekInt = setInterval(() => { if (!this.state.currentUser || this.state.peekClosed || this.state.peekToast) return; const n = this.riskAlerts().filter(a => !this.state.peekDismissed[a.id]).length; if (n > 1) this.setState(s => ({ peekIdx: s.peekIdx + 1 })); }, 7000);
+    // АЯ напоминает спокойно: облачко с задачами авто-раскрывается раз в ~2,5 ч и само сворачивается через 45 с.
+    this._remindMs = 2.5 * 3600 * 1000; // интервал напоминаний (2–3 часа)
+    this._peekShowMs = 45000;           // как долго облачко висит раскрытым
+    const openPeek = () => {
+      if (!this.state.currentUser || this.state.peekToast) return;
+      const n = this.riskAlerts().filter(a => !this.state.peekDismissed[a.id]).length;
+      if (n <= 0) return; // напоминать не о чем — не открываем
+      this.setState({ peekOpen: true, peekClosed: false });
+      clearTimeout(this._peekHideT);
+      this._peekHideT = setTimeout(() => this.setState({ peekOpen: false }), this._peekShowMs);
+    };
+    this._openPeek = openPeek;
+    this._peekFirstT = setTimeout(openPeek, 90000);        // первое мягкое напоминание через 1,5 мин после входа
+    this._peekRemindInt = setInterval(openPeek, this._remindMs); // далее раз в ~2,5 ч
+    // Медленная ротация рисков — только пока облачко раскрыто и рисков несколько
+    this._peekInt = setInterval(() => { if (!this.state.currentUser || !this.state.peekOpen || this.state.peekToast) return; const n = this.riskAlerts().filter(a => !this.state.peekDismissed[a.id]).length; if (n > 1) this.setState(s => ({ peekIdx: s.peekIdx + 1 })); }, 12000);
     // Автоудаление выполненных задач старше 70 дней (из программы и облака)
     this._purgeT = setTimeout(() => this.purgeOldTasks(), 5000);
     this._purgeInt = setInterval(() => this.purgeOldTasks(), 3600000);
@@ -3608,7 +3621,51 @@ class Component extends DCLogic {
   cvVal(rub, rate) { let v = (Number(rub) || 0) * this.cvFactorVat(); if (this.state.curMode === 'EUR') v = rate ? v / rate : 0; return v; }
   cvMoney(rub, rate) { return this.cvFmt(this.cvVal(rub, rate)); }
   cvFmt(v) { return (Number(v) || 0).toLocaleString('ru-RU', { maximumFractionDigits: this.state.curMode === 'EUR' ? 2 : 0 }) + ' ' + this.cvSym(); }
-  cvModeLabel() { return (this.state.curMode === 'EUR' ? 'EUR €' : 'RUB ₽') + ' · ' + (this.state.vatMode === 'WITH' ? 'с НДС' : 'без НДС'); }
+  cvModeLabel() { return (this.state.curMode === 'EUR' ? 'EUR €' : 'RUB ₽') + ' · ' + (this.state.vatMode === 'WITH' ? 'с НДС' : 'без НДС') + ' · ' + (this.cvUnitOn() ? 'на 1 кг' : 'абс.'); }
+  // ===== Сквозной режим «удельные показатели на 1 кг продукции» =====
+  cvUnitOn() { return this.state.unitMode === 'PERKG'; }
+  cvUnitLabel() { return this.cvUnitOn() ? 'На 1 кг' : 'Абсолютные'; }
+  // Метка режима для шапки Excel-файлов (валюта | контур | метрика)
+  cvExcelMode() {
+    return 'Валюта отчёта: ' + (this.state.curMode === 'EUR' ? 'EUR €' : 'RUB ₽')
+      + ' | Контур: ' + (this.state.vatMode === 'WITH' ? 'С НДС' : 'Без НДС')
+      + ' | Метрика: ' + (this.cvUnitOn() ? 'На 1 кг продукции' : 'Абсолютные значения')
+      + (this.state.curMode === 'EUR' ? (' | Курс ЦБ: 1 € = ' + (this.cvRateEur() || 0).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' ₽') : '');
+  }
+  // Удельный суффикс для масок/подписей («₽/кг» или «€/кг»)
+  cvUnitSuffix() { return this.cvSym() + '/кг'; }
+  // Денежный формат с учётом режима «на 1 кг»: value — уже сконвертированная сумма (cvVal/cvAgg), w — вес в кг.
+  // Защита от деления на ноль: при w<=0 в удельном режиме возвращает «—».
+  cvFmtW(value, w) {
+    if (this.cvUnitOn()) {
+      if (!w || w <= 0) return '—';
+      const pk = (Number(value) || 0) / w;
+      return pk.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + this.cvUnitSuffix();
+    }
+    return this.cvFmt(value);
+  }
+  // Заголовок денежной колонки: в удельном режиме добавляет «, ₽/кг»/«, €/кг»
+  cvColHead(base) { return this.cvUnitOn() ? (base + ', ' + this.cvUnitSuffix()) : base; }
+  // Глобальный сервис-конвертер: приводит массив отчётных строк к валюте/контуру/метрике для рендеринга.
+  // НЕ мутирует исходные RUB-данные. moneyFields — какие поля делить/конвертировать; weightField — поле веса в кг.
+  convertFinancialData(rows, rate, opts) {
+    opts = opts || {};
+    const moneyFields = opts.moneyFields || ['rev', 'ss', 'm1', 'm2', 'g2', 'kv'];
+    const wf = opts.weightField || 'w';
+    const unit = this.cvUnitOn();
+    return (rows || []).map(r => {
+      const o = { ...r };
+      const w = Number(r[wf]) || 0;
+      for (const f of moneyFields) {
+        if (r[f] == null) continue;
+        let v = this.cvVal(r[f], rate); // валюта + контур НДС
+        if (unit) v = w > 0 ? v / w : null; // на 1 кг (защита от деления на ноль)
+        o[f] = v;
+      }
+      o.__unit = unit; o.__w = w;
+      return o;
+    });
+  }
   // Дисплей-агрегат: масштаб всех денежных полей по валюте/НДС; проценты маржи инвариантны (берутся из исходного RUB-агрегата)
   cvAgg(a, rate) { const f = this.cvFactorVat(); const eur = this.state.curMode === 'EUR'; const c = (x) => { let v = (Number(x) || 0) * f; if (eur) v = rate ? v / rate : 0; return v; }; return { w: a.w, rev: c(a.rev), ss: c(a.ss), g2: c(a.g2 || 0), kv: c(a.kv || 0), m1: c(a.m1), m2: c(a.m2), r1: a.rev ? a.m1 / a.rev * 100 : 0, r2: a.rev ? a.m2 / a.rev * 100 : 0 }; }
   curVatVals() {
@@ -3618,6 +3675,9 @@ class Component extends DCLogic {
       setCurRub: () => set({ curMode: 'RUB' }), setCurEur: () => set({ curMode: 'EUR' }),
       cvVatWithCls: S.vatMode === 'WITH' ? 'cvseg on' : 'cvseg', cvVatNoCls: S.vatMode !== 'WITH' ? 'cvseg on' : 'cvseg',
       setVatWith: () => set({ vatMode: 'WITH' }), setVatNo: () => set({ vatMode: 'WITHOUT' }),
+      cvUnitAbsCls: S.unitMode !== 'PERKG' ? 'cvseg on' : 'cvseg', cvUnitKgCls: S.unitMode === 'PERKG' ? 'cvseg on' : 'cvseg',
+      setUnitAbs: () => set({ unitMode: 'ABS' }), setUnitKg: () => set({ unitMode: 'PERKG' }),
+      cvUnitOn: S.unitMode === 'PERKG',
     };
   }
   mgEnrich(costMode) {
@@ -3662,7 +3722,7 @@ class Component extends DCLogic {
   // Построить стилизованный лист: заголовок, шапка (navy), данные (тонкие границы), строка ИТОГО (формулы SUM + двойная граница), автоширина
   mgXlSheet(title, headers, types, rows, totalRow) {
     const XLSX = window.XLSX, st = this.mgXlSt();
-    const modeLabel = 'Валюта отчёта: ' + (this.state.curMode === 'EUR' ? 'EUR €' : 'RUB ₽') + ' | Контур: ' + (this.state.vatMode === 'WITH' ? 'С НДС' : 'Без НДС') + (this.state.curMode === 'EUR' ? (' | Курс ЦБ: 1 € = ' + (this.cvRateEur() || 0).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' ₽') : '');
+    const modeLabel = this.cvExcelMode();
     const aoa = [[title], [modeLabel], headers.slice()];
     const headRow = 2, dataStart = 3;
     rows.forEach(r => aoa.push(r.slice()));
@@ -4611,15 +4671,17 @@ class Component extends DCLogic {
     const T = agg(rows);
     const TD = this.cvAgg(T, rate);
     const M = (rub) => this.cvMoney(rub, rate);
+    const perKgFmt = (v) => T.w > 0 ? (v / T.w).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + this.cvUnitSuffix() : '—';
+    const subU = (v) => this.cvUnitOn() ? ('всего ' + this.cvFmt(v)) : perKgFmt(v);
     // KPI
     const clients = new Set(rows.map(r => r.client).filter(Boolean)).size;
     const kpis = [
-      { k: 'Выручка', v: this.cvFmt(TD.rev), e: this.cvModeLabel(), u: (T.w ? (T.rev / T.w).toFixed(1) : 0) + ' ₽/кг' },
-      { k: 'Себестоимость', v: this.cvFmt(TD.ss), e: '', u: (T.w ? (T.ss / T.w).toFixed(1) : 0) + ' ₽/кг' },
-      { k: 'МАРЖА 1 (валовая)', v: this.cvFmt(TD.m1), e: this.mgPct(TD.r1) + ' рент.', u: '', hi: 1 },
-      { k: 'GM2 (опер. расходы)', v: this.cvFmt(TD.g2), e: '', u: (T.w ? (T.g2 / T.w).toFixed(1) : 0) + ' ₽/кг' },
-      { k: 'КВ (ком. вознагр.)', v: this.cvFmt(TD.kv), e: '', u: '' },
-      { k: 'МАРЖА 2 (операц.)', v: this.cvFmt(TD.m2), e: this.mgPct(TD.r2) + ' рент.', u: '', hi: 2 }
+      { k: 'Выручка', v: this.cvFmtW(TD.rev, T.w), e: this.cvModeLabel(), u: subU(TD.rev) },
+      { k: 'Себестоимость', v: this.cvFmtW(TD.ss, T.w), e: '', u: subU(TD.ss) },
+      { k: 'МАРЖА 1 (валовая)', v: this.cvFmtW(TD.m1, T.w), e: this.mgPct(TD.r1) + ' рент.', u: this.cvUnitOn() ? ('всего ' + this.cvFmt(TD.m1)) : '', hi: 1 },
+      { k: 'GM2 (опер. расходы)', v: this.cvFmtW(TD.g2, T.w), e: '', u: subU(TD.g2) },
+      { k: 'КВ (ком. вознагр.)', v: this.cvFmtW(TD.kv, T.w), e: '', u: '' },
+      { k: 'МАРЖА 2 (операц.)', v: this.cvFmtW(TD.m2, T.w), e: this.mgPct(TD.r2) + ' рент.', u: this.cvUnitOn() ? ('всего ' + this.cvFmt(TD.m2)) : '', hi: 2 }
     ];
     const meta = [
       { k: 'Отгружено', v: this.mgKg(T.w) }, { k: 'Позиций', v: String(rows.length) }, { k: 'Клиентов', v: String(clients) }, { k: 'Курс EUR/RUB', v: rate ? rate.toFixed(4) : '—' }
@@ -4627,24 +4689,27 @@ class Component extends DCLogic {
     // группы
     const groupRows = this.mgGroups().map(g => {
       const list = rows.filter(r => r.group === g); if (!list.length) return null; const a = agg(list); const d = this.cvAgg(a, rate);
-      return { group: g, weightS: this.mgKg(a.w), revS: this.cvFmt(d.rev), ssS: this.cvFmt(d.ss), m1S: this.cvFmt(d.m1), m2S: this.cvFmt(d.m2), rent1: this.mgPct(d.r1), rent2: this.mgPct(d.r2), m2neg: a.m2 < 0 };
+      return { group: g, weightS: this.mgKg(a.w), revS: this.cvFmtW(d.rev, a.w), ssS: this.cvFmtW(d.ss, a.w), m1S: this.cvFmtW(d.m1, a.w), m2S: this.cvFmtW(d.m2, a.w), rent1: this.mgPct(d.r1), rent2: this.mgPct(d.r2), m2neg: a.m2 < 0 };
     }).filter(Boolean);
     // по марке (с фильтром по группе)
     const flt = S.mgFltGroup ? rows.filter(r => r.group === S.mgFltGroup) : rows;
     const markaMap = new Map();
     for (const r of flt) { const key = r.marka; if (!markaMap.has(key)) markaMap.set(key, []); markaMap.get(key).push(r); }
     const markaRows = [...markaMap.entries()].map(([marka, list]) => { const a = agg(list); const d = this.cvAgg(a, rate); const exp = !!S.mgExpanded[marka]; const ccKg = list[0].ccKg;
-      return { marka, group: list[0].group, weightS: this.mgKg(a.w), revS: this.cvFmt(d.rev), revKg: (a.w ? (a.rev / a.w).toFixed(1) : 0) + ' ₽/кг', ccKgS: ccKg > 0 ? (this.mgNum(ccKg).toFixed(1) + ' ₽/кг') : '— нет СС', noCost: ccKg <= 0,
-        m1S: this.cvFmt(d.m1), m1Kg: (a.w ? (a.m1 / a.w).toFixed(1) : 0) + ' ₽/кг', m2S: this.cvFmt(d.m2), rent1: this.mgPct(d.r1), m2neg: a.m2 < 0,
+      const sfx = ' ' + this.cvUnitSuffix();
+      return { marka, group: list[0].group, weightS: this.mgKg(a.w), revS: this.cvFmtW(d.rev, a.w), revKg: (a.w ? (this.cvVal(a.rev, rate) / a.w).toFixed(2) : 0) + sfx, ccKgS: ccKg > 0 ? (this.cvVal(this.mgNum(ccKg), rate).toFixed(2) + sfx) : '— нет СС', noCost: ccKg <= 0,
+        m1S: this.cvFmtW(d.m1, a.w), m1Kg: (a.w ? (this.cvVal(a.m1, rate) / a.w).toFixed(2) : 0) + sfx, m2S: this.cvFmtW(d.m2, a.w), rent1: this.mgPct(d.r1), m2neg: a.m2 < 0,
         expanded: exp, expIcon: exp ? '−' : '+', rowCls: exp ? 'mgmrow on' : 'mgmrow',
         toggle: () => this.setState(st => ({ mgExpanded: { ...st.mgExpanded, [marka]: !st.mgExpanded[marka] } })),
         onCost: (e) => this.setState(st => ({ mgManualCost: { ...st.mgManualCost, [marka]: e.target.value } }), () => this.saveMargin()),
         costInput: manual[marka] != null ? manual[marka] : '',
-        clients: exp ? list.map(x => { const xd = this.cvAgg({ w: x.weight, rev: x.revenue, ss: x.ss, g2: x.gm2, kv: x.kv, m1: x.m1, m2: x.m2 }, rate); return { client: x.client || '—', nomen: x.nomen, weightS: this.mgKg(x.weight), revS: this.cvFmt(xd.rev), m1S: this.cvFmt(xd.m1), m2S: this.cvFmt(xd.m2), m2neg: x.m2 < 0 }; }) : [] };
+        clients: exp ? list.map(x => { const xd = this.cvAgg({ w: x.weight, rev: x.revenue, ss: x.ss, g2: x.gm2, kv: x.kv, m1: x.m1, m2: x.m2 }, rate); return { client: x.client || '—', nomen: x.nomen, weightS: this.mgKg(x.weight), revS: this.cvFmtW(xd.rev, x.weight), m1S: this.cvFmtW(xd.m1, x.weight), m2S: this.cvFmtW(xd.m2, x.weight), m2neg: x.m2 < 0 }; }) : [] };
     }).sort((a, b) => b.revS.length - a.revS.length || a.marka.localeCompare(b.marka, 'ru'));
     const noCostCount = markaRows.filter(m => m.noCost).length;
     return {
       ...base, mgReady: true, mgKpis: kpis, mgMeta: meta, mgGroupRows: groupRows, mgMarkaRows: markaRows, ...this.curVatVals(),
+      mgHVyr: this.cvColHead('Выручка'), mgHSs: this.cvColHead('Себестоимость'), mgHM1: this.cvColHead('Маржа 1'), mgHM2: this.cvColHead('Маржа 2'),
+      mgHPrice: 'Цена ' + this.cvUnitSuffix(), mgHSsKg: 'СС ' + this.cvUnitSuffix(), mgHUdM1: 'Уд. маржа 1, ' + this.cvUnitSuffix(),
       mgView: S.mgView, isGroupsView: S.mgView === 'groups', isMarkaView: S.mgView === 'marka',
       showGroups: () => set({ mgView: 'groups' }), showMarka: () => set({ mgView: 'marka' }),
       groupsBtnCls: S.mgView === 'groups' ? 'mgtab on' : 'mgtab', markaBtnCls: S.mgView === 'marka' ? 'mgtab on' : 'mgtab',
@@ -5077,7 +5142,7 @@ class Component extends DCLogic {
     if (this.myAreaSet().size) this.queueCloudPush();
   }
 
-  componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); clearInterval(this._peekInt); clearTimeout(this._peekToastT); clearTimeout(this._purgeT); clearInterval(this._purgeInt); clearInterval(this._chInt); clearTimeout(this._chLeaveT); clearTimeout(this._coffeeT); clearInterval(this._clockInt); clearInterval(this._badgeInt); if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
+  componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); clearInterval(this._peekInt); clearTimeout(this._peekToastT); clearTimeout(this._peekFirstT); clearInterval(this._peekRemindInt); clearTimeout(this._peekHideT); clearTimeout(this._purgeT); clearInterval(this._purgeInt); clearInterval(this._chInt); clearTimeout(this._chLeaveT); clearTimeout(this._coffeeT); clearInterval(this._clockInt); clearInterval(this._badgeInt); if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
 
   loaderVals() {
     const T = 'ENGINEERED FOR EXCELLENCE.';
@@ -5741,6 +5806,9 @@ class Component extends DCLogic {
       }
       throw new Error(lastErr || 'нет доступных бесплатных моделей — впишите модель вручную в ⚙ (см. openrouter.ai/models, фильтр Free)');
     }
+    if (!this.state.aiKey) {
+      await this.ensurePuter();
+    }
     if (typeof puter !== 'undefined' && puter.ai && !this.state.aiKey) {
       const rr = await puter.ai.chat(messages, { model: this.state.aiModel });
       return (rr && (rr.message && rr.message.content || rr.text || (typeof rr === 'string' ? rr : ''))) || '';
@@ -5748,6 +5816,21 @@ class Component extends DCLogic {
     throw new Error('no-key: укажите ключ OpenRouter');
   }
   hasAI() { return !!this.state.aiKey; }
+  ensurePuter() {
+    if (typeof puter !== 'undefined') return Promise.resolve();
+    if (this._puterP) return this._puterP;
+    this._puterP = new Promise((resolve) => {
+      try {
+        const s = document.createElement('script');
+        s.src = 'https://js.puter.com/v2/';
+        s.async = true;
+        s.onload = () => { try { if (typeof puter !== 'undefined') puter.quiet = true; } catch (e) {} resolve(); };
+        s.onerror = () => resolve();
+        document.head.appendChild(s);
+      } catch (e) { resolve(); }
+    });
+    return this._puterP;
+  }
   aiSignedInSilent() { return !!this.state.aiKey || (typeof puter !== 'undefined' && puter.ai && puter.auth && typeof puter.auth.isSignedIn === 'function' && puter.auth.isSignedIn()); }
   saveAiCfg() {
     const key = (this.state.aiKeyEdit || '').trim(), base = (this.state.aiBaseEdit || '').trim(), model = (this.state.aiModelEdit || '').trim();
@@ -6325,7 +6408,16 @@ class Component extends DCLogic {
     const activeRoom = rooms.find(r => r.id === cur);
     const memberNames = activeRoom ? (activeRoom.members || []).map(id => { const u = (S.users || []).find(x => x.id === id); return u ? u.name : '—'; }).join(', ') : '';
     const pm = S.privModal;
-    const userOpts = (S.users || []).filter(u => u.id !== meId).map(u => ({ id: u.id, name: u.name, role: u.role === 'admin' ? 'админ' : 'сотрудник', on: !!(pm && pm.members && pm.members[u.id]), cls: (pm && pm.members && pm.members[u.id]) ? 'privuser on' : 'privuser', toggle: () => this.privModalToggleMember(u.id) }));
+    const meName = this.norm(cu ? cu.name : '');
+    const seenU = new Set();
+    const userOpts = (S.users || []).filter(u => {
+      if (!u || u.id === meId) return false;
+      if (meName && this.norm(u.name) === meName) return false;
+      const key = this.norm(u.name) || u.id;
+      if (seenU.has(key)) return false;
+      seenU.add(key);
+      return true;
+    }).map(u => ({ id: u.id, name: u.name, role: u.role === 'admin' ? 'админ' : 'сотрудник', on: !!(pm && pm.members && pm.members[u.id]), cls: (pm && pm.members && pm.members[u.id]) ? 'privuser on' : 'privuser', toggle: () => this.privModalToggleMember(u.id) }));
     return {
       chatRoomTabs: tabs, chatIsGeneral: cur === 'general',
       chatRoomTitle: cur === 'general' ? 'Общий чат' : (activeRoom ? activeRoom.title : 'Беседа'),
@@ -7624,15 +7716,22 @@ class Component extends DCLogic {
       // Спокойное состояние: АЯ всегда видна, просрочек нет
       return { ...stub, peekShow: true, peekLevel: 'idle', peekText: 'Я на связи. Срочных задач по срокам нет — всё под контролем 👍' };
     }
+    const open = S.peekOpen && !S.peekClosed;
     const idx = ((S.peekIdx % alerts.length) + alerts.length) % alerts.length;
     const a = alerts[idx];
-    return {
+    const full = {
       ...stub, peekShow: true, peekText: a.text, peekLevel: a.level, peekQuick: a.quick, peekHasQuick: !!a.quick,
       peekShowBtns: true, peekCount: alerts.length, peekHasMore: alerts.length > 1, peekMoreN: String(alerts.length - 1), peekCanClose: true, peekOpenLabel: a.openLabel || 'Открыть',
       peekDoQuick: () => { if (a.taskId && a.quick === 'Взять в работу') { this.setTaskStatus(a.taskId, 'В работе'); this.setState({ peekDismissed: { ...this.state.peekDismissed, [a.id]: 1 }, peekIdx: this.state.peekIdx + 1, peekToast: '✓ Задача взята в работу' }); clearTimeout(this._peekToastT); this._peekToastT = setTimeout(() => this.setState({ peekToast: '' }), 2600); } else { this.peekAct(a); } },
       peekOpenPurchase: a.open || (() => this.setState({ tab: 'proc', editId: a.purchaseId, navOpen: false })),
-      peekClose: () => this.setState({ peekDismissed: { ...this.state.peekDismissed, [a.id]: 1 }, peekIdx: this.state.peekIdx + 1 }),
+      peekClose: () => this.setState({ peekDismissed: { ...this.state.peekDismissed, [a.id]: 1 }, peekIdx: this.state.peekIdx + 1, peekOpen: false }),
     };
+    if (!open) {
+      // Есть напоминания, но не время авто-показа — АЯ свёрнута (облачко скрыто, видно по наведению).
+      const word = alerts.length === 1 ? 'задача требует' : (alerts.length < 5 ? 'задачи требуют' : 'задач требуют');
+      return { ...full, peekLevel: 'idle', peekShowBtns: false, peekHasMore: false, peekCanClose: false, peekText: alerts.length + ' ' + word + ' внимания. Наведите или нажмите на меня, чтобы посмотреть.' };
+    }
+    return full;
   }
   // Быстрое действие из облачка: публикуем напоминание в чат команды (+ Telegram) и убираем риск.
   peekAct(a) {
@@ -8030,7 +8129,9 @@ class Component extends DCLogic {
     const anomSum = sum(anoms, 'overpay');
     const transit = recs.filter(r => r.inTransit);
     const transitTot = sum(transit, 'landedPlan');
-    base.lcKpiLanded = this.lcRub(totLanded);
+    const totQtyDel = sum(delivered, 'qR');
+    const lcW = (rub, qty) => this.cvFmtW(this.cvVal(rub, this.cvRateEur()), qty);
+    base.lcKpiLanded = lcW(totLanded, totQtyDel);
     base.lcKpiBatches = String(delivered.length);
     base.lcKpiPeriod = (S.lcMeta && S.lcMeta.period) || '—';
     base.lcKpiOverhead = this.lcPct(overheadAll);
@@ -8532,17 +8633,17 @@ class Component extends DCLogic {
     const byMarka = [...this.plGroupBy(rows, r => r.marka || '—').entries()].map(([k, l]) => ({ k, a: agg(l), d: this.cvAgg(agg(l), rate) }));
     const topProd = byMarka.slice().sort((a, b) => b.d.m2 - a.d.m2)[0];
     const mgrRows = rows.filter(r => r.manager && String(r.manager).trim());
-    const byMgr = [...this.plGroupBy(mgrRows, r => r.manager).entries()].map(([k, l]) => ({ k, d: this.cvAgg(agg(l), rate) }));
+    const byMgr = [...this.plGroupBy(mgrRows, r => r.manager).entries()].map(([k, l]) => ({ k, a: agg(l), d: this.cvAgg(agg(l), rate) }));
     const topMgr = byMgr.slice().sort((a, b) => b.d.m2 - a.d.m2)[0];
     const skuN = byMarka.length, clientN = new Set(rows.map(r => r.client).filter(Boolean)).size;
     const discW = rows.reduce((s, r) => s + (this.mgNum(r.discount) || 0) * r.revenue, 0), avgDisc = T.rev ? discW / T.rev : 0;
     const planRev = this.cvVal(this.mgNum(S.plPlanRev), rate, true), planM2 = this.cvVal(this.mgNum(S.plPlanM2), rate, true);
     const kpis = [
-      { cls: 'plkpi navy', k: 'Выручка (Gross)', v: F(TD.rev), e: (S.curMode === 'EUR' ? 'EUR' : 'RUB') + ' · ' + (S.vatMode === 'WITHOUT' ? 'без НДС' : 'с НДС') },
-      { cls: 'plkpi', k: 'Валовая маржа GM1', v: F(TD.m1), e: this.mgPct(TD.r1) + ' рент.', ecls: 'plke ' + (TD.r1 >= 0 ? 'pos' : 'neg') },
-      { cls: 'plkpi navy2', k: 'Чистая маржа GM2', v: F(TD.m2), e: this.mgPct(TD.r2) + ' рент.' },
-      { cls: 'plkpi', k: 'ТОП-продукт по GM2', v: topProd ? topProd.k : '—', e: topProd ? F(topProd.d.m2) : '' },
-      { cls: 'plkpi', k: 'Лидер-менеджер', v: topMgr ? topMgr.k : 'нет данных', e: topMgr ? F(topMgr.d.m2) + ' GM2' : 'добавьте колонку «менеджер»' },
+      { cls: 'plkpi navy', k: 'Выручка (Gross)', v: this.cvFmtW(TD.rev, T.w), e: this.cvModeLabel() },
+      { cls: 'plkpi', k: 'Валовая маржа GM1', v: this.cvFmtW(TD.m1, T.w), e: this.mgPct(TD.r1) + ' рент.', ecls: 'plke ' + (TD.r1 >= 0 ? 'pos' : 'neg') },
+      { cls: 'plkpi navy2', k: 'Чистая маржа GM2', v: this.cvFmtW(TD.m2, T.w), e: this.mgPct(TD.r2) + ' рент.' },
+      { cls: 'plkpi', k: 'ТОП-продукт по GM2', v: topProd ? topProd.k : '—', e: topProd ? this.cvFmtW(topProd.d.m2, topProd.a.w) : '' },
+      { cls: 'plkpi', k: 'Лидер-менеджер', v: topMgr ? topMgr.k : 'нет данных', e: topMgr ? this.cvFmtW(topMgr.d.m2, topMgr.a.w) + ' GM2' : 'добавьте колонку «менеджер»' },
       { cls: 'plkpi', k: 'Объём / SKU / клиенты', v: this.mgKg(T.w), e: skuN + ' SKU · ' + clientN + ' клиент.' },
     ];
     if (planRev > 0) kpis.push({ cls: 'plkpi', k: 'Выполнение плана выручки', v: this.mgPct(TD.rev / planRev * 100), e: (TD.rev - planRev >= 0 ? '+' : '') + F(TD.rev - planRev), ecls: 'plke ' + (TD.rev >= planRev ? 'pos' : 'neg') });
@@ -8563,9 +8664,9 @@ class Component extends DCLogic {
         cls: 'plr l' + lvl + (c ? ' ' + c : ''), lvl, name, hasKids, open,
         x: hasKids ? (open ? '▾' : '▸') : '·',
         toggle: tog || (() => {}),
-        w: this.mgKg(a.w), rev: this.cvFmt(d.rev), ss: this.cvFmt(d.ss),
-        m1: this.cvFmt(d.m1), r1: this.mgPct(d.r1), r1cls: 'plnum ' + (d.r1 >= 0 ? 'pos' : 'neg'),
-        m2: this.cvFmt(d.m2), r2: this.mgPct(d.r2), r2cls: 'plnum ' + (d.m2 < 0 ? 'neg' : (d.r2 >= 15 ? 'pos' : '')),
+        w: this.mgKg(a.w), rev: this.cvFmtW(d.rev, a.w), ss: this.cvFmtW(d.ss, a.w),
+        m1: this.cvFmtW(d.m1, a.w), r1: this.mgPct(d.r1), r1cls: 'plnum ' + (d.r1 >= 0 ? 'pos' : 'neg'),
+        m2: this.cvFmtW(d.m2, a.w), r2: this.mgPct(d.r2), r2cls: 'plnum ' + (d.m2 < 0 ? 'neg' : (d.r2 >= 15 ? 'pos' : '')),
         share: T.rev ? Math.max(2, Math.round(a.rev / T.rev * 100)) : 0, shareTxt: this.mgPct(T.rev ? a.rev / T.rev * 100 : 0),
       };
     };
@@ -8585,7 +8686,8 @@ class Component extends DCLogic {
       }
     }
     base.plRows = flat;
-    base.plTot = { w: this.mgKg(T.w), rev: this.cvFmt(TD.rev), ss: this.cvFmt(TD.ss), m1: this.cvFmt(TD.m1), r1: this.mgPct(TD.r1), m2: this.cvFmt(TD.m2), r2: this.mgPct(TD.r2) };
+    base.plTot = { w: this.mgKg(T.w), rev: this.cvFmtW(TD.rev, T.w), ss: this.cvFmtW(TD.ss, T.w), m1: this.cvFmtW(TD.m1, T.w), r1: this.mgPct(TD.r1), m2: this.cvFmtW(TD.m2, T.w), r2: this.mgPct(TD.r2) };
+    base.plHVyr = this.cvColHead('Выручка'); base.plHCogs = this.cvColHead('COGS'); base.plHGm2 = this.cvUnitOn() ? ('GM2 ' + this.cvUnitSuffix()) : 'GM2 ' + this.cvSym();
     base.plPlanRev = S.plPlanRev || ''; base.onPlPlanRev = (e) => set({ plPlanRev: e.target.value });
     base.plPlanM2 = S.plPlanM2 || ''; base.onPlPlanM2 = (e) => set({ plPlanM2: e.target.value });
     base.plPrint = () => this.plPrint(); base.plExcel = () => this.plExcel(); base.plEmail = () => this.plEmail(); base.plRunAi = () => this.plRunAi();
@@ -9676,6 +9778,12 @@ class Component extends DCLogic {
       onec: 'Интеграция с 1С: автоматическая загрузка остатков сырья и закупочных цен из 1С (ERP) по расписанию через HTTP-сервис.',
       tasks: 'Постановка задач коллегам: исполнитель, срок, приоритет. Виды «Мои задачи» и «Поручено мной»; АЯ напоминает о просроченных.',
       users: 'Управление доступом: добавление сотрудников, выдача логинов и паролей, роли и блокировка учётных записей.',
+      docs: 'Документы: счета, спецификации и сопроводительные формы с реквизитами компании, печать и выгрузка.',
+      sales: 'Продажи готовой продукции: заявки и отгрузки клиентам, объём и выручка — основа для маржи и плана производства.',
+      cparties: 'Справочник контрагентов и поставщиков: реквизиты, страна/ВЭД, условия оплаты и рейтинг надёжности (OTIF).',
+      receipts: 'Поступления ТМЦ: оприходование сырья на склад по накладным, формирование остатков и фактической себестоимости партий.',
+      logi: 'Логистика: транспортные и таможенные расходы по поставкам, распределение на себестоимость сырья (Landed Cost).',
+      treas30: 'БДДС на 30 дней: бюджет движения денежных средств — притоки и оттоки по дням, кассовые разрывы и остаток на счёте.',
     };
     const homeGroups = tabGroups.map(g => ({
       label: g.label,
@@ -9714,7 +9822,7 @@ class Component extends DCLogic {
 
     const base = {
       ...L, ...Rt,
-      ready: true, navGroups, tabDesc: descs[S.tab], productOptions, ownerOptions, componentOptions,
+      ready: true, navGroups, tabDesc: descs[S.tab] || '', productOptions, ownerOptions, componentOptions,
       cloudToast: S.cloudToast || '', cloudToastHas: !!S.cloudToast,
       isHome: S.tab === 'home', homeGroups, goHome: () => set({ tab: 'home', navOpen: false }), isUsers: S.tab === 'users',
       isCat: S.tab === 'cat', catGroups: catGroup ? [catGroup] : [], catCards: catGroup ? catGroup.items : [],
