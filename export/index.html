@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 Not Found</title>
+<script>
+/*
+  ШЛЮЗ ДОСТУПА (двухконтурная маскировка для GitHub Pages).
+  По умолчанию корень сайта показывает фейковый 404.
+  Реальное приложение открывается ТОЛЬКО при наличии секретного ключа в URL:
+     .../index.html?key=ВАШ_КЛЮЧ        (рекомендуется)
+     .../index.html#ВАШ_КЛЮЧ
+  Ключ задаётся в одном месте ниже (SECRET_KEY).
+*/
+(function () {
+  var SECRET_KEY = 'shtark-erp-2026';            // ← измените на свой секрет
+  var APP_FILE = 'Калькулятор NEV.dc.html';      // основной файл приложения
+
+  function param(name) {
+    try { return new URLSearchParams(location.search).get(name); } catch (e) { return null; }
+  }
+  var hash = (location.hash || '').replace(/^#/, '');
+  var supplied = param('key') || param('k') || hash || (hash.indexOf('key=') === 0 ? hash.slice(4) : '');
+  var stored = false;
+  try { stored = sessionStorage.getItem('sf_access') === SECRET_KEY; } catch (e) {}
+
+  if (supplied === SECRET_KEY || stored) {
+    // Доступ разрешён — пропускаем в приложение, ключ кладём в сессию и переносим в URL.
+    try { sessionStorage.setItem('sf_access', SECRET_KEY); } catch (e) {}
+    var target = './' + encodeURIComponent(APP_FILE) + '?k=' + encodeURIComponent(SECRET_KEY);
+    location.replace(target);
+  } else {
+    // Доступа нет — остаёмся на фейковой странице 404 (см. <body> ниже).
+    document.documentElement.setAttribute('data-blocked', '1');
+  }
+})();
+</script>
+<style>
+  html[data-blocked] body { display: block; }
+  body { background: #fff; color: #000; font-family: -apple-system, "Segoe UI", Arial, sans-serif; margin: 0; }
+  .e { max-width: 700px; margin: 0; padding: 40px 32px; }
+  h1 { font-size: 28px; font-weight: 700; margin: 0 0 10px; }
+  hr { border: 0; border-top: 1px solid #ddd; margin: 14px 0; }
+  address { font-style: normal; color: #555; font-size: 13px; }
+  p { font-size: 15px; margin: 8px 0; }
+</style>
+</head>
+<body>
+<div class="e">
+<h1>404 Not Found</h1>
+<p>The requested URL was not found on this server.</p>
+<hr>
+<address>nginx</address>
+</div>
+</body>
+</html>

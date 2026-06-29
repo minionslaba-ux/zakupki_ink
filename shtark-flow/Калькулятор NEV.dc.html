@@ -1368,6 +1368,42 @@ a.wordmark:hover{opacity:.6}
 .tracktoast .tticon{font-size:16px;color:#c7b9ff;filter:drop-shadow(0 0 4px rgba(124,92,255,.8))}
 @keyframes ttIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
 @keyframes ctIn{from{opacity:0;transform:translate(-50%,14px)}to{opacity:1;transform:translate(-50%,0)}}
+.cloudtoast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:1460;background:#0f3d24;color:#eafaf0;border:1px solid #2f9e63;border-radius:13px;padding:13px 18px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 14px 40px rgba(15,61,36,.4);animation:ctIn .26s ease;max-width:90vw}
+.cloudtoast .clic{font-size:17px;filter:drop-shadow(0 0 5px rgba(80,220,140,.7))}
+.cloudtoast small{display:block;font-weight:500;color:#9fd9b6;font-size:11.5px;margin-top:1px}
+.cvbar{display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap}
+.cvgrp{display:inline-flex;background:#f0eee9;border-radius:9px;padding:3px;gap:2px}
+.cvseg{appearance:none;border:none;background:none;border-radius:7px;padding:7px 14px;font:inherit;font-size:12.5px;font-weight:700;color:#56534f;cursor:pointer;white-space:nowrap}
+.cvseg.on{background:#1F4E78;color:#fff}
+.cvlbl{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#9a9793}
+.chrooms{display:flex;gap:5px;flex-wrap:wrap;padding:8px 12px 4px;border-bottom:1px solid #ececff;background:#fbfbff}
+.chroom{appearance:none;border:1px solid #e0e0ee;background:#fff;border-radius:16px;padding:5px 11px;font:inherit;font-size:11.5px;font-weight:600;color:#56534f;cursor:pointer;white-space:nowrap;max-width:170px;overflow:hidden;text-overflow:ellipsis}
+.chroom.on{background:#2A6FDB;color:#fff;border-color:#2A6FDB}
+.chprivbtn{appearance:none;border:1px dashed #2A6FDB;background:rgba(42,111,219,.07);color:#2A6FDB;border-radius:16px;padding:5px 11px;font:inherit;font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+.chprivbtn:hover{background:rgba(42,111,219,.15)}
+.chprivhint{font-size:10.5px;color:#9a8a5a;background:#fff8e6;padding:4px 12px;border-bottom:1px solid #f0e6c8}
+.chmembers{font-size:10.5px;color:#8a8782;padding:3px 12px 5px;background:#fbfbff;border-bottom:1px solid #ececff}
+.chatbody.secret .chtext{user-select:none;-webkit-user-select:none}
+.privbg{position:fixed;inset:0;background:rgba(15,18,22,.45);backdrop-filter:blur(4px);z-index:1500;display:flex;align-items:center;justify-content:center;padding:18px}
+.privcard{background:#fff;border-radius:14px;max-width:440px;width:100%;max-height:84vh;overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.32);padding:20px 22px}
+.privh{font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;color:#1a1916;margin-bottom:4px}
+.privs{font-size:12px;color:#56534f;margin-bottom:14px;line-height:1.5}
+.privlbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#8a8782;margin:12px 0 6px}
+.privinp{width:100%;border:1px solid #d3d8e0;border-radius:9px;padding:10px 12px;font:inherit;font-size:14px;box-sizing:border-box}
+.privlist{display:flex;flex-direction:column;gap:5px;max-height:240px;overflow:auto;margin-top:4px}
+.privuser{display:flex;align-items:center;gap:10px;border:1px solid #e7e4e0;border-radius:9px;padding:9px 12px;cursor:pointer;font-size:13px;transition:background .12s}
+.privuser:hover{background:#f6f8fc}
+.privuser.on{background:#eef4ff;border-color:#2A6FDB}
+.privck{width:18px;height:18px;border-radius:5px;border:2px solid #c2bfba;flex:none;position:relative}
+.privuser.on .privck{background:#2A6FDB;border-color:#2A6FDB}
+.privuser.on .privck::after{content:'✓';position:absolute;inset:0;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.privrole{margin-left:auto;font-size:10.5px;color:#9a9793}
+.privfoot{display:flex;gap:10px;margin-top:18px}
+.privbtn{flex:1;appearance:none;border:none;border-radius:9px;padding:11px;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.privbtn.go{background:#2A6FDB;color:#fff}
+.privbtn.go:disabled{background:#cdd3db;cursor:not-allowed}
+.privbtn.cancel{background:#efedea;color:#56534f}
+.onava{cursor:context-menu}
 .sbgroup{display:flex;flex-direction:column;gap:4px}
 .sbghead{display:flex;align-items:center;border-radius:8px;transition:background .14s}
 .sbghead:hover{background:rgba(255,255,255,.05)}
@@ -1658,7 +1694,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки</div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск: контрагент, ИНН, артикул, сырьё, заявка, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">Ничего не найдено</div></sc-if><sc-for list="{{ searchResults }}" as="r" hint-placeholder-count="3"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
-<sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava">{{ u.avatar }}<i class="ondot"></i></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div></div></sc-if>
+<sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava" title="{{ u.tip }}" onContextMenu="{{ u.onCtx }}">{{ u.avatar }}<i class="ondot"></i></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div></div></sc-if>
 <div class="desc">{{ tabDesc }}</div>
 <div class="actrow"><sc-if value="{{ aiAnalyzable }}" hint-placeholder-val=""><button class="aianalyze" onClick="{{ analyzeScreen }}" disabled="{{ aiBusy }}"><span class="aiana-ic">✦</span> Сделать AI-анализ данных</button></sc-if></div>
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}"><div class="homehero"><div class="homeh1">Добро пожаловать в {{ coName }} <span class="homeflow">Flow</span></div><div class="homesub">Карта навигации — выберите раздел, чтобы начать работу</div></div><sc-for list="{{ homeGroups }}" as="g" hint-placeholder-count="6"><div class="homegrp"><div class="homegl"><span class="homebar"></span>{{ g.label }}</div><div class="homecards"><sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3"><button class="homecard" onClick="{{ t.go }}"><span class="homeic">{{ t.icon }}</span><span class="hometx"><span class="homename">{{ t.label }}</span><span class="homedesc">{{ t.desc }}</span></span></button></sc-for></div></div></sc-for></sc-if>
@@ -1745,7 +1781,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="mgresults">
 <sc-if value="{{ mgNoCost }}" hint-placeholder-val=""><div class="banner warn">{{ mgNoCostMsg }}</div></sc-if>
 <div class="card">
-<div class="mgrhead"><div class="mgrtitle">Маржинальный отчёт <span class="mgrper">{{ mgPeriodVal }}</span></div><button class="btn mgxls" onClick="{{ mgExportExcel }}">⬇ Скачать в Excel</button></div>
+<div class="mgrhead"><div class="mgrtitle">Маржинальный отчёт <span class="mgrper">{{ mgPeriodVal }}</span></div><div class="cvbar"><div class="cvgrp"><button class="{{ cvRubCls }}" onClick="{{ setCurRub }}">RUB ₽</button><button class="{{ cvEurCls }}" onClick="{{ setCurEur }}">EUR €</button></div><div class="cvgrp"><button class="{{ cvVatWithCls }}" onClick="{{ setVatWith }}">С НДС</button><button class="{{ cvVatNoCls }}" onClick="{{ setVatNo }}">Без НДС</button></div><button class="btn mgxls" onClick="{{ mgExportExcel }}">⬇ Скачать Excel</button></div></div>
 <div class="mgkpis"><sc-for list="{{ mgKpis }}" as="k" hint-placeholder-count="6"><div class="mgkpi mghi{{ k.hi }}"><div class="mgkk">{{ k.k }}</div><div class="mgkv">{{ k.v }}</div><div class="mgke">{{ k.e }}</div><div class="mgku">{{ k.u }}</div></div></sc-for></div>
 <div class="mgmeta"><sc-for list="{{ mgMeta }}" as="m" hint-placeholder-count="4"><div class="mgmt"><span class="mgmtl">{{ m.k }}</span><span class="mgmtv">{{ m.v }}</span></div></sc-for></div>
 </div>
@@ -1795,9 +1831,10 @@ window.dispatchEvent(new Event('fbready'));
 
 <sc-if value="{{ lcReady }}" hint-placeholder-val="">
 <div class="card">
+<div class="pltoolbar" style="margin:0 0 14px"><div class="cvbar"><span class="cvlbl">Валюта</span><div class="cvgrp"><button class="{{ cvRubCls }}" onClick="{{ setCurRub }}">RUB ₽</button><button class="{{ cvEurCls }}" onClick="{{ setCurEur }}">EUR €</button></div><div class="cvgrp"><button class="{{ cvVatWithCls }}" onClick="{{ setVatWith }}">С НДС</button><button class="{{ cvVatNoCls }}" onClick="{{ setVatNo }}">Без НДС</button></div></div></div>
 <div class="lckpis">
 <div class="lckpi navy"><span class="lckl">Landed Cost · факт</span><span class="lckv">{{ lcKpiLanded }}</span><span class="lcksub">{{ lcKpiBatches }} партий · {{ lcKpiPeriod }}</span></div>
-<div class="lckpi"><span class="lckl">Накладные расходы</span><span class="lckv">{{ lcKpiOverhead }}</span><span class="lcksub">{{ lcKpiExtraRub }} ₽ лог.+там.+брокер</span></div>
+<div class="lckpi"><span class="lckl">Накладные расходы</span><span class="lckv">{{ lcKpiOverhead }}</span><span class="lcksub">{{ lcKpiExtraRub }} лог.+там.+брокер</span></div>
 <div class="lckpi"><span class="lckl">Валютный фактор (ВЭД)</span><span class="{{ lcKpiFxCls }}">{{ lcKpiFx }}</span><span class="lcksub">{{ lcKpiFxNote }}</span></div>
 <div class="lckpi"><span class="lckl">OTIF поставок</span><span class="lckv">{{ lcKpiOtif }}</span><span class="lcksub">{{ lcKpiOtifNote }}</span></div>
 <div class="lckpi"><span class="lckl">Аномалии расходов</span><span class="{{ lcKpiAnomCls }}">{{ lcKpiAnom }}</span><span class="lcksub">переплата {{ lcKpiAnomSum }} ₽</span></div>
@@ -1864,6 +1901,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="plkpis"><sc-for list="{{ plKpis }}" as="k" hint-placeholder-count="6"><div class="{{ k.cls }}"><span class="plkk">{{ k.k }}</span><span class="plkv">{{ k.v }}</span><span class="{{ k.ecls }}">{{ k.e }}</span></div></sc-for></div>
 <sc-if value="{{ mgCostNoteShow }}" hint-placeholder-val=""><div class="{{ mgCostNoteCls }}">{{ mgCostNote }}</div></sc-if>
 <div class="pltoolbar">
+<div class="cvbar"><span class="cvlbl">Валюта</span><div class="cvgrp"><button class="{{ cvRubCls }}" onClick="{{ setCurRub }}">RUB ₽</button><button class="{{ cvEurCls }}" onClick="{{ setCurEur }}">EUR €</button></div><div class="cvgrp"><button class="{{ cvVatWithCls }}" onClick="{{ setVatWith }}">С НДС</button><button class="{{ cvVatNoCls }}" onClick="{{ setVatNo }}">Без НДС</button></div></div>
 <div class="field"><span class="lbl">Период</span><input class="inp" value="{{ plPeriodVal }}" onInput="{{ onPlPeriod }}" placeholder="июнь 2026"></div>
 <div class="field"><span class="lbl">Себестоимость</span><div class="plseg"><button class="{{ plModeTreeCls }}" onClick="{{ setModeTree }}">Дерево СС</button><button class="{{ plModeBatchCls }}" onClick="{{ setModeBatch }}">Партионная</button></div></div>
 <div class="plplan">План выручки ₽<input class="inp num" value="{{ plPlanRev }}" onInput="{{ onPlPlanRev }}"></div>
@@ -2741,11 +2779,17 @@ window.dispatchEvent(new Event('fbready'));
 <div class="fg"><label>Service ID</label><input class="inp" value="{{ emServiceId }}" onInput="{{ onEmService }}" placeholder="service_xxxxxxx"></div>
 <div class="fg"><label>Template ID</label><input class="inp" value="{{ emTemplateId }}" onInput="{{ onEmTemplate }}" placeholder="template_xxxxxxx"></div>
 <div class="fg"><label>Public Key</label><input class="inp" value="{{ emPublicKey }}" onInput="{{ onEmPublic }}" placeholder="xxxxxxxxxxxxxx"></div>
-<div class="fg"><label>Имя отправителя</label><input class="inp" value="{{ emFromName }}" onInput="{{ onEmFrom }}" placeholder="Shtark Chemicals Flow"></div>
+<div class="fg"><label>Имя отправителя</label><input class="inp" value="{{ emFromName }}" onInput="{{ onEmFrom }}" placeholder="Shtark Flow"></div>
 </div>
 <div class="genrow"><button class="btn dark" onClick="{{ saveEmailCfg }}">Сохранить настройки почты</button><sc-if value="{{ emailConfigured }}" hint-placeholder-val=""><span class="estat ok">● Отправка настроена</span></sc-if><sc-if value="{{ emailNotConfigured }}" hint-placeholder-val="{{ true }}"><span class="estat off">● Не настроено</span></sc-if></div>
 <sc-if value="{{ emailHasStatus }}" hint-placeholder-val=""><div class="hint">{{ emailStatus }}</div></sc-if>
-<div class="etestbox"><div class="sec2">Проверка отправки</div><div class="etestrow"><input class="inp" type="email" value="{{ emTestTo }}" onInput="{{ onEmTestTo }}" placeholder="ваш-email@почта.ру"><button class="btn dark" onClick="{{ sendTestEmail }}">✉ Отправить тест</button><sc-if value="{{ emTestBusy }}" hint-placeholder-val=""><span class="hint">Отправка…</span></sc-if></div><sc-if value="{{ emTestHasMsg }}" hint-placeholder-val=""><div class="{{ emTestCls }}">{{ emTestMsg }}</div></sc-if></div>
+<div class="unote" style="margin-top:14px"><b>Уведомления о задачах сотрудникам.</b> Создайте в EmailJS второй шаблон письма для задач с переменными: to_email, to_name, subject, message, task_title, task_due, task_author, task_priority, app_name. Впишите его Template ID ниже и включите уведомления. Письмо уходит исполнителям (у кого указан e-mail в карточке пользователя) при назначении и изменении задачи.</div>
+<div class="uform">
+<div class="fg"><label>Template ID для задач</label><input class="inp" value="{{ emTaskTemplate }}" onInput="{{ onEmTaskTemplate }}" placeholder="template_xxxxxxx"></div>
+<div class="fg"><label>Уведомлять о задачах</label><label class="dlmapchk" style="height:38px"><input type="checkbox" checked="{{ emNotifyTasks }}" onChange="{{ onEmNotifyTasks }}"> Отправлять письма исполнителям</label></div>
+</div>
+<div class="uform"><div class="fg full"><label>Ссылка на приложение (боевой адрес для писем)</label><input class="inp" value="{{ emAppUrl }}" onInput="{{ onEmAppUrl }}" placeholder="https://minionslaba-ux.github.io/zakupki_ink/index.html?key=shtark-erp-2026"></div></div>
+<div class="etestbox"><div class="sec2">Проверка отправки</div><div class="etestrow"><input class="inp" type="email" value="{{ emTestTo }}" onInput="{{ onEmTestTo }}" placeholder="ваш-email@почта.ру"><button class="btn dark" onClick="{{ sendTestEmail }}">✉ Тест пароля</button><button class="btn" onClick="{{ sendTaskTestEmail }}">✉ Тест задачи</button><sc-if value="{{ emTestBusy }}" hint-placeholder-val=""><span class="hint">Отправка…</span></sc-if></div><sc-if value="{{ emTestHasMsg }}" hint-placeholder-val=""><div class="{{ emTestCls }}">{{ emTestMsg }}</div></sc-if></div>
 </div>
 <div class="card"><div class="sec">Пользователи · {{ usCount }}</div>
 <div class="scroll"><table><thead><tr><th class="l">Имя</th><th class="l">Логин</th><th class="l">E-mail</th><th class="l">Пароль</th><th class="l">Роль</th><th class="l">Доступ</th><th class="l">Статус</th><th class="l">Действия</th></tr></thead>
@@ -2910,12 +2954,25 @@ window.dispatchEvent(new Event('fbready'));
 <div class="chatfab" onClick="{{ chatToggle }}" title="Общий чат команды"><span class="chatfabic">💬</span><span class="chatfabtx">Чат команды</span></div>
 <sc-if value="{{ chatOpen }}" hint-placeholder-val="">
 <div class="chatpanel">
-<div class="chathead"><div class="chl">💬 Общий чат</div><div class="chr"><sc-if value="{{ tgHasLink }}" hint-placeholder-val=""><a class="tgbtn" href="{{ tgLink }}" target="_blank" rel="noopener" title="Открыть в Telegram"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M9.8 15.6 9.6 19c.4 0 .6-.2.8-.4l1.9-1.8 3.9 2.9c.7.4 1.2.2 1.4-.7l2.6-12.2c.2-1-.4-1.4-1.1-1.2L2.4 9.7c-1 .4-1 .9-.2 1.2l4.3 1.3 9.9-6.2c.5-.3.9-.1.5.2z"/></svg> Telegram</a></sc-if><button class="aix" onClick="{{ chatClose }}">✕</button></div></div>
+<div class="chathead"><div class="chl">💬 {{ chatRoomTitle }}</div><div class="chr"><sc-if value="{{ tgHasLink }}" hint-placeholder-val=""><a class="tgbtn" href="{{ tgLink }}" target="_blank" rel="noopener" title="Открыть в Telegram"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M9.8 15.6 9.6 19c.4 0 .6-.2.8-.4l1.9-1.8 3.9 2.9c.7.4 1.2.2 1.4-.7l2.6-12.2c.2-1-.4-1.4-1.1-1.2L2.4 9.7c-1 .4-1 .9-.2 1.2l4.3 1.3 9.9-6.2c.5-.3.9-.1.5.2z"/></svg> Telegram</a></sc-if><button class="aix" onClick="{{ chatClose }}">✕</button></div></div>
+<div class="chrooms"><sc-for list="{{ chatRoomTabs }}" as="r" hint-placeholder-count="1"><button class="{{ r.cls }}" onClick="{{ r.go }}">{{ r.label }}</button></sc-for><button class="chprivbtn" onClick="{{ openPrivModal }}">＋ Приватная беседа</button></div>
+<sc-if value="{{ chatRoomMembers }}" hint-placeholder-val=""><div class="chmembers">Участники: {{ chatRoomMembers }}</div></sc-if>
+<sc-if value="{{ chatPrivHint }}" hint-placeholder-val=""><div class="chprivhint">{{ chatPrivHint }}</div></sc-if>
 <sc-if value="{{ tgIsAdmin }}" hint-placeholder-val=""><div class="tgset"><div class="tgrow"><input class="tginp" value="{{ tgEdit }}" onInput="{{ onTgEdit }}" placeholder="Ссылка t.me/группа (для кнопки)"><button class="tgsave" onClick="{{ saveTg }}">OK</button></div><div class="tglbl">Дублировать сообщения в Telegram-бота:</div><div class="tgrow"><input class="tginp" value="{{ tgEditToken }}" onInput="{{ onTgToken }}" placeholder="Токен бота 123456:ABC-DEF…"></div><div class="tgrow"><input class="tginp" value="{{ tgEditChatId }}" onInput="{{ onTgChatId }}" placeholder="ID чата (-100… или @канал)"><button class="tgsave" onClick="{{ saveTgBot }}">Включить</button></div><sc-if value="{{ tgStatus }}" hint-placeholder-val=""><div class="tgstat">{{ tgStatus }}</div></sc-if></div></sc-if>
-<div class="chatbody"><sc-for list="{{ chatMsgs }}" as="m" hint-placeholder-count="0"><div class="{{ m.cls }}"><div class="chmeta"><span class="chau">{{ m.author }}</span><span class="chtime">{{ m.time }}</span></div><div class="chtext">{{ m.text }}</div></div></sc-for><sc-if value="{{ chatEmpty }}" hint-placeholder-val="{{ true }}"><div class="chempty">Пока сообщений нет.<br>Напишите команде первым! 👋</div></sc-if></div>
+<div class="chatbody{{ chatBodySecret }}"><sc-for list="{{ chatMsgs }}" as="m" hint-placeholder-count="0"><div class="{{ m.cls }}"><div class="chmeta"><span class="chau">{{ m.author }}</span><span class="chtime">{{ m.time }}</span></div><div class="chtext">{{ m.text }}</div></div></sc-for><sc-if value="{{ chatEmpty }}" hint-placeholder-val="{{ true }}"><div class="chempty">Пока сообщений нет.<br>Напишите команде первым! 👋</div></sc-if></div>
 <div class="chatfoot"><textarea class="chatinp" rows="1" placeholder="Сообщение команде…" value="{{ chatInput }}" onInput="{{ onChatInput }}" onKeyDown="{{ onChatKey }}"></textarea><button class="chsend" onClick="{{ chatSend }}">→</button></div>
 </div>
 </sc-if>
+<sc-if value="{{ privModalOpen }}" hint-placeholder-val=""><div class="privbg" onClick="{{ privCancel }}"></div><div class="privcard">
+<div class="privh">Создать приватную беседу</div>
+<div class="privs">Выберите участников и укажите тему. Беседа появится в списке под этим названием. Сообщения исчезают через 48 ч, копирование запрещено.</div>
+<div class="privlbl">Тема беседы</div>
+<input class="privinp" value="{{ privTheme }}" onInput="{{ onPrivTheme }}" placeholder="Напр. Сделка с Конфлекс — конфиденциально">
+<div class="privlbl">Участники</div>
+<div class="privlist"><sc-for list="{{ privUsers }}" as="u" hint-placeholder-count="3"><div class="{{ u.cls }}" onClick="{{ u.toggle }}"><span class="privck"></span><span>{{ u.name }}</span><span class="privrole">{{ u.role }}</span></div></sc-for></div>
+<sc-if value="{{ privHasErr }}" hint-placeholder-val=""><div class="banner err" style="margin-top:12px">{{ privErr }}</div></sc-if>
+<div class="privfoot"><button class="privbtn go" onClick="{{ privSubmit }}" disabled="{{ privCreateDisabled }}">Создать беседу</button><button class="privbtn cancel" onClick="{{ privCancel }}">Отмена</button></div>
+</div></sc-if>
 <sc-if value="{{ peekShow }}" hint-placeholder-val="">
 <div class="ayapeek {{ peekLevel }}">
 <sc-if value="{{ peekCanClose }}" hint-placeholder-val=""><button class="ayaclose" onClick="{{ peekClose }}" title="Скрыть">✕</button></sc-if>
@@ -2984,6 +3041,7 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 </sc-if>
 <sc-if value="{{ trackToastHas }}" hint-placeholder-val=""><div class="tracktoast"><span class="tticon">👁</span><span>{{ trackToast }}</span></div></sc-if>
+<sc-if value="{{ cloudToastHas }}" hint-placeholder-val=""><div class="cloudtoast"><span class="clic">☁✓</span><span>{{ cloudToast }}</span></div></sc-if>
 <sc-if value="{{ claudeToast }}" hint-placeholder-val=""><div class="claudetoast"><span class="cticon">📋</span>Данные для Claude Pro скопированы в буфер! Вставьте их в ваш рабочий чат Claude (Ctrl+V)</div></sc-if>
 <sc-if value="{{ aiOpen }}" hint-placeholder-val="">
 <div class="aibackdrop" onClick="{{ aiClose }}"></div>
@@ -3024,12 +3082,13 @@ class Component extends DCLogic {
     dlBase: {}, dlExtra: [], dlTemplates: [], dlMap: null, dlBusy: '', dlMsg: '', dlErr: '', dlDone: '',
     lc1cUrl: '', lc1cToken: '', lc1cBusy: false,
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {}, cloudLocks: {}, cloudMyAreas: [],
+    curMode: 'RUB', vatMode: 'WITHOUT',
     sbReady: false, sbFltMarka: '', sbFltPeriod: '', sbSearch: '', sbCompare: false, sbCmpMarka: '', sbDateFrom: '', sbDateTo: '', sbSummary: false, sbExpanded: {},
     mgRevenue: null, mgRevMeta: null, mgErr: '', mgBusy: false, mgPeriod: '', mgGm: null, mgKv: [{ name: 'Конфлекс', pct: 10 }], mgView: 'groups', mgFltGroup: '', mgExpanded: {}, mgCostMode: 'tree', plSlice: 'nomen', plExpanded: {}, plAi: '', plAiBusy: false, plPlanRev: '', plPlanM2: '', mgManualCost: {},
-    chat: [], chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false, navExp: null, catKey: '', compassOpen: false,
+    chat: [], chatRooms: [], chatRoom: 'general', privModal: null, chatInput: '', chatOpen: false, tgLink: '', tgEdit: '', navOpen: false, isMobile: false, navExp: null, catKey: '', compassOpen: false,
     tasks: [], taskDraft: null, taskView: 'mine', taskFilter: '', taskErr: '', taskMode: 'list', taskCalKey: '', tasksSeenAt: 0, taskRejecting: '', taskRejectReason: '', taskOpenThread: '', taskCommentInput: '', cwOpen: false, cwDay: '', cwMonth: '', cwLoading: false, cwBump: 0, cwMode: 'cal', qaDate: '', qaTitle: '', qaExecId: '', qaTime: '', qaErr: '', chScene: '', chPhrase: '', chEmp: null, sbCollapsed: false, cparties: [], cpDraft: null, cpErr: '', gsearch: '', receipts: [], recDraft: null, recErr: '', sales: [], saleDraft: null, saleErr: '', salesTransport: 0, salesTransMode: 'weight', cashStart: 0, payMoves: {}, paySplits: {}, payMoveEdit: '', logistics: [], logDraft: null, logErr: '', payreqs: [], prDraft: null, prErr: '', stmtMsg: '',
     docType: 'invoice', docData: { no: '14', date: '', invBuyer: 'ООО «Печатный двор»', invBuyerInn: 'ИНН 7712345678 / КПП 771201001', invBank: 'АО «Альфа-Банк», р/с 40702810000000012345, БИК 044525593, к/с 30101810200000000593', invItems: 'Чёрнила флексо Cyan | 500 | кг | 480\nЧёрнила флексо Magenta | 300 | кг | 510\nРастворитель этилацетат | 200 | л | 95', empName: 'Иванов Иван Иванович', empPost: 'менеджер по закупкам', empPassport: '45 09 № 123456, выдан ОВД «Тверской» г. Москвы 12.03.2015, код 770-001', supplier: 'ООО «ХимПоставка»', supplierAddr: 'г. Москва, ул. Промышленная, д. 7', goods: 'Пигмент синий (фталоцианиновый) — 500 кг\nРастворитель НефрасС2 — 200 л\nСтабилизатор СТ-4 — 50 кг', term: '10 дней', route: 'Москва — Санкт-Петербург', car: 'Volvo FH, гос. № А123ВС 777', driver: 'Петров Пётр Петрович', driverDoc: 'вод. удостоверение 99 12 345678', cargo: '1200 кг / 4,0 м³, 6 паллет', cargoName: 'Сырьё для производства чернил', rfpSupplier: 'ООО «ХимПоставка»', rfpItems: 'Пигмент синий (фталоцианиновый) — 500 кг\nПигмент жёлтый — 300 кг\nРастворитель НефрасС2 — 200 л', rfpDeadline: '5 рабочих дней' },
-    peekIdx: 0, peekDismissed: {}, peekClosed: false, peekToast: '',
+    peekIdx: 0, peekDismissed: {}, peekClosed: false, peekToast: '', cloudToast: '',
     tgToken: '', tgChatId: '', tgFwd: false, tgEditToken: '', tgEditChatId: '', tgStatus: '',
     cloudHistory: [], cloudName: '', cloudCfgText: '', cloudWsId: 'workspace',
   };
@@ -3070,7 +3129,7 @@ class Component extends DCLogic {
     try { tgLink = this.lsGet('tg') || ''; } catch (e) {}
     let tgBot = {};
     try { tgBot = JSON.parse(this.lsGet('tgbot') || '{}') || {}; } catch (e) {}
-    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, tasksSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
+    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, tasksSeenAt, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '', taskTemplateId: emailCfg.taskTemplateId || '', notifyTasks: !!emailCfg.notifyTasks, appUrl: emailCfg.appUrl || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
     // Двухфазный экран входа: фаза 1 (загрузка) → фаза 2 (логотип слева + кнопка «Войти»)
     this._loaderT1 = setTimeout(() => this.setState({ loaderPhase: 'p2' }), 3400);
     // Слоган под логотипом перепечатывается каждые 10 c (remount по tick → анимация проигрывается заново)
@@ -3136,7 +3195,7 @@ class Component extends DCLogic {
   static get STORE_KEY() { return 'inkflow_state_v1'; }
   static get IDLE_MS() { return 35 * 60 * 1000; }
   static get FBCFG() { return { apiKey: 'AIzaSyCOoE74NqK4xkpmzUvzoPmanz8Ej_IW5q8', authDomain: 'shtark-flow.firebaseapp.com', projectId: 'shtark-flow', storageBucket: 'shtark-flow.firebasestorage.app', messagingSenderId: '969786336713', appId: '1:969786336713:web:39bd23af4ca2e281d07418' }; }
-  static get PERSIST() { return ['stock', 'extra', 'orders', 'purchases', 'prices', 'pct', 'added', 'rate', 'loss', 'planFrom', 'planTo', 'recipeOwner', 'whFilled', 'stockUpdatedAt', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth', 'prodPlan', 'planHorizon', 'planStart', 'planExpand', 'planCur', 'ppScale', 'ppFrom', 'ppTo', 'ppNetStock', 'ppNetTransit', 'ppBy', 'ppCur', 'ppGroup', 'oneCUrl', 'oneCMatch', 'oneCAuto', 'oneCLastAt', 'oneCLog', 'lcData', 'lcMeta', 'lc1cUrl', 'dlTemplates']; }
+  static get PERSIST() { return ['stock', 'extra', 'orders', 'purchases', 'prices', 'pct', 'added', 'rate', 'loss', 'planFrom', 'planTo', 'recipeOwner', 'whFilled', 'stockUpdatedAt', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth', 'prodPlan', 'planHorizon', 'planStart', 'planExpand', 'planCur', 'ppScale', 'ppFrom', 'ppTo', 'ppNetStock', 'ppNetTransit', 'ppBy', 'ppCur', 'ppGroup', 'oneCUrl', 'oneCMatch', 'oneCAuto', 'oneCLastAt', 'oneCLog', 'lcData', 'lcMeta', 'lc1cUrl', 'dlTemplates', 'curMode', 'vatMode', 'chatRooms']; }
 
   // ===== Мультикомпанийность: реестр компаний группы =====
   coCfg() {
@@ -3213,10 +3272,18 @@ class Component extends DCLogic {
         if (busy) throw new Error('Область «' + this.areaLabel(areaId) + '» редактирует ' + lk.name + ' — дождитесь освобождения.');
         tx.set(this._docRef, { locks: { [areaId]: { name: this.state.cloudName || 'Без имени', clientId: this._clientId, ts: Date.now() } } }, { merge: true });
       });
+      this.setState(st => ({ cloudLocks: { ...(st.cloudLocks || {}), [areaId]: { name: this.state.cloudName || 'Без имени', clientId: this._clientId, ts: Date.now() } } }));
       this._areaBaseline = JSON.stringify(this._snapMyAreas());
       this.startHeartbeat();
       this.setState({ cloudErr: '' });
     } catch (e) { this.setState({ cloudErr: e.message }); }
+  }
+  // Автозахват свободных областей при правке/загрузке: данные сразу уходят в облако всем
+  async autoClaimAreas(areas) {
+    let claimed = false;
+    for (const a of areas) { if (this.myAreaSet().has(a) || this.areaHeldByOther(a)) continue; try { await this.takeArea(a); if (this.myAreaSet().has(a)) claimed = true; } catch (e) {} }
+    if (claimed) { this._areaBaseline = '{}'; this.queueCloudPush(); }
+    return claimed;
   }
   // Снимок значений всех ключей областей, которые я сейчас держу
   _snapMyAreas() { const mine = this.myAreaSet(); const o = {}; for (const k of Component.PERSIST) { const ar = this.areaOfKey(k); if (ar && mine.has(ar)) o[k] = this.state[k]; } return o; }
@@ -3257,7 +3324,7 @@ class Component extends DCLogic {
   // Записать набор данных: чанки в дочерние документы + запись в реестр главного документа
   async dsPush(dsId, area, meta, obj) {
     const fb = window.__FB; if (!fb || !this._docRef || !this._connectedWs) return false;
-    if (!this.myAreaSet().has(area)) return false;
+    if (!this.myAreaSet().has(area)) { if (this.areaHeldByOther(area)) return false; try { await this.takeArea(area); } catch (e) {} if (!this.myAreaSet().has(area)) return false; }
     try {
       const packed = await this._gzip(obj);
       const full = packed.b; const parts = Math.max(1, Math.ceil(full.length / Component.DS_CHUNK));
@@ -3268,6 +3335,7 @@ class Component extends DCLogic {
       await fb.setDoc(this._docRef, { datasets: { [dsId]: entry } }, { merge: true });
       this._dsReg = this._dsReg || {}; this._dsReg[dsId] = entry; this._dsApplied = this._dsApplied || {}; this._dsApplied[dsId] = entry.rev;
       if (prev && prev.dataId && prev.dataId !== dataId) this._dsDelParts(dsId, prev.dataId, prev.parts);
+      this.pushCloudToast('«' + this.areaLabel(area) + '»');
       return true;
     } catch (e) { this.setState({ cloudErr: 'Не удалось выгрузить данные в облако: ' + (e.message || e) }); return false; }
   }
@@ -3292,7 +3360,7 @@ class Component extends DCLogic {
   }
   // Отложенная выгрузка (для частых правок: маржа, техкарты)
   dsQueuePush(dsId, area, metaFn, objFn) {
-    if (!this.state.cloudConnected || !this.myAreaSet().has(area)) return;
+    if (!this.state.cloudConnected || this.areaHeldByOther(area)) return;
     this._dsPending = this._dsPending || {}; this._dsT = this._dsT || {};
     const run = () => { if (this._dsT[dsId]) { this._dsT[dsId] = null; } delete this._dsPending[dsId]; return this.dsPush(dsId, area, metaFn(), objFn()); };
     this._dsPending[dsId] = run;
@@ -3530,7 +3598,25 @@ class Component extends DCLogic {
     if (e) return { mgCostNote: '✓ Себестоимость из дерева за ' + (e.period || key) + ' — период совпадает с маржой.', mgCostNoteShow: true, mgCostNoteCls: 'mgcost ok' };
     return { mgCostNote: '⚠ Нет дерева себестоимости за этот период. Загрузите выгрузку 1С во вкладке «Анализ себестоимости» — иначе СС берётся из последнего отчёта себестоимости.', mgCostNoteShow: true, mgCostNoteCls: 'mgcost warn' };
   }
-  // Единый расчёт строк маржи (используется и для экрана, и для экспорта в Excel)
+  // ===== Единый расчёт строк маржи (используется и для экрана, и для экспорта в Excel) =====
+  // Сквозной мультивалютный конвертер дисплея (RUB/EUR + контур НДС). Данные хранятся в RUB без НДС и не мутируются.
+  cvSym() { return this.state.curMode === 'EUR' ? '€' : '₽'; }
+  cvFactorVat() { return this.state.vatMode === 'WITH' ? 1.20 : 1; }
+  cvVal(rub, rate) { let v = (Number(rub) || 0) * this.cvFactorVat(); if (this.state.curMode === 'EUR') v = rate ? v / rate : 0; return v; }
+  cvMoney(rub, rate) { return this.cvFmt(this.cvVal(rub, rate)); }
+  cvFmt(v) { return (Number(v) || 0).toLocaleString('ru-RU', { maximumFractionDigits: this.state.curMode === 'EUR' ? 2 : 0 }) + ' ' + this.cvSym(); }
+  cvModeLabel() { return (this.state.curMode === 'EUR' ? 'EUR €' : 'RUB ₽') + ' · ' + (this.state.vatMode === 'WITH' ? 'с НДС' : 'без НДС'); }
+  // Дисплей-агрегат: масштаб всех денежных полей по валюте/НДС; проценты маржи инвариантны (берутся из исходного RUB-агрегата)
+  cvAgg(a, rate) { const f = this.cvFactorVat(); const eur = this.state.curMode === 'EUR'; const c = (x) => { let v = (Number(x) || 0) * f; if (eur) v = rate ? v / rate : 0; return v; }; return { w: a.w, rev: c(a.rev), ss: c(a.ss), g2: c(a.g2 || 0), kv: c(a.kv || 0), m1: c(a.m1), m2: c(a.m2), r1: a.rev ? a.m1 / a.rev * 100 : 0, r2: a.rev ? a.m2 / a.rev * 100 : 0 }; }
+  curVatVals() {
+    const S = this.state, set = (p) => this.setState(p);
+    return {
+      cvRubCls: S.curMode !== 'EUR' ? 'cvseg on' : 'cvseg', cvEurCls: S.curMode === 'EUR' ? 'cvseg on' : 'cvseg',
+      setCurRub: () => set({ curMode: 'RUB' }), setCurEur: () => set({ curMode: 'EUR' }),
+      cvVatWithCls: S.vatMode === 'WITH' ? 'cvseg on' : 'cvseg', cvVatNoCls: S.vatMode !== 'WITH' ? 'cvseg on' : 'cvseg',
+      setVatWith: () => set({ vatMode: 'WITH' }), setVatNo: () => set({ vatMode: 'WITHOUT' }),
+    };
+  }
   mgEnrich(costMode) {
     const S = this.state; const gm = S.mgGm || this.mgDefaultGm();
     const mode = costMode || S.mgCostMode || 'tree';
@@ -3573,7 +3659,8 @@ class Component extends DCLogic {
   // Построить стилизованный лист: заголовок, шапка (navy), данные (тонкие границы), строка ИТОГО (формулы SUM + двойная граница), автоширина
   mgXlSheet(title, headers, types, rows, totalRow) {
     const XLSX = window.XLSX, st = this.mgXlSt();
-    const aoa = [[title], [], headers.slice()];
+    const modeLabel = 'Валюта отчёта: ' + (this.state.curMode === 'EUR' ? 'EUR €' : 'RUB ₽') + ' | Контур: ' + (this.state.vatMode === 'WITH' ? 'С НДС' : 'Без НДС') + (this.state.curMode === 'EUR' ? (' | Курс ЦБ: 1 € = ' + (this.cvRateEur() || 0).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' ₽') : '');
+    const aoa = [[title], [modeLabel], headers.slice()];
     const headRow = 2, dataStart = 3;
     rows.forEach(r => aoa.push(r.slice()));
     let totIdx = -1; if (totalRow) { totIdx = aoa.length; aoa.push(totalRow.slice()); }
@@ -3581,6 +3668,7 @@ class Component extends DCLogic {
     ws['!ref'] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: aoa.length - 1, c: headers.length - 1 } });
     const cell = (r, c) => { const ad = XLSX.utils.encode_cell({ r, c }); if (!ws[ad]) ws[ad] = { t: 's', v: '' }; return ws[ad]; };
     cell(0, 0).s = { font: { name: 'Calibri', sz: 16, bold: true, color: { rgb: st.NAVY } } };
+    cell(1, 0).s = { font: { name: 'Calibri', sz: 11, bold: true, color: { rgb: st.NAVY } } };
     for (let c = 0; c < headers.length; c++) cell(headRow, c).s = { font: { name: 'Calibri', sz: 11, bold: true, color: { rgb: 'FFFFFF' } }, fill: { fgColor: { rgb: st.NAVY } }, alignment: { horizontal: 'center', vertical: 'center', wrapText: true }, border: st.dataBorder };
     for (let i = 0; i < rows.length; i++) for (let c = 0; c < headers.length; c++) { const cl = cell(dataStart + i, c); const s = { font: { name: 'Calibri', sz: 11, color: { rgb: '000000' } }, alignment: { horizontal: this.mgXlAlign(types[c]) }, border: st.dataBorder }; const f = this.mgXlFmt(types[c]); if (f) s.numFmt = f; cl.s = s; }
     if (totIdx >= 0) for (let c = 0; c < headers.length; c++) { const cl = cell(totIdx, c); const s = { font: { name: 'Calibri', sz: 11, bold: true, color: { rgb: '000000' } }, fill: { fgColor: { rgb: st.TOTAL } }, alignment: { horizontal: this.mgXlAlign(types[c]) }, border: st.totBorder }; const f = this.mgXlFmt(types[c]); if (f) s.numFmt = f; cl.s = s; if ((types[c] === 'money' || types[c] === 'eur' || types[c] === 'num' || types[c] === 'num1') && rows.length) { const col = XLSX.utils.encode_col(c); cl.t = 'n'; cl.f = 'SUM(' + col + (dataStart + 1) + ':' + col + (dataStart + rows.length) + ')'; } }
@@ -4042,7 +4130,7 @@ class Component extends DCLogic {
     await this.ctIdbPut(id, tree);
     this.ctArchSaveIndex(idx); try { this.lsSet('ctarch_cur', id); } catch (e) {}
     this.ctTree = tree; this._ctActiveId = id; this._ctAggCache = null;
-    if (this.state.cloudConnected && this.myAreaSet().has('costtree')) {
+    if (this.state.cloudConnected && !this.areaHeldByOther('costtree')) {
       this.dsPush('ct:' + pk.key, 'costtree', { fileName: tree.fileName || '', period: tree.period || '', key: pk.key, y: pk.y, m: pk.m, batchN: tree.batches.length, cur: tree.cur || '€', at: Date.now() }, tree);
     }
   }
@@ -4052,7 +4140,7 @@ class Component extends DCLogic {
     const delEntry = this.ctArchIndex().find(x => x.id === id);
     await this.ctIdbDel(id); try { this.lsDel('ctarch_' + id); } catch (e) {}
     const idx = this.ctArchIndex().filter(x => x.id !== id); this.ctArchSaveIndex(idx);
-    if (delEntry && delEntry.key && this.state.cloudConnected && this.myAreaSet().has('costtree')) { this.dsDelete('ct:' + delEntry.key); }
+    if (delEntry && delEntry.key && this.state.cloudConnected && !this.areaHeldByOther('costtree')) { this.dsDelete('ct:' + delEntry.key); }
     if (this._ctActiveId === id) {
       const e = idx.slice().sort((a, b) => (b.uploadedAt || 0) - (a.uploadedAt || 0))[0];
       if (e) { this.ctTree = await this.ctArchGetTree(e); this._ctActiveId = e.id; try { this.lsSet('ctarch_cur', e.id); } catch (_) {} }
@@ -4518,40 +4606,42 @@ class Component extends DCLogic {
     const E = this.mgEnrich();
     const rows = E.rows, rate = E.rate, agg = E.agg, manual = E.manual;
     const T = agg(rows);
+    const TD = this.cvAgg(T, rate);
+    const M = (rub) => this.cvMoney(rub, rate);
     // KPI
     const clients = new Set(rows.map(r => r.client).filter(Boolean)).size;
     const kpis = [
-      { k: 'Выручка б/НДС', v: this.mgRub(T.rev), e: this.mgEur(rate ? T.rev / rate : 0), u: (T.w ? (T.rev / T.w).toFixed(1) : 0) + ' ₽/кг' },
-      { k: 'Себестоимость', v: this.mgRub(T.ss), e: this.mgEur(rate ? T.ss / rate : 0), u: (T.w ? (T.ss / T.w).toFixed(1) : 0) + ' ₽/кг' },
-      { k: 'МАРЖА 1 (валовая)', v: this.mgRub(T.m1), e: this.mgEur(rate ? T.m1 / rate : 0), u: this.mgPct(T.rev ? T.m1 / T.rev * 100 : 0) + ' рент.', hi: 1 },
-      { k: 'GM2 (опер. расходы)', v: this.mgRub(T.g2), e: this.mgEur(rate ? T.g2 / rate : 0), u: (T.w ? (T.g2 / T.w).toFixed(1) : 0) + ' ₽/кг' },
-      { k: 'КВ (ком. вознагр.)', v: this.mgRub(T.kv), e: this.mgEur(rate ? T.kv / rate : 0), u: '' },
-      { k: 'МАРЖА 2 (операц.)', v: this.mgRub(T.m2), e: this.mgEur(rate ? T.m2 / rate : 0), u: this.mgPct(T.rev ? T.m2 / T.rev * 100 : 0) + ' рент.', hi: 2 }
+      { k: 'Выручка', v: this.cvFmt(TD.rev), e: this.cvModeLabel(), u: (T.w ? (T.rev / T.w).toFixed(1) : 0) + ' ₽/кг' },
+      { k: 'Себестоимость', v: this.cvFmt(TD.ss), e: '', u: (T.w ? (T.ss / T.w).toFixed(1) : 0) + ' ₽/кг' },
+      { k: 'МАРЖА 1 (валовая)', v: this.cvFmt(TD.m1), e: this.mgPct(TD.r1) + ' рент.', u: '', hi: 1 },
+      { k: 'GM2 (опер. расходы)', v: this.cvFmt(TD.g2), e: '', u: (T.w ? (T.g2 / T.w).toFixed(1) : 0) + ' ₽/кг' },
+      { k: 'КВ (ком. вознагр.)', v: this.cvFmt(TD.kv), e: '', u: '' },
+      { k: 'МАРЖА 2 (операц.)', v: this.cvFmt(TD.m2), e: this.mgPct(TD.r2) + ' рент.', u: '', hi: 2 }
     ];
     const meta = [
       { k: 'Отгружено', v: this.mgKg(T.w) }, { k: 'Позиций', v: String(rows.length) }, { k: 'Клиентов', v: String(clients) }, { k: 'Курс EUR/RUB', v: rate ? rate.toFixed(4) : '—' }
     ];
     // группы
     const groupRows = this.mgGroups().map(g => {
-      const list = rows.filter(r => r.group === g); if (!list.length) return null; const a = agg(list);
-      return { group: g, weightS: this.mgKg(a.w), revS: this.mgRub(a.rev), ssS: this.mgRub(a.ss), m1S: this.mgRub(a.m1), m2S: this.mgRub(a.m2), rent1: this.mgPct(a.rev ? a.m1 / a.rev * 100 : 0), rent2: this.mgPct(a.rev ? a.m2 / a.rev * 100 : 0), m2neg: a.m2 < 0 };
+      const list = rows.filter(r => r.group === g); if (!list.length) return null; const a = agg(list); const d = this.cvAgg(a, rate);
+      return { group: g, weightS: this.mgKg(a.w), revS: this.cvFmt(d.rev), ssS: this.cvFmt(d.ss), m1S: this.cvFmt(d.m1), m2S: this.cvFmt(d.m2), rent1: this.mgPct(d.r1), rent2: this.mgPct(d.r2), m2neg: a.m2 < 0 };
     }).filter(Boolean);
     // по марке (с фильтром по группе)
     const flt = S.mgFltGroup ? rows.filter(r => r.group === S.mgFltGroup) : rows;
     const markaMap = new Map();
     for (const r of flt) { const key = r.marka; if (!markaMap.has(key)) markaMap.set(key, []); markaMap.get(key).push(r); }
-    const markaRows = [...markaMap.entries()].map(([marka, list]) => { const a = agg(list); const exp = !!S.mgExpanded[marka]; const ccKg = list[0].ccKg;
-      return { marka, group: list[0].group, weightS: this.mgKg(a.w), revS: this.mgRub(a.rev), revKg: (a.w ? (a.rev / a.w).toFixed(1) : 0) + ' ₽/кг', ccKgS: ccKg > 0 ? (this.mgNum(ccKg).toFixed(1) + ' ₽/кг') : '— нет СС', noCost: ccKg <= 0,
-        m1S: this.mgRub(a.m1), m1Kg: (a.w ? (a.m1 / a.w).toFixed(1) : 0) + ' ₽/кг', m2S: this.mgRub(a.m2), rent1: this.mgPct(a.rev ? a.m1 / a.rev * 100 : 0), m2neg: a.m2 < 0,
+    const markaRows = [...markaMap.entries()].map(([marka, list]) => { const a = agg(list); const d = this.cvAgg(a, rate); const exp = !!S.mgExpanded[marka]; const ccKg = list[0].ccKg;
+      return { marka, group: list[0].group, weightS: this.mgKg(a.w), revS: this.cvFmt(d.rev), revKg: (a.w ? (a.rev / a.w).toFixed(1) : 0) + ' ₽/кг', ccKgS: ccKg > 0 ? (this.mgNum(ccKg).toFixed(1) + ' ₽/кг') : '— нет СС', noCost: ccKg <= 0,
+        m1S: this.cvFmt(d.m1), m1Kg: (a.w ? (a.m1 / a.w).toFixed(1) : 0) + ' ₽/кг', m2S: this.cvFmt(d.m2), rent1: this.mgPct(d.r1), m2neg: a.m2 < 0,
         expanded: exp, expIcon: exp ? '−' : '+', rowCls: exp ? 'mgmrow on' : 'mgmrow',
         toggle: () => this.setState(st => ({ mgExpanded: { ...st.mgExpanded, [marka]: !st.mgExpanded[marka] } })),
         onCost: (e) => this.setState(st => ({ mgManualCost: { ...st.mgManualCost, [marka]: e.target.value } }), () => this.saveMargin()),
         costInput: manual[marka] != null ? manual[marka] : '',
-        clients: exp ? list.map(x => ({ client: x.client || '—', nomen: x.nomen, weightS: this.mgKg(x.weight), revS: this.mgRub(x.revenue), m1S: this.mgRub(x.m1), m2S: this.mgRub(x.m2), m2neg: x.m2 < 0 })) : [] };
+        clients: exp ? list.map(x => { const xd = this.cvAgg({ w: x.weight, rev: x.revenue, ss: x.ss, g2: x.gm2, kv: x.kv, m1: x.m1, m2: x.m2 }, rate); return { client: x.client || '—', nomen: x.nomen, weightS: this.mgKg(x.weight), revS: this.cvFmt(xd.rev), m1S: this.cvFmt(xd.m1), m2S: this.cvFmt(xd.m2), m2neg: x.m2 < 0 }; }) : [] };
     }).sort((a, b) => b.revS.length - a.revS.length || a.marka.localeCompare(b.marka, 'ru'));
     const noCostCount = markaRows.filter(m => m.noCost).length;
     return {
-      ...base, mgReady: true, mgKpis: kpis, mgMeta: meta, mgGroupRows: groupRows, mgMarkaRows: markaRows,
+      ...base, mgReady: true, mgKpis: kpis, mgMeta: meta, mgGroupRows: groupRows, mgMarkaRows: markaRows, ...this.curVatVals(),
       mgView: S.mgView, isGroupsView: S.mgView === 'groups', isMarkaView: S.mgView === 'marka',
       showGroups: () => set({ mgView: 'groups' }), showMarka: () => set({ mgView: 'marka' }),
       groupsBtnCls: S.mgView === 'groups' ? 'mgtab on' : 'mgtab', markaBtnCls: S.mgView === 'marka' ? 'mgtab on' : 'mgtab',
@@ -4970,11 +5060,18 @@ class Component extends DCLogic {
   pickState(src) { const o = {}; for (const k of Component.PERSIST) o[k] = src[k]; return o; }
 
   componentDidUpdate() {
-    const snap = JSON.stringify(this.pickState(this.state));
+    const cur = this.pickState(this.state);
+    const snap = JSON.stringify(cur);
     if (snap === this._lastSnap) return;
+    let prev = {}; try { prev = JSON.parse(this._lastSnap || '{}'); } catch (e) {}
     this._lastSnap = snap;
     this.persist();
-    if (!this._applyingRemote && this.state.cloudConnected && this.myAreaSet().size) this.queueCloudPush();
+    if (this._applyingRemote || !this.state.cloudConnected) return;
+    const changed = new Set();
+    for (const k of Component.PERSIST) { const ar = this.areaOfKey(k); if (ar && JSON.stringify(cur[k]) !== JSON.stringify(prev[k])) changed.add(ar); }
+    const free = [...changed].filter(a => !this.myAreaSet().has(a) && !this.areaHeldByOther(a));
+    if (free.length) this.autoClaimAreas(free);
+    if (this.myAreaSet().size) this.queueCloudPush();
   }
 
   componentWillUnmount() { this.stopHeartbeat(); this.stopPresence(); if (this._mq) window.removeEventListener('resize', this._mq); if (this._unsub) this._unsub(); clearTimeout(this._loaderT1); clearTimeout(this._loaderT2); clearInterval(this._sloganInt); clearInterval(this._idleInt); clearInterval(this._peekInt); clearTimeout(this._peekToastT); clearTimeout(this._purgeT); clearInterval(this._purgeInt); clearInterval(this._chInt); clearTimeout(this._chLeaveT); clearTimeout(this._coffeeT); clearInterval(this._clockInt); clearInterval(this._badgeInt); if (this._markAct) ['mousedown', 'keydown', 'touchstart', 'scroll', 'pointerdown'].forEach(ev => window.removeEventListener(ev, this._markAct)); }
@@ -5390,26 +5487,66 @@ class Component extends DCLogic {
   switchUser() { this.setState({ currentUser: null, loginInput: '', passInput: '', loginErr: '' }); }
 
   // ===== Восстановление пароля по e-mail (EmailJS) =====
-  emailCfgVal() { const c = this.state.emailCfg || {}; return { serviceId: c.serviceId || '', templateId: c.templateId || '', publicKey: c.publicKey || '', fromName: c.fromName || 'Shtark Chemicals Flow' }; }
+  emailCfgVal() { const c = this.state.emailCfg || {}; return { serviceId: c.serviceId || '', templateId: c.templateId || '', publicKey: c.publicKey || '', fromName: c.fromName || 'Shtark Flow', taskTemplateId: c.taskTemplateId || '', notifyTasks: !!c.notifyTasks, appUrl: c.appUrl || 'https://minionslaba-ux.github.io/zakupki_ink/index.html?key=shtark-erp-2026' }; }
   emailConfigured() { const c = this.emailCfgVal(); return !!(c.serviceId && c.templateId && c.publicKey); }
   maskEmail(em) { const p = String(em || '').split('@'); if (p.length !== 2) return em; const a = p[0]; return (a.length <= 2 ? a : a.slice(0, 2) + '***') + '@' + p[1]; }
   saveEmailCfg() {
     const e = this.state.emailEdit || {};
-    const cfg = { serviceId: (e.serviceId || '').trim(), templateId: (e.templateId || '').trim(), publicKey: (e.publicKey || '').trim(), fromName: (e.fromName || '').trim() || 'Shtark Chemicals Flow' };
+    const cfg = { serviceId: (e.serviceId || '').trim(), templateId: (e.templateId || '').trim(), publicKey: (e.publicKey || '').trim(), fromName: (e.fromName || '').trim() || 'Shtark Flow', taskTemplateId: (e.taskTemplateId || '').trim(), notifyTasks: !!e.notifyTasks, appUrl: (e.appUrl || '').trim() };
     this.setState({ emailCfg: cfg, emailStatus: 'Настройки отправки писем сохранены ✓' });
     try { this.lsSet('emailcfg', JSON.stringify(cfg)); } catch (e2) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { emailCfg: cfg }, { merge: true }).catch(() => {}); } catch (e2) {} }
   }
+  // Уведомление исполнителей о задаче по e-mail (EmailJS)
+  async notifyTaskEmail(task, kind) {
+    try {
+      const c = this.emailCfgVal();
+      if (!c.notifyTasks || !c.serviceId || !c.publicKey) return;
+      const tpl = c.taskTemplateId; if (!tpl) return;
+      if (!window.emailjs) return;
+      const execs = Array.isArray(task.executors) ? task.executors : [];
+      const users = this.state.users || [];
+      const app = c.fromName || (this.co().name + ' Flow');
+      const due = task.due ? this.taskDueLabel(task) : 'без срока';
+      const verb = kind === 'upd' ? 'обновлена' : 'назначена';
+      let link = c.appUrl || ''; if (!link) { try { link = location.origin + location.pathname + location.search; } catch (e) {} }
+      try { window.emailjs.init({ publicKey: c.publicKey }); } catch (e) {}
+      for (const ex of execs) {
+        const u = users.find(x => x.id === ex.id) || users.find(x => String(x.name || '').trim().toLowerCase() === String(ex.name || '').trim().toLowerCase());
+        const email = u && u.email; if (!email) continue;
+        const subject = 'Задача ' + verb + ': ' + task.title;
+        const message = 'Здравствуйте, ' + (u.name || ex.name || '') + '!\n\nВам ' + verb + ' задача в ' + app + ':\n\n«' + task.title + '»\n' + (task.desc ? ('\n' + task.desc + '\n') : '') + '\nПриоритет: ' + (task.priority || 'Обычный') + '\nСрок: ' + due + '\nПостановщик: ' + (task.author || '—') + '\n\nЧтобы принять задачу в работу, нажмите кнопку ниже.';
+        const params = { to_email: email, email: email, to_name: u.name || ex.name || '', user_name: u.name || ex.name || '', subject: subject, message: message, task_title: task.title, task_due: due, task_author: task.author || '', task_priority: task.priority || 'Обычный', task_link: link, link: link, app_name: app, login: u.login || '', password: '', new_password: '' };
+        try { await window.emailjs.send(c.serviceId, tpl, params, { publicKey: c.publicKey }); } catch (e) {}
+      }
+    } catch (e) {}
+  }
+  async sendTaskTestEmail() {
+    const c = this.emailCfgVal(); const to = (this.state.emTestTo || '').trim();
+    const tpl = c.taskTemplateId;
+    if (!tpl) { this.setState({ emTestMsg: 'Укажите отдельный «Template ID для задач» (не парольный шаблон) и нажмите «Сохранить».', emTestOk: false }); return; }
+    if (!c.serviceId || !c.publicKey) { this.setState({ emTestMsg: 'Заполните Service ID и Public Key, затем «Сохранить».', emTestOk: false }); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) { this.setState({ emTestMsg: 'Введите корректный e-mail для теста.', emTestOk: false }); return; }
+    if (!window.emailjs) { this.setState({ emTestMsg: 'Библиотека EmailJS не загрузилась — обновите страницу.', emTestOk: false }); return; }
+    this.setState({ emTestBusy: true, emTestMsg: '', emTestOk: false });
+    try { window.emailjs.init({ publicKey: c.publicKey }); } catch (e) {}
+    const app = c.fromName;
+    let link = c.appUrl || ''; if (!link) { try { link = location.origin + location.pathname + location.search; } catch (e) {} }
+    const params = { to_email: to, email: to, to_name: 'Тест', user_name: 'Тест', subject: 'Тест: новая задача', message: 'Это тестовое уведомление о задаче из ' + app + '.\n\n«Пробная задача»\n\nПриоритет: Высокий\nСрок: сегодня\nПостановщик: Администратор\n\nЕсли письмо пришло и кнопка ниже открывает систему — уведомления настроены верно.', task_title: 'Пробная задача', task_due: 'сегодня', task_author: 'Администратор', task_priority: 'Высокий', task_link: link, link: link, app_name: app, login: '', password: '', new_password: '' };
+    try { await window.emailjs.send(c.serviceId, tpl, params, { publicKey: c.publicKey }); this.setState({ emTestBusy: false, emTestOk: true, emTestMsg: 'Тест уведомления о задаче отправлен на ' + to + '. Проверьте почту и «Спам».' }); }
+    catch (err) { const code = err && (err.status || err.code); const text = (err && (err.text || err.message)) || String(err); let hint = ''; if (/recipient|empty/i.test(text)) hint = ' → В шаблоне EmailJS поле «To Email» должно быть {{to_email}}.'; this.setState({ emTestBusy: false, emTestOk: false, emTestMsg: 'Ошибка' + (code ? ' ' + code : '') + ': ' + text + hint }); }
+  }
   async sendTestEmail() {
     const S = this.state; const to = (S.emTestTo || '').trim();
-    const c = { serviceId: ((S.emailEdit || {}).serviceId || '').trim(), templateId: ((S.emailEdit || {}).templateId || '').trim(), publicKey: ((S.emailEdit || {}).publicKey || '').trim(), fromName: ((S.emailEdit || {}).fromName || '').trim() || 'Shtark Chemicals Flow' };
+    const c = { serviceId: ((S.emailEdit || {}).serviceId || '').trim(), templateId: ((S.emailEdit || {}).templateId || '').trim(), publicKey: ((S.emailEdit || {}).publicKey || '').trim(), fromName: ((S.emailEdit || {}).fromName || '').trim() || 'Shtark Flow' };
     if (!c.serviceId || !c.templateId || !c.publicKey) { this.setState({ emTestMsg: 'Заполните Service ID, Template ID и Public Key, затем нажмите «Сохранить».', emTestOk: false }); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) { this.setState({ emTestMsg: 'Введите корректный e-mail для теста.', emTestOk: false }); return; }
     if (!window.emailjs) { this.setState({ emTestMsg: 'Библиотека EmailJS не загрузилась — обновите страницу.', emTestOk: false }); return; }
     this.setState({ emTestBusy: true, emTestMsg: '', emTestOk: false });
     try {
       try { window.emailjs.init({ publicKey: c.publicKey }); } catch (e) {}
-      const params = { to_email: to, email: to, to_name: 'Тест', user_name: 'Тест', login: 'test_login', password: 'TEST-1234', new_password: 'TEST-1234', app_name: c.fromName };
+      const pmsg = 'Здравствуйте, Тест!\n\nВы запросили восстановление пароля для входа в систему ' + c.fromName + '. Мы сгенерировали для вас новый пароль:\n\nЛогин: test_login\nНовый пароль: TEST-1234\n\nВойдите с этим паролем и при необходимости смените его в настройках профиля. Если вы не запрашивали восстановление — проигнорируйте это письмо, прежний пароль перестал действовать в целях безопасности.';
+      const params = { to_email: to, email: to, to_name: 'Тест', user_name: 'Тест', login: 'test_login', password: 'TEST-1234', new_password: 'TEST-1234', subject: 'Восстановление пароля · ' + c.fromName, message: pmsg, app_name: c.fromName };
       await window.emailjs.send(c.serviceId, c.templateId, params, { publicKey: c.publicKey });
       this.setState({ emTestBusy: false, emTestOk: true, emTestMsg: 'Тестовое письмо отправлено на ' + to + '. Проверьте почту и «Спам». Если письма нет — проверьте, что в шаблоне EmailJS поле «To Email» = {{to_email}}.' });
     } catch (err) {
@@ -5436,7 +5573,8 @@ class Component extends DCLogic {
     const np = this.genPassword();
     try {
       try { window.emailjs.init({ publicKey: c.publicKey }); } catch (e) {}
-      await window.emailjs.send(c.serviceId, c.templateId, { to_email: u.email, email: u.email, to_name: u.name, user_name: u.name, login: u.login, password: np, new_password: np, app_name: c.fromName }, { publicKey: c.publicKey });
+      const pmsg = 'Здравствуйте, ' + u.name + '!\n\nВы запросили восстановление пароля для входа в систему ' + c.fromName + '. Мы сгенерировали для вас новый пароль:\n\nЛогин: ' + u.login + '\nНовый пароль: ' + np + '\n\nВойдите с этим паролем и при необходимости смените его в настройках профиля. Если вы не запрашивали восстановление — проигнорируйте это письмо, прежний пароль перестал действовать в целях безопасности.';
+      await window.emailjs.send(c.serviceId, c.templateId, { to_email: u.email, email: u.email, to_name: u.name, user_name: u.name, login: u.login, password: np, new_password: np, subject: 'Восстановление пароля · ' + c.fromName, message: pmsg, app_name: c.fromName }, { publicKey: c.publicKey });
       const next = (S.users || []).map(x => x.id === u.id ? { ...x, password: np } : x);
       this.saveUsers(next);
       this.setState({ resetBusy: false, resetOk: 'Новый пароль отправлен на ' + this.maskEmail(u.email) + '. Проверьте почту (и папку «Спам»).', resetErr: '', resetInput: '' });
@@ -5529,6 +5667,11 @@ class Component extends DCLogic {
       onEmTemplate: (e) => set({ emailEdit: { ...(S.emailEdit || {}), templateId: e.target.value }, emailStatus: '' }),
       onEmPublic: (e) => set({ emailEdit: { ...(S.emailEdit || {}), publicKey: e.target.value }, emailStatus: '' }),
       onEmFrom: (e) => set({ emailEdit: { ...(S.emailEdit || {}), fromName: e.target.value }, emailStatus: '' }),
+      emTaskTemplate: (S.emailEdit || {}).taskTemplateId || '', emNotifyTasks: !!(S.emailEdit || {}).notifyTasks,
+      onEmTaskTemplate: (e) => set({ emailEdit: { ...(S.emailEdit || {}), taskTemplateId: e.target.value }, emailStatus: '' }),
+      emAppUrl: (S.emailEdit || {}).appUrl || '', onEmAppUrl: (e) => set({ emailEdit: { ...(S.emailEdit || {}), appUrl: e.target.value }, emailStatus: '' }),
+      onEmNotifyTasks: (e) => set({ emailEdit: { ...(S.emailEdit || {}), notifyTasks: e.target.checked }, emailStatus: '' }),
+      sendTaskTestEmail: () => this.sendTaskTestEmail(),
       saveEmailCfg: () => this.saveEmailCfg(), emailStatus: S.emailStatus || '', emailHasStatus: !!S.emailStatus,
       emTestTo: S.emTestTo || '', onEmTestTo: (e) => set({ emTestTo: e.target.value, emTestMsg: '' }),
       sendTestEmail: () => this.sendTestEmail(), emTestBusy: !!S.emTestBusy, emTestMsg: S.emTestMsg || '', emTestHasMsg: !!S.emTestMsg, emTestCls: S.emTestOk ? 'hint ok' : 'banner err',
@@ -5786,7 +5929,7 @@ class Component extends DCLogic {
     const patch = { cloudConnected: true, cloudErr: '', cloudStatus: 'Онлайн', cloudHistory: d.history || [], cloudPresence: d.presence || {}, cloudLocks: valid, cloudMyAreas: [...mine], cloudRole: mine.size ? 'editor' : (othersN ? 'viewer' : 'idle') };
     // Топ-уровневые коллекции: применяем, если эту область не держу я (chat — всегда, без замка)
     const colApply = (col, key) => { if (!Array.isArray(d[col])) return; const ar = this.areaOfCol(col); if (ar && mine.has(ar)) return; patch[col] = d[col]; try { this.lsSet(key, JSON.stringify(d[col])); } catch (e) {} };
-    colApply('chat', 'chat'); colApply('tasks', 'tasks'); colApply('cparties', 'cparties'); colApply('receipts', 'receipts'); colApply('sales', 'sales'); colApply('logistics', 'logistics'); colApply('payreqs', 'payreqs');
+    colApply('chat', 'chat'); colApply('tasks', 'tasks'); colApply('cparties', 'cparties'); colApply('receipts', 'receipts'); colApply('sales', 'sales'); colApply('logistics', 'logistics'); colApply('payreqs', 'payreqs'); colApply('chatRooms', 'chatrooms');
     if (d.emailCfg && typeof d.emailCfg === 'object') { patch.emailCfg = d.emailCfg; try { this.lsSet('emailcfg', JSON.stringify(d.emailCfg)); } catch (e) {} }
     if (typeof d.tgLink === 'string') patch.tgLink = d.tgLink;
     if (d.tgBot && typeof d.tgBot === 'object') { patch.tgToken = d.tgBot.token || ''; patch.tgChatId = d.tgBot.chatId || ''; patch.tgFwd = !!d.tgBot.fwd; }
@@ -5847,8 +5990,9 @@ class Component extends DCLogic {
   }
   presenceList() {
     const S = this.state, now = Date.now(), out = [], seen = new Set();
-    const add = (name, photo, self) => { const initial = (name || '?').trim().charAt(0).toUpperCase(); const src = this.avatarForName(name, photo); const avatar = src ? React.createElement('img', { className: 'onimg', src, alt: '' }) : React.createElement('span', { className: 'onini' }, initial); out.push({ name: name || '—', avatar, self: !!self }); };
-    if (S.currentUser) { add(S.currentUser.name, this.userAvatar(S.currentUser.name) || S.welcomePhoto || 'welcome-photo.png', true); seen.add(this._clientId); }
+    const meId = S.currentUser ? S.currentUser.id : '';
+    const add = (name, photo, self, uid) => { const initial = (name || '?').trim().charAt(0).toUpperCase(); const src = this.avatarForName(name, photo); const avatar = src ? React.createElement('img', { className: 'onimg', src, alt: '' }) : React.createElement('span', { className: 'onini' }, initial); const id = uid || this.userIdByName(name); out.push({ name: name || '—', avatar, self: !!self, id, canDm: !self && !!id, tip: self ? 'Это вы' : 'ПКМ — приватный чат с «' + (name || '') + '»', onCtx: (e) => { if (e && e.preventDefault) e.preventDefault(); if (!self && id) this.openPrivateWith(id, name); } }); };
+    if (S.currentUser) { add(S.currentUser.name, this.userAvatar(S.currentUser.name) || S.welcomePhoto || 'welcome-photo.png', true, meId); seen.add(this._clientId); }
     if (S.cloudConnected && S.cloudPresence) {
       for (const cid of Object.keys(S.cloudPresence)) {
         const p = S.cloudPresence[cid];
@@ -5865,7 +6009,9 @@ class Component extends DCLogic {
     const text = (this.state.chatInput || '').trim();
     if (!text) return;
     const cu = this.state.currentUser;
-    const msg = { id: 'm' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), author: cu ? cu.name : 'Гость', text: text.slice(0, 800), ts: Date.now() };
+    const room = this.state.chatRoom || 'general';
+    const msg = { id: 'm' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), author: cu ? cu.name : 'Гость', authorId: cu ? cu.id : '', text: text.slice(0, 800), ts: Date.now() };
+    if (room !== 'general') { this.privPostMsg(room, msg); this.setState({ chatInput: '' }); return; }
     const next = [...(this.state.chat || []), msg].slice(-120);
     this.setState({ chat: next, chatInput: '' });
     try { this.lsSet('chat', JSON.stringify(next)); } catch (e) {}
@@ -5873,6 +6019,53 @@ class Component extends DCLogic {
       try { window.__FB.setDoc(this._docRef, { chat: next }, { merge: true }).catch(() => {}); } catch (e) {}
     }
     this.forwardToTelegram(msg);
+  }
+  // ===== Приватные беседы (тет-а-тет и групповые с темой) + матрица доступа =====
+  chatRoomsSave(next) {
+    this.setState({ chatRooms: next });
+    try { this.lsSet('chatrooms', JSON.stringify(next)); } catch (e) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { chatRooms: next }, { merge: true }).catch(() => {}); } catch (e) {} }
+  }
+  userIdByName(name) { const u = (this.state.users || []).find(x => x.name === name); return u ? u.id : ''; }
+  isChatAdmin() { return !!(this.state.currentUser && this.state.currentUser.role === 'admin'); }
+  // Матрица доступа: админ видит все комнаты; обычный — только где он участник/создатель
+  visibleRooms() {
+    const cu = this.state.currentUser; const cid = cu ? cu.id : '';
+    const all = (this.state.chatRooms || []).filter(r => r && r.type === 'private');
+    if (this.isChatAdmin()) return all;
+    return all.filter(r => (r.members || []).indexOf(cid) >= 0 || r.creatorId === cid);
+  }
+  privPostMsg(roomId, msg) {
+    const next = (this.state.chatRooms || []).map(r => r.id === roomId ? { ...r, msgs: [...(r.msgs || []), msg].slice(-200) } : r);
+    this.chatRoomsSave(next);
+    const room = next.find(r => r.id === roomId);
+    if (room) this.forwardToTelegram({ author: msg.author + ' · «' + room.title + '»', text: msg.text });
+  }
+  // Открыть/создать приватный чат тет-а-тет с пользователем
+  openPrivateWith(userId, userName) {
+    const cu = this.state.currentUser; if (!cu || !userId || userId === cu.id) return;
+    const pair = [cu.id, userId].sort();
+    let room = (this.state.chatRooms || []).find(r => r.type === 'private' && r.dm && (r.members || []).slice().sort().join() === pair.join());
+    if (!room) {
+      room = { id: 'cr' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), type: 'private', dm: true, title: 'Тет-а-тет: ' + cu.name + ' ↔ ' + (userName || '—'), creatorId: cu.id, members: pair, createdAt: Date.now(), msgs: [] };
+      this.chatRoomsSave([...(this.state.chatRooms || []), room]);
+    }
+    this.setState({ chatOpen: true, chatRoom: room.id, privModal: null });
+  }
+  // Конструктор групповой беседы
+  privModalOpen() { this.setState({ privModal: { members: {}, theme: '' } }); }
+  privModalCancel() { this.setState({ privModal: null }); }
+  privModalToggleMember(id) { this.setState(st => { const m = { ...(st.privModal.members || {}) }; m[id] = !m[id]; return { privModal: { ...st.privModal, members: m } }; }); }
+  privModalSetTheme(v) { this.setState(st => ({ privModal: { ...st.privModal, theme: v } })); }
+  privModalSubmit() {
+    const cu = this.state.currentUser; const pm = this.state.privModal; if (!cu || !pm) return;
+    const theme = (pm.theme || '').trim(); if (!theme) return;
+    const picked = Object.keys(pm.members).filter(id => pm.members[id]);
+    const members = [...new Set([cu.id, ...picked])];
+    if (members.length < 2) { this.setState(st => ({ privModal: { ...st.privModal, err: 'Выберите хотя бы одного участника.' } })); return; }
+    const room = { id: 'cr' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), type: 'private', dm: false, title: theme, creatorId: cu.id, members, createdAt: Date.now(), msgs: [] };
+    this.chatRoomsSave([...(this.state.chatRooms || []), room]);
+    this.setState({ privModal: null, chatOpen: true, chatRoom: room.id });
   }
 
   // ===== Задачи: постановка задач коллегам =====
@@ -5922,6 +6115,7 @@ class Component extends DCLogic {
       this.writeTasks(next);
       this.setState({ taskDraft: null, taskErr: '' });
       this.postSystemNote('✏️ Задача обновлена: «' + title + '» — исполнители: ' + execs.map(e => e.name).join(', '), cu ? cu.name : '—');
+      this.notifyTaskEmail({ title: title.slice(0, 200), executors: execs, author: cu ? cu.name : '—', due: d.due || '', dueTime: d.dueTime || '', desc: d.desc || '', priority: d.priority || 'Обычный' }, 'upd');
       return;
     }
     const task = {
@@ -5933,6 +6127,7 @@ class Component extends DCLogic {
     this.writeTasks([task, ...(S.tasks || [])].slice(0, 500));
     this.setState({ taskDraft: null, taskErr: '', taskView: 'assigned' });
     this.postSystemNote('📋 Новая задача для «' + execs.map(e => e.name).join(', ') + '»: ' + task.title + (task.due ? ' · срок ' + this.taskDueLabel(task) : ''), cu ? cu.name : '—');
+    this.notifyTaskEmail(task, 'new');
   }
   setTaskStatus(id, status) {
     const t = (this.state.tasks || []).find(x => x.id === id); if (!t) return;
@@ -6103,14 +6298,45 @@ class Component extends DCLogic {
   }
   chatMsgsView() {
     const S = this.state, cu = S.currentUser;
-    return (S.chat || []).slice(-120).map(m => {
+    const room = S.chatRoom || 'general';
+    let list;
+    if (room === 'general') { list = (S.chat || []).slice(-120); }
+    else { const r = (S.chatRooms || []).find(x => x.id === room); const cutoff = Date.now() - 48 * 3600000; list = r ? (r.msgs || []).filter(m => (m.ts || 0) >= cutoff) : []; }
+    return list.map(m => {
       const d = new Date(m.ts || 0);
       const time = ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
-      return { key: m.id, author: m.author || '—', text: m.text || '', time, cls: (cu && m.author === cu.name) ? 'chmsg me' : 'chmsg' };
+      return { key: m.id, author: m.author || '—', text: m.text || '', time, cls: (cu && (m.authorId ? m.authorId === cu.id : m.author === cu.name)) ? 'chmsg me' : 'chmsg' };
     });
   }
-
-  queueCloudPush() { if (this._pushT) clearTimeout(this._pushT); this._pushT = setTimeout(() => this.cloudPush(), 1000); }
+  // Значения для переключателя комнат и конструктора приватной беседы
+  chatRoomVals() {
+    const S = this.state, set = (p) => this.setState(p);
+    const cur = S.chatRoom || 'general';
+    const rooms = this.visibleRooms();
+    const cu = S.currentUser; const meId = cu ? cu.id : '';
+    const tabs = [{ id: 'general', label: '💬 Общий', cls: cur === 'general' ? 'chroom on' : 'chroom', go: () => set({ chatRoom: 'general' }) }]
+      .concat(rooms.map(r => {
+        const foreign = this.isChatAdmin() && (r.members || []).indexOf(meId) < 0 && r.creatorId !== meId;
+        return { id: r.id, label: (r.dm ? '👤 ' : '🔒 ') + r.title + (foreign ? ' · admin' : ''), cls: cur === r.id ? 'chroom on' : 'chroom', go: () => set({ chatRoom: r.id }) };
+      }));
+    const activeRoom = rooms.find(r => r.id === cur);
+    const memberNames = activeRoom ? (activeRoom.members || []).map(id => { const u = (S.users || []).find(x => x.id === id); return u ? u.name : '—'; }).join(', ') : '';
+    const pm = S.privModal;
+    const userOpts = (S.users || []).filter(u => u.id !== meId).map(u => ({ id: u.id, name: u.name, role: u.role === 'admin' ? 'админ' : 'сотрудник', on: !!(pm && pm.members && pm.members[u.id]), cls: (pm && pm.members && pm.members[u.id]) ? 'privuser on' : 'privuser', toggle: () => this.privModalToggleMember(u.id) }));
+    return {
+      chatRoomTabs: tabs, chatIsGeneral: cur === 'general',
+      chatRoomTitle: cur === 'general' ? 'Общий чат' : (activeRoom ? activeRoom.title : 'Беседа'),
+      chatRoomPrivate: cur !== 'general', chatRoomMembers: memberNames,
+      chatRoomSecret: cur !== 'general', chatPrivHint: cur !== 'general' ? '🔒 Приватно · сообщения исчезают через 48 ч' : '', chatBodySecret: cur !== 'general' ? ' secret' : '',
+      openPrivModal: () => this.privModalOpen(),
+      privModalOpen: !!pm, privUsers: userOpts,
+      privTheme: pm ? (pm.theme || '') : '', onPrivTheme: (e) => this.privModalSetTheme(e.target.value),
+      privCanCreate: !!(pm && (pm.theme || '').trim() && Object.values(pm.members || {}).some(Boolean)),
+      privCreateDisabled: !(pm && (pm.theme || '').trim() && Object.values(pm.members || {}).some(Boolean)),
+      privErr: pm && pm.err ? pm.err : '', privHasErr: !!(pm && pm.err),
+      privSubmit: () => this.privModalSubmit(), privCancel: () => this.privModalCancel(),
+    };
+  }  queueCloudPush() { if (this._pushT) clearTimeout(this._pushT); this._pushT = setTimeout(() => this.cloudPush(), 1000); }
 
   changeNote(st) {
     let prev = {}; try { prev = JSON.parse(this._lastCloudState || '{}'); } catch (e) {}
@@ -6134,6 +6360,7 @@ class Component extends DCLogic {
     const history = [entry, ...(this.state.cloudHistory || [])].slice(0, 80);
     try {
       await window.__FB.setDoc(this._docRef, { state: partial, rev: (this._cloudRev || 0) + 1, updatedAt: Date.now(), updatedBy: entry.author, history, locks: locksRefresh }, { merge: true });
+      this.pushCloudToast([...changed].map(a => '«' + this.areaLabel(a) + '»').join(', '));
     } catch (e) { this.setState({ cloudErr: 'Не сохранено в облако: ' + e.message }); }
   }
 
@@ -6924,6 +7151,12 @@ class Component extends DCLogic {
     this.setState({ trackToast: text }); clearTimeout(this._trackToastT);
     this._trackToastT = setTimeout(() => this.setState({ trackToast: '' }), 5000);
   }
+  // Плашка-подтверждение публикации данных в облако (видна всем устройствам)
+  pushCloudToast(label) {
+    const t = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    this.setState({ cloudToast: (label || 'Данные') + ' опубликованы в облако · ' + t + ' — их видят все устройства' });
+    clearTimeout(this._cloudToastT); this._cloudToastT = setTimeout(() => this.setState({ cloudToast: '' }), 4200);
+  }
   triggerTrackingNotification(docData, oldStatus, newStatus) {
     if (!docData || docData.isTracked === false || docData.track === false) {}
     const who = this.state.currentUser ? this.state.currentUser.name : '—';
@@ -7548,10 +7781,12 @@ class Component extends DCLogic {
     this.setState({ stock, extra, prices, whFilled: true, oneCLastAt: Date.now(), oneCLog: log, stockUpdatedAt: Date.now(), oneCStatus: note });
   }
   // ===== Модуль «Landed Cost · ВЭД» (полная себестоимость закупки) =====
-  lcRub(n) { return Math.round(Number(n) || 0).toLocaleString('ru-RU') + ' ₽'; }
+  cvRateEur() { const g = this.state.mgGm; const r = g && this.mgNum(g.rate); return r || (Number(this.state.rate) || 0); }
+  lcRub(n) { return this.cvMoney(n, this.cvRateEur()); }
+  lcMoneyNum(n) { return this.cvVal(n, this.cvRateEur()).toLocaleString('ru-RU', { maximumFractionDigits: this.state.curMode === 'EUR' ? 2 : 0 }); }
   lcNum(n) { return (Number(n) || 0).toLocaleString('ru-RU', { maximumFractionDigits: 0 }); }
   lcPct(n) { return (Number(n) || 0).toLocaleString('ru-RU', { maximumFractionDigits: 1 }) + '%'; }
-  lcSign(n) { const v = Math.round(Number(n) || 0); return (v > 0 ? '+' : '') + v.toLocaleString('ru-RU') + ' ₽'; }
+  lcSign(n) { const v = this.cvVal(n, this.cvRateEur()); const s = Math.abs(v).toLocaleString('ru-RU', { maximumFractionDigits: this.state.curMode === 'EUR' ? 2 : 0 }); return (v > 0 ? '+' : (v < 0 ? '−' : '')) + s + ' ' + this.cvSym(); }
   lcDays(a, b) { if (!a || !b) return null; const d = (new Date(b) - new Date(a)) / 86400000; return isNaN(d) ? null : Math.round(d); }
   lcMarketLabel(m) { return m === 'FOREIGN_VED' ? 'ВЭД' : 'Внутр.'; }
   // Обогащение партий расчётами Landed Cost / факторов / OTIF
@@ -7766,7 +8001,7 @@ class Component extends DCLogic {
     const E = this.lcEnrich();
     const recs = E.recs;
     const base = {
-      isLanded: true, lcCoName: co.name + ' Flow',
+      isLanded: true, lcCoName: co.name + ' Flow', ...this.curVatVals(),
       lcEmpty: recs.length === 0, lcReady: recs.length > 0,
       lcHasErr: !!S.lcErr, lcErr: S.lcErr, lcHasStatus: !!S.lcStatus && !S.lcErr, lcStatus: S.lcStatus,
       lc1cUrl: S.lc1cUrl || '', onLc1cUrl: (e) => set({ lc1cUrl: e.target.value }),
@@ -7796,7 +8031,7 @@ class Component extends DCLogic {
     base.lcKpiBatches = String(delivered.length);
     base.lcKpiPeriod = (S.lcMeta && S.lcMeta.period) || '—';
     base.lcKpiOverhead = this.lcPct(overheadAll);
-    base.lcKpiExtraRub = this.lcNum(totExtra);
+    base.lcKpiExtraRub = this.lcMoneyNum(totExtra);
     base.lcKpiFx = this.lcSign(fxTot);
     base.lcKpiFxCls = fxTot > 0 ? 'lckv neg' : (fxTot < 0 ? 'lckv pos' : 'lckv');
     base.lcKpiFxNote = fxTot > 0 ? 'потери на курсе' : (fxTot < 0 ? 'выгода по курсу' : 'нейтрально');
@@ -7804,7 +8039,7 @@ class Component extends DCLogic {
     base.lcKpiOtifNote = otifOk + ' из ' + otifPool.length + ' в срок и в объёме';
     base.lcKpiAnom = String(anoms.length);
     base.lcKpiAnomCls = anoms.length ? 'lckv neg' : 'lckv pos';
-    base.lcKpiAnomSum = this.lcNum(anomSum);
+    base.lcKpiAnomSum = this.lcMoneyNum(anomSum);
     base.lcKpiTransit = this.lcRub(transitTot);
     base.lcKpiTransitN = String(transit.length);
     // вердикт
@@ -7833,28 +8068,28 @@ class Component extends DCLogic {
     base.lcBatchRows = flt.map(r => {
       const [otxt, ocls] = otifTag(r.otifStatus);
       return { no: r.no, supplier: r.supplier, mkt: this.lcMarketLabel(r.market), mktCls: r.ved ? 'lctag ved' : 'lctag dom',
-        material: r.material, qty: this.lcNum(r.qR), invoice: this.lcNum(r.invRubFact), logi: this.lcNum(r.logiF), customs: this.lcNum(r.custF), broker: this.lcNum(r.brokF),
-        landed: this.lcNum(r.landedFact), unit: r.qR ? this.lcNum(r.unitLanded) : '—', overhead: this.lcPct(r.overhead),
+        material: r.material, qty: this.lcNum(r.qR), invoice: this.lcMoneyNum(r.invRubFact), logi: this.lcMoneyNum(r.logiF), customs: this.lcMoneyNum(r.custF), broker: this.lcMoneyNum(r.brokF),
+        landed: this.lcMoneyNum(r.landedFact), unit: r.qR ? this.lcMoneyNum(r.unitLanded) : '—', overhead: this.lcPct(r.overhead),
         otif: otxt, otifCls: ocls, cls: r.isAnom ? 'anom' : (r.otifStatus === 'OTIF_OK' ? 'good' : '') };
     });
     base.lcBatchN = String(flt.length);
-    base.lcTotQty = this.lcNum(sum(flt, 'qR')); base.lcTotInvoice = this.lcNum(sum(flt, 'invRubFact'));
-    base.lcTotLogi = this.lcNum(sum(flt, 'logiF')); base.lcTotCustoms = this.lcNum(sum(flt, 'custF')); base.lcTotBroker = this.lcNum(sum(flt, 'brokF'));
-    base.lcTotLanded = this.lcNum(sum(flt, 'landedFact'));
+    base.lcTotQty = this.lcNum(sum(flt, 'qR')); base.lcTotInvoice = this.lcMoneyNum(sum(flt, 'invRubFact'));
+    base.lcTotLogi = this.lcMoneyNum(sum(flt, 'logiF')); base.lcTotCustoms = this.lcMoneyNum(sum(flt, 'custF')); base.lcTotBroker = this.lcMoneyNum(sum(flt, 'brokF'));
+    base.lcTotLanded = this.lcMoneyNum(sum(flt, 'landedFact'));
     const fDel = flt.filter(r => r.delivered); const fInv = sum(fDel, 'invRubFact'); base.lcTotOverhead = this.lcPct(fInv ? sum(fDel, 'extraFact') / fInv * 100 : 0);
     // factor table (только принятые партии — у которых есть факт для сравнения)
     const fc = (n) => (n > 0 ? 'lcfacpos' : (n < 0 ? 'lcfacneg' : ''));
     const fltF = flt.filter(r => r.delivered);
-    base.lcFactorRows = fltF.map(r => ({ no: r.no, supplier: r.supplier, plan: this.lcNum(r.landedPlanFlex), fact: this.lcNum(r.landedFact),
+    base.lcFactorRows = fltF.map(r => ({ no: r.no, supplier: r.supplier, plan: this.lcMoneyNum(r.landedPlanFlex), fact: this.lcMoneyNum(r.landedFact),
       fPrice: this.lcSign(r.priceFactor), fPriceCls: fc(r.priceFactor), fLogi: this.lcSign(r.logiFactor), fLogiCls: fc(r.logiFactor),
       fFx: this.lcSign(r.fxFactor), fFxCls: fc(r.fxFactor), fTot: this.lcSign(r.totDev), fTotCls: fc(r.totDev), cls: r.totDev > 0 ? 'anom' : (r.totDev < 0 ? 'good' : '') }));
-    base.lcFTotPlan = this.lcNum(sum(fltF, 'landedPlanFlex')); base.lcFTotFact = this.lcNum(sum(fltF, 'landedFact'));
+    base.lcFTotPlan = this.lcMoneyNum(sum(fltF, 'landedPlanFlex')); base.lcFTotFact = this.lcMoneyNum(sum(fltF, 'landedFact'));
     base.lcFTotPrice = this.lcSign(sum(fltF, 'priceFactor')); base.lcFTotLogi = this.lcSign(sum(fltF, 'logiFactor')); base.lcFTotFx = this.lcSign(sum(fltF, 'fxFactor')); base.lcFTotDev = this.lcSign(sum(fltF, 'totDev'));
     // anomalies
     base.lcAnomEmpty = anoms.length === 0;
     base.lcAnomRows = anoms.map(r => ({ title: 'Партия ' + r.no + ' · ' + r.supplier + ' · ' + r.material,
       text: 'Логистика ' + this.lcNum(r.logiPerUnit) + ' ₽/' + (r.unit || 'ед') + ' против средней ' + this.lcNum(r.dirAvg) + ' ₽/' + (r.unit || 'ед') + ' по направлению «' + r.dirKey + '» (+' + this.lcPct((r.dirAvg ? (r.logiPerUnit / r.dirAvg - 1) * 100 : 0)) + '). Вероятная причина: сверхнормативное хранение/демередж или смена маршрута.',
-      sum: this.lcNum(r.overpay) }));
+      sum: this.lcMoneyNum(r.overpay) }));
     // OTIF by supplier
     const supMap = new Map();
     for (const r of otifPool) { const k = r.supplier; if (!supMap.has(k)) supMap.set(k, { supplier: k, country: r.country, n: 0, onTime: 0, inFull: 0, otif: 0 }); const s = supMap.get(k); s.n++; if (r.onTime) s.onTime++; if (r.inFull) s.inFull++; if (r.otif) s.otif++; }
@@ -7862,10 +8097,10 @@ class Component extends DCLogic {
       return { supplier: s.supplier, country: s.country || '—', n: String(s.n), onTime: String(s.onTime), inFull: String(s.inFull), otif: String(s.otif), rating: this.lcPct(rating), barStyle: 'width:' + Math.max(4, Math.round(rating)) + '%;background:' + col, cls: rating < 70 ? 'anom' : (rating >= 90 ? 'good' : '') }; });
     // transit
     const statTag = (st) => /таможн/i.test(st) ? 'lctag late' : 'lctag ved';
-    base.lcTransitRows = transit.sort((a, b) => (b.transitDays || 0) - (a.transitDays || 0)).map(r => ({ no: r.no, supplier: r.supplier, status: r.status, statCls: statTag(r.status), bucket: r.transitDays != null ? (r.transitDays + ' дн · ' + this.lcTransitBucket(r.transitDays)) : this.lcTransitBucket(null), landed: this.lcNum(r.landedPlan) }));
+    base.lcTransitRows = transit.sort((a, b) => (b.transitDays || 0) - (a.transitDays || 0)).map(r => ({ no: r.no, supplier: r.supplier, status: r.status, statCls: statTag(r.status), bucket: r.transitDays != null ? (r.transitDays + ' дн · ' + this.lcTransitBucket(r.transitDays)) : this.lcTransitBucket(null), landed: this.lcMoneyNum(r.landedPlan) }));
     const b1 = transit.filter(r => r.transitDays != null && r.transitDays <= 15), b2 = transit.filter(r => r.transitDays != null && r.transitDays > 15 && r.transitDays <= 30), b3 = transit.filter(r => r.transitDays != null && r.transitDays > 30);
-    base.lcTransitBreak = 'до 15: ' + this.lcNum(sum(b1, 'landedPlan')) + ' · 15–30: ' + this.lcNum(sum(b2, 'landedPlan')) + ' · >30: ' + this.lcNum(sum(b3, 'landedPlan'));
-    base.lcTransitTot = this.lcNum(transitTot);
+    base.lcTransitBreak = 'до 15: ' + this.lcMoneyNum(sum(b1, 'landedPlan')) + ' · 15–30: ' + this.lcMoneyNum(sum(b2, 'landedPlan')) + ' · >30: ' + this.lcMoneyNum(sum(b3, 'landedPlan'));
+    base.lcTransitTot = this.lcMoneyNum(transitTot);
     return base;
   }
   lcExportExcel() {
@@ -8283,30 +8518,32 @@ class Component extends DCLogic {
     const E = this.mgEnrich(mode); const rows = E.rows, rate = E.rate || 0, agg = E.agg;
     const T = agg(rows);
     Object.assign(base, this.mgCostSrcVals());
+    Object.assign(base, this.curVatVals());
     base.plCostMode = mode;
     base.plModeTreeCls = mode !== 'batch' ? 'plsegb on' : 'plsegb'; base.plModeBatchCls = mode === 'batch' ? 'plsegb on' : 'plsegb';
     base.setModeTree = () => set({ mgCostMode: 'tree' }, () => this.saveMargin && this.saveMargin());
     base.setModeBatch = () => set({ mgCostMode: 'batch' }, () => this.saveMargin && this.saveMargin());
-    // KPI
-    const rent1 = T.rev ? T.m1 / T.rev * 100 : 0, rent2 = T.rev ? T.m2 / T.rev * 100 : 0;
-    const byMarka = [...this.plGroupBy(rows, r => r.marka || '—').entries()].map(([k, l]) => ({ k, a: agg(l) }));
-    const topProd = byMarka.slice().sort((a, b) => b.a.m2 - a.a.m2)[0];
+    // KPI (с учётом валюты/НДС)
+    const TD = this.cvAgg(T, rate);
+    const F = (v) => this.cvFmt(v);
+    const byMarka = [...this.plGroupBy(rows, r => r.marka || '—').entries()].map(([k, l]) => ({ k, a: agg(l), d: this.cvAgg(agg(l), rate) }));
+    const topProd = byMarka.slice().sort((a, b) => b.d.m2 - a.d.m2)[0];
     const mgrRows = rows.filter(r => r.manager && String(r.manager).trim());
-    const byMgr = [...this.plGroupBy(mgrRows, r => r.manager).entries()].map(([k, l]) => ({ k, a: agg(l) }));
-    const topMgr = byMgr.slice().sort((a, b) => b.a.m2 - a.a.m2)[0];
+    const byMgr = [...this.plGroupBy(mgrRows, r => r.manager).entries()].map(([k, l]) => ({ k, d: this.cvAgg(agg(l), rate) }));
+    const topMgr = byMgr.slice().sort((a, b) => b.d.m2 - a.d.m2)[0];
     const skuN = byMarka.length, clientN = new Set(rows.map(r => r.client).filter(Boolean)).size;
     const discW = rows.reduce((s, r) => s + (this.mgNum(r.discount) || 0) * r.revenue, 0), avgDisc = T.rev ? discW / T.rev : 0;
-    const planRev = this.mgNum(S.plPlanRev), planM2 = this.mgNum(S.plPlanM2);
+    const planRev = this.cvVal(this.mgNum(S.plPlanRev), rate, true), planM2 = this.cvVal(this.mgNum(S.plPlanM2), rate, true);
     const kpis = [
-      { cls: 'plkpi navy', k: 'Выручка (Gross)', v: this.mgRub(T.rev), e: this.mgEur(rate ? T.rev / rate : 0) },
-      { cls: 'plkpi', k: 'Валовая маржа GM1', v: this.mgRub(T.m1), e: this.mgPct(rent1) + ' рент.', ecls: 'plke ' + (rent1 >= 0 ? 'pos' : 'neg') },
-      { cls: 'plkpi navy2', k: 'Чистая маржа GM2', v: this.mgRub(T.m2), e: this.mgPct(rent2) + ' рент.' },
-      { cls: 'plkpi', k: 'ТОП-продукт по GM2', v: topProd ? topProd.k : '—', e: topProd ? this.mgRub(topProd.a.m2) : '' },
-      { cls: 'plkpi', k: 'Лидер-менеджер', v: topMgr ? topMgr.k : 'нет данных', e: topMgr ? this.mgRub(topMgr.a.m2) + ' GM2' : 'добавьте колонку «менеджер»' },
+      { cls: 'plkpi navy', k: 'Выручка (Gross)', v: F(TD.rev), e: (S.curMode === 'EUR' ? 'EUR' : 'RUB') + ' · ' + (S.vatMode === 'WITHOUT' ? 'без НДС' : 'с НДС') },
+      { cls: 'plkpi', k: 'Валовая маржа GM1', v: F(TD.m1), e: this.mgPct(TD.r1) + ' рент.', ecls: 'plke ' + (TD.r1 >= 0 ? 'pos' : 'neg') },
+      { cls: 'plkpi navy2', k: 'Чистая маржа GM2', v: F(TD.m2), e: this.mgPct(TD.r2) + ' рент.' },
+      { cls: 'plkpi', k: 'ТОП-продукт по GM2', v: topProd ? topProd.k : '—', e: topProd ? F(topProd.d.m2) : '' },
+      { cls: 'plkpi', k: 'Лидер-менеджер', v: topMgr ? topMgr.k : 'нет данных', e: topMgr ? F(topMgr.d.m2) + ' GM2' : 'добавьте колонку «менеджер»' },
       { cls: 'plkpi', k: 'Объём / SKU / клиенты', v: this.mgKg(T.w), e: skuN + ' SKU · ' + clientN + ' клиент.' },
     ];
-    if (planRev > 0) kpis.push({ cls: 'plkpi', k: 'Выполнение плана выручки', v: this.mgPct(T.rev / planRev * 100), e: (T.rev - planRev >= 0 ? '+' : '') + this.mgRub(T.rev - planRev), ecls: 'plke ' + (T.rev >= planRev ? 'pos' : 'neg') });
-    if (planM2 > 0) kpis.push({ cls: 'plkpi', k: 'Выполнение плана GM2', v: this.mgPct(T.m2 / planM2 * 100), e: (T.m2 - planM2 >= 0 ? '+' : '') + this.mgRub(T.m2 - planM2), ecls: 'plke ' + (T.m2 >= planM2 ? 'pos' : 'neg') });
+    if (planRev > 0) kpis.push({ cls: 'plkpi', k: 'Выполнение плана выручки', v: this.mgPct(TD.rev / planRev * 100), e: (TD.rev - planRev >= 0 ? '+' : '') + F(TD.rev - planRev), ecls: 'plke ' + (TD.rev >= planRev ? 'pos' : 'neg') });
+    if (planM2 > 0) kpis.push({ cls: 'plkpi', k: 'Выполнение плана GM2', v: this.mgPct(TD.m2 / planM2 * 100), e: (TD.m2 - planM2 >= 0 ? '+' : '') + F(TD.m2 - planM2), ecls: 'plke ' + (TD.m2 >= planM2 ? 'pos' : 'neg') });
     if (avgDisc > 0) kpis.push({ cls: 'plkpi', k: 'Средняя скидка', v: this.mgPct(avgDisc), e: 'взвеш. по выручке' });
     base.plKpis = kpis;
     // slices
@@ -8317,15 +8554,15 @@ class Component extends DCLogic {
     const exp = S.plExpanded || {};
     const toggle = (k) => this.setState(st => ({ plExpanded: { ...(st.plExpanded || {}), [k]: !(st.plExpanded || {})[k] } }));
     const fmtRow = (lvl, key, name, a, hasKids, open, tog) => {
-      const r1 = a.rev ? a.m1 / a.rev * 100 : 0, r2 = a.rev ? a.m2 / a.rev * 100 : 0;
+      const d = this.cvAgg(a, rate);
       const c = this.plCls(a);
       return {
         cls: 'plr l' + lvl + (c ? ' ' + c : ''), lvl, name, hasKids, open,
         x: hasKids ? (open ? '▾' : '▸') : '·',
         toggle: tog || (() => {}),
-        w: this.mgKg(a.w), rev: this.mgRub(a.rev), ss: this.mgRub(a.ss),
-        m1: this.mgRub(a.m1), r1: this.mgPct(r1), r1cls: 'plnum ' + (r1 >= 0 ? 'pos' : 'neg'),
-        m2: this.mgRub(a.m2), r2: this.mgPct(r2), r2cls: 'plnum ' + (a.m2 < 0 ? 'neg' : (r2 >= 15 ? 'pos' : '')),
+        w: this.mgKg(a.w), rev: this.cvFmt(d.rev), ss: this.cvFmt(d.ss),
+        m1: this.cvFmt(d.m1), r1: this.mgPct(d.r1), r1cls: 'plnum ' + (d.r1 >= 0 ? 'pos' : 'neg'),
+        m2: this.cvFmt(d.m2), r2: this.mgPct(d.r2), r2cls: 'plnum ' + (d.m2 < 0 ? 'neg' : (d.r2 >= 15 ? 'pos' : '')),
         share: T.rev ? Math.max(2, Math.round(a.rev / T.rev * 100)) : 0, shareTxt: this.mgPct(T.rev ? a.rev / T.rev * 100 : 0),
       };
     };
@@ -8345,7 +8582,7 @@ class Component extends DCLogic {
       }
     }
     base.plRows = flat;
-    base.plTot = { w: this.mgKg(T.w), rev: this.mgRub(T.rev), ss: this.mgRub(T.ss), m1: this.mgRub(T.m1), r1: this.mgPct(rent1), m2: this.mgRub(T.m2), r2: this.mgPct(rent2) };
+    base.plTot = { w: this.mgKg(T.w), rev: this.cvFmt(TD.rev), ss: this.cvFmt(TD.ss), m1: this.cvFmt(TD.m1), r1: this.mgPct(TD.r1), m2: this.cvFmt(TD.m2), r2: this.mgPct(TD.r2) };
     base.plPlanRev = S.plPlanRev || ''; base.onPlPlanRev = (e) => set({ plPlanRev: e.target.value });
     base.plPlanM2 = S.plPlanM2 || ''; base.onPlPlanM2 = (e) => set({ plPlanM2: e.target.value });
     base.plPrint = () => this.plPrint(); base.plExcel = () => this.plExcel(); base.plEmail = () => this.plEmail(); base.plRunAi = () => this.plRunAi();
@@ -9468,13 +9705,14 @@ class Component extends DCLogic {
     if (S.cloudConnected) {
       if (!_curArea) { cbCls = 'cloudbar free'; cbText = 'Онлайн · в этом разделе нет совместно редактируемых данных'; cbBtn = ''; cbAct = () => {}; }
       else if (_mineAreas.has(_curArea)) { cbCls = 'cloudbar edit'; cbText = 'Онлайн · вы редактируете «' + this.areaLabel(_curArea) + '» — изменения видят все'; cbBtn = 'Освободить'; cbAct = () => this.releaseArea(_curArea); }
-      else { const _o = this.areaHeldByOther(_curArea); if (_o) { cbCls = 'cloudbar view'; cbText = 'Онлайн · «' + this.areaLabel(_curArea) + '» редактирует ' + _o.name + ' — режим просмотра'; cbBtn = ''; cbAct = () => {}; } else { cbCls = 'cloudbar free'; cbText = 'Онлайн · «' + this.areaLabel(_curArea) + '» свободно — возьмите для редактирования'; cbBtn = 'Взять для редактирования'; cbAct = () => this.takeArea(_curArea); } }
+      else { const _o = this.areaHeldByOther(_curArea); if (_o) { cbCls = 'cloudbar view'; cbText = 'Онлайн · «' + this.areaLabel(_curArea) + '» редактирует ' + _o.name + ' — режим просмотра'; cbBtn = ''; cbAct = () => {}; } else { cbCls = 'cloudbar free'; cbText = 'Онлайн · «' + this.areaLabel(_curArea) + '» свободно — правьте или загружайте, изменения увидят все'; cbBtn = 'Взять для редактирования'; cbAct = () => this.takeArea(_curArea); } }
     }
-    const _viewonly = (S.cloudConnected && _curArea && !_mineAreas.has(_curArea)) ? 'viewonly' : '';
+    const _viewonly = (S.cloudConnected && _curArea && this.areaHeldByOther(_curArea)) ? 'viewonly' : '';
 
     const base = {
       ...L, ...Rt,
       ready: true, navGroups, tabDesc: descs[S.tab], productOptions, ownerOptions, componentOptions,
+      cloudToast: S.cloudToast || '', cloudToastHas: !!S.cloudToast,
       isHome: S.tab === 'home', homeGroups, goHome: () => set({ tab: 'home', navOpen: false }), isUsers: S.tab === 'users',
       isCat: S.tab === 'cat', catGroups: catGroup ? [catGroup] : [], catCards: catGroup ? catGroup.items : [],
       compassOpen: !!S.compassOpen, openCompass: () => set({ compassOpen: true, navOpen: false }), closeCompass: () => set({ compassOpen: false }),
@@ -9490,7 +9728,8 @@ class Component extends DCLogic {
       sidebarStyle: S.isMobile ? { position: 'fixed', left: S.navOpen ? '0' : '-274px', top: 0, bottom: 0, width: '264px', transition: 'left .26s ease', zIndex: 200, overflowY: 'auto', boxShadow: S.navOpen ? '0 0 60px rgba(0,0,0,.5)' : 'none' } : null,
       toggleNav: () => this.setState({ navOpen: !S.navOpen }), closeNav: () => this.setState({ navOpen: false }),
       chatOpen: !!S.chatOpen, chatToggle: () => this.setState({ chatOpen: !S.chatOpen }), chatClose: () => this.setState({ chatOpen: false }),
-      chatMsgs: this.chatMsgsView(), chatEmpty: !(S.chat && S.chat.length), chatCount: (S.chat || []).length,
+      chatMsgs: this.chatMsgsView(), chatEmpty: this.chatMsgsView().length === 0, chatCount: (S.chat || []).length,
+      ...this.chatRoomVals(),
       chatInput: S.chatInput || '', onChatInput: (e) => this.setState({ chatInput: e.target.value }),
       onChatKey: (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.sendChat(); } }, chatSend: () => this.sendChat(),
       tgLink: S.tgLink || '', tgHasLink: !!S.tgLink, tgNoLink: !S.tgLink, tgEdit: S.tgEdit || '', onTgEdit: (e) => this.setState({ tgEdit: e.target.value }), saveTg: () => this.saveTg(), tgIsAdmin: !!(S.currentUser && S.currentUser.role === 'admin'),

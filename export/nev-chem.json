@@ -1,0 +1,27 @@
+{
+ "meta": {
+  "source": "Shtark Chemicals — готовая продукция (марки из отчёта Себестоимость). Рецептуры и сырьё заполняются в приложении.",
+  "vat_rate": 0.22,
+  "extracted": ""
+ },
+ "raw_materials": [],
+ "semi_products": [],
+ "products": [
+  { "client": "Shtark Chemicals", "name": "Starkbond 2004", "type": "ГП", "kind": "Клей", "article": "2004" },
+  { "client": "Shtark Chemicals", "name": "Starkbond 2014", "type": "ГП", "kind": "Клей", "article": "2014" },
+  { "client": "Shtark Chemicals", "name": "Starkbond 521 А", "type": "ГП", "kind": "Клей", "article": "521 А" },
+  { "client": "Shtark Chemicals", "name": "Starkbond 522 А", "type": "ГП", "kind": "Клей", "article": "522 А" },
+  { "client": "Shtark Chemicals", "name": "Starkbond 525 А", "type": "ГП", "kind": "Клей", "article": "525 А" },
+  { "client": "Shtark Chemicals", "name": "Starkbond 745/3 А", "type": "ГП", "kind": "Клей", "article": "745/3А" },
+  { "client": "Shtark Chemicals", "name": "Starkbond 745/41 А", "type": "ГП", "kind": "Клей", "article": "745/41А" },
+  { "client": "Shtark Chemicals", "name": "Starkbond 521C 10.0", "type": "ГП", "kind": "Отвердитель", "article": "521C10.0" },
+  { "client": "Shtark Chemicals", "name": "Starkbond 521C 11.0", "type": "ГП", "kind": "Отвердитель", "article": "521C11.0" },
+  { "client": "Shtark Chemicals", "name": "Starkbond 525C 2.0", "type": "ГП", "kind": "Отвердитель", "article": "525C2.0" },
+  { "client": "Shtark Chemicals", "name": "Starkbond 525C 3.0", "type": "ГП", "kind": "Отвердитель", "article": "525C3.0" },
+  { "client": "Shtark Chemicals", "name": "Starkbond 746 С", "type": "ГП", "kind": "Отвердитель", "article": "746С" },
+  { "client": "Shtark Chemicals", "name": "Starkbond 746/1 С", "type": "ГП", "kind": "Отвердитель", "article": "746/1С" }
+ ],
+ "recipes": [],
+ "rates": [],
+ "losses": []
+}
