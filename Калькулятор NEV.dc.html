@@ -740,7 +740,9 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .imptblrow{border-top:1px solid #f0ece6}
 .imptblrow .inp{height:30px;font-size:12px;padding:3px 7px}
 .impsumc{font-size:12px;text-align:right;color:#1F4E78;font-weight:600}
-.imptblfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;background:#fafafa;border-top:1px solid #f0ece6}
+.imptblfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;background:#fafafa;border-top:1px solid #f0ece6;flex-wrap:wrap}
+.impvat{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#56534f}
+.impvat .inp{width:54px;height:28px;padding:2px 6px}
 .impfn{font-weight:600;color:#2b2926;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .impdoc{font-size:10px;font-weight:800;color:#5b3fa0;background:#efe9fa;border-radius:20px;padding:2px 8px;white-space:nowrap}
 .impsum{font-size:11.5px;color:#56534f;white-space:nowrap}
@@ -3664,7 +3666,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="impdochd"><label class="impfg"><span>Дата документа</span><input class="inp" type="date" value="{{ f.date }}" onInput="{{ f.onDate }}"></label><label class="impfg"><span>{{ impPartyLabel }}</span><input class="inp" value="{{ f.party }}" onInput="{{ f.onParty }}" placeholder="будет создан, если новый"></label><label class="impfg sm"><span>№ док.</span><input class="inp" value="{{ f.no }}" onInput="{{ f.onNo }}"></label></div>
 <sc-if value="{{ f.isSimple }}" hint-placeholder-val="x"><div class="impdochd"><sc-if value="{{ f.purpose }}" hint-placeholder-val=""><label class="impfg"><span>Назначение / маршрут</span><input class="inp" value="{{ f.purpose }}" onInput="{{ f.onPurpose }}"></label></sc-if></div></sc-if>
 <sc-if value="{{ f.isSimple }}" hint-placeholder-val=""><div class="impdochd"><label class="impfg"><span>Сумма ₽</span><input class="inp num" value="{{ f.amount }}" onInput="{{ f.onAmount }}"></label><label class="impfg"><span>Маршрут</span><input class="inp" value="{{ f.route }}" onInput="{{ f.onRoute }}"></label><label class="impfg"><span>Фрахт ₽</span><input class="inp num" value="{{ f.freight }}" onInput="{{ f.onFreight }}"></label></div></sc-if>
-<sc-if value="{{ f.isSimple }}" hint-placeholder-val="x"><div class="imptbl"><div class="imptblhd"><span>{{ impNameLabel }}</span><span>Артикул</span><span>Кол-во</span><span>Цена</span><span>Сумма</span><span></span></div><sc-for list="{{ f.lines }}" as="l" hint-placeholder-count="2"><div class="imptblrow"><input class="inp" value="{{ l.name }}" onInput="{{ l.onName }}" placeholder="наименование"><input class="inp" value="{{ l.article }}" onInput="{{ l.onArticle }}" placeholder="арт."><input class="inp num" value="{{ l.qty }}" onInput="{{ l.onQty }}"><input class="inp num" value="{{ l.price }}" onInput="{{ l.onPrice }}"><span class="mono impsumc">{{ l.sum }}</span><button class="tlink del" onClick="{{ l.del }}">✕</button></div></sc-for><div class="imptblfoot"><button class="btn xs" onClick="{{ f.addLine }}">+ строка</button><span class="hint">Позиций: {{ f.lineCount }} · Итого: {{ f.totalFmt }} ₽</span></div></div></sc-if>
+<sc-if value="{{ f.isSimple }}" hint-placeholder-val="x"><div class="imptbl"><div class="imptblhd"><span>{{ impNameLabel }}</span><span>Артикул</span><span>Кол-во</span><span>Цена</span><span>Сумма</span><span></span></div><sc-for list="{{ f.lines }}" as="l" hint-placeholder-count="2"><div class="imptblrow"><input class="inp" value="{{ l.name }}" onInput="{{ l.onName }}" placeholder="наименование"><input class="inp" value="{{ l.article }}" onInput="{{ l.onArticle }}" placeholder="арт."><input class="inp num" value="{{ l.qty }}" onInput="{{ l.onQty }}"><input class="inp num" value="{{ l.price }}" onInput="{{ l.onPrice }}"><span class="mono impsumc">{{ l.sum }}</span><button class="tlink del" onClick="{{ l.del }}">✕</button></div></sc-for><div class="imptblfoot"><button class="btn xs" onClick="{{ f.addLine }}">+ строка</button><label class="impvat">НДС, %<input class="inp num" value="{{ f.vatRate }}" onInput="{{ f.onVatRate }}"></label><span class="hint">Позиций: {{ f.lineCount }} · Итого с НДС: {{ f.totalFmt }} ₽ · НДС: {{ f.vatFmt }} ₽ · без НДС: {{ f.totalNetFmt }} ₽</span></div></div></sc-if>
 </sc-if>
 </div></sc-for></div></sc-if>
 <sc-if value="{{ impIsVed }}" hint-placeholder-val=""><div class="impved"><div class="impvedt">Сборка Landed Cost (ВЭД-пакет)</div><div class="impvedgrid"><div><span>Инвойс</span><b>{{ impVedInvoice }}</b></div><div><span>Таможня (ТД)</span><b>{{ impVedCustoms }}</b></div><div><span>Брокер/экспедитор</span><b>{{ impVedBroker }}</b></div><div><span>Фрахт/перевозчик</span><b>{{ impVedFreight }}</b></div></div><div class="impvedtot">Полная Landed Cost: <b>{{ impVedLanded }} ₽</b></div></div></sc-if>
@@ -8739,6 +8741,7 @@ class Component extends DCLogic {
     const rows = (d.rows || []).filter(r => r && r.some(c => c != null && String(c).trim()));
     const baseName = (file.name || '').replace(/\.[^.]+$/, '');
     const H = d.headers || [];
+    const meta = d.meta || {};
     const today = this.ymd(new Date());
     // усиление маппинга по заголовкам (если ядро не нашло)
     if (map.qty == null) { const i = this.impCol(H, ['кол-во', 'количеств', 'объ', 'вес', 'масса', 'qty', 'нетто']); if (i >= 0) map.qty = i; }
@@ -8751,31 +8754,36 @@ class Component extends DCLogic {
     if (map.supplier == null) { const i = this.impCol(H, ['поставщик', 'продавец', 'контрагент', 'грузоотправ', 'vendor', 'supplier']); if (i >= 0) map.supplier = i; }
     if (map.inn == null) { const i = this.impCol(H, ['инн']); if (i >= 0) map.inn = i; }
     const lineOf = (r) => { const name = this.impCell(r, map, 'nomen') || ''; const qty = this.impNum(this.impCell(r, map, 'qty')); let price = this.impNum(this.impCell(r, map, 'price')); const sum = this.impNum(this.impCell(r, map, 'sum')); if (!price && qty && sum) price = this.excelRound ? this.excelRound(sum / qty, 4) : (sum / qty); return { name, article: this.impCell(r, map, 'article'), qty, price }; };
-    const dateF = this.impFirstDate(rows, map.date) || today;
+    const dateD = meta.docDate || this.impFirstDate(rows, map.date) || today;
+    const docNo = meta.docNo || '';
+    // Ставка НДС из подвала документа (в том числе НДS / Итого), иначе 22%
+    let vatRate = 22;
+    if (meta.vatAmount && meta.totalAmount && meta.totalAmount > meta.vatAmount) vatRate = Math.round(meta.vatAmount / (meta.totalAmount - meta.vatAmount) * 100);
+    if (![10, 20, 22].includes(vatRate)) vatRate = 22;
     if (target === 'sales') {
-      const party = this.impTopValue(rows, map.client) || this.impTopValue(rows, map.supplier) || baseName;
+      const party = meta.buyer || this.impTopValue(rows, map.client) || this.impTopValue(rows, map.supplier) || baseName;
       const lines = rows.map(lineOf).filter(l => l.name || l.qty || l.price);
-      return { recType: 'sales', doc: { date: dateF, party, no: '', lines: lines.length ? lines : [{ name: '', article: '', qty: 0, price: 0 }] }, summary: 'Реализация · ' + party + ' · ' + lines.length + ' поз.' };
+      return { recType: 'sales', doc: { date: dateD, party, inn: meta.buyerInn || '', no: docNo, vatRate, vatIncl: true, vatAmount: meta.vatAmount || 0, lines: lines.length ? lines : [{ name: '', article: '', qty: 0, price: 0 }] }, summary: 'Реализация · ' + party + ' · ' + lines.length + ' поз.' };
     }
     if (target === 'receipts' || target === 'purchases' || target === 'ved') {
-      const party = this.impTopValue(rows, map.supplier) || baseName;
-      const inn = this.impTopValue(rows, map.inn) || '';
+      const party = meta.supplier || this.impTopValue(rows, map.supplier) || baseName;
+      const inn = meta.supplierInn || this.impTopValue(rows, map.inn) || '';
       const lines = rows.map(lineOf).filter(l => l.name || l.qty || l.price);
-      const doc = { date: dateF, party, inn, no: '', market: (target === 'ved' ? 'Внешний' : 'Внутренний'), lines: lines.length ? lines : [{ name: '', article: '', qty: 0, price: 0 }] };
+      const doc = { date: dateD, party, inn, no: docNo, market: (target === 'ved' ? 'Внешний' : 'Внутренний'), vatRate, vatIncl: true, vatAmount: meta.vatAmount || 0, lines: lines.length ? lines : [{ name: '', article: '', qty: 0, price: 0 }] };
       if (target === 'ved') { const dt = this.impVedDocType(file.name, H); const total = lines.reduce((s, l) => s + (l.qty && l.price ? l.qty * l.price : 0), 0) || rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'sum')), 0); return { recType: 'ved', docType: dt, doc, total, summary: dt.label + ' · ' + this.fmt(total) }; }
       return { recType: target, doc, summary: party + ' · ' + lines.length + ' поз.' };
     }
     if (target === 'payreq') {
-      const party = this.impTopValue(rows, map.supplier) || this.impTopValue(rows, map.client) || baseName;
-      let amount = rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'sum')), 0);
+      const party = meta.supplier || this.impTopValue(rows, map.supplier) || this.impTopValue(rows, map.client) || baseName;
+      let amount = meta.totalAmount || rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'sum')), 0);
       if (!amount) amount = rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'price')) * (this.impNum(this.impCell(r, map, 'qty')) || 1), 0);
-      return { recType: 'payreq', doc: { date: dateF, party, amount, purpose: 'Счёт ' + baseName }, summary: party + ' · ' + this.fmt(amount) + ' ₽' };
+      return { recType: 'payreq', doc: { date: dateD, party, amount, vatRate, vatAmount: meta.vatAmount || 0, purpose: (meta.docKind === 'receipt' ? 'Оплата поступления' : 'Счёт') + (docNo ? ' № ' + docNo : '') + (meta.supplier ? ' · ' + meta.supplier : '') }, summary: party + ' · ' + this.fmt(amount) + ' ₽' };
     }
     if (target === 'logi') {
-      const carrier = this.impTopValue(rows, map.supplier) || '';
+      const carrier = meta.supplier || this.impTopValue(rows, map.supplier) || '';
       const route = this.impTopValue(rows, map.nomen) || baseName;
-      const freight = rows.reduce((s, r) => s + (this.impNum(this.impCell(r, map, 'sum')) || this.impNum(this.impCell(r, map, 'price'))), 0);
-      return { recType: 'logi', doc: { date: dateF, party: carrier, route, freight }, summary: route + ' · ' + this.fmt(freight) + ' ₽' };
+      const freight = meta.totalAmount || rows.reduce((s, r) => s + (this.impNum(this.impCell(r, map, 'sum')) || this.impNum(this.impCell(r, map, 'price'))), 0);
+      return { recType: 'logi', doc: { date: dateD, party: carrier, route, freight }, summary: route + ' · ' + this.fmt(freight) + ' ₽' };
     }
     return { recType: target, doc: { date: today, party: baseName, lines: [] }, summary: '' };
   }
@@ -8863,6 +8871,8 @@ class Component extends DCLogic {
         del: () => this.impDelLine(i, li),
       }));
       const total = (dc.lines || []).reduce((s, l) => s + (l.qty || 0) * (l.price || 0), 0);
+      const vr = (dc.vatRate != null ? dc.vatRate : 22);
+      const totalNet = dc.vatIncl !== false ? total / (1 + vr / 100) : total;
       return {
         name: f.name, ok: f.status === 'ok', err: f.err || '', via: f.via || '',
         summary: f.summary || '', docLabel: f.docType ? f.docType.label : '',
@@ -8878,6 +8888,8 @@ class Component extends DCLogic {
         route: dc.route || '', onRoute: (e) => this.impEditDoc(i, 'route', e.target.value),
         freight: dc.freight || 0, onFreight: (e) => this.impEditDoc(i, 'freight', this.impNum(e.target.value)),
         lines, lineCount: String(lines.length), totalFmt: this.fmt(total),
+        vatRate: vr, onVatRate: (e) => this.impEditDoc(i, 'vatRate', this.impNum(e.target.value)),
+        totalNetFmt: this.fmt(Math.round(totalNet)), vatFmt: this.fmt(Math.round(total - totalNet)),
         addLine: () => this.impAddLine(i),
         isSimple: simpleDoc, isSalesDoc: isSales,
       };
@@ -9949,10 +9961,54 @@ class Component extends DCLogic {
     const buf = await file.arrayBuffer(); const wb = XLSX.read(buf, { type: 'array' });
     const ws = wb.Sheets[wb.SheetNames[0]];
     const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: null });
-    let hr = 0; for (let i = 0; i < Math.min(aoa.length, 15); i++) { const c = (aoa[i] || []).filter(x => x != null && String(x).trim()).length; if (c >= 2) { hr = i; break; } }
+    // Поиск строки заголовков по ключевым словам (а не просто «первая с ≥2 ячейками»)
+    const HDR = ['товар', 'номенклат', 'артикул', 'наименован', 'количеств', 'кол-во', 'цена', 'сумма', 'стоимост', 'продукт', 'материал', 'остаток', 'дата', 'ед.', 'единиц', 'марка', 'ндс'];
+    const scoreRow = (r) => { if (!r) return 0; let sc = 0; for (const c of r) { const n = this.dlNorm(c); if (!n) continue; if (HDR.some(k => n === k || n.indexOf(k) >= 0)) sc++; } return sc; };
+    let hr = -1, bestScore = 1;
+    for (let i = 0; i < Math.min(aoa.length, 30); i++) { const s = scoreRow(aoa[i]); if (s > bestScore) { bestScore = s; hr = i; } }
+    if (hr < 0) { for (let i = 0; i < Math.min(aoa.length, 15); i++) { const c = (aoa[i] || []).filter(x => x != null && String(x).trim()).length; if (c >= 2) { hr = i; break; } } }
+    if (hr < 0) hr = 0;
     const headers = (aoa[hr] || []).map(x => String(x == null ? '' : x).trim());
-    const rows = aoa.slice(hr + 1).filter(r => r && r.some(x => x != null && String(x).trim()) && !this.dlIsNoiseRow(r));
-    return { headers, rows, n: rows.length };
+    const meta = this.dlExtractMeta(aoa, hr, file.name || '');
+    const rows = aoa.slice(hr + 1).filter(r => r && r.some(x => x != null && String(x).trim()) && !this.dlIsNoiseRow(r) && !this.dlIsTotalRow(r));
+    return { headers, rows, n: rows.length, meta };
+  }
+  // Итоговая строка документа 1С (Итого / в т.ч. НДС / Всего наименований / подписи) — не позиция
+  dlIsTotalRow(row) {
+    if (!row) return false;
+    const cells = row.map(x => this.dlNorm(x)).filter(Boolean);
+    const joined = cells.join(' ');
+    return /^(итого|всего|в том числе ндс|в т\.ч\. ндс|сумма ндс|без ндс|отпустил|получил|всего наименован|четырнадцать|одна тысяча|две тысячи|три тысячи|по документу)/.test(joined) || /^итого|^всего наименован/.test(cells[0] || '');
+  }
+  // Извлечь шапку документа 1С: поставщик, покупатель, №, дата, НДС, итог
+  dlExtractMeta(aoa, hr, fname) {
+    const meta = { supplier: '', supplierInn: '', buyer: '', buyerInn: '', docNo: '', docDate: '', vatAmount: 0, totalAmount: 0, title: '', docKind: '' };
+    const valAfter = (row, ci) => { for (let j = ci + 1; j < row.length; j++) { const v = row[j]; if (v != null && String(v).trim()) return String(v).trim(); } return ''; };
+    const rightNum = (row) => { let n = 0; for (const c of row) { const x = this.impNum(c); if (x) n = x; } return n; };
+    const innOf = (s) => { const m = String(s).match(/\d{10,12}/); return m ? m[0] : ''; };
+    for (let i = 0; i < Math.min(aoa.length, hr + 6); i++) {
+      const row = aoa[i] || [];
+      for (let c = 0; c < row.length; c++) {
+        const n = this.dlNorm(row[c]); if (!n) continue;
+        if (!meta.supplier && /^(поставщик|продавец|грузоотправит)/.test(n)) { const v = valAfter(row, c); if (v) { meta.supplier = v.replace(/^["']|["']$/g, ''); meta.supplierInn = innOf(v) || meta.supplierInn; } }
+        if (!meta.buyer && /^(покупател|клиент|заказчик|грузополучат|плательщик)/.test(n)) { const v = valAfter(row, c); if (v) { meta.buyer = v.replace(/^["']|["']$/g, ''); meta.buyerInn = innOf(v) || meta.buyerInn; } }
+      }
+    }
+    // НДС и Итого — из подвала
+    for (let i = hr + 1; i < aoa.length; i++) {
+      const row = aoa[i] || []; const joined = row.map(x => this.dlNorm(x)).join(' ');
+      if (/в том числе ндс|в т\.ч\. ндс|сумма ндс/.test(joined)) meta.vatAmount = rightNum(row) || meta.vatAmount;
+      else if (/^\s*итого/.test(joined) || /итого:/.test(joined)) meta.totalAmount = rightNum(row) || meta.totalAmount;
+    }
+    // Заголовок документа: № и дата
+    const title = String((aoa[0] && aoa[0].find(x => x != null && String(x).trim())) || fname || '');
+    meta.title = title;
+    const mno = title.match(/№\s*([^\s]+)/); if (mno) meta.docNo = mno[1];
+    const md = title.match(/от\s+(\d{1,2}[.\-/]\d{1,2}[.\-/]\d{2,4})/i) || (fname || '').match(/(\d{1,2}[.\-/]\d{1,2}[.\-/]\d{2,4})/); if (md) meta.docDate = this.impDate(md[1]);
+    const nt = this.dlNorm(title);
+    if (/реализац|расходн|товарн|счет-фактур|счёт-фактур|отгрузк/.test(nt)) meta.docKind = 'sales';
+    else if (/поступлен|приход|накладн|закуп/.test(nt)) meta.docKind = 'receipt';
+    return meta;
   }
   // Лениво подгрузить PDF.js (один раз)
   dlLoadPdfJs() {
