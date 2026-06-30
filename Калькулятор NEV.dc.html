@@ -1884,6 +1884,15 @@ a.wordmark:hover{opacity:.6}
 .prchk.on{background:#0e0e0e;color:#fff;border-color:#0e0e0e}
 .prchk.on .prchkbox{background:#FFD200;border-color:#FFD200}
 .prchk.on .prchkbox:after{content:'';position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid #0e0e0e;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.prdir{font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.prdir.out{background:#fdeceb;color:#c0322b}
+.prdir.in{background:#eafaf0;color:#1f8a5b}
+.prfx{font-weight:700}.prfx.loss{color:#c0322b}.prfx.gain{color:#1f8a5b}
+.seg{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:8px;border:1px solid #e0d8c8;background:#fff;cursor:pointer;font-size:12.5px;font-weight:600;color:#56534f}
+.seg.segon{background:#1F4E78;color:#fff;border-color:#1F4E78}
+.prsched{margin-top:14px;border:1px solid #e7e4e0;border-radius:11px;padding:12px 14px;background:#fbfaf8}
+.prschedh{font-size:13px;font-weight:700;color:#1a2b3c;margin-bottom:9px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.prschedh .hint{font-weight:500}
 .docsform{display:flex;flex-direction:column;gap:11px}
 .docrow2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .ayadoc,.maxdoc{font-size:12.5px;line-height:1.5;border-radius:10px;padding:9px 12px;color:#1e293b}
@@ -3246,13 +3255,25 @@ window.dispatchEvent(new Event('fbready'));
 
 <sc-if value="{{ isTreas30 }}" hint-placeholder-val="">
 <div class="card"><div class="sec">Добавить платёж · заявка на согласование</div>
+<div class="genrow"><span class="seg {{ prDirOutCls }}" onClick="{{ setPrDirOut }}">↗ Оплата поставщику</span><span class="seg {{ prDirInCls }}" onClick="{{ setPrDirIn }}">↘ Поступление от клиента</span></div>
 <div class="uform">
-<div class="fg"><label>Получатель / поставщик</label><input class="inp" value="{{ prSupplier }}" onInput="{{ onPrSupplier }}" placeholder="ООО «ХимПоставка»"></div>
-<div class="fg"><label>Сумма, ₽</label><input class="inp num" type="number" value="{{ prAmount }}" onInput="{{ onPrAmount }}"></div>
-<div class="fg"><label>Дата платежа</label><input class="inp" type="date" value="{{ prDate }}" onInput="{{ onPrDate }}"></div>
+<div class="fg"><label>Контрагент</label><input class="inp" value="{{ prSupplier }}" onInput="{{ onPrSupplier }}" placeholder="ООО «ХимПоставка»"></div>
+<div class="fg"><label>Валюта</label><select class="sel" value="{{ prCurrency }}" onChange="{{ onPrCurrency }}"><sc-for list="{{ prCurOpts }}" as="c" hint-placeholder-count="4"><option value="{{ c.v }}">{{ c.label }}</option></sc-for></select></div>
+<sc-if value="{{ prIsRub }}" hint-placeholder-val="{{ true }}"><div class="fg"><label>Сумма, ₽</label><input class="inp num" type="number" value="{{ prAmount }}" onInput="{{ onPrAmount }}"></div></sc-if>
+<sc-if value="{{ prIsRub }}" hint-placeholder-val="x"><div class="fg"><label>Сумма в валюте</label><input class="inp num" type="number" value="{{ prCurAmount }}" onInput="{{ onPrCurAmount }}"></div></sc-if>
+<sc-if value="{{ prIsRub }}" hint-placeholder-val="x"><div class="fg"><label>Курс</label><select class="sel" value="{{ prRateMode }}" onChange="{{ onPrRateMode }}"><sc-for list="{{ prRateModeOpts }}" as="m" hint-placeholder-count="3"><option value="{{ m.v }}">{{ m.label }}</option></sc-for></select></div></sc-if>
+<sc-if value="{{ prIsRub }}" hint-placeholder-val="x"><div class="fg"><label>Курс ₽ (ЦБ {{ prCbRate }})</label><input class="inp num" type="number" value="{{ prRate }}" onInput="{{ onPrRate }}"></div></sc-if>
+<sc-if value="{{ prIsRub }}" hint-placeholder-val="x"><div class="fg"><label>Курс начисления (для курс. разниц)</label><input class="inp num" type="number" value="{{ prRateAccrual }}" onInput="{{ onPrRateAccrual }}"></div></sc-if>
+<div class="fg"><label>Дата документа</label><input class="inp" type="date" value="{{ prDate }}" onInput="{{ onPrDate }}"></div>
+<div class="fg"><label>Вид оплаты</label><select class="sel" value="{{ prPayType }}" onChange="{{ onPrPayType }}"><sc-for list="{{ prPayTypeOpts }}" as="t" hint-placeholder-count="4"><option value="{{ t.v }}">{{ t.label }}</option></sc-for></select></div>
+<div class="fg"><label>Контрольный срок оплаты</label><input class="inp" type="date" value="{{ prDueDate }}" onInput="{{ onPrDueDate }}"></div>
+<sc-if value="{{ prShowPartial }}" hint-placeholder-val=""><div class="fg"><label>Предоплата, %</label><input class="inp num" type="number" value="{{ prPrepayPct }}" onInput="{{ onPrPrepayPct }}"></div></sc-if>
+<sc-if value="{{ prShowTerm }}" hint-placeholder-val=""><div class="fg"><label>Отсрочка, дней</label><input class="inp num" type="number" value="{{ prTermDays }}" onInput="{{ onPrTermDays }}"></div></sc-if>
 <div class="fg"><label>Согласующий</label><select class="sel" value="{{ prApprover }}" onChange="{{ onPrApprover }}"><option value="">— выберите —</option><sc-for list="{{ prApproverOpts }}" as="u" hint-placeholder-count="3"><option value="{{ u.v }}">{{ u.label }}</option></sc-for></select></div>
 <div class="fg full"><label>Назначение платежа</label><input class="inp" value="{{ prPurpose }}" onInput="{{ onPrPurpose }}" placeholder="Оплата за сырьё по счёту №…"></div>
 </div>
+<sc-if value="{{ prIsRub }}" hint-placeholder-val="x"><div class="hint">Сумма к оплате в рублях по курсу: <b>{{ prAmountRub }} ₽</b></div></sc-if>
+<div class="prsched"><div class="prschedh">📅 График платежей · разбивка по датам <span class="hint">сумма частей: {{ prSchedSum }} ₽</span></div><div class="scroll"><table class="rectbl"><thead><tr><th class="l">Дата</th><th>Сумма, ₽</th><th class="l">Назначение части</th><th></th></tr></thead><tbody><sc-for list="{{ prSchedule }}" as="s" hint-placeholder-count="2"><tr><td><input class="inp w120" type="date" value="{{ s.date }}" onInput="{{ s.onDate }}"></td><td><input class="inp num w120" type="number" value="{{ s.amount }}" onInput="{{ s.onAmount }}"></td><td><input class="inp" value="{{ s.kind }}" onInput="{{ s.onKind }}"></td><td><button class="tlink del" onClick="{{ s.del }}">✕</button></td></tr></sc-for></tbody></table></div><button class="btn xs" onClick="{{ prScheduleAdd }}">+ часть платежа</button></div>
 <div class="genrow"><button class="{{ prTrack }}" onClick="{{ togglePrTrack }}"><span class="prchkbox"></span>Отслеживать платёж</button></div>
 <sc-if value="{{ prHasErr }}" hint-placeholder-val=""><div class="banner err">{{ prErr }}</div></sc-if>
 <div class="uactions"><button class="btn dark" onClick="{{ prSend }}">Отправить на согласование</button><button class="btn" onClick="{{ prSave }}">Сохранить черновик</button><button class="btn imp" onClick="{{ impOpenPayreq }}">📎 Загрузить счета (ИИ)</button><label class="btn"><span>🏦</span> Загрузить выписку .txt<input type="file" accept=".txt" style="display:none" onChange="{{ onStmtFile }}"></label></div>
@@ -3260,8 +3281,8 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 <div class="card"><div class="sec">Заявки на платёж · {{ prCount }}</div>
 <sc-if value="{{ prEmpty }}" hint-placeholder-val=""><div class="hint">Пока нет заявок на платёж.</div></sc-if>
-<div class="scroll"><table><thead><tr><th class="l">Получатель</th><th>Сумма</th><th class="l">Дата</th><th class="l">Инициатор</th><th class="l">Согласующий</th><th class="l">Статус</th><th>Отсл.</th><th class="l">Действия</th></tr></thead>
-<tbody><sc-for list="{{ prRows }}" as="p" hint-placeholder-count="2"><tr><td class="l nm">{{ p.supplier }}</td><td class="mono">{{ p.amount }}</td><td class="l mono">{{ p.date }}</td><td class="l">{{ p.initiator }}</td><td class="l">{{ p.approver }}</td><td class="l"><span class="tcstatus {{ p.statusCls }}">{{ p.status }}</span></td><td><button class="{{ p.trackCls }}" onClick="{{ p.toggleTrack }}"><span class="prchkbox"></span></button></td><td class="l"><div class="urowact"><sc-if value="{{ p.canSend }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.send }}">На согл.</button></sc-if><sc-if value="{{ p.canApprove }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.approve }}">Согл.</button><button class="ulink del" onClick="{{ p.reject }}">Откл.</button></sc-if><sc-if value="{{ p.canPay }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.pay }}">Оплачено</button></sc-if><sc-if value="{{ p.canRemove }}" hint-placeholder-val=""><button class="ulink del" onClick="{{ p.remove }}">×</button></sc-if></div></td></tr></sc-for></tbody></table></div>
+<div class="scroll"><table><thead><tr><th class="l">Тип</th><th class="l">Контрагент</th><th>Сумма ₽</th><th class="l">Валюта/курс</th><th class="l">Вид</th><th>Частей</th><th class="l">Курс. разн.</th><th class="l">Статус</th><th class="l">Действия</th></tr></thead>
+<tbody><sc-for list="{{ prRows }}" as="p" hint-placeholder-count="2"><tr><td class="l"><span class="{{ p.dirCls }}">{{ p.dir }}</span></td><td class="l nm">{{ p.supplier }}</td><td class="mono">{{ p.amount }}</td><td class="l mono">{{ p.curLbl }}</td><td class="l">{{ p.payTypeLbl }}</td><td class="mono">{{ p.parts }}</td><td class="l mono"><sc-if value="{{ p.hasFx }}" hint-placeholder-val=""><span class="{{ p.fxCls }}">{{ p.fx }}</span></sc-if></td><td class="l"><span class="tcstatus {{ p.statusCls }}">{{ p.status }}</span></td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ p.edit }}">✎</button><sc-if value="{{ p.canSend }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.send }}">На согл.</button></sc-if><sc-if value="{{ p.canApprove }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.approve }}">Согл.</button><button class="ulink del" onClick="{{ p.reject }}">Откл.</button></sc-if><sc-if value="{{ p.canPay }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.pay }}">Оплачено</button></sc-if><sc-if value="{{ p.canRemove }}" hint-placeholder-val=""><button class="ulink del" onClick="{{ p.remove }}">×</button></sc-if></div></td></tr></sc-for></tbody></table></div>
 <div class="hint">При смене статуса инициатор и согласующий получают уведомление в командный чат (и Telegram). «Отслеживать» помечает важные платежи.</div>
 </div>
 <div class="card"><div class="sec">Казначейский календарь · БДДС на 30 дней</div>
@@ -8434,7 +8455,30 @@ class Component extends DCLogic {
     };
   }
   // ===== Заявки на платёж (согласование) =====
-  emptyPayReq() { const cu = this.state.currentUser; return { id: '', initiator: cu ? cu.name : '', initiatorId: cu ? cu.id : '', approverId: '', supplier: '', amount: '', date: this.ymd(new Date()), purpose: '', status: 'Черновик', track: true }; }
+  emptyPayReq() { const cu = this.state.currentUser; return { id: '', direction: 'out', initiator: cu ? cu.name : '', initiatorId: cu ? cu.id : '', approverId: '', supplier: '', currency: 'RUB', rateMode: 'cb', rate: 0, rateAccrual: 0, amountCur: '', amount: '', date: this.ymd(new Date()), dueDate: this.ymd(new Date()), payType: 'full', prepayPct: 50, termDays: 0, schedule: [], purpose: '', status: 'Черновик', track: true }; }
+  // Курс ЦБ для валюты (₽ за единицу)
+  cbRate(cur) { if (!cur || cur === 'RUB') return 1; const S = this.state; if (cur === 'EUR') { const e = S.rates && S.rates.EUR && S.rates.EUR.val; return e || Number(S.rate) || 0; } const r = S.rates && S.rates[cur]; return (r && r.val) || 0; }
+  // Эффективный курс заявки: ЦБ / фиксированный / ручной
+  prEffRate(pr) { if ((pr.currency || 'RUB') === 'RUB') return 1; if (pr.rateMode === 'fixed' || pr.rateMode === 'manual') return Number(pr.rate) || this.cbRate(pr.currency); return this.cbRate(pr.currency); }
+  prAmountRub(pr) { const cur = pr.currency || 'RUB'; if (cur === 'RUB') return Number(pr.amount || pr.amountCur) || 0; return (Number(pr.amountCur) || 0) * this.prEffRate(pr); }
+  // Курсовая разница: (курс оплаты − курс начисления) × сумма в валюте
+  prFxDiff(pr) { if ((pr.currency || 'RUB') === 'RUB') return 0; const acc = Number(pr.rateAccrual) || 0; if (!acc) return 0; return ((this.prEffRate(pr) - acc) * (Number(pr.amountCur) || 0)); }
+  // Построить график платежей по типу оплаты (части в платёжном календаре)
+  prBuildSchedule(pr) {
+    const total = Math.round(this.prAmountRub(pr));
+    const today = this.ymd(new Date());
+    const due = pr.dueDate || pr.date || today;
+    const addDays = (base, n) => { const d = this.parseISO(base) || new Date(); const x = new Date(d); x.setDate(x.getDate() + (Number(n) || 0)); return this.ymd(x); };
+    const t = pr.payType || 'full';
+    if (t === 'prepay') return [{ date: today, amount: total, kind: 'Предоплата 100%', paid: false }];
+    if (t === 'postpay') return [{ date: pr.termDays ? addDays(due, pr.termDays) : due, amount: total, kind: 'Постоплата' + (pr.termDays ? ' (' + pr.termDays + ' дн)' : ''), paid: false }];
+    if (t === 'partial') { const pp = Math.round(total * (Number(pr.prepayPct) || 50) / 100); return [{ date: today, amount: pp, kind: 'Предоплата ' + (Number(pr.prepayPct) || 50) + '%', paid: false }, { date: pr.termDays ? addDays(due, pr.termDays) : due, amount: total - pp, kind: 'Остаток', paid: false }]; }
+    return [{ date: due, amount: total, kind: 'Оплата', paid: false }];
+  }
+  prScheduleSet(idx, key, val) { const d = this.state.prDraft || this.emptyPayReq(); const sch = (d.schedule || []).slice(); sch[idx] = { ...sch[idx], [key]: (key === 'amount' ? this.impNum(val) : val) }; this.setState({ prDraft: { ...d, schedule: sch, payType: 'custom' } }); }
+  prScheduleAdd() { const d = this.state.prDraft || this.emptyPayReq(); const sch = (d.schedule && d.schedule.length ? d.schedule : this.prBuildSchedule(d)).slice(); sch.push({ date: this.ymd(new Date()), amount: 0, kind: 'Часть', paid: false }); this.setState({ prDraft: { ...d, schedule: sch, payType: 'custom' } }); }
+  prScheduleDel(idx) { const d = this.state.prDraft || this.emptyPayReq(); this.setState({ prDraft: { ...d, schedule: (d.schedule || []).filter((_, i) => i !== idx), payType: 'custom' } }); }
+  prApproverName(id) { const u = (this.state.users || []).find(x => x.id === id); return u ? u.name : '—'; }
   writePayreqs(next) {
     this.setState({ payreqs: next });
     try { this.lsSet('payreqs', JSON.stringify(next)); } catch (e) {}
@@ -8485,13 +8529,18 @@ class Component extends DCLogic {
   savePayReq(send) {
     const S = this.state, d = S.prDraft || this.emptyPayReq();
     if (!(d.supplier || '').trim()) { this.setState({ prErr: 'Укажите получателя/поставщика' }); return; }
-    if (!(Number(d.amount) > 0)) { this.setState({ prErr: 'Укажите сумму' }); return; }
+    const cur = d.currency || 'RUB';
+    const amountRub = Math.round(this.prAmountRub(d));
+    if (!(amountRub > 0)) { this.setState({ prErr: 'Укажите сумму' }); return; }
     if (send && !d.approverId) { this.setState({ prErr: 'Выберите согласующего' }); return; }
     const cu = S.currentUser;
-    const pr = { id: d.id || ('pr_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), initiator: d.initiator || (cu ? cu.name : '—'), initiatorId: d.initiatorId || (cu ? cu.id : ''), approverId: d.approverId || '', supplier: (d.supplier || '').trim(), amount: Number(d.amount) || 0, date: d.date || this.ymd(new Date()), purpose: (d.purpose || '').trim(), status: send ? 'На согласовании' : (d.status || 'Черновик'), track: d.track !== false, createdAt: d.createdAt || Date.now() };
+    const rateAccrual = Number(d.rateAccrual) || (cur === 'RUB' ? 1 : this.prEffRate(d));
+    const schedule = (d.schedule && d.schedule.length) ? d.schedule : this.prBuildSchedule(d);
+    const pr = { id: d.id || ('pr_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), direction: d.direction || 'out', initiator: d.initiator || (cu ? cu.name : '—'), initiatorId: d.initiatorId || (cu ? cu.id : ''), approverId: d.approverId || '', supplier: (d.supplier || '').trim(), currency: cur, rateMode: d.rateMode || 'cb', rate: this.prEffRate(d), rateAccrual, amountCur: Number(d.amountCur) || amountRub, amount: amountRub, date: d.date || this.ymd(new Date()), dueDate: d.dueDate || d.date || this.ymd(new Date()), payType: d.payType || 'full', prepayPct: Number(d.prepayPct) || 50, termDays: Number(d.termDays) || 0, schedule, purpose: (d.purpose || '').trim(), status: send ? 'На согласовании' : (d.status || 'Черновик'), track: d.track !== false, fromReceipt: d.fromReceipt || '', fromSale: d.fromSale || '', createdAt: d.createdAt || Date.now() };
     this.writePayreqs([pr, ...(S.payreqs || []).filter(x => x.id !== pr.id)]);
     this.setState({ prDraft: null, prErr: '' });
-    if (send) { this.postSystemNote('🧾 На согласование: платёж «' + pr.supplier + '» на ' + this.fmt(pr.amount) + ' ₽ от ' + pr.initiator + ' → согласующий ' + this.prApproverName(pr.approverId), cu ? cu.name : '—'); this.createTaskFromDocument('Заявка на платёж', { no: pr.no || pr.id.slice(-4), id: pr.id, initiator: pr.initiator, executorId: pr.approverId, supplier: pr.supplier, amount: pr.amount, status: 'на согласовании' }); this.triggerAiWorkflowNotification('Заявка на платёж', 'assign', { no: pr.no || pr.id.slice(-4), initiator: pr.initiator, approverId: pr.approverId, status: 'на согласовании' }); }
+    const curLbl = cur === 'RUB' ? '' : (' (' + this.fmt(pr.amountCur) + ' ' + this.curSym(cur) + ' × ' + (pr.rate || 0).toFixed(2) + ')');
+    if (send) { this.postSystemNote('🧾 На согласование: ' + (pr.direction === 'in' ? 'поступление от' : 'платёж') + ' «' + pr.supplier + '» на ' + this.fmt(pr.amount) + ' ₽' + curLbl + ' от ' + pr.initiator + ' → согласующий ' + this.prApproverName(pr.approverId), cu ? cu.name : '—'); this.createTaskFromDocument('Заявка на платёж', { no: pr.no || pr.id.slice(-4), id: pr.id, initiator: pr.initiator, executorId: pr.approverId, supplier: pr.supplier, amount: pr.amount, status: 'на согласовании' }); this.triggerAiWorkflowNotification('Заявка на платёж', 'assign', { no: pr.no || pr.id.slice(-4), initiator: pr.initiator, approverId: pr.approverId, status: 'на согласовании' }); }
   }
   setPayReqStatus(id, status) {
     const pr = (this.state.payreqs || []).find(x => x.id === id); if (!pr) return;
@@ -8549,14 +8598,36 @@ class Component extends DCLogic {
     const stCls = { 'Черновик': 'st-new', 'На согласовании': 'st-acc', 'Согласован': 'st-prog', 'Оплачен': 'st-done', 'Отклонён': 'st-rej' };
     const rows = (S.payreqs || []).slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).map(pr => {
       const isApprover = pr.approverId === cid; const isInit = pr.initiatorId === cid; const isAdmin = cu && cu.role === 'admin';
-      return { id: pr.id, supplier: pr.supplier || '—', amount: this.fmt(pr.amount), date: this.dmFull(pr.date), purpose: pr.purpose || '', initiator: pr.initiator || '—', approver: this.prApproverName(pr.approverId), status: pr.status, statusCls: stCls[pr.status] || 'st-new', track: !!pr.track, trackCls: pr.track ? 'prchk on' : 'prchk', toggleTrack: () => this.togglePayReqTrack(pr.id),
+      const fx = this.prFxDiff(pr);
+      const curLbl = (pr.currency && pr.currency !== 'RUB') ? (this.fmt(pr.amountCur) + ' ' + this.curSym(pr.currency) + ' · ' + (Number(pr.rate) || 0).toFixed(2) + ' ₽') : '';
+      const payTypeLbl = ({ full: 'Полная', prepay: 'Предоплата', postpay: 'Постоплата', partial: 'Частичная', custom: 'График' })[pr.payType] || '—';
+      return { id: pr.id, dir: pr.direction === 'in' ? '↘ приход' : '↗ оплата', dirCls: pr.direction === 'in' ? 'prdir in' : 'prdir out', supplier: pr.supplier || '—', amount: this.fmt(pr.amount), curLbl, hasCur: !!curLbl, payTypeLbl, parts: (pr.schedule || []).length, date: this.dmFull(pr.date), purpose: pr.purpose || '', initiator: pr.initiator || '—', approver: this.prApproverName(pr.approverId), status: pr.status, statusCls: stCls[pr.status] || 'st-new', track: !!pr.track, trackCls: pr.track ? 'prchk on' : 'prchk', toggleTrack: () => this.togglePayReqTrack(pr.id),
+        fx: fx ? ((fx > 0 ? '+' : '') + this.fmt(Math.round(fx)) + ' ₽') : '', hasFx: Math.abs(fx) >= 1, fxCls: fx > 0 ? 'prfx loss' : 'prfx gain',
         canApprove: (isApprover || isAdmin) && pr.status === 'На согласовании', approve: () => this.setPayReqStatus(pr.id, 'Согласован'), reject: () => this.setPayReqStatus(pr.id, 'Отклонён'),
         canPay: (isApprover || isAdmin || isInit) && pr.status === 'Согласован', pay: () => this.setPayReqStatus(pr.id, 'Оплачен'),
         canSend: isInit && pr.status === 'Черновик', send: () => this.setPayReqStatus(pr.id, 'На согласовании'),
+        edit: () => set({ prDraft: { ...pr, amountCur: pr.amountCur || pr.amount } }),
         canRemove: isInit || isAdmin, remove: () => this.askDelete('заявку на платёж «' + (pr.supplier || '') + '»', () => this.writePayreqs((this.state.payreqs || []).filter(x => x.id !== pr.id))) };
     });
+    const cur = d.currency || 'RUB';
+    const isRub = cur === 'RUB';
+    const effRate = this.prEffRate(d);
+    const sched = (d.schedule && d.schedule.length) ? d.schedule : this.prBuildSchedule(d);
+    const schedRows = sched.map((s, i) => ({ date: s.date || '', amount: s.amount || 0, kind: s.kind || '', onDate: (e) => this.prScheduleSet(i, 'date', e.target.value), onAmount: (e) => this.prScheduleSet(i, 'amount', e.target.value), onKind: (e) => this.prScheduleSet(i, 'kind', e.target.value), del: () => this.prScheduleDel(i) }));
+    const schedSum = sched.reduce((s, p) => s + (Number(p.amount) || 0), 0);
     return {
-      prSupplier: d.supplier || '', onPrSupplier: upd('supplier'), prAmount: d.amount || '', onPrAmount: upd('amount'), prDate: d.date || '', onPrDate: upd('date'), prPurpose: d.purpose || '', onPrPurpose: upd('purpose'),
+      prDir: d.direction || 'out', prDirOutCls: (d.direction || 'out') === 'out' ? 'segon' : 'seg', prDirInCls: d.direction === 'in' ? 'segon' : 'seg',
+      setPrDirOut: () => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), direction: 'out' } }), setPrDirIn: () => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), direction: 'in' } }),
+      prSupplier: d.supplier || '', onPrSupplier: upd('supplier'), prDate: d.date || '', onPrDate: upd('date'), prPurpose: d.purpose || '', onPrPurpose: upd('purpose'),
+      prCurrency: cur, onPrCurrency: (e) => { const c = e.target.value; set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), currency: c, rate: this.cbRate(c), rateAccrual: this.cbRate(c) }, prErr: '' }); }, prCurOpts: ['RUB', 'EUR', 'USD', 'CNY'].map(c => ({ v: c, label: c + ' ' + this.curSym(c) })),
+      prIsRub: isRub, prCurAmount: d.amountCur || '', onPrCurAmount: upd('amountCur'), prAmount: d.amount || '', onPrAmount: upd('amount'),
+      prRateMode: d.rateMode || 'cb', onPrRateMode: (e) => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), rateMode: e.target.value, rate: e.target.value === 'cb' ? this.cbRate(cur) : (this.state.prDraft || {}).rate || this.cbRate(cur) }, prErr: '' }), prRateModeOpts: [['cb', 'Курс ЦБ'], ['fixed', 'Фиксированный'], ['manual', 'Ручной']].map(x => ({ v: x[0], label: x[1] })),
+      prRate: d.rate || effRate || '', onPrRate: upd('rate'), prRateAccrual: d.rateAccrual || '', onPrRateAccrual: upd('rateAccrual'),
+      prAmountRub: this.fmt(Math.round(this.prAmountRub(d))), prCbRate: this.cbRate(cur).toFixed(4),
+      prPayType: d.payType || 'full', onPrPayType: (e) => { const t = e.target.value; set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), payType: t, schedule: [] }, prErr: '' }); }, prPayTypeOpts: [['full', 'Полная оплата'], ['prepay', 'Предоплата 100%'], ['postpay', 'Постоплата / отсрочка'], ['partial', 'Частичная предоплата']].map(x => ({ v: x[0], label: x[1] })),
+      prDueDate: d.dueDate || '', onPrDueDate: upd('dueDate'), prPrepayPct: d.prepayPct || 50, onPrPrepayPct: upd('prepayPct'), prTermDays: d.termDays || 0, onPrTermDays: upd('termDays'),
+      prShowPartial: (d.payType === 'partial'), prShowTerm: (d.payType === 'postpay' || d.payType === 'partial'),
+      prSchedule: schedRows, prScheduleAdd: () => this.prScheduleAdd(), prSchedSum: this.fmt(Math.round(schedSum)),
       prApprover: d.approverId || '', onPrApprover: upd('approverId'), prApproverOpts: users.map(u => ({ v: u.id, label: u.name })),
       prTrack: d.track !== false ? 'prchk on' : 'prchk', togglePrTrack: () => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), track: !((this.state.prDraft || this.emptyPayReq()).track !== false) } }),
       prSave: () => this.savePayReq(false), prSend: () => this.savePayReq(true), prErr: S.prErr || '', prHasErr: !!S.prErr,
@@ -8580,11 +8651,23 @@ class Component extends DCLogic {
       if (Array.isArray(sp) && sp.length) sp.forEach((part, i) => pays.push({ id: p.id, part: i, supplier: p.supplier || '—', material: p.material || '—', date: part.date, amount: Number(part.amount) || 0, due }));
       else pays.push({ id: p.id, part: -1, supplier: p.supplier || '—', material: p.material || '—', date: moves[p.id] || baseDate, amount: due, due });
     }
+    // Заявки на платёж: части графика → отдельные оттоки/притоки по датам (мультивалюта в ₽)
+    const inExtra = {};
+    for (const pr of (S.payreqs || [])) {
+      if (/отклонён|оплачен/i.test(String(pr.status || ''))) continue;
+      const sched = (pr.schedule && pr.schedule.length) ? pr.schedule : [{ date: pr.dueDate || pr.date, amount: Number(pr.amount) || 0, kind: 'Оплата' }];
+      sched.forEach((part, i) => {
+        const amt = Number(part.amount) || 0; if (amt <= 0 || !part.date) return;
+        if (pr.direction === 'in') { inExtra[part.date] = (inExtra[part.date] || 0) + amt; }
+        else pays.push({ id: pr.id, part: 1000 + i, supplier: pr.supplier || '—', material: (part.kind || 'платёж') + (pr.currency && pr.currency !== 'RUB' ? (' · ' + this.curSym(pr.currency)) : ''), date: part.date, amount: amt, due: amt });
+      });
+    }
     const dayMap = {}; let overdueSum = 0;
     for (const pay of pays) { (dayMap[pay.date] = dayMap[pay.date] || []).push(pay); if (pay.date < todayStr) overdueSum += pay.amount; }
     const WD = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
     let bal = Number(S.cashStart) || 0; const days = []; let minBal = bal; let totalOut = 0;
     const inMap = this.incomingByDay();
+    for (const k in inExtra) inMap[k] = (inMap[k] || 0) + inExtra[k];
     // просрочка садится на сегодня
     for (let i = 0; i < 30; i++) {
       const d = new Date(todayMs + i * 86400000); const ds = this.ymd(d);
@@ -8941,17 +9024,18 @@ class Component extends DCLogic {
   payreqFromReceipt(receiptId) {
     const r = (this.state.receipts || []).find(x => x.id === receiptId); if (!r) return;
     const cu = this.state.currentUser;
-    const tc = (r.lines || []).reduce((s, l) => s + (Number(l.qty) || 0) * (Number(l.price) || 0), 0);
-    const amountRub = Math.round(tc * (Number(r.rate) || 1));
+    const cur = r.currency || 'RUB';
+    const rrate = Number(r.rate) || 1;
+    const amountCur = (r.lines || []).reduce((s, l) => s + (Number(l.qty) || 0) * (Number(l.price) || 0), 0);
+    const amountRub = Math.round(amountCur * rrate);
     const items = (r.lines || []).map(l => l.material).filter(Boolean).slice(0, 3).join(', ');
-    const draft = {
-      id: '', initiator: cu ? cu.name : '', initiatorId: cu ? cu.id : '', approverId: '',
-      supplier: r.supplier || '', amount: amountRub, date: this.ymd(new Date()),
+    const base = { id: '', direction: 'out', initiator: cu ? cu.name : '', initiatorId: cu ? cu.id : '', approverId: '',
+      supplier: r.supplier || '', currency: cur, rateMode: (cur === 'RUB' ? 'cb' : 'manual'), rate: rrate, rateAccrual: rrate, amountCur: amountCur, amount: amountRub, date: r.date || this.ymd(new Date()), dueDate: r.date || this.ymd(new Date()), payType: 'full', schedule: [],
       purpose: 'Оплата поступления ТМЦ' + (r.no ? ' № ' + r.no : '') + ' от ' + this.dmFull(r.date) + (items ? ' (' + items + (((r.lines || []).length > 3) ? '…' : '') + ')' : ''),
-      no: '', status: 'Черновик', track: true, fromReceipt: r.id,
-    };
+      no: '', status: 'Черновик', track: true, fromReceipt: r.id };
+    const draft = { ...base, schedule: this.prBuildSchedule(base) };
     this.setState({ tab: 'treas30', prDraft: draft, prErr: '' });
-    this.pushRecalcToast('🧾 Счёт на оплату для «' + (r.supplier || '') + '» на ' + this.fmt(amountRub) + ' ₽ — проверьте и отправьте на согласование.');
+    this.pushRecalcToast('🧾 Счёт на оплату для «' + (r.supplier || '') + '» на ' + this.fmt(amountRub) + ' ₽ — выберите вид оплаты и сроки, отправьте на согласование.');
   }
   buildReceipts() {
     const S = this.state, set = (p) => this.setState(p);
@@ -9009,7 +9093,10 @@ class Component extends DCLogic {
     const name = (d.name || '').trim();
     if (!name) { this.setState({ cpErr: 'Введите название контрагента' }); return; }
     const pl = (d.priceList || []).filter(p => (p.material || '').trim()).map(p => ({ material: (p.material || '').trim(), price: Number(p.price) || 0 }));
-    const cp = { id: d.id || ('cp_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), name: name.slice(0, 160), inn: (d.inn || '').trim(), kpp: (d.kpp || '').trim(), terms: Number(d.terms) || 0, limit: Number(d.limit) || 0, contacts: (d.contacts || '').trim(), priceList: pl, createdAt: d.createdAt || Date.now() };
+    const inn = (d.inn || '').trim();
+    // Контроль уникальности по ИНН: запрет дублей контрагента с тем же ИНН
+    if (inn) { const dup = (S.cparties || []).find(x => x.id !== d.id && String(x.inn || '').trim() === inn); if (dup) { this.setState({ cpErr: 'Контрагент с ИНН ' + inn + ' уже есть: «' + dup.name + '». Дубль по ИНН запрещён.' }); return; } }
+    const cp = { id: d.id || ('cp_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), name: name.slice(0, 160), inn, kpp: (d.kpp || '').trim(), terms: Number(d.terms) || 0, limit: Number(d.limit) || 0, contacts: (d.contacts || '').trim(), priceList: pl, history: d.history || [], roles: d.roles || [], createdAt: d.createdAt || Date.now() };
     const list = d.id ? (S.cparties || []).map(x => x.id === d.id ? cp : x) : [cp, ...(S.cparties || [])];
     this.writeCparties(list);
     this.setState({ cpDraft: null, cpErr: '' });
