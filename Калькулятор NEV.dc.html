@@ -727,6 +727,20 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .impfile{display:flex;align-items:center;gap:10px;border:1px solid #e7e4e0;border-radius:9px;padding:8px 12px;font-size:12.5px}
 .impfile.ok{border-left:3px solid #2a8a4a}
 .impfile.err{border-left:3px solid #c0322b;background:#fdf6f5}
+.impfile{display:block}
+.impfhd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.impdochd{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.impfg{display:flex;flex-direction:column;gap:3px;flex:1;min-width:130px}
+.impfg.sm{flex:0 0 90px;min-width:90px}
+.impfg span{font-size:10.5px;font-weight:700;color:#8a8782;text-transform:uppercase;letter-spacing:.02em}
+.impfg .inp{height:34px}
+.imptbl{border:1px solid #e7e4e0;border-radius:9px;overflow:hidden}
+.imptblhd,.imptblrow{display:grid;grid-template-columns:2.4fr 1fr 0.9fr 0.9fr 1fr auto;gap:6px;align-items:center;padding:6px 9px}
+.imptblhd{background:#f6f3ef;font-size:10px;font-weight:700;text-transform:uppercase;color:#8a8782}
+.imptblrow{border-top:1px solid #f0ece6}
+.imptblrow .inp{height:30px;font-size:12px;padding:3px 7px}
+.impsumc{font-size:12px;text-align:right;color:#1F4E78;font-weight:600}
+.imptblfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;background:#fafafa;border-top:1px solid #f0ece6}
 .impfn{font-weight:600;color:#2b2926;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .impdoc{font-size:10px;font-weight:800;color:#5b3fa0;background:#efe9fa;border-radius:20px;padding:2px 8px;white-space:nowrap}
 .impsum{font-size:11.5px;color:#56534f;white-space:nowrap}
@@ -3302,7 +3316,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="card"><div class="sec">Журнал поступлений · {{ recCount }}</div>
 <sc-if value="{{ recEmpty }}" hint-placeholder-val=""><div class="hint">Пока нет документов поступления.</div></sc-if>
 <div class="scroll"><table><thead><tr><th class="l">№</th><th class="l">Дата</th><th class="l">Поставщик</th><th class="l">Рынок</th><th>Позиций</th><th>Сумма</th><th>В ₽</th><th class="l"></th></tr></thead>
-<tbody><sc-for list="{{ recJournal }}" as="r" hint-placeholder-count="2"><tr><td class="l mono">{{ r.no }}</td><td class="l mono">{{ r.date }}</td><td class="l nm">{{ r.supplier }}</td><td class="l">{{ r.market }}</td><td class="mono">{{ r.lines }}</td><td class="mono">{{ r.sumCur }} {{ r.currency }}</td><td class="mono">{{ r.sumRub }}</td><td class="l"><button class="ulink del" onClick="{{ r.remove }}">Удалить</button></td></tr></sc-for></tbody></table></div>
+<tbody><sc-for list="{{ recJournal }}" as="r" hint-placeholder-count="2"><tr><td class="l mono">{{ r.no }}</td><td class="l mono">{{ r.date }}</td><td class="l nm">{{ r.supplier }}</td><td class="l">{{ r.market }}</td><td class="mono">{{ r.lines }}</td><td class="mono">{{ r.sumCur }} {{ r.currency }}</td><td class="mono">{{ r.sumRub }}</td><td class="l"><button class="ulink" onClick="{{ r.makeBill }}">🧾 Счёт на оплату</button> <button class="ulink del" onClick="{{ r.remove }}">Удалить</button></td></tr></sc-for></tbody></table></div>
 </div>
 </sc-if>
 
@@ -3644,7 +3658,15 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ impAiOn }}" hint-placeholder-val=""><div class="impai">🤖 Внешний ИИ подключён — нераспознанные документы распознаются автоматически</div></sc-if>
 </div>
 <sc-if value="{{ impBusy }}" hint-placeholder-val=""><div class="banner aifb"><span class="aifbic">🤖</span><span>Распознаю документы…</span></div></sc-if>
-<sc-if value="{{ impHasFiles }}" hint-placeholder-val=""><div class="impfiles"><sc-for list="{{ impFiles }}" as="f" hint-placeholder-count="2"><div class="{{ f.cls }}"><span class="impfn">{{ f.name }}</span><sc-if value="{{ f.docLabel }}" hint-placeholder-val=""><span class="impdoc">{{ f.docLabel }}</span></sc-if><span class="impsum">{{ f.summary }}</span><sc-if value="{{ f.via }}" hint-placeholder-val=""><span class="impvia">{{ f.via }}</span></sc-if><sc-if value="{{ f.err }}" hint-placeholder-val=""><span class="imperr">{{ f.err }}</span></sc-if><button class="tlink del" onClick="{{ f.remove }}">✕</button></div></sc-for></div></sc-if>
+<sc-if value="{{ impHasFiles }}" hint-placeholder-val=""><div class="impfiles"><sc-for list="{{ impFiles }}" as="f" hint-placeholder-count="1"><div class="{{ f.cls }}">
+<div class="impfhd"><span class="impfn">📄 {{ f.name }}</span><sc-if value="{{ f.docLabel }}" hint-placeholder-val=""><span class="impdoc">{{ f.docLabel }}</span></sc-if><sc-if value="{{ f.via }}" hint-placeholder-val=""><span class="impvia">{{ f.via }}</span></sc-if><sc-if value="{{ f.err }}" hint-placeholder-val=""><span class="imperr">{{ f.err }}</span></sc-if><button class="tlink del" onClick="{{ f.remove }}">✕ файл</button></div>
+<sc-if value="{{ f.hasDoc }}" hint-placeholder-val="">
+<div class="impdochd"><label class="impfg"><span>Дата документа</span><input class="inp" type="date" value="{{ f.date }}" onInput="{{ f.onDate }}"></label><label class="impfg"><span>{{ impPartyLabel }}</span><input class="inp" value="{{ f.party }}" onInput="{{ f.onParty }}" placeholder="будет создан, если новый"></label><label class="impfg sm"><span>№ док.</span><input class="inp" value="{{ f.no }}" onInput="{{ f.onNo }}"></label></div>
+<sc-if value="{{ f.isSimple }}" hint-placeholder-val="x"><div class="impdochd"><sc-if value="{{ f.purpose }}" hint-placeholder-val=""><label class="impfg"><span>Назначение / маршрут</span><input class="inp" value="{{ f.purpose }}" onInput="{{ f.onPurpose }}"></label></sc-if></div></sc-if>
+<sc-if value="{{ f.isSimple }}" hint-placeholder-val=""><div class="impdochd"><label class="impfg"><span>Сумма ₽</span><input class="inp num" value="{{ f.amount }}" onInput="{{ f.onAmount }}"></label><label class="impfg"><span>Маршрут</span><input class="inp" value="{{ f.route }}" onInput="{{ f.onRoute }}"></label><label class="impfg"><span>Фрахт ₽</span><input class="inp num" value="{{ f.freight }}" onInput="{{ f.onFreight }}"></label></div></sc-if>
+<sc-if value="{{ f.isSimple }}" hint-placeholder-val="x"><div class="imptbl"><div class="imptblhd"><span>{{ impNameLabel }}</span><span>Артикул</span><span>Кол-во</span><span>Цена</span><span>Сумма</span><span></span></div><sc-for list="{{ f.lines }}" as="l" hint-placeholder-count="2"><div class="imptblrow"><input class="inp" value="{{ l.name }}" onInput="{{ l.onName }}" placeholder="наименование"><input class="inp" value="{{ l.article }}" onInput="{{ l.onArticle }}" placeholder="арт."><input class="inp num" value="{{ l.qty }}" onInput="{{ l.onQty }}"><input class="inp num" value="{{ l.price }}" onInput="{{ l.onPrice }}"><span class="mono impsumc">{{ l.sum }}</span><button class="tlink del" onClick="{{ l.del }}">✕</button></div></sc-for><div class="imptblfoot"><button class="btn xs" onClick="{{ f.addLine }}">+ строка</button><span class="hint">Позиций: {{ f.lineCount }} · Итого: {{ f.totalFmt }} ₽</span></div></div></sc-if>
+</sc-if>
+</div></sc-for></div></sc-if>
 <sc-if value="{{ impIsVed }}" hint-placeholder-val=""><div class="impved"><div class="impvedt">Сборка Landed Cost (ВЭД-пакет)</div><div class="impvedgrid"><div><span>Инвойс</span><b>{{ impVedInvoice }}</b></div><div><span>Таможня (ТД)</span><b>{{ impVedCustoms }}</b></div><div><span>Брокер/экспедитор</span><b>{{ impVedBroker }}</b></div><div><span>Фрахт/перевозчик</span><b>{{ impVedFreight }}</b></div></div><div class="impvedtot">Полная Landed Cost: <b>{{ impVedLanded }} ₽</b></div></div></sc-if>
 <sc-if value="{{ impErr }}" hint-placeholder-val=""><div class="banner err">{{ impErr }}</div></sc-if>
 <sc-if value="{{ impDoneMsg }}" hint-placeholder-val=""><div class="banner ok">{{ impDoneMsg }}</div></sc-if>
@@ -8698,112 +8720,172 @@ class Component extends DCLogic {
   }
   _impPush(entry) { const imp = this.state.imp; if (!imp) return; this.setState({ imp: { ...imp, files: [...imp.files, entry] } }); }
   impRemoveFile(idx) { const imp = this.state.imp; if (!imp) return; this.setState({ imp: { ...imp, files: imp.files.filter((_, i) => i !== idx), committed: false } }); }
-  // Преобразовать распознанные строки в записи целевого модуля
+  // Разобрать дату из ячейки в формат YYYY-MM-DD (dd.mm.yyyy, yyyy-mm-dd, Excel-serial)
+  impDate(v) {
+    if (v == null) return '';
+    const s = String(v).trim(); if (!s) return '';
+    let m = s.match(/^(\d{4})[-./](\d{1,2})[-./](\d{1,2})/); if (m) return m[1] + '-' + ('0' + m[2]).slice(-2) + '-' + ('0' + m[3]).slice(-2);
+    m = s.match(/^(\d{1,2})[-./](\d{1,2})[-./](\d{2,4})/); if (m) { let y = m[3]; if (y.length === 2) y = '20' + y; return y + '-' + ('0' + m[2]).slice(-2) + '-' + ('0' + m[1]).slice(-2); }
+    if (/^\d{4,5}$/.test(s)) { const n = +s; if (n > 30000 && n < 90000) { const dt = new Date(Date.UTC(1899, 11, 30 + n)); return dt.toISOString().slice(0, 10); } }
+    return '';
+  }
+  // Самая частая непустая строка по колонке (для шапки: клиент/поставщик)
+  impTopValue(rows, idx) { if (idx == null || idx < 0) return ''; const cnt = {}; for (const r of rows) { const v = r[idx] == null ? '' : String(r[idx]).trim(); if (v) cnt[v] = (cnt[v] || 0) + 1; } let best = '', n = 0; for (const k in cnt) if (cnt[k] > n) { n = cnt[k]; best = k; } return best; }
+  impFirstDate(rows, idx) { if (idx == null || idx < 0) return ''; for (const r of rows) { const dd = this.impDate(r[idx]); if (dd) return dd; } return ''; }
+  // Доп. поиск колонки по синонимам прямо в заголовках (усиление распознавания)
+  impCol(headers, syns) { const H = (headers || []).map(h => this.dlNorm(h)); for (let i = 0; i < H.length; i++) if (syns.some(s => H[i].indexOf(s) >= 0)) return i; return -1; }
+  // Преобразовать распознанные строки в РЕДАКТИРУЕМЫЙ документ целевого модуля
   impConvert(target, d, map, file) {
     const rows = (d.rows || []).filter(r => r && r.some(c => c != null && String(c).trim()));
     const baseName = (file.name || '').replace(/\.[^.]+$/, '');
+    const H = d.headers || [];
     const today = this.ymd(new Date());
+    // усиление маппинга по заголовкам (если ядро не нашло)
+    if (map.qty == null) { const i = this.impCol(H, ['кол-во', 'количеств', 'объ', 'вес', 'масса', 'qty', 'нетто']); if (i >= 0) map.qty = i; }
+    if (map.price == null) { const i = this.impCol(H, ['цена', 'price', 'стоимость ед', 'цена за']); if (i >= 0) map.price = i; }
+    if (map.sum == null) { const i = this.impCol(H, ['сумма', 'итого', 'стоимост', 'total', 'amount', 'к оплате']); if (i >= 0) map.sum = i; }
+    if (map.date == null) { const i = this.impCol(H, ['дата', 'date', 'период']); if (i >= 0) map.date = i; }
+    if (map.nomen == null) { const i = this.impCol(H, ['номенклат', 'товар', 'продукт', 'материал', 'сырь', 'наименован', 'марка', 'издели']); if (i >= 0) map.nomen = i; }
+    if (map.article == null) { const i = this.impCol(H, ['артикул', 'код', 'article', 'sku', 'арт']); if (i >= 0) map.article = i; }
+    if (map.client == null) { const i = this.impCol(H, ['клиент', 'покупател', 'заказчик', 'грузополучат']); if (i >= 0) map.client = i; }
+    if (map.supplier == null) { const i = this.impCol(H, ['поставщик', 'продавец', 'контрагент', 'грузоотправ', 'vendor', 'supplier']); if (i >= 0) map.supplier = i; }
+    if (map.inn == null) { const i = this.impCol(H, ['инн']); if (i >= 0) map.inn = i; }
+    const lineOf = (r) => { const name = this.impCell(r, map, 'nomen') || ''; const qty = this.impNum(this.impCell(r, map, 'qty')); let price = this.impNum(this.impCell(r, map, 'price')); const sum = this.impNum(this.impCell(r, map, 'sum')); if (!price && qty && sum) price = this.excelRound ? this.excelRound(sum / qty, 4) : (sum / qty); return { name, article: this.impCell(r, map, 'article'), qty, price }; };
+    const dateF = this.impFirstDate(rows, map.date) || today;
     if (target === 'sales') {
-      const records = rows.map(r => {
-        const client = this.impCell(r, map, 'client') || this.impCell(r, map, 'nomen') || '';
-        const product = this.impCell(r, map, 'nomen') || client;
-        const qty = this.impNum(this.impCell(r, map, 'qty'));
-        let price = this.impNum(this.impCell(r, map, 'price'));
-        const sum = this.impNum(this.impCell(r, map, 'sum'));
-        if (!price && qty && sum) price = sum / qty;
-        return { client, product, qty, price, date: this.impCell(r, map, 'date') || today };
-      }).filter(x => x.client && (x.qty || x.price));
-      return { records, recType: 'sales', summary: records.length + ' отгрузок' };
+      const party = this.impTopValue(rows, map.client) || this.impTopValue(rows, map.supplier) || baseName;
+      const lines = rows.map(lineOf).filter(l => l.name || l.qty || l.price);
+      return { recType: 'sales', doc: { date: dateF, party, no: '', lines: lines.length ? lines : [{ name: '', article: '', qty: 0, price: 0 }] }, summary: 'Реализация · ' + party + ' · ' + lines.length + ' поз.' };
     }
     if (target === 'receipts' || target === 'purchases' || target === 'ved') {
-      const lines = rows.map(r => {
-        const material = this.impCell(r, map, 'nomen') || '';
-        const qty = this.impNum(this.impCell(r, map, 'qty'));
-        let price = this.impNum(this.impCell(r, map, 'price'));
-        const sum = this.impNum(this.impCell(r, map, 'sum'));
-        if (!price && qty && sum) price = sum / qty;
-        return { material, article: this.impCell(r, map, 'article'), qty, price };
-      }).filter(x => x.material && (x.qty || x.price));
-      const supplier = this.impCell(rows[0] || [], map, 'supplier') || baseName;
-      if (target === 'ved') { const dt = this.impVedDocType(file.name, d.headers); const total = lines.reduce((s, l) => s + (l.qty && l.price ? l.qty * l.price : 0), 0) || rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'sum')), 0); return { recType: 'ved', docType: dt, supplier, lines, total, summary: dt.label + ' · ' + this.fmt(total) }; }
-      return { recType: target, supplier, lines, summary: (supplier ? supplier + ' · ' : '') + lines.length + ' позиц.' };
+      const party = this.impTopValue(rows, map.supplier) || baseName;
+      const inn = this.impTopValue(rows, map.inn) || '';
+      const lines = rows.map(lineOf).filter(l => l.name || l.qty || l.price);
+      const doc = { date: dateF, party, inn, no: '', market: (target === 'ved' ? 'Внешний' : 'Внутренний'), lines: lines.length ? lines : [{ name: '', article: '', qty: 0, price: 0 }] };
+      if (target === 'ved') { const dt = this.impVedDocType(file.name, H); const total = lines.reduce((s, l) => s + (l.qty && l.price ? l.qty * l.price : 0), 0) || rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'sum')), 0); return { recType: 'ved', docType: dt, doc, total, summary: dt.label + ' · ' + this.fmt(total) }; }
+      return { recType: target, doc, summary: party + ' · ' + lines.length + ' поз.' };
     }
     if (target === 'payreq') {
-      const records = rows.map(r => {
-        const supplier = this.impCell(r, map, 'supplier') || this.impCell(r, map, 'client') || baseName;
-        let amount = this.impNum(this.impCell(r, map, 'sum'));
-        if (!amount) amount = this.impNum(this.impCell(r, map, 'price')) * (this.impNum(this.impCell(r, map, 'qty')) || 1);
-        return { supplier, amount, purpose: this.impCell(r, map, 'nomen') || ('Счёт ' + baseName), date: this.impCell(r, map, 'date') || today };
-      }).filter(x => x.supplier && x.amount);
-      // если файл — один счёт (нет суммовой колонки) → одна заявка на общую сумму
-      if (!records.length) { const total = rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'price')) * (this.impNum(this.impCell(r, map, 'qty')) || 1), 0); records.push({ supplier: baseName, amount: total, purpose: 'Счёт ' + baseName, date: today }); }
-      return { records, recType: 'payreq', summary: records.length + ' счёт(ов)' };
+      const party = this.impTopValue(rows, map.supplier) || this.impTopValue(rows, map.client) || baseName;
+      let amount = rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'sum')), 0);
+      if (!amount) amount = rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'price')) * (this.impNum(this.impCell(r, map, 'qty')) || 1), 0);
+      return { recType: 'payreq', doc: { date: dateF, party, amount, purpose: 'Счёт ' + baseName }, summary: party + ' · ' + this.fmt(amount) + ' ₽' };
     }
     if (target === 'logi') {
-      const records = rows.map(r => ({ route: this.impCell(r, map, 'nomen') || baseName, carrier: this.impCell(r, map, 'supplier') || '', freight: this.impNum(this.impCell(r, map, 'sum')) || this.impNum(this.impCell(r, map, 'price')), date: this.impCell(r, map, 'date') || today })).filter(x => x.route);
-      if (!records.length) records.push({ route: baseName, carrier: '', freight: 0, date: today });
-      return { records, recType: 'logi', summary: records.length + ' поручение(й)' };
+      const carrier = this.impTopValue(rows, map.supplier) || '';
+      const route = this.impTopValue(rows, map.nomen) || baseName;
+      const freight = rows.reduce((s, r) => s + (this.impNum(this.impCell(r, map, 'sum')) || this.impNum(this.impCell(r, map, 'price'))), 0);
+      return { recType: 'logi', doc: { date: dateF, party: carrier, route, freight }, summary: route + ' · ' + this.fmt(freight) + ' ₽' };
     }
-    return { records: [], recType: target, summary: '' };
+    return { recType: target, doc: { date: today, party: baseName, lines: [] }, summary: '' };
   }
+  // Редактирование распознанного документа в окне импорта
+  impEditDoc(idx, field, val) { const imp = this.state.imp; if (!imp) return; const files = imp.files.slice(); const f = { ...files[idx] }; f.doc = { ...f.doc, [field]: val }; files[idx] = f; this.setState({ imp: { ...imp, files, committed: false } }); }
+  impEditLine(idx, li, field, val) { const imp = this.state.imp; if (!imp) return; const files = imp.files.slice(); const f = { ...files[idx] }; const lines = (f.doc.lines || []).slice(); lines[li] = { ...lines[li], [field]: (field === 'name' || field === 'article') ? val : this.impNum(val) }; f.doc = { ...f.doc, lines }; files[idx] = f; this.setState({ imp: { ...imp, files, committed: false } }); }
+  impAddLine(idx) { const imp = this.state.imp; if (!imp) return; const files = imp.files.slice(); const f = { ...files[idx] }; f.doc = { ...f.doc, lines: [...(f.doc.lines || []), { name: '', article: '', qty: 0, price: 0 }] }; files[idx] = f; this.setState({ imp: { ...imp, files, committed: false } }); }
+  impDelLine(idx, li) { const imp = this.state.imp; if (!imp) return; const files = imp.files.slice(); const f = { ...files[idx] }; f.doc = { ...f.doc, lines: (f.doc.lines || []).filter((_, j) => j !== li) }; files[idx] = f; this.setState({ imp: { ...imp, files, committed: false } }); }
   // Итоговые цифры пакета ВЭД (Landed Cost)
   impVedTotals() {
     const imp = this.state.imp; if (!imp) return null;
     const agg = { invoice: 0, customs: 0, broker: 0, freight: 0, other: 0, supplier: '', lines: [] };
-    for (const f of imp.files) { if (f.status !== 'ok' || f.recType !== 'ved') continue; const k = f.docType ? f.docType.key : 'other'; agg[k] = (agg[k] || 0) + (f.total || 0); if (k === 'invoice') { agg.supplier = agg.supplier || f.supplier; agg.lines = agg.lines.concat(f.lines || []); } }
+    for (const f of imp.files) { if (f.status !== 'ok' || f.recType !== 'ved') continue; const k = f.docType ? f.docType.key : 'other'; agg[k] = (agg[k] || 0) + (f.total || 0); if (k === 'invoice') { agg.supplier = agg.supplier || (f.doc && f.doc.party); agg.lines = agg.lines.concat((f.doc && f.doc.lines) || []); } }
     agg.landed = agg.invoice + agg.customs + agg.broker + agg.freight + agg.other;
     return agg;
   }
-  // Применить распознанное во все целевые хранилища
+  // Автосоздание/обновление контрагента + накопление статистики (что/когда/по какой цене)
+  impEnsureCp(name, inn, lines, type, date) {
+    name = (name || '').trim(); if (!name || name.length < 2) return;
+    const list = (this.state.cparties || []).slice();
+    let cp = list.find(c => this.norm(c.name) === this.norm(name) || (inn && c.inn && String(c.inn) === String(inn)));
+    let created = false;
+    if (!cp) { cp = { id: 'cp_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), name: name.slice(0, 160), inn: inn || '', kpp: '', terms: '', limit: '', contacts: '', priceList: [], history: [], roles: [] }; list.unshift(cp); created = true; }
+    else { cp = { ...cp }; const i = list.findIndex(c => c.id === cp.id); list[i] = cp; if (inn && !cp.inn) cp.inn = inn; }
+    cp.roles = Array.from(new Set([...(cp.roles || []), type === 'sell' ? 'client' : 'supplier']));
+    cp.history = (cp.history || []).slice();
+    cp.priceList = (cp.priceList || []).slice();
+    for (const l of (lines || [])) { if (!l.name) continue; if (l.qty || l.price) cp.history.push({ date: date || this.ymd(new Date()), material: l.name, qty: l.qty || 0, price: l.price || 0, type }); const pi = cp.priceList.findIndex(p => this.norm(p.material) === this.norm(l.name)); if (l.price) { if (pi >= 0) cp.priceList[pi] = { ...cp.priceList[pi], price: l.price } ; else cp.priceList.push({ material: l.name, price: l.price }); } }
+    cp.history = cp.history.slice(-200);
+    this.writeCparties(list);
+    return created;
+  }
+  // Применить распознанные документы в целевые хранилища
   impCommit() {
     const imp = this.state.imp; if (!imp) return;
-    const ok = imp.files.filter(f => f.status === 'ok'); if (!ok.length) { this.setState({ imp: { ...imp, err: 'Нет распознанных документов.' } }); return; }
-    const t = imp.target; let msg = ''; const co = this._co();
+    const ok = imp.files.filter(f => f.status === 'ok' && f.doc); if (!ok.length) { this.setState({ imp: { ...imp, err: 'Нет распознанных документов.' } }); return; }
+    const t = imp.target; let msg = ''; let newCp = 0;
     if (t === 'sales') {
-      const recs = ok.flatMap(f => f.records || []);
-      const sales = recs.map((x, i) => ({ id: 'sl_' + Date.now().toString(36) + i.toString(36), no: '', date: x.date, client: x.client, product: x.product, qty: x.qty, price: x.price, currency: 'RUB', rate: 1, createdAt: Date.now() }));
-      this.writeSales([...sales, ...(this.state.sales || [])]);
-      this.scheduleAutoRecalc('NEW_SALES'); msg = 'Внесено отгрузок: ' + sales.length;
+      const sales = []; let i = 0;
+      for (const f of ok) { const dc = f.doc; if (this.impEnsureCp(dc.party, '', dc.lines, 'sell', dc.date)) newCp++; for (const l of (dc.lines || [])) { if (!(l.name) && !(l.qty) && !(l.price)) continue; sales.push({ id: 'sl_' + Date.now().toString(36) + (i++).toString(36), no: dc.no || '', date: dc.date, client: dc.party, product: l.name, qty: l.qty || 0, price: l.price || 0, currency: 'RUB', rate: 1, createdAt: Date.now() }); } }
+      this.writeSales([...sales, ...(this.state.sales || [])]); this.scheduleAutoRecalc('NEW_SALES'); msg = 'Внесено строк реализации: ' + sales.length;
     } else if (t === 'receipts') {
-      let cnt = 0; for (const f of ok) { const r = { id: 'rc_' + Date.now().toString(36) + (cnt++).toString(36), no: '', date: this.ymd(new Date()), supplier: f.supplier || '', inn: '', currency: 'RUB', rate: 1, market: 'Внутренний', lines: (f.lines || []).map(l => ({ material: l.material, article: l.article || '', qty: l.qty, price: l.price })), createdAt: Date.now() }; this.writeReceipts([r, ...(this.state.receipts || [])]); this.applyReceiptStock(r); }
+      let cnt = 0; for (const f of ok) { const dc = f.doc; if (this.impEnsureCp(dc.party, dc.inn, dc.lines, 'buy', dc.date)) newCp++; const r = { id: 'rc_' + Date.now().toString(36) + (cnt++).toString(36), no: dc.no || '', date: dc.date, supplier: dc.party, inn: dc.inn || '', currency: 'RUB', rate: 1, market: dc.market || 'Внутренний', lines: (dc.lines || []).filter(l => l.name || l.qty).map(l => ({ material: l.name, article: l.article || '', qty: l.qty, price: l.price })), createdAt: Date.now() }; this.writeReceipts([r, ...(this.state.receipts || [])]); this.applyReceiptStock(r); }
       this.scheduleAutoRecalc('NEW_RECEIPT'); msg = 'Внесено поступлений: ' + cnt;
     } else if (t === 'purchases') {
-      let cnt = 0; const add = []; for (const f of ok) for (const l of (f.lines || [])) { add.push({ id: 'p_' + Date.now().toString(36) + (cnt++).toString(36), no: String(this.nextNo ? this.nextNo(this.state.purchases) : (cnt)), reqDate: this.ymd(new Date()), orderDate: '', arriveDate: '', supplier: f.supplier || '', material: l.material, qty: l.qty || 0, priceEur: l.price || 0, currency: '₽', curRate: 0, transport: 0, customs: 0, prepay: 0, status: 'новая', approvalStatus: 'на рассмотрении', priceApproval: '', market: 'Внутренний', comment: 'Импорт из файла', initiator: this.state.currentUser ? this.state.currentUser.name : '', paid: 0 }); }
+      let cnt = 0; const add = []; for (const f of ok) { const dc = f.doc; if (this.impEnsureCp(dc.party, dc.inn, dc.lines, 'buy', dc.date)) newCp++; for (const l of (dc.lines || [])) { if (!l.name) continue; add.push({ id: 'p_' + Date.now().toString(36) + (cnt++).toString(36), no: String(this.nextNo ? this.nextNo(this.state.purchases) : (cnt)), reqDate: dc.date, orderDate: '', arriveDate: '', supplier: dc.party, material: l.name, qty: l.qty || 0, priceEur: l.price || 0, currency: '₽', curRate: 0, transport: 0, customs: 0, prepay: 0, status: 'новая', approvalStatus: 'на рассмотрении', priceApproval: '', market: dc.market || 'Внутренний', comment: 'Импорт из файла', initiator: this.state.currentUser ? this.state.currentUser.name : '', paid: 0 }); } }
       this.setState({ purchases: [...(this.state.purchases || []), ...add] }); try { this.lsSet('purchases', JSON.stringify([...(this.state.purchases || []), ...add])); } catch (e) {}
       this.scheduleAutoRecalc('NEW_PURCHASE'); msg = 'Внесено позиций закупки: ' + add.length;
     } else if (t === 'ved') {
       const agg = this.impVedTotals();
-      const po = { id: 'p_' + Date.now().toString(36), no: String(this.nextNo ? this.nextNo(this.state.purchases) : 1), reqDate: this.ymd(new Date()), orderDate: '', arriveDate: '', supplier: agg.supplier || 'Импорт ВЭД', material: (agg.lines[0] && agg.lines[0].material) || 'Импортная партия', qty: (agg.lines.reduce((s, l) => s + (l.qty || 0), 0)) || 0, priceEur: agg.invoice, currency: '€', curRate: Number(this.state.rate) || 0, transport: agg.freight, customs: agg.customs + agg.broker, prepay: 0, status: 'в пути', approvalStatus: 'на рассмотрении', priceApproval: '', market: 'ВЭД', comment: 'ВЭД-пакет: инвойс ' + this.fmt(agg.invoice) + ', ТД ' + this.fmt(agg.customs) + ', брокер ' + this.fmt(agg.broker) + ', фрахт ' + this.fmt(agg.freight) + ' → Landed ' + this.fmt(agg.landed), initiator: this.state.currentUser ? this.state.currentUser.name : '', paid: 0 };
+      if (this.impEnsureCp(agg.supplier || 'Импорт ВЭД', '', agg.lines, 'buy', this.ymd(new Date()))) newCp++;
+      const po = { id: 'p_' + Date.now().toString(36), no: String(this.nextNo ? this.nextNo(this.state.purchases) : 1), reqDate: this.ymd(new Date()), orderDate: '', arriveDate: '', supplier: agg.supplier || 'Импорт ВЭД', material: (agg.lines[0] && agg.lines[0].name) || 'Импортная партия', qty: (agg.lines.reduce((s, l) => s + (l.qty || 0), 0)) || 0, priceEur: agg.invoice, currency: '€', curRate: Number(this.state.rate) || 0, transport: agg.freight, customs: agg.customs + agg.broker, prepay: 0, status: 'в пути', approvalStatus: 'на рассмотрении', priceApproval: '', market: 'ВЭД', comment: 'ВЭД-пакет: инвойс ' + this.fmt(agg.invoice) + ', ТД ' + this.fmt(agg.customs) + ', брокер ' + this.fmt(agg.broker) + ', фрахт ' + this.fmt(agg.freight) + ' → Landed ' + this.fmt(agg.landed), initiator: this.state.currentUser ? this.state.currentUser.name : '', paid: 0 };
       this.setState({ purchases: [...(this.state.purchases || []), po] }); try { this.lsSet('purchases', JSON.stringify([...(this.state.purchases || []), po])); } catch (e) {}
       this.scheduleAutoRecalc('NEW_PURCHASE'); msg = 'Сформирована партия ВЭД, Landed Cost ' + this.fmt(agg.landed) + ' ₽';
     } else if (t === 'payreq') {
-      const recs = ok.flatMap(f => f.records || []); const cu = this.state.currentUser; let cnt = 0;
-      const prs = recs.map(x => ({ id: 'pr_' + Date.now().toString(36) + (cnt++).toString(36), initiator: cu ? cu.name : '—', initiatorId: cu ? cu.id : '', approverId: '', supplier: x.supplier, amount: x.amount, date: x.date, purpose: x.purpose, no: '', status: 'Черновик', track: true, createdAt: Date.now() }));
+      const cu = this.state.currentUser; let cnt = 0; const prs = [];
+      for (const f of ok) { const dc = f.doc; if (this.impEnsureCp(dc.party, '', [], 'buy', dc.date)) newCp++; prs.push({ id: 'pr_' + Date.now().toString(36) + (cnt++).toString(36), initiator: cu ? cu.name : '—', initiatorId: cu ? cu.id : '', approverId: '', supplier: dc.party, amount: dc.amount, date: dc.date, purpose: dc.purpose, no: '', status: 'Черновик', track: true, createdAt: Date.now() }); }
       this.writePayreqs([...prs, ...(this.state.payreqs || [])]); msg = 'Создано заявок на оплату: ' + prs.length;
     } else if (t === 'logi') {
-      const recs = ok.flatMap(f => f.records || []); let cnt = 0;
-      const lgs = recs.map(x => ({ ...this.emptyLog(), id: 'lg_' + Date.now().toString(36) + (cnt++).toString(36), date: x.date, route: x.route, carrier: x.carrier, freight: x.freight, status: 'На согласовании', createdAt: Date.now() }));
+      let cnt = 0; const lgs = [];
+      for (const f of ok) { const dc = f.doc; lgs.push({ ...this.emptyLog(), id: 'lg_' + Date.now().toString(36) + (cnt++).toString(36), date: dc.date, route: dc.route, carrier: dc.party, freight: dc.freight, status: 'На согласовании', createdAt: Date.now() }); }
       this.writeLogistics([...lgs, ...(this.state.logistics || [])]); msg = 'Создано поручений экспедитору: ' + lgs.length;
     }
-    // Архивировать оригиналы (год → месяц → неделя → день в «Архиве файлов»)
     for (const f of ok) { if (f._file) { try { this.archiveFile(f._file, { category: t, category_label: this.impTargetTitle(t), source: 'import_recognize', rows: f.n || 0 }); } catch (e) {} } }
-    try { this.postSystemNote('📥 Импорт+ИИ: ' + msg + ' (файлов: ' + ok.length + ', компания: ' + (this.co().name) + ').', this.state.currentUser ? this.state.currentUser.name : 'Система'); } catch (e) {}
-    this.setState({ imp: { ...imp, committed: true, doneMsg: '✓ ' + msg + '. Документы видны в списке и в Архиве файлов (год → месяц → неделя).' } });
+    try { this.postSystemNote('📥 Импорт+ИИ: ' + msg + (newCp ? (', создано контрагентов: ' + newCp) : '') + ' (файлов: ' + ok.length + ').', this.state.currentUser ? this.state.currentUser.name : 'Система'); } catch (e) {}
+    this.setState({ imp: { ...imp, committed: true, doneMsg: '✓ ' + msg + (newCp ? ('. Новых контрагентов: ' + newCp + ' (со статистикой цен)') : '') + '. Документы видны в списке и в Архиве файлов.' } });
   }
   impVals() {
     const S = this.state, imp = S.imp;
     if (!imp) return { impOpen: false };
     const ved = imp.target === 'ved';
     const vt = ved ? this.impVedTotals() : null;
-    const files = imp.files.map((f, i) => ({
-      name: f.name, ok: f.status === 'ok', err: f.err || '', via: f.via || '',
-      summary: f.summary || '', docLabel: f.docType ? f.docType.label : '',
-      cls: f.status === 'ok' ? 'impfile ok' : 'impfile err',
-      remove: () => this.impRemoveFile(i),
-    }));
+    const isSales = imp.target === 'sales';
+    const partyLabel = isSales ? 'Клиент' : (imp.target === 'logi' ? 'Перевозчик' : 'Поставщик');
+    const nameLabel = isSales ? 'Продукт (ГП)' : 'Наименование';
+    const simpleDoc = imp.target === 'payreq' || imp.target === 'logi';
+    const files = imp.files.map((f, i) => {
+      const dc = f.doc || {};
+      const lines = (dc.lines || []).map((l, li) => ({
+        name: l.name || '', article: l.article || '', qty: l.qty || 0, price: l.price || 0, sum: this.fmt((l.qty || 0) * (l.price || 0)),
+        onName: (e) => this.impEditLine(i, li, 'name', e.target.value),
+        onArticle: (e) => this.impEditLine(i, li, 'article', e.target.value),
+        onQty: (e) => this.impEditLine(i, li, 'qty', e.target.value),
+        onPrice: (e) => this.impEditLine(i, li, 'price', e.target.value),
+        del: () => this.impDelLine(i, li),
+      }));
+      const total = (dc.lines || []).reduce((s, l) => s + (l.qty || 0) * (l.price || 0), 0);
+      return {
+        name: f.name, ok: f.status === 'ok', err: f.err || '', via: f.via || '',
+        summary: f.summary || '', docLabel: f.docType ? f.docType.label : '',
+        cls: f.status === 'ok' ? 'impfile ok' : 'impfile err',
+        remove: () => this.impRemoveFile(i),
+        hasDoc: f.status === 'ok' && !!f.doc,
+        date: dc.date || '', onDate: (e) => this.impEditDoc(i, 'date', e.target.value),
+        party: dc.party || '', onParty: (e) => this.impEditDoc(i, 'party', e.target.value),
+        inn: dc.inn || '', onInn: (e) => this.impEditDoc(i, 'inn', e.target.value),
+        no: dc.no || '', onNo: (e) => this.impEditDoc(i, 'no', e.target.value),
+        amount: dc.amount || 0, onAmount: (e) => this.impEditDoc(i, 'amount', this.impNum(e.target.value)),
+        purpose: dc.purpose || '', onPurpose: (e) => this.impEditDoc(i, 'purpose', e.target.value),
+        route: dc.route || '', onRoute: (e) => this.impEditDoc(i, 'route', e.target.value),
+        freight: dc.freight || 0, onFreight: (e) => this.impEditDoc(i, 'freight', this.impNum(e.target.value)),
+        lines, lineCount: String(lines.length), totalFmt: this.fmt(total),
+        addLine: () => this.impAddLine(i),
+        isSimple: simpleDoc, isSalesDoc: isSales,
+      };
+    });
     const okN = imp.files.filter(f => f.status === 'ok').length;
     return {
       impOpen: true, impTitle: imp.title, impHint: imp.hint, impBusy: !!imp.busy,
+      impPartyLabel: partyLabel, impNameLabel: nameLabel,
       impFiles: files, impHasFiles: files.length > 0, impOkN: String(okN),
       impIsVed: ved,
       impVedInvoice: vt ? this.fmt(vt.invoice) : '0', impVedCustoms: vt ? this.fmt(vt.customs) : '0',
@@ -8843,6 +8925,22 @@ class Component extends DCLogic {
     this.postSystemNote('📥 Поступление на склад от «' + supplier + '»: ' + lines.length + ' позиц., обновлены остатки', S.currentUser ? S.currentUser.name : '—');
     setTimeout(() => this.triggerGlobalRecalculation('NEW_RECEIPT'), 60);
   }
+  // Создать счёт на оплату (заявку на платёж) на основании поступления ТМЦ
+  payreqFromReceipt(receiptId) {
+    const r = (this.state.receipts || []).find(x => x.id === receiptId); if (!r) return;
+    const cu = this.state.currentUser;
+    const tc = (r.lines || []).reduce((s, l) => s + (Number(l.qty) || 0) * (Number(l.price) || 0), 0);
+    const amountRub = Math.round(tc * (Number(r.rate) || 1));
+    const items = (r.lines || []).map(l => l.material).filter(Boolean).slice(0, 3).join(', ');
+    const draft = {
+      id: '', initiator: cu ? cu.name : '', initiatorId: cu ? cu.id : '', approverId: '',
+      supplier: r.supplier || '', amount: amountRub, date: this.ymd(new Date()),
+      purpose: 'Оплата поступления ТМЦ' + (r.no ? ' № ' + r.no : '') + ' от ' + this.dmFull(r.date) + (items ? ' (' + items + (((r.lines || []).length > 3) ? '…' : '') + ')' : ''),
+      no: '', status: 'Черновик', track: true, fromReceipt: r.id,
+    };
+    this.setState({ tab: 'treas30', prDraft: draft, prErr: '' });
+    this.pushRecalcToast('🧾 Счёт на оплату для «' + (r.supplier || '') + '» на ' + this.fmt(amountRub) + ' ₽ — проверьте и отправьте на согласование.');
+  }
   buildReceipts() {
     const S = this.state, set = (p) => this.setState(p);
     const d = S.recDraft || this.emptyReceipt(); const isDraft = !!S.recDraft;
@@ -8857,7 +8955,7 @@ class Component extends DCLogic {
     const onSupplier = (e) => { const name = e.target.value; const c = cpList.find(x => (x.name || '') === name); set({ recDraft: { ...(this.state.recDraft || this.emptyReceipt()), supplier: name, inn: c ? (c.inn || '') : (this.state.recDraft || {}).inn || '' }, recErr: '' }); };
     const journal = (S.receipts || []).slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).map(r => {
       const tc = (r.lines || []).reduce((s, l) => s + (Number(l.qty) || 0) * (Number(l.price) || 0), 0);
-      return { id: r.id, no: r.no || '—', date: this.dmFull(r.date), supplier: r.supplier || '—', market: r.market || '—', currency: r.currency || '₽', sumCur: this.fmt(tc), sumRub: this.fmt(tc * (Number(r.rate) || 1)), lines: (r.lines || []).length, remove: () => this.askDelete('документ поступления от «' + (r.supplier || '') + '»', () => this.writeReceipts((this.state.receipts || []).filter(x => x.id !== r.id))) };
+      return { id: r.id, no: r.no || '—', date: this.dmFull(r.date), supplier: r.supplier || '—', market: r.market || '—', currency: r.currency || '₽', sumCur: this.fmt(tc), sumRub: this.fmt(tc * (Number(r.rate) || 1)), lines: (r.lines || []).length, remove: () => this.askDelete('документ поступления от «' + (r.supplier || '') + '»', () => this.writeReceipts((this.state.receipts || []).filter(x => x.id !== r.id))), makeBill: () => this.payreqFromReceipt(r.id) };
     });
     return {
       isReceipts: true,
@@ -10411,7 +10509,7 @@ class Component extends DCLogic {
     const okBase = this.dlBaseDefs().filter(d => dlBase[d.key] && dlBase[d.key].status === 'ok');
     const okExtra = (this.state.dlExtra || []).filter(x => x.status === 'ok');
     const okCount = okBase.length + okExtra.length;
-    if (okCount < 1) { this.setState({ dlErr: 'Пересчёт недоступен: загрузите хотя бы один отчёт (зелёный). Можно начать с любого одного.' }); return; }
+    if (okCount < 1) { this.setState({ dlErr: '' }); this.forceGlobalRecalc(); return; }
     const errBase = this.dlBaseDefs().filter(d => dlBase[d.key] && dlBase[d.key].status === 'err');
     let fed = 0, sbFed = 0;
     // Маршрутизация: Себестоимость ШК (отчёт КО) → отчёт Себестоимость-КО по партиям
@@ -10630,7 +10728,7 @@ class Component extends DCLogic {
       dlPlaceApply: () => this.dlPlaceApply(S.dlPlace ? S.dlPlace.choice : 'custom', false),
       dlPlaceAuto: () => this.dlPlaceAuto(),
       dlPlaceCancel: () => this.dlPlaceCancel(),
-      dlRecalc: () => this.dlRecalc(), dlRecalcOff: !anyOk,
+      dlRecalc: () => this.dlRecalc(), dlRecalcOff: false,
       dlProgText: 'Базовые: ' + baseLoaded + '/' + this.dlBaseDefs().length + ' · доп. форм: ' + (S.dlExtra || []).length,
       // Движок сквозного пересчёта
       recalcChain: Object.keys(this.recalcGraph()).filter(k => k !== 'rates').map((k, i) => ({ k, n: i + 1, label: this.recalcGraph()[k].label, hasEffect: !!(this.recalcGraph()[k].effects || []).length })),
