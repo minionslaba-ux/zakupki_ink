@@ -713,6 +713,33 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .dlplrow .sel{flex:1}
 .btn.ai{background:linear-gradient(135deg,#1F4E78,#2A6FDB);color:#fff;border:none}
 .btn.ai:hover{filter:brightness(1.07)}
+.btn.imp{background:#eef4fb;border:1px solid #cfe0f2;color:#1F4E78;font-weight:600}
+.btn.imp:hover{background:#e3eefb}
+.impmodal{max-width:720px}
+.impdrop{border:2px dashed #cfe0f2;border-radius:13px;background:#f8fbff;padding:22px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;transition:all .15s ease}
+.impdrop.drag{border-color:#2A6FDB;background:#eaf2fe}
+.impdropic{font-size:30px}
+.impdropt{font-size:13px;color:#56534f}
+.impbtn{cursor:pointer}
+.impdrophint{font-size:11px;color:#8a8782}
+.impai{margin-top:4px;font-size:11.5px;color:#1f8a5b;background:#eafaf0;border:1px solid #cdeeda;border-radius:8px;padding:5px 10px}
+.impfiles{display:flex;flex-direction:column;gap:7px;margin-top:14px}
+.impfile{display:flex;align-items:center;gap:10px;border:1px solid #e7e4e0;border-radius:9px;padding:8px 12px;font-size:12.5px}
+.impfile.ok{border-left:3px solid #2a8a4a}
+.impfile.err{border-left:3px solid #c0322b;background:#fdf6f5}
+.impfn{font-weight:600;color:#2b2926;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.impdoc{font-size:10px;font-weight:800;color:#5b3fa0;background:#efe9fa;border-radius:20px;padding:2px 8px;white-space:nowrap}
+.impsum{font-size:11.5px;color:#56534f;white-space:nowrap}
+.impvia{font-size:10px;font-weight:700;color:#1F4E78;background:#eef4fb;border-radius:20px;padding:2px 8px;white-space:nowrap}
+.imperr{font-size:11px;color:#c0322b}
+.impved{margin-top:14px;border:1px solid #dfe7f1;border-radius:11px;background:#f6f9fd;padding:13px 15px}
+.impvedt{font-size:12px;font-weight:800;color:#1F4E78;margin-bottom:9px}
+.impvedgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.impvedgrid>div{display:flex;flex-direction:column;gap:3px}
+.impvedgrid span{font-size:10.5px;color:#8a8782}
+.impvedgrid b{font-size:14px;color:#1a2b3c;font-family:'IBM Plex Mono',monospace}
+.impvedtot{margin-top:11px;padding-top:10px;border-top:1px dashed #cfdcec;font-size:13px;color:#2b2926}
+.impvedtot b{font-size:16px;color:#1F4E78;font-family:'IBM Plex Mono',monospace}
 .fatabs{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
 .fatab{display:flex;flex-direction:column;align-items:flex-start;gap:1px;border:1.5px solid #e1ddd7;background:#fbfaf8;border-radius:10px;padding:9px 16px;cursor:pointer;min-width:150px;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
 .fatab b{font-size:13.5px;font-weight:700;color:#2b2926}
@@ -2187,6 +2214,11 @@ window.dispatchEvent(new Event('fbready'));
 <div class="fg"><input class="inp" value="{{ lc1cUrl }}" onInput="{{ onLc1cUrl }}" placeholder="https://host/base/hs/shtark/purchases"></div>
 <div class="lcsrcb"><button class="btn dark" onClick="{{ lcFetch1c }}" disabled="{{ lc1cBusy }}">{{ lc1cBtnText }}</button><button class="btn ghost" onClick="{{ lcLoadDemo }}">Демо-данные</button></div>
 </div>
+<div class="lcsrccard">
+<div class="lcsrch">📦 Пакет документов ВЭД (ИИ)</div>
+<div class="lcsrcd">Загрузите весь пакет одним окном: коммерческий инвойс, таможенная декларация (ТД/ДТ), поручение экспедитору, счёт перевозчика. ИИ определит тип каждого документа и соберёт полную Landed Cost.</div>
+<div class="lcsrcb"><button class="btn dark" onClick="{{ impOpenVed }}">📎 Загрузить пакет и распознать</button></div>
+</div>
 </div>
 <sc-if value="{{ lcHasErr }}" hint-placeholder-val=""><div class="banner err">{{ lcErr }}</div></sc-if>
 <sc-if value="{{ lcHasStatus }}" hint-placeholder-val=""><div class="banner ok">{{ lcStatus }}</div></sc-if>
@@ -3181,7 +3213,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="fg"><label>Привязать к заказу клиента</label><select class="sel" value="{{ lgLinkO }}" onChange="{{ onLgLinkO }}"><option value="">— нет —</option><sc-for list="{{ lgOrderOpts }}" as="o" hint-placeholder-count="2"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></div>
 </div>
 <sc-if value="{{ lgHasErr }}" hint-placeholder-val=""><div class="banner err">{{ lgErr }}</div></sc-if>
-<div class="uactions"><button class="btn dark" onClick="{{ saveLog }}">Сохранить поручение</button><sc-if value="{{ lgHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelLog }}">Отмена</button></sc-if></div>
+<div class="uactions"><button class="btn dark" onClick="{{ saveLog }}">Сохранить поручение</button><button class="btn imp" onClick="{{ impOpenLogi }}">📎 Автозагрузка и распознавание</button><sc-if value="{{ lgHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelLog }}">Отмена</button></sc-if></div>
 </div>
 <div class="card"><div class="sec">Монитор перевозок · {{ logCount }}</div>
 <sc-if value="{{ logEmpty }}" hint-placeholder-val=""><div class="hint">Пока нет поручений на перевозку.</div></sc-if>
@@ -3207,7 +3239,7 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 <div class="genrow"><button class="{{ prTrack }}" onClick="{{ togglePrTrack }}"><span class="prchkbox"></span>Отслеживать платёж</button></div>
 <sc-if value="{{ prHasErr }}" hint-placeholder-val=""><div class="banner err">{{ prErr }}</div></sc-if>
-<div class="uactions"><button class="btn dark" onClick="{{ prSend }}">Отправить на согласование</button><button class="btn" onClick="{{ prSave }}">Сохранить черновик</button><label class="btn"><span>🏦</span> Загрузить выписку .txt<input type="file" accept=".txt" style="display:none" onChange="{{ onStmtFile }}"></label></div>
+<div class="uactions"><button class="btn dark" onClick="{{ prSend }}">Отправить на согласование</button><button class="btn" onClick="{{ prSave }}">Сохранить черновик</button><button class="btn imp" onClick="{{ impOpenPayreq }}">📎 Загрузить счета (ИИ)</button><label class="btn"><span>🏦</span> Загрузить выписку .txt<input type="file" accept=".txt" style="display:none" onChange="{{ onStmtFile }}"></label></div>
 <sc-if value="{{ stmtHasMsg }}" hint-placeholder-val=""><div class="hint">{{ stmtMsg }}</div></sc-if>
 </div>
 <div class="card"><div class="sec">Заявки на платёж · {{ prCount }}</div>
@@ -3237,7 +3269,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="fg"><label>Курс к ₽</label><input class="inp num" type="number" value="{{ slRate }}" onInput="{{ onSlRate }}"></div>
 </div>
 <sc-if value="{{ slHasErr }}" hint-placeholder-val=""><div class="banner err">{{ slErr }}</div></sc-if>
-<div class="uactions"><button class="btn dark" onClick="{{ saveSale }}">Записать отгрузку</button><sc-if value="{{ slHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelSale }}">Отмена</button></sc-if></div>
+<div class="uactions"><button class="btn dark" onClick="{{ saveSale }}">Записать отгрузку</button><button class="btn imp" onClick="{{ impOpenSales }}">📎 Загрузить из файла и распознать</button><sc-if value="{{ slHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelSale }}">Отмена</button></sc-if></div>
 </div>
 <div class="card"><div class="sec">Маржинальность продаж · {{ salesCount }}</div>
 <div class="toolbar"><div class="field"><span class="lbl">Транспортный пул за период, ₽</span><input class="inp num w120" type="number" value="{{ salesTransport }}" onInput="{{ onSalesTransport }}"></div><div class="field"><span class="lbl">Распределять</span><span class="segrow"><button class="{{ transWeightCls }}" onClick="{{ setTransWeight }}">по весу</button><button class="{{ transValueCls }}" onClick="{{ setTransValue }}">по стоимости</button></span></div></div>
@@ -3265,7 +3297,7 @@ window.dispatchEvent(new Event('fbready'));
 <tbody><sc-for list="{{ recLines }}" as="l" hint-placeholder-count="2"><tr><td><input class="inp" value="{{ l.material }}" onInput="{{ l.onMat }}" placeholder="Наименование"></td><td><input class="inp w120" value="{{ l.article }}" onInput="{{ l.onArt }}" placeholder="арт."></td><td><input class="inp num w90" type="number" value="{{ l.qty }}" onInput="{{ l.onQty }}"></td><td><input class="inp num w90" type="number" value="{{ l.price }}" onInput="{{ l.onPrice }}"></td><td class="mono">{{ l.sum }}</td><td><button class="tlink del" onClick="{{ l.del }}">✕</button></td></tr></sc-for></tbody></table></div>
 <div class="genrow"><button class="btn" onClick="{{ addRecLine }}">+ позиция</button><span class="hint">Итого: {{ recTotCur }} {{ recCurLabel }} · в управленческом учёте ≈ {{ recTotRub }} ₽</span></div>
 <sc-if value="{{ recHasErr }}" hint-placeholder-val=""><div class="banner err">{{ recErr }}</div></sc-if>
-<div class="uactions"><button class="btn dark" onClick="{{ saveReceipt }}">Провести и обновить склад</button><sc-if value="{{ recHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelReceipt }}">Отмена</button></sc-if></div>
+<div class="uactions"><button class="btn dark" onClick="{{ saveReceipt }}">Провести и обновить склад</button><button class="btn imp" onClick="{{ impOpenReceipts }}">📎 Добавить и распознать из файла</button><sc-if value="{{ recHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelReceipt }}">Отмена</button></sc-if></div>
 </div>
 <div class="card"><div class="sec">Журнал поступлений · {{ recCount }}</div>
 <sc-if value="{{ recEmpty }}" hint-placeholder-val=""><div class="hint">Пока нет документов поступления.</div></sc-if>
@@ -3602,6 +3634,22 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ trackToastHas }}" hint-placeholder-val=""><div class="tracktoast"><span class="tticon">👁</span><span>{{ trackToast }}</span></div></sc-if>
 <sc-if value="{{ cloudToastHas }}" hint-placeholder-val=""><div class="cloudtoast"><span class="clic">☁✓</span><span>{{ cloudToast }}</span></div></sc-if>
 <sc-if value="{{ recalcToastHas }}" hint-placeholder-val=""><div class="recalctoast"><span class="rclic">⚙</span><span>{{ recalcToast }}</span></div></sc-if>
+<sc-if value="{{ impOpen }}" hint-placeholder-val=""><div class="dlmapbg" onClick="{{ impClose }}"></div><div class="dlmap impmodal">
+<div class="dlmaph">{{ impTitle }}</div>
+<div class="dlmaps">{{ impHint }}</div>
+<div class="{{ impDragCls }}" onDrop="{{ onImpDrop }}" onDragOver="{{ onImpDragOver }}" onDragLeave="{{ onImpDragLeave }}">
+<div class="impdropic">📎</div><div class="impdropt">Перетащите файлы сюда или</div>
+<label class="btn dark impbtn">Выбрать файлы<input type="file" multiple accept=".xlsx,.xls,.csv,.txt,.pdf" onChange="{{ onImpFiles }}" style="display:none"></label>
+<div class="impdrophint">xlsx · csv · txt · pdf (скан) · можно несколько сразу</div>
+<sc-if value="{{ impAiOn }}" hint-placeholder-val=""><div class="impai">🤖 Внешний ИИ подключён — нераспознанные документы распознаются автоматически</div></sc-if>
+</div>
+<sc-if value="{{ impBusy }}" hint-placeholder-val=""><div class="banner aifb"><span class="aifbic">🤖</span><span>Распознаю документы…</span></div></sc-if>
+<sc-if value="{{ impHasFiles }}" hint-placeholder-val=""><div class="impfiles"><sc-for list="{{ impFiles }}" as="f" hint-placeholder-count="2"><div class="{{ f.cls }}"><span class="impfn">{{ f.name }}</span><sc-if value="{{ f.docLabel }}" hint-placeholder-val=""><span class="impdoc">{{ f.docLabel }}</span></sc-if><span class="impsum">{{ f.summary }}</span><sc-if value="{{ f.via }}" hint-placeholder-val=""><span class="impvia">{{ f.via }}</span></sc-if><sc-if value="{{ f.err }}" hint-placeholder-val=""><span class="imperr">{{ f.err }}</span></sc-if><button class="tlink del" onClick="{{ f.remove }}">✕</button></div></sc-for></div></sc-if>
+<sc-if value="{{ impIsVed }}" hint-placeholder-val=""><div class="impved"><div class="impvedt">Сборка Landed Cost (ВЭД-пакет)</div><div class="impvedgrid"><div><span>Инвойс</span><b>{{ impVedInvoice }}</b></div><div><span>Таможня (ТД)</span><b>{{ impVedCustoms }}</b></div><div><span>Брокер/экспедитор</span><b>{{ impVedBroker }}</b></div><div><span>Фрахт/перевозчик</span><b>{{ impVedFreight }}</b></div></div><div class="impvedtot">Полная Landed Cost: <b>{{ impVedLanded }} ₽</b></div></div></sc-if>
+<sc-if value="{{ impErr }}" hint-placeholder-val=""><div class="banner err">{{ impErr }}</div></sc-if>
+<sc-if value="{{ impDoneMsg }}" hint-placeholder-val=""><div class="banner ok">{{ impDoneMsg }}</div></sc-if>
+<div class="dlmapfoot"><sc-if value="{{ impNotCommitted }}" hint-placeholder-val=""><button class="btn dark" onClick="{{ impCommit }}" disabled="{{ impBusy }}">✓ Внести {{ impOkN }} док. в систему</button></sc-if><button class="btn" onClick="{{ impClose }}">Закрыть</button></div>
+</div></sc-if>
 <sc-if value="{{ claudeToast }}" hint-placeholder-val=""><div class="claudetoast"><span class="cticon">📋</span>Данные для Claude Pro скопированы в буфер! Вставьте их в ваш рабочий чат Claude (Ctrl+V)</div></sc-if>
 <sc-if value="{{ aiOpen }}" hint-placeholder-val="">
 <div class="aibackdrop" onClick="{{ aiClose }}"></div>
@@ -3641,7 +3689,7 @@ class Component extends DCLogic {
     oneCUrl: '', oneCToken: '', oneCMatch: 'article', oneCAuto: false, oneCBusy: false, oneCStatus: '', oneCErr: '', oneCPreview: null, oneCLastAt: 0, oneCLog: [], oneCFileCur: 'RUB',
     lcData: [], lcMeta: null, lcBusy: false, lcErr: '', lcStatus: '', lcView: 'dash', lcFltMarket: '', lcFltSupplier: '', lcFltStatus: '', lcOnlyAnom: false, lcSrcOpen: false,
     dvHorizon: 90, dvFrom: '', dvTo: '', dvFltMarket: '', dvFltSupplier: '', dvFltGroup: '', dvExpanded: {}, dvAi: '', dvAiBusy: false, dvScope: 'all',
-    dlBase: {}, dlExtra: [], dlTemplates: [], dlMap: null, dlPlace: null, dlBusy: '', dlMsg: '', dlErr: '', dlDone: '',
+    dlBase: {}, dlExtra: [], dlTemplates: [], dlMap: null, dlPlace: null, imp: null, impDrag: false, dlBusy: '', dlMsg: '', dlErr: '', dlDone: '',
     faCo: '', faSearch: '', faDay: '', faExp: {}, faCalY: new Date().getFullYear(), faCalM: new Date().getMonth(), faTick: 0,
     lc1cUrl: '', lc1cToken: '', lc1cBusy: false,
     cloudConnected: false, cloudRole: 'idle', cloudStatus: '', cloudErr: '', cloudWho: '', cloudPresence: {}, cloudLocks: {}, cloudMyAreas: [],
@@ -8597,6 +8645,181 @@ class Component extends DCLogic {
   }
   // ===== Поступление ТМЦ на склад =====
   emptyReceipt() { return { id: '', no: '', date: this.ymd(new Date()), supplier: '', inn: '', currency: 'RUB', rate: 1, market: 'Внутренний', lines: [{ material: '', article: '', qty: '', price: '' }] }; }
+  // ============================================================
+  // УНИВЕРСАЛЬНЫЙ ИМПОРТ + ИИ-РАСПОЗНАВАНИЕ (пакетная загрузка документов)
+  // Один модуль для: Продажи, Поступления ТМЦ, Закупки/ВЭД (пакет: инвойс+ТД+
+  // экспедитор+перевозчик), Заявки на оплату (счета), Поручения экспедитору.
+  // Поддерживает несколько файлов сразу; внутреннее ядро + эскалация к внешнему ИИ.
+  // ============================================================
+  impNum(v) { if (v == null) return 0; const n = parseFloat(String(v).replace(/[^\d,.\-]/g, '').replace(/\s/g, '').replace(',', '.')); return isFinite(n) ? n : 0; }
+  impCell(row, map, field) { const i = map[field]; return (i == null || i < 0) ? '' : String(row[i] == null ? '' : row[i]).trim(); }
+  impTargetTitle(t) { return ({ sales: 'Продажи · загрузить реализацию из файла', receipts: 'Поступление ТМЦ · загрузить и распознать', purchases: 'Закупки · загрузить счета/спецификации', ved: 'ВЭД · пакет документов (инвойс, ТД, экспедитор, перевозчик)', payreq: 'Заявки на оплату · загрузить счета', logi: 'Поручение экспедитору · автозагрузка' })[t] || 'Импорт и распознавание'; }
+  impTargetHint(t) { return ({ sales: 'Реализация ГП: распознаются клиент, продукт, объём (кг), цена. Каждая строка → отгрузка в реестре продаж.', receipts: 'Накладные/приходы: распознаются наименование сырья, артикул, количество, цена. Строки → позиции поступления, склад обновится.', purchases: 'Спецификации/счета: поставщик, сырьё, кол-во, цена. Строки → заявки закупки.', ved: 'Бросьте ВЕСЬ пакет: коммерческий инвойс, таможенная декларация (ТД/ДТ), поручение экспедитору, счёт перевозчика. ИИ определит тип каждого документа и соберёт полную Landed Cost.', payreq: 'Счета на оплату: получатель, сумма, назначение. Можно несколько файлов — каждый счёт станет заявкой на платёж.', logi: 'Поручение/счёт экспедитору: маршрут, перевозчик, фрахт. Файлы → строки монитора логистики.' })[t] || ''; }
+  impOpen(target) { this.setState({ imp: { target, title: this.impTargetTitle(target), hint: this.impTargetHint(target), files: [], busy: false, committed: false } }); }
+  impClose() { this.setState({ imp: null }); }
+  // Распознать тип документа ВЭД по имени файла / содержимому
+  impVedDocType(name, headers) {
+    const s = this.dlNorm(name + ' ' + (headers || []).join(' '));
+    if (/инвойс|invoice|invoys|коммерческ|commercial|proforma|проформ|счет-фактур|счёт-фактур/.test(s)) return { key: 'invoice', label: 'Коммерческий инвойс' };
+    if (/деклараци|deklarac|\bтд\b|\bдт\b|гтд|gtd|customs|таможен|tamozh|пошлин|poshlin|duty/.test(s)) return { key: 'customs', label: 'Таможенная декларация' };
+    if (/экспедит|ekspedit|forwarder|поручени|poruchenie|брокер|broker/.test(s)) return { key: 'broker', label: 'Экспедитор / брокер' };
+    if (/перевоз|perevoz|carrier|фрахт|fraht|fracht|freight|тэк\b|транспорт|transport|cmr|логистик|logistik/.test(s)) return { key: 'freight', label: 'Счёт перевозчика' };
+    return { key: 'other', label: 'Прочий документ' };
+  }
+  // Попытка ИИ-маппинга колонок (когда внутреннее ядро не уверено и есть ключ)
+  async impAiColumnMap(d) {
+    if (!this.hasAI()) return null;
+    try {
+      const sys = 'Ты сопоставляешь колонки таблицы с системными полями. Верни СТРОГО JSON {"map":{"<системное_поле>":<индекс_колонки_с_0>}}. Системные поля: client, supplier, nomen (наименование/продукт/сырьё), qty (кол-во/вес кг), price (цена за ед), sum (сумма/итого), date, article (артикул).';
+      const user = 'Заголовки: ' + JSON.stringify(d.headers) + '\nПримеры строк: ' + JSON.stringify((d.rows || []).slice(0, 4));
+      const withTimeout = (p, ms) => Promise.race([p, new Promise((_, r) => setTimeout(() => r(new Error('timeout')), ms))]);
+      const raw = await withTimeout(this.aiComplete([{ role: 'system', content: sys }, { role: 'user', content: user }], { max: 400 }), 45000);
+      const t = String(raw || ''); const m = t.match(/\{[\s\S]*\}/); if (!m) return null;
+      const j = JSON.parse(m[0]); return (j && j.map) ? j.map : null;
+    } catch (e) { return null; }
+  }
+  async impAddFiles(fileList) {
+    const target = this.state.imp ? this.state.imp.target : ''; if (!target) return;
+    const files = Array.from(fileList || []); if (!files.length) return;
+    this.setState({ imp: { ...this.state.imp, busy: true } });
+    for (const file of files) {
+      if (!/\.(xlsx|xls|csv|txt|pdf)$/i.test(file.name || '')) { this._impPush({ name: file.name, status: 'err', err: 'неподдерживаемый формат', records: [] }); continue; }
+      try {
+        const d = await this.dlReadFile(file);
+        let map = this.dlGuessMap(d.headers, d.rows);
+        let via = 'ядро';
+        const confident = this.dlSemanticConfident(d.headers, d.rows) || (map.nomen != null || map.supplier != null || map.client != null);
+        if (!confident && this.hasAI()) { const am = await this.impAiColumnMap(d); if (am) { map = am; via = 'внешний ИИ'; } }
+        const conv = this.impConvert(target, d, map, file);
+        this._impPush({ name: file.name, status: 'ok', via, n: d.n, headers: d.headers, ...conv, _file: file });
+      } catch (e) { this._impPush({ name: file.name, status: 'err', err: (e && e.message) || String(e), records: [] }); }
+    }
+    this.setState({ imp: { ...this.state.imp, busy: false } });
+  }
+  _impPush(entry) { const imp = this.state.imp; if (!imp) return; this.setState({ imp: { ...imp, files: [...imp.files, entry] } }); }
+  impRemoveFile(idx) { const imp = this.state.imp; if (!imp) return; this.setState({ imp: { ...imp, files: imp.files.filter((_, i) => i !== idx), committed: false } }); }
+  // Преобразовать распознанные строки в записи целевого модуля
+  impConvert(target, d, map, file) {
+    const rows = (d.rows || []).filter(r => r && r.some(c => c != null && String(c).trim()));
+    const baseName = (file.name || '').replace(/\.[^.]+$/, '');
+    const today = this.ymd(new Date());
+    if (target === 'sales') {
+      const records = rows.map(r => {
+        const client = this.impCell(r, map, 'client') || this.impCell(r, map, 'nomen') || '';
+        const product = this.impCell(r, map, 'nomen') || client;
+        const qty = this.impNum(this.impCell(r, map, 'qty'));
+        let price = this.impNum(this.impCell(r, map, 'price'));
+        const sum = this.impNum(this.impCell(r, map, 'sum'));
+        if (!price && qty && sum) price = sum / qty;
+        return { client, product, qty, price, date: this.impCell(r, map, 'date') || today };
+      }).filter(x => x.client && (x.qty || x.price));
+      return { records, recType: 'sales', summary: records.length + ' отгрузок' };
+    }
+    if (target === 'receipts' || target === 'purchases' || target === 'ved') {
+      const lines = rows.map(r => {
+        const material = this.impCell(r, map, 'nomen') || '';
+        const qty = this.impNum(this.impCell(r, map, 'qty'));
+        let price = this.impNum(this.impCell(r, map, 'price'));
+        const sum = this.impNum(this.impCell(r, map, 'sum'));
+        if (!price && qty && sum) price = sum / qty;
+        return { material, article: this.impCell(r, map, 'article'), qty, price };
+      }).filter(x => x.material && (x.qty || x.price));
+      const supplier = this.impCell(rows[0] || [], map, 'supplier') || baseName;
+      if (target === 'ved') { const dt = this.impVedDocType(file.name, d.headers); const total = lines.reduce((s, l) => s + (l.qty && l.price ? l.qty * l.price : 0), 0) || rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'sum')), 0); return { recType: 'ved', docType: dt, supplier, lines, total, summary: dt.label + ' · ' + this.fmt(total) }; }
+      return { recType: target, supplier, lines, summary: (supplier ? supplier + ' · ' : '') + lines.length + ' позиц.' };
+    }
+    if (target === 'payreq') {
+      const records = rows.map(r => {
+        const supplier = this.impCell(r, map, 'supplier') || this.impCell(r, map, 'client') || baseName;
+        let amount = this.impNum(this.impCell(r, map, 'sum'));
+        if (!amount) amount = this.impNum(this.impCell(r, map, 'price')) * (this.impNum(this.impCell(r, map, 'qty')) || 1);
+        return { supplier, amount, purpose: this.impCell(r, map, 'nomen') || ('Счёт ' + baseName), date: this.impCell(r, map, 'date') || today };
+      }).filter(x => x.supplier && x.amount);
+      // если файл — один счёт (нет суммовой колонки) → одна заявка на общую сумму
+      if (!records.length) { const total = rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'price')) * (this.impNum(this.impCell(r, map, 'qty')) || 1), 0); records.push({ supplier: baseName, amount: total, purpose: 'Счёт ' + baseName, date: today }); }
+      return { records, recType: 'payreq', summary: records.length + ' счёт(ов)' };
+    }
+    if (target === 'logi') {
+      const records = rows.map(r => ({ route: this.impCell(r, map, 'nomen') || baseName, carrier: this.impCell(r, map, 'supplier') || '', freight: this.impNum(this.impCell(r, map, 'sum')) || this.impNum(this.impCell(r, map, 'price')), date: this.impCell(r, map, 'date') || today })).filter(x => x.route);
+      if (!records.length) records.push({ route: baseName, carrier: '', freight: 0, date: today });
+      return { records, recType: 'logi', summary: records.length + ' поручение(й)' };
+    }
+    return { records: [], recType: target, summary: '' };
+  }
+  // Итоговые цифры пакета ВЭД (Landed Cost)
+  impVedTotals() {
+    const imp = this.state.imp; if (!imp) return null;
+    const agg = { invoice: 0, customs: 0, broker: 0, freight: 0, other: 0, supplier: '', lines: [] };
+    for (const f of imp.files) { if (f.status !== 'ok' || f.recType !== 'ved') continue; const k = f.docType ? f.docType.key : 'other'; agg[k] = (agg[k] || 0) + (f.total || 0); if (k === 'invoice') { agg.supplier = agg.supplier || f.supplier; agg.lines = agg.lines.concat(f.lines || []); } }
+    agg.landed = agg.invoice + agg.customs + agg.broker + agg.freight + agg.other;
+    return agg;
+  }
+  // Применить распознанное во все целевые хранилища
+  impCommit() {
+    const imp = this.state.imp; if (!imp) return;
+    const ok = imp.files.filter(f => f.status === 'ok'); if (!ok.length) { this.setState({ imp: { ...imp, err: 'Нет распознанных документов.' } }); return; }
+    const t = imp.target; let msg = ''; const co = this._co();
+    if (t === 'sales') {
+      const recs = ok.flatMap(f => f.records || []);
+      const sales = recs.map((x, i) => ({ id: 'sl_' + Date.now().toString(36) + i.toString(36), no: '', date: x.date, client: x.client, product: x.product, qty: x.qty, price: x.price, currency: 'RUB', rate: 1, createdAt: Date.now() }));
+      this.writeSales([...sales, ...(this.state.sales || [])]);
+      this.scheduleAutoRecalc('NEW_SALES'); msg = 'Внесено отгрузок: ' + sales.length;
+    } else if (t === 'receipts') {
+      let cnt = 0; for (const f of ok) { const r = { id: 'rc_' + Date.now().toString(36) + (cnt++).toString(36), no: '', date: this.ymd(new Date()), supplier: f.supplier || '', inn: '', currency: 'RUB', rate: 1, market: 'Внутренний', lines: (f.lines || []).map(l => ({ material: l.material, article: l.article || '', qty: l.qty, price: l.price })), createdAt: Date.now() }; this.writeReceipts([r, ...(this.state.receipts || [])]); this.applyReceiptStock(r); }
+      this.scheduleAutoRecalc('NEW_RECEIPT'); msg = 'Внесено поступлений: ' + cnt;
+    } else if (t === 'purchases') {
+      let cnt = 0; const add = []; for (const f of ok) for (const l of (f.lines || [])) { add.push({ id: 'p_' + Date.now().toString(36) + (cnt++).toString(36), no: String(this.nextNo ? this.nextNo(this.state.purchases) : (cnt)), reqDate: this.ymd(new Date()), orderDate: '', arriveDate: '', supplier: f.supplier || '', material: l.material, qty: l.qty || 0, priceEur: l.price || 0, currency: '₽', curRate: 0, transport: 0, customs: 0, prepay: 0, status: 'новая', approvalStatus: 'на рассмотрении', priceApproval: '', market: 'Внутренний', comment: 'Импорт из файла', initiator: this.state.currentUser ? this.state.currentUser.name : '', paid: 0 }); }
+      this.setState({ purchases: [...(this.state.purchases || []), ...add] }); try { this.lsSet('purchases', JSON.stringify([...(this.state.purchases || []), ...add])); } catch (e) {}
+      this.scheduleAutoRecalc('NEW_PURCHASE'); msg = 'Внесено позиций закупки: ' + add.length;
+    } else if (t === 'ved') {
+      const agg = this.impVedTotals();
+      const po = { id: 'p_' + Date.now().toString(36), no: String(this.nextNo ? this.nextNo(this.state.purchases) : 1), reqDate: this.ymd(new Date()), orderDate: '', arriveDate: '', supplier: agg.supplier || 'Импорт ВЭД', material: (agg.lines[0] && agg.lines[0].material) || 'Импортная партия', qty: (agg.lines.reduce((s, l) => s + (l.qty || 0), 0)) || 0, priceEur: agg.invoice, currency: '€', curRate: Number(this.state.rate) || 0, transport: agg.freight, customs: agg.customs + agg.broker, prepay: 0, status: 'в пути', approvalStatus: 'на рассмотрении', priceApproval: '', market: 'ВЭД', comment: 'ВЭД-пакет: инвойс ' + this.fmt(agg.invoice) + ', ТД ' + this.fmt(agg.customs) + ', брокер ' + this.fmt(agg.broker) + ', фрахт ' + this.fmt(agg.freight) + ' → Landed ' + this.fmt(agg.landed), initiator: this.state.currentUser ? this.state.currentUser.name : '', paid: 0 };
+      this.setState({ purchases: [...(this.state.purchases || []), po] }); try { this.lsSet('purchases', JSON.stringify([...(this.state.purchases || []), po])); } catch (e) {}
+      this.scheduleAutoRecalc('NEW_PURCHASE'); msg = 'Сформирована партия ВЭД, Landed Cost ' + this.fmt(agg.landed) + ' ₽';
+    } else if (t === 'payreq') {
+      const recs = ok.flatMap(f => f.records || []); const cu = this.state.currentUser; let cnt = 0;
+      const prs = recs.map(x => ({ id: 'pr_' + Date.now().toString(36) + (cnt++).toString(36), initiator: cu ? cu.name : '—', initiatorId: cu ? cu.id : '', approverId: '', supplier: x.supplier, amount: x.amount, date: x.date, purpose: x.purpose, no: '', status: 'Черновик', track: true, createdAt: Date.now() }));
+      this.writePayreqs([...prs, ...(this.state.payreqs || [])]); msg = 'Создано заявок на оплату: ' + prs.length;
+    } else if (t === 'logi') {
+      const recs = ok.flatMap(f => f.records || []); let cnt = 0;
+      const lgs = recs.map(x => ({ ...this.emptyLog(), id: 'lg_' + Date.now().toString(36) + (cnt++).toString(36), date: x.date, route: x.route, carrier: x.carrier, freight: x.freight, status: 'На согласовании', createdAt: Date.now() }));
+      this.writeLogistics([...lgs, ...(this.state.logistics || [])]); msg = 'Создано поручений экспедитору: ' + lgs.length;
+    }
+    // Архивировать оригиналы (год → месяц → неделя → день в «Архиве файлов»)
+    for (const f of ok) { if (f._file) { try { this.archiveFile(f._file, { category: t, category_label: this.impTargetTitle(t), source: 'import_recognize', rows: f.n || 0 }); } catch (e) {} } }
+    try { this.postSystemNote('📥 Импорт+ИИ: ' + msg + ' (файлов: ' + ok.length + ', компания: ' + (this.co().name) + ').', this.state.currentUser ? this.state.currentUser.name : 'Система'); } catch (e) {}
+    this.setState({ imp: { ...imp, committed: true, doneMsg: '✓ ' + msg + '. Документы видны в списке и в Архиве файлов (год → месяц → неделя).' } });
+  }
+  impVals() {
+    const S = this.state, imp = S.imp;
+    if (!imp) return { impOpen: false };
+    const ved = imp.target === 'ved';
+    const vt = ved ? this.impVedTotals() : null;
+    const files = imp.files.map((f, i) => ({
+      name: f.name, ok: f.status === 'ok', err: f.err || '', via: f.via || '',
+      summary: f.summary || '', docLabel: f.docType ? f.docType.label : '',
+      cls: f.status === 'ok' ? 'impfile ok' : 'impfile err',
+      remove: () => this.impRemoveFile(i),
+    }));
+    const okN = imp.files.filter(f => f.status === 'ok').length;
+    return {
+      impOpen: true, impTitle: imp.title, impHint: imp.hint, impBusy: !!imp.busy,
+      impFiles: files, impHasFiles: files.length > 0, impOkN: String(okN),
+      impIsVed: ved,
+      impVedInvoice: vt ? this.fmt(vt.invoice) : '0', impVedCustoms: vt ? this.fmt(vt.customs) : '0',
+      impVedBroker: vt ? this.fmt(vt.broker) : '0', impVedFreight: vt ? this.fmt(vt.freight) : '0',
+      impVedLanded: vt ? this.fmt(vt.landed) : '0',
+      impCommitted: !!imp.committed, impDoneMsg: imp.doneMsg || '', impErr: imp.err || '',
+      impNotCommitted: !imp.committed && imp.files.some(f => f.status === 'ok'),
+      impAiOn: this.hasAI(),
+      onImpFiles: (e) => { const fl = e.target.files; if (fl && fl.length) this.impAddFiles(fl); if (e.target) e.target.value = ''; },
+      onImpDrop: (e) => { e.preventDefault(); const fl = e.dataTransfer && e.dataTransfer.files; this.setState({ impDrag: false }); if (fl && fl.length) this.impAddFiles(fl); },
+      onImpDragOver: (e) => { e.preventDefault(); if (!S.impDrag) this.setState({ impDrag: true }); },
+      onImpDragLeave: (e) => { e.preventDefault(); this.setState({ impDrag: false }); },
+      impDragCls: S.impDrag ? 'impdrop drag' : 'impdrop',
+      impCommit: () => this.impCommit(), impClose: () => this.impClose(),
+    };
+  }
   writeReceipts(next) {
     this.setState({ receipts: next });
     try { this.lsSet('receipts', JSON.stringify(next)); } catch (e) {}
@@ -12235,6 +12458,10 @@ class Component extends DCLogic {
       ready: true, navGroups, tabDesc: descs[S.tab] || '', productOptions, ownerOptions, componentOptions,
       cloudToast: S.cloudToast || '', cloudToastHas: !!S.cloudToast,
       recalcToast: S.recalcToast || '', recalcToastHas: !!S.recalcToast,
+      ...this.impVals(),
+      impOpenSales: () => this.impOpen('sales'), impOpenReceipts: () => this.impOpen('receipts'),
+      impOpenPurchases: () => this.impOpen('purchases'), impOpenVed: () => this.impOpen('ved'),
+      impOpenPayreq: () => this.impOpen('payreq'), impOpenLogi: () => this.impOpen('logi'),
       isHome: S.tab === 'home', homeGroups, goHome: () => set({ tab: 'home', navOpen: false }), isUsers: S.tab === 'users',
       isCat: S.tab === 'cat', catGroups: catGroup ? [catGroup] : [], catCards: catGroup ? catGroup.items : [],
       compassOpen: !!S.compassOpen, openCompass: () => set({ compassOpen: true, navOpen: false }), closeCompass: () => set({ compassOpen: false }),
