@@ -3684,7 +3684,7 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ impHasFiles }}" hint-placeholder-val=""><div class="impfiles"><sc-for list="{{ impFiles }}" as="f" hint-placeholder-count="1"><div class="{{ f.cls }}">
 <div class="impfhd"><span class="impfn">📄 {{ f.name }}</span><sc-if value="{{ f.docLabel }}" hint-placeholder-val=""><span class="impdoc">{{ f.docLabel }}</span></sc-if><sc-if value="{{ f.via }}" hint-placeholder-val=""><span class="impvia">{{ f.via }}</span></sc-if><sc-if value="{{ f.err }}" hint-placeholder-val=""><span class="imperr">{{ f.err }}</span></sc-if><button class="tlink del" onClick="{{ f.remove }}">✕ файл</button></div>
 <sc-if value="{{ f.hasDoc }}" hint-placeholder-val="">
-<div class="impdochd"><label class="impfg"><span>Дата документа</span><input class="inp" type="date" value="{{ f.date }}" onInput="{{ f.onDate }}"></label><label class="impfg"><span>{{ impPartyLabel }}</span><input class="inp" value="{{ f.party }}" onInput="{{ f.onParty }}" placeholder="будет создан, если новый"></label><label class="impfg sm"><span>№ док.</span><input class="inp" value="{{ f.no }}" onInput="{{ f.onNo }}"></label></div>
+<div class="impdochd"><label class="impfg"><span>Дата документа</span><input class="inp" type="date" value="{{ f.date }}" onInput="{{ f.onDate }}"></label><label class="impfg"><span>{{ impPartyLabel }}</span><input class="inp" value="{{ f.party }}" onInput="{{ f.onParty }}" placeholder="будет создан, если новый"></label><label class="impfg sm"><span>ИНН</span><input class="inp" value="{{ f.inn }}" onInput="{{ f.onInn }}" placeholder="для контроля дублей"></label><label class="impfg sm"><span>№ док.</span><input class="inp" value="{{ f.no }}" onInput="{{ f.onNo }}"></label><label class="impfg sm"><span>Валюта</span><select class="sel" value="{{ f.curr }}" onChange="{{ f.onCurr }}"><option value="RUB">RUB ₽</option><option value="EUR">EUR €</option><option value="USD">USD $</option><option value="CNY">CNY ¥</option></select></label><sc-if value="{{ f.isForeign }}" hint-placeholder-val=""><label class="impfg sm"><span>Курс ЦБ ₽</span><input class="inp num" value="{{ f.rate }}" onInput="{{ f.onRate }}"></label></sc-if></div>
 <sc-if value="{{ f.isSimple }}" hint-placeholder-val="x"><div class="impdochd"><sc-if value="{{ f.purpose }}" hint-placeholder-val=""><label class="impfg"><span>Назначение / маршрут</span><input class="inp" value="{{ f.purpose }}" onInput="{{ f.onPurpose }}"></label></sc-if></div></sc-if>
 <sc-if value="{{ f.isSimple }}" hint-placeholder-val=""><div class="impdochd"><label class="impfg"><span>Сумма ₽</span><input class="inp num" value="{{ f.amount }}" onInput="{{ f.onAmount }}"></label><label class="impfg"><span>Маршрут</span><input class="inp" value="{{ f.route }}" onInput="{{ f.onRoute }}"></label><label class="impfg"><span>Фрахт ₽</span><input class="inp num" value="{{ f.freight }}" onInput="{{ f.onFreight }}"></label></div></sc-if>
 <sc-if value="{{ f.isSimple }}" hint-placeholder-val="x"><div class="imptbl"><div class="imptblhd"><span>{{ impNameLabel }}</span><span>Артикул</span><span>Кол-во</span><span>Цена</span><span>Сумма</span><span></span></div><sc-for list="{{ f.lines }}" as="l" hint-placeholder-count="2"><div class="imptblrow"><input class="inp" value="{{ l.name }}" onInput="{{ l.onName }}" placeholder="наименование"><input class="inp" value="{{ l.article }}" onInput="{{ l.onArticle }}" placeholder="арт."><input class="inp num" value="{{ l.qty }}" onInput="{{ l.onQty }}"><input class="inp num" value="{{ l.price }}" onInput="{{ l.onPrice }}"><span class="mono impsumc">{{ l.sum }}</span><button class="tlink del" onClick="{{ l.del }}">✕</button></div></sc-for><div class="imptblfoot"><button class="btn xs" onClick="{{ f.addLine }}">+ строка</button><label class="impvat">НДС, %<input class="inp num" value="{{ f.vatRate }}" onInput="{{ f.onVatRate }}"></label><span class="hint">Позиций: {{ f.lineCount }} · Итого с НДС: {{ f.totalFmt }} ₽ · НДС: {{ f.vatFmt }} ₽ · без НДС: {{ f.totalNetFmt }} ₽</span></div></div></sc-if>
@@ -8846,13 +8846,13 @@ class Component extends DCLogic {
     if (target === 'sales') {
       const party = meta.buyer || this.impTopValue(rows, map.client) || this.impTopValue(rows, map.supplier) || baseName;
       const lines = rows.map(lineOf).filter(l => l.name || l.qty || l.price);
-      return { recType: 'sales', doc: { date: dateD, party, inn: meta.buyerInn || '', no: docNo, vatRate, vatIncl: true, vatAmount: meta.vatAmount || 0, lines: lines.length ? lines : [{ name: '', article: '', qty: 0, price: 0 }] }, summary: 'Реализация · ' + party + ' · ' + lines.length + ' поз.' };
+      return { recType: 'sales', doc: { date: dateD, party, inn: meta.buyerInn || '', no: docNo, currency: meta.currency || 'RUB', rate: meta.rate || 1, vatRate, vatIncl: true, vatAmount: meta.vatAmount || 0, lines: lines.length ? lines : [{ name: '', article: '', qty: 0, price: 0 }] }, summary: 'Реализация · ' + party + ' · ' + lines.length + ' поз.' };
     }
     if (target === 'receipts' || target === 'purchases' || target === 'ved') {
       const party = meta.supplier || this.impTopValue(rows, map.supplier) || baseName;
       const inn = meta.supplierInn || this.impTopValue(rows, map.inn) || '';
       const lines = rows.map(lineOf).filter(l => l.name || l.qty || l.price);
-      const doc = { date: dateD, party, inn, no: docNo, market: (target === 'ved' ? 'Внешний' : 'Внутренний'), vatRate, vatIncl: true, vatAmount: meta.vatAmount || 0, lines: lines.length ? lines : [{ name: '', article: '', qty: 0, price: 0 }] };
+      const doc = { date: dateD, party, inn, no: docNo, currency: meta.currency || 'RUB', rate: meta.rate || 1, market: (target === 'ved' || (meta.currency && meta.currency !== 'RUB') ? 'Внешний' : 'Внутренний'), vatRate, vatIncl: true, vatAmount: meta.vatAmount || 0, lines: lines.length ? lines : [{ name: '', article: '', qty: 0, price: 0 }] };
       if (target === 'ved') { const dt = this.impVedDocType(file.name, H); const total = lines.reduce((s, l) => s + (l.qty && l.price ? l.qty * l.price : 0), 0) || rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'sum')), 0); return { recType: 'ved', docType: dt, doc, total, summary: dt.label + ' · ' + this.fmt(total) }; }
       return { recType: target, doc, summary: party + ' · ' + lines.length + ' поз.' };
     }
@@ -8906,10 +8906,10 @@ class Component extends DCLogic {
     const t = imp.target; let msg = ''; let newCp = 0;
     if (t === 'sales') {
       const sales = []; let i = 0;
-      for (const f of ok) { const dc = f.doc; if (this.impEnsureCp(dc.party, '', dc.lines, 'sell', dc.date)) newCp++; for (const l of (dc.lines || [])) { if (!(l.name) && !(l.qty) && !(l.price)) continue; sales.push({ id: 'sl_' + Date.now().toString(36) + (i++).toString(36), no: dc.no || '', date: dc.date, client: dc.party, product: l.name, qty: l.qty || 0, price: l.price || 0, currency: 'RUB', rate: 1, createdAt: Date.now() }); } }
+      for (const f of ok) { const dc = f.doc; if (this.impEnsureCp(dc.party, dc.inn, dc.lines, 'sell', dc.date)) newCp++; for (const l of (dc.lines || [])) { if (!(l.name) && !(l.qty) && !(l.price)) continue; sales.push({ id: 'sl_' + Date.now().toString(36) + (i++).toString(36), no: dc.no || '', date: dc.date, client: dc.party, product: l.name, qty: l.qty || 0, price: l.price || 0, currency: dc.currency || 'RUB', rate: (dc.currency && dc.currency !== 'RUB') ? (Number(dc.rate) || 1) : 1, createdAt: Date.now() }); } }
       this.writeSales([...sales, ...(this.state.sales || [])]); this.scheduleAutoRecalc('NEW_SALES'); msg = 'Внесено строк реализации: ' + sales.length;
     } else if (t === 'receipts') {
-      let cnt = 0; for (const f of ok) { const dc = f.doc; if (this.impEnsureCp(dc.party, dc.inn, dc.lines, 'buy', dc.date)) newCp++; const r = { id: 'rc_' + Date.now().toString(36) + (cnt++).toString(36), no: dc.no || '', date: dc.date, supplier: dc.party, inn: dc.inn || '', currency: 'RUB', rate: 1, market: dc.market || 'Внутренний', lines: (dc.lines || []).filter(l => l.name || l.qty).map(l => ({ material: l.name, article: l.article || '', qty: l.qty, price: l.price })), createdAt: Date.now() }; this.writeReceipts([r, ...(this.state.receipts || [])]); this.applyReceiptStock(r); }
+      let cnt = 0; for (const f of ok) { const dc = f.doc; if (this.impEnsureCp(dc.party, dc.inn, dc.lines, 'buy', dc.date)) newCp++; const r = { id: 'rc_' + Date.now().toString(36) + (cnt++).toString(36), no: dc.no || '', date: dc.date, supplier: dc.party, inn: dc.inn || '', currency: dc.currency || 'RUB', rate: (dc.currency && dc.currency !== 'RUB') ? (Number(dc.rate) || 1) : 1, market: dc.market || 'Внутренний', lines: (dc.lines || []).filter(l => l.name || l.qty).map(l => ({ material: l.name, article: l.article || '', qty: l.qty, price: l.price })), createdAt: Date.now() }; this.writeReceipts([r, ...(this.state.receipts || [])]); this.applyReceiptStock(r); }
       this.scheduleAutoRecalc('NEW_RECEIPT'); msg = 'Внесено поступлений: ' + cnt;
     } else if (t === 'purchases') {
       let cnt = 0; const add = []; for (const f of ok) { const dc = f.doc; if (this.impEnsureCp(dc.party, dc.inn, dc.lines, 'buy', dc.date)) newCp++; for (const l of (dc.lines || [])) { if (!l.name) continue; add.push({ id: 'p_' + Date.now().toString(36) + (cnt++).toString(36), no: String(this.nextNo ? this.nextNo(this.state.purchases) : (cnt)), reqDate: dc.date, orderDate: '', arriveDate: '', supplier: dc.party, material: l.name, qty: l.qty || 0, priceEur: l.price || 0, currency: '₽', curRate: 0, transport: 0, customs: 0, prepay: 0, status: 'новая', approvalStatus: 'на рассмотрении', priceApproval: '', market: dc.market || 'Внутренний', comment: 'Импорт из файла', initiator: this.state.currentUser ? this.state.currentUser.name : '', paid: 0 }); } }
@@ -8965,6 +8965,9 @@ class Component extends DCLogic {
         date: dc.date || '', onDate: (e) => this.impEditDoc(i, 'date', e.target.value),
         party: dc.party || '', onParty: (e) => this.impEditDoc(i, 'party', e.target.value),
         inn: dc.inn || '', onInn: (e) => this.impEditDoc(i, 'inn', e.target.value),
+        curr: dc.currency || 'RUB', onCurr: (e) => { const c = e.target.value; this.impEditDoc(i, 'currency', c); this.impEditDoc(i, 'rate', c === 'RUB' ? 1 : (this.cbRate(c) || 0)); },
+        rate: dc.rate || 1, onRate: (e) => this.impEditDoc(i, 'rate', this.impNum(e.target.value)),
+        isForeign: (dc.currency && dc.currency !== 'RUB'),
         no: dc.no || '', onNo: (e) => this.impEditDoc(i, 'no', e.target.value),
         amount: dc.amount || 0, onAmount: (e) => this.impEditDoc(i, 'amount', this.impNum(e.target.value)),
         purpose: dc.purpose || '', onPurpose: (e) => this.impEditDoc(i, 'purpose', e.target.value),
@@ -10042,7 +10045,8 @@ class Component extends DCLogic {
       const delim = head.indexOf('\t') >= 0 ? '\t' : (head.split(';').length > head.split(',').length ? ';' : ',');
       const parse = (l) => l.split(delim).map(c => c.replace(/^"|"$/g, '').trim());
       const headers = parse(head); const rows = lines.slice(1).map(parse).filter(r => !this.dlIsNoiseRow(r));
-      return { headers, rows, n: rows.length };
+      let cur = 'RUB'; const lt = this.dlNorm(text); if (/евро|euro|\beur\b|€|\bцент/.test(lt)) cur = 'EUR'; else if (/доллар|usd|\$/.test(lt)) cur = 'USD'; else if (/юан|cny|¥/.test(lt)) cur = 'CNY';
+      return { headers, rows, n: rows.length, meta: { currency: cur, rate: cur === 'RUB' ? 1 : (this.cbRate(cur) || 0) } };
     }
     const XLSX = window.XLSX; if (!XLSX) throw new Error('Библиотека Excel не загрузилась — обновите страницу.');
     const buf = await file.arrayBuffer(); const wb = XLSX.read(buf, { type: 'array' });
@@ -10079,6 +10083,7 @@ class Component extends DCLogic {
         const n = this.dlNorm(row[c]); if (!n) continue;
         if (!meta.supplier && /^(поставщик|продавец|грузоотправит)/.test(n)) { const v = valAfter(row, c); if (v) { meta.supplier = v.replace(/^["']|["']$/g, ''); meta.supplierInn = innOf(v) || meta.supplierInn; } }
         if (!meta.buyer && /^(покупател|клиент|заказчик|грузополучат|плательщик)/.test(n)) { const v = valAfter(row, c); if (v) { meta.buyer = v.replace(/^["']|["']$/g, ''); meta.buyerInn = innOf(v) || meta.buyerInn; } }
+        if (/^инн\b|^инн:/.test(n)) { const v = valAfter(row, c); const innv = innOf(v) || innOf(n); if (innv) { if (meta.docKind === 'sales' || /покупат|клиент/.test(meta._innFor || '')) meta.buyerInn = meta.buyerInn || innv; else meta.supplierInn = meta.supplierInn || innv; } }
       }
     }
     // НДС и Итого — из подвала
@@ -10095,6 +10100,11 @@ class Component extends DCLogic {
     const nt = this.dlNorm(title);
     if (/реализац|расходн|товарн|счет-фактур|счёт-фактур|отгрузк/.test(nt)) meta.docKind = 'sales';
     else if (/поступлен|приход|накладн|закуп/.test(nt)) meta.docKind = 'receipt';
+    // Определение валюты документа (по сумме прописью / символам / заголовкам колонок)
+    let curr = 'RUB';
+    for (const row of aoa) { if (!row) continue; for (const c of row) { const t = this.dlNorm(c); if (!t) continue; if (/евро|euro|eur\b|€|\bцент/.test(t)) { curr = 'EUR'; break; } if (/доллар|usd|\$/.test(t)) { curr = 'USD'; break; } if (/юан|cny|юаней|жэньминьби|¥/.test(t)) { curr = 'CNY'; break; } } if (curr !== 'RUB') break; }
+    meta.currency = curr;
+    meta.rate = curr === 'RUB' ? 1 : (this.cbRate(curr) || 0);
     return meta;
   }
   // Лениво подгрузить PDF.js (один раз)
