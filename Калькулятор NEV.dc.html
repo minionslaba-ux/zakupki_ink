@@ -960,6 +960,14 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 @keyframes siLogoIn{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:none}}
 .weloverlay{position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(18,20,24,.58);backdrop-filter:blur(3px);animation:welFade .28s ease both}
 @keyframes welFade{from{opacity:0}to{opacity:1}}
+.mailmodal{max-width:450px}
+.maildoc{font-weight:700;font-size:14px;color:#1F4E78;margin-bottom:2px}
+.maildocsub{font-weight:400;color:#56534f}
+.mailfmts{display:flex;gap:8px}
+.mailfmt{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 8px;border:1.5px solid #d8d5d0;background:#fff;border-radius:10px;cursor:pointer;font-weight:600;font-size:13px;color:#3a3a3a}
+.mailfmt.on{border-color:#1F4E78;background:#eef3fb;color:#1F4E78}
+.mailtorow{display:flex;gap:8px;align-items:center}
+.mailtorow .inp{flex:1}
 .welcard{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;max-width:430px;background:#fff;border-radius:22px;padding:28px 30px 26px;box-shadow:0 34px 90px rgba(0,0,0,.42);animation:welPop .42s cubic-bezier(.18,.9,.3,1.2) both}
 @keyframes welPop{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
 .welphoto{position:relative;width:248px;height:158px;border-radius:16px;overflow:hidden;cursor:pointer;background:#f4f2ef;border:1px solid #e7e4e0;box-shadow:0 10px 26px rgba(0,0,0,.16);display:flex;align-items:center;justify-content:center}
@@ -2066,6 +2074,8 @@ window.dispatchEvent(new Event('fbready'));
 <script>try{if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}}catch(e){}</script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </helmet>
 <sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="{{ loaderCls }}" role="status"><div class="si-p1 {{ p1cls }}"><div class="si-in"><div class="si-wm">Shtark</div><div class="si-tag">{{ tagLetters }}</div><div class="si-bar"><div class="si-run"></div></div><div class="si-cap">Корпоративный портал группы компаний</div></div></div><div class="si-p2 {{ p2cls }}"><div class="p2card"><div class="p2left"><div class="p2brand">Shtark Ink <span class="p2flow">Flow</span></div><div class="p2bar"><div class="p2run"></div></div><div class="p2slo">{{ sloganLetters }}</div><a class="p2site" href="https://shtarkink.com/" target="_blank" rel="noopener" title="Официальный сайт Shtark Ink">Официальный сайт →</a><div class="p2chem"><div class="p2brand">Shtark Chemicals <span class="p2flow">Flow</span></div><div class="p2bar"><div class="p2run"></div></div><div class="p2slo p2slochem">{{ chemSloganLetters }}</div><a class="p2site" href="https://shtarkchemicals.com/" target="_blank" rel="noopener" title="Официальный сайт Shtark Chemicals">Официальный сайт →</a></div></div><div class="p2right"><div class="p2ready"><span class="p2dot"></span> Система готова к работе</div><div class="p2h"><span class="p2heb">Единая платформа управления</span><span class="p2hbrand">SHTARK<i class="p2hbar"></i></span></div><sc-if value="{{ needLogin }}" hint-placeholder-val="{{ true }}"><div class="p2form"><div><div class="p2lbl">Логин</div><input class="p2inp" value="{{ loginInput }}" onInput="{{ onLoginInput }}" onKeyDown="{{ onLoginKey }}" placeholder="например, ivanov" autocomplete="username"></div><div><div class="p2lbl">Пароль</div><input class="p2inp" type="password" value="{{ passInput }}" onInput="{{ onPassInput }}" onKeyDown="{{ onLoginKey }}" placeholder="••••••••" autocomplete="current-password"></div><div class="p2err">{{ loginErr }}</div><button class="p2btn" onClick="{{ doLogin }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ openReset }}">Забыли пароль?</button></div><sc-if value="{{ resetOpen }}" hint-placeholder-val=""><div class="p2reset"><div class="p2lbl">Восстановление пароля</div><input class="p2inp" value="{{ resetInput }}" onInput="{{ onResetInput }}" onKeyDown="{{ onResetKey }}" placeholder="ваш e-mail или логин" autocomplete="email"><sc-if value="{{ resetErr }}" hint-placeholder-val=""><div class="p2err">{{ resetErr }}</div></sc-if><sc-if value="{{ resetOk }}" hint-placeholder-val=""><div class="p2ok">{{ resetOk }}</div></sc-if><div class="p2rrow"><button class="p2btn sm" onClick="{{ doReset }}" disabled="{{ resetBusy }}">Прислать новый пароль</button><button class="p2link" onClick="{{ closeReset }}">Отмена</button></div><div class="p2hint">На указанный e-mail придёт новый временный пароль. Если e-mail не привязан — обратитесь к администратору.</div></div></sc-if><div class="p2hint">Введите логин и пароль, выданные администратором</div><div class="p2dev">Разработка и сопровождение системы: <b>Моисеенко Константин</b></div></sc-if><sc-if value="{{ hasSession }}" hint-placeholder-val=""><div class="p2you">Вы вошли как <b>{{ sessionName }}</b></div><button class="p2btn" onClick="{{ enterWelcome }}">Войти <span class="p2arr">→</span></button><button class="p2link" onClick="{{ switchUser }}">Войти под другим пользователем</button></sc-if></div></div></div></div></sc-if>
 <div class="wrap {{ wrapCls }}">
@@ -3406,6 +3416,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="unote" style="margin-top:14px"><b>Уведомления о задачах сотрудникам.</b> Создайте в EmailJS второй шаблон письма для задач с переменными: to_email, to_name, subject, message, task_title, task_due, task_author, task_priority, app_name. Впишите его Template ID ниже и включите уведомления. Письмо уходит исполнителям (у кого указан e-mail в карточке пользователя) при назначении и изменении задачи.</div>
 <div class="uform">
 <div class="fg"><label>Template ID для задач</label><input class="inp" value="{{ emTaskTemplate }}" onInput="{{ onEmTaskTemplate }}" placeholder="template_xxxxxxx"></div>
+<div class="fg"><label>Template ID для отчётов/файлов (вложения)</label><input class="inp" value="{{ emReportTemplate }}" onInput="{{ onEmReportTemplate }}" placeholder="template_xxxxxxx"></div>
 <div class="fg"><label>Уведомлять о задачах</label><label class="dlmapchk" style="height:38px"><input type="checkbox" checked="{{ emNotifyTasks }}" onChange="{{ onEmNotifyTasks }}"> Отправлять письма исполнителям</label></div>
 </div>
 <div class="uform"><div class="fg full"><label>Ссылка на приложение (боевой адрес для писем)</label><input class="inp" value="{{ emAppUrl }}" onInput="{{ onEmAppUrl }}" placeholder="https://minionslaba-ux.github.io/zakupki_ink/index.html?key=shtark-erp-2026"></div></div>
@@ -3584,6 +3595,19 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 </div></div>
 </sc-if>
+<sc-if value="{{ mailDlgOpen }}" hint-placeholder-val=""><div class="modalbg" onClick="{{ mailDlgClose }}"><div class="modal mailmodal" onClick="{{ mailStopProp }}">
+<div class="modalhd"><h3>Отправить на почту</h3><button class="x2" onClick="{{ mailDlgClose }}">×</button></div>
+<div class="modalbd">
+<div class="maildoc">{{ mailDlgTitle }}<sc-if value="{{ mailDlgSub }}" hint-placeholder-val=""><span class="maildocsub"> · {{ mailDlgSub }}</span></sc-if></div>
+<div class="fsec first">Формат файла</div>
+<div class="mailfmts"><button class="mailfmt {{ mailFmtExcelCls }}" onClick="{{ mailDlgSetExcel }}"><span>📊</span> Excel</button><button class="mailfmt {{ mailFmtWordCls }}" onClick="{{ mailDlgSetWord }}"><span>📝</span> Word</button><button class="mailfmt {{ mailFmtPdfCls }}" onClick="{{ mailDlgSetPdf }}"><span>📄</span> PDF</button></div>
+<div class="fsec">Адрес получателя</div>
+<div class="mailtorow"><input class="inp" type="email" value="{{ mailDlgTo }}" onInput="{{ onMailDlgTo }}" placeholder="name@company.ru"><button class="btn" onClick="{{ mailDlgSelf }}" title="Отправить на e-mail вашего аккаунта">Отправить себе</button></div>
+<sc-if value="{{ mailDlgHasSelf }}" hint-placeholder-val=""><div class="hint">Ваш e-mail в аккаунте: {{ mailDlgSelfEmail }}</div></sc-if>
+<sc-if value="{{ mailDlgHasMsg }}" hint-placeholder-val=""><div class="{{ mailDlgMsgCls }}">{{ mailDlgMsg }}</div></sc-if>
+</div>
+<div class="modalft"><button class="btn" onClick="{{ mailDlgClose }}">Отмена</button><button class="btn dark" onClick="{{ mailDlgSend }}" disabled="{{ mailDlgBusy }}"><span>✉</span> {{ mailDlgSendLabel }}</button></div>
+</div></div></sc-if>
 <sc-if value="{{ showWelcome }}" hint-placeholder-val=""><div class="weloverlay"><div class="welcard"><div class="welduo"><div class="welbot"><span class="welbotav aya">✦</span><span class="welbotname">Ая</span></div><div class="welbot"><span class="welbotav max">🤖</span><span class="welbotname">Макс</span></div></div><div class="welhi">Привет, {{ welName }}! 👋</div><div class="welai">{{ welGreeting }}</div><div class="welthanks">Удачного дня и продуктивной смены — <b>Ая и Макс</b>. Спасибо, что работаете в <b>{{ coName }} Flow</b>.</div><button class="welbtn" onClick="{{ startWork }}">Начать работу <span class="p2arr">→</span></button></div></div></sc-if>
 <sc-if value="{{ showFarewell }}" hint-placeholder-val=""><div class="weloverlay"><div class="welcard"><label class="welphoto">{{ welPhotoImg }}</label><div class="welai">{{ farewellText }}</div><div class="welthanks">До скорой встречи в <b>Shtark Chemicals Flow</b>!</div><div class="welrow"><button class="welstay" onClick="{{ cancelFarewell }}">Остаться</button><button class="welbtn" onClick="{{ doLogout }}">Выйти <span class="p2arr">→</span></button></div></div></div></sc-if>
 <sc-if value="{{ tgHasLink }}" hint-placeholder-val=""><a class="tgfab" href="{{ tgLink }}" target="_blank" rel="noopener" title="Telegram-чат компании"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M9.8 15.6 9.6 19c.4 0 .6-.2.8-.4l1.9-1.8 3.9 2.9c.7.4 1.2.2 1.4-.7l2.6-12.2c.2-1-.4-1.4-1.1-1.2L2.4 9.7c-1 .4-1 .9-.2 1.2l4.3 1.3 9.9-6.2c.5-.3.9-.1.5.2z"/></svg></a></sc-if>
@@ -6470,7 +6494,7 @@ class Component extends DCLogic {
   switchUser() { this.setState({ currentUser: null, loginInput: '', passInput: '', loginErr: '' }); }
 
   // ===== Восстановление пароля по e-mail (EmailJS) =====
-  emailCfgVal() { const c = this.state.emailCfg || {}; return { serviceId: c.serviceId || '', templateId: c.templateId || '', publicKey: c.publicKey || '', fromName: c.fromName || 'Shtark Flow', taskTemplateId: c.taskTemplateId || '', notifyTasks: !!c.notifyTasks, appUrl: c.appUrl || 'https://minionslaba-ux.github.io/zakupki_ink/index.html?key=shtark-erp-2026' }; }
+  emailCfgVal() { const c = this.state.emailCfg || {}; return { serviceId: c.serviceId || '', templateId: c.templateId || '', publicKey: c.publicKey || '', fromName: c.fromName || 'Shtark Flow', taskTemplateId: c.taskTemplateId || '', reportTemplateId: c.reportTemplateId || '', notifyTasks: !!c.notifyTasks, appUrl: c.appUrl || 'https://minionslaba-ux.github.io/zakupki_ink/index.html?key=shtark-erp-2026' }; }
   emailConfigured() { const c = this.emailCfgVal(); return !!(c.serviceId && c.templateId && c.publicKey); }
   maskEmail(em) { const p = String(em || '').split('@'); if (p.length !== 2) return em; const a = p[0]; return (a.length <= 2 ? a : a.slice(0, 2) + '***') + '@' + p[1]; }
   // ===== ПОЧТОВЫЙ РОБОТ (входящие документы) — конфигурация + боевая проверка пайплайна =====
@@ -6539,7 +6563,7 @@ class Component extends DCLogic {
   }
   saveEmailCfg() {
     const e = this.state.emailEdit || {};
-    const cfg = { serviceId: (e.serviceId || '').trim(), templateId: (e.templateId || '').trim(), publicKey: (e.publicKey || '').trim(), fromName: (e.fromName || '').trim() || 'Shtark Flow', taskTemplateId: (e.taskTemplateId || '').trim(), notifyTasks: !!e.notifyTasks, appUrl: (e.appUrl || '').trim() };
+    const cfg = { serviceId: (e.serviceId || '').trim(), templateId: (e.templateId || '').trim(), publicKey: (e.publicKey || '').trim(), fromName: (e.fromName || '').trim() || 'Shtark Flow', taskTemplateId: (e.taskTemplateId || '').trim(), reportTemplateId: (e.reportTemplateId || '').trim(), notifyTasks: !!e.notifyTasks, appUrl: (e.appUrl || '').trim() };
     this.setState({ emailCfg: cfg, emailStatus: 'Настройки отправки писем сохранены ✓' });
     try { this.lsSet('emailcfg', JSON.stringify(cfg)); } catch (e2) {}
     if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { emailCfg: cfg }, { merge: true }).catch(() => {}); } catch (e2) {} }
@@ -6715,6 +6739,7 @@ class Component extends DCLogic {
       onEmPublic: (e) => set({ emailEdit: { ...(S.emailEdit || {}), publicKey: e.target.value }, emailStatus: '' }),
       onEmFrom: (e) => set({ emailEdit: { ...(S.emailEdit || {}), fromName: e.target.value }, emailStatus: '' }),
       emTaskTemplate: (S.emailEdit || {}).taskTemplateId || '', emNotifyTasks: !!(S.emailEdit || {}).notifyTasks,
+      emReportTemplate: (S.emailEdit || {}).reportTemplateId || '', onEmReportTemplate: (e) => set({ emailEdit: { ...(S.emailEdit || {}), reportTemplateId: e.target.value }, emailStatus: '' }),
       onEmTaskTemplate: (e) => set({ emailEdit: { ...(S.emailEdit || {}), taskTemplateId: e.target.value }, emailStatus: '' }),
       emAppUrl: (S.emailEdit || {}).appUrl || '', onEmAppUrl: (e) => set({ emailEdit: { ...(S.emailEdit || {}), appUrl: e.target.value }, emailStatus: '' }),
       onEmNotifyTasks: (e) => set({ emailEdit: { ...(S.emailEdit || {}), notifyTasks: e.target.checked }, emailStatus: '' }),
@@ -11885,7 +11910,7 @@ class Component extends DCLogic {
     base.onPdf = () => { set({ dlOpen: false }); this.printOnLetterhead(exp); };
     base.onExcel = () => { set({ dlOpen: false }); this.calcExportXlsx(exp); };
     base.onWord = () => { set({ dlOpen: false }); this.exportWord(exp); };
-    base.onEmail = () => { set({ dlOpen: false }); this.calcEmailExport(exp); };
+    base.onEmail = () => { set({ dlOpen: false }); this.openCalcEmail(exp); };
   }
 
   // Премиум Excel для калькуляторов (Steel Blue/Navy): лист «Дашборд» (KPI) + «Детализация». Без xl-данных — откат на .xls.
@@ -11926,6 +11951,129 @@ class Component extends DCLogic {
     const subj = exp.title + (exp.subtitle ? ' · ' + exp.subtitle : '') + ' · ' + this.co().name;
     const href = 'mailto:?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
     try { window.location.href = href; } catch (e) { try { window.open(href); } catch (e2) {} }
+  }
+
+  // ===== Диалог отправки на почту: формат (Excel/Word/PDF) + адрес получателя + «Отправить себе» =====
+  openCalcEmail(exp) {
+    const cu = this.state.currentUser;
+    this.setState({ mailDlg: { open: true, exp, fmt: 'excel', to: (cu && cu.email) || '', busy: false, msg: '', ok: false } });
+  }
+  calcEmailSelf() {
+    const cu = this.state.currentUser; const d = this.state.mailDlg || {};
+    const self = (cu && cu.email) || '';
+    if (!self) { this.setState({ mailDlg: { ...d, msg: 'В вашем аккаунте не указан e-mail. Задайте его в разделе «Пользователи».', ok: false } }); return; }
+    this.setState({ mailDlg: { ...d, to: self, msg: '' } }, () => this.calcDoEmail());
+  }
+  blobToBase64(blob) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => { const s = String(r.result || ''); res(s.slice(s.indexOf(',') + 1)); }; r.onerror = rej; r.readAsDataURL(blob); }); }
+  calcMetaHtmlInline(exp) { return (exp.meta || []).map(m => '<span style="margin-right:22px;font-size:12px;white-space:nowrap"><b style="color:#56534f">' + this.escHtml(m[0]) + ':</b> ' + this.escHtml(m[1]) + '</span>').join(''); }
+  calcTableHtmlInline(exp) {
+    const th = exp.cols.map(c => '<th style="background:#1F4E78;color:#fff;text-align:' + (c.r ? 'right' : 'left') + ';padding:6px 8px;font-size:12px;border:1px solid #1F4E78;font-weight:700">' + this.escHtml(c.l) + '</th>').join('');
+    const body = exp.rows.map(row => '<tr>' + row.map(cell => { const c = (cell && typeof cell === 'object') ? cell : { v: cell }; return '<td style="border:1px solid #d3d3d3;padding:5px 8px;font-size:12px;text-align:' + (c.r ? 'right' : 'left') + ';' + (c.tot ? 'font-weight:bold;background:#D9E1F2;' : '') + '">' + this.escHtml(c.v) + '</td>'; }).join('') + '</tr>').join('');
+    return '<table style="width:100%;border-collapse:collapse;margin-top:10px"><thead><tr>' + th + '</tr></thead><tbody>' + body + '</tbody></table>';
+  }
+  calcWordHtml(exp) {
+    const lh = window.LETTERHEAD_DATAURL || 'letterhead.png';
+    const tbl = '<table border="1" cellspacing="0" style="border-collapse:collapse;width:100%;font-size:9pt">'
+      + '<thead><tr>' + exp.cols.map(c => '<th style="background:#0e0e0e;color:#fff;padding:3pt 5pt;text-align:' + (c.r ? 'right' : 'left') + ';border:0.5pt solid #888">' + this.escHtml(c.l) + '</th>').join('') + '</tr></thead><tbody>'
+      + exp.rows.map(row => '<tr>' + row.map(cell => { const c = (cell && typeof cell === 'object') ? cell : { v: cell }; return '<td style="border:0.5pt solid #bbb;padding:2.5pt 5pt;text-align:' + (c.r ? 'right' : 'left') + ';' + (c.tot ? 'font-weight:bold;background:#fbf3c8;' : '') + '">' + this.escHtml(c.v) + '</td>'; }).join('') + '</tr>').join('') + '</tbody></table>';
+    const meta = (exp.meta || []).map(m => '<span style="margin-right:24pt"><b>' + this.escHtml(m[0]) + ':</b> ' + this.escHtml(m[1]) + '</span>').join('');
+    return '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8">'
+      + '<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->'
+      + '<style>@page Section1{size:21.0cm 29.7cm;margin:6.0cm 1.8cm 3.2cm 1.8cm;mso-header-margin:0cm;mso-footer-margin:0cm;mso-header:h1;}'
+      + 'div.Section1{page:Section1;}p.MsoHeader{margin:0;}body{font-family:"Arial";font-size:10pt;color:#0e0e0e;}'
+      + 'h1{font-family:"Arial";font-size:14pt;margin:0 0 4pt;}.sub{color:#56534f;font-size:10pt;margin-bottom:8pt;}'
+      + '</style></head><body><div class="Section1">'
+      + '<h1>' + this.escHtml(exp.title) + '</h1>'
+      + (exp.subtitle ? '<div class="sub">' + this.escHtml(exp.subtitle) + '</div>' : '')
+      + (meta ? '<p style="font-size:9.5pt">' + meta + '</p>' : '') + tbl
+      + '<p style="margin-top:24pt;color:#56534f">Исполнитель: ______________________&nbsp;&nbsp;&nbsp;&nbsp;Дата: ____________</p>'
+      + '</div><div style="mso-element:header" id="h1"><p class="MsoHeader"><img width="794" height="1123" src="' + lh + '"></p></div>'
+      + '</body></html>';
+  }
+  async calcPdfBlob(exp) {
+    const html2canvas = window.html2canvas;
+    const jsPDFctor = window.jspdf && window.jspdf.jsPDF;
+    if (!html2canvas || !jsPDFctor) throw new Error('PDF-движок не загрузился — обновите страницу');
+    const lh = window.LETTERHEAD_DATAURL || 'letterhead.png';
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'position:fixed;left:-99999px;top:0;width:794px;background:#fff;z-index:-1';
+    wrap.innerHTML = '<div style="position:relative;width:794px;min-height:1123px;background:#fff;font-family:Arial,Helvetica,sans-serif;color:#0e0e0e">'
+      + '<img src="' + lh + '" style="position:absolute;top:0;left:0;width:794px;height:1123px">'
+      + '<div style="position:relative;padding:210px 58px 110px">'
+      + '<div style="font-size:20px;font-weight:800;margin:0 0 6px">' + this.escHtml(exp.title) + '</div>'
+      + (exp.subtitle ? '<div style="color:#56534f;font-size:13px;margin:0 0 12px">' + this.escHtml(exp.subtitle) + '</div>' : '')
+      + '<div style="display:flex;flex-wrap:wrap;gap:4px 0;margin:0 0 8px">' + this.calcMetaHtmlInline(exp) + '</div>'
+      + this.calcTableHtmlInline(exp)
+      + '<div style="margin-top:34px;color:#56534f;font-size:12px">Исполнитель: ______________________&nbsp;&nbsp;&nbsp;&nbsp;Дата: ____________</div>'
+      + '</div></div>';
+    document.body.appendChild(wrap);
+    try {
+      await new Promise(res => { const im = wrap.querySelector('img'); if (im && im.complete) return res(); if (!im) return res(); im.onload = res; im.onerror = res; setTimeout(res, 1800); });
+      const canvas = await html2canvas(wrap.firstChild, { scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false });
+      const pdf = new jsPDFctor({ unit: 'pt', format: 'a4' });
+      const pw = pdf.internal.pageSize.getWidth(), ph = pdf.internal.pageSize.getHeight();
+      const imgW = pw, imgH = canvas.height * (pw / canvas.width);
+      const img = canvas.toDataURL('image/jpeg', 0.92);
+      pdf.addImage(img, 'JPEG', 0, 0, imgW, imgH);
+      let left = imgH - ph, pos = 0;
+      while (left > 0.5) { pos -= ph; pdf.addPage(); pdf.addImage(img, 'JPEG', 0, pos, imgW, imgH); left -= ph; }
+      return pdf.output('blob');
+    } finally { try { document.body.removeChild(wrap); } catch (e) {} }
+  }
+  async calcFileBlob(exp, fmt) {
+    if (fmt === 'excel') {
+      const XLSX = window.XLSX; if (!XLSX) throw new Error('Библиотека Excel не загрузилась');
+      let wb;
+      if (exp.xl) {
+        wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, this.calcDashSheet(exp.title, exp.subtitle, exp.meta, exp.kpis), 'Дашборд');
+        XLSX.utils.book_append_sheet(wb, this.mgXlSheet(exp.title + (exp.subtitle ? ' · ' + exp.subtitle : ''), exp.xl.headers, exp.xl.types, exp.xl.rows, exp.xl.total || null), 'Детализация');
+      } else {
+        wb = XLSX.utils.book_new();
+        const aoa = [[exp.title], [exp.subtitle || ''], []].concat([exp.cols.map(c => c.l)]).concat(exp.rows.map(r => r.map(c => (c && typeof c === 'object') ? c.v : c)));
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(aoa), 'Отчёт');
+      }
+      const arr = XLSX.write(wb, { type: 'array', bookType: 'xlsx' });
+      return { blob: new Blob([arr], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), name: (exp.fileBase || 'export') + '.xlsx' };
+    }
+    if (fmt === 'word') {
+      return { blob: new Blob(['\ufeff' + this.calcWordHtml(exp)], { type: 'application/msword;charset=utf-8' }), name: (exp.fileBase || 'export') + '.doc' };
+    }
+    const blob = await this.calcPdfBlob(exp);
+    return { blob, name: (exp.fileBase || 'export') + '.pdf' };
+  }
+  async calcDoEmail() {
+    const d = this.state.mailDlg; if (!d || !d.exp) return;
+    const to = (d.to || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) { this.setState({ mailDlg: { ...d, msg: 'Укажите корректный e-mail получателя или нажмите «Отправить себе».', ok: false } }); return; }
+    this.setState({ mailDlg: { ...d, busy: true, msg: 'Формирование файла…', ok: false } });
+    let file;
+    try { file = await this.calcFileBlob(d.exp, d.fmt); }
+    catch (e) { this.setState({ mailDlg: { ...(this.state.mailDlg || {}), busy: false, msg: 'Не удалось сформировать файл: ' + (e.message || e), ok: false } }); return; }
+    try { this.dlBlob(file.name, file.blob); } catch (e) {}
+    const exp = d.exp;
+    let body = exp.title + (exp.subtitle ? ' · ' + exp.subtitle : '') + '\n\n';
+    (exp.meta || []).forEach(m => { body += m[0] + ': ' + m[1] + '\n'; });
+    if (exp.kpis && exp.kpis.length) { body += '\nКлючевые показатели:\n'; exp.kpis.forEach(k => { body += '• ' + k[0] + ': ' + k[1] + '\n'; }); }
+    const subj = exp.title + (exp.subtitle ? ' · ' + exp.subtitle : '') + ' · ' + this.co().name;
+    const c = this.emailCfgVal();
+    const tpl = c.reportTemplateId || c.templateId;
+    if (window.emailjs && c.serviceId && c.publicKey && tpl) {
+      try {
+        const b64 = await this.blobToBase64(file.blob);
+        try { window.emailjs.init({ publicKey: c.publicKey }); } catch (e) {}
+        const cu = this.state.currentUser;
+        const msg = body + '\n— Файл «' + file.name + '» во вложении. Сформировано в ' + this.co().name + ' Flow.';
+        const params = { to_email: to, email: to, to_name: to, user_name: (cu && cu.name) || '', from_name: c.fromName, subject: subj, message: msg, content: b64, filename: file.name, attachment: b64, attachment_name: file.name };
+        await window.emailjs.send(c.serviceId, tpl, params, { publicKey: c.publicKey });
+        this.setState({ mailDlg: { ...(this.state.mailDlg || {}), busy: false, ok: true, msg: 'Письмо с файлом отправлено на ' + to + '. Копия файла также скачана на устройство.' } });
+        return;
+      } catch (e) { /* переходим на черновик mailto */ }
+    }
+    body += '\n— Файл «' + file.name + '» сформирован и скачан на устройство. Прикрепите его к этому письму перед отправкой.';
+    const href = 'mailto:' + encodeURIComponent(to) + '?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+    try { window.location.href = href; } catch (e) { try { window.open(href); } catch (e2) {} }
+    this.setState({ mailDlg: { ...(this.state.mailDlg || {}), busy: false, ok: true, msg: 'Файл скачан, черновик письма для ' + to + ' открыт — прикрепите файл и отправьте. (Для автоотправки с вложением настройте «Template ID для отчётов» в разделе Пользователи → Почта.)' } });
   }
 
   expMetaHtml(exp) {
@@ -12879,6 +13027,27 @@ class Component extends DCLogic {
       cloudConnect: () => { this.cloudSaveSettings(); this.cloudConnect(); }, cloudDisconnect: () => this.cloudDisconnect(),
       hasExport: false, dlOpen: S.dlOpen, toggleDl: () => set({ dlOpen: !S.dlOpen }),
       onPrint: () => {}, onPdf: () => {}, onExcel: () => {}, onWord: () => {}, onEmail: () => {},
+      mailDlgOpen: !!(S.mailDlg && S.mailDlg.open),
+      mailDlgTitle: (S.mailDlg && S.mailDlg.exp && S.mailDlg.exp.title) || '',
+      mailDlgSub: (S.mailDlg && S.mailDlg.exp && S.mailDlg.exp.subtitle) || '',
+      mailDlgTo: (S.mailDlg && S.mailDlg.to) || '',
+      mailDlgBusy: !!(S.mailDlg && S.mailDlg.busy),
+      mailDlgSendLabel: (S.mailDlg && S.mailDlg.busy) ? 'Отправка…' : 'Отправить',
+      mailDlgMsg: (S.mailDlg && S.mailDlg.msg) || '', mailDlgHasMsg: !!(S.mailDlg && S.mailDlg.msg),
+      mailDlgMsgCls: (S.mailDlg && S.mailDlg.ok) ? 'hint ok' : 'banner err',
+      mailDlgSelfEmail: (S.currentUser && S.currentUser.email) || '',
+      mailDlgHasSelf: !!(S.currentUser && S.currentUser.email),
+      mailFmtExcelCls: (!S.mailDlg || !S.mailDlg.fmt || S.mailDlg.fmt === 'excel') ? 'on' : '',
+      mailFmtWordCls: (S.mailDlg && S.mailDlg.fmt === 'word') ? 'on' : '',
+      mailFmtPdfCls: (S.mailDlg && S.mailDlg.fmt === 'pdf') ? 'on' : '',
+      onMailDlgTo: (e) => set({ mailDlg: { ...(S.mailDlg || {}), to: e.target.value, msg: '' } }),
+      mailDlgSetExcel: () => set({ mailDlg: { ...(S.mailDlg || {}), fmt: 'excel' } }),
+      mailDlgSetWord: () => set({ mailDlg: { ...(S.mailDlg || {}), fmt: 'word' } }),
+      mailDlgSetPdf: () => set({ mailDlg: { ...(S.mailDlg || {}), fmt: 'pdf' } }),
+      mailDlgSelf: () => this.calcEmailSelf(),
+      mailDlgSend: () => this.calcDoEmail(),
+      mailDlgClose: () => set({ mailDlg: null }),
+      mailStopProp: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
       product: S.product, rate: S.rate, loss: S.loss, recipeOwner: S.recipeOwner,
       draftComp: S.draftComp, draftPct: S.draftPct, priceFilter: S.priceFilter,
       isCost: S.tab === 'cost', isMargin: S.tab === 'margin', isLanded: S.tab === 'landed', isDelivery: S.tab === 'delivery', isDataload: S.tab === 'dataload', isFileArch: S.tab === 'filearch', isPnl: S.tab === 'pnl',
