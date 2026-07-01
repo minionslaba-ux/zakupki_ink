@@ -2173,7 +2173,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
 <sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
-<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-01 · r12</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
+<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-01 · r13</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava" title="{{ u.tip }}" onContextMenu="{{ u.onCtx }}">{{ u.avatar }}<i class="ondot"></i><sc-if value="{{ u.hasStars }}" hint-placeholder-val=""><span class="onstars" title="KPI {{ u.starsLabel }}">{{ u.starsLabel }}</span></sc-if></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div><button class="ratebtn onrate" onClick="{{ goRating }}"><span>🏆</span> Рейтинг по задачам</button></div></sc-if>
@@ -3919,6 +3919,7 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this._activeCo = this.state.activeCo || 'ink';
+    try { this.vaultHeal(); } catch (e) {}
     try { document.title = this.co().name + ' Flow — корпоративный портал'; } catch (e) {}
     try { if (typeof puter !== 'undefined') puter.quiet = true; } catch (e) {}
     this._mq = () => this.setState({ isMobile: window.innerWidth <= 1024 });
@@ -4279,8 +4280,31 @@ class Component extends DCLogic {
   lsGlobal() { return { users_v1: 1, session_v1: 1, sf_token: 1, welcome_photo: 1, emailcfg: 1, aicfg: 1, cloud_v1: 1, daily_motiv: 1, active_co: 1 }; }
   lsKey(name) { return (this.lsGlobal()[name] ? 'inkflow_' : (this._co() === 'ink' ? 'inkflow_' : this._co() + '_')) + name; }
   lsGet(name) { try { return localStorage.getItem(this.lsKey(name)); } catch (e) { return null; } }
-  lsSet(name, val) { try { localStorage.setItem(this.lsKey(name), val); } catch (e) {} }
+  lsSet(name, val) { try { localStorage.setItem(this.lsKey(name), val); if (this.lsVaulted()[name] && val != null && val !== '' && val !== '{}' && val !== '[]') localStorage.setItem('vault_' + this.lsKey(name), JSON.stringify({ v: val, at: Date.now() })); } catch (e) {} }
   lsDel(name) { try { localStorage.removeItem(this.lsKey(name)); } catch (e) {} }
+  // ===== Хранилище-сейф настроек: критичные ключи не теряются при деплое (резервная копия + самовосстановление) =====
+  // Деплой обновляет только файлы кода; данные и настройки живут в localStorage (+ облако). Сейф — доп. страховка от случайной очистки.
+  lsVaulted() { return { users_v1: 1, aicfg: 1, emailcfg: 1, mailrobot: 1, admin_seed: 1, cloud_v1: 1, userprods: 1, nomrenames: 1, tc_actual: 1, tcalc: 1, xcalc: 1, ai_semantic_weights: 1, margin: 1, sebest: 1, ctcorr: 1 }; }
+  vaultHeal() {
+    // Для каждого критичного ключа: если основного значения нет/пусто, но есть резерв в сейфе — восстановить.
+    // Если значение есть, но резерва нет — создать резерв (бэкфилл существующих настроек).
+    let healed = 0, backfilled = 0;
+    for (const name of Object.keys(this.lsVaulted())) {
+      try {
+        const key = this.lsKey(name); const cur = localStorage.getItem(key);
+        const isEmpty = (cur == null || cur === '' || cur === '{}' || cur === '[]');
+        const vkey = 'vault_' + key; const raw = localStorage.getItem(vkey);
+        if (isEmpty) {
+          if (!raw) continue;
+          const bak = JSON.parse(raw); if (bak && bak.v != null && bak.v !== '' && bak.v !== '{}' && bak.v !== '[]') { localStorage.setItem(key, bak.v); healed++; }
+        } else if (!raw) {
+          localStorage.setItem(vkey, JSON.stringify({ v: cur, at: Date.now() })); backfilled++;
+        }
+      } catch (e) {}
+    }
+    if (healed) { try { this.secLog && this.secLog('SETTINGS_VAULT_RESTORE', { detail: 'Восстановлено настроек/данных из локального сейфа: ' + healed + ' (защита при деплое).' }); } catch (e) {} }
+    return healed;
+  }
 
   companyBlank() {
     return { stock: {}, extra: [], orders: [], purchases: [], prices: {}, pct: {}, added: {}, rate: (Number(this.state.rate) || 83.6892), loss: 0, planFrom: '', planTo: '', recipeOwner: '', whFilled: false, stockUpdatedAt: 0, rrHorizon: 3, rrSafetyMonths: 1, rrLeadDefault: 1, rrRun: {}, rrLead: {}, rrSafety: {}, turnoverDays: 90, stressGrowth: 30, prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planCur: 'RUB', ppScale: 'month', ppFrom: '', ppTo: '', ppNetStock: true, ppNetTransit: true, ppBy: 'raw', ppCur: 'RUB', ppGroup: 'none', oneCUrl: '', oneCMatch: 'article', oneCAuto: false, oneCLastAt: 0, oneCLog: [], lcData: [], lcMeta: null };
@@ -4302,6 +4326,7 @@ class Component extends DCLogic {
   }
   loadCompanyData(co) {
     const cfg = this.coCfg()[co] || this.coCfg().ink;
+    try { this.vaultHeal(); } catch (e) {}
     this.setState({ ready: false, catReady: false });
     fetch(cfg.data).then(r => r.json()).then(d => {
       this.data = d; this.buildIndex(); this._landMap = null;
@@ -6102,7 +6127,15 @@ class Component extends DCLogic {
       title: kind === 'xcalc' ? 'Калькулятор X · себестоимость и цена' : 'Калькулятор технолога · себестоимость и цена',
       subtitle: name || '', fileBase: (kind === 'xcalc' ? 'kalkulyator-x-' : 'kalkulyator-tehnologa-') + this.slug(name || 'produkt'),
       meta, cols, rows, kpis,
-      xl: { headers: cols.map(c => c.l), types: ['code', 'text', 'text', 'num1', 'eur2', 'eur', 'money'], rows: xlRows, total: xlTotal }
+      xl: { headers: cols.map(c => c.l), types: ['code', 'text', 'text', 'num1', 'eur2', 'eur', 'money'], rows: xlRows, total: xlTotal },
+      xlModel: {
+        kind: kind,
+        rawRows: comps.map((c) => { const qty = c.kind === 'main' ? this.tcNum(c.weight) / sumW : this.tcNum(c.qty); return { name: c.name || '', section: c.section || '', qty: qty, price: this.tcNum(c.priceEur) }; }),
+        vat: vat, rate: rE, assumed: this.tcNum(s.assumedEur) || rE,
+        techLoss: Math.min(0.99, Math.max(0, this.tcNum(s.techLoss))),
+        delivery: this.tcNum(s.delivery), gm2: this.tcNum(s.gm2), kv: this.tcNum(s.kv), other: this.tcNum(s.other),
+        markupPct: this.tcNum(s.markupPct), markupRub: this.tcNum(s.markupRub)
+      }
     };
   }
   // ---- Калькулятор X: проектные (новые) продукты ----
@@ -12837,10 +12870,120 @@ class Component extends DCLogic {
   calcExportXlsx(exp) {
     if (!exp.xl || !window.XLSX) return this.exportExcel(exp);
     const XLSX = window.XLSX;
+    // Калькуляторы (технолог / X): ОДИН лист как на экране + живые формулы Excel + 2 мини-калькулятора
+    if (exp.xlModel) {
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, this.calcTcSheet(exp), 'Расчёт');
+      try { XLSX.writeFile(wb, (exp.fileBase || 'raschet') + '.xlsx'); } catch (e) { this.exportExcel(exp); }
+      return;
+    }
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, this.calcDashSheet(exp.title, exp.subtitle, exp.meta, exp.kpis), 'Дашборд');
     XLSX.utils.book_append_sheet(wb, this.mgXlSheet(exp.title + (exp.subtitle ? ' · ' + exp.subtitle : ''), exp.xl.headers, exp.xl.types, exp.xl.rows, exp.xl.total || null), 'Детализация');
     try { XLSX.writeFile(wb, (exp.fileBase || 'export') + '.xlsx'); } catch (e) { this.exportExcel(exp); }
+  }
+  // Единый лист калькулятора: основной расчёт (компоненты + формулы) сверху, два мини-калькулятора снизу.
+  // Все ключевые числа — живые формулы Excel (для перепроверки), стиль Steel Blue / Navy.
+  calcTcSheet(exp) {
+    const XLSX = window.XLSX, st = this.mgXlSt(), m = exp.xlModel;
+    const NAVY = st.NAVY, TOTAL = st.TOTAL, SUB = st.SUB;
+    const EUR2 = '#,##0.00\\ "€"', EUR4 = '#,##0.0000\\ "€"', RUB2 = '#,##0.00\\ "₽"', PCT = '0.00%', NUM4 = '#,##0.0000';
+    const ws = {}; let maxC = 6;
+    const enc = (r, c) => XLSX.utils.encode_cell({ r: r, c: c });
+    const A1 = (r, c) => enc(r, c);
+    const merges = [];
+    const fBd = st.dataBorder;
+    // put(row,col,value,{f,numFmt,fill,bold,color,size,align,border})
+    const put = (r, c, v, o) => {
+      o = o || {}; const ad = enc(r, c);
+      const cell = { t: (o.f ? 'n' : (typeof v === 'number' ? 'n' : 's')), v: (v == null ? '' : v) };
+      if (o.f) cell.f = o.f;
+      const s = { font: { name: 'Calibri', sz: o.size || 11, bold: !!o.bold, color: { rgb: o.color || '000000' } }, alignment: { horizontal: o.align || (typeof v === 'number' || o.f ? 'right' : 'left'), vertical: 'center', wrapText: !!o.wrap } };
+      if (o.fill) s.fill = { fgColor: { rgb: o.fill } };
+      if (o.numFmt) s.numFmt = o.numFmt;
+      if (o.border !== false) s.border = o.border || fBd;
+      cell.s = s; ws[ad] = cell; return cell;
+    };
+    const band = (r, text, sub) => { put(r, 0, text, { bold: true, size: 13, color: 'FFFFFF', fill: NAVY, border: false }); for (let c = 1; c <= maxC; c++) put(r, c, c === maxC && sub ? sub : '', { fill: NAVY, color: 'FFFFFF', border: false, align: 'right' }); merges.push({ s: { r: r, c: 0 }, e: { r: r, c: sub ? maxC - 1 : maxC } }); };
+    let R = 0;
+    // ── Заголовок ──
+    put(R, 0, exp.title, { bold: true, size: 16, color: NAVY, border: false }); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: maxC } }); R++;
+    put(R, 0, exp.subtitle || '', { size: 11, color: '56534F', border: false }); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: maxC } }); R++;
+    put(R, 0, this.cvExcelMode(), { size: 10, color: '56534F', border: false }); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: maxC } }); R++;
+    R++;
+    // ── ПАРАМЕТРЫ (ячейки, на которые ссылаются формулы) ──
+    band(R, 'Параметры расчёта', 'редактируемые'); R++;
+    const params = [
+      ['НДС', m.vat, PCT], ['Курс ЦБ EUR / ₽', m.rate, NUM4], ['Предполагаемый курс EUR / ₽', m.assumed, NUM4],
+      ['Тех. потери, %', m.techLoss, PCT], ['Доставка на 1 кг, €', m.delivery, EUR2], ['GM2, €', m.gm2, EUR2],
+      ['КВ, €', m.kv, EUR2], ['Прочие расходы, €', m.other, EUR2], ['Наценка, %', m.markupPct, PCT], ['Наценка ₽ (ручная)', m.markupRub, RUB2]
+    ];
+    const P = {}; const pk = ['vat', 'rate', 'assumed', 'loss', 'delivery', 'gm2', 'kv', 'other', 'mpct', 'mrub'];
+    params.forEach((p, i) => { put(R, 0, p[0], { fill: SUB, bold: true, color: '56534F' }); for (let c = 1; c < maxC; c++) put(R, c, '', { fill: SUB }); put(R, maxC, p[1], { numFmt: p[2], bold: true, color: NAVY, fill: SUB }); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: maxC - 1 } }); P[pk[i]] = A1(R, maxC); R++; });
+    R++;
+    // ── ОСНОВНОЙ РАСЧЁТ (компоненты) ──
+    band(R, 'Основной расчёт себестоимости'); R++;
+    const heads = ['№', 'Компонент', 'Раздел', 'Кол-во / кг', 'Цена €/ед.', '€/кг с НДС', '₽/кг с НДС'];
+    heads.forEach((h, c) => put(R, c, h, { bold: true, color: 'FFFFFF', fill: NAVY, align: c === 0 ? 'center' : (c >= 3 ? 'right' : 'left') })); R++;
+    const dataStart = R;
+    m.rawRows.forEach((row, i) => {
+      put(R, 0, i + 1, { align: 'center' });
+      put(R, 1, row.name, {});
+      put(R, 2, row.section, {});
+      put(R, 3, row.qty, { numFmt: NUM4 });
+      put(R, 4, row.price, { numFmt: EUR2 });
+      // €/кг с НДС = Кол-во * Цена * (1 + НДС)
+      put(R, 5, row.qty * row.price * (1 + m.vat), { f: A1(R, 3) + '*' + A1(R, 4) + '*(1+' + P.vat + ')', numFmt: EUR2 });
+      // ₽/кг с НДС = €/кг * курс
+      put(R, 6, row.qty * row.price * (1 + m.vat) * m.rate, { f: A1(R, 5) + '*' + P.rate, numFmt: RUB2 });
+      R++;
+    });
+    const dataEnd = R - 1;
+    // ИТОГО (материалы) — SUM формулы
+    put(R, 0, 'ИТОГО материалы', { bold: true, fill: TOTAL, border: st.totBorder }); for (let c = 1; c <= 4; c++) put(R, c, '', { fill: TOTAL, border: st.totBorder });
+    put(R, 5, m.rawRows.reduce((a, x) => a + x.qty * x.price * (1 + m.vat), 0), { f: 'SUM(' + A1(dataStart, 5) + ':' + A1(dataEnd, 5) + ')', numFmt: EUR2, bold: true, fill: TOTAL, border: st.totBorder });
+    put(R, 6, m.rawRows.reduce((a, x) => a + x.qty * x.price * (1 + m.vat) * m.rate, 0), { f: 'SUM(' + A1(dataStart, 6) + ':' + A1(dataEnd, 6) + ')', numFmt: RUB2, bold: true, fill: TOTAL, border: st.totBorder });
+    const MAT = A1(R, 5); // материалы €/кг с НДС
+    R++; R++;
+    // Себестоимость с учётом тех. потерь (одна опорная ячейка для мини-калькуляторов)
+    put(R, 0, 'Себестоимость 1 кг с потерями · € с НДС', { bold: true, fill: TOTAL }); for (let c = 1; c < maxC; c++) put(R, c, '', { fill: TOTAL });
+    put(R, maxC, (m.rawRows.reduce((a, x) => a + x.qty * x.price * (1 + m.vat), 0)) * (m.techLoss > 0 ? 1 / (1 - m.techLoss) : 1), { f: MAT + '/(1-' + P.loss + ')', numFmt: EUR2, bold: true, color: NAVY, fill: TOTAL });
+    merges.push({ s: { r: R, c: 0 }, e: { r: R, c: maxC - 1 } });
+    const COST = A1(R, maxC); // себестоимость €/кг с НДС (с потерями)
+    R++; R++;
+    // ── МИНИ-КАЛЬКУЛЯТОР 1: варианты себестоимости ──
+    const miniStart = R;
+    band(R, 'Мини-калькулятор 1 · Себестоимость 1 кг'); R++;
+    const mini1 = [
+      ['€ с НДС', COST, EUR2],
+      ['€ без НДС', COST + '/(1+' + P.vat + ')', EUR2],
+      ['₽ с НДС · курс ЦБ', COST + '*' + P.rate, RUB2],
+      ['₽ без НДС · курс ЦБ', COST + '*' + P.rate + '/(1+' + P.vat + ')', RUB2],
+      ['₽ с НДС · предполагаемый курс', COST + '*' + P.assumed, RUB2],
+      ['₽ без НДС · предполагаемый курс', COST + '*' + P.assumed + '/(1+' + P.vat + ')', RUB2]
+    ];
+    mini1.forEach(row => { put(R, 0, row[0], { fill: SUB, bold: true }); for (let c = 1; c < maxC; c++) put(R, c, '', { fill: SUB }); put(R, maxC, 0, { f: row[1], numFmt: row[2], bold: true, color: NAVY, fill: SUB }); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: maxC - 1 } }); R++; });
+    R++;
+    // ── МИНИ-КАЛЬКУЛЯТОР 2: цена клиенту ──
+    band(R, 'Мини-калькулятор 2 · Цена клиенту'); R++;
+    // Полная себестоимость = себест. + доставка + GM2 + КВ + прочие
+    put(R, 0, 'Полная себестоимость (€ с НДС)', { fill: SUB, bold: true }); for (let c = 1; c < maxC; c++) put(R, c, '', { fill: SUB });
+    put(R, maxC, 0, { f: COST + '+' + P.delivery + '+' + P.gm2 + '+' + P.kv + '+' + P.other, numFmt: EUR2, bold: true, color: NAVY, fill: SUB });
+    merges.push({ s: { r: R, c: 0 }, e: { r: R, c: maxC - 1 } });
+    const FULL = A1(R, maxC); R++;
+    const mini2 = [
+      ['Цена клиенту · € с НДС', FULL + '*(1+' + P.mpct + ')+' + P.mrub + '/' + P.rate, EUR2],
+      ['Цена клиенту · € без НДС', '(' + FULL + '*(1+' + P.mpct + ')+' + P.mrub + '/' + P.rate + ')/(1+' + P.vat + ')', EUR2],
+      ['Цена клиенту · ₽ с НДС', '(' + FULL + '*(1+' + P.mpct + ')+' + P.mrub + '/' + P.rate + ')*' + P.rate, RUB2],
+      ['Цена клиенту · ₽ без НДС', '(' + FULL + '*(1+' + P.mpct + ')+' + P.mrub + '/' + P.rate + ')*' + P.rate + '/(1+' + P.vat + ')', RUB2]
+    ];
+    mini2.forEach(row => { put(R, 0, row[0], { fill: SUB, bold: true }); for (let c = 1; c < maxC; c++) put(R, c, '', { fill: SUB }); put(R, maxC, 0, { f: row[1], numFmt: row[2], bold: true, color: NAVY, fill: SUB }); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: maxC - 1 } }); R++; });
+    R++;
+    put(R, 0, 'Все значения — живые формулы Excel: измените параметры выше, и себестоимость и цена пересчитаются автоматически.', { size: 9, color: '8A8782', border: false }); merges.push({ s: { r: R, c: 0 }, e: { r: R, c: maxC } }); R++;
+    ws['!merges'] = merges;
+    ws['!cols'] = [{ wch: 5 }, { wch: 34 }, { wch: 20 }, { wch: 13 }, { wch: 13 }, { wch: 15 }, { wch: 16 }];
+    ws['!ref'] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: R, c: maxC } });
+    return ws;
   }
   calcDashSheet(title, subtitle, meta, kpis) {
     const XLSX = window.XLSX, st = this.mgXlSt();
@@ -12944,7 +13087,10 @@ class Component extends DCLogic {
     if (fmt === 'excel') {
       const XLSX = window.XLSX; if (!XLSX) throw new Error('Библиотека Excel не загрузилась');
       let wb;
-      if (exp.xl) {
+      if (exp.xlModel) {
+        wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, this.calcTcSheet(exp), 'Расчёт');
+      } else if (exp.xl) {
         wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, this.calcDashSheet(exp.title, exp.subtitle, exp.meta, exp.kpis), 'Дашборд');
         XLSX.utils.book_append_sheet(wb, this.mgXlSheet(exp.title + (exp.subtitle ? ' · ' + exp.subtitle : ''), exp.xl.headers, exp.xl.types, exp.xl.rows, exp.xl.total || null), 'Детализация');
