@@ -2164,7 +2164,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
 <sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
-<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-01 · r7</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
+<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-01 · r9</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava" title="{{ u.tip }}" onContextMenu="{{ u.onCtx }}">{{ u.avatar }}<i class="ondot"></i><sc-if value="{{ u.hasStars }}" hint-placeholder-val=""><span class="onstars" title="KPI {{ u.starsLabel }}">{{ u.starsLabel }}</span></sc-if></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div><button class="ratebtn onrate" onClick="{{ goRating }}"><span>🏆</span> Рейтинг по задачам</button></div></sc-if>
@@ -6331,49 +6331,75 @@ class Component extends DCLogic {
     this.buildIndex(); this._dvCat = null; this._memo = new Map();
   }
   // Чтение любого файла в массив строк-массивов (xlsx/xls/csv/txt/pdf)
-  async tccReadAny(file) {
+  // Чтение файла во ВСЕ листы (массив aoa). xlsx/xls/csv/txt/pdf. Возвращает массив листов [aoa,...]
+  async tccReadSheets(file) {
     const nm = (file.name || '').toLowerCase();
-    if (/\.pdf$/.test(nm)) { try { const rows = await this.dlReadPdf(file); return (rows || []).map(r => Array.isArray(r) ? r : String(r).split(/\s{2,}|\t/)); } catch (e) { throw new Error('PDF не распознан: ' + (e.message || e)); } }
+    if (/\.pdf$/.test(nm)) { try { const rows = await this.dlReadPdf(file); return [(rows || []).map(r => Array.isArray(r) ? r : String(r).split(/\s{2,}|\t/))]; } catch (e) { throw new Error('PDF не распознан: ' + (e.message || e)); } }
     const XLSX = window.XLSX; if (!XLSX) throw new Error('Библиотека чтения Excel не загрузилась — обновите страницу.');
     const buf = await file.arrayBuffer();
     const wb = XLSX.read(buf, { type: 'array' });
-    let best = [];
-    for (const sn of wb.SheetNames) { const aoa = XLSX.utils.sheet_to_json(wb.Sheets[sn], { header: 1, raw: true, defval: null }); if (aoa.length > best.length) best = aoa; }
+    return wb.SheetNames.map(sn => XLSX.utils.sheet_to_json(wb.Sheets[sn], { header: 1, raw: true, defval: null }));
+  }
+  async tccReadAny(file) {
+    const sheets = await this.tccReadSheets(file);
+    let best = []; for (const a of sheets) if (a.length > best.length) best = a;
     return best;
   }
   tccNum(v) { if (typeof v === 'number') return isFinite(v) ? v : 0; if (v == null) return 0; const n = parseFloat(String(v).replace(/\u00a0/g, '').replace(/\s/g, '').replace('%', '').replace(',', '.')); return isFinite(n) ? n : 0; }
-  // Распознать колонки и извлечь дельты. kind: 'tree' | 'output' | 'auto'
-  tccExtract(aoa, kind) {
-    const out = { prices: [], recipes: [], products: [], outputs: [], kind: kind, rowsTotal: 0, rowsParsed: 0, unparsed: [], hasVatCol: false, vatColPct: null };
-    if (!aoa || !aoa.length) return out;
-    // 1) Сначала пробуем штатный парсер «Дерева себестоимости» из 1С (иерархия «Производство без заказа №…»)
+  // Распознать колонки и извлечь дельты. sheets: aoa | [aoa,...]; kind: 'tree' | 'output' | 'auto'
+  tccExtract(sheets, kind) {
+    const out = { prices: [], recipes: [], products: [], outputs: [], kind: kind, rowsTotal: 0, rowsParsed: 0, unparsed: [], hasVatCol: false, vatColPct: null, diag: '' };
+    const list = (Array.isArray(sheets) && sheets.length && Array.isArray(sheets[0])) ? sheets : [sheets || []];
+    if (!list.length || !list.some(a => a && a.length)) { out.diag = 'пустой файл'; return out; }
+    // 1) Сначала пробуем штатный парсер «Дерева себестоимости» из 1С (иерархия «Производство без заказа №…») — по ВСЕМ листам
     if (kind === 'tree' || kind === 'auto' || !kind) {
-      try {
-        const tree = this.ctParseAoa(aoa);
-        if (tree && tree.batches && tree.batches.length) {
-          out.kind = 'tree';
-          const rate = this.cbRate('EUR') || (this.tcset && this.tccNum(this.tcset.rateEur)) || 83.6892;
-          const toEur = (v) => (tree.cur === '₽' && rate) ? (v / rate) : v;
-          const seenP = new Set();
-          for (const b of tree.batches) {
-            const prod = (b.product || '').trim(); if (!prod) continue;
-            out.products.push({ name: prod });
-            const mats = (b.comps || []).filter(c => c.cat !== 'Доп. расходы' && c.name);
-            const denom = b.outQty || mats.reduce((s, c) => s + (c.qty || 0), 0) || 0;
-            for (const c of mats) {
-              out.rowsTotal++;
-              const priceEur = c.qty ? toEur(c.summa / c.qty) : 0;
-              const pct = denom ? (c.qty / denom) : 0;
-              let ok = false;
-              if (priceEur > 0) { const nk = this.norm(c.name); if (!seenP.has(nk)) { out.prices.push({ name: c.name, price: priceEur, unit: c.unit || 'кг', vatPct: 0 }); seenP.add(nk); } ok = true; }
-              if (pct > 0) { out.recipes.push({ product: prod, component: c.name, pct: pct }); ok = true; }
-              if (ok) out.rowsParsed++;
+      let treeErr = '';
+      for (const aoa of list) {
+        if (!aoa || !aoa.length) continue;
+        try {
+          const tree = this.ctParseAoa(aoa);
+          if (tree && tree.batches && tree.batches.length) {
+            out.kind = 'tree';
+            const rate = this.cbRate('EUR') || (this.tcset && this.tccNum(this.tcset.rateEur)) || 83.6892;
+            const toEur = (v) => (tree.cur === '₽' && rate) ? (v / rate) : v;
+            // По каждому продукту берём ОДНУ представительную партию (с наибольшим выпуском), чтобы не смешивать составы разных партий
+            const bestByProd = new Map();
+            for (const b of tree.batches) { const prod = (b.product || '').trim(); if (!prod) continue; const ex = bestByProd.get(prod); if (!ex || (b.outQty || 0) > (ex.outQty || 0)) bestByProd.set(prod, b); }
+            const seenP = new Set();
+            // цены сырья — по всем партиям (последняя цена по наименованию)
+            for (const b of tree.batches) for (const c of (b.comps || [])) { if (c.cat === 'Доп. расходы' || !c.name || !c.qty) continue; const priceEur = toEur(c.summa / c.qty); if (priceEur > 0) { const nk = this.norm(c.name); if (!seenP.has(nk)) seenP.add(nk); out.prices = out.prices.filter(p => this.norm(p.name) !== nk); out.prices.push({ name: c.name, price: priceEur, unit: c.unit || 'кг', vatPct: 0 }); } }
+            // рецептуры — только из представительной партии продукта
+            for (const [prod, b] of bestByProd) {
+              out.products.push({ name: prod });
+              const mats = (b.comps || []).filter(c => c.cat !== 'Доп. расходы' && c.name && c.qty);
+              const denom = b.outQty || mats.reduce((s, c) => s + (c.qty || 0), 0) || 0;
+              for (const c of mats) { out.rowsTotal++; const pct = denom ? (c.qty / denom) : 0; if (pct > 0) { out.recipes.push({ product: prod, component: c.name, pct: pct }); out.rowsParsed++; } }
             }
+            if (out.prices.length || out.recipes.length) { out.diag = 'дерево 1С: партий ' + tree.batches.length + ', продуктов ' + bestByProd.size; return out; }
           }
-          if (out.prices.length || out.recipes.length) return out;
-        }
-      } catch (e) { /* не 1С-дерево — переходим к общему парсеру по заголовкам */ }
+        } catch (e) { treeErr = (e && e.message) || String(e); }
+      }
+      if (treeErr) out.diag = treeErr;
     }
+    // 1b) Формат «Себестоимость выпущенной продукции» (блоки: «Продукция, Серия» + таблица «Статья калькуляции / Процент затрат, %»)
+    for (const aoa of list) {
+      if (!aoa || !aoa.length) continue;
+      const a = this.tccParseAnalysis(aoa);
+      if (a && (a.recipes.length || a.prices.length)) {
+        out.kind = 'tree';
+        const netByHeader = a.vatMode !== 'gross'; // отчёты 1С упр.учёта — без НДС
+        a.products.forEach(p => out.products.push(p));
+        const seenP = new Set();
+        a.prices.forEach(p => { const nk = this.norm(p.name); if (p.price > 0 && !seenP.has(nk)) { out.prices.push({ name: p.name, price: p.price, unit: 'кг', vatPct: netByHeader ? 0 : null }); seenP.add(nk); } });
+        a.recipes.forEach(r => out.recipes.push(r));
+        out.rowsTotal += a.recipes.length; out.rowsParsed += a.recipes.length;
+        out.diag = 'СС выпущенной продукции: продуктов ' + a.products.length + (netByHeader ? ' · без НДС' : ' · с НДС');
+        return out;
+      }
+    }
+    // 2) Общий парсер по заголовкам — на самом «длинном» листе
+    let aoa = []; for (const a of list) if (a && a.length > aoa.length) aoa = a;
+    if (!aoa.length) return out;
     const RE = {
       name: /наимен|компонент|номенклат|сырь|материал|товар|позиц/i,
       product: /продукт|марка|издел|\bгп\b|партия|рецепт|выпуск/i,
@@ -6426,6 +6452,42 @@ class Component extends DCLogic {
     if (out.recipes.length) { const ps = new Set(out.recipes.map(r => this.norm(r.product))); ps.forEach(k => { const nm = out.recipes.find(r => this.norm(r.product) === k).product; out.products.push({ name: nm }); }); }
     return out;
   }
+  // Парсер отчёта «Себестоимость выпущенной продукции» (1С): блоки по продукту + таблица статей с «Процент затрат, %»
+  tccParseAnalysis(aoa) {
+    const res = { products: [], prices: [], recipes: [], vatMode: null };
+    if (!aoa || !aoa.length) return res;
+    const firstVal = (row) => { for (let j = 0; j < row.length; j++) if (row[j] != null && String(row[j]).trim()) return String(row[j]).trim(); return ''; };
+    const lastVal = (row) => { for (let j = row.length - 1; j >= 0; j--) if (row[j] != null && String(row[j]).trim()) return String(row[j]).trim(); return ''; };
+    const head = aoa.slice(0, 12).map(r => (r || []).map(c => c == null ? '' : String(c)).join(' ')).join(' ');
+    if (/без\s*ндс/i.test(head)) res.vatMode = 'net'; else if (/с\s*ндс/i.test(head)) res.vatMode = 'gross';
+    // блоки по продукту; для каждого продукта берём ПОСЛЕДНИЙ полный блок (состав одной партии, не смешивая)
+    const prodMap = new Map(); const priceMap = new Map(); let article = '', cur = null, cols = null, inTable = false, hasBlock = false;
+    for (let i = 0; i < aoa.length; i++) {
+      const row = aoa[i] || []; const f = firstVal(row);
+      if (/^Артикул$/i.test(f)) { const lv = lastVal(row); article = (lv && lv !== f) ? lv : ''; continue; }
+      if (/^Продукция(,|\s|$)/i.test(f)) { const nm = lastVal(row); cur = (nm && nm !== f) ? nm.replace(/,\s*<По всем сериям>.*/i, '').replace(/,\s*$/, '').trim() : null; cols = null; inTable = false; if (cur) { prodMap.set(cur, { name: cur, article: article, comps: [] }); hasBlock = true; } continue; }
+      if (/Статья калькуляции/i.test(f)) { cols = {}; row.forEach((c, j) => { const t = String(c == null ? '' : c).toLowerCase(); if (/количество затрат/.test(t) && cols.qty == null) cols.qty = j; else if (/стоимость затрат/.test(t)) cols.cost = j; else if (/процент затрат/.test(t)) cols.pct = j; else if (/себестоимость единицы/.test(t)) cols.unitcost = j; }); inTable = true; continue; }
+      if (inTable && cur && cols) {
+        if (!f) { inTable = false; continue; }
+        if (/^(Затрата|Итого|Выпуск готовой продукции|Выпуск полуфабрикатов|Постоянные затраты|Косвенные)/i.test(f)) continue;
+        const qty = cols.qty != null ? this.tccNum(row[cols.qty]) : 0;
+        const cost = cols.cost != null ? this.tccNum(row[cols.cost]) : 0;
+        const pct = cols.pct != null ? this.tccNum(row[cols.pct]) : 0;
+        if (qty > 0 && cost > 0) priceMap.set(this.norm(f), { name: f, price: cost / qty });
+        const blk = prodMap.get(cur); if (blk && pct > 0) blk.comps.push({ component: f, pct: pct / 100 });
+      }
+    }
+    if (!hasBlock) return { products: [], prices: [], recipes: [], vatMode: res.vatMode };
+    for (const [, blk] of prodMap) {
+      res.products.push({ name: blk.name, article: blk.article });
+      // отчёт СС иерархичен (продукт → полуфабрикаты → сырьё): плоская сумма % может задваиваться.
+      // Рецептуру берём только если состав блока суммируется в ~100% (иначе — ненадёжен, оставляем лишь цены/номенклатуру).
+      const sum = blk.comps.reduce((s, c) => s + (c.pct || 0), 0);
+      if (blk.comps.length && sum >= 0.9 && sum <= 1.1) for (const c of blk.comps) res.recipes.push({ product: blk.name, component: c.component, pct: c.pct });
+    }
+    for (const [, p] of priceMap) res.prices.push(p);
+    return res;
+  }
   // Внешний ИИ: разобрать «трудные» строки файла в структуру (parse-until-win). Возвращает {prices,recipes,products,outputs,unparsed}
   async tccAiParse(fileName, aoa, kindHint) {
     if (!this.hasAI()) return null;
@@ -6463,13 +6525,14 @@ class Component extends DCLogic {
     const rep = { files: 0, prices: 0, recipes: 0, newRaw: 0, newProd: 0, outputs: 0, kinds: [], errors: [], aiUsed: 0, anomalies: [], vatRate: defVat, vatMode: (S.acVatMode === 'net' ? 'net' : 'gross') };
     for (const it of items) {
       try {
-        const aoa = await this.tccReadAny(it.file);
-        let d = this.tccExtract(aoa, it.kind);
+        const sheets = await this.tccReadSheets(it.file);
+        let d = this.tccExtract(sheets, it.kind);
         const conf = d.rowsTotal ? d.rowsParsed / d.rowsTotal : (d.prices.length || d.recipes.length || d.outputs.length ? 1 : 0);
+        if (!d.prices.length && !d.recipes.length && !d.outputs.length && d.diag) rep.errors.push((it.file.name || 'файл') + ': не распознано (' + d.diag + ')');
         let usedAi = false;
         // Порог 95%: если внутреннее ядро не уверено — эскалация во внешний ИИ (parse-until-win)
         if (conf < 0.95 && this.hasAI()) {
-          const ai = await this.tccAiParse(it.file.name, aoa, it.kind);
+          const ai = await this.tccAiParse(it.file.name, (function () { let a = []; for (const s of sheets) if (s && s.length > a.length) a = s; return a; })(), it.kind);
           if (ai && !ai.error) {
             usedAi = true; rep.aiUsed++;
             const aiVat = (ai.vat_included && ai.vat_pct) ? (ai.vat_pct > 1 ? ai.vat_pct / 100 : ai.vat_pct) : null;
