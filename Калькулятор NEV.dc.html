@@ -2164,7 +2164,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
 <sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
-<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-01</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
+<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-01 · r7</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava" title="{{ u.tip }}" onContextMenu="{{ u.onCtx }}">{{ u.avatar }}<i class="ondot"></i><sc-if value="{{ u.hasStars }}" hint-placeholder-val=""><span class="onstars" title="KPI {{ u.starsLabel }}">{{ u.starsLabel }}</span></sc-if></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div><button class="ratebtn onrate" onClick="{{ goRating }}"><span>🏆</span> Рейтинг по задачам</button></div></sc-if>
@@ -6346,6 +6346,34 @@ class Component extends DCLogic {
   tccExtract(aoa, kind) {
     const out = { prices: [], recipes: [], products: [], outputs: [], kind: kind, rowsTotal: 0, rowsParsed: 0, unparsed: [], hasVatCol: false, vatColPct: null };
     if (!aoa || !aoa.length) return out;
+    // 1) Сначала пробуем штатный парсер «Дерева себестоимости» из 1С (иерархия «Производство без заказа №…»)
+    if (kind === 'tree' || kind === 'auto' || !kind) {
+      try {
+        const tree = this.ctParseAoa(aoa);
+        if (tree && tree.batches && tree.batches.length) {
+          out.kind = 'tree';
+          const rate = this.cbRate('EUR') || (this.tcset && this.tccNum(this.tcset.rateEur)) || 83.6892;
+          const toEur = (v) => (tree.cur === '₽' && rate) ? (v / rate) : v;
+          const seenP = new Set();
+          for (const b of tree.batches) {
+            const prod = (b.product || '').trim(); if (!prod) continue;
+            out.products.push({ name: prod });
+            const mats = (b.comps || []).filter(c => c.cat !== 'Доп. расходы' && c.name);
+            const denom = b.outQty || mats.reduce((s, c) => s + (c.qty || 0), 0) || 0;
+            for (const c of mats) {
+              out.rowsTotal++;
+              const priceEur = c.qty ? toEur(c.summa / c.qty) : 0;
+              const pct = denom ? (c.qty / denom) : 0;
+              let ok = false;
+              if (priceEur > 0) { const nk = this.norm(c.name); if (!seenP.has(nk)) { out.prices.push({ name: c.name, price: priceEur, unit: c.unit || 'кг', vatPct: 0 }); seenP.add(nk); } ok = true; }
+              if (pct > 0) { out.recipes.push({ product: prod, component: c.name, pct: pct }); ok = true; }
+              if (ok) out.rowsParsed++;
+            }
+          }
+          if (out.prices.length || out.recipes.length) return out;
+        }
+      } catch (e) { /* не 1С-дерево — переходим к общему парсеру по заголовкам */ }
+    }
     const RE = {
       name: /наимен|компонент|номенклат|сырь|материал|товар|позиц/i,
       product: /продукт|марка|издел|\bгп\b|партия|рецепт|выпуск/i,
@@ -6431,7 +6459,7 @@ class Component extends DCLogic {
     const S = this.state;
     const rawVatRate = this.tccNum(S.acVatRate);
     const defVat = (S.acVatMode === 'net') ? 0 : (rawVatRate > 1 ? rawVatRate / 100 : (rawVatRate > 0 ? rawVatRate : (this.vat || 0.2)));
-    const netOf = (price, rowVatPct) => { const v = (rowVatPct != null && rowVatPct > 0) ? rowVatPct : defVat; return v > 0 ? price / (1 + v) : price; };
+    const netOf = (price, rowVatPct) => { const v = (rowVatPct == null) ? defVat : rowVatPct; return v > 0 ? price / (1 + v) : price; };
     const rep = { files: 0, prices: 0, recipes: 0, newRaw: 0, newProd: 0, outputs: 0, kinds: [], errors: [], aiUsed: 0, anomalies: [], vatRate: defVat, vatMode: (S.acVatMode === 'net' ? 'net' : 'gross') };
     for (const it of items) {
       try {
