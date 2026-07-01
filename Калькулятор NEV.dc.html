@@ -2620,6 +2620,7 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 </div>
 </div>
+<sc-if value="{{ hasExport }}" hint-placeholder-val=""><div class="exprow"><button class="btn expbtn" onClick="{{ onExcel }}"><span>📊</span> Excel</button><button class="btn expbtn" onClick="{{ onPdf }}"><span>📄</span> PDF</button><button class="btn expbtn" onClick="{{ onEmail }}"><span>✉</span> На почту</button><button class="btn expbtn" onClick="{{ onWord }}"><span>📝</span> Word</button><button class="btn dark expbtn" onClick="{{ onPrint }}"><span>🖨</span> Распечатать</button></div></sc-if>
 </sc-if>
 </sc-if>
 
@@ -2663,6 +2664,7 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 </div>
 </div>
+<sc-if value="{{ hasExport }}" hint-placeholder-val=""><div class="exprow"><button class="btn expbtn" onClick="{{ onExcel }}"><span>📊</span> Excel</button><button class="btn expbtn" onClick="{{ onPdf }}"><span>📄</span> PDF</button><button class="btn expbtn" onClick="{{ onEmail }}"><span>✉</span> На почту</button><button class="btn expbtn" onClick="{{ onWord }}"><span>📝</span> Word</button><button class="btn dark expbtn" onClick="{{ onPrint }}"><span>🖨</span> Распечатать</button></div></sc-if>
 </sc-if>
 </sc-if>
 
@@ -2683,7 +2685,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="totcell"><div class="totlbl">₽/кг без НДС</div><div class="totnum mono">{{ rubNoVat }}<span class="totunit">₽</span></div></div>
 <div class="totcell accent"><div class="totlbl">₽/кг с НДС</div><div class="totnum mono">{{ rubVat }}<span class="totunit">₽</span></div></div>
 </div>
-<sc-if value="{{ hasExport }}" hint-placeholder-val="{{ true }}"><div class="exprow"><button class="btn dark expbtn" onClick="{{ onPrint }}"><span>🖨</span> Распечатать</button><div class="dlwrap"><button class="btn expbtn" onClick="{{ toggleDl }}"><span>⬇</span> Скачать ▾</button><sc-if value="{{ dlOpen }}" hint-placeholder-val=""><div class="dlmenu"><button class="dlitem" onClick="{{ onExcel }}">Excel (.xls)</button><button class="dlitem" onClick="{{ onWord }}">Word (.doc, бланк)</button></div></sc-if></div></div></sc-if>
+<sc-if value="{{ hasExport }}" hint-placeholder-val="{{ true }}"><div class="exprow"><button class="btn expbtn" onClick="{{ onExcel }}"><span>📊</span> Excel</button><button class="btn expbtn" onClick="{{ onPdf }}"><span>📄</span> PDF</button><button class="btn expbtn" onClick="{{ onEmail }}"><span>✉</span> На почту</button><button class="btn expbtn" onClick="{{ onWord }}"><span>📝</span> Word</button><button class="btn dark expbtn" onClick="{{ onPrint }}"><span>🖨</span> Распечатать</button></div></sc-if>
 </div>
 </sc-if>
 
@@ -5742,7 +5744,7 @@ class Component extends DCLogic {
     return 0;
   }
   tcMakeSetField(s, save) {
-    return (key, label, kind) => {
+    return (key, label, kind, fallback) => {
       const id = 'set|' + key;
       if (kind === 'cb') {
         const v = this.cbRate('EUR') || this.tcNum(s[key]) || 0;
@@ -5750,7 +5752,9 @@ class Component extends DCLogic {
           tcsVal: v.toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 }),
           onFocus: () => {}, onBlur: () => {}, onInput: () => {} };
       }
-      const fmt = kind === 'pct' ? (this.tcNum(s[key]) * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) : this.tcNum(s[key]).toLocaleString('ru-RU', { maximumFractionDigits: 4 });
+      const raw = this.tcNum(s[key]);
+      const shown = (kind !== 'pct' && !raw && fallback) ? this.tcNum(fallback) : raw;
+      const fmt = kind === 'pct' ? (raw * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) : shown.toLocaleString('ru-RU', { maximumFractionDigits: 4 });
       return {
         key, tcsLabel: label, ro: false,
         tcsVal: this.state.efId === id ? this.state.efText : fmt,
@@ -5802,7 +5806,7 @@ class Component extends DCLogic {
     const mPct = this.tcNum(s.markupPct), mRub = this.tcNum(s.markupRub);
     const clientEurVat = full * (1 + mPct) + (rE ? mRub / rE : 0), clientRubVat = clientEurVat * rE;
     const markupAmtRub = full * rE * mPct + mRub;
-    const usd = this.tcNum(s.rateUsd), cny = this.tcNum(s.rateCny);
+    const usd = this.tcNum(s.rateUsd) || this.cbRate('USD') || 0, cny = this.tcNum(s.rateCny) || this.cbRate('CNY') || 0;
     return {
       tcRateEur: rE.toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 }) + ' ₽',
       tcShowUsd: usd > 0, tcRateUsd: usd.toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 }) + ' ₽',
@@ -5819,9 +5823,9 @@ class Component extends DCLogic {
       tcClientEurNet: this.tcEur(clientEurVat / (1 + vat)), tcClientRubNet: this.tcRub(clientRubVat / (1 + vat)),
       tcSettings: [
         setField('vat', 'НДС', 'pct'), setField('rateEur', 'Курс ЦБ EUR / ₽ · на сегодня', 'cb'),
-        setField('rateUsd', 'Курс USD / ₽', 'num'), setField('rateCny', 'Курс CNY / ₽', 'num'),
+        setField('rateUsd', 'Курс USD / ₽ · ЦБ, можно вручную', 'num', this.cbRate('USD')), setField('rateCny', 'Курс CNY / ₽ · ЦБ, можно вручную', 'num', this.cbRate('CNY')),
         setField('techLoss', 'Тех. потери при производстве, %', 'pct'),
-        setField('assumedEur', 'Предполагаемый курс EUR / ₽ · ручной', 'num')
+        setField('assumedEur', 'Предполагаемый курс EUR / ₽ · ручной ввод', 'num', rE)
       ],
       tcClientFields: [
         setField('delivery', 'Доставка на 1 кг, €', 'num'), setField('gm2', 'GM2, €', 'num'),
@@ -5848,7 +5852,7 @@ class Component extends DCLogic {
     }));
     const rowsV = this.tcRowsVals(comps, s);
     const setField = this.tcMakeSetField(s, () => this.saveTCalc());
-    return Object.assign({
+    const result = Object.assign({
       tcEmpty: false, tcReady: true, tcBody: true,
       tcProductOptions: d.products.map(x => ({ value: x.id, label: x.name })),
       tcProduct: this.state.tcProduct, onTcProduct: (e) => set({ tcProduct: e.target.value }),
@@ -5856,6 +5860,8 @@ class Component extends DCLogic {
       tcAddComp: () => mutP(pp => pp.comps.push({ name: 'Новый компонент', section: 'Материал основной', unit: 'кг', kind: 'main', base: 0, priceEur: 0 })),
       tcReset: () => { this.lsDel('tcalc'); this.loadTCalc(this.co()); }
     }, rowsV, this.tcTotalsVals(rowsV._sumEurVat, s, setField));
+    this.setExport(result, set, this.tcExportPayload('tcalc', p.name, comps, s, result));
+    return result;
   }
   // INK: живой расчёт по рецептурам nev_data (правки % и цен идут в общие переопределения приложения)
   tcLiveVals() {
@@ -5882,7 +5888,7 @@ class Component extends DCLogic {
     });
     const rowsV = this.tcRowsVals(comps, s);
     const setField = this.tcMakeSetField(s, () => this.saveTcset());
-    return Object.assign({
+    const result = Object.assign({
       tcEmpty: false, tcReady: true, tcBody: true,
       tcProductOptions: prods.map(p => ({ value: p.name, label: p.name })),
       tcProduct: name, onTcProduct: (e) => set({ tcProduct: e.target.value }),
@@ -5890,8 +5896,47 @@ class Component extends DCLogic {
       tcAddComp: () => set(st => ({ added: { ...st.added, [owner]: [...(st.added[owner] || []), { component: '', pct: 0 }] } })),
       tcReset: () => { this.tcset = this.tcDefaultSettings(); this.saveTcset(); this.forceUpdate(); }
     }, rowsV, this.tcTotalsVals(rowsV._sumEurVat, s, setField));
+    this.setExport(result, set, this.tcExportPayload('tcalc', name, comps, s, result));
+    return result;
   }
   tcDefaultSettings() { const rate = Number(this.state.rate) || 83.6892; return { vat: this.vat || 0.22, rateEur: rate, rateUsd: 0, rateCny: 0, assumedEur: rate, delivery: 0, gm2: 0, kv: 0, other: 0, markupPct: 0.20, markupRub: 0 }; }
+  // Payload для выгрузки калькуляторов (Excel/PDF/Email/Печать): рецептура + KPI себестоимости/цены
+  tcExportPayload(kind, name, comps, s, totals) {
+    const vat = this.tcNum(s.vat), rE = this.cbRate('EUR') || this.tcNum(s.rateEur) || 1;
+    const mains = comps.filter(c => c.kind === 'main');
+    const sumW = mains.reduce((a, c) => a + this.tcNum(c.weight), 0) || 1;
+    const r2 = (n) => Math.round((Number(n) || 0) * 100) / 100, r4 = (n) => Math.round((Number(n) || 0) * 10000) / 10000;
+    const xlRows = comps.map((c, i) => {
+      const qty = c.kind === 'main' ? this.tcNum(c.weight) / sumW : this.tcNum(c.qty);
+      const price = this.tcNum(c.priceEur);
+      const eurVat = qty * price * (1 + vat);
+      return [i + 1, c.name || '', c.section || '', r4(qty), r2(price), r2(eurVat), r2(eurVat * rE)];
+    });
+    const sumEurVat = xlRows.reduce((a, r) => a + r[5], 0);
+    const xlTotal = ['ИТОГО', '', '', '', '', r2(sumEurVat), r2(sumEurVat * rE)];
+    const cols = [{ l: '№' }, { l: 'Компонент' }, { l: 'Раздел' }, { l: 'Кол-во/кг', r: true }, { l: 'Цена €/ед.', r: true }, { l: '€/кг с НДС', r: true }, { l: '₽/кг с НДС', r: true }];
+    const cell = (v, r, tot) => ({ v, r, tot });
+    const rows = xlRows.map(rr => [rr[0], { v: rr[1] }, { v: rr[2] }, cell(this.fmt(rr[3], 4), true), cell(this.tcEur(rr[4]), true), cell(this.tcEur(rr[5]), true), cell(this.tcRub(rr[6]), true)]);
+    rows.push([cell('ИТОГО', false, true), cell('', false, true), cell('', false, true), cell('', false, true), cell('', false, true), cell(this.tcEur(sumEurVat), true, true), cell(this.tcRub(sumEurVat * rE), true, true)]);
+    const kpis = [
+      ['Себестоимость 1 кг · € с НДС', totals.tcCostEurVat], ['Себестоимость 1 кг · € без НДС', totals.tcCostEurNet],
+      ['Себестоимость 1 кг · ₽ с НДС', totals.tcCostRubVat], ['Себестоимость 1 кг · ₽ без НДС', totals.tcCostRubNet],
+      ['По предполагаемому курсу ' + totals.tcAssumedRate + ' ₽ · ₽ с НДС', totals.tcCostRubVatA],
+      ['Цена клиенту · ₽ с НДС', totals.tcClientRubVat], ['Цена клиенту · ₽ без НДС', totals.tcClientRubNet]
+    ];
+    const meta = [
+      ['Курс ЦБ EUR/₽', (this.cbRate('EUR') || rE).toLocaleString('ru-RU', { maximumFractionDigits: 4 })],
+      ['Предполагаемый курс EUR/₽', totals.tcAssumedRate + ' ₽'],
+      ['НДС', (vat * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + '%'],
+      ['Дата', new Date().toLocaleDateString('ru-RU')]
+    ];
+    return {
+      title: kind === 'xcalc' ? 'Калькулятор X · себестоимость и цена' : 'Калькулятор технолога · себестоимость и цена',
+      subtitle: name || '', fileBase: (kind === 'xcalc' ? 'kalkulyator-x-' : 'kalkulyator-tehnologa-') + this.slug(name || 'produkt'),
+      meta, cols, rows, kpis,
+      xl: { headers: cols.map(c => c.l), types: ['code', 'text', 'text', 'num1', 'eur2', 'eur', 'money'], rows: xlRows, total: xlTotal }
+    };
+  }
   // ---- Калькулятор X: проектные (новые) продукты ----
   loadXCalc() {
     let data = null;
@@ -5931,10 +5976,12 @@ class Component extends DCLogic {
     }));
     const rowsV = this.tcRowsVals(comps, s);
     const setField = this.tcMakeSetField(s, () => this.saveXCalc());
-    return Object.assign({
+    const result = Object.assign({
       xEmpty: false, tcBody: true,
       xAddComp: () => mutP(pp => pp.comps.push({ name: '', section: 'Сырьё', unit: 'кг', pct: 0, priceEur: 0 }))
     }, head, rowsV, this.tcTotalsVals(rowsV._sumEurVat, s, setField));
+    this.setExport(result, set, this.tcExportPayload('xcalc', p.name, comps, s, result));
+    return result;
   }
   switchCompany(id) {
     if (!this.coCfg()[id]) return;
@@ -11835,8 +11882,50 @@ class Component extends DCLogic {
   setExport(base, set, exp) {
     base.hasExport = true;
     base.onPrint = () => { set({ dlOpen: false }); this.printOnLetterhead(exp); };
-    base.onExcel = () => { set({ dlOpen: false }); this.exportExcel(exp); };
+    base.onPdf = () => { set({ dlOpen: false }); this.printOnLetterhead(exp); };
+    base.onExcel = () => { set({ dlOpen: false }); this.calcExportXlsx(exp); };
     base.onWord = () => { set({ dlOpen: false }); this.exportWord(exp); };
+    base.onEmail = () => { set({ dlOpen: false }); this.calcEmailExport(exp); };
+  }
+
+  // Премиум Excel для калькуляторов (Steel Blue/Navy): лист «Дашборд» (KPI) + «Детализация». Без xl-данных — откат на .xls.
+  calcExportXlsx(exp) {
+    if (!exp.xl || !window.XLSX) return this.exportExcel(exp);
+    const XLSX = window.XLSX;
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, this.calcDashSheet(exp.title, exp.subtitle, exp.meta, exp.kpis), 'Дашборд');
+    XLSX.utils.book_append_sheet(wb, this.mgXlSheet(exp.title + (exp.subtitle ? ' · ' + exp.subtitle : ''), exp.xl.headers, exp.xl.types, exp.xl.rows, exp.xl.total || null), 'Детализация');
+    try { XLSX.writeFile(wb, (exp.fileBase || 'export') + '.xlsx'); } catch (e) { this.exportExcel(exp); }
+  }
+  calcDashSheet(title, subtitle, meta, kpis) {
+    const XLSX = window.XLSX, st = this.mgXlSt();
+    const aoa = [[title], [subtitle || ''], []];
+    (meta || []).forEach(m => aoa.push([m[0], m[1]]));
+    if ((meta || []).length) aoa.push([]);
+    aoa.push(['Ключевые показатели', '']);
+    (kpis || []).forEach(k => aoa.push([k[0], k[1]]));
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+    ws['!cols'] = [{ wch: 48 }, { wch: 24 }];
+    const C = (r, c) => { const ad = XLSX.utils.encode_cell({ r, c }); return ws[ad]; };
+    if (C(0, 0)) C(0, 0).s = { font: { name: 'Calibri', sz: 16, bold: true, color: { rgb: st.NAVY } } };
+    if (C(1, 0)) C(1, 0).s = { font: { name: 'Calibri', sz: 11, color: { rgb: '56534F' } } };
+    let r = 3;
+    (meta || []).forEach(() => { if (C(r, 0)) C(r, 0).s = { font: { name: 'Calibri', sz: 10, bold: true, color: { rgb: '56534F' } } }; if (C(r, 1)) C(r, 1).s = { font: { name: 'Calibri', sz: 10 }, alignment: { horizontal: 'right' } }; r++; });
+    if ((meta || []).length) r++;
+    if (C(r, 0)) C(r, 0).s = { font: { name: 'Calibri', sz: 12, bold: true, color: { rgb: 'FFFFFF' } }, fill: { fgColor: { rgb: st.NAVY } } };
+    if (C(r, 1)) C(r, 1).s = { fill: { fgColor: { rgb: st.NAVY } } };
+    r++;
+    (kpis || []).forEach(() => { if (C(r, 0)) C(r, 0).s = { font: { name: 'Calibri', sz: 11, bold: true }, fill: { fgColor: { rgb: st.TOTAL } }, border: st.dataBorder, alignment: { horizontal: 'left' } }; if (C(r, 1)) C(r, 1).s = { font: { name: 'Calibri', sz: 12, bold: true, color: { rgb: st.NAVY } }, fill: { fgColor: { rgb: st.TOTAL } }, border: st.dataBorder, alignment: { horizontal: 'right' } }; r++; });
+    return ws;
+  }
+  calcEmailExport(exp) {
+    let body = exp.title + (exp.subtitle ? ' · ' + exp.subtitle : '') + '\n\n';
+    (exp.meta || []).forEach(m => { body += m[0] + ': ' + m[1] + '\n'; });
+    if (exp.kpis && exp.kpis.length) { body += '\nКлючевые показатели:\n'; exp.kpis.forEach(k => { body += '• ' + k[0] + ': ' + k[1] + '\n'; }); }
+    body += '\n— Сформировано в ' + this.co().name + ' Flow. Подробная таблица — во вложении Excel (выгрузите кнопкой «Excel» и прикрепите к письму).';
+    const subj = exp.title + (exp.subtitle ? ' · ' + exp.subtitle : '') + ' · ' + this.co().name;
+    const href = 'mailto:?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+    try { window.location.href = href; } catch (e) { try { window.open(href); } catch (e2) {} }
   }
 
   expMetaHtml(exp) {
@@ -12789,7 +12878,7 @@ class Component extends DCLogic {
       onCloudName: (e) => set({ cloudName: e.target.value }), onCloudCfg: (e) => set({ cloudCfgText: e.target.value }), onCloudWs: (e) => set({ cloudWsId: e.target.value }),
       cloudConnect: () => { this.cloudSaveSettings(); this.cloudConnect(); }, cloudDisconnect: () => this.cloudDisconnect(),
       hasExport: false, dlOpen: S.dlOpen, toggleDl: () => set({ dlOpen: !S.dlOpen }),
-      onPrint: () => {}, onExcel: () => {}, onWord: () => {},
+      onPrint: () => {}, onPdf: () => {}, onExcel: () => {}, onWord: () => {}, onEmail: () => {},
       product: S.product, rate: S.rate, loss: S.loss, recipeOwner: S.recipeOwner,
       draftComp: S.draftComp, draftPct: S.draftPct, priceFilter: S.priceFilter,
       isCost: S.tab === 'cost', isMargin: S.tab === 'margin', isLanded: S.tab === 'landed', isDelivery: S.tab === 'delivery', isDataload: S.tab === 'dataload', isFileArch: S.tab === 'filearch', isPnl: S.tab === 'pnl',
@@ -13016,6 +13105,7 @@ class Component extends DCLogic {
       this.setExport(base, set, {
         title: 'Калькуляция себестоимости', subtitle: S.product, fileBase: 'kalkulyatsiya-' + this.slug(S.product),
         meta: [['Курс EUR/₽', this.fmt(rate, 4)], ['Потери', this.fmt(Number(S.loss) || 0) + ' %'], ['Дата', new Date().toLocaleDateString('ru-RU')]],
+        kpis: [['€/кг без НДС', base.eurNoVat + ' €'], ['€/кг с НДС', base.eurVat + ' €'], ['₽/кг без НДС', base.rubNoVat + ' ₽'], ['₽/кг с НДС', base.rubVat + ' ₽']],
         cols: [{ l: '№' }, { l: 'Компонента' }, { l: 'Тип' }, { l: 'Доля', r: true }, { l: 'Кол-во/кг', r: true }, { l: 'Цена €/кг', r: true }, { l: '€/кг', r: true }, { l: '₽/кг', r: true }],
         rows: base.calcLines.map(ln => [ln.i, { v: ln.name }, { v: ln.kindLabel }, { v: ln.pct, r: true }, { v: ln.qty, r: true }, { v: ln.price, r: true }, { v: ln.eur, r: true }, { v: ln.rub, r: true }]).concat([
           [{ v: '', tot: true }, { v: 'ИТОГО без НДС', tot: true }, { v: '', tot: true }, { v: base.sumPct, r: true, tot: true }, { v: '', tot: true }, { v: '', tot: true }, { v: base.eurNoVat, r: true, tot: true }, { v: base.rubNoVat, r: true, tot: true }],
