@@ -2164,7 +2164,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
 <sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
-<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-01 · r9</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
+<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-01 · r11</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava" title="{{ u.tip }}" onContextMenu="{{ u.onCtx }}">{{ u.avatar }}<i class="ondot"></i><sc-if value="{{ u.hasStars }}" hint-placeholder-val=""><span class="onstars" title="KPI {{ u.starsLabel }}">{{ u.starsLabel }}</span></sc-if></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div><button class="ratebtn onrate" onClick="{{ goRating }}"><span>🏆</span> Рейтинг по задачам</button></div></sc-if>
@@ -4389,12 +4389,13 @@ class Component extends DCLogic {
       if (!leaves.length) throw new Error('Не найдены строки выручки. Нужен отчёт 1С «Выручка по группам аналитического учёта».');
       const totalW = leaves.reduce((a, l) => a + l.weight, 0), totalR = leaves.reduce((a, l) => a + l.revenue, 0);
       this.setState({ mgRevenue: leaves, mgRevMeta: { file: file.name, at: Date.now(), rows: leaves.length, weight: totalW, revenue: totalR }, mgBusy: false }, () => this.saveMargin());
+      this.biNotify('Маржинальный отчёт', 'revenue', 'NEW_SALES', { label: 'Загружена выручка по группам («' + file.name + '»), строк: ' + leaves.length });
     } catch (err) { this.setState({ mgBusy: false, mgErr: err.message || String(err) }); }
   }
   async mgUploadGm(e) {
     const file = e.target.files && e.target.files[0]; if (!file) return; e.target.value = '';
     this.setState({ mgBusy: true, mgErr: '' });
-    try { const rows = await this.mgReadFile(file); const gm = this.mgParseGm(rows, 1); this.setState({ mgGm: gm, mgBusy: false }, () => this.saveMargin()); }
+    try { const rows = await this.mgReadFile(file); const gm = this.mgParseGm(rows, 1); this.setState({ mgGm: gm, mgBusy: false }, () => this.saveMargin()); this.biNotify('Маржинальный отчёт', 'gm', 'DATA_ACTUALIZATION', { label: 'Загружены данные GM/себестоимости («' + file.name + '»)' }); }
     catch (err) { this.setState({ mgBusy: false, mgErr: err.message || String(err) }); }
   }
   mgClear() { this.setState({ mgRevenue: null, mgRevMeta: null, mgGm: null, mgErr: '', mgExpanded: {} }, () => this.saveMargin()); }
@@ -5108,6 +5109,7 @@ class Component extends DCLogic {
       if (!tree.batches.length) throw new Error('Не найдено ни одной партии производства. Проверьте, что в отчёте включена детализация по партиям производства.');
       tree.fileName = file.name;
       await this.ctArchAdd(tree);
+      try { this.tccActualizeFromTree(tree, 'Анализ себестоимости'); } catch (e) {}
       this.setState({ ctBusy: false, ctErr: '', ctView: this.state.ctView || 'decomp', ctGenerated: false, ctExpanded: {} });
     } catch (err) { this.setState({ ctBusy: false, ctErr: 'Не удалось обработать файл: ' + (err.message || err) }); }
     try { e.target.value = ''; } catch (_) {}
@@ -5695,6 +5697,7 @@ class Component extends DCLogic {
       this.setState({ sbReady: true, sbImpBusy: false, sbImpErr: '', sbImpMsg: 'Загружено партий: ' + recs.length + ' из «' + file.name + '»' + span + '.' });
       try { this.archiveFile(file, { category: 'cost', category_label: 'Себестоимость ШК (отчёт КО)', source: 'sebest_import', rows: recs.length }); } catch (e) {}
       try { this.postSystemNote('📥 Себестоимость-КО: загружен отчёт «' + file.name + '» — партий: ' + recs.length + span + '.', this.state.currentUser ? this.state.currentUser.name : 'Система'); } catch (e) {}
+      this.biNotify('Себестоимость (КО)', 'cost', 'DATA_ACTUALIZATION', { label: 'Загружена себестоимость партий («' + file.name + '»), партий: ' + recs.length });
       this.forceUpdate();
     } catch (e) { this.setState({ sbImpBusy: false, sbImpErr: 'Ошибка чтения «' + (file.name || '') + '»: ' + (e.message || e) }); }
   }
@@ -6359,23 +6362,13 @@ class Component extends DCLogic {
         try {
           const tree = this.ctParseAoa(aoa);
           if (tree && tree.batches && tree.batches.length) {
-            out.kind = 'tree';
-            const rate = this.cbRate('EUR') || (this.tcset && this.tccNum(this.tcset.rateEur)) || 83.6892;
-            const toEur = (v) => (tree.cur === '₽' && rate) ? (v / rate) : v;
-            // По каждому продукту берём ОДНУ представительную партию (с наибольшим выпуском), чтобы не смешивать составы разных партий
-            const bestByProd = new Map();
-            for (const b of tree.batches) { const prod = (b.product || '').trim(); if (!prod) continue; const ex = bestByProd.get(prod); if (!ex || (b.outQty || 0) > (ex.outQty || 0)) bestByProd.set(prod, b); }
-            const seenP = new Set();
-            // цены сырья — по всем партиям (последняя цена по наименованию)
-            for (const b of tree.batches) for (const c of (b.comps || [])) { if (c.cat === 'Доп. расходы' || !c.name || !c.qty) continue; const priceEur = toEur(c.summa / c.qty); if (priceEur > 0) { const nk = this.norm(c.name); if (!seenP.has(nk)) seenP.add(nk); out.prices = out.prices.filter(p => this.norm(p.name) !== nk); out.prices.push({ name: c.name, price: priceEur, unit: c.unit || 'кг', vatPct: 0 }); } }
-            // рецептуры — только из представительной партии продукта
-            for (const [prod, b] of bestByProd) {
-              out.products.push({ name: prod });
-              const mats = (b.comps || []).filter(c => c.cat !== 'Доп. расходы' && c.name && c.qty);
-              const denom = b.outQty || mats.reduce((s, c) => s + (c.qty || 0), 0) || 0;
-              for (const c of mats) { out.rowsTotal++; const pct = denom ? (c.qty / denom) : 0; if (pct > 0) { out.recipes.push({ product: prod, component: c.name, pct: pct }); out.rowsParsed++; } }
-            }
-            if (out.prices.length || out.recipes.length) { out.diag = 'дерево 1С: партий ' + tree.batches.length + ', продуктов ' + bestByProd.size; return out; }
+            out.kind = 'tree'; out._tree = tree;
+            const d = this.tccTreeDeltas(tree);
+            d.prices.forEach(p => out.prices.push(p));
+            d.recipes.forEach(r => out.recipes.push(r));
+            d.products.forEach(p => out.products.push(p));
+            out.rowsTotal += d.recipes.length; out.rowsParsed += d.recipes.length;
+            if (out.prices.length || out.recipes.length) { out.diag = 'дерево 1С: партий ' + tree.batches.length + ', продуктов ' + d.products.length; return out; }
           }
         } catch (e) { treeErr = (e && e.message) || String(e); }
       }
@@ -6452,6 +6445,47 @@ class Component extends DCLogic {
     if (out.recipes.length) { const ps = new Set(out.recipes.map(r => this.norm(r.product))); ps.forEach(k => { const nm = out.recipes.find(r => this.norm(r.product) === k).product; out.products.push({ name: nm }); }); }
     return out;
   }
+  // Разбор дерева 1С (this.ctTree) в дельты: цены сырья (по всем партиям) + рецептуры (представительная партия) + номенклатура
+  tccTreeDeltas(tree) {
+    const out = { prices: [], recipes: [], products: [] };
+    if (!tree || !tree.batches || !tree.batches.length) return out;
+    const rate = this.cbRate('EUR') || (this.tcset && this.tccNum(this.tcset.rateEur)) || 83.6892;
+    const toEur = (v) => (tree.cur === '₽' && rate) ? (v / rate) : v;
+    const bestByProd = new Map();
+    for (const b of tree.batches) { const prod = (b.product || '').trim(); if (!prod) continue; const ex = bestByProd.get(prod); if (!ex || (b.outQty || 0) > (ex.outQty || 0)) bestByProd.set(prod, b); }
+    const priceByName = new Map();
+    for (const b of tree.batches) for (const c of (b.comps || [])) { if (c.cat === 'Доп. расходы' || !c.name || !c.qty) continue; const priceEur = toEur(c.summa / c.qty); if (priceEur > 0) priceByName.set(this.norm(c.name), { name: c.name, price: priceEur, unit: c.unit || 'кг', vatPct: 0 }); }
+    for (const [, p] of priceByName) out.prices.push(p);
+    for (const [prod, b] of bestByProd) {
+      out.products.push({ name: prod });
+      const mats = (b.comps || []).filter(c => c.cat !== 'Доп. расходы' && c.name && c.qty);
+      const denom = b.outQty || mats.reduce((s, c) => s + (c.qty || 0), 0) || 0;
+      for (const c of mats) { const pct = denom ? (c.qty / denom) : 0; if (pct > 0) out.recipes.push({ product: prod, component: c.name, pct: pct }); }
+    }
+    return out;
+  }
+  // Сквозная актуализация из уже разобранного дерева (напр. загруженного в разделе «Анализ себестоимости»)
+  tccActualizeFromTree(tree, source) {
+    if (!tree || !tree.batches || !tree.batches.length) return;
+    this.tccLoad();
+    const d = this.tccTreeDeltas(tree);
+    let np = 0, nr = 0, nnew = 0;
+    for (const p of d.prices) { const k = this.norm(p.name); if (!k) continue; const wasKnown = this.rawByName && this.rawByName.has(k); if (!wasKnown && !this._tcc.prices[k]) nnew++; this._tcc.prices[k] = { name: p.name, price: p.price, gross: p.price, vat: 0, article: '', unit: p.unit || 'кг', cat: '' }; np++; }
+    for (const r of d.recipes) { const key = this.norm(r.product) + '|||' + this.norm(r.component); this._tcc.recipes[key] = { product: r.product, component: r.component, pct: r.pct }; nr++; }
+    for (const p of d.products) { const k = this.norm(p.name); if (!k) continue; if (!this._tcc.products[k] && !(this.data && (this.data.products || []).some(x => this.norm(x.name) === k))) this._tcc.products[k] = { name: p.name, type: '', article: '' }; }
+    this._tcc.date = Date.now();
+    this._tcc.summary = 'Обновлено из «' + source + '»: цен ' + np + ', строк рецептур ' + nr + ', новой номенклатуры ' + nnew;
+    this._tcc.history.unshift({ date: this._tcc.date, files: [(tree.fileName || 'Дерево себестоимости') + ' · ' + source], prices: np, recipes: nr, newRaw: nnew, newProd: 0, outputs: 0, by: this.state.currentUser ? this.state.currentUser.name : '' });
+    this._tcc.history = this._tcc.history.slice(0, 50);
+    this.tccSave(); this.tccApply();
+    this._memo = new Map(); this._landMap = null; this._dvCat = null; this._ctAggCache = null; this._ctEffKey = null;
+    try { this.apBeep(); } catch (e) {}
+    try { this.postSystemNote('🔄 Сквозная актуализация из раздела «' + source + '»: ' + this._tcc.summary + '. Обновлены рецептуры и цены во всех расчётах.', this.state.currentUser ? this.state.currentUser.name : 'Система'); } catch (e) {}
+    try { this.secLog('DATA_ACTUALIZATION', { detail: this._tcc.summary + ' (источник: ' + source + ')' }); } catch (e) {}
+    try { this.scheduleAutoRecalc('DATA_ACTUALIZATION'); } catch (e) {}
+    try { if (this.triggerGlobalRecalculation) setTimeout(() => this.triggerGlobalRecalculation('DATA_ACTUALIZATION'), 80); } catch (e) {}
+    try { this.pushRecalcToast && this.pushRecalcToast('🔄 Данные актуализированы из «' + source + '»: рецептур ' + nr + ', цен ' + np + '. Пересчёт запущен.'); } catch (e) {}
+  }
   // Парсер отчёта «Себестоимость выпущенной продукции» (1С): блоки по продукту + таблица статей с «Процент затрат, %»
   tccParseAnalysis(aoa) {
     const res = { products: [], prices: [], recipes: [], vatMode: null };
@@ -6523,10 +6557,12 @@ class Component extends DCLogic {
     const defVat = (S.acVatMode === 'net') ? 0 : (rawVatRate > 1 ? rawVatRate / 100 : (rawVatRate > 0 ? rawVatRate : (this.vat || 0.2)));
     const netOf = (price, rowVatPct) => { const v = (rowVatPct == null) ? defVat : rowVatPct; return v > 0 ? price / (1 + v) : price; };
     const rep = { files: 0, prices: 0, recipes: 0, newRaw: 0, newProd: 0, outputs: 0, kinds: [], errors: [], aiUsed: 0, anomalies: [], vatRate: defVat, vatMode: (S.acVatMode === 'net' ? 'net' : 'gross') };
+    const treesToArchive = [];
     for (const it of items) {
       try {
         const sheets = await this.tccReadSheets(it.file);
         let d = this.tccExtract(sheets, it.kind);
+        if (d._tree) { d._tree.fileName = it.file.name; treesToArchive.push(d._tree); }
         const conf = d.rowsTotal ? d.rowsParsed / d.rowsTotal : (d.prices.length || d.recipes.length || d.outputs.length ? 1 : 0);
         if (!d.prices.length && !d.recipes.length && !d.outputs.length && d.diag) rep.errors.push((it.file.name || 'файл') + ': не распознано (' + d.diag + ')');
         let usedAi = false;
@@ -6563,6 +6599,8 @@ class Component extends DCLogic {
     this._tcc.history.unshift({ date: this._tcc.date, files: items.map(i => i.file.name), prices: rep.prices, recipes: rep.recipes, newRaw: rep.newRaw, newProd: rep.newProd, outputs: rep.outputs, ai: rep.aiUsed, vat: Math.round(defVat * 100) + '%', by: this.state.currentUser ? this.state.currentUser.name : '' });
     this._tcc.history = this._tcc.history.slice(0, 50);
     this.tccSave(); this.tccApply();
+    // Реверс-пропагация: дерево, загруженное в «Актуализации», попадает и в архив «Анализ себестоимости»
+    for (const t of treesToArchive) { try { await this.ctArchAdd(t); } catch (e) {} }
     // Сквозная актуализация всех модулей с учётом внесённых изменений
     this._memo = new Map(); this._landMap = null; this._dvCat = null; this._ctAggCache = null; this._ctEffKey = null;
     const check = this.tccSelfCheck();
@@ -11428,6 +11466,7 @@ class Component extends DCLogic {
   // Debounce 300мс гасит спам; события коалесцируются; берётся самый «верхний» вход графа.
   scheduleAutoRecalc(event) {
     if (this.state.autoRecalc === false) return;            // фоновый режим можно выключить вручную
+    this.biInvalidateAll();                                 // единая точка: любое событие сбрасывает кэши всех ядер
     this._pendingEvents = this._pendingEvents || new Set();
     this._pendingEvents.add(event || 'FULL_RECALC');
     this.rcDebounce('autoRecalc', () => {
@@ -11436,6 +11475,40 @@ class Component extends DCLogic {
       const entry = this.rcPickHighestEntry(evs);
       this.runCascade(entry, { mode: 'auto', events: evs });
     }, 300);
+  }
+  // ===== ЕДИНАЯ ШИНА ИНТЕГРАЦИИ ДАННЫХ (biBus): полная сквозная связь всех модулей =====
+  // Сбрасывает ВСЕ кэши расчётных ядер, чтобы каждый модуль пересчитался на свежих данных.
+  biInvalidateAll() {
+    this._memo = new Map();
+    this._landMap = null;
+    this._dvCat = null;
+    this._ctAggCache = null; this._ctAggKey = null; this._ctEffKey = null;
+    this._ctAggCacheByKey = null;
+    this._mgEnrichCache = null; this._mgCostCache = null;
+    this._coverCache = null; this._whCache = null;
+    this._pfCache = null; this._runRateCache = null;
+    this._salesAgg = null; this._purchAgg = null;
+  }
+  // Центральная точка: ЛЮБАЯ загрузка/изменение данных в ЛЮБОМ разделе идёт сюда.
+  // source — раздел-источник, kind — тип данных, event — вход графа пересчёта.
+  biNotify(source, kind, event, opts) {
+    opts = opts || {};
+    try { this.biInvalidateAll(); } catch (e) {}
+    // Актуализация общего ядра себестоимости (рецептуры/цены применяются во всех расчётах)
+    try { if (this.data) { this.tccLoad(); this.tccApply(); } } catch (e) {}
+    try { this.buildIndex && this.buildIndex(); } catch (e) {}
+    // Единый сквозной пересчёт всех зависимых контуров
+    try { this.scheduleAutoRecalc(event || 'FULL_RECALC'); } catch (e) {}
+    try { if (this.triggerGlobalRecalculation) setTimeout(() => this.triggerGlobalRecalculation(event || 'FULL_RECALC'), 90); } catch (e) {}
+    // Уведомления + журнал
+    if (!opts.silent) {
+      const label = opts.label || ('Данные обновлены в разделе «' + source + '»');
+      try { this.apBeep && this.apBeep(); } catch (e) {}
+      try { this.pushRecalcToast && this.pushRecalcToast('🔄 ' + label + '. Сквозной пересчёт всех модулей запущен.'); } catch (e) {}
+      try { this.postSystemNote && this.postSystemNote('🔄 Сквозная интеграция: ' + label + '. Обновление разошлось по всем связанным разделам и ядрам расчёта.', this.state.currentUser ? this.state.currentUser.name : 'Система'); } catch (e) {}
+      try { this.secLog && this.secLog('CROSS_MODULE_SYNC', { detail: label + ' → тип: ' + (kind || '—') + ', вход графа: ' + (event || 'FULL_RECALC') }); } catch (e) {}
+    }
+    try { this.forceUpdate && this.forceUpdate(); } catch (e) {}
   }
   // Самый «верхний» по цепочке вход среди коалесцированных событий (Закупки выше Продаж и т.д.)
   rcPickHighestEntry(events) {
