@@ -1019,6 +1019,20 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .acrepv{font-size:22px;font-weight:800;color:#1F4E78}
 .acrepl{font-size:11px;color:#8a8782;margin-top:2px}
 .acissue{font-size:13px;background:#fff7ed;border:1px solid #fed7aa;color:#9a5b12;border-radius:8px;padding:7px 11px;margin-top:6px}
+.acvatbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0 4px;padding:10px 12px;background:#f4f6f9;border:1px solid #e5e9ef;border-radius:10px}
+.acvatlab{font-size:13px;font-weight:600;color:#25324a}
+.cvseg-wrap{display:inline-flex;border:1px solid #c3cede;border-radius:8px;overflow:hidden}
+.cvseg{border:none;background:#fff;color:#64748b;font-size:12.5px;font-weight:600;padding:6px 14px;cursor:pointer}
+.cvseg.on{background:#1F4E78;color:#fff}
+.acvatrate{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#56534f}
+.acvatrate .tcin{width:60px}
+.acvathint{font-size:12px;color:#8a8782;flex:1;min-width:200px}
+.acaibadge{font-size:12.5px;color:#1f6f5b;background:#e6f4ea;border:1px solid #b7e0c4;border-radius:8px;padding:7px 11px;margin:8px 0 2px}
+.acanomwrap{max-height:150px;overflow:auto;border:1px solid #fed7aa;border-radius:8px;margin-top:4px}
+.acanom{font-size:12px;color:#7a4a12;padding:5px 10px;border-bottom:1px solid #fdebd3;font-family:'JetBrains Mono',monospace}
+.acmanrow{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.acairow{display:flex;align-items:center;gap:10px}
+.acaiverdict{margin-top:8px;font-size:13px;line-height:1.55;color:#25324a;background:#eef3fb;border:1px solid #dbe6f5;border-radius:10px;padding:11px 13px;white-space:pre-wrap}
 .welcard{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;max-width:430px;background:#fff;border-radius:22px;padding:28px 30px 26px;box-shadow:0 34px 90px rgba(0,0,0,.42);animation:welPop .42s cubic-bezier(.18,.9,.3,1.2) both}
 @keyframes welPop{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
 .welphoto{position:relative;width:248px;height:158px;border-radius:16px;overflow:hidden;cursor:pointer;background:#f4f2ef;border:1px solid #e7e4e0;box-shadow:0 10px 26px rgba(0,0,0,.16);display:flex;align-items:center;justify-content:center}
@@ -2780,12 +2794,14 @@ window.dispatchEvent(new Event('fbready'));
 <div class="aczone"><div class="aczh">🌳 Дерево себестоимости</div><div class="aczs">Цены сырья, состав рецептур, % содержания компонентов</div><sc-if value="{{ acHasTree }}" hint-placeholder-val=""><div class="acfile">📎 {{ acTreeName }} <button class="aczx" onClick="{{ acClearTree }}">×</button></div></sc-if><label class="btn dark acbtn">Выбрать файл<input type="file" accept=".xlsx,.xls,.csv,.txt,.pdf" style="display:none" onChange="{{ onAcTree }}"></label></div>
 <div class="aczone"><div class="aczh">📦 Анализ выпущенной продукции</div><div class="aczs">Готовая продукция и объёмы выпуска по предприятию</div><sc-if value="{{ acHasOut }}" hint-placeholder-val=""><div class="acfile">📎 {{ acOutName }} <button class="aczx" onClick="{{ acClearOut }}">×</button></div></sc-if><label class="btn dark acbtn">Выбрать файл<input type="file" accept=".xlsx,.xls,.csv,.txt,.pdf" style="display:none" onChange="{{ onAcOut }}"></label></div>
 </div>
+<div class="acvatbar"><div class="acvatlab">Цены в файлах указаны:</div><span class="cvseg-wrap"><button class="{{ acVatGrossCls }}" onClick="{{ acVatGross }}">с НДС</button><button class="{{ acVatNetCls }}" onClick="{{ acVatNet }}">без НДС</button></span><sc-if value="{{ acVatShowRate }}" hint-placeholder-val="{{ true }}"><label class="acvatrate">Ставка НДС, %<input class="tcin mono" value="{{ acVatRate }}" onInput="{{ onAcVatRate }}"></label></sc-if><span class="acvathint">Анализ выпущенной продукции загружается с НДС — ядро приведёт цены к без-НДС и заполнит обе величины.</span></div>
+<sc-if value="{{ acAiOn }}" hint-placeholder-val=""><div class="acaibadge">🤖 Внешний ИИ подключён — партии с уверенностью &lt; 95% разбираются автоматически, что не удалось — выносится в аномалии для ручного ввода.</div></sc-if>
 <div class="acrunrow"><sc-if value="{{ acCanRun }}" hint-placeholder-val="{{ true }}"><button class="btn dark acrun" onClick="{{ acAsk }}"><span>🔄</span> Актуализировать ({{ acFileCount }})</button></sc-if></div>
 <sc-if value="{{ acHasHistory }}" hint-placeholder-val=""><div class="sec">История актуализаций</div><div class="tctblwrap"><table class="tctbl"><thead><tr><th class="l">Дата</th><th class="l">Файлы</th><th class="l">Результат</th><th class="l">Кто</th></tr></thead><tbody><sc-for list="{{ acHistory }}" as="h" hint-placeholder-count="2"><tr class="tcrow"><td class="l mono">{{ h.hDate }}</td><td class="l">{{ h.hFiles }}</td><td class="l">{{ h.hStats }}</td><td class="l">{{ h.hBy }}</td></tr></sc-for></tbody></table></div></sc-if>
 </div>
 <sc-if value="{{ acConfirmOpen }}" hint-placeholder-val=""><div class="modalbg"><div class="modal"><div class="modalhd"><h3>Актуализировать данные?</h3></div><div class="modalbd"><div class="npmodtext">Из загруженных файлов ({{ acFileCount }}) будут обновлены: стоимость сырья, состав рецептур и % содержания компонентов; новая номенклатура и продукты попадут в справочники. Действие затрагивает все расчёты блока.</div></div><div class="modalft"><button class="btn" onClick="{{ acCancel }}">Отменить</button><button class="btn dark" onClick="{{ acRun }}">Актуализировать</button></div></div></div></sc-if>
 <sc-if value="{{ acBusyOpen }}" hint-placeholder-val=""><div class="modalbg"><div class="modal"><div class="modalhd"><h3>Обработка…</h3></div><div class="modalbd"><div class="npmodtext">Вычислительное ядро разбирает файлы, обновляет рецептуры и цены, выполняет самопроверку…</div></div></div></div></sc-if>
-<sc-if value="{{ acDoneOpen }}" hint-placeholder-val=""><div class="modalbg"><div class="modal mailmodal"><div class="modalhd"><h3>✓ Данные актуализированы</h3></div><div class="modalbd"><div class="acrepgrid"><div class="acrepc"><div class="acrepv mono">{{ acRepPrices }}</div><div class="acrepl">цен сырья</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepRecipes }}</div><div class="acrepl">строк рецептур</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepNewRaw }}</div><div class="acrepl">новой номенклатуры</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepNewProd }}</div><div class="acrepl">продуктов</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepOutputs }}</div><div class="acrepl">записей выпуска</div></div></div><sc-if value="{{ acRepKinds }}" hint-placeholder-val=""><div class="hint">{{ acRepKinds }}</div></sc-if><div class="fsec">Самопроверка вычислительного ядра</div><sc-if value="{{ acCheckOk }}" hint-placeholder-val=""><div class="banner ok">Расхождений не обнаружено. {{ acCheckStats }}</div></sc-if><sc-for list="{{ acCheckIssues }}" as="c" hint-placeholder-count="0"><div class="{{ c.cls }}">⚠ {{ c.text }}</div></sc-for><sc-if value="{{ acRepHasErr }}" hint-placeholder-val=""><div class="banner err">Не удалось прочитать: {{ acRepErrors }}</div></sc-if></div><div class="modalft"><button class="btn dark" onClick="{{ acCloseDone }}">Готово</button></div></div></div></sc-if>
+<sc-if value="{{ acDoneOpen }}" hint-placeholder-val=""><div class="modalbg"><div class="modal mailmodal"><div class="modalhd"><h3>✓ Данные актуализированы</h3></div><div class="modalbd"><div class="acrepgrid"><div class="acrepc"><div class="acrepv mono">{{ acRepPrices }}</div><div class="acrepl">цен сырья</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepRecipes }}</div><div class="acrepl">строк рецептур</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepNewRaw }}</div><div class="acrepl">новой номенклатуры</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepNewProd }}</div><div class="acrepl">продуктов</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepOutputs }}</div><div class="acrepl">записей выпуска</div></div></div><sc-if value="{{ acRepKinds }}" hint-placeholder-val=""><div class="hint">{{ acRepKinds }}</div></sc-if><sc-if value="{{ acRepVatNote }}" hint-placeholder-val=""><div class="banner ok">🧮 {{ acRepVatNote }}</div></sc-if><sc-if value="{{ acRepAiUsed }}" hint-placeholder-val=""><div class="hint">🤖 Внешний ИИ разобрал файлов: {{ acRepAi }}</div></sc-if><div class="fsec">Самопроверка вычислительного ядра</div><sc-if value="{{ acCheckOk }}" hint-placeholder-val=""><div class="banner ok">Расхождений не обнаружено. {{ acCheckStats }}</div></sc-if><sc-for list="{{ acCheckIssues }}" as="c" hint-placeholder-count="0"><div class="{{ c.cls }}">⚠ {{ c.text }}</div></sc-for><sc-if value="{{ acHasAnomalies }}" hint-placeholder-val=""><div class="fsec">Аномалии — не удалось распознать ({{ acAnomalyCount }}) · внесите вручную</div><div class="acanomwrap"><sc-for list="{{ acAnomalies }}" as="a" hint-placeholder-count="0"><div class="acanom">{{ a.text }}</div></sc-for></div><div class="acmanrow"><button class="btn" onClick="{{ acGoManual }}">➕ Ввести продукт вручную</button><button class="btn" onClick="{{ acGoNomfix }}">✏️ Корректировка номенклатуры</button></div></sc-if><div class="fsec">Перепроверка расчётов внешним ИИ</div><div class="acairow"><button class="btn dark" onClick="{{ acVerifyAi }}" disabled="{{ acAiBusy }}"><span>✦</span> Проверить расчёты ИИ</button><sc-if value="{{ acAiBusy }}" hint-placeholder-val=""><span class="hint">Проверка…</span></sc-if></div><sc-if value="{{ acHasAiVerdict }}" hint-placeholder-val=""><div class="acaiverdict">{{ acAiVerdict }}</div></sc-if><sc-if value="{{ acRepHasErr }}" hint-placeholder-val=""><div class="banner err">Не удалось прочитать: {{ acRepErrors }}</div></sc-if></div><div class="modalft"><button class="btn dark" onClick="{{ acCloseDone }}">Готово</button></div></div></div></sc-if>
 </sc-if>
 
 <sc-if value="{{ isCalc }}" hint-placeholder-val="">
@@ -6328,79 +6344,143 @@ class Component extends DCLogic {
   tccNum(v) { if (typeof v === 'number') return isFinite(v) ? v : 0; if (v == null) return 0; const n = parseFloat(String(v).replace(/\u00a0/g, '').replace(/\s/g, '').replace('%', '').replace(',', '.')); return isFinite(n) ? n : 0; }
   // Распознать колонки и извлечь дельты. kind: 'tree' | 'output' | 'auto'
   tccExtract(aoa, kind) {
-    const out = { prices: [], recipes: [], products: [], outputs: [], kind: kind };
+    const out = { prices: [], recipes: [], products: [], outputs: [], kind: kind, rowsTotal: 0, rowsParsed: 0, unparsed: [], hasVatCol: false, vatColPct: null };
     if (!aoa || !aoa.length) return out;
     const RE = {
       name: /наимен|компонент|номенклат|сырь|материал|товар|позиц/i,
       product: /продукт|марка|издел|\bгп\b|партия|рецепт|выпуск/i,
       pct: /%|содерж|доля|норма|расход|процент/i,
       price: /цена|стоим|руб|eur|€|\/\s?кг/i,
-      qty: /объ[её]м|кол-?во|количеств|выпущ|выпуск|вес|масса|нетто/i
+      qty: /объ[её]м|кол-?во|количеств|выпущ|выпуск|вес|масса|нетто/i,
+      vat: /ндс|\bvat\b/i
     };
-    // строка заголовков — с максимумом совпадений ключевых слов
     let hr = -1, best = -1, cols = {};
     for (let i = 0; i < Math.min(aoa.length, 25); i++) {
       const row = aoa[i] || []; let score = 0; const c = {};
       row.forEach((cell, j) => { const t = String(cell == null ? '' : cell); if (!t.trim()) return;
         if (c.name == null && RE.name.test(t)) { c.name = j; score++; }
         if (c.product == null && RE.product.test(t)) { c.product = j; score++; }
-        if (c.pct == null && RE.pct.test(t)) { c.pct = j; score++; }
+        if (c.pct == null && RE.pct.test(t) && !RE.vat.test(t)) { c.pct = j; score++; }
         if (c.price == null && RE.price.test(t)) { c.price = j; score++; }
         if (c.qty == null && RE.qty.test(t)) { c.qty = j; score++; }
+        if (c.vat == null && RE.vat.test(t) && !RE.price.test(t) && !RE.name.test(t)) { c.vat = j; score++; const m = t.match(/(\d{1,2})\s*%/); if (m) out.vatColPct = Number(m[1]) / 100; }
       });
       if (score > best) { best = score; hr = i; cols = c; }
     }
     if (hr < 0) return out;
+    out.hasVatCol = cols.vat != null;
     const autoKind = (kind === 'auto' || !kind) ? ((cols.pct != null || (cols.name != null && cols.price != null)) ? 'tree' : (cols.qty != null ? 'output' : 'tree')) : kind;
     out.kind = autoKind;
     let curProduct = '';
     for (let i = hr + 1; i < aoa.length; i++) {
-      const row = aoa[i] || []; if (!row.length) continue;
+      const row = aoa[i] || []; if (!row.length || !row.some(c => c != null && String(c).trim())) continue;
       const nameCell = cols.name != null ? String(row[cols.name] == null ? '' : row[cols.name]).trim() : '';
       const prodCell = cols.product != null ? String(row[cols.product] == null ? '' : row[cols.product]).trim() : '';
       if (prodCell) curProduct = prodCell;
       const pct = cols.pct != null ? this.tccNum(row[cols.pct]) : 0;
       const price = cols.price != null ? this.tccNum(row[cols.price]) : 0;
       const qty = cols.qty != null ? this.tccNum(row[cols.qty]) : 0;
+      const rowVat = cols.vat != null ? this.tccNum(row[cols.vat]) : null;
+      out.rowsTotal++;
+      let parsed = false;
       if (autoKind === 'output') {
-        const pname = prodCell || nameCell; if (!pname || /итог|всего|^\s*$/i.test(pname)) continue;
-        out.products.push({ name: pname }); out.outputs.push({ product: pname, qty: qty, date: Date.now() });
+        const pname = prodCell || nameCell; if (!pname || /итог|всего|^\s*$/i.test(pname)) { out.rowsTotal--; continue; }
+        out.products.push({ name: pname }); out.outputs.push({ product: pname, qty: qty, date: Date.now() }); parsed = true;
+        if (price > 0) out.prices.push({ name: pname, price: price, unit: 'кг', vatPct: (rowVat != null && rowVat > 0) ? (rowVat > 1 ? rowVat / 100 : rowVat) : null });
       } else {
-        const comp = nameCell; if (!comp || /итог|всего/i.test(comp)) continue;
-        if (price > 0) out.prices.push({ name: comp, price: price, unit: 'кг' });
-        if (curProduct && pct > 0) out.recipes.push({ product: curProduct, component: comp, pct: pct > 1 ? pct / 100 : pct });
+        const comp = nameCell; if (!comp || /итог|всего/i.test(comp)) { out.rowsTotal--; continue; }
+        if (price > 0) { out.prices.push({ name: comp, price: price, unit: 'кг', vatPct: (rowVat != null && rowVat > 0) ? (rowVat > 1 ? rowVat / 100 : rowVat) : null }); parsed = true; }
+        if (curProduct && pct > 0) { out.recipes.push({ product: curProduct, component: comp, pct: pct > 1 ? pct / 100 : pct }); parsed = true; }
       }
+      if (parsed) out.rowsParsed++;
+      else { const txt = row.map(c => c == null ? '' : String(c).trim()).filter(Boolean).join(' | '); if (txt) out.unparsed.push(txt); }
     }
     if (out.recipes.length) { const ps = new Set(out.recipes.map(r => this.norm(r.product))); ps.forEach(k => { const nm = out.recipes.find(r => this.norm(r.product) === k).product; out.products.push({ name: nm }); }); }
     return out;
   }
+  // Внешний ИИ: разобрать «трудные» строки файла в структуру (parse-until-win). Возвращает {prices,recipes,products,outputs,unparsed}
+  async tccAiParse(fileName, aoa, kindHint) {
+    if (!this.hasAI()) return null;
+    const sample = (aoa || []).slice(0, 60).map(r => (r || []).map(c => c == null ? '' : String(c)));
+    const sys = 'Ты — старший ИИ-аналитик ERP химзавода Shtark Flow. Разбираешь загруженный производственный файл (дерево себестоимости ИЛИ анализ выпущенной продукции) в СТРОГИЙ JSON. '
+      + 'Верни ТОЛЬКО JSON вида {"kind":"tree|output","vat_included":true|false,"vat_pct":0.2,'
+      + '"prices":[{"name":"сырьё","price":число_за_кг}],'
+      + '"recipes":[{"product":"продукт","component":"сырьё","pct":доля_0..1}],'
+      + '"products":[{"name":"продукт","type":""}],'
+      + '"outputs":[{"product":"продукт","qty":кг}],'
+      + '"unparsed":["строки, которые НЕ удалось уверенно разобрать"]}. '
+      + 'Проценты приводи к долям 0..1. Если цены указаны с НДС — vat_included=true и укажи vat_pct. Не выдумывай данные: сомнительные строки помещай в unparsed.';
+    const user = 'Файл: ' + fileName + '. Подсказка типа: ' + (kindHint || 'auto') + '.\nТаблица (массив строк):\n' + JSON.stringify(sample);
+    try {
+      const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
+      const raw = await withTimeout(this.aiComplete([{ role: 'system', content: sys }, { role: 'user', content: user }], { max: 1400 }), 60000);
+      const norm = this.aiNormalizeVerdict(raw);
+      let obj = (norm && norm.json) ? norm.json : null;
+      if (!obj) { const t = String(raw || ''); const m = t.match(/\{[\s\S]*\}/); if (m) { try { obj = JSON.parse(m[0]); } catch (e) {} } }
+      if (!obj || typeof obj !== 'object') return null;
+      obj.prices = Array.isArray(obj.prices) ? obj.prices : [];
+      obj.recipes = Array.isArray(obj.recipes) ? obj.recipes : [];
+      obj.products = Array.isArray(obj.products) ? obj.products : [];
+      obj.outputs = Array.isArray(obj.outputs) ? obj.outputs : [];
+      obj.unparsed = Array.isArray(obj.unparsed) ? obj.unparsed : [];
+      return obj;
+    } catch (e) { return { error: (e && e.message) || String(e) }; }
+  }
   async tccIngest(items) {
     this.tccLoad();
-    const rep = { files: 0, prices: 0, recipes: 0, newRaw: 0, newProd: 0, outputs: 0, kinds: [], errors: [] };
+    const S = this.state;
+    const rawVatRate = this.tccNum(S.acVatRate);
+    const defVat = (S.acVatMode === 'net') ? 0 : (rawVatRate > 1 ? rawVatRate / 100 : (rawVatRate > 0 ? rawVatRate : (this.vat || 0.2)));
+    const netOf = (price, rowVatPct) => { const v = (rowVatPct != null && rowVatPct > 0) ? rowVatPct : defVat; return v > 0 ? price / (1 + v) : price; };
+    const rep = { files: 0, prices: 0, recipes: 0, newRaw: 0, newProd: 0, outputs: 0, kinds: [], errors: [], aiUsed: 0, anomalies: [], vatRate: defVat, vatMode: (S.acVatMode === 'net' ? 'net' : 'gross') };
     for (const it of items) {
       try {
         const aoa = await this.tccReadAny(it.file);
-        const d = this.tccExtract(aoa, it.kind);
-        rep.kinds.push((it.file.name) + ' → ' + (d.kind === 'output' ? 'выпуск продукции' : 'дерево себестоимости'));
-        for (const p of d.prices) { const k = this.norm(p.name); if (!k) continue; const wasKnown = this.rawByName && this.rawByName.has(k); if (!wasKnown && !this._tcc.prices[k]) rep.newRaw++; this._tcc.prices[k] = { name: p.name, price: p.price, article: p.article || '', unit: p.unit || 'кг', cat: p.cat || '' }; rep.prices++; }
+        let d = this.tccExtract(aoa, it.kind);
+        const conf = d.rowsTotal ? d.rowsParsed / d.rowsTotal : (d.prices.length || d.recipes.length || d.outputs.length ? 1 : 0);
+        let usedAi = false;
+        // Порог 95%: если внутреннее ядро не уверено — эскалация во внешний ИИ (parse-until-win)
+        if (conf < 0.95 && this.hasAI()) {
+          const ai = await this.tccAiParse(it.file.name, aoa, it.kind);
+          if (ai && !ai.error) {
+            usedAi = true; rep.aiUsed++;
+            const aiVat = (ai.vat_included && ai.vat_pct) ? (ai.vat_pct > 1 ? ai.vat_pct / 100 : ai.vat_pct) : null;
+            const merge = { prices: [], recipes: d.recipes.slice(), products: d.products.slice(), outputs: d.outputs.slice(), unparsed: (ai.unparsed || []), kind: ai.kind || d.kind };
+            const seenP = new Set(d.prices.map(p => this.norm(p.name)));
+            d.prices.forEach(p => merge.prices.push(p));
+            (ai.prices || []).forEach(p => { if (p && p.name && p.price > 0 && !seenP.has(this.norm(p.name))) { merge.prices.push({ name: p.name, price: p.price, unit: 'кг', vatPct: aiVat }); seenP.add(this.norm(p.name)); } });
+            const seenR = new Set(d.recipes.map(r => this.norm(r.product) + '|' + this.norm(r.component)));
+            (ai.recipes || []).forEach(r => { if (r && r.product && r.component) { const k = this.norm(r.product) + '|' + this.norm(r.component); if (!seenR.has(k)) { merge.recipes.push({ product: r.product, component: r.component, pct: r.pct > 1 ? r.pct / 100 : r.pct }); seenR.add(k); } } });
+            (ai.products || []).forEach(p => { if (p && p.name) merge.products.push({ name: p.name, type: p.type || '' }); });
+            (ai.outputs || []).forEach(o => { if (o && o.product) merge.outputs.push({ product: o.product, qty: o.qty || 0, date: Date.now() }); });
+            d = merge;
+          }
+        }
+        rep.kinds.push((it.file.name) + ' → ' + (d.kind === 'output' ? 'выпуск продукции' : 'дерево себестоимости') + (usedAi ? ' · внешний ИИ' : ' · ядро') + ' · уверенность ' + Math.round(conf * 100) + '%');
+        for (const p of d.prices) { const k = this.norm(p.name); if (!k) continue; const net = netOf(p.price, p.vatPct); const wasKnown = this.rawByName && this.rawByName.has(k); if (!wasKnown && !this._tcc.prices[k]) rep.newRaw++; this._tcc.prices[k] = { name: p.name, price: net, gross: p.price, vat: (p.vatPct != null ? p.vatPct : defVat), article: p.article || '', unit: p.unit || 'кг', cat: p.cat || '' }; rep.prices++; }
         for (const r of d.recipes) { const key = this.norm(r.product) + '|||' + this.norm(r.component); this._tcc.recipes[key] = { product: r.product, component: r.component, pct: r.pct }; rep.recipes++; }
         for (const p of d.products) { const k = this.norm(p.name); if (!k) continue; if (!this._tcc.products[k] && !(this.data && (this.data.products || []).some(x => this.norm(x.name) === k))) rep.newProd++; this._tcc.products[k] = { name: p.name, type: p.type || '', article: p.article || '' }; }
         for (const o of d.outputs) { this._tcc.outputs.push(o); rep.outputs++; }
+        (d.unparsed || []).slice(0, 40).forEach(u => rep.anomalies.push({ file: it.file.name, text: u }));
       } catch (e) { rep.errors.push((it.file.name || 'файл') + ': ' + (e.message || e)); }
       rep.files++;
     }
     this._tcc.outputs = this._tcc.outputs.slice(-2000);
     this._tcc.date = Date.now();
-    this._tcc.summary = 'Обновлено: цен ' + rep.prices + ', строк рецептур ' + rep.recipes + ', новой номенклатуры ' + rep.newRaw + ', продуктов ' + rep.newProd;
-    this._tcc.history.unshift({ date: this._tcc.date, files: items.map(i => i.file.name), prices: rep.prices, recipes: rep.recipes, newRaw: rep.newRaw, newProd: rep.newProd, outputs: rep.outputs, by: this.state.currentUser ? this.state.currentUser.name : '' });
+    this._tcc.vatRate = defVat;
+    this._tcc.summary = 'Обновлено: цен ' + rep.prices + ', строк рецептур ' + rep.recipes + ', новой номенклатуры ' + rep.newRaw + ', продуктов ' + rep.newProd + (rep.vatMode === 'gross' ? ' · цены приведены к без-НДС (ставка ' + Math.round(defVat * 100) + '%)' : '');
+    this._tcc.history.unshift({ date: this._tcc.date, files: items.map(i => i.file.name), prices: rep.prices, recipes: rep.recipes, newRaw: rep.newRaw, newProd: rep.newProd, outputs: rep.outputs, ai: rep.aiUsed, vat: Math.round(defVat * 100) + '%', by: this.state.currentUser ? this.state.currentUser.name : '' });
     this._tcc.history = this._tcc.history.slice(0, 50);
     this.tccSave(); this.tccApply();
+    // Сквозная актуализация всех модулей с учётом внесённых изменений
+    this._memo = new Map(); this._landMap = null; this._dvCat = null; this._ctAggCache = null; this._ctEffKey = null;
     const check = this.tccSelfCheck();
     try { this.apBeep(); } catch (e) {}
-    try { this.postSystemNote('🔄 Актуализация данных: ' + this._tcc.summary + '. Самопроверка: ' + (check.issues.length ? ('замечаний ' + check.issues.length) : 'без замечаний') + '.', this.state.currentUser ? this.state.currentUser.name : 'Технолог'); } catch (e) {}
-    try { this.secLog('DATA_ACTUALIZATION', { detail: this._tcc.summary + ' (файлов: ' + rep.files + ')' }); } catch (e) {}
+    try { this.postSystemNote('🔄 Актуализация данных: ' + this._tcc.summary + '. Самопроверка: ' + (check.issues.length ? ('замечаний ' + check.issues.length) : 'без замечаний') + (rep.aiUsed ? (' · внешний ИИ разобрал файлов: ' + rep.aiUsed) : '') + (rep.anomalies.length ? (' · аномалий к ручному вводу: ' + rep.anomalies.length) : '') + '.', this.state.currentUser ? this.state.currentUser.name : 'Технолог'); } catch (e) {}
+    try { this.secLog('DATA_ACTUALIZATION', { detail: this._tcc.summary + ' (файлов: ' + rep.files + ', ИИ: ' + rep.aiUsed + ', аномалий: ' + rep.anomalies.length + ')' }); } catch (e) {}
     try { this.scheduleAutoRecalc('DATA_ACTUALIZATION'); } catch (e) {}
-    this.setState({ acStep: 'done', acBusy: false, acReport: Object.assign({}, rep, { check: check }), acFiles: [] });
+    try { if (this.triggerGlobalRecalculation) setTimeout(() => this.triggerGlobalRecalculation('DATA_ACTUALIZATION'), 80); } catch (e) {}
+    this.setState({ acStep: 'done', acBusy: false, acReport: Object.assign({}, rep, { check: check }), acFiles: [], acAiVerdict: '', acAiBusy: false });
   }
   // Самопроверка + сквозной анализ: Σ% рецептур, отсутствующие цены, сверка с деревом себестоимости
   tccSelfCheck() {
@@ -6419,6 +6499,34 @@ class Component extends DCLogic {
     } catch (e) {}
     return { issues, stats: { products: byProd.size, sumBad: sumBad, rawNoPrice: rawNoPrice, crossMatched: crossN, ok: issues.length === 0 } };
   }
+  // Внутренняя проверка расчётов калькулятора (пересчёт ядром): себестоимость по рецептуре из цен сырья
+  tccRecomputeProduct(name) {
+    const recs = (this.recByOwner && this.recByOwner.get(this.norm(name))) || [];
+    if (!recs.length) return null;
+    let sumPct = 0, costNet = 0; const comps = [];
+    for (const r of recs) { const pct = r.pct_base || 0; const price = this.rawPrice ? this.rawPrice(r.component) : 0; const eff = (this.isSemi && this.isSemi(r.component)) ? this.tcEffPrice(r.component) : price; sumPct += pct; costNet += pct * eff; comps.push({ component: r.component, pct: pct, price: eff, contribNet: pct * eff }); }
+    const vat = this.vat || 0.2;
+    return { name, sumPct, costNet: costNet, costVat: costNet * (1 + vat), comps };
+  }
+  // Внешний ИИ: перепроверка расчётов калькулятора (сверка себестоимости с рецептурой и ценами)
+  async tccVerifyExternal() {
+    if (!this.hasAI()) { this.setState({ acAiVerdict: '⚙ Укажите ключ внешнего ИИ в панели «AI-аналитик» (⚙), чтобы включить перепроверку расчётов.', acAiBusy: false }); return; }
+    this.setState({ acAiBusy: true, acAiVerdict: '' });
+    const prods = (this.data && this.data.products ? this.data.products : []).slice(0, 12);
+    const samples = [];
+    for (const p of prods) { const r = this.tccRecomputeProduct(p.name); if (r) samples.push({ product: r.name, sumPct: Math.round(r.sumPct * 1000) / 10, costNet: Math.round(r.costNet * 10000) / 10000, costVat: Math.round(r.costVat * 10000) / 10000, comps: r.comps.slice(0, 12).map(c => ({ c: c.component, pct: Math.round(c.pct * 1000) / 10, price: c.price })) }); }
+    if (!samples.length) { this.setState({ acAiBusy: false, acAiVerdict: 'Нет рецептур для перепроверки — сначала актуализируйте данные.' }); return; }
+    const vat = Math.round((this.vat || 0.2) * 100);
+    const sys = 'Ты — независимый аудитор расчётов себестоимости химзавода. Внутреннее ядро посчитало себестоимость 1 кг продукции по рецептуре (costNet — без НДС, costVat — с НДС ' + vat + '%, sumPct — сумма долей компонентов в %, должна быть ≈100). '
+      + 'Перепроверь арифметику: costNet должен равняться Σ(pct/100 × price). Найди расхождения, продукты с sumPct≠100, аномальные цены. Ответь кратко по-русски: вердикт (расчёты верны / есть замечания) и список проблем с числами. Максимум 8 пунктов.';
+    const user = 'Расчёты ядра (JSON):\n' + JSON.stringify(samples, null, 1);
+    try {
+      const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
+      const txt = await withTimeout(this.aiComplete([{ role: 'system', content: sys }, { role: 'user', content: user }], { max: 700 }), 60000);
+      try { this.secLog('CALC_AI_VERIFY', { detail: 'Перепроверка расчётов внешним ИИ: продуктов ' + samples.length }); } catch (e) {}
+      this.setState({ acAiBusy: false, acAiVerdict: (txt || 'Пустой ответ.').trim() });
+    } catch (e) { this.setState({ acAiBusy: false, acAiVerdict: 'Не удалось выполнить проверку: ' + (e.message || e) }); }
+  }
   buildActualize() {
     const S = this.state, set = (p) => this.setState(p);
     this.tccLoad();
@@ -6428,6 +6536,8 @@ class Component extends DCLogic {
     }));
     const files = Array.isArray(S.acFiles) ? S.acFiles : [];
     const rep = S.acReport;
+    const vatMode = S.acVatMode || 'gross';
+    const vatRate = (S.acVatRate != null && S.acVatRate !== '') ? S.acVatRate : String(Math.round((this.vat || 0.2) * 100));
     const stageFile = (kind) => (e) => { const f = e.target.files && e.target.files[0]; if (f) set({ acFiles: [...files.filter(x => x.kind !== kind), { file: f, name: f.name, kind: kind }], acStep: '' }); if (e.target) e.target.value = ''; };
     return {
       isActualize: true,
@@ -6436,6 +6546,10 @@ class Component extends DCLogic {
       acTreeName: (files.find(x => x.kind === 'tree') || {}).name || '', acHasTree: files.some(x => x.kind === 'tree'),
       acOutName: (files.find(x => x.kind === 'output') || {}).name || '', acHasOut: files.some(x => x.kind === 'output'),
       acCanRun: files.length > 0, acFileCount: String(files.length),
+      acVatGrossCls: vatMode === 'gross' ? 'cvseg on' : 'cvseg', acVatNetCls: vatMode === 'net' ? 'cvseg on' : 'cvseg',
+      acVatGross: () => set({ acVatMode: 'gross' }), acVatNet: () => set({ acVatMode: 'net' }),
+      acVatRate: vatRate, acVatShowRate: vatMode === 'gross', onAcVatRate: (e) => set({ acVatRate: e.target.value }),
+      acAiOn: this.hasAI(),
       onAcTree: stageFile('tree'), onAcOut: stageFile('output'),
       acClearTree: () => set({ acFiles: files.filter(x => x.kind !== 'tree') }),
       acClearOut: () => set({ acFiles: files.filter(x => x.kind !== 'output') }),
@@ -6450,7 +6564,14 @@ class Component extends DCLogic {
       acRepKinds: (rep && rep.kinds ? rep.kinds : []).join(' · '),
       acCheckIssues: (rep && rep.check && rep.check.issues) ? rep.check.issues.map(x => ({ text: x.text, cls: x.lvl === 'warn' ? 'acissue warn' : 'acissue' })) : [],
       acCheckOk: !!(rep && rep.check && (!rep.check.issues || !rep.check.issues.length)),
-      acCheckStats: (rep && rep.check && rep.check.stats) ? ('Рецептур проверено: ' + (rep.check.stats.products || 0) + ' · сверено с деревом себестоимости: ' + (rep.check.stats.crossMatched || 0)) : ''
+      acCheckStats: (rep && rep.check && rep.check.stats) ? ('Рецептур проверено: ' + (rep.check.stats.products || 0) + ' · сверено с деревом себестоимости: ' + (rep.check.stats.crossMatched || 0)) : '',
+      acRepAi: rep ? String(rep.aiUsed || 0) : '0', acRepAiUsed: !!(rep && rep.aiUsed),
+      acRepVatNote: (rep && rep.vatMode === 'gross') ? ('Цены из файла (с НДС) приведены к без-НДС по ставке ' + Math.round((rep.vatRate || 0) * 100) + '%. В расчётах доступны обе величины: без НДС и с НДС.') : ((rep && rep.vatMode === 'net') ? 'Цены загружены как без-НДС.' : ''),
+      acAnomalies: (rep && rep.anomalies ? rep.anomalies : []).slice(0, 20).map(a => ({ text: (a.file ? a.file + ': ' : '') + a.text })),
+      acHasAnomalies: !!(rep && rep.anomalies && rep.anomalies.length), acAnomalyCount: rep ? String((rep.anomalies || []).length) : '0',
+      acGoManual: () => set({ tab: 'newprod', acStep: '', acReport: null }), acGoNomfix: () => set({ tab: 'nomfix', acStep: '', acReport: null }),
+      acAiBusy: !!S.acAiBusy, acAiVerdict: S.acAiVerdict || '', acHasAiVerdict: !!S.acAiVerdict,
+      acVerifyAi: () => this.tccVerifyExternal()
     };
   }
   xMut(fn) { if (!this.xcalc) this.loadXCalc(); fn(this.xcalc); this.saveXCalc(); this.forceUpdate(); }
