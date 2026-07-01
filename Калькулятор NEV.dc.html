@@ -6,9 +6,12 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="googlebot" content="noindex, nofollow">
 <script>
-/* Второй контур шлюза: прямой доступ к приложению без секретного ключа → фейковый 404. */
+/* Второй контур шлюза: прямой доступ к приложению без секретного ключа → фейковый 404.
+   GATE_ON = false → шлюз ОТКЛЮЧЁН, портал открывается напрямую (поставьте true, чтобы вернуть защиту). */
 (function () {
+  var GATE_ON = false;
   var SECRET_KEY = 'shtark-erp-2026';
+  if (!GATE_ON) { return; }
   function param(n) { try { return new URLSearchParams(location.search).get(n); } catch (e) { return null; } }
   var hash = (location.hash || '').replace(/^#/, '');
   var supplied = param('k') || param('key') || hash || (hash.indexOf('key=') === 0 ? hash.slice(4) : '');
@@ -34,6 +37,7 @@ body{margin:0;background:#f6f5f2;font-family:'IBM Plex Sans',system-ui,sans-seri
 .mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
 .wrap{max-width:1200px;margin:0 auto 0 252px;padding:30px 40px 90px}
 .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9a9793;font-weight:600}
+.buildtag{display:inline-block;margin-left:8px;padding:1px 7px;border-radius:5px;background:#eef1f6;color:#1F4E78;font-weight:700;letter-spacing:.06em}
 .h1{font-family:'Montserrat',sans-serif;font-size:26px;font-weight:800;letter-spacing:-.015em;margin:6px 0 0}
 .nav{display:flex;gap:10px 14px;margin-top:14px;background:#fbf3c8;padding:9px 11px;border-radius:11px;flex-wrap:wrap;align-items:flex-end}
 .navgroup{display:flex;flex-direction:column;gap:5px}
@@ -395,6 +399,7 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .tcfld{display:flex;flex-direction:column;gap:4px}
 .tcfl{font-size:11px;font-weight:600;color:#8a8782}
 .tcfld .tcin{width:100%;text-align:left}
+.tcfld .tcin[readonly]{background:#eef1f6;color:#1F4E78;font-weight:600;cursor:default;border-color:#dfe4ec}
 .tcbreak{margin-top:14px;border-top:1px solid #f0eeea;padding-top:12px;display:flex;flex-direction:column;gap:7px}
 .tcbrow{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#56534f}
 .tcbrow b{color:#1a1916}
@@ -2080,7 +2085,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
 <sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
-<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки</div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск: контрагент, ИНН, артикул, сырьё, заявка, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">Ничего не найдено</div></sc-if><sc-for list="{{ searchResults }}" as="r" hint-placeholder-count="3"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-if></div></div>
+<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-01</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск: контрагент, ИНН, артикул, сырьё, заявка, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">Ничего не найдено</div></sc-if><sc-for list="{{ searchResults }}" as="r" hint-placeholder-count="3"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava" title="{{ u.tip }}" onContextMenu="{{ u.onCtx }}">{{ u.avatar }}<i class="ondot"></i><sc-if value="{{ u.hasStars }}" hint-placeholder-val=""><span class="onstars" title="KPI {{ u.starsLabel }}">{{ u.starsLabel }}</span></sc-if></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div><button class="ratebtn onrate" onClick="{{ goRating }}"><span>🏆</span> Рейтинг по задачам</button></div></sc-if>
@@ -2588,7 +2593,7 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 <div class="sec">Рецептура · Σ массовых компонентов {{ tcSumPct }}</div>
 <div class="tctblwrap"><table class="tctbl"><thead><tr><th class="l">№</th><th class="l">Компонент</th><th class="l">Раздел</th><th>Ед.</th><th>% ввод</th><th>% факт</th><th>Кол-во/кг</th><th>Цена €/ед.</th><th>€/кг с НДС</th><th>₽/кг с НДС</th><th></th></tr></thead>
-<tbody><sc-for list="{{ tcRows }}" as="r" hint-placeholder-count="13"><tr class="{{ r.rowCls }}"><td class="l idx mono">{{ r.no }}</td><td class="l"><sc-if value="{{ r.tcNameEditable }}" hint-placeholder-val=""><input class="tcin tcname" list="{{ r.tcNameList }}" value="{{ r.tcName }}" placeholder="наименование из номенклатуры" onInput="{{ r.onName }}"></sc-if><sc-if value="{{ r.tcNameStatic }}" hint-placeholder-val="{{ true }}"><span class="nm">{{ r.tcName }}</span></sc-if></td><td class="l tcsec">{{ r.tcSection }}</td><td class="mono">{{ r.tcUnit }}</td><td><sc-if value="{{ r.isMain }}" hint-placeholder-val="{{ true }}"><input class="tcin mono" value="{{ r.pctInput }}" placeholder="{{ r.pctPlaceholder }}" onInput="{{ r.onPct }}"></sc-if><sc-if value="{{ r.isMain }}" hint-placeholder-val=""></sc-if></td><td class="mono tcfact">{{ r.pctFact }}</td><td class="mono">{{ r.qtyS }}</td><td><sc-if value="{{ r.priceEditable }}" hint-placeholder-val="{{ true }}"><input class="tcin mono tcprice" value="{{ r.priceInput }}" onInput="{{ r.onPrice }}"></sc-if><sc-if value="{{ r.priceStatic }}" hint-placeholder-val=""><span class="mono tcpread" title="Расчётная цена полупродукта">{{ r.priceReadS }}</span></sc-if></td><td class="mono">{{ r.eurVatS }}</td><td class="mono">{{ r.rubVatS }}</td><td><sc-if value="{{ r.deletable }}" hint-placeholder-val=""><button class="tcdel" onClick="{{ r.onDel }}" title="Удалить компонент">✕</button></sc-if></td></tr></sc-for></tbody>
+<tbody><sc-for list="{{ tcRows }}" as="r" hint-placeholder-count="13"><tr class="{{ r.rowCls }}"><td class="l idx mono">{{ r.no }}</td><td class="l"><sc-if value="{{ r.tcNameEditable }}" hint-placeholder-val=""><input class="tcin tcname" list="{{ r.tcNameList }}" value="{{ r.tcName }}" placeholder="наименование из номенклатуры" onInput="{{ r.onName }}"></sc-if><sc-if value="{{ r.tcNameStatic }}" hint-placeholder-val="{{ true }}"><span class="nm">{{ r.tcName }}</span></sc-if></td><td class="l tcsec">{{ r.tcSection }}</td><td class="mono">{{ r.tcUnit }}</td><td><sc-if value="{{ r.isMain }}" hint-placeholder-val="{{ true }}"><input class="tcin mono" value="{{ r.pctInput }}" placeholder="{{ r.pctPlaceholder }}" onInput="{{ r.onPct }}" onFocus="{{ r.onPctFocus }}" onBlur="{{ r.onPctBlur }}"></sc-if><sc-if value="{{ r.isMain }}" hint-placeholder-val=""></sc-if></td><td class="mono tcfact">{{ r.pctFact }}</td><td class="mono">{{ r.qtyS }}</td><td><sc-if value="{{ r.priceEditable }}" hint-placeholder-val="{{ true }}"><input class="tcin mono tcprice" value="{{ r.priceInput }}" onInput="{{ r.onPrice }}"></sc-if><sc-if value="{{ r.priceStatic }}" hint-placeholder-val=""><span class="mono tcpread" title="Расчётная цена полупродукта">{{ r.priceReadS }}</span></sc-if></td><td class="mono">{{ r.eurVatS }}</td><td class="mono">{{ r.rubVatS }}</td><td><sc-if value="{{ r.deletable }}" hint-placeholder-val=""><button class="tcdel" onClick="{{ r.onDel }}" title="Удалить компонент">✕</button></sc-if></td></tr></sc-for></tbody>
 <tfoot><tr class="tcsum"><td class="l" colspan="4">Σ ИТОГО</td><td></td><td class="mono tcfact">{{ tcSumPct }}</td><td></td><td></td><td class="mono">{{ tcSumEurVat }}</td><td class="mono">{{ tcSumRubVat }}</td><td></td></tr></tfoot></table></div>
 <datalist id="tc-noms"><sc-for list="{{ tcNomOptions }}" as="n" hint-placeholder-count="0"><option value="{{ n }}"></option></sc-for></datalist>
 <div class="tcactions"><button class="btn ghost" onClick="{{ tcAddComp }}"><span>＋</span> Добавить компонент</button><button class="btn ghost" onClick="{{ tcReset }}" title="Сбросить настройки/правки">↺ Сбросить</button></div>
@@ -2603,11 +2608,11 @@ window.dispatchEvent(new Event('fbready'));
 <div class="tccell"><div class="tccl">₽ без НДС</div><div class="tccv mono">{{ tcCostRubNet }}</div></div>
 </div>
 <div class="tcassumed">По предполагаемому курсу {{ tcAssumedRate }} ₽: <b class="mono">{{ tcCostRubVatA }}</b> с НДС · <span class="mono">{{ tcCostRubNetA }}</span> без НДС</div><sc-if value="{{ tcHasLoss }}" hint-placeholder-val=""><div class="tcloss">⚠ Тех. потери при производстве {{ tcTechLossS }}: материалы {{ tcMatEurVat }} → с учётом отхода <b class="mono">{{ tcCostEurVat }}</b> · надбавка на отход {{ tcLossSurchargeEur }}</div></sc-if>
-<div class="tcsettings"><sc-for list="{{ tcSettings }}" as="f" hint-placeholder-count="5"><label class="tcfld"><span class="tcfl">{{ f.tcsLabel }}</span><input class="tcin mono" value="{{ f.tcsVal }}" onInput="{{ f.onInput }}"></label></sc-for></div>
+<div class="tcsettings"><sc-for list="{{ tcSettings }}" as="f" hint-placeholder-count="5"><label class="tcfld"><span class="tcfl">{{ f.tcsLabel }}</span><input class="tcin mono" value="{{ f.tcsVal }}" readOnly="{{ f.ro }}" onInput="{{ f.onInput }}" onFocus="{{ f.onFocus }}" onBlur="{{ f.onBlur }}"></label></sc-for></div>
 </div>
 <div class="card tcclient">
 <div class="tcch tcchblue">Цена для клиента</div>
-<div class="tcclientfields"><sc-for list="{{ tcClientFields }}" as="f" hint-placeholder-count="6"><label class="tcfld"><span class="tcfl">{{ f.tcsLabel }}</span><input class="tcin mono" value="{{ f.tcsVal }}" onInput="{{ f.onInput }}"></label></sc-for></div>
+<div class="tcclientfields"><sc-for list="{{ tcClientFields }}" as="f" hint-placeholder-count="6"><label class="tcfld"><span class="tcfl">{{ f.tcsLabel }}</span><input class="tcin mono" value="{{ f.tcsVal }}" readOnly="{{ f.ro }}" onInput="{{ f.onInput }}" onFocus="{{ f.onFocus }}" onBlur="{{ f.onBlur }}"></label></sc-for></div>
 <div class="tcbreak"><div class="tcbrow"><span>Себестоимость</span><b class="mono">{{ tcSebest }}</b></div><div class="tcbrow"><span>Полная стоимость</span><b class="mono">{{ tcFull }}</b></div><div class="tcbrow"><span>Наценка {{ tcMarkupPctS }}</span><b class="mono">{{ tcMarkupAmtRub }}</b></div></div>
 <div class="tcfinal">
 <div class="tcfcell"><div class="tcfl2">Цена клиенту · с НДС</div><div class="tcfv mono">{{ tcClientEurVat }}</div><div class="tcfv2 mono">{{ tcClientRubVat }}</div></div>
@@ -2629,7 +2634,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="xnamerow"><label class="xnamefld"><span class="tcfl">Название проектного продукта</span><input class="inp xnameinp" value="{{ xName }}" onInput="{{ xRename }}"></label><button class="tcdel xdelp" onClick="{{ xDelProduct }}" title="Удалить проект">✕ Удалить проект</button></div>
 <div class="sec">Рецептура · Σ массовых компонентов {{ tcSumPct }}</div>
 <div class="tctblwrap"><table class="tctbl"><thead><tr><th class="l">№</th><th class="l">Компонент</th><th class="l">Раздел</th><th>Ед.</th><th>% ввод</th><th>% факт</th><th>Кол-во/кг</th><th>Цена €/ед.</th><th>€/кг с НДС</th><th>₽/кг с НДС</th><th></th></tr></thead>
-<tbody><sc-for list="{{ tcRows }}" as="r" hint-placeholder-count="3"><tr class="{{ r.rowCls }}"><td class="l idx mono">{{ r.no }}</td><td class="l"><input class="tcin tcname" list="{{ r.tcNameList }}" value="{{ r.tcName }}" placeholder="наименование из номенклатуры" onInput="{{ r.onName }}"></td><td class="l tcsec">{{ r.tcSection }}</td><td class="mono">{{ r.tcUnit }}</td><td><input class="tcin mono" value="{{ r.pctInput }}" placeholder="{{ r.pctPlaceholder }}" onInput="{{ r.onPct }}"></td><td class="mono tcfact">{{ r.pctFact }}</td><td class="mono">{{ r.qtyS }}</td><td><input class="tcin mono tcprice" value="{{ r.priceInput }}" onInput="{{ r.onPrice }}"></td><td class="mono">{{ r.eurVatS }}</td><td class="mono">{{ r.rubVatS }}</td><td><button class="tcdel" onClick="{{ r.onDel }}" title="Удалить компонент">✕</button></td></tr></sc-for></tbody>
+<tbody><sc-for list="{{ tcRows }}" as="r" hint-placeholder-count="3"><tr class="{{ r.rowCls }}"><td class="l idx mono">{{ r.no }}</td><td class="l"><input class="tcin tcname" list="{{ r.tcNameList }}" value="{{ r.tcName }}" placeholder="наименование из номенклатуры" onInput="{{ r.onName }}"></td><td class="l tcsec">{{ r.tcSection }}</td><td class="mono">{{ r.tcUnit }}</td><td><input class="tcin mono" value="{{ r.pctInput }}" placeholder="{{ r.pctPlaceholder }}" onInput="{{ r.onPct }}" onFocus="{{ r.onPctFocus }}" onBlur="{{ r.onPctBlur }}"></td><td class="mono tcfact">{{ r.pctFact }}</td><td class="mono">{{ r.qtyS }}</td><td><input class="tcin mono tcprice" value="{{ r.priceInput }}" onInput="{{ r.onPrice }}"></td><td class="mono">{{ r.eurVatS }}</td><td class="mono">{{ r.rubVatS }}</td><td><button class="tcdel" onClick="{{ r.onDel }}" title="Удалить компонент">✕</button></td></tr></sc-for></tbody>
 <tfoot><tr class="tcsum"><td class="l" colspan="4">Σ ИТОГО</td><td></td><td class="mono tcfact">{{ tcSumPct }}</td><td></td><td></td><td class="mono">{{ tcSumEurVat }}</td><td class="mono">{{ tcSumRubVat }}</td><td></td></tr></tfoot></table></div>
 <datalist id="tc-noms"><sc-for list="{{ tcNomOptions }}" as="n" hint-placeholder-count="0"><option value="{{ n }}"></option></sc-for></datalist>
 <div class="tcactions"><button class="btn ghost" onClick="{{ xAddComp }}"><span>＋</span> Добавить компонент</button></div>
@@ -2646,11 +2651,11 @@ window.dispatchEvent(new Event('fbready'));
 <div class="tccell"><div class="tccl">₽ без НДС</div><div class="tccv mono">{{ tcCostRubNet }}</div></div>
 </div>
 <div class="tcassumed">По предполагаемому курсу {{ tcAssumedRate }} ₽: <b class="mono">{{ tcCostRubVatA }}</b> с НДС · <span class="mono">{{ tcCostRubNetA }}</span> без НДС</div><sc-if value="{{ tcHasLoss }}" hint-placeholder-val=""><div class="tcloss">⚠ Тех. потери при производстве {{ tcTechLossS }}: материалы {{ tcMatEurVat }} → с учётом отхода <b class="mono">{{ tcCostEurVat }}</b> · надбавка на отход {{ tcLossSurchargeEur }}</div></sc-if>
-<div class="tcsettings"><sc-for list="{{ tcSettings }}" as="f" hint-placeholder-count="5"><label class="tcfld"><span class="tcfl">{{ f.tcsLabel }}</span><input class="tcin mono" value="{{ f.tcsVal }}" onInput="{{ f.onInput }}"></label></sc-for></div>
+<div class="tcsettings"><sc-for list="{{ tcSettings }}" as="f" hint-placeholder-count="5"><label class="tcfld"><span class="tcfl">{{ f.tcsLabel }}</span><input class="tcin mono" value="{{ f.tcsVal }}" readOnly="{{ f.ro }}" onInput="{{ f.onInput }}" onFocus="{{ f.onFocus }}" onBlur="{{ f.onBlur }}"></label></sc-for></div>
 </div>
 <div class="card tcclient">
 <div class="tcch tcchblue">Цена для клиента</div>
-<div class="tcclientfields"><sc-for list="{{ tcClientFields }}" as="f" hint-placeholder-count="6"><label class="tcfld"><span class="tcfl">{{ f.tcsLabel }}</span><input class="tcin mono" value="{{ f.tcsVal }}" onInput="{{ f.onInput }}"></label></sc-for></div>
+<div class="tcclientfields"><sc-for list="{{ tcClientFields }}" as="f" hint-placeholder-count="6"><label class="tcfld"><span class="tcfl">{{ f.tcsLabel }}</span><input class="tcin mono" value="{{ f.tcsVal }}" readOnly="{{ f.ro }}" onInput="{{ f.onInput }}" onFocus="{{ f.onFocus }}" onBlur="{{ f.onBlur }}"></label></sc-for></div>
 <div class="tcbreak"><div class="tcbrow"><span>Себестоимость</span><b class="mono">{{ tcSebest }}</b></div><div class="tcbrow"><span>Полная стоимость</span><b class="mono">{{ tcFull }}</b></div><div class="tcbrow"><span>Наценка {{ tcMarkupPctS }}</span><b class="mono">{{ tcMarkupAmtRub }}</b></div></div>
 <div class="tcfinal">
 <div class="tcfcell"><div class="tcfl2">Цена клиенту · с НДС</div><div class="tcfv mono">{{ tcClientEurVat }}</div><div class="tcfv2 mono">{{ tcClientRubVat }}</div></div>
@@ -5737,15 +5742,27 @@ class Component extends DCLogic {
     return 0;
   }
   tcMakeSetField(s, save) {
-    return (key, label, kind) => ({
-      key, tcsLabel: label,
-      tcsVal: kind === 'pct' ? (this.tcNum(s[key]) * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) : this.tcNum(s[key]).toLocaleString('ru-RU', { maximumFractionDigits: 4 }),
-      onInput: (e) => { s[key] = kind === 'pct' ? this.tcNum(e.target.value) / 100 : this.tcNum(e.target.value); save(); this.forceUpdate(); }
-    });
+    return (key, label, kind) => {
+      const id = 'set|' + key;
+      if (kind === 'cb') {
+        const v = this.cbRate('EUR') || this.tcNum(s[key]) || 0;
+        return { key, tcsLabel: label, ro: true,
+          tcsVal: v.toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 }),
+          onFocus: () => {}, onBlur: () => {}, onInput: () => {} };
+      }
+      const fmt = kind === 'pct' ? (this.tcNum(s[key]) * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) : this.tcNum(s[key]).toLocaleString('ru-RU', { maximumFractionDigits: 4 });
+      return {
+        key, tcsLabel: label, ro: false,
+        tcsVal: this.state.efId === id ? this.state.efText : fmt,
+        onFocus: () => this.setState({ efId: id, efText: fmt }),
+        onBlur: () => this.setState({ efId: null, efText: null }),
+        onInput: (e) => { const t = e.target.value; s[key] = kind === 'pct' ? this.tcNum(t) / 100 : this.tcNum(t); this.setState({ efText: t }); save(); }
+      };
+    };
   }
   // comps: [{name,section,unit,kind,weight,basePct,qty,priceEur,pctInput,nameEditable,nameList,editablePrice,deletable,onName,onPct,onPrice,onDel}]
   tcRowsVals(comps, s) {
-    const vat = this.tcNum(s.vat), rE = this.tcNum(s.rateEur) || 1;
+    const vat = this.tcNum(s.vat), rE = this.cbRate('EUR') || this.tcNum(s.rateEur) || 1;
     const mains = comps.filter(c => c.kind === 'main');
     const sumW = mains.reduce((a, c) => a + this.tcNum(c.weight), 0) || 1;
     let sumEurVat = 0;
@@ -5760,20 +5777,23 @@ class Component extends DCLogic {
       return {
         idx, no: String(idx + 1), tcName: c.name, tcSection: c.section, tcUnit: c.unit, isMain,
         tcNameEditable: nameEd, tcNameStatic: !nameEd, tcNameList: c.nameList || '',
-        pctInput: c.pctInput || '', pctPlaceholder: isMain ? (this.tcNum(c.basePct) * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) : '—',
+        pctInput: (this.state.efId === 'pct|' + idx) ? this.state.efText : (c.pctInput || ''),
+        onPctFocus: () => this.setState({ efId: 'pct|' + idx, efText: c.pctInput || '' }),
+        onPctBlur: () => this.setState({ efId: null, efText: null }),
+        pctPlaceholder: isMain ? (this.tcNum(c.basePct) * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) : '—',
         pctFact: isMain ? this.tcPctS(qty) : '—',
         qtyS: qty.toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 6 }),
         priceInput: price.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 4 }),
         priceEditable: editP, priceStatic: !editP, priceReadS: this.tcEur(price),
         eurVatS: eurVat ? this.tcEur(eurVat) : '—', rubVatS: rubVat ? this.tcRub(rubVat) : '—',
         rowCls: isMain ? 'tcrow' : 'tcrow tcfix', deletable: c.deletable !== false,
-        onName: c.onName || (() => {}), onPct: c.onPct || (() => {}), onPrice: c.onPrice || (() => {}), onDel: c.onDel || (() => {})
+        onName: c.onName || (() => {}), onPct: (e) => { const t = e.target.value; this.setState({ efText: t }); (c.onPct || (() => {}))(e); }, onPrice: c.onPrice || (() => {}), onDel: c.onDel || (() => {})
       };
     });
     return { tcRows: rows, tcSumPct: '100,00%', tcSumEurVat: this.tcEur(sumEurVat), tcSumRubVat: this.tcRub(sumEurVat * rE), _sumEurVat: sumEurVat };
   }
   tcTotalsVals(sumEurVat, s, setField) {
-    const vat = this.tcNum(s.vat), rE = this.tcNum(s.rateEur) || 1, assumed = this.tcNum(s.assumedEur) || rE;
+    const vat = this.tcNum(s.vat), rE = this.cbRate('EUR') || this.tcNum(s.rateEur) || 1, assumed = this.tcNum(s.assumedEur) || rE;
     const loss = Math.min(0.99, Math.max(0, this.tcNum(s.techLoss)));
     const lossFactor = loss > 0 ? 1 / (1 - loss) : 1;
     const matEurVat = sumEurVat, costEurVat = sumEurVat * lossFactor, costEurNet = costEurVat / (1 + vat), costRubVat = costEurVat * rE, costRubNet = costRubVat / (1 + vat);
@@ -5798,10 +5818,10 @@ class Component extends DCLogic {
       tcClientEurVat: this.tcEur(clientEurVat), tcClientRubVat: this.tcRub(clientRubVat),
       tcClientEurNet: this.tcEur(clientEurVat / (1 + vat)), tcClientRubNet: this.tcRub(clientRubVat / (1 + vat)),
       tcSettings: [
-        setField('vat', 'НДС', 'pct'), setField('rateEur', 'Курс EUR / ₽', 'num'),
+        setField('vat', 'НДС', 'pct'), setField('rateEur', 'Курс ЦБ EUR / ₽ · на сегодня', 'cb'),
         setField('rateUsd', 'Курс USD / ₽', 'num'), setField('rateCny', 'Курс CNY / ₽', 'num'),
         setField('techLoss', 'Тех. потери при производстве, %', 'pct'),
-        setField('assumedEur', 'Предполагаемый курс EUR / ₽', 'num')
+        setField('assumedEur', 'Предполагаемый курс EUR / ₽ · ручной', 'num')
       ],
       tcClientFields: [
         setField('delivery', 'Доставка на 1 кг, €', 'num'), setField('gm2', 'GM2, €', 'num'),
@@ -5820,9 +5840,9 @@ class Component extends DCLogic {
     const comps = (p.comps || []).map((c, idx) => ({
       name: c.name, section: c.section, unit: c.unit, kind: c.kind,
       weight: c.ovr != null ? this.tcNum(c.ovr) : this.tcNum(c.base), basePct: this.tcNum(c.base), qty: c.qty, priceEur: c.priceEur,
-      pctInput: (c.kind === 'main' && c.ovr != null) ? (this.tcNum(c.ovr) * 100).toLocaleString('ru-RU', { maximumFractionDigits: 4 }) : '',
+      pctInput: (c.kind === 'main' && c.ovr != null) ? (this.tcNum(c.ovr) * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) : '',
       editablePrice: true, deletable: true,
-      onPct: (e) => mutP(pp => { const v = e.target.value.trim(); pp.comps[idx].ovr = v === '' ? null : this.tcNum(v) / 100; }),
+      onPct: (e) => mutP(pp => { const v = e.target.value.trim(); pp.comps[idx].ovr = v === '' ? null : Math.min(100, Math.max(0, Math.round(this.tcNum(v) * 100) / 100)) / 100; }),
       onPrice: (e) => mutP(pp => { pp.comps[idx].priceEur = this.tcNum(e.target.value); }),
       onDel: () => mutP(pp => pp.comps.splice(idx, 1))
     }));
@@ -5852,10 +5872,10 @@ class Component extends DCLogic {
       return {
         name: ln.component, section: semi ? 'Полупродукт' : 'Сырьё', unit: 'кг', kind: 'main',
         weight: ln.pct, basePct: ln.pct, priceEur: this.tcEffPrice(ln.component),
-        pctInput: (this.tcNum(ln.pct) * 100).toLocaleString('ru-RU', { maximumFractionDigits: 4 }),
+        pctInput: (this.tcNum(ln.pct) * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }),
         nameEditable: !!ln.added, nameList: 'tc-noms', editablePrice: !semi, deletable: !!ln.added,
         onName: ln.added ? (e) => { const nm = e.target.value; set(st => { const arr = (st.added[owner] || []).slice(); if (arr[ln.ai]) arr[ln.ai] = { ...arr[ln.ai], component: nm }; return { added: { ...st.added, [owner]: arr } }; }); } : null,
-        onPct: (e) => { const v = e.target.value.trim(); if (ln.added) { set(st => { const arr = (st.added[owner] || []).slice(); if (arr[ln.ai]) arr[ln.ai] = { ...arr[ln.ai], pct: this.tcNum(v) }; return { added: { ...st.added, [owner]: arr } }; }); } else { set(st => { const pk = { ...st.pct }; if (v === '') delete pk[owner + '|' + ln.idx]; else pk[owner + '|' + ln.idx] = this.tcNum(v); return { pct: pk }; }); } },
+        onPct: (e) => { const v = e.target.value.trim(); const num = Math.min(100, Math.max(0, Math.round(this.tcNum(v) * 100) / 100)); if (ln.added) { set(st => { const arr = (st.added[owner] || []).slice(); if (arr[ln.ai]) arr[ln.ai] = { ...arr[ln.ai], pct: num }; return { added: { ...st.added, [owner]: arr } }; }); } else { set(st => { const pk = { ...st.pct }; if (v === '') delete pk[owner + '|' + ln.idx]; else pk[owner + '|' + ln.idx] = num; return { pct: pk }; }); } },
         onPrice: semi ? null : (e) => { const val = e.target.value; set(st => ({ prices: { ...st.prices, [this.norm(ln.component)]: val } })); },
         onDel: ln.added ? () => { set(st => { const arr = (st.added[owner] || []).slice(); arr.splice(ln.ai, 1); return { added: { ...st.added, [owner]: arr } }; }); } : null
       };
@@ -5889,7 +5909,7 @@ class Component extends DCLogic {
     const p = this.xProd();
     const head = {
       xReady: true, xHasProduct: !!p, tcNomOptions: this.tcNomNames(),
-      tcRateEur: this.tcNum(s.rateEur).toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 }) + ' ₽',
+      tcRateEur: (this.cbRate('EUR') || this.tcNum(s.rateEur)).toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 }) + ' ₽',
       xProducts: d.products.map(x => ({ value: x.id, label: x.name })),
       xProduct: p ? p.id : '', onXProduct: (e) => set({ xProduct: e.target.value }),
       xCount: String(d.products.length), xName: p ? p.name : '',
