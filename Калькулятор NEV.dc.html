@@ -745,6 +745,44 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .imptblhd{background:#f6f3ef;font-size:10px;font-weight:700;text-transform:uppercase;color:#8a8782}
 .imptblrow{border-top:1px solid #f0ece6}
 .imptblrow .inp{height:30px;font-size:12px;padding:3px 7px}
+.imchk{width:20px;height:20px;border-radius:5px;border:1.5px solid #c7d0da;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.imchk.on{background:#1F8A5B;border-color:#1F8A5B}
+.imchk.on::after{content:'✓';color:#fff;font-size:12px;font-weight:800;line-height:1}
+.imptbl.pay .imptblhd,.imptbl.pay .imptblrow{grid-template-columns:26px 2.1fr 0.8fr 0.9fr 1fr 1.1fr auto}
+.imptblrow.off{opacity:.42}
+.impkoc{color:#1F4E78;font-weight:700;border-color:#bcd0ea !important;background:#f4f8fd !important}
+.prflt{display:flex;gap:10px 14px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px}
+.prbar{display:inline-block;height:7px;border-radius:4px;background:#e7ecf3;width:60px;overflow:hidden;vertical-align:middle;margin-right:6px}
+.prbar i{display:block;height:100%;background:#1F8A5B;border-radius:4px}
+.prbar.od i{background:#c0322b}
+tr.od td{background:#fdf3f0}
+.prfile{border:none;background:#eef4fb;color:#1F4E78;font-weight:700;border-radius:6px;padding:3px 8px;cursor:pointer;font-size:11px}
+.prfile:hover{background:#1F4E78;color:#fff}
+.prdebtbox{margin-top:12px;border:1px solid #e6d5cf;border-radius:11px;background:#fbf5f2;padding:13px 15px}
+.prlines{margin-top:12px;border:1px solid #dbe6f5;border-radius:11px;background:#f7faff;padding:13px 15px}
+.prlinesh{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;font-weight:800;color:#1F4E78;margin-bottom:9px;flex-wrap:wrap}
+.prlinesctl{display:flex;gap:6px}
+.prlinestot{margin-top:9px;font-size:13px;color:#25324a;text-align:right}
+.prlinestot b{color:#1F4E78;font-size:15px}
+tr.prlmuted{opacity:.42}
+tr.prlmuted .nm{text-decoration:line-through}
+.prdebtbox.ok{border-color:#cdeeda;background:#f2faf5}
+.prdebth{font-size:12px;font-weight:800;color:#8a3b1e;margin-bottom:9px}
+.prdebtbox.ok .prdebth{color:#1a6b3f}
+.prdebtk{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:10px}
+.prdebtk div{display:flex;flex-direction:column;gap:2px}
+.prdebtk span{font-size:10.5px;color:#8a8782}
+.prdebtk b{font-family:'IBM Plex Mono',monospace;font-size:17px;color:#1a2b3c}
+.prdebtk b.bad{color:#c0322b}
+.prpaid{border:1.5px solid #c7d0da;background:#fff;border-radius:5px;width:20px;height:20px;cursor:pointer;padding:0;line-height:1}
+.prpaid.on{background:#1F8A5B;border-color:#1F8A5B}
+.prpaid.on::after{content:'✓';color:#fff;font-size:12px;font-weight:800}
+.prdetgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0}
+.prdetgrid div{display:flex;flex-direction:column;gap:2px}
+.prdetgrid span{font-size:10.5px;color:#8a8782}
+.prdetgrid b{font-size:15px;font-family:'IBM Plex Mono',monospace;color:#1a2b3c}
+.prdetgrid b.bad{color:#c0322b}
+.prdrill{border:none;background:none;color:#1F4E78;font-weight:700;cursor:pointer;font-size:12px;padding:0;text-decoration:underline}
 .impsumc{font-size:12px;text-align:right;color:#1F4E78;font-weight:600}
 .imptblfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;background:#fafafa;border-top:1px solid #f0ece6;flex-wrap:wrap}
 .impvat{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#56534f}
@@ -2164,7 +2202,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
 <sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
-<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-01 · r14</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
+<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-02 · r15</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava" title="{{ u.tip }}" onContextMenu="{{ u.onCtx }}">{{ u.avatar }}<i class="ondot"></i><sc-if value="{{ u.hasStars }}" hint-placeholder-val=""><span class="onstars" title="KPI {{ u.starsLabel }}">{{ u.starsLabel }}</span></sc-if></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div><button class="ratebtn onrate" onClick="{{ goRating }}"><span>🏆</span> Рейтинг по задачам</button></div></sc-if>
@@ -3417,19 +3455,33 @@ window.dispatchEvent(new Event('fbready'));
 <div class="fg"><label>Согласующий</label><select class="sel" value="{{ prApprover }}" onChange="{{ onPrApprover }}"><option value="">— выберите —</option><sc-for list="{{ prApproverOpts }}" as="u" hint-placeholder-count="3"><option value="{{ u.v }}">{{ u.label }}</option></sc-for></select></div>
 <div class="fg full"><label>Назначение платежа</label><input class="inp" value="{{ prPurpose }}" onInput="{{ onPrPurpose }}" placeholder="Оплата за сырьё по счёту №…"></div>
 </div>
+<sc-if value="{{ prDebtShow }}" hint-placeholder-val=""><div class="{{ prDebtBoxCls }}"><div class="prdebth">📊 Задолженность перед «{{ prDebtSupplier }}» · открытых заявок: {{ prDebtN }}</div><div class="prdebtk"><div><span>Текущая задолженность</span><b>{{ prDebtTotal }} ₽</b></div><sc-if value="{{ prDebtHasOverdue }}" hint-placeholder-val=""><div><span>из них просрочено</span><b class="bad">{{ prDebtOverdue }} ₽</b></div></sc-if></div><sc-if value="{{ prDebtHasRows }}" hint-placeholder-val=""><div class="scroll"><table class="rectbl"><thead><tr><th class="l">Счёт №</th><th class="l">Дата</th><th class="l">План. оплата</th><th>Остаток ₽</th><th class="l">Статус</th><th></th></tr></thead><tbody><sc-for list="{{ prDebtRows }}" as="r" hint-placeholder-count="2"><tr class="{{ r.rowCls }}"><td class="l mono">{{ r.no }}</td><td class="l">{{ r.date }}</td><td class="l">{{ r.planned }}</td><td class="mono">{{ r.rem }}</td><td class="l">{{ r.status }}</td><td class="l"><button class="prdrill" onClick="{{ r.open }}">открыть →</button></td></tr></sc-for></tbody></table></div></sc-if><sc-if value="{{ prDebtEmpty }}" hint-placeholder-val=""><div class="hint">Непогашенных заявок по этому поставщику нет.</div></sc-if></div></sc-if>
 <sc-if value="{{ prIsRub }}" hint-placeholder-val="x"><div class="hint">Сумма к оплате в рублях по курсу: <b>{{ prAmountRub }} ₽</b></div></sc-if>
+<sc-if value="{{ prDraftHasFile }}" hint-placeholder-val=""><div class="genrow"><button class="btn ai" onClick="{{ prDraftOpenFile }}">📄 Открыть счёт: {{ prDraftFileName }}</button></div></sc-if>
+<sc-if value="{{ prHasLines }}" hint-placeholder-val=""><div class="prlines"><div class="prlinesh"><span>🧾 Номенклатура счёта · отметьте позиции к оплате ({{ prLinesSelN }} из {{ prLinesTotalN }})</span><span class="prlinesctl"><button class="btn xs" onClick="{{ prLinesAllOn }}">Выбрать все</button><button class="btn xs" onClick="{{ prLinesAllOff }}">Снять все</button></span></div><div class="scroll"><table class="rectbl"><thead><tr><th class="l">✓</th><th class="l">Наименование</th><th>Кол-во</th><th>Цена</th><th>Сумма</th><th>К оплате</th></tr></thead><tbody><sc-for list="{{ prLines }}" as="l" hint-placeholder-count="3"><tr class="{{ l.rowCls }}"><td class="l"><button class="{{ l.selCls }}" onClick="{{ l.toggle }}"><span class="prchkbox"></span></button></td><td class="l nm">{{ l.name }}</td><td class="mono">{{ l.qty }}</td><td class="mono">{{ l.price }}</td><td class="mono">{{ l.lineSum }}</td><td><input class="inp num w120" type="number" value="{{ l.payAmount }}" onInput="{{ l.onAmount }}"></td></tr></sc-for></tbody></table></div><div class="prlinestot">К оплате по выбранным позициям: <b>{{ prLinesTotal }} {{ prLinesCurSym }}</b></div></div></sc-if>
 <div class="prsched"><div class="prschedh">📅 График платежей · разбивка по датам <span class="hint">сумма частей: {{ prSchedSum }} ₽</span></div><div class="scroll"><table class="rectbl"><thead><tr><th class="l">Дата</th><th>Сумма, ₽</th><th class="l">Назначение части</th><th></th></tr></thead><tbody><sc-for list="{{ prSchedule }}" as="s" hint-placeholder-count="2"><tr><td><input class="inp w120" type="date" value="{{ s.date }}" onInput="{{ s.onDate }}"></td><td><input class="inp num w120" type="number" value="{{ s.amount }}" onInput="{{ s.onAmount }}"></td><td><input class="inp" value="{{ s.kind }}" onInput="{{ s.onKind }}"></td><td><button class="tlink del" onClick="{{ s.del }}">✕</button></td></tr></sc-for></tbody></table></div><button class="btn xs" onClick="{{ prScheduleAdd }}">+ часть платежа</button></div>
 <div class="genrow"><button class="{{ prTrack }}" onClick="{{ togglePrTrack }}"><span class="prchkbox"></span>Отслеживать платёж</button></div>
 <sc-if value="{{ prHasErr }}" hint-placeholder-val=""><div class="banner err">{{ prErr }}</div></sc-if>
-<div class="uactions"><button class="btn dark" onClick="{{ prSend }}">Отправить на согласование</button><button class="btn" onClick="{{ prSave }}">Сохранить черновик</button><button class="btn imp" onClick="{{ impOpenPayreq }}">📎 Загрузить счета (ИИ)</button><label class="btn"><span>🏦</span> Загрузить выписку .txt<input type="file" accept=".txt" style="display:none" onChange="{{ onStmtFile }}"></label></div>
+<div class="uactions"><button class="btn dark" onClick="{{ prSend }}">Отправить на согласование</button><button class="btn" onClick="{{ prSave }}">Сохранить черновик</button><sc-if value="{{ prIsEditing }}" hint-placeholder-val=""><button class="btn" onClick="{{ prCancel }}">Отмена правки</button></sc-if><button class="btn" onClick="{{ prCancel }}">Очистить</button><button class="btn imp" onClick="{{ impOpenPayreq }}">📎 Загрузить счета (ИИ)</button><label class="btn"><span>🏦</span> Загрузить выписку .txt<input type="file" accept=".txt" style="display:none" onChange="{{ onStmtFile }}"></label></div>
 <sc-if value="{{ stmtHasMsg }}" hint-placeholder-val=""><div class="hint">{{ stmtMsg }}</div></sc-if>
 </div>
-<div class="card"><div class="sec">Заявки на платёж · {{ prCount }}</div>
-<sc-if value="{{ prEmpty }}" hint-placeholder-val=""><div class="hint">Пока нет заявок на платёж.</div></sc-if>
-<div class="scroll"><table><thead><tr><th class="l">Тип</th><th class="l">Контрагент</th><th>Сумма ₽</th><th class="l">Валюта/курс</th><th class="l">Вид</th><th>Частей</th><th class="l">Курс. разн.</th><th class="l">Статус</th><th class="l">Действия</th></tr></thead>
-<tbody><sc-for list="{{ prRows }}" as="p" hint-placeholder-count="2"><tr><td class="l"><span class="{{ p.dirCls }}">{{ p.dir }}</span></td><td class="l nm">{{ p.supplier }}</td><td class="mono">{{ p.amount }}</td><td class="l mono">{{ p.curLbl }}</td><td class="l">{{ p.payTypeLbl }}</td><td class="mono">{{ p.parts }}</td><td class="l mono"><sc-if value="{{ p.hasFx }}" hint-placeholder-val=""><span class="{{ p.fxCls }}">{{ p.fx }}</span></sc-if></td><td class="l"><span class="tcstatus {{ p.statusCls }}">{{ p.status }}</span></td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ p.edit }}">✎</button><sc-if value="{{ p.canSend }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.send }}">На согл.</button></sc-if><sc-if value="{{ p.canApprove }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.approve }}">Согл.</button><button class="ulink del" onClick="{{ p.reject }}">Откл.</button></sc-if><sc-if value="{{ p.canPay }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.pay }}">Оплачено</button></sc-if><sc-if value="{{ p.canRemove }}" hint-placeholder-val=""><button class="ulink del" onClick="{{ p.remove }}">×</button></sc-if></div></td></tr></sc-for></tbody></table></div>
-<div class="hint">При смене статуса инициатор и согласующий получают уведомление в командный чат (и Telegram). «Отслеживать» помечает важные платежи.</div>
+<div class="card"><div class="sec">Реестр заявок на оплату · {{ prCount }}</div>
+<div class="prflt"><div class="field"><span class="lbl">Период с</span><input class="inp" type="date" value="{{ prFltFrom }}" onInput="{{ onPrFltFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp" type="date" value="{{ prFltTo }}" onInput="{{ onPrFltTo }}"></div><div class="field grow"><span class="lbl">Поставщик</span><input class="inp" value="{{ prFltSup }}" onInput="{{ onPrFltSup }}" placeholder="фильтр по названию…"></div><div class="field"><span class="lbl">Статус</span><select class="sel" value="{{ prFltStatus }}" onChange="{{ onPrFltStatus }}"><sc-for list="{{ prStatusOpts }}" as="o" hint-placeholder-count="4"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></div><sc-if value="{{ prFltActive }}" hint-placeholder-val=""><button class="btn" onClick="{{ prFltReset }}">Сбросить фильтр</button></sc-if></div>
+<sc-if value="{{ prEmpty }}" hint-placeholder-val=""><div class="hint">Заявок по заданным условиям нет.</div></sc-if>
+<div class="scroll"><table><thead><tr><th class="l">Тип</th><th class="l">Контрагент</th><th class="l">Счёт №</th><th>Сумма ₽</th><th class="l">Оплата</th><th class="l">План. дата</th><th class="l">Статус</th><th class="l">Действия</th></tr></thead>
+<tbody><sc-for list="{{ prRows }}" as="p" hint-placeholder-count="2"><tr class="{{ p.rowCls }}"><td class="l"><span class="{{ p.dirCls }}">{{ p.dir }}</span></td><td class="l nm"><button class="prdrill" onClick="{{ p.open }}">{{ p.supplier }}</button></td><td class="l mono">{{ p.invNo }} <sc-if value="{{ p.hasFile }}" hint-placeholder-val=""><button class="prfile" onClick="{{ p.openFile }}">📄 счёт</button></sc-if></td><td class="mono">{{ p.amount }}</td><td class="l"><span class="{{ p.barCls }}"><i style="width:{{ p.pctW }}"></i></span> <span class="mono">{{ p.pctW }}</span></td><td class="l">{{ p.planned }}</td><td class="l"><span class="tcstatus {{ p.statusCls }}">{{ p.status }}</span></td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ p.open }}">Открыть</button><button class="ulink" onClick="{{ p.edit }}">✎</button><sc-if value="{{ p.canSend }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.send }}">На согл.</button></sc-if><sc-if value="{{ p.canApprove }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.approve }}">Согл.</button><button class="ulink del" onClick="{{ p.reject }}">Откл.</button></sc-if><sc-if value="{{ p.canPay }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.pay }}">Оплачено</button></sc-if><sc-if value="{{ p.canSoftDel }}" hint-placeholder-val=""><button class="ulink del" onClick="{{ p.softDel }}">На удаление</button></sc-if><sc-if value="{{ p.isTrash }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.restore }}">Восстановить</button></sc-if><sc-if value="{{ p.canRemove }}" hint-placeholder-val=""><button class="ulink del" onClick="{{ p.remove }}">×</button></sc-if></div></td></tr></sc-for></tbody></table></div>
+<div class="hint">Итого по фильтру: заявок на <b>{{ prSumTotal }} ₽</b> · к доплате <b>{{ prSumRemain }} ₽</b>. Красным выделены просроченные. «Открыть» / клик по поставщику — карточка заявки с номенклатурой, вложенным счётом и графиком оплат. «На удаление» помечает заявку без физического удаления (её можно восстановить).</div>
 </div>
+<sc-if value="{{ prDetailOpen }}" hint-placeholder-val=""><div class="dlmapbg" onClick="{{ prDetailClose }}"></div><div class="dlmap impmodal">
+<div class="dlmaph">Заявка на оплату · {{ prDetailSupplier }} <span class="tcstatus {{ prDetailStatusCls }}">{{ prDetailStatus }}</span></div>
+<div class="dlmaps">{{ prDetailInv }} · {{ prDetailDate }} · назначение: {{ prDetailPurpose }}</div>
+<div class="prdetgrid"><div><span>Сумма заявки</span><b>{{ prDetailAmount }} ₽</b></div><div><span>Оплачено</span><b>{{ prDetailPaid }} ₽ · {{ prDetailPct }}</b></div><div><span>Остаток</span><b class="{{ prDetailRemainCls }}">{{ prDetailRemain }} ₽</b></div><div><span>Плановая дата</span><b>{{ prDetailPlanned }}</b></div></div>
+<sc-if value="{{ prDetailHasFile }}" hint-placeholder-val=""><div class="genrow"><button class="btn ai" onClick="{{ prDetailOpenFile }}">📄 Открыть счёт: {{ prDetailFileName }}</button></div></sc-if>
+<sc-if value="{{ prDetailHasLines }}" hint-placeholder-val=""><div class="sec" style="font-size:13px;margin-top:10px">Номенклатура счёта</div><div class="scroll"><table class="rectbl"><thead><tr><th class="l">Наименование</th><th>Кол-во</th><th>Цена</th><th>К оплате ₽</th></tr></thead><tbody><sc-for list="{{ prDetailLines }}" as="l" hint-placeholder-count="2"><tr class="{{ l.rowCls }}"><td class="l nm">{{ l.name }}</td><td class="mono">{{ l.qty }}</td><td class="mono">{{ l.price }}</td><td class="mono">{{ l.pay }}</td></tr></sc-for></tbody></table></div></sc-if>
+<sc-if value="{{ prDetailHasSched }}" hint-placeholder-val=""><div class="sec" style="font-size:13px;margin-top:10px">График оплат · отметьте фактические платежи</div><div class="scroll"><table class="rectbl"><thead><tr><th></th><th class="l">Дата</th><th>Сумма ₽</th><th class="l">Назначение</th></tr></thead><tbody><sc-for list="{{ prDetailSched }}" as="s" hint-placeholder-count="2"><tr><td><button class="{{ s.payCls }}" onClick="{{ s.toggle }}"></button></td><td class="l">{{ s.date }}</td><td class="mono">{{ s.amount }}</td><td class="l">{{ s.kind }}</td></tr></sc-for></tbody></table></div></sc-if>
+<div class="dlmaps">Инициатор: {{ prDetailInitiator }} · Согласующий: {{ prDetailApprover }}</div>
+<div class="dlmapfoot"><sc-if value="{{ prDetailCanPayFull }}" hint-placeholder-val=""><button class="btn dark" onClick="{{ prDetailPayFull }}">✓ Оплачено полностью</button></sc-if><sc-if value="{{ prDetailCanEdit }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailEdit }}">✎ Корректировать</button></sc-if><sc-if value="{{ prDetailCanSoftDel }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailSoftDel }}">🗑 На удаление</button></sc-if><sc-if value="{{ prDetailIsTrash }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailRestore }}">Восстановить</button></sc-if><button class="btn" onClick="{{ prDetailClose }}">Закрыть</button></div>
+</div></sc-if>
 <div class="card"><div class="sec">Казначейский календарь · БДДС на 30 дней</div>
 <div class="toolbar"><div class="field"><span class="lbl">Остаток на счетах сегодня, ₽</span><input class="inp num w120" type="number" value="{{ cashStart }}" onInput="{{ onCashStart }}"></div><button class="btn" onClick="{{ trResetPlan }}">Сбросить переносы</button><button class="btn" onClick="{{ exportBdds }}"><span>↓</span> Excel (CSV)</button><button class="btn dark" onClick="{{ printBdds }}"><span>🖨</span> Печать / PDF</button></div>
 <div class="kpis"><div class="kpi"><div class="kl">Платежи 30 дн., ₽</div><div class="kv mono">{{ trTotalOut }}</div></div><div class="kpi {{ trMinCls }}"><div class="kl">Мин. остаток (риск разрыва)</div><div class="kv mono">{{ trMinBal }}</div></div><sc-if value="{{ trHasOverdue }}" hint-placeholder-val=""><div class="kpi kpiBad"><div class="kl">Просрочено, ₽</div><div class="kv mono">{{ trOverdue }}</div></div></sc-if></div>
@@ -3847,6 +3899,11 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ f.isSimple }}" hint-placeholder-val="x"><div class="impdochd"><sc-if value="{{ f.purpose }}" hint-placeholder-val=""><label class="impfg"><span>Назначение / маршрут</span><input class="inp" value="{{ f.purpose }}" onInput="{{ f.onPurpose }}"></label></sc-if></div></sc-if>
 <sc-if value="{{ f.isSimple }}" hint-placeholder-val=""><div class="impdochd"><label class="impfg"><span>Сумма ₽</span><input class="inp num" value="{{ f.amount }}" onInput="{{ f.onAmount }}"></label><label class="impfg"><span>Маршрут</span><input class="inp" value="{{ f.route }}" onInput="{{ f.onRoute }}"></label><label class="impfg"><span>Фрахт ₽</span><input class="inp num" value="{{ f.freight }}" onInput="{{ f.onFreight }}"></label></div></sc-if>
 <sc-if value="{{ f.isSimple }}" hint-placeholder-val="x"><div class="imptbl"><div class="imptblhd"><span>{{ impNameLabel }}</span><span>Артикул</span><span>Кол-во</span><span>Цена</span><span>Сумма</span><span></span></div><sc-for list="{{ f.lines }}" as="l" hint-placeholder-count="2"><div class="imptblrow"><input class="inp" value="{{ l.name }}" onInput="{{ l.onName }}" placeholder="наименование"><input class="inp" value="{{ l.article }}" onInput="{{ l.onArticle }}" placeholder="арт."><input class="inp num" value="{{ l.qty }}" onInput="{{ l.onQty }}"><input class="inp num" value="{{ l.price }}" onInput="{{ l.onPrice }}"><span class="mono impsumc">{{ l.sum }}</span><button class="tlink del" onClick="{{ l.del }}">✕</button></div></sc-for><div class="imptblfoot"><button class="btn xs" onClick="{{ f.addLine }}">+ строка</button><label class="impvat">НДС, %<input class="inp num" value="{{ f.vatRate }}" onInput="{{ f.onVatRate }}"></label><span class="hint">Позиций: {{ f.lineCount }} · Итого с НДС: {{ f.totalFmt }} ₽ · НДС: {{ f.vatFmt }} ₽ · без НДС: {{ f.totalNetFmt }} ₽</span></div></div></sc-if>
+<sc-if value="{{ f.isPayreq }}" hint-placeholder-val="">
+<div class="impdochd"><label class="impfg sm"><span>№ счёта</span><input class="inp" value="{{ f.no }}" onInput="{{ f.onNo }}"></label><label class="impfg"><span>Назначение платежа</span><input class="inp" value="{{ f.purpose }}" onInput="{{ f.onPurpose }}"></label></div>
+<div class="imptbl pay"><div class="imptblhd"><span>Опл.</span><span>Номенклатура</span><span>Кол-во</span><span>Цена</span><span>Сумма</span><span>К оплате ₽</span><span></span></div><sc-for list="{{ f.lines }}" as="l" hint-placeholder-count="2"><div class="{{ l.rowCls }}"><button class="{{ l.payCls }}" onClick="{{ l.onPay }}"></button><input class="inp" value="{{ l.name }}" onInput="{{ l.onName }}" placeholder="наименование"><input class="inp num" value="{{ l.qty }}" onInput="{{ l.onQty }}"><input class="inp num" value="{{ l.price }}" onInput="{{ l.onPrice }}"><span class="mono impsumc">{{ l.sum }}</span><input class="inp num impkoc" value="{{ l.payAmount }}" onInput="{{ l.onPayAmount }}"><button class="tlink del" onClick="{{ l.del }}">✕</button></div></sc-for><div class="imptblfoot"><button class="btn xs" onClick="{{ f.addLine }}">+ строка</button><label class="impvat">НДС, %<input class="inp num" value="{{ f.vatRate }}" onInput="{{ f.onVatRate }}"></label><span class="hint">Отмечено к оплате: {{ f.paySelN }} поз. · <b class="impkoc">К оплате: {{ f.paySumFmt }} ₽</b> · Итого по счёту: {{ f.docTotalFmt }} ₽</span></div></div>
+<div class="hint">Снимите отметку «Опл.» с позиций, которые не оплачиваете. В колонке «К оплате ₽» задайте частичную сумму по позиции — заявка сформируется на итог отмеченного.</div>
+</sc-if>
 </sc-if>
 </div></sc-for></div></sc-if>
 <sc-if value="{{ impIsVed }}" hint-placeholder-val=""><div class="impved"><div class="impvedt">Сборка Landed Cost (ВЭД-пакет)</div><div class="impvedgrid"><div><span>Инвойс</span><b>{{ impVedInvoice }}</b></div><div><span>Таможня (ТД)</span><b>{{ impVedCustoms }}</b></div><div><span>Брокер/экспедитор</span><b>{{ impVedBroker }}</b></div><div><span>Фрахт/перевозчик</span><b>{{ impVedFreight }}</b></div></div><div class="impvedtot">Полная Landed Cost: <b>{{ impVedLanded }} ₽</b></div></div></sc-if>
@@ -4271,11 +4328,13 @@ class Component extends DCLogic {
   lsGlobal() { return { users_v1: 1, session_v1: 1, sf_token: 1, welcome_photo: 1, emailcfg: 1, aicfg: 1, cloud_v1: 1, daily_motiv: 1, active_co: 1 }; }
   lsKey(name) { return (this.lsGlobal()[name] ? 'inkflow_' : (this._co() === 'ink' ? 'inkflow_' : this._co() + '_')) + name; }
   lsGet(name) { try { return localStorage.getItem(this.lsKey(name)); } catch (e) { return null; } }
-  lsSet(name, val) { try { localStorage.setItem(this.lsKey(name), val); if (this.lsVaulted()[name] && val != null && val !== '' && val !== '{}' && val !== '[]') localStorage.setItem('vault_' + this.lsKey(name), JSON.stringify({ v: val, at: Date.now() })); } catch (e) {} }
+  lsSet(name, val) { try { localStorage.setItem(this.lsKey(name), val); if (this.lsVaulted()[name] && val != null && val !== '' && val !== '{}' && val !== '[]' && val.length <= 60000) localStorage.setItem('vault_' + this.lsKey(name), JSON.stringify({ v: val, at: Date.now() })); } catch (e) {} }
   lsDel(name) { try { localStorage.removeItem(this.lsKey(name)); } catch (e) {} }
   // ===== Хранилище-сейф настроек: критичные ключи не теряются при деплое (резервная копия + самовосстановление) =====
   // Деплой обновляет только файлы кода; данные и настройки живут в localStorage (+ облако). Сейф — доп. страховка от случайной очистки.
-  lsVaulted() { return { users_v1: 1, aicfg: 1, emailcfg: 1, mailrobot: 1, admin_seed: 1, cloud_v1: 1, userprods: 1, nomrenames: 1, tc_actual: 1, tcalc: 1, xcalc: 1, ai_semantic_weights: 1, margin: 1, sebest: 1, ctcorr: 1 }; }
+  // ВАЖНО: сейф дублирует ТОЛЬКО небольшие ключи настроек. Крупные данные (дерево себестоимости, продукты, рецептуры,
+  // архив файлов) деплой и так не трогает — их дублирование раздуло бы localStorage и упёрлось бы в квоту браузера.
+  lsVaulted() { return { users_v1: 1, aicfg: 1, emailcfg: 1, mailrobot: 1, admin_seed: 1, cloud_v1: 1, nomrenames: 1 }; }
   vaultHeal() {
     // Для каждого критичного ключа: если основного значения нет/пусто, но есть резерв в сейфе — восстановить.
     // Если значение есть, но резерва нет — создать резерв (бэкфилл существующих настроек).
@@ -4296,6 +4355,15 @@ class Component extends DCLogic {
     if (healed) { try { this.secLog && this.secLog('SETTINGS_VAULT_RESTORE', { detail: 'Восстановлено настроек/данных из локального сейфа: ' + healed + ' (защита при деплое).' }); } catch (e) {} }
     // Глобальный (не привязанный к компании) сейф seed-а администратора
     try { const gk = 'shtark_admin_seed_global', cur = localStorage.getItem(gk); if ((cur == null || cur === '')) { const raw = localStorage.getItem('vault_' + gk); if (raw) { const bak = JSON.parse(raw); if (bak && bak.v) localStorage.setItem(gk, bak.v); } } } catch (e) {}
+    // Очистка устаревших/крупных резервов сейфа (артефакты прежних версий): дублировать большие данные не нужно —
+    // деплой их не трогает. Оставляем только мелкие ключи настроек, чтобы не упираться в квоту localStorage.
+    try {
+      const keepBases = Object.keys(this.lsVaulted()).concat(['shtark_admin_seed_global']);
+      const keepFull = new Set(); for (const b of keepBases) { keepFull.add('vault_inkflow_' + b); keepFull.add('vault_chem_' + b); keepFull.add('vault_' + b); }
+      const toDel = [];
+      for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.indexOf('vault_') === 0) { const v = localStorage.getItem(k) || ''; if (!keepFull.has(k) || v.length > 60000) toDel.push(k); } }
+      for (const k of toDel) { try { localStorage.removeItem(k); } catch (e) {} }
+    } catch (e) {}
     return healed;
   }
 
@@ -7020,7 +7088,17 @@ class Component extends DCLogic {
   // ===== Пользователи и доступ =====
   // ===== Ротация пароля администратора: смена каждые 3 часа; пароль «admin» запрещён =====
   adminRotMs() { return 3 * 3600 * 1000; }
-  adminSeed() { let s = ''; try { s = localStorage.getItem('shtark_admin_seed_global') || ''; } catch (e) {} if (!s) { try { s = localStorage.getItem(this.lsKey('admin_seed')) || ''; } catch (e) {} } if (!s) { s = Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 12) + '-' + Math.random().toString(36).slice(2, 12); } try { localStorage.setItem('shtark_admin_seed_global', s); localStorage.setItem('vault_shtark_admin_seed_global', JSON.stringify({ v: s, at: Date.now() })); } catch (e) {} return s; }
+  adminSeed() {
+    if (this._adminSeedCache) return this._adminSeedCache;
+    let s = '';
+    try { s = localStorage.getItem('shtark_admin_seed_global') || ''; } catch (e) {}
+    if (!s) { try { s = localStorage.getItem(this.lsKey('admin_seed')) || ''; } catch (e) {} }
+    if (!s) { try { const raw = localStorage.getItem('vault_shtark_admin_seed_global'); if (raw) { const b = JSON.parse(raw); if (b && b.v) s = b.v; } } catch (e) {} }
+    if (!s) { s = Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 12) + '-' + Math.random().toString(36).slice(2, 12); }
+    this._adminSeedCache = s;
+    try { localStorage.setItem('shtark_admin_seed_global', s); localStorage.setItem('vault_shtark_admin_seed_global', JSON.stringify({ v: s, at: Date.now() })); } catch (e) {}
+    return s;
+  }
   adminWindow(ts) { return Math.floor((ts == null ? Date.now() : ts) / this.adminRotMs()); }
   adminHash(str) { let h = 2166136261 >>> 0; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; }
   adminPassFor(win) {
@@ -9369,12 +9447,38 @@ class Component extends DCLogic {
     };
   }
   // ===== Заявки на платёж (согласование) =====
-  emptyPayReq() { const cu = this.state.currentUser; return { id: '', direction: 'out', initiator: cu ? cu.name : '', initiatorId: cu ? cu.id : '', approverId: '', supplier: '', currency: 'RUB', rateMode: 'cb', rate: 0, rateAccrual: 0, amountCur: '', amount: '', date: this.ymd(new Date()), dueDate: this.ymd(new Date()), payType: 'full', prepayPct: 50, termDays: 0, schedule: [], purpose: '', status: 'Черновик', track: true }; }
+  emptyPayReq() { const cu = this.state.currentUser; return { id: '', direction: 'out', initiator: cu ? cu.name : '', initiatorId: cu ? cu.id : '', approverId: '', supplier: '', currency: 'RUB', rateMode: 'cb', rate: 0, rateAccrual: 0, amountCur: '', amount: '', date: this.ymd(new Date()), dueDate: this.ymd(new Date()), payType: 'full', prepayPct: 50, termDays: 0, schedule: [], purpose: '', status: 'Черновик', track: true, lines: [], fileRef: null, invNo: '', invDate: '', invTotal: 0, vatRate: 22, paidAmount: 0 }; }
   // Курс ЦБ для валюты (₽ за единицу)
   cbRate(cur) { if (!cur || cur === 'RUB') return 1; const S = this.state; if (cur === 'EUR') { const e = S.rates && S.rates.EUR && S.rates.EUR.val; return e || Number(S.rate) || 0; } const r = S.rates && S.rates[cur]; return (r && r.val) || 0; }
   // Эффективный курс заявки: ЦБ / фиксированный / ручной
   prEffRate(pr) { if ((pr.currency || 'RUB') === 'RUB') return 1; if (pr.rateMode === 'fixed' || pr.rateMode === 'manual') return Number(pr.rate) || this.cbRate(pr.currency); return this.cbRate(pr.currency); }
   prAmountRub(pr) { const cur = pr.currency || 'RUB'; if (cur === 'RUB') return Number(pr.amount || pr.amountCur) || 0; return (Number(pr.amountCur) || 0) * this.prEffRate(pr); }
+  // ── Позиции счёта: выбор к оплате + частичная сумма по позиции ──
+  prLineSum(l) { return Number(l.lineSum) || (Number(l.qty) || 0) * (Number(l.price) || 0); }
+  prHasLines(d) { return Array.isArray(d && d.lines) && d.lines.length > 0; }
+  // Сумма к оплате по выбранным позициям (в валюте счёта)
+  prLinesPayTotal(d) { if (!this.prHasLines(d)) return 0; return (d.lines || []).reduce((s, l) => s + (l.pay === false ? 0 : (l.payAmount != null && l.payAmount !== '' ? Number(l.payAmount) || 0 : this.prLineSum(l))), 0); }
+  prLineToggle(idx) {
+    const d = this.state.prDraft || this.emptyPayReq(); const lines = (d.lines || []).map((l, i) => i === idx ? { ...l, pay: (l.pay === false) } : l);
+    const nd = { ...d, lines }; this._prSyncAmount(nd); this.setState({ prDraft: nd, prErr: '' });
+  }
+  prLineSetAmount(idx, val) {
+    const d = this.state.prDraft || this.emptyPayReq(); const v = this.impNum(val);
+    const lines = (d.lines || []).map((l, i) => i === idx ? { ...l, payAmount: v, pay: v > 0 ? (l.pay !== false) : l.pay } : l);
+    const nd = { ...d, lines }; this._prSyncAmount(nd); this.setState({ prDraft: nd, prErr: '' });
+  }
+  prLinesAll(sel) {
+    const d = this.state.prDraft || this.emptyPayReq(); const lines = (d.lines || []).map(l => ({ ...l, pay: !!sel }));
+    const nd = { ...d, lines }; this._prSyncAmount(nd); this.setState({ prDraft: nd, prErr: '' });
+  }
+  // При наличии позиций сумма заявки = сумма выбранных позиций (в валюте и в ₽)
+  _prSyncAmount(d) {
+    if (!this.prHasLines(d)) return;
+    const tot = Math.round(this.prLinesPayTotal(d));
+    const cur = d.currency || 'RUB';
+    if (cur === 'RUB') { d.amount = tot; d.amountCur = tot; } else { d.amountCur = tot; d.amount = Math.round(tot * this.prEffRate(d)); }
+    d.schedule = [];
+  }
   // Курсовая разница: (курс оплаты − курс начисления) × сумма в валюте
   prFxDiff(pr) { if ((pr.currency || 'RUB') === 'RUB') return 0; const acc = Number(pr.rateAccrual) || 0; if (!acc) return 0; return ((this.prEffRate(pr) - acc) * (Number(pr.amountCur) || 0)); }
   // Построить график платежей по типу оплаты (части в платёжном календаре)
@@ -9444,13 +9548,14 @@ class Component extends DCLogic {
     const S = this.state, d = S.prDraft || this.emptyPayReq();
     if (!(d.supplier || '').trim()) { this.setState({ prErr: 'Укажите получателя/поставщика' }); return; }
     const cur = d.currency || 'RUB';
+    if (this.prHasLines(d)) this._prSyncAmount(d);
     const amountRub = Math.round(this.prAmountRub(d));
     if (!(amountRub > 0)) { this.setState({ prErr: 'Укажите сумму' }); return; }
     if (send && !d.approverId) { this.setState({ prErr: 'Выберите согласующего' }); return; }
     const cu = S.currentUser;
     const rateAccrual = Number(d.rateAccrual) || (cur === 'RUB' ? 1 : this.prEffRate(d));
     const schedule = (d.schedule && d.schedule.length) ? d.schedule : this.prBuildSchedule(d);
-    const pr = { id: d.id || ('pr_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), direction: d.direction || 'out', initiator: d.initiator || (cu ? cu.name : '—'), initiatorId: d.initiatorId || (cu ? cu.id : ''), approverId: d.approverId || '', supplier: (d.supplier || '').trim(), currency: cur, rateMode: d.rateMode || 'cb', rate: this.prEffRate(d), rateAccrual, amountCur: Number(d.amountCur) || amountRub, amount: amountRub, date: d.date || this.ymd(new Date()), dueDate: d.dueDate || d.date || this.ymd(new Date()), payType: d.payType || 'full', prepayPct: Number(d.prepayPct) || 50, termDays: Number(d.termDays) || 0, schedule, purpose: (d.purpose || '').trim(), status: send ? 'На согласовании' : (d.status || 'Черновик'), track: d.track !== false, fromReceipt: d.fromReceipt || '', fromSale: d.fromSale || '', createdAt: d.createdAt || Date.now() };
+    const pr = { id: d.id || ('pr_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), direction: d.direction || 'out', initiator: d.initiator || (cu ? cu.name : '—'), initiatorId: d.initiatorId || (cu ? cu.id : ''), approverId: d.approverId || '', supplier: (d.supplier || '').trim(), currency: cur, rateMode: d.rateMode || 'cb', rate: this.prEffRate(d), rateAccrual, amountCur: Number(d.amountCur) || amountRub, amount: amountRub, date: d.date || this.ymd(new Date()), dueDate: d.dueDate || d.date || this.ymd(new Date()), payType: d.payType || 'full', prepayPct: Number(d.prepayPct) || 50, termDays: Number(d.termDays) || 0, schedule, purpose: (d.purpose || '').trim(), status: send ? 'На согласовании' : (d.status || 'Черновик'), track: d.track !== false, fromReceipt: d.fromReceipt || '', fromSale: d.fromSale || '', lines: Array.isArray(d.lines) ? d.lines : [], fileRef: d.fileRef || null, invNo: d.invNo || '', invDate: d.invDate || '', invTotal: Number(d.invTotal) || 0, vatRate: Number(d.vatRate) || 22, paidAmount: Number(d.paidAmount) || 0, createdAt: d.createdAt || Date.now() };
     this.writePayreqs([pr, ...(S.payreqs || []).filter(x => x.id !== pr.id)]);
     this.setState({ prDraft: null, prErr: '' });
     const curLbl = cur === 'RUB' ? '' : (' (' + this.fmt(pr.amountCur) + ' ' + this.curSym(cur) + ' × ' + (pr.rate || 0).toFixed(2) + ')');
@@ -9504,13 +9609,101 @@ class Component extends DCLogic {
       if (n > 0) navigator.setAppBadge(n).catch(() => {}); else if (navigator.clearAppBadge) navigator.clearAppBadge().catch(() => {});
     } catch (e) {}
   }
+  // ── % оплаты, остаток, плановая дата, просрочка ──
+  prPaidPct(pr) { const a = Number(pr.amount) || 0; if (a <= 0) return pr.status === 'Оплачен' ? 100 : 0; const p = Math.max(0, Math.min(a, Number(pr.paidAmount) || 0)); return Math.round(p / a * 100); }
+  prRemain(pr) { const a = Number(pr.amount) || 0; return Math.max(0, a - (Number(pr.paidAmount) || 0)); }
+  prPlanned(pr) { const sch = (pr.schedule || []).filter(s => !s.paid && (Number(s.amount) || 0) > 0).map(s => s.date).filter(Boolean).sort(); if (sch.length) return sch[0]; return pr.dueDate || pr.date || ''; }
+  prOverdue(pr) { if (['Отклонён', 'К удалению', 'Оплачен'].includes(pr.status)) return false; if (this.prRemain(pr) <= 0) return false; const d = this.prPlanned(pr); return !!d && d < this.ymd(new Date()); }
+  // Отметить/снять часть графика оплаченной → пересчёт оплаченной суммы и статуса
+  prMarkPart(id, idx) {
+    const pr = (this.state.payreqs || []).find(x => x.id === id); if (!pr) return;
+    const sch = (pr.schedule || []).slice(); if (!sch[idx]) return;
+    sch[idx] = { ...sch[idx], paid: !sch[idx].paid };
+    const paid = sch.filter(s => s.paid).reduce((s, p) => s + (Number(p.amount) || 0), 0);
+    const amount = Number(pr.amount) || 0;
+    let status = pr.status;
+    if (paid <= 0) status = (pr.status === 'Оплачен' || pr.status === 'Частично оплачен') ? 'Согласован' : pr.status;
+    else if (paid >= amount - 1) status = 'Оплачен';
+    else status = 'Частично оплачен';
+    this.writePayreqs((this.state.payreqs || []).map(x => x.id === id ? { ...x, schedule: sch, paidAmount: Math.round(paid), status } : x));
+  }
+  prPayFull(id) {
+    const pr = (this.state.payreqs || []).find(x => x.id === id); if (!pr) return;
+    const sch = (pr.schedule || []).map(s => ({ ...s, paid: true }));
+    this.writePayreqs((this.state.payreqs || []).map(x => x.id === id ? { ...x, schedule: sch, paidAmount: Number(x.amount) || 0, status: 'Оплачен' } : x));
+    this.postSystemNote('🧾 Заявка «' + (pr.supplier || '') + '» отмечена полностью оплаченной (' + this.fmt(pr.amount) + ' ₽).', this.state.currentUser ? this.state.currentUser.name : '—');
+  }
+  prSoftDelete(id) { const pr = (this.state.payreqs || []).find(x => x.id === id); if (!pr) return; this.writePayreqs((this.state.payreqs || []).map(x => x.id === id ? { ...x, status: 'К удалению' } : x)); this.postSystemNote('🗑 Заявка на оплату «' + (pr.supplier || '') + '» помечена НА УДАЛЕНИЕ.', this.state.currentUser ? this.state.currentUser.name : '—'); }
+  prRestore(id) { this.writePayreqs((this.state.payreqs || []).map(x => x.id === id ? { ...x, status: 'Черновик' } : x)); }
+  // Задолженность перед поставщиком: непогашенные заявки + просрочка + перечень
+  supplierDebt(name, excludeId) {
+    const nm = this.norm(name || ''); const rows = []; let total = 0, overdue = 0;
+    if (!nm) return { total: 0, overdue: 0, rows: [], n: 0 };
+    for (const pr of (this.state.payreqs || [])) {
+      if ((pr.direction || 'out') !== 'out') continue;
+      if (excludeId && pr.id === excludeId) continue;
+      if (['Отклонён', 'К удалению'].includes(pr.status)) continue;
+      if (this.norm(pr.supplier) !== nm) continue;
+      const rem = this.prRemain(pr); if (rem <= 0) continue;
+      const od = this.prOverdue(pr); total += rem; if (od) overdue += rem;
+      rows.push({ id: pr.id, no: pr.invNo || (pr.no || pr.id.slice(-4)), date: this.dmFull(pr.invDate || pr.date), planned: this.dmFull(this.prPlanned(pr)), rem: this.fmt(Math.round(rem)), status: pr.status, od });
+    }
+    rows.sort((a, b) => (a.od === b.od ? 0 : (a.od ? -1 : 1)));
+    return { total: Math.round(total), overdue: Math.round(overdue), rows, n: rows.length };
+  }
+  // Карточка заявки (проваливание из реестра)
+  payReqDetailVals() {
+    const S = this.state, set = (p) => this.setState(p);
+    const id = S.prDetailId; if (!id) return { prDetailOpen: false };
+    const pr = (S.payreqs || []).find(x => x.id === id); if (!pr) return { prDetailOpen: false };
+    const cu = S.currentUser, cid = cu ? cu.id : ''; const isAdmin = cu && cu.role === 'admin';
+    const isInit = pr.initiatorId === cid; const isApprover = pr.approverId === cid;
+    const stCls = { 'Черновик': 'st-new', 'На согласовании': 'st-acc', 'Согласован': 'st-prog', 'Частично оплачен': 'st-prog', 'Оплачен': 'st-done', 'Отклонён': 'st-rej', 'К удалению': 'st-rej' };
+    const lines = (pr.lines || []).map(l => { const excl = l.pay === false; const pay = excl ? 0 : (l.payAmount != null ? l.payAmount : (l.lineSum || 0)); return { name: (l.name || '—') + (excl ? ' (не оплачивается)' : ''), qty: this.fmt(l.qty || 0, 0), price: this.fmt(l.price || 0, 2), pay: excl ? '—' : this.fmt(Math.round(pay)), rowCls: excl ? 'prlmuted' : '' }; });
+    const sched = (pr.schedule || []).map((s, i) => ({ date: this.dmFull(s.date), amount: this.fmt(Math.round(s.amount || 0)), kind: s.kind || 'Оплата', paid: !!s.paid, payCls: s.paid ? 'prpaid on' : 'prpaid', toggle: () => this.prMarkPart(pr.id, i) }));
+    const rem = this.prRemain(pr);
+    return {
+      prDetailOpen: true, prDetailSupplier: pr.supplier || '—', prDetailStatus: pr.status, prDetailStatusCls: stCls[pr.status] || 'st-new',
+      prDetailInv: pr.invNo ? ('Счёт № ' + pr.invNo) : '', prDetailDate: this.dmFull(pr.invDate || pr.date),
+      prDetailAmount: this.fmt(Math.round(pr.amount || 0)), prDetailPaid: this.fmt(Math.round(pr.paidAmount || 0)), prDetailRemain: this.fmt(Math.round(rem)), prDetailPct: this.prPaidPct(pr) + '%', prDetailRemainCls: (rem > 0 && this.prOverdue(pr)) ? 'bad' : '',
+      prDetailPurpose: pr.purpose || '', prDetailInitiator: pr.initiator || '—', prDetailApprover: this.prApproverName(pr.approverId), prDetailPlanned: this.dmFull(this.prPlanned(pr)),
+      prDetailLines: lines, prDetailHasLines: lines.length > 0,
+      prDetailSched: sched, prDetailHasSched: sched.length > 0,
+      prDetailHasFile: !!(pr.fileRef && pr.fileRef.id), prDetailFileName: pr.fileRef ? pr.fileRef.name : '', prDetailOpenFile: () => this.faOpen(pr.fileRef && pr.fileRef.id),
+      prDetailCanEdit: (isInit || isAdmin) && pr.status !== 'Оплачен', prDetailEdit: () => set({ prDraft: { ...pr, amountCur: pr.amountCur || pr.amount }, prDetailId: '' }),
+      prDetailCanPayFull: (isInit || isApprover || isAdmin) && rem > 0 && pr.status !== 'К удалению', prDetailPayFull: () => this.prPayFull(pr.id),
+      prDetailCanSoftDel: (isInit || isAdmin) && pr.status !== 'К удалению' && pr.status !== 'Оплачен', prDetailSoftDel: () => this.prSoftDelete(pr.id),
+      prDetailIsTrash: pr.status === 'К удалению', prDetailRestore: () => this.prRestore(pr.id),
+      prDetailClose: () => set({ prDetailId: '' }),
+    };
+  }
+  // Панель задолженности поставщика при создании/правке заявки
+  supplierDebtVals() {
+    const S = this.state, set = (p) => this.setState(p);
+    const d = S.prDraft; const sup = d ? (d.supplier || '') : '';
+    if (!sup || sup.trim().length < 2) return { prDebtShow: false };
+    const editId = d && d.id;
+    const dbt = this.supplierDebt(sup, editId);
+    const rows = dbt.rows.map(r => ({ ...r, rowCls: r.od ? 'od' : '', open: () => set({ prDetailId: r.id }) }));
+    return { prDebtShow: true, prDebtSupplier: sup, prDebtTotal: this.fmt(dbt.total), prDebtOverdue: this.fmt(dbt.overdue), prDebtHasOverdue: dbt.overdue > 0, prDebtBoxCls: dbt.total > 0 ? 'prdebtbox' : 'prdebtbox ok', prDebtRows: rows, prDebtN: String(rows.length), prDebtHasRows: rows.length > 0, prDebtEmpty: rows.length === 0 };
+  }
   payReqVals() {
     const S = this.state, set = (p) => this.setState(p); const cu = S.currentUser; const cid = cu ? cu.id : '';
     const d = S.prDraft || this.emptyPayReq();
     const upd = (k) => (e) => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), [k]: e.target.value }, prErr: '' });
     const users = (S.users || []).filter(u => u.active !== false);
-    const stCls = { 'Черновик': 'st-new', 'На согласовании': 'st-acc', 'Согласован': 'st-prog', 'Оплачен': 'st-done', 'Отклонён': 'st-rej' };
-    const rows = (S.payreqs || []).slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).map(pr => {
+    const stCls = { 'Черновик': 'st-new', 'На согласовании': 'st-acc', 'Согласован': 'st-prog', 'Частично оплачен': 'st-prog', 'Оплачен': 'st-done', 'Отклонён': 'st-rej', 'К удалению': 'st-rej' };
+    const fFrom = S.prFltFrom || '', fTo = S.prFltTo || '', fSup = this.norm(S.prFltSup || ''), fStatus = S.prFltStatus || '';
+    const allPr = (S.payreqs || []).slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    const filtered = allPr.filter(pr => {
+      const dd = pr.invDate || pr.date || '';
+      if (fFrom && dd && dd < fFrom) return false;
+      if (fTo && dd && dd > fTo) return false;
+      if (fSup && this.norm(pr.supplier).indexOf(fSup) < 0) return false;
+      if (fStatus && pr.status !== fStatus) return false;
+      return true;
+    });
+    const rows = filtered.map(pr => {
       const isApprover = pr.approverId === cid; const isInit = pr.initiatorId === cid; const isAdmin = cu && cu.role === 'admin';
       const fx = this.prFxDiff(pr);
       const curLbl = (pr.currency && pr.currency !== 'RUB') ? (this.fmt(pr.amountCur) + ' ' + this.curSym(pr.currency) + ' · ' + (Number(pr.rate) || 0).toFixed(2) + ' ₽') : '';
@@ -9521,7 +9714,13 @@ class Component extends DCLogic {
         canPay: (isApprover || isAdmin || isInit) && pr.status === 'Согласован', pay: () => this.setPayReqStatus(pr.id, 'Оплачен'),
         canSend: isInit && pr.status === 'Черновик', send: () => this.setPayReqStatus(pr.id, 'На согласовании'),
         edit: () => set({ prDraft: { ...pr, amountCur: pr.amountCur || pr.amount } }),
-        canRemove: isInit || isAdmin, remove: () => this.askDelete('заявку на платёж «' + (pr.supplier || '') + '»', () => this.writePayreqs((this.state.payreqs || []).filter(x => x.id !== pr.id))) };
+        canRemove: isInit || isAdmin, remove: () => this.askDelete('заявку на платёж «' + (pr.supplier || '') + '»', () => this.writePayreqs((this.state.payreqs || []).filter(x => x.id !== pr.id))),
+        pct: this.prPaidPct(pr), pctW: this.prPaidPct(pr) + '%', paidFmt: this.fmt(Math.round(Number(pr.paidAmount) || 0)), remainFmt: this.fmt(Math.round(this.prRemain(pr))),
+        planned: this.dmFull(this.prPlanned(pr)), overdue: this.prOverdue(pr), rowCls: this.prOverdue(pr) ? 'od' : '', barCls: this.prOverdue(pr) ? 'prbar od' : 'prbar',
+        invNo: pr.invNo || '', hasFile: !!(pr.fileRef && pr.fileRef.id), openFile: () => this.faOpen(pr.fileRef && pr.fileRef.id),
+        open: () => set({ prDetailId: pr.id }),
+        canSoftDel: (isInit || isAdmin) && pr.status !== 'К удалению' && pr.status !== 'Оплачен', softDel: () => this.prSoftDelete(pr.id),
+        isTrash: pr.status === 'К удалению', restore: () => this.prRestore(pr.id) };
     });
     const cur = d.currency || 'RUB';
     const isRub = cur === 'RUB';
@@ -9529,7 +9728,14 @@ class Component extends DCLogic {
     const sched = (d.schedule && d.schedule.length) ? d.schedule : this.prBuildSchedule(d);
     const schedRows = sched.map((s, i) => ({ date: s.date || '', amount: s.amount || 0, kind: s.kind || '', onDate: (e) => this.prScheduleSet(i, 'date', e.target.value), onAmount: (e) => this.prScheduleSet(i, 'amount', e.target.value), onKind: (e) => this.prScheduleSet(i, 'kind', e.target.value), del: () => this.prScheduleDel(i) }));
     const schedSum = sched.reduce((s, p) => s + (Number(p.amount) || 0), 0);
+    const curSym = this.curSym(cur);
+    const prLines = (d.lines || []).map((l, i) => { const ls = this.prLineSum(l); const pv = (l.payAmount != null && l.payAmount !== '') ? Number(l.payAmount) : ls; return { name: l.name || '—', qty: this.fmt(l.qty || 0, 0), price: this.fmt(l.price || 0, 2), lineSum: this.fmt(Math.round(ls)), payAmount: (l.pay === false ? '' : (l.payAmount != null && l.payAmount !== '' ? l.payAmount : Math.round(ls))), sel: l.pay !== false, selCls: l.pay !== false ? 'prchk on' : 'prchk', toggle: () => this.prLineToggle(i), onAmount: (e) => this.prLineSetAmount(i, e.target.value), rowCls: l.pay === false ? 'prlmuted' : '' }; });
+    const selN = (d.lines || []).filter(l => l.pay !== false).length;
     return {
+      prHasLines: prLines.length > 0, prLines, prLinesSelN: String(selN), prLinesTotalN: String(prLines.length),
+      prLinesTotal: this.fmt(Math.round(this.prLinesPayTotal(d))), prLinesCurSym: curSym,
+      prLinesAllOn: () => this.prLinesAll(true), prLinesAllOff: () => this.prLinesAll(false),
+      prDraftHasFile: !!(d.fileRef && d.fileRef.id), prDraftFileName: d.fileRef ? d.fileRef.name : '', prDraftOpenFile: () => this.faOpen(d.fileRef && d.fileRef.id),
       prDir: d.direction || 'out', prDirOutCls: (d.direction || 'out') === 'out' ? 'segon' : 'seg', prDirInCls: d.direction === 'in' ? 'segon' : 'seg',
       setPrDirOut: () => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), direction: 'out' } }), setPrDirIn: () => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), direction: 'in' } }),
       prSupplier: d.supplier || '', onPrSupplier: upd('supplier'), prDate: d.date || '', onPrDate: upd('date'), prPurpose: d.purpose || '', onPrPurpose: upd('purpose'),
@@ -9547,6 +9753,16 @@ class Component extends DCLogic {
       prSave: () => this.savePayReq(false), prSend: () => this.savePayReq(true), prErr: S.prErr || '', prHasErr: !!S.prErr,
       prRows: rows, prEmpty: rows.length === 0, prCount: String(rows.length),
       onStmtFile: (e) => { const f = e.target.files && e.target.files[0]; if (f) this.importStatement(f); e.target.value = ''; }, stmtMsg: S.stmtMsg || '', stmtHasMsg: !!S.stmtMsg,
+      prFltFrom: fFrom, onPrFltFrom: (e) => set({ prFltFrom: e.target.value }),
+      prFltTo: fTo, onPrFltTo: (e) => set({ prFltTo: e.target.value }),
+      prFltSup: S.prFltSup || '', onPrFltSup: (e) => set({ prFltSup: e.target.value }),
+      prFltStatus: fStatus, onPrFltStatus: (e) => set({ prFltStatus: e.target.value }), prStatusOpts: ['', 'Черновик', 'На согласовании', 'Согласован', 'Частично оплачен', 'Оплачен', 'Отклонён', 'К удалению'].map(v => ({ v, label: v || 'Все статусы' })),
+      prFltReset: () => set({ prFltFrom: '', prFltTo: '', prFltSup: '', prFltStatus: '' }), prFltActive: !!(fFrom || fTo || fSup || fStatus),
+      prSumTotal: this.fmt(Math.round(filtered.reduce((s, p) => s + (Number(p.amount) || 0), 0))),
+      prSumRemain: this.fmt(Math.round(filtered.reduce((s, p) => s + this.prRemain(p), 0))),
+      prIsEditing: !!(S.prDraft && S.prDraft.id), prCancel: () => set({ prDraft: null, prErr: '' }),
+      ...this.payReqDetailVals(),
+      ...this.supplierDebtVals(),
     };
   }
   // ===== БДДС: казначейский календарь на 30 дней =====
@@ -9568,10 +9784,10 @@ class Component extends DCLogic {
     // Заявки на платёж: части графика → отдельные оттоки/притоки по датам (мультивалюта в ₽)
     const inExtra = {};
     for (const pr of (S.payreqs || [])) {
-      if (/отклонён|оплачен/i.test(String(pr.status || ''))) continue;
+      if (/отклон|оплачен|удал/i.test(String(pr.status || ''))) continue;
       const sched = (pr.schedule && pr.schedule.length) ? pr.schedule : [{ date: pr.dueDate || pr.date, amount: Number(pr.amount) || 0, kind: 'Оплата' }];
       sched.forEach((part, i) => {
-        const amt = Number(part.amount) || 0; if (amt <= 0 || !part.date) return;
+        const amt = Number(part.amount) || 0; if (amt <= 0 || !part.date || part.paid) return;
         if (pr.direction === 'in') { inExtra[part.date] = (inExtra[part.date] || 0) + amt; }
         else pays.push({ id: pr.id, part: 1000 + i, supplier: pr.supplier || '—', material: (part.kind || 'платёж') + (pr.currency && pr.currency !== 'RUB' ? (' · ' + this.curSym(pr.currency)) : ''), date: part.date, amount: amt, due: amt });
       });
@@ -9675,7 +9891,7 @@ class Component extends DCLogic {
   impNum(v) { if (v == null) return 0; const n = parseFloat(String(v).replace(/[^\d,.\-]/g, '').replace(/\s/g, '').replace(',', '.')); return isFinite(n) ? n : 0; }
   impCell(row, map, field) { const i = map[field]; return (i == null || i < 0) ? '' : String(row[i] == null ? '' : row[i]).trim(); }
   impTargetTitle(t) { return ({ sales: 'Продажи · загрузить реализацию из файла', receipts: 'Поступление ТМЦ · загрузить и распознать', purchases: 'Закупки · загрузить счета/спецификации', ved: 'ВЭД · пакет документов (инвойс, ТД, экспедитор, перевозчик)', payreq: 'Заявки на оплату · загрузить счета', logi: 'Поручение экспедитору · автозагрузка' })[t] || 'Импорт и распознавание'; }
-  impTargetHint(t) { return ({ sales: 'Реализация ГП: распознаются клиент, продукт, объём (кг), цена. Каждая строка → отгрузка в реестре продаж.', receipts: 'Накладные/приходы: распознаются наименование сырья, артикул, количество, цена. Строки → позиции поступления, склад обновится.', purchases: 'Спецификации/счета: поставщик, сырьё, кол-во, цена. Строки → заявки закупки.', ved: 'Бросьте ВЕСЬ пакет: коммерческий инвойс, таможенная декларация (ТД/ДТ), поручение экспедитору, счёт перевозчика. ИИ определит тип каждого документа и соберёт полную Landed Cost.', payreq: 'Счета на оплату: получатель, сумма, назначение. Можно несколько файлов — каждый счёт станет заявкой на платёж.', logi: 'Поручение/счёт экспедитору: маршрут, перевозчик, фрахт. Файлы → строки монитора логистики.' })[t] || ''; }
+  impTargetHint(t) { return ({ sales: 'Реализация ГП: распознаются клиент, продукт, объём (кг), цена. Каждая строка → отгрузка в реестре продаж.', receipts: 'Накладные/приходы: распознаются наименование сырья, артикул, количество, цена. Строки → позиции поступления, склад обновится.', purchases: 'Спецификации/счета: поставщик, сырьё, кол-во, цена. Строки → заявки закупки.', ved: 'Бросьте ВЕСЬ пакет: коммерческий инвойс, таможенная декларация (ТД/ДТ), поручение экспедитору, счёт перевозчика. ИИ определит тип каждого документа и соберёт полную Landed Cost.', payreq: 'Счета / УПД на оплату (PDF, Excel): ядро распознаёт поставщика, № и дату счёта, НДС и построчную номенклатуру. Отметьте позиции к оплате, задайте частичные суммы — оригинал счёта вложится в заявку и открывается из реестра.', logi: 'Поручение/счёт экспедитору: маршрут, перевозчик, фрахт. Файлы → строки монитора логистики.' })[t] || ''; }
   impOpen(target) { this.setState({ imp: { target, title: this.impTargetTitle(target), hint: this.impTargetHint(target), files: [], busy: false, committed: false } }); }
   impClose() { this.setState({ imp: null }); }
   // Распознать тип документа ВЭД по имени файла / содержимому
@@ -9699,6 +9915,43 @@ class Component extends DCLogic {
       const j = JSON.parse(m[0]); return (j && j.map) ? j.map : null;
     } catch (e) { return null; }
   }
+  // ═══ ЯДРО РАСПОЗНАВАНИЯ ДОКУМЕНТОВ — встроенный промт (счета/УПД/накладные/инвойсы) ═══
+  // Внедрён в проект: используется при эскалации к внешнему ИИ для извлечения значимых
+  // для учёта параметров (№, дата, поставщик, ИНН, НДС, итог, построчная номенклатура).
+  docRecogPrompt() {
+    return [
+      'РОЛЬ: ядро распознавания первичных бухгалтерских документов финансового портала Shtark Flow (две компании химотрасли, учёт в 1С).',
+      'ЗАДАЧА: из текста документа (счёт на оплату, счёт-фактура, УПД, товарная накладная, коммерческий инвойс) извлечь все значимые для учёта параметры и вернуть СТРОГО валидный JSON без пояснений, комментариев и markdown-ограждений.',
+      'ФОРМАТ: {"doc_kind":"invoice|upd|waybill|proforma|other","doc_no":"<номер документа>","doc_date":"YYYY-MM-DD","supplier":"<продавец/поставщик>","supplier_inn":"<ИНН продавца>","buyer":"<покупатель>","currency":"RUB|EUR|USD|CNY","vat_rate":<ставка НДС, число процентов>,"vat_amount":<сумма НДС, число>,"total":<итог «Всего к оплате», число>,"lines":[{"name":"<наименование номенклатуры>","qty":<количество>,"unit":"<единица>","price":<цена за единицу>,"sum":<сумма строки>}]}',
+      'ПРАВИЛА: 1) Числа — точка как десятичный разделитель, без пробелов/разделителей тысяч. 2) Поставщик — тот, кто ВЫСТАВИЛ счёт (Продавец / Поставщик / Исполнитель / Получатель платежа), НЕ покупатель и НЕ грузополучатель. 3) total = «Всего к оплате» либо «Итого». 4) vat_amount = «в том числе НДС». 5) Каждая товарная позиция таблицы — отдельный элемент lines; служебные/итоговые строки не включать. 6) Не выдумывай отсутствующие данные — ставь пустую строку или 0. 7) Раздел размещения для таких документов в системе — «Заявки на оплату (казначейство)».',
+    ].join('\n');
+  }
+  // Извлечение инвойса внешним ИИ (когда внутреннее ядро распознало неуверенно)
+  async impAiInvoice(d) {
+    if (!this.hasAI()) return null;
+    try {
+      const text = [(d.headers || []).join(' | '), ...(d.rows || []).slice(0, 60).map(r => (r || []).join(' | '))].join('\n').slice(0, 6000);
+      const withTimeout = (p, ms) => Promise.race([p, new Promise((_, r) => setTimeout(() => r(new Error('timeout')), ms))]);
+      const raw = await withTimeout(this.aiComplete([{ role: 'system', content: this.docRecogPrompt() }, { role: 'user', content: 'ТЕКСТ ДОКУМЕНТА:\n' + text }], { max: 900 }), 45000);
+      const t = String(raw || ''); const m = t.match(/\{[\s\S]*\}/); if (!m) return null;
+      const j = JSON.parse(m[0]); return (j && typeof j === 'object') ? j : null;
+    } catch (e) { return null; }
+  }
+  mergeInvoiceAi(doc, ai) {
+    const d = { ...doc };
+    if (!d.no && ai.doc_no) d.no = String(ai.doc_no);
+    if (ai.supplier && (!d.party || d.party.length < 3)) d.party = String(ai.supplier);
+    if (ai.supplier_inn && !d.inn) d.inn = String(ai.supplier_inn);
+    if (ai.doc_date) { const dd = this.impDateAny(ai.doc_date) || ai.doc_date; if (dd) d.date = dd; }
+    if (ai.vat_rate) d.vatRate = Number(ai.vat_rate) || d.vatRate;
+    if (ai.vat_amount) d.vatAmount = Number(ai.vat_amount) || d.vatAmount;
+    if (Array.isArray(ai.lines) && ai.lines.length) {
+      d.lines = ai.lines.map(l => { const qty = Number(l.qty) || 0, price = Number(l.price) || 0; const ls = Number(l.sum) || (qty && price ? qty * price : price); const r = Math.round(ls * 100) / 100; return { name: String(l.name || ''), article: '', qty, price, lineSum: r, pay: true, payAmount: r }; }).filter(l => l.name || l.lineSum);
+    }
+    const total = Number(ai.total) || (d.lines || []).reduce((s, l) => s + (l.lineSum || 0), 0);
+    if (total) d.amount = total;
+    return d;
+  }
   async impAddFiles(fileList) {
     const target = this.state.imp ? this.state.imp.target : ''; if (!target) return;
     const files = Array.from(fileList || []); if (!files.length) return;
@@ -9712,6 +9965,10 @@ class Component extends DCLogic {
         const confident = this.dlSemanticConfident(d.headers, d.rows) || (map.nomen != null || map.supplier != null || map.client != null);
         if (!confident && this.hasAI()) { const am = await this.impAiColumnMap(d); if (am) { map = am; via = 'внешний ИИ'; } }
         const conv = this.impConvert(target, d, map, file);
+        if (target === 'payreq' && this.hasAI() && (!conv.doc.no || !(conv.doc.lines || []).length || !conv.doc.amount)) {
+          const ai = await this.impAiInvoice(d);
+          if (ai) { via = via + ' + ИИ'; conv.doc = this.mergeInvoiceAi(conv.doc, ai); conv.summary = conv.doc.party + ' · ' + (conv.doc.lines || []).length + ' поз. · ' + this.fmt(conv.doc.amount) + ' ₽'; }
+        }
         this._impPush({ name: file.name, status: 'ok', via, n: d.n, headers: d.headers, ...conv, _file: file });
       } catch (e) { this._impPush({ name: file.name, status: 'err', err: (e && e.message) || String(e), records: [] }); }
     }
@@ -9772,9 +10029,14 @@ class Component extends DCLogic {
     }
     if (target === 'payreq') {
       const party = meta.supplier || this.impTopValue(rows, map.supplier) || this.impTopValue(rows, map.client) || baseName;
-      let amount = meta.totalAmount || rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'sum')), 0);
-      if (!amount) amount = rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'price')) * (this.impNum(this.impCell(r, map, 'qty')) || 1), 0);
-      return { recType: 'payreq', doc: { date: dateD, party, amount, vatRate, vatAmount: meta.vatAmount || 0, purpose: (meta.docKind === 'receipt' ? 'Оплата поступления' : 'Счёт') + (docNo ? ' № ' + docNo : '') + (meta.supplier ? ' · ' + meta.supplier : '') }, summary: party + ' · ' + this.fmt(amount) + ' ₽' };
+      const inn = meta.supplierInn || this.impTopValue(rows, map.inn) || '';
+      const rnd = (x) => this.excelRound ? this.excelRound(x, 2) : Math.round((x || 0) * 100) / 100;
+      let lines = rows.map((r) => { const l = lineOf(r); const rowSum = this.impNum(this.impCell(r, map, 'sum')); const ls = rowSum || (l.qty && l.price ? l.qty * l.price : (l.price || 0)); return { ...l, lineSum: rnd(ls), pay: true, payAmount: rnd(ls) }; }).filter(l => l.name || l.qty || l.price || l.lineSum);
+      let total = meta.totalAmount || lines.reduce((s, l) => s + (l.lineSum || 0), 0);
+      if (!total) total = rows.reduce((s, r) => s + this.impNum(this.impCell(r, map, 'sum')), 0);
+      if (!lines.length) lines = [{ name: (meta.title || baseName), article: '', qty: 0, price: 0, lineSum: total, pay: true, payAmount: total }];
+      const purpose = (meta.docKind === 'receipt' ? 'Оплата поступления' : 'Оплата по счёту') + (docNo ? ' № ' + docNo : '');
+      return { recType: 'payreq', doc: { date: dateD, party, inn, no: docNo, currency: meta.currency || 'RUB', rate: meta.rate || 1, vatRate, vatAmount: meta.vatAmount || 0, amount: total, lines, purpose }, summary: party + ' · ' + lines.length + ' поз. · ' + this.fmt(total) + ' ₽' };
     }
     if (target === 'logi') {
       const carrier = meta.supplier || this.impTopValue(rows, map.supplier) || '';
@@ -9786,8 +10048,10 @@ class Component extends DCLogic {
   }
   // Редактирование распознанного документа в окне импорта
   impEditDoc(idx, field, val) { const imp = this.state.imp; if (!imp) return; const files = imp.files.slice(); const f = { ...files[idx] }; f.doc = { ...f.doc, [field]: val }; files[idx] = f; this.setState({ imp: { ...imp, files, committed: false } }); }
-  impEditLine(idx, li, field, val) { const imp = this.state.imp; if (!imp) return; const files = imp.files.slice(); const f = { ...files[idx] }; const lines = (f.doc.lines || []).slice(); lines[li] = { ...lines[li], [field]: (field === 'name' || field === 'article') ? val : this.impNum(val) }; f.doc = { ...f.doc, lines }; files[idx] = f; this.setState({ imp: { ...imp, files, committed: false } }); }
-  impAddLine(idx) { const imp = this.state.imp; if (!imp) return; const files = imp.files.slice(); const f = { ...files[idx] }; f.doc = { ...f.doc, lines: [...(f.doc.lines || []), { name: '', article: '', qty: 0, price: 0 }] }; files[idx] = f; this.setState({ imp: { ...imp, files, committed: false } }); }
+  impEditLine(idx, li, field, val) { const imp = this.state.imp; if (!imp) return; const files = imp.files.slice(); const f = { ...files[idx] }; const lines = (f.doc.lines || []).slice(); const cur = { ...lines[li] }; cur[field] = (field === 'name' || field === 'article') ? val : this.impNum(val); if (field === 'qty' || field === 'price') { const ls = (Number(cur.qty) || 0) * (Number(cur.price) || 0); if (ls) { cur.lineSum = ls; if (cur.pay !== false) cur.payAmount = ls; } } lines[li] = cur; f.doc = { ...f.doc, lines }; files[idx] = f; this.setState({ imp: { ...imp, files, committed: false } }); }
+  // Отметить/снять строку счёта к оплате (частичный выбор позиций)
+  impToggleLinePay(idx, li) { const imp = this.state.imp; if (!imp) return; const files = imp.files.slice(); const f = { ...files[idx] }; const lines = (f.doc.lines || []).slice(); const cur = { ...lines[li] }; cur.pay = cur.pay === false; if (cur.pay && !(Number(cur.payAmount) > 0)) cur.payAmount = cur.lineSum || (Number(cur.qty) || 0) * (Number(cur.price) || 0); lines[li] = cur; f.doc = { ...f.doc, lines }; files[idx] = f; this.setState({ imp: { ...imp, files, committed: false } }); }
+  impAddLine(idx) { const imp = this.state.imp; if (!imp) return; const files = imp.files.slice(); const f = { ...files[idx] }; f.doc = { ...f.doc, lines: [...(f.doc.lines || []), { name: '', article: '', qty: 0, price: 0, lineSum: 0, pay: true, payAmount: 0 }] }; files[idx] = f; this.setState({ imp: { ...imp, files, committed: false } }); }
   impDelLine(idx, li) { const imp = this.state.imp; if (!imp) return; const files = imp.files.slice(); const f = { ...files[idx] }; f.doc = { ...f.doc, lines: (f.doc.lines || []).filter((_, j) => j !== li) }; files[idx] = f; this.setState({ imp: { ...imp, files, committed: false } }); }
   // Итоговые цифры пакета ВЭД (Landed Cost)
   impVedTotals() {
@@ -9814,7 +10078,7 @@ class Component extends DCLogic {
     return created;
   }
   // Применить распознанные документы в целевые хранилища
-  impCommit() {
+  async impCommit() {
     const imp = this.state.imp; if (!imp) return;
     const ok = imp.files.filter(f => f.status === 'ok' && f.doc); if (!ok.length) { this.setState({ imp: { ...imp, err: 'Нет распознанных документов.' } }); return; }
     const t = imp.target; let msg = ''; let newCp = 0;
@@ -9837,14 +10101,24 @@ class Component extends DCLogic {
       this.scheduleAutoRecalc('NEW_PURCHASE'); msg = 'Сформирована партия ВЭД, Landed Cost ' + this.fmt(agg.landed) + ' ₽';
     } else if (t === 'payreq') {
       const cu = this.state.currentUser; let cnt = 0; const prs = [];
-      for (const f of ok) { const dc = f.doc; if (this.impEnsureCp(dc.party, '', [], 'buy', dc.date)) newCp++; prs.push({ id: 'pr_' + Date.now().toString(36) + (cnt++).toString(36), initiator: cu ? cu.name : '—', initiatorId: cu ? cu.id : '', approverId: '', supplier: dc.party, amount: dc.amount, date: dc.date, purpose: dc.purpose, no: '', status: 'Черновик', track: true, createdAt: Date.now() }); }
-      this.writePayreqs([...prs, ...(this.state.payreqs || [])]); msg = 'Создано заявок на оплату: ' + prs.length;
+      for (const f of ok) {
+        const dc = f.doc;
+        if (this.impEnsureCp(dc.party, dc.inn || '', dc.lines || [], 'buy', dc.date)) newCp++;
+        const payLines = (dc.lines || []).filter(l => l.pay !== false).map(l => ({ name: l.name || '', qty: Number(l.qty) || 0, price: Number(l.price) || 0, lineSum: Number(l.lineSum) || (Number(l.qty) || 0) * (Number(l.price) || 0), payAmount: Number(l.payAmount) || 0 }));
+        const amount = Math.round(payLines.reduce((s, l) => s + (l.payAmount || 0), 0)) || Math.round(Number(dc.amount) || 0);
+        let fileRef = null;
+        if (f._file) { try { const fid = await this.archiveFile(f._file, { category: 'payreq', category_label: 'Счёт на оплату', source: 'import_recognize', rows: f.n || 0 }); if (fid) fileRef = { id: fid, name: f._file.name || 'Счёт' }; } catch (e) {} }
+        const due = this.ymd(new Date());
+        prs.push({ id: 'pr_' + Date.now().toString(36) + (cnt++).toString(36), direction: 'out', initiator: cu ? cu.name : '—', initiatorId: cu ? cu.id : '', approverId: '', supplier: dc.party, currency: 'RUB', amount, amountCur: amount, invNo: dc.no || '', invDate: dc.date || due, invTotal: Math.round(Number(dc.amount) || amount), vatRate: dc.vatRate || 22, lines: payLines, fileRef, paidAmount: 0, date: dc.date || due, dueDate: due, payType: 'full', schedule: [{ date: due, amount, kind: 'Оплата', paid: false }], purpose: dc.purpose || ('Оплата по счёту' + (dc.no ? ' № ' + dc.no : '')), no: '', status: 'Черновик', track: true, createdAt: Date.now() });
+      }
+      this.writePayreqs([...prs, ...(this.state.payreqs || [])]); msg = 'Создано заявок на оплату: ' + prs.length + ' (счета вложены)';
+      if (prs.length === 1) { this.setState({ prDraft: { ...prs[0], amountCur: prs[0].amountCur || prs[0].amount } }); msg += '. Открыта для выбора позиций к оплате.'; }
     } else if (t === 'logi') {
       let cnt = 0; const lgs = [];
       for (const f of ok) { const dc = f.doc; lgs.push({ ...this.emptyLog(), id: 'lg_' + Date.now().toString(36) + (cnt++).toString(36), date: dc.date, route: dc.route, carrier: dc.party, freight: dc.freight, status: 'На согласовании', createdAt: Date.now() }); }
       this.writeLogistics([...lgs, ...(this.state.logistics || [])]); msg = 'Создано поручений экспедитору: ' + lgs.length;
     }
-    for (const f of ok) { if (f._file) { try { this.archiveFile(f._file, { category: t, category_label: this.impTargetTitle(t), source: 'import_recognize', rows: f.n || 0 }); } catch (e) {} } }
+    if (t !== 'payreq') for (const f of ok) { if (f._file) { try { this.archiveFile(f._file, { category: t, category_label: this.impTargetTitle(t), source: 'import_recognize', rows: f.n || 0 }); } catch (e) {} } }
     try { this.postSystemNote('📥 Импорт+ИИ: ' + msg + (newCp ? (', создано контрагентов: ' + newCp) : '') + ' (файлов: ' + ok.length + ').', this.state.currentUser ? this.state.currentUser.name : 'Система'); } catch (e) {}
     this.setState({ imp: { ...imp, committed: true, doneMsg: '✓ ' + msg + (newCp ? ('. Новых контрагентов: ' + newCp + ' (со статистикой цен)') : '') + '. Документы видны в списке и в Архиве файлов.' } });
   }
@@ -9856,11 +10130,16 @@ class Component extends DCLogic {
     const isSales = imp.target === 'sales';
     const partyLabel = isSales ? 'Клиент' : (imp.target === 'logi' ? 'Перевозчик' : 'Поставщик');
     const nameLabel = isSales ? 'Продукт (ГП)' : 'Наименование';
-    const simpleDoc = imp.target === 'payreq' || imp.target === 'logi';
+    const simpleDoc = imp.target === 'logi';
+    const isPayreq = imp.target === 'payreq';
     const files = imp.files.map((f, i) => {
       const dc = f.doc || {};
       const lines = (dc.lines || []).map((l, li) => ({
-        name: l.name || '', article: l.article || '', qty: l.qty || 0, price: l.price || 0, sum: this.fmt((l.qty || 0) * (l.price || 0)),
+        name: l.name || '', article: l.article || '', qty: l.qty || 0, price: l.price || 0, sum: this.fmt(l.lineSum != null ? l.lineSum : (l.qty || 0) * (l.price || 0)),
+        rowCls: (l.pay !== false) ? 'imptblrow' : 'imptblrow off',
+        pay: l.pay !== false, payCls: (l.pay !== false) ? 'imchk on' : 'imchk', onPay: () => this.impToggleLinePay(i, li),
+        payAmount: l.payAmount != null ? l.payAmount : (l.lineSum != null ? l.lineSum : (l.qty || 0) * (l.price || 0)),
+        onPayAmount: (e) => this.impEditLine(i, li, 'payAmount', e.target.value),
         onName: (e) => this.impEditLine(i, li, 'name', e.target.value),
         onArticle: (e) => this.impEditLine(i, li, 'article', e.target.value),
         onQty: (e) => this.impEditLine(i, li, 'qty', e.target.value),
@@ -9891,7 +10170,10 @@ class Component extends DCLogic {
         vatRate: vr, onVatRate: (e) => this.impEditDoc(i, 'vatRate', this.impNum(e.target.value)),
         totalNetFmt: this.fmt(Math.round(totalNet)), vatFmt: this.fmt(Math.round(total - totalNet)),
         addLine: () => this.impAddLine(i),
-        isSimple: simpleDoc, isSalesDoc: isSales,
+        isSimple: simpleDoc, isSalesDoc: isSales, isPayreq,
+        docTotalFmt: this.fmt(dc.amount || (dc.lines || []).reduce((s, l) => s + (l.lineSum != null ? l.lineSum : (l.qty || 0) * (l.price || 0)), 0)),
+        paySumFmt: this.fmt(Math.round((dc.lines || []).filter(l => l.pay !== false).reduce((s, l) => s + (Number(l.payAmount) || 0), 0))),
+        paySelN: String((dc.lines || []).filter(l => l.pay !== false).length),
       };
     });
     const okN = imp.files.filter(f => f.status === 'ok').length;
@@ -11043,31 +11325,46 @@ class Component extends DCLogic {
     ];
   }
   dlFields() { return [{ v: 'nomen', l: 'Номенклатура' }, { v: 'qty', l: 'Количество' }, { v: 'price', l: 'Цена' }, { v: 'sum', l: 'Сумма' }, { v: 'date', l: 'Дата' }, { v: 'supplier', l: 'Поставщик' }, { v: 'client', l: 'Контрагент' }, { v: 'warehouse', l: 'Склад' }, { v: 'unit', l: 'Ед. изм.' }, { v: 'note', l: 'Примечание' }]; }
+  // Поиск строки-шапки товарной таблицы по ключевым словам (единая логика для XLSX / CSV / TXT)
+  dlFindHeaderRow(aoa) {
+    const HDR = ['товар', 'номенклат', 'артикул', 'наименован', 'количеств', 'кол-во', 'цена', 'сумма', 'стоимост', 'продукт', 'материал', 'остаток', 'дата', 'ед.', 'единиц', 'марка', 'ндс', 'qty', 'price', 'amount', 'unit'];
+    const scoreRow = (r) => { if (!r) return 0; let sc = 0; for (const c of r) { const n = this.dlNorm(c); if (!n) continue; if (HDR.some(k => n === k || n.indexOf(k) >= 0)) sc++; } return sc; };
+    let hr = -1, bestScore = 1;
+    for (let i = 0; i < Math.min(aoa.length, 30); i++) { const s = scoreRow(aoa[i]); if (s > bestScore) { bestScore = s; hr = i; } }
+    if (hr < 0) { for (let i = 0; i < Math.min(aoa.length, 15); i++) { const c = (aoa[i] || []).filter(x => x != null && String(x).trim()).length; if (c >= 2) { hr = i; break; } } }
+    if (hr < 0) hr = 0;
+    return hr;
+  }
   async dlReadFile(file) {
     const name = file.name || ''; const ext = (name.split('.').pop() || '').toLowerCase();
     if (ext === 'pdf') return this.dlReadPdf(file);
     if (ext === 'csv' || ext === 'txt') {
       const text = await file.text();
-      const lines = text.split(/\r?\n/).filter(l => l.trim().length);
-      if (!lines.length) return { headers: [], rows: [], n: 0 };
-      const head = lines[0];
-      const delim = head.indexOf('\t') >= 0 ? '\t' : (head.split(';').length > head.split(',').length ? ';' : ',');
+      const rawLines = text.split(/\r?\n/).filter(l => l.trim().length);
+      if (!rawLines.length) return { headers: [], rows: [], n: 0 };
+      // Разделитель — по всему файлу (устойчиво к преамбуле «Счёт №…», где нет разделителей)
+      const cnt = (l, ch) => l.split(ch).length - 1;
+      const useTab = rawLines.some(l => cnt(l, '\t') > 0);
+      const semi = rawLines.reduce((a, l) => a + cnt(l, ';'), 0);
+      const comma = rawLines.reduce((a, l) => a + cnt(l, ','), 0);
+      const delim = useTab ? '\t' : (semi >= comma ? ';' : ',');
       const parse = (l) => l.split(delim).map(c => c.replace(/^"|"$/g, '').trim());
-      const headers = parse(head); const rows = lines.slice(1).map(parse).filter(r => !this.dlIsNoiseRow(r));
-      let cur = 'RUB'; const lt = this.dlNorm(text); if (/евро|euro|\beur\b|€|\bцент/.test(lt)) cur = 'EUR'; else if (/доллар|usd|\$/.test(lt)) cur = 'USD'; else if (/юан|cny|¥/.test(lt)) cur = 'CNY';
-      return { headers, rows, n: rows.length, meta: { currency: cur, rate: cur === 'RUB' ? 1 : (this.cbRate(cur) || 0) } };
+      const aoa = rawLines.map(parse);
+      // Настоящая строка заголовков таблицы (а не всегда первая) + извлечение шапки документа
+      const hr = this.dlFindHeaderRow(aoa);
+      const headers = (aoa[hr] || []).map(x => String(x == null ? '' : x).trim());
+      let meta = {};
+      try { meta = this.dlExtractMeta(aoa, hr, file.name || '') || {}; } catch (e) { meta = {}; }
+      try { this.dlAugmentPdfMeta(meta, aoa, file.name || ''); } catch (e) {}
+      const rows = aoa.slice(hr + 1).filter(r => r && r.some(x => x != null && String(x).trim()) && !this.dlIsNoiseRow(r) && !this.dlIsTotalRow(r));
+      return { headers, rows, n: rows.length, meta };
     }
     const XLSX = window.XLSX; if (!XLSX) throw new Error('Библиотека Excel не загрузилась — обновите страницу.');
     const buf = await file.arrayBuffer(); const wb = XLSX.read(buf, { type: 'array' });
     const ws = wb.Sheets[wb.SheetNames[0]];
     const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: null });
     // Поиск строки заголовков по ключевым словам (а не просто «первая с ≥2 ячейками»)
-    const HDR = ['товар', 'номенклат', 'артикул', 'наименован', 'количеств', 'кол-во', 'цена', 'сумма', 'стоимост', 'продукт', 'материал', 'остаток', 'дата', 'ед.', 'единиц', 'марка', 'ндс'];
-    const scoreRow = (r) => { if (!r) return 0; let sc = 0; for (const c of r) { const n = this.dlNorm(c); if (!n) continue; if (HDR.some(k => n === k || n.indexOf(k) >= 0)) sc++; } return sc; };
-    let hr = -1, bestScore = 1;
-    for (let i = 0; i < Math.min(aoa.length, 30); i++) { const s = scoreRow(aoa[i]); if (s > bestScore) { bestScore = s; hr = i; } }
-    if (hr < 0) { for (let i = 0; i < Math.min(aoa.length, 15); i++) { const c = (aoa[i] || []).filter(x => x != null && String(x).trim()).length; if (c >= 2) { hr = i; break; } } }
-    if (hr < 0) hr = 0;
+    const hr = this.dlFindHeaderRow(aoa);
     const headers = (aoa[hr] || []).map(x => String(x == null ? '' : x).trim());
     const meta = this.dlExtractMeta(aoa, hr, file.name || '');
     const rows = aoa.slice(hr + 1).filter(r => r && r.some(x => x != null && String(x).trim()) && !this.dlIsNoiseRow(r) && !this.dlIsTotalRow(r));
@@ -11084,14 +11381,16 @@ class Component extends DCLogic {
   dlExtractMeta(aoa, hr, fname) {
     const meta = { supplier: '', supplierInn: '', buyer: '', buyerInn: '', docNo: '', docDate: '', vatAmount: 0, totalAmount: 0, title: '', docKind: '' };
     const valAfter = (row, ci) => { for (let j = ci + 1; j < row.length; j++) { const v = row[j]; if (v != null && String(v).trim()) return String(v).trim(); } return ''; };
+    const sameCellVal = (raw) => { const s = String(raw == null ? '' : raw); const m = s.match(/[:：]\s*(.+)$/); return m ? m[1].trim() : ''; };
+    const cleanParty = (v) => { let s = String(v || '').replace(/[\s,;]+(инн|кпп)[\s:.№]*\d{6,12}.*$/i, '').trim(); if (/^["«].*["»]$/.test(s)) s = s.slice(1, -1).trim(); return s; };
     const rightNum = (row) => { let n = 0; for (const c of row) { const x = this.impNum(c); if (x) n = x; } return n; };
     const innOf = (s) => { const m = String(s).match(/\d{10,12}/); return m ? m[0] : ''; };
     for (let i = 0; i < Math.min(aoa.length, hr + 6); i++) {
       const row = aoa[i] || [];
       for (let c = 0; c < row.length; c++) {
         const n = this.dlNorm(row[c]); if (!n) continue;
-        if (!meta.supplier && /^(поставщик|продавец|грузоотправит)/.test(n)) { const v = valAfter(row, c); if (v) { meta.supplier = v.replace(/^["']|["']$/g, ''); meta.supplierInn = innOf(v) || meta.supplierInn; } }
-        if (!meta.buyer && /^(покупател|клиент|заказчик|грузополучат|плательщик)/.test(n)) { const v = valAfter(row, c); if (v) { meta.buyer = v.replace(/^["']|["']$/g, ''); meta.buyerInn = innOf(v) || meta.buyerInn; } }
+        if (!meta.supplier && /^(поставщик|продавец|грузоотправит)/.test(n)) { const v = valAfter(row, c) || sameCellVal(row[c]); if (v) { meta.supplier = cleanParty(v); meta.supplierInn = innOf(v) || meta.supplierInn; } }
+        if (!meta.buyer && /^(покупател|клиент|заказчик|грузополучат|плательщик)/.test(n)) { const v = valAfter(row, c) || sameCellVal(row[c]); if (v) { meta.buyer = cleanParty(v); meta.buyerInn = innOf(v) || meta.buyerInn; } }
         if (/^инн\b|^инн:/.test(n)) { const v = valAfter(row, c); const innv = innOf(v) || innOf(n); if (innv) { if (meta.docKind === 'sales' || /покупат|клиент/.test(meta._innFor || '')) meta.buyerInn = meta.buyerInn || innv; else meta.supplierInn = meta.supplierInn || innv; } }
       }
     }
@@ -11150,11 +11449,49 @@ class Component extends DCLogic {
     }
     const clean = lines.filter(r => !this.dlIsNoiseRow(r));
     if (!clean.length) throw new Error('В PDF не найден текстовый слой (вероятно скан). Для сканов используется OCR-модуль почтового робота; загрузите Excel/CSV или цифровой PDF.');
+    // Ядро распознавания: ищем строку-шапку товарной таблицы (счета/инвойсы/УПД)
+    let hr = 0, hrScore = 0;
+    for (let i = 0; i < clean.length; i++) {
+      const cells = clean[i].map(c => this.dlNorm(c)); let sc = 0;
+      for (const c of cells) { if (/наименован|товар|номенклат|работ|услуг|описан/.test(c)) sc += 2; if (/кол-?во|количеств|об[ъь][её]м/.test(c)) sc += 2; if (/цена|тариф/.test(c)) sc += 2; if (/сумма|стоимост/.test(c)) sc += 1; if (/^ед$|единиц/.test(c)) sc += 1; if (/^№$|п\/п/.test(c)) sc += 1; }
+      if (cells.length >= 3 && sc > hrScore) { hrScore = sc; hr = i; }
+    }
+    if (hrScore < 4) hr = 0; // уверенной шапки нет — совместимое поведение
+    // Мета шапки/подвала документа + доп. сканирование плоского текста
+    let meta = {};
+    try { meta = this.dlExtractMeta(clean, hr, file.name || '') || {}; } catch (e) { meta = {}; }
+    try { this.dlAugmentPdfMeta(meta, clean, file.name || ''); } catch (e) {}
     // нормализуем ширину строк по самой широкой
     const w = clean.reduce((m, r) => Math.max(m, r.length), 0);
-    const norm = clean.map(r => { const c = r.slice(); while (c.length < w) c.push(''); return c; });
-    const headers = norm[0]; const rows = norm.slice(1);
-    return { headers, rows, n: rows.length };
+    const pad = (r) => { const c = r.slice(); while (c.length < w) c.push(''); return c; };
+    const headers = pad(clean[hr] || []);
+    const rows = clean.slice(hr + 1).filter(r => !this.dlIsTotalRow(r)).map(pad);
+    return { headers, rows: rows.length ? rows : clean.slice(hr + 1).map(pad), n: (rows.length ? rows : clean.slice(hr + 1)).length, meta };
+  }
+  // Русские месяцы → номер (для дат вида «1 июля 2026 г.»)
+  ruMonth(m) { const map = { январ: 1, феврал: 2, март: 3, апрел: 4, ма: 5, июн: 6, июл: 7, август: 8, сентябр: 9, октябр: 10, ноябр: 11, декабр: 12 }; const w = this.dlNorm(m); for (const k in map) if (w.indexOf(k) === 0) return map[k]; return 0; }
+  impDateAny(s) {
+    s = String(s || '').trim(); if (!s) return '';
+    let m = s.match(/(\d{1,2})\s+([А-Яа-яЁё]+)\s+(\d{4})/); // 1 июля 2026
+    if (m) { const mo = this.ruMonth(m[2]); if (mo) return m[3] + '-' + ('0' + mo).slice(-2) + '-' + ('0' + m[1]).slice(-2); }
+    return this.impDate(s);
+  }
+  // Доп. сканирование инвойса/счёта по плоскому тексту PDF (№, дата, поставщик, итог, НДС)
+  dlAugmentPdfMeta(meta, clean, fname) {
+    const flat = clean.map(r => r.join(' ')).join('\n');
+    const numAt = (re) => { const m = flat.match(re); return m ? this.impNum(m[1]) : 0; };
+    if (!meta.docNo) { const m = flat.match(/сч[её]т(?:[\s-]*фактура|\s*на\s*оплату)?\s*№\s*([^\s,;]+)/i) || flat.match(/№\s*(\d{1,6})\s+от\s+\d/i); if (m) meta.docNo = m[1]; }
+    if (!meta.docDate) { const m = flat.match(/от\s+(\d{1,2}\s+[А-Яа-яЁё]+\s+\d{4})/i) || flat.match(/от\s+(\d{1,2}[.\-/]\d{1,2}[.\-/]\d{2,4})/i); if (m) meta.docDate = this.impDateAny(m[1]); }
+    const total = numAt(/всего к оплате[^\d\-]*([\d \u00a0.,]+\d)/i) || numAt(/всего к оплате\s*\(9\)[^\d\-]*([\d \u00a0.,]+\d)/i) || numAt(/\bитого[:\s]*([\d \u00a0.,]+\d)/i);
+    if (total && (!meta.totalAmount || total > meta.totalAmount)) meta.totalAmount = total;
+    const vat = numAt(/в том числе ндс[^\d]*\d{0,2}\s*%?[^\d]*([\d \u00a0.,]+\d)/i) || numAt(/сумма налога[^\d]*([\d \u00a0.,]+\d)/i) || numAt(/ндс\s*\d{0,2}\s*%?\s*:?\s*([\d \u00a0.,]+\d)/i);
+    if (vat && !meta.vatAmount) meta.vatAmount = vat;
+    if (!meta.supplier || /исполнител|заказчик|продавец$|^—$/i.test(meta.supplier) || meta.supplier.length < 3) {
+      const m = flat.match(/(?:поставщик|продавец)[^\n:]*:?\s*(ООО|АО|ЗАО|ПАО|ИП|ОАО)\s*["«']?([^,"»'\n]{2,80})/i);
+      if (m) meta.supplier = (m[1] + ' ' + m[2]).replace(/["«»']/g, '').trim();
+    }
+    if (!meta.supplierInn) { const m = flat.match(/(?:поставщик|продавец)[\s\S]{0,120}?инн[\/\s:]*?(\d{10,12})/i); if (m) meta.supplierInn = m[1]; }
+    return meta;
   }
   dlValidate(key, headers) {
     const def = this.dlBaseDefs().find(d => d.key === key); if (!def) return { ok: true, missing: [] };
@@ -11769,7 +12106,17 @@ class Component extends DCLogic {
       const entry = { id, company_id: this._co(), company_name: this.co().name, file_name: file.name || 'file', file_ext: ext, size_bytes: file.size || 0, uploaded_by: u ? u.name : '—', uploaded_by_id: u ? u.id : '', uploaded_at: Date.now(), category: meta.category || 'custom', category_label: meta.category_label || this.faCatLabel(meta.category), source: meta.source || '', rows: meta.rows || 0 };
       const idx = this.faIndex(); idx.push(entry); this.faSaveIndex(idx);
       this.setState({ faTick: (this.state.faTick || 0) + 1 });
-    } catch (e) {}
+      return id;
+    } catch (e) { return ''; }
+  }
+  // Открыть оригинал документа (счёт-PDF) в новой вкладке — без скачивания
+  async faOpen(id) {
+    if (!id) return;
+    const rec = await this.faIdbGet(id);
+    if (!rec || !rec.blob) { try { alert('Оригинал счёта не найден в локальном хранилище этого устройства. Файлы-оригиналы хранятся на устройстве, куда счёт был загружен.'); } catch (e) {} return; }
+    const url = URL.createObjectURL(rec.blob);
+    try { window.open(url, '_blank'); } catch (e) {}
+    setTimeout(() => { try { URL.revokeObjectURL(url); } catch (e) {} }, 60000);
   }
   async faDownload(id) {
     const rec = await this.faIdbGet(id);
