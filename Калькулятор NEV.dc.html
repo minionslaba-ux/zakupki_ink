@@ -2219,7 +2219,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
 <sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
-<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-02 · r19</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
+<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-02 · r20</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava" title="{{ u.tip }}" onContextMenu="{{ u.onCtx }}">{{ u.avatar }}<i class="ondot"></i><sc-if value="{{ u.hasStars }}" hint-placeholder-val=""><span class="onstars" title="KPI {{ u.starsLabel }}">{{ u.starsLabel }}</span></sc-if></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div><button class="ratebtn onrate" onClick="{{ goRating }}"><span>🏆</span> Рейтинг по задачам</button></div></sc-if>
@@ -3501,7 +3501,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="dlmapfoot"><sc-if value="{{ prDetailCanPayFull }}" hint-placeholder-val=""><button class="btn dark" onClick="{{ prDetailPayFull }}">✓ Оплачено полностью</button></sc-if><sc-if value="{{ prDetailCanEdit }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailEdit }}">✎ Корректировать</button></sc-if><sc-if value="{{ prDetailCanSoftDel }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailSoftDel }}">🗑 На удаление</button></sc-if><sc-if value="{{ prDetailIsTrash }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailRestore }}">Восстановить</button></sc-if><button class="btn" onClick="{{ prDetailClose }}">Закрыть</button></div>
 </div></sc-if>
 <div class="card"><div class="sec">Казначейский календарь · БДДС на 30 дней</div>
-<div class="toolbar"><div class="field"><span class="lbl">Остаток на счетах сегодня, ₽</span><input class="inp num w120" type="number" value="{{ cashStart }}" onInput="{{ onCashStart }}"></div><button class="btn" onClick="{{ trResetPlan }}">Сбросить переносы</button><button class="btn" onClick="{{ exportBddsXlsx }}"><span>↓</span> Excel</button><button class="btn" onClick="{{ exportBdds }}"><span>↓</span> CSV</button><button class="btn dark" onClick="{{ printBdds }}"><span>🖨</span> Печать / PDF</button></div>
+<div class="toolbar"><div class="field"><span class="lbl">Остаток на счетах сегодня, ₽</span><input class="inp num w120" type="number" value="{{ cashStart }}" onInput="{{ onCashStart }}"></div><button class="btn" onClick="{{ trResetPlan }}">Сбросить переносы</button><button class="btn dark" onClick="{{ exportBddsInternal }}"><span>↓</span> Excel (внутренний формат)</button><button class="btn" onClick="{{ exportBddsXlsx }}"><span>↓</span> Excel</button><button class="btn" onClick="{{ exportBdds }}"><span>↓</span> CSV</button><button class="btn dark" onClick="{{ printBdds }}"><span>🖨</span> Печать / PDF</button></div>
 <div class="kpis"><div class="kpi"><div class="kl">Платежи 30 дн., ₽</div><div class="kv mono">{{ trTotalOut }}</div></div><div class="kpi {{ trMinCls }}"><div class="kl">Мин. остаток (риск разрыва)</div><div class="kv mono">{{ trMinBal }}</div></div><sc-if value="{{ trHasOverdue }}" hint-placeholder-val=""><div class="kpi kpiBad"><div class="kl">Просрочено, ₽</div><div class="kv mono">{{ trOverdue }}</div></div></sc-if></div>
 <div class="t30grid"><sc-for list="{{ trDays }}" as="d" hint-placeholder-count="10"><div class="t30cell {{ d.off }}"><div class="t30h"><span class="t30d">{{ d.day }} {{ d.wd }}</span><span class="t30b {{ d.gap }}">{{ d.bal }} ₽</span></div><sc-if value="{{ d.hasInc }}" hint-placeholder-val=""><div class="t30inc">приход {{ d.inc }} ₽</div></sc-if><sc-if value="{{ d.gap }}" hint-placeholder-val=""><div class="t30risk">⛔ Критический риск разрыва · −{{ d.risk }} ₽</div></sc-if><sc-if value="{{ d.hasItems }}" hint-placeholder-val=""><div class="t30items"><sc-for list="{{ d.items }}" as="p" hint-placeholder-count="1"><div class="t30pay {{ p.over }}"><div class="t30pt"><b>{{ p.amount }} ₽</b> {{ p.supplier }} · {{ p.material }}</div><sc-if value="{{ p.overdue }}" hint-placeholder-val=""><div class="t30badge">⚠ неоплачено<sc-if value="{{ p.rolled }}" hint-placeholder-val=""> · перенесён с {{ p.origDate }}</sc-if></div></sc-if><sc-if value="{{ p.hasRemainAfter }}" hint-placeholder-val=""><div class="t30rem">{{ p.splitInfo }} · {{ p.remainAfter }}</div></sc-if><div class="t30act"><button class="tlink" onClick="{{ p.startMove }}">перенести</button><button class="tlink" onClick="{{ p.openSplit }}">разбить</button><sc-if value="{{ p.hasSplit }}" hint-placeholder-val=""><button class="tlink" onClick="{{ p.unsplit }}">объединить</button></sc-if><sc-if value="{{ p.noPayFile }}" hint-placeholder-val="{{ true }}"><label class="tlink">📎 прикрепить счёт<input type="file" accept=".pdf,.xlsx,.xls,.csv" style="display:none" onChange="{{ p.onAttachPayFile }}"></label></sc-if><sc-if value="{{ p.hasPayFile }}" hint-placeholder-val=""><button class="tlink" onClick="{{ p.openPayFile }}">📄 счёт</button><button class="tlink del" onClick="{{ p.detachPayFile }}">✕</button></sc-if></div><sc-if value="{{ p.moveOpen }}" hint-placeholder-val=""><input class="inp" type="date" value="{{ p.moveVal }}" onInput="{{ p.onMove }}"></sc-if></div></sc-for></div></sc-if></div></sc-for></div>
 <div class="hint">Остаток на конец дня пересчитывается на лету с учётом ожидаемых приходов от клиентов (по отсрочкам контрагентов). Красный остаток и метка «Критический риск разрыва» — кассовый разрыв с глубиной дефицита. «Разбить» открывает окно дробления счёта на транши с выбором дат и сумм, «перенести» сдвигает дату платежа. Неоплаченные счета автоматически переносятся на следующий рабочий день со статусом «неоплачено».</div>
@@ -9964,6 +9964,7 @@ class Component extends DCLogic {
       trResetPlan: () => { try { this.lsSet('paymoves', '{}'); this.lsSet('paysplits', '{}'); } catch (e) {} set({ payMoves: {}, paySplits: {}, payMoveEdit: '' }); },
       exportBdds: () => { const rows = []; for (const dd of days) { if (!dd.hasItems) { rows.push([dd.key, dd.day + ' ' + dd.wd, '', '', '', dd.bal]); continue; } for (const it of dd.items) rows.push([dd.key, dd.day + ' ' + dd.wd, it.supplier, it.material, it.amount, dd.bal]); } this.downloadCsv('bdds-30-dney.csv', ['Дата', 'День', 'Получатель', 'Сырьё', 'Сумма ₽', 'Остаток на конец дня ₽'], rows); },
       exportBddsXlsx: () => this.exportBddsExcel(days, { totalOut, minBal, overdueSum, cashStart: Number(S.cashStart) || 0 }, core.overdue),
+      exportBddsInternal: () => this.exportBddsInternal(),
       printBdds: () => this.printBddsDoc(days, { totalOut, minBal, overdueSum, cashStart: Number(S.cashStart) || 0 }, core.overdue),
       ...this.splitDialogVals(),
     };
@@ -10049,6 +10050,86 @@ class Component extends DCLogic {
       if (!w) { this.pushRecalcToast && this.pushRecalcToast('⚠ Разрешите всплывающие окна для печати БДДС'); return; }
       w.document.open(); w.document.write(html); w.document.close(); w.focus();
     } catch (e) { this.pushRecalcToast && this.pushRecalcToast('Не удалось открыть окно печати'); }
+  }
+  // Матрица БДДС во внутреннем формате компании: строки = контрагенты/статьи, столбцы = даты (горизонт), ячейки = суммы
+  bddsMatrix(horizon) {
+    horizon = horizon || 60;
+    const S = this.state, rate = Number(S.rate) || 0, vat = this.vat;
+    const core = this.bddsCore();
+    const t0 = this.parseISO(core.todayStr).getTime();
+    const dates = []; for (let i = 0; i < horizon; i++) dates.push(this.ymd(new Date(t0 + i * 86400000)));
+    const idxOf = {}; dates.forEach((d, i) => idxOf[d] = i);
+    // ОПЛАТЫ: группировка по контрагенту (+ назначение), суммы по датам; просрочка в отдельную колонку
+    const payMap = new Map();
+    for (const pm of core.payments) {
+      const key = this.norm(pm.supplier) + '|' + (pm.material || '');
+      if (!payMap.has(key)) payMap.set(key, { name: pm.supplier || '—', note: pm.material || '', over: 0, cols: {}, total: 0 });
+      const row = payMap.get(key);
+      if (pm.overdue) { row.over += pm.amount; }
+      const ci = idxOf[pm.eff]; if (ci != null) { row.cols[ci] = (row.cols[ci] || 0) + pm.amount; }
+      row.total += pm.amount;
+    }
+    const payments = Array.from(payMap.values()).filter(r => r.total > 0.5).sort((a, b) => b.total - a.total);
+    // ПОСТУПЛЕНИЯ ОТ ПОКУПАТЕЛЕЙ: заявки direction 'in' по контрагенту + ожидаемые приходы по продажам
+    const recMap = new Map();
+    const addRec = (name, ds, amt) => { if (!name || !ds || amt <= 0) return; const k = this.norm(name); if (!recMap.has(k)) recMap.set(k, { name: name, over: 0, cols: {}, total: 0 }); const row = recMap.get(k); if (ds < core.todayStr) { row.over += amt; } const ci = idxOf[ds < core.todayStr ? core.todayStr : ds]; if (ci != null) row.cols[ci] = (row.cols[ci] || 0) + amt; row.total += amt; };
+    for (const pr of (S.payreqs || [])) { if (pr.direction !== 'in') continue; if (/отклон|удал/i.test(String(pr.status || ''))) continue; const sched = (pr.schedule && pr.schedule.length) ? pr.schedule : [{ date: pr.dueDate || pr.date, amount: Number(pr.amount) || 0 }]; for (const s of sched) { if (s.paid) continue; addRec(pr.supplier, s.date, Number(s.amount) || 0); } }
+    // ожидаемые приходы по продажам (по отсрочке клиента)
+    const cpTerms = {}; for (const c of (S.cparties || [])) cpTerms[this.norm(c.name)] = Number(c.terms) || 0;
+    for (const s of (S.sales || [])) { const rev = (Number(s.qty) || 0) * (Number(s.price) || 0) * (Number(s.rate) || 1); if (rev <= 0) continue; const base = s.date || s.shipDate; if (!base) continue; const terms = cpTerms[this.norm(s.client)] || 0; const dd = this.ymd(new Date(this.parseISO(base).getTime() + terms * 86400000)); addRec(s.client || 'Покупатель', dd, rev); }
+    const receipts = Array.from(recMap.values()).filter(r => r.total > 0.5).sort((a, b) => b.total - a.total);
+    // Балансы и KPI
+    const cashStart = Number(S.cashStart) || 0;
+    const totalIn = receipts.reduce((s, r) => s + r.total, 0);
+    const totalOut = payments.reduce((s, r) => s + r.total, 0);
+    const overdueOut = payments.reduce((s, r) => s + r.over, 0);
+    const rates = { EUR: this.cbRate('EUR'), USD: this.cbRate('USD'), CNY: this.cbRate('CNY') };
+    return { dates, idxOf, receipts, payments, cashStart, totalIn, totalOut, overdueOut, overdueIn: receipts.reduce((s, r) => s + r.over, 0), rates, todayStr: core.todayStr };
+  }
+  // Экспорт БДДС во внутреннем формате компании (матрица дата×контрагент, стиль Steel Blue/Navy)
+  exportBddsInternal() {
+    if (!window.XLSX) { this.pushRecalcToast && this.pushRecalcToast('Библиотека Excel не загрузилась'); return; }
+    const XLSX = window.XLSX, st = this.mgXlSt(), m = this.bddsMatrix(60);
+    const NAVY = st.NAVY, TOTAL = st.TOTAL, SUB = st.SUB, GOOD = 'E2EFDA', BAD = 'FCE4D6';
+    const MON = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+    const RUB = '#,##0;[Red]-#,##0';
+    const ws = {}; const merges = [];
+    const enc = (r, c) => XLSX.utils.encode_cell({ r, c });
+    const put = (r, c, v, o) => { o = o || {}; const cell = { t: (typeof v === 'number' ? 'n' : 's'), v: (v == null ? '' : v) }; const s = { font: { name: 'Calibri', sz: o.size || 10, bold: !!o.bold, color: { rgb: o.color || '1a1a1a' } }, alignment: { horizontal: o.align || (typeof v === 'number' ? 'right' : 'left'), vertical: 'center', wrapText: !!o.wrap } }; if (o.fill) s.fill = { fgColor: { rgb: o.fill } }; if (o.numFmt) s.numFmt = o.numFmt; if (o.border !== false) s.border = st.dataBorder; cell.s = s; ws[enc(r, c)] = cell; };
+    const COL0 = 0, COLNOTE = 1, COLOVER = 2, COLD0 = 3; // назначение в 1, просрочка в 2, даты с 3
+    const ncols = COLD0 + m.dates.length;
+    // Шапка-дашборд
+    put(0, 0, 'БДДС · ' + (this.co ? this.co().name : 'Shtark') + ' · платёжный календарь', { bold: true, size: 14, color: NAVY, border: false }); merges.push({ s: { r: 0, c: 0 }, e: { r: 0, c: 8 } });
+    put(1, 0, 'Курс ЦБ: € ' + m.rates.EUR.toFixed(4) + ' · $ ' + m.rates.USD.toFixed(4) + ' · ¥ ' + m.rates.CNY.toFixed(4) + '  ·  сформировано ' + new Date().toLocaleString('ru-RU'), { size: 9, color: '56534F', border: false }); merges.push({ s: { r: 1, c: 0 }, e: { r: 1, c: 8 } });
+    const kpiRow = 2;
+    const kpis = [['Остаток на счетах', m.cashStart, SUB], ['План поступлений', m.totalIn, GOOD], ['План оплат', m.totalOut, SUB], ['Просрочка КЗ', m.overdueOut, BAD], ['Баланс', m.cashStart + m.totalIn - m.totalOut, (m.cashStart + m.totalIn - m.totalOut) < 0 ? BAD : GOOD]];
+    kpis.forEach((k, i) => { put(kpiRow, i * 2, k[0], { bold: true, fill: k[2], color: '56534F', size: 9 }); put(kpiRow, i * 2 + 1, Math.round(k[1]), { numFmt: RUB, bold: true, fill: k[2], color: NAVY }); });
+    // Строка дат
+    const HR = 4;
+    put(HR, COL0, 'Статья / Контрагент', { bold: true, color: 'FFFFFF', fill: NAVY });
+    put(HR, COLNOTE, 'Назначение', { bold: true, color: 'FFFFFF', fill: NAVY });
+    put(HR, COLOVER, 'Просрочено', { bold: true, color: 'FFFFFF', fill: NAVY, align: 'right' });
+    m.dates.forEach((d, i) => { const dt = this.parseISO(d); put(HR, COLD0 + i, dt.getDate() + ' ' + MON[dt.getMonth()], { bold: true, color: 'FFFFFF', fill: NAVY, align: 'right', size: 9 }); });
+    let R = HR + 1;
+    const bandRow = (title, sum) => { put(R, COL0, title, { bold: true, color: 'FFFFFF', fill: NAVY }); for (let c = 1; c < ncols; c++) put(R, c, (c === COLOVER ? '' : ''), { fill: NAVY }); put(R, COLOVER, '', { fill: NAVY }); R++; };
+    const dataRow = (name, note, over, cols) => { put(R, COL0, name, {}); put(R, COLNOTE, note || '', { size: 9, color: '56534F' }); put(R, COLOVER, over > 0 ? Math.round(over) : '', { numFmt: RUB, fill: over > 0 ? BAD : null, bold: over > 0 }); for (let i = 0; i < m.dates.length; i++) { const v = cols[i]; put(R, COLD0 + i, v ? Math.round(v) : '', { numFmt: RUB, size: 9 }); } R++; };
+    const totalRow = (title, rows, over) => { put(R, COL0, title, { bold: true, fill: TOTAL, border: st.totBorder }); put(R, COLNOTE, '', { fill: TOTAL, border: st.totBorder }); put(R, COLOVER, over > 0 ? Math.round(over) : '', { numFmt: RUB, bold: true, fill: TOTAL, border: st.totBorder }); for (let i = 0; i < m.dates.length; i++) { const sum = rows.reduce((s, rr) => s + (rr.cols[i] || 0), 0); put(R, COLD0 + i, sum ? Math.round(sum) : '', { numFmt: RUB, bold: true, fill: TOTAL, border: st.totBorder, size: 9 }); } R++; };
+    // ПОСТУПЛЕНИЯ
+    bandRow('ПОСТУПЛЕНИЯ ОТ ПОКУПАТЕЛЕЙ');
+    if (m.receipts.length) m.receipts.forEach(r => dataRow(r.name, '', r.over, r.cols)); else dataRow('— нет плановых поступлений —', '', 0, {});
+    totalRow('ИТОГО поступления', m.receipts, m.overdueIn);
+    R++;
+    // ОПЛАТЫ
+    bandRow('ОПЛАТЫ ПОСТАВЩИКАМ И ПО СТАТЬЯМ');
+    if (m.payments.length) m.payments.forEach(r => dataRow(r.name, r.note, r.over, r.cols)); else dataRow('— нет плановых оплат —', '', 0, {});
+    totalRow('ИТОГО оплаты', m.payments, m.overdueOut);
+    // Ширины
+    const cols = [{ wch: 30 }, { wch: 18 }, { wch: 13 }]; for (let i = 0; i < m.dates.length; i++) cols.push({ wch: 11 });
+    ws['!cols'] = cols; ws['!merges'] = merges; ws['!ref'] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: R, c: ncols - 1 } });
+    ws['!freeze'] = { xSplit: 3, ySplit: 5 };
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, this.dmFull(m.todayStr).replace(/\./g, '.'));
+    try { XLSX.writeFile(wb, 'БДДС-внутренний-' + m.todayStr + '.xlsx'); } catch (e) { this.pushRecalcToast && this.pushRecalcToast('Не удалось сохранить файл'); }
   }
   // Экспорт БДДС в Excel (.xlsx, стиль Steel Blue/Navy, формулы SUM) + лист просрочки
   exportBddsExcel(days, kpi, overdue) {
