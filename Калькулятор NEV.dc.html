@@ -1973,6 +1973,37 @@ a.wordmark:hover{opacity:.6}
 .secrow .sec,.secrow .sec2cp{margin:0}
 .prcpinfo{font-size:11.5px;color:#1a6b3f;margin-top:5px;font-weight:600}
 .prcpinfo.warn{color:#9a5b12}
+.cotabs{display:flex;gap:7px}
+.cotab{border:1px solid #dbe6f5;background:#f7faff;color:#56534f;border-radius:8px;padding:5px 13px;cursor:pointer;font-size:12.5px;font-weight:700}
+.cotab.on{background:#1F4E78;color:#fff;border-color:#1F4E78}
+.csgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.csfield label{display:block;font-size:11.5px;color:#8a8782;margin-bottom:3px;font-weight:600}
+.csfrow{display:flex;gap:7px}
+.csfrow .inp{flex:1}
+.csbtn{white-space:nowrap;padding:8px 12px}
+.csmediarow{display:flex;gap:20px;flex-wrap:wrap}
+.csmedia{flex:1;min-width:240px}
+.csmediabox{border:2px dashed #c3cede;border-radius:12px;background:#f7faff;min-height:120px;display:flex;align-items:center;justify-content:center;padding:12px;margin-bottom:10px}
+.csmediabox.letter{min-height:160px}
+.cslogoimg{max-height:110px;max-width:100%}
+.csletterimg{max-height:150px;max-width:100%}
+.csmediaph{color:#9a9793;font-size:13px}
+.csbank{border:1px solid #e5e9ef;border-radius:12px;padding:14px;margin-bottom:12px;background:#fbfcfe}
+.csbankh{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.csbanklabel{flex:1;font-weight:700}
+.balrow{display:flex;gap:24px;flex-wrap:wrap;margin-top:8px}
+.balview,.baledit{flex:1;min-width:280px}
+.balview label,.baledit label{display:block;font-size:11.5px;color:#8a8782;margin-bottom:4px;font-weight:600}
+.balbig{font-size:30px;font-weight:800;color:#1F4E78;margin-top:8px}
+.balbig.none{font-size:16px;color:#9a9793;font-weight:600}
+.balbanks{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.balbankchip{font-size:12px;background:#eef3fb;border:1px solid #dbe6f5;border-radius:8px;padding:4px 9px;color:#25324a}
+.balbanklist{display:flex;flex-direction:column;gap:7px;margin:8px 0}
+.balbankrow{display:flex;gap:8px;align-items:center}
+.balbanklabel{flex:1}
+.balcur{font-size:12px;color:#8a8782;min-width:34px}
+.baltotrow{margin-top:8px;font-size:14px;color:#25324a}
+.baltotrow b{color:#1F4E78;font-size:17px}
 .cppl{display:flex;flex-direction:column;gap:7px}
 .cpplrow{display:flex;gap:8px;align-items:center}
 .cpplrow .inp{flex:1}
@@ -2219,7 +2250,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
 <sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
-<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-02 · r20</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
+<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-02 · r21</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava" title="{{ u.tip }}" onContextMenu="{{ u.onCtx }}">{{ u.avatar }}<i class="ondot"></i><sc-if value="{{ u.hasStars }}" hint-placeholder-val=""><span class="onstars" title="KPI {{ u.starsLabel }}">{{ u.starsLabel }}</span></sc-if></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div><button class="ratebtn onrate" onClick="{{ goRating }}"><span>🏆</span> Рейтинг по задачам</button></div></sc-if>
@@ -3500,6 +3531,22 @@ window.dispatchEvent(new Event('fbready'));
 <div class="dlmaps">Инициатор: {{ prDetailInitiator }} · Согласующий: {{ prDetailApprover }}</div>
 <div class="dlmapfoot"><sc-if value="{{ prDetailCanPayFull }}" hint-placeholder-val=""><button class="btn dark" onClick="{{ prDetailPayFull }}">✓ Оплачено полностью</button></sc-if><sc-if value="{{ prDetailCanEdit }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailEdit }}">✎ Корректировать</button></sc-if><sc-if value="{{ prDetailCanSoftDel }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailSoftDel }}">🗑 На удаление</button></sc-if><sc-if value="{{ prDetailIsTrash }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailRestore }}">Восстановить</button></sc-if><button class="btn" onClick="{{ prDetailClose }}">Закрыть</button></div>
 </div></sc-if>
+<div class="card"><div class="sec">💰 Остатки на начало дня</div>
+<div class="unote">Введите остаток на счетах на нужную дату — по банкам или общей суммой. Данные хранятся по датам; можно посмотреть остаток на любую дату. Сохранённый остаток на сегодня используется как стартовый в календаре БДДС.</div>
+<div class="balrow">
+<div class="balview"><label>Показать остаток на дату</label><input class="inp" type="date" value="{{ balViewDate }}" onInput="{{ onBalViewDate }}">
+<sc-if value="{{ balResolvedNone }}" hint-placeholder-val=""><div class="balbig none">Нет данных об остатке</div></sc-if>
+<sc-if value="{{ balResolvedNone }}" hint-placeholder-val="x"><div class="balbig">{{ balResolvedTotal }} ₽</div><sc-if value="{{ balResolvedExact }}" hint-placeholder-val="x"><div class="hint">Последний известный остаток на {{ balResolvedFrom }} (на выбранную дату записи нет)</div></sc-if><sc-if value="{{ balResolvedIsManual }}" hint-placeholder-val="x"><div class="balbanks"><sc-for list="{{ balResolvedBanks }}" as="rb" hint-placeholder-count="2"><div class="balbankchip">{{ rb.label }} · <b>{{ rb.amount }}</b> {{ rb.currency }}</div></sc-for></div></sc-if></sc-if>
+</div>
+<div class="baledit"><label>Внести / изменить остаток на дату</label><div class="genrow"><input class="inp" type="date" value="{{ balEditDate }}" onInput="{{ onBalEditDate }}"><button class="btn" onClick="{{ balUseToday }}">Сегодня</button></div>
+<div class="genrow"><span class="seg {{ balModeBanks }}" onClick="{{ setBalBanks }}">По банкам</span><span class="seg" onClick="{{ setBalManual }}">Общей суммой</span></div>
+<sc-if value="{{ balModeManual }}" hint-placeholder-val=""><div class="csfield"><label>Остаток всего, ₽</label><input class="inp num" type="number" value="{{ balManualTotal }}" onInput="{{ onBalManualTotal }}" placeholder="0"></div></sc-if>
+<sc-if value="{{ balModeBanks }}" hint-placeholder-val="{{ true }}"><div class="balbanklist"><sc-for list="{{ balBankRows }}" as="bb" hint-placeholder-count="2"><div class="balbankrow"><input class="inp balbanklabel" value="{{ bb.label }}" onInput="{{ bb.onLabel }}" placeholder="Банк / счёт"><input class="inp num w150" type="number" value="{{ bb.amount }}" onInput="{{ bb.onAmount }}" placeholder="0"><span class="balcur">{{ bb.currency }}</span><button class="tlink del" onClick="{{ bb.del }}">✕</button></div></sc-for></div><div class="genrow"><button class="btn" onClick="{{ balAddBank }}">+ счёт</button></div></sc-if>
+<div class="baltotrow">Итого остаток: <b>{{ balDraftTotal }} ₽</b></div>
+<div class="uactions"><button class="btn dark" onClick="{{ balSave }}">Сохранить остаток на дату</button></div>
+</div>
+</div>
+</div>
 <div class="card"><div class="sec">Казначейский календарь · БДДС на 30 дней</div>
 <div class="toolbar"><div class="field"><span class="lbl">Остаток на счетах сегодня, ₽</span><input class="inp num w120" type="number" value="{{ cashStart }}" onInput="{{ onCashStart }}"></div><button class="btn" onClick="{{ trResetPlan }}">Сбросить переносы</button><button class="btn dark" onClick="{{ exportBddsInternal }}"><span>↓</span> Excel (внутренний формат)</button><button class="btn" onClick="{{ exportBddsXlsx }}"><span>↓</span> Excel</button><button class="btn" onClick="{{ exportBdds }}"><span>↓</span> CSV</button><button class="btn dark" onClick="{{ printBdds }}"><span>🖨</span> Печать / PDF</button></div>
 <div class="kpis"><div class="kpi"><div class="kl">Платежи 30 дн., ₽</div><div class="kv mono">{{ trTotalOut }}</div></div><div class="kpi {{ trMinCls }}"><div class="kl">Мин. остаток (риск разрыва)</div><div class="kv mono">{{ trMinBal }}</div></div><sc-if value="{{ trHasOverdue }}" hint-placeholder-val=""><div class="kpi kpiBad"><div class="kl">Просрочено, ₽</div><div class="kv mono">{{ trOverdue }}</div></div></sc-if></div>
@@ -3621,6 +3668,33 @@ window.dispatchEvent(new Event('fbready'));
 </div></sc-if>
 </sc-if>
 
+<sc-if value="{{ isCoSettings }}" hint-placeholder-val="">
+<div class="card"><div class="secrow"><div class="sec">Настройки компании · {{ csCompanyName }}</div><div class="cotabs"><sc-for list="{{ csCompanyTabs }}" as="c" hint-placeholder-count="2"><button class="{{ c.cls }}" onClick="{{ c.pick }}">{{ c.label }}</button></sc-for></div></div>
+<div class="unote">Базовая информация о предприятии для договоров, счетов и фирменных бланков. У каждого поля своя кнопка «Сохранить»; изменения хранятся в системе и переживают обновления.</div>
+<div class="csgrid"><sc-for list="{{ csFields }}" as="f" hint-placeholder-count="6"><div class="csfield"><label>{{ f.label }}</label><div class="csfrow"><input class="inp" value="{{ f.value }}" onInput="{{ f.on }}" placeholder="{{ f.ph }}"><button class="btn csbtn" onClick="{{ f.save }}">Сохранить</button></div></div></sc-for></div>
+<div class="uactions"><button class="btn dark" onClick="{{ csSaveAll }}">Сохранить всю карточку</button></div>
+</div>
+<div class="card"><div class="csmediarow">
+<div class="csmedia"><div class="sec2cp">Логотип компании</div><div class="csmediabox"><sc-if value="{{ csHasLogo }}" hint-placeholder-val="">{{ csLogoImg }}</sc-if><sc-if value="{{ csHasLogo }}" hint-placeholder-val="x"><span class="csmediaph">Логотип не загружен</span></sc-if></div><div class="genrow"><label class="btn"><span>⬆</span> Загрузить логотип<input type="file" accept="image/*" style="display:none" onChange="{{ onCsLogo }}"></label><sc-if value="{{ csHasLogo }}" hint-placeholder-val=""><button class="ulink del" onClick="{{ clearCsLogo }}">Убрать</button></sc-if></div></div>
+<div class="csmedia"><div class="sec2cp">Фирменный бланк</div><div class="csmediabox letter"><sc-if value="{{ csHasLetter }}" hint-placeholder-val="">{{ csLetterImg }}</sc-if><sc-if value="{{ csHasLetter }}" hint-placeholder-val="x"><span class="csmediaph">Бланк не загружен</span></sc-if></div><div class="genrow"><label class="btn"><span>⬆</span> Загрузить бланк<input type="file" accept="image/*" style="display:none" onChange="{{ onCsLetter }}"></label><sc-if value="{{ csHasLetter }}" hint-placeholder-val=""><button class="ulink del" onClick="{{ clearCsLetter }}">Убрать</button></sc-if></div></div>
+</div></div>
+<div class="card"><div class="secrow"><div class="sec">🏦 Банковские счета · {{ csBankCount }}</div><button class="btn dark" onClick="{{ csAddBank }}">+ Добавить счёт</button></div>
+<div class="unote">У компании может быть несколько счетов (в разных банках и валютах). Заполните и нажмите «Сохранить счета».</div>
+<sc-for list="{{ csBanks }}" as="b" hint-placeholder-count="1"><div class="csbank"><div class="csbankh"><input class="inp csbanklabel" value="{{ b.label }}" onInput="{{ b.onLabel }}" placeholder="Название счёта (напр. ВТБ RUB / Солидарность CNY)"><button class="tlink del" onClick="{{ b.del }}">✕ удалить</button></div>
+<div class="csgrid">
+<div class="csfield"><label>Банк</label><input class="inp" value="{{ b.bank }}" onInput="{{ b.onBank }}" placeholder="Филиал «Центральный» Банка ВТБ (ПАО)"></div>
+<div class="csfield"><label>Валюта</label><select class="sel" value="{{ b.currency }}" onChange="{{ b.onCurrency }}"><option value="RUB">₽ Рубль</option><option value="EUR">€ Евро</option><option value="USD">$ Доллар</option><option value="CNY">¥ Юань</option></select></div>
+<div class="csfield"><label>БИК</label><input class="inp" value="{{ b.bik }}" onInput="{{ b.onBik }}" placeholder="044525411"></div>
+<div class="csfield"><label>Корр. счёт</label><input class="inp" value="{{ b.corrAcc }}" onInput="{{ b.onCorr }}" placeholder="30101810145250000411"></div>
+<div class="csfield"><label>Расчётный счёт</label><input class="inp" value="{{ b.account }}" onInput="{{ b.onAcc }}" placeholder="40702810504270000002"></div>
+<div class="csfield"><label>SWIFT</label><input class="inp" value="{{ b.swift }}" onInput="{{ b.onSwift }}" placeholder="SLDRRU3S"></div>
+<div class="csfield"><label>Банк-корреспондент</label><input class="inp" value="{{ b.corrBank }}" onInput="{{ b.onCorrBank }}" placeholder="SWIFT + наименование"></div>
+<div class="csfield"><label>Назначение</label><input class="inp" value="{{ b.purpose }}" onInput="{{ b.onPurpose }}" placeholder="Для договоров с резидентами РФ"></div>
+</div></div></sc-for>
+<div class="uactions"><button class="btn dark" onClick="{{ csSaveBanks }}">Сохранить счета</button></div>
+</div>
+</sc-if>
+
 <sc-if value="{{ isUsers }}" hint-placeholder-val="">
 <sc-if value="{{ usNoAccess }}" hint-placeholder-val=""><div class="card"><div class="banner err">Управление пользователями доступно только администратору.</div></div></sc-if>
 <sc-if value="{{ usHasAccess }}" hint-placeholder-val="{{ true }}">
@@ -3632,7 +3706,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="fg"><label>Логин</label><input class="inp" value="{{ udLogin }}" onInput="{{ onUdLogin }}" placeholder="ivanov"></div>
 <div class="fg"><label>E-mail (для восстановления пароля)</label><input class="inp" type="email" value="{{ udEmail }}" onInput="{{ onUdEmail }}" placeholder="ivanov@company.ru"></div>
 <div class="fg"><label>Пароль</label><div class="upassrow"><input class="inp" value="{{ udPass }}" onInput="{{ onUdPass }}" placeholder="пароль"><button class="btn ugen" onClick="{{ genPass }}">↻ Сгенерировать</button></div></div>
-<div class="fg"><label>Роль</label><select class="sel" value="{{ udRole }}" onChange="{{ onUdRole }}"><option value="user">Закупщик</option><option value="rukovoditel">Руководитель</option><option value="tehnolog">Технолог</option><option value="ved">Менеджер ВЭД</option><option value="logist">Логист</option><option value="admin">Администратор</option></select></div>
+<div class="fg"><label>Роль</label><select class="sel" value="{{ udRole }}" onChange="{{ onUdRole }}"><sc-for list="{{ roleOpts }}" as="r" hint-placeholder-count="3"><option value="{{ r.v }}">{{ r.label }}</option></sc-for></select></div>
 </div>
 <div class="permhead"><span class="sec2">Доступ к компаниям группы</span></div><div class="permchips"><sc-for list="{{ companyToggles }}" as="c" hint-placeholder-count="2"><button class="{{ c.cls }}" onClick="{{ c.toggle }}"><span class="pcbox"></span>{{ c.label }}</button></sc-for></div>
 <sc-if value="{{ udIsAdmin }}" hint-placeholder-val=""><div class="permnote">Администратор видит все разделы и управляет пользователями.</div></sc-if>
@@ -3674,6 +3748,12 @@ window.dispatchEvent(new Event('fbready'));
 <div class="etestbox"><div class="sec2">🧪 Боевая проверка пайплайна (имитация входящего письма)</div><div class="unote" style="margin-top:4px">Выберите ящик-получатель и приложите файл — робот прогонит его через полный реальный пайплайн: распознавание → приём в базу → запуск движка 24/7 → уведомление в чат со звуком (или письмо-отказ).</div>
 <div class="etestrow"><select class="sel" value="{{ mrTestInbox }}" onChange="{{ onMrTestInbox }}"><option value="{{ mrInbox1 }}">Ящик №1 · Chemicals</option><option value="{{ mrInbox2 }}">Ящик №2 · INK</option></select><label class="btn dark">📎 Приложить файл письма<input type="file" accept=".xlsx,.xls,.csv,.txt,.pdf" style="display:none" onChange="{{ onMrTestFile }}"></label><sc-if value="{{ mailRobotBusy }}" hint-placeholder-val=""><span class="hint">Робот обрабатывает письмо…</span></sc-if></div>
 <sc-if value="{{ mailRobotHasResult }}" hint-placeholder-val=""><div class="{{ mailRobotResultCls }}">{{ mailRobotResult }}</div></sc-if></div>
+</div>
+<div class="card"><div class="secrow"><div class="sec">Справочник ролей · {{ roleDraftName }}</div></div>
+<div class="unote">Роль определяет должность сотрудника. Базовые роли изменять нельзя. Администратор может создавать новые роли и удалять неиспользуемые.</div>
+<div class="genrow"><sc-if value="{{ roleNoDraft }}" hint-placeholder-val="{{ true }}"><button class="btn dark" onClick="{{ newRole }}">+ Новая роль</button></sc-if></div>
+<sc-if value="{{ roleHasDraft }}" hint-placeholder-val=""><div class="uform"><div class="fg full"><label>Название роли</label><input class="inp" value="{{ roleDraftName }}" onInput="{{ onRoleName }}" placeholder="Например: Бухгалтер, Финансовый директор"></div></div><sc-if value="{{ roleHasErr }}" hint-placeholder-val=""><div class="banner err">{{ roleErr }}</div></sc-if><div class="uactions"><button class="btn dark" onClick="{{ saveRole }}">Сохранить роль</button><button class="btn" onClick="{{ cancelRole }}">Отмена</button></div></sc-if>
+<div class="scroll"><table><thead><tr><th class="l">Роль</th><th class="l">Тип</th><th>Пользователей</th><th class="l">Действия</th></tr></thead><tbody><sc-for list="{{ roleRows }}" as="r" hint-placeholder-count="3"><tr><td class="l nm">{{ r.name }}</td><td class="l">{{ r.kind }}</td><td class="mono">{{ r.count }}</td><td class="l"><sc-if value="{{ r.locked }}" hint-placeholder-val="x"><div class="urowact"><button class="ulink" onClick="{{ r.edit }}">Переименовать</button><button class="ulink del" onClick="{{ r.del }}">Удалить</button></div></sc-if><sc-if value="{{ r.locked }}" hint-placeholder-val=""><span class="hint">базовая</span></sc-if></td></tr></sc-for></tbody></table></div>
 </div>
 <div class="card"><div class="sec">Пользователи · {{ usCount }}</div>
 <div class="scroll"><table><thead><tr><th class="l">Имя</th><th class="l">Логин</th><th class="l">E-mail</th><th class="l">Пароль</th><th class="l">Роль</th><th class="l">Доступ</th><th class="l">Статус</th><th class="l">Действия</th></tr></thead>
@@ -4059,6 +4139,12 @@ class Component extends DCLogic {
     try { payMoves = JSON.parse(this.lsGet('paymoves') || '{}') || {}; } catch (e) {}
     let payFiles = {};
     try { payFiles = JSON.parse(this.lsGet('payfiles') || '{}') || {}; } catch (e) {}
+    let customRoles = [];
+    try { customRoles = JSON.parse(this.lsGet('customroles') || '[]'); if (!Array.isArray(customRoles)) customRoles = []; } catch (e) {}
+    let companyCards = {};
+    try { companyCards = JSON.parse(this.lsGet('companycards') || '{}') || {}; } catch (e) {}
+    let bankBalances = {};
+    try { bankBalances = JSON.parse(this.lsGet('bankbalances') || '{}') || {}; } catch (e) {}
     let emailCfg = {};
     try { emailCfg = JSON.parse(this.lsGet('emailcfg') || '{}') || {}; } catch (e) {}
     let tasksSeenAt = 0;
@@ -4077,7 +4163,7 @@ class Component extends DCLogic {
     let mailRobotCfg = {};
     try { mailRobotCfg = JSON.parse(this.lsGet('mailrobot') || '{}') || {}; } catch (e) {}
     this.setState({ mailRobotCfg, mailRobotEdit: { inbox1: mailRobotCfg.inbox1 || '', inbox2: mailRobotCfg.inbox2 || '', imapHost: mailRobotCfg.imapHost || '', pollMin: mailRobotCfg.pollMin || 5, proxyUrl: mailRobotCfg.proxyUrl || '', enabled: !!mailRobotCfg.enabled } });
-    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, paySplits, payMoves, payFiles, tasksSeenAt, chatSeenAt, recalcLog, autoRecalc, securityLog, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '', taskTemplateId: emailCfg.taskTemplateId || '', notifyTasks: !!emailCfg.notifyTasks, appUrl: emailCfg.appUrl || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
+    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, paySplits, payMoves, payFiles, customRoles, companyCards, bankBalances, tasksSeenAt, chatSeenAt, recalcLog, autoRecalc, securityLog, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '', taskTemplateId: emailCfg.taskTemplateId || '', notifyTasks: !!emailCfg.notifyTasks, appUrl: emailCfg.appUrl || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
     // Двухфазный экран входа: фаза 1 (загрузка) → фаза 2 (логотип слева + кнопка «Войти»)
     this._loaderT1 = setTimeout(() => this.setState({ loaderPhase: 'p2' }), 3400);
     // Слоган под логотипом перепечатывается каждые 10 c (remount по tick → анимация проигрывается заново)
@@ -7270,7 +7356,28 @@ class Component extends DCLogic {
     let p = ''; for (let i = 0; i < 6; i++) p += pick(lo); return p + pick(up) + pick(nu) + pick(nu);
   }
   countAdmins() { return (this.state.users || []).filter(u => u.role === 'admin' && u.active).length; }
-  roleName(r) { return ({ admin: 'Администратор', rukovoditel: 'Руководитель', tehnolog: 'Технолог', ved: 'Менеджер ВЭД', logist: 'Логист', user: 'Закупщик' })[r] || 'Закупщик'; }
+  roleName(r) { const base = { admin: 'Администратор', rukovoditel: 'Руководитель', tehnolog: 'Технолог', ved: 'Менеджер ВЭД', logist: 'Логист', user: 'Закупщик' }; if (base[r]) return base[r]; const cr = (this.state.customRoles || []).find(x => x.id === r); return cr ? cr.name : (r || '—'); }
+  builtinRoles() { return [{ id: 'admin', name: 'Администратор', locked: true }, { id: 'rukovoditel', name: 'Руководитель' }, { id: 'user', name: 'Закупщик' }, { id: 'tehnolog', name: 'Технолог' }, { id: 'ved', name: 'Менеджер ВЭД' }, { id: 'logist', name: 'Логист' }]; }
+  allRoles() { return [...this.builtinRoles(), ...(this.state.customRoles || [])]; }
+  saveRole() {
+    const S = this.state, d = S.roleDraft; if (!d) return;
+    const name = (d.name || '').trim();
+    if (!name) { this.setState({ roleErr: 'Введите название роли' }); return; }
+    const id = d.id || ('role_' + name.toLowerCase().replace(/[^a-zа-я0-9]+/gi, '_').slice(0, 24) + '_' + Date.now().toString(36).slice(-4));
+    if (this.allRoles().some(r => r.id !== id && r.name.toLowerCase() === name.toLowerCase())) { this.setState({ roleErr: 'Роль «' + name + '» уже существует' }); return; }
+    const list = d.id ? (S.customRoles || []).map(r => r.id === d.id ? { ...r, name } : r) : [...(S.customRoles || []), { id, name }];
+    this.setState({ customRoles: list, roleDraft: null, roleErr: '' });
+    try { this.lsSet('customroles', JSON.stringify(list)); } catch (e) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { customRoles: list }, { merge: true }).catch(() => {}); } catch (e) {} }
+    this.pushRecalcToast && this.pushRecalcToast('✓ Роль сохранена: ' + name);
+  }
+  deleteRole(id) {
+    if (this.builtinRoles().some(r => r.id === id)) { this.setState({ roleErr: 'Базовую роль удалить нельзя' }); return; }
+    const used = (this.state.users || []).filter(u => u.role === id);
+    const doDel = () => { const list = (this.state.customRoles || []).filter(r => r.id !== id); this.setState({ customRoles: list, roleErr: '' }); try { this.lsSet('customroles', JSON.stringify(list)); } catch (e) {} if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { customRoles: list }, { merge: true }).catch(() => {}); } catch (e) {} } };
+    if (used.length) { this.askDelete('роль «' + this.roleName(id) + '» (её используют ' + used.length + ' польз. — они станут «Закупщик»)', () => { this.saveUsers((this.state.users || []).map(u => u.role === id ? { ...u, role: 'user' } : u)); doDel(); }); }
+    else this.askDelete('роль «' + this.roleName(id) + '»', doDel);
+  }
 
   // Каталог разделов для настройки прав (без вкладки «Пользователи» — она только у админа)
   permCatalog() {
@@ -7282,7 +7389,7 @@ class Component extends DCLogic {
       { label: 'Закупки', tabs: [['proc', 'План закупок'], ['procplan', 'График закупок'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['delivery', 'Доставка · баланс снабжения'], ['cparties', 'Поставщики / Контрагенты']] },
       { label: 'Логистика и склад', tabs: [['wh', 'Склад'], ['receipts', 'Поступления ТМЦ'], ['logi', 'Логистика'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка запасов']] },
       { label: 'Финансы', tabs: [['margin', 'Маржинальный отчёт'], ['cost', 'Себестоимость · КО'], ['costtree', 'Анализ себестоимости'], ['pay', 'Платежи'], ['treas30', 'БДДС 30 дней'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
-      { label: 'Настройки', tabs: [['cloud', 'Облако'], ['onec', 'Интеграция 1С']] },
+      { label: 'Настройки', tabs: [['cosettings', 'Настройки компании'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С']] },
     ];
   }
   allTabIds() { return this.permCatalog().reduce((a, g) => a.concat(g.tabs.map(t => t[0])), []); }
@@ -7308,7 +7415,7 @@ class Component extends DCLogic {
     if (user.role === 'admin') return ['home'].concat(all, ['users', 'filearch', 'autopilot', 'seclog']);
     const perms = Array.isArray(user.perms) ? user.perms : all;
     // Новые разделы доступны по умолчанию всем (добавлены позже — их нет в старых perms)
-    const always = ['tcalc', 'xcalc', 'calc', 'newprod', 'actualize', 'nomfix', 'prodplan', 'procplan', 'onec', 'tasks', 'docs', 'cparties', 'receipts', 'sales', 'treas30', 'logi', 'prodrep', 'costtree'];
+    const always = ['tcalc', 'xcalc', 'calc', 'newprod', 'actualize', 'nomfix', 'prodplan', 'procplan', 'onec', 'cosettings', 'tasks', 'docs', 'cparties', 'receipts', 'sales', 'treas30', 'logi', 'prodrep', 'costtree'];
     return ['home'].concat(all.filter(id => perms.includes(id) || always.includes(id)));
   }
 
@@ -7678,6 +7785,12 @@ class Component extends DCLogic {
     }));
     return {
       isUsers: true, usNoAccess: false, usHasAccess: true, usCount: rows.length, usRows: rows, companyToggles,
+      roleOpts: this.allRoles().map(r => ({ v: r.id, label: r.name })),
+      roleRows: this.allRoles().map(r => ({ id: r.id, name: r.name, kind: this.builtinRoles().some(b => b.id === r.id) ? 'базовая' : 'своя', count: String((S.users || []).filter(u => u.role === r.id).length), locked: this.builtinRoles().some(b => b.id === r.id), edit: () => set({ roleDraft: { id: r.id, name: r.name }, roleErr: '' }), del: () => this.deleteRole(r.id) })),
+      roleDraft: S.roleDraft, roleHasDraft: !!S.roleDraft, roleNoDraft: !S.roleDraft, roleDraftName: (S.roleDraft || {}).name || '', roleIsEdit: !!(S.roleDraft && S.roleDraft.id),
+      onRoleName: (e) => set({ roleDraft: { ...(this.state.roleDraft || {}), name: e.target.value }, roleErr: '' }),
+      newRole: () => set({ roleDraft: { name: '' }, roleErr: '' }), saveRole: () => this.saveRole(), cancelRole: () => set({ roleDraft: null, roleErr: '' }),
+      roleErr: S.roleErr || '', roleHasErr: !!S.roleErr,
       udName: dn.name, udLogin: dn.login, udPass: dn.password, udRole: dn.role, udEmail: dn.email || '',
       onUdEmail: patch('email'),
       udPhoto: dn.photo || '', udHasPhoto: !!dn.photo, udNoPhoto: !dn.photo, udInitial: (dn.name || '?').trim().charAt(0).toUpperCase() || '?',
@@ -9916,6 +10029,58 @@ class Component extends DCLogic {
     overdue.items.sort((a, b) => b.remain - a.remain);
     return { todayStr, payments, incoming, overdue };
   }
+  // ===== Остатки на начало дня (по банкам или общей суммой), хранение по датам =====
+  bankBalFor(ds) { const bb = this.state.bankBalances || {}; return bb[ds] || null; }
+  // Остаток на выбранную дату: явно введённый, иначе последний известный до этой даты
+  bankBalResolved(ds) {
+    const bb = this.state.bankBalances || {};
+    if (bb[ds]) return { rec: bb[ds], exact: true, date: ds };
+    const keys = Object.keys(bb).filter(k => k <= ds).sort();
+    if (keys.length) { const k = keys[keys.length - 1]; return { rec: bb[k], exact: false, date: k }; }
+    return { rec: null, exact: false, date: '' };
+  }
+  bankBalTotal(rec) { if (!rec) return 0; if (rec.mode === 'manual') return Number(rec.total) || 0; return (rec.banks || []).reduce((s, b) => s + (Number(b.amount) || 0), 0); }
+  saveBankBal(ds, rec) {
+    const bb = { ...(this.state.bankBalances || {}) }; bb[ds] = rec;
+    this.setState({ bankBalances: bb });
+    try { this.lsSet('bankbalances', JSON.stringify(bb)); } catch (e) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { bankBalances: bb }, { merge: true }).catch(() => {}); } catch (e) {} }
+  }
+  bankBalVals() {
+    const S = this.state, set = (p) => this.setState(p);
+    const co = this._activeCo || 'ink';
+    const today = this.ymd(new Date());
+    const viewDate = S.balViewDate || today;
+    const resolved = this.bankBalResolved(viewDate);
+    const editDate = S.balEditDate || viewDate;
+    const existing = (S.bankBalances || {})[editDate];
+    const companyBanks = (this.companyCard(co).banks || []);
+    // черновик редактирования
+    let draft = S.balDraft;
+    if (!draft || draft._date !== editDate) {
+      if (existing) draft = { _date: editDate, mode: existing.mode || 'banks', total: existing.total || 0, banks: (existing.banks || []).slice() };
+      else draft = { _date: editDate, mode: companyBanks.length ? 'banks' : 'manual', total: 0, banks: companyBanks.map(b => ({ label: b.label || b.bank || 'Счёт', currency: b.currency || 'RUB', amount: 0 })) };
+    }
+    const bankRows = (draft.banks || []).map((b, i) => ({ label: b.label || ('Счёт ' + (i + 1)), currency: b.currency || 'RUB', amount: b.amount || '', onAmount: (e) => { const nb = (this._balCur(editDate).banks || []).map((x, j) => j === i ? { ...x, amount: this.impNum(e.target.value) } : x); set({ balDraft: { ...this._balCur(editDate), banks: nb } }); }, onLabel: (e) => { const nb = (this._balCur(editDate).banks || []).map((x, j) => j === i ? { ...x, label: e.target.value } : x); set({ balDraft: { ...this._balCur(editDate), banks: nb } }); }, del: () => { const nb = (this._balCur(editDate).banks || []).filter((_, j) => j !== i); set({ balDraft: { ...this._balCur(editDate), banks: nb } }); } }));
+    const draftTotal = this.bankBalTotal(draft);
+    return {
+      balViewDate: viewDate, onBalViewDate: (e) => set({ balViewDate: e.target.value }),
+      balResolvedTotal: this.fmt(Math.round(this.bankBalTotal(resolved.rec))),
+      balResolvedExact: resolved.exact, balResolvedFrom: resolved.date ? this.dmFull(resolved.date) : '—', balResolvedNone: !resolved.rec,
+      balResolvedBanks: resolved.rec && resolved.rec.mode !== 'manual' ? (resolved.rec.banks || []).map(b => ({ label: b.label, currency: b.currency || 'RUB', amount: this.fmt(Math.round(Number(b.amount) || 0)) })) : [],
+      balResolvedIsManual: !!(resolved.rec && resolved.rec.mode === 'manual'),
+      balEditDate: editDate, onBalEditDate: (e) => set({ balEditDate: e.target.value, balDraft: null }),
+      balMode: draft.mode, balModeBanks: draft.mode === 'banks', balModeManual: draft.mode === 'manual',
+      setBalBanks: () => set({ balDraft: { ...this._balCur(editDate), mode: 'banks' } }), setBalManual: () => set({ balDraft: { ...this._balCur(editDate), mode: 'manual' } }),
+      balManualTotal: draft.total || '', onBalManualTotal: (e) => set({ balDraft: { ...this._balCur(editDate), total: this.impNum(e.target.value) } }),
+      balBankRows: bankRows, balDraftTotal: this.fmt(Math.round(draftTotal)),
+      balAddBank: () => { const d = this._balCur(editDate); set({ balDraft: { ...d, banks: [...(d.banks || []), { label: '', currency: 'RUB', amount: 0 }] } }); },
+      balSave: () => { const d = this._balCur(editDate); const rec = { mode: d.mode, total: d.mode === 'manual' ? (Number(d.total) || 0) : this.bankBalTotal(d), banks: (d.banks || []).map(b => ({ label: b.label || 'Счёт', currency: b.currency || 'RUB', amount: Number(b.amount) || 0 })), savedAt: Date.now() }; this.saveBankBal(editDate, rec); set({ cashStart: rec.total }); this.pushRecalcToast && this.pushRecalcToast('✓ Остаток на ' + this.dmFull(editDate) + ' сохранён: ' + this.fmt(Math.round(rec.total)) + ' ₽'); },
+      balUseToday: () => set({ balEditDate: today, balDraft: null }),
+    };
+  }
+  _balCur(ds) { const S = this.state; if (S.balDraft && S.balDraft._date === ds) return S.balDraft; const ex = (S.bankBalances || {})[ds]; const companyBanks = (this.companyCard(this._activeCo || 'ink').banks || []); return ex ? { _date: ds, mode: ex.mode || 'banks', total: ex.total || 0, banks: (ex.banks || []).slice() } : { _date: ds, mode: companyBanks.length ? 'banks' : 'manual', total: 0, banks: companyBanks.map(b => ({ label: b.label || b.bank || 'Счёт', currency: b.currency || 'RUB', amount: 0 })) }; }
+  // ===== Остатки END =====
   // ===== БДДС: казначейский календарь на 30 дней =====
   buildTreasury30() {
     const S = this.state, set = (p) => this.setState(p);
@@ -9956,7 +10121,7 @@ class Component extends DCLogic {
       sched: it.sched.map(s => ({ date: this.dmFull(s.date), eff: this.dmFull(s.eff), amount: this.fmt(Math.round(s.amount)), rolled: s.eff !== s.date })) }));
     const odByDate = Object.keys(core.overdue.byDate).sort().map(dt => ({ date: this.dmFull(dt), amount: this.fmt(Math.round(core.overdue.byDate[dt])) }));
     return {
-      isTreas30: true, cashStart: S.cashStart || 0, onCashStart: (e) => set({ cashStart: e.target.value }),
+      isTreas30: true, cashStart: (function () { const r = this.bankBalResolved(this.ymd(new Date())); return r.rec ? Math.round(this.bankBalTotal(r.rec)) : (S.cashStart || 0); }).call(this), onCashStart: (e) => set({ cashStart: e.target.value }),
       trDays: days, trOverdue: this.fmt(overdueSum), trHasOverdue: overdueSum > 0,
       trTotalOut: this.fmt(totalOut), trMinBal: this.fmt(minBal), trMinCls: minBal < 0 ? 'mneg' : 'mpos', trGap: minBal < 0,
       trOdItems: odItems, trOdHasItems: odItems.length > 0, trOdCount: String(odItems.length),
@@ -9967,6 +10132,7 @@ class Component extends DCLogic {
       exportBddsInternal: () => this.exportBddsInternal(),
       printBdds: () => this.printBddsDoc(days, { totalOut, minBal, overdueSum, cashStart: Number(S.cashStart) || 0 }, core.overdue),
       ...this.splitDialogVals(),
+      ...this.bankBalVals(),
     };
   }
   // ===== Диалог разбиения платежа на транши (даты + суммы) =====
@@ -10720,6 +10886,58 @@ class Component extends DCLogic {
     const gsGroups = order.map(cat => ({ cat, count: String(byCat.get(cat).length), items: byCat.get(cat) }));
     return { gsOpen: true, searchResults: top, gsEmpty: top.length === 0, gsGroups, gsHasResults: top.length > 0, gsCount: String(res.length), gsShown: String(top.length), gsQuery: raw };
   }
+  // ===== Настройки компании: карточка предприятия, банковские счета, логотип, бланки =====
+  emptyBankAcc() { return { id: '', label: '', bank: '', bik: '', corrAcc: '', account: '', swift: '', corrBank: '', purpose: '', currency: 'RUB' }; }
+  companyCard(co) { const cards = this.state.companyCards || {}; return cards[co] || { name: '', shortName: '', legalAddr: '', postAddr: '', inn: '', kpp: '', ogrn: '', okpo: '', okato: '', oktmo: '', okogu: '', okopf: '', email: '', phone: '', director: '', logo: '', letterhead: '', banks: [] }; }
+  saveCompanyCard(co, patch) {
+    const cards = { ...(this.state.companyCards || {}) };
+    cards[co] = { ...this.companyCard(co), ...patch };
+    this.setState({ companyCards: cards });
+    try { this.lsSet('companycards', JSON.stringify(cards)); } catch (e) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { companyCards: cards }, { merge: true }).catch(() => {}); } catch (e) {} }
+  }
+  buildCoSettings() {
+    const S = this.state, set = (p) => this.setState(p);
+    const co = S.csCompany || this._activeCo || 'ink';
+    const card = this.companyCard(co);
+    const draft = (S.csDraft && S.csDraft._co === co) ? S.csDraft : { ...card, _co: co };
+    const f = (k) => (e) => set({ csDraft: { ...(this.state.csDraft && this.state.csDraft._co === co ? this.state.csDraft : { ...this.companyCard(co), _co: co }), [k]: e.target.value } });
+    const saveField = (k) => () => { this.saveCompanyCard(co, { [k]: (this.state.csDraft || {})[k] }); this.pushRecalcToast && this.pushRecalcToast('✓ Сохранено'); };
+    const fields = [
+      ['name', 'Полное наименование', 'Общество с ограниченной ответственностью «…»'],
+      ['shortName', 'Краткое наименование', 'ООО «…»'],
+      ['legalAddr', 'Юридический адрес', 'Индекс, город, улица'],
+      ['postAddr', 'Почтовый / фактический адрес', 'Индекс, город, улица'],
+      ['inn', 'ИНН', '9718183780'], ['kpp', 'КПП', '772601001'], ['ogrn', 'ОГРН', '1217700649011'],
+      ['okpo', 'ОКПО', ''], ['okato', 'ОКАТО', ''], ['oktmo', 'ОКТМО', ''], ['okogu', 'ОКОГУ', ''], ['okopf', 'ОКОПФ', ''],
+      ['email', 'E-mail', 'info@company.ru'], ['phone', 'Телефон', '+7 …'], ['director', 'Генеральный директор', 'ФИО'],
+    ].map(x => ({ key: x[0], label: x[1], ph: x[2], value: draft[x[0]] || '', on: f(x[0]), save: saveField(x[0]) }));
+    const banks = (draft.banks || []).map((b, i) => ({
+      idx: i, label: b.label || ('Счёт ' + (i + 1)), bank: b.bank || '', bik: b.bik || '', corrAcc: b.corrAcc || '', account: b.account || '', swift: b.swift || '', corrBank: b.corrBank || '', purpose: b.purpose || '', currency: b.currency || 'RUB',
+      onLabel: (e) => this._csBankSet(co, i, 'label', e.target.value), onBank: (e) => this._csBankSet(co, i, 'bank', e.target.value), onBik: (e) => this._csBankSet(co, i, 'bik', e.target.value),
+      onCorr: (e) => this._csBankSet(co, i, 'corrAcc', e.target.value), onAcc: (e) => this._csBankSet(co, i, 'account', e.target.value), onSwift: (e) => this._csBankSet(co, i, 'swift', e.target.value),
+      onCorrBank: (e) => this._csBankSet(co, i, 'corrBank', e.target.value), onPurpose: (e) => this._csBankSet(co, i, 'purpose', e.target.value), onCurrency: (e) => this._csBankSet(co, i, 'currency', e.target.value),
+      del: () => this.askDelete('банковский счёт «' + (b.label || ('Счёт ' + (i + 1))) + '»', () => { const d = this._csCur(co); const nb = (d.banks || []).filter((_, j) => j !== i); this.setState({ csDraft: { ...d, banks: nb } }); this.saveCompanyCard(co, { banks: nb }); }),
+    }));
+    return {
+      isCoSettings: true, csCompany: co, csCompanyName: (this.coCfg()[co] || {}).name || co,
+      csCompanyTabs: Object.keys(this.coCfg()).map(k => ({ v: k, label: (this.coCfg()[k] || {}).name || k, cls: k === co ? 'cotab on' : 'cotab', pick: () => set({ csCompany: k, csDraft: null }) })),
+      csFields: fields,
+      csLogo: draft.logo || '', csHasLogo: !!draft.logo, csLogoImg: draft.logo ? React.createElement('img', { className: 'cslogoimg', src: draft.logo, alt: '' }) : null,
+      onCsLogo: (e) => { const fl = e.target.files && e.target.files[0]; if (!fl) return; this.readAvatarFile(fl, (url) => { const d = this._csCur(co); this.setState({ csDraft: { ...d, logo: url } }); this.saveCompanyCard(co, { logo: url }); }); if (e.target) e.target.value = ''; },
+      clearCsLogo: () => { const d = this._csCur(co); this.setState({ csDraft: { ...d, logo: '' } }); this.saveCompanyCard(co, { logo: '' }); },
+      csLetter: draft.letterhead || '', csHasLetter: !!draft.letterhead, csLetterImg: draft.letterhead ? React.createElement('img', { className: 'csletterimg', src: draft.letterhead, alt: '' }) : null,
+      onCsLetter: (e) => { const fl = e.target.files && e.target.files[0]; if (!fl) return; this.readAvatarFile(fl, (url) => { const d = this._csCur(co); this.setState({ csDraft: { ...d, letterhead: url } }); this.saveCompanyCard(co, { letterhead: url }); }); if (e.target) e.target.value = ''; },
+      clearCsLetter: () => { const d = this._csCur(co); this.setState({ csDraft: { ...d, letterhead: '' } }); this.saveCompanyCard(co, { letterhead: '' }); },
+      csBanks: banks, csBankCount: String(banks.length),
+      csAddBank: () => { const d = this._csCur(co); const nb = [...(d.banks || []), { ...this.emptyBankAcc(), id: 'ba_' + Date.now().toString(36) }]; this.setState({ csDraft: { ...d, banks: nb } }); },
+      csSaveBanks: () => { this.saveCompanyCard(co, { banks: (this._csCur(co).banks || []) }); this.pushRecalcToast && this.pushRecalcToast('✓ Банковские счета сохранены'); },
+      csSaveAll: () => { const d = this._csCur(co); const { _co, ...rest } = d; this.saveCompanyCard(co, rest); this.pushRecalcToast && this.pushRecalcToast('✓ Карточка компании сохранена'); },
+    };
+  }
+  _csCur(co) { return (this.state.csDraft && this.state.csDraft._co === co) ? this.state.csDraft : { ...this.companyCard(co), _co: co }; }
+  _csBankSet(co, i, k, v) { const d = this._csCur(co); const banks = (d.banks || []).map((b, j) => j === i ? { ...b, [k]: v } : b); this.setState({ csDraft: { ...d, banks } }); }
+  // ===== Настройки компании END =====
   // ===== Справочник контрагентов =====
   emptyCp() { return { id: '', name: '', inn: '', kpp: '', terms: '', limit: '', contacts: '', bik: '', bank: '', corrAcc: '', account: '', address: '', priceList: [], contracts: [] }; }
   emptyContract() { return { id: '', no: '', date: '', currency: 'RUB', payTerms: '', deliveryTerms: '', validTill: '', note: '' }; }
@@ -14650,7 +14868,7 @@ class Component extends DCLogic {
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['delivery', 'Доставка · баланс'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['prodrep', 'Отчёты производства'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
       ['cost', 'Себестоимость · КО'], ['margin', 'Маржинальный отчёт'], ['costtree', 'Анализ себестоимости'], ['pnl', 'P&L 360°'],
-      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['dataload', 'Загрузка данных 1С'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['filearch', 'Архив файлов'], ['autopilot', 'ИИ-Автопилот'], ['seclog', 'Журнал безопасности'], ['home', 'Карта навигации'],
+      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['dataload', 'Загрузка данных 1С'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['filearch', 'Архив файлов'], ['autopilot', 'ИИ-Автопилот'], ['seclog', 'Журнал безопасности'], ['home', 'Карта навигации'], ['cosettings', 'Настройки компании'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
     const tabGroups = [
@@ -14661,7 +14879,7 @@ class Component extends DCLogic {
       { label: 'Закупки', items: ['proc', 'procplan', 'runrate', 'audit', 'landed', 'delivery', 'cparties'], en: { procplan: 'График закупок', cparties: 'Поставщики / Контрагенты' } },
       { label: 'Логистика и склад', items: ['wh', 'receipts', 'logi', 'turnover', 'cover'], en: { cover: 'Сводка запасов' } },
       { label: 'Финансы', items: ['margin', 'cost', 'costtree', 'pay', 'treas30', 'planfact', 'stress', 'reports'] },
-      { label: 'Настройки', items: ['cloud', 'onec', 'users', 'filearch', 'autopilot', 'seclog'], en: { filearch: 'Архив загруженных файлов', autopilot: 'ИИ-Автопилот (AI Control Core)', seclog: 'Журнал безопасности' } },
+      { label: 'Настройки', items: ['cosettings', 'cloud', 'onec', 'users', 'filearch', 'autopilot', 'seclog'], en: { filearch: 'Архив загруженных файлов', autopilot: 'ИИ-Автопилот (AI Control Core)', seclog: 'Журнал безопасности' } },
     ];
     const allowed = this.allowedTabs(S.currentUser);
     const allowSet = new Set(allowed);
@@ -15272,6 +15490,7 @@ class Component extends DCLogic {
     if (S.tab === 'stress') Object.assign(base, this.buildStress(rate));
     if (S.tab === 'pay') Object.assign(base, this.buildTreasury(rate));
     if (S.tab === 'users') Object.assign(base, this.buildUsers());
+    if (S.tab === 'cosettings') Object.assign(base, this.buildCoSettings());
     if (S.tab === 'onec') Object.assign(base, this.buildOneC());
     if (S.tab === 'tasks') Object.assign(base, this.buildTasks());
     if (S.tab === 'docs') Object.assign(base, this.buildDocs());
