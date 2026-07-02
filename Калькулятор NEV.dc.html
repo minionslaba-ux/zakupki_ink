@@ -722,6 +722,10 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .btn.imp{background:#eef4fb;border:1px solid #cfe0f2;color:#1F4E78;font-weight:600}
 .btn.imp:hover{background:#e3eefb}
 .impmodal{max-width:720px}
+.dlmap.impfull{max-width:calc(100vw - 20px);width:calc(100vw - 20px);max-height:calc(100vh - 20px);height:calc(100vh - 20px)}
+.impmaph{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.impmaxbtn{flex:none;border:1px solid #cfe0f2;background:#eef4fb;color:#1F4E78;border-radius:7px;padding:5px 10px;font-size:11.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.impmaxbtn:hover{background:#e3eefb}
 .impchip{display:inline-block;background:#eef4fb;border:1px solid #cfe0f2;color:#1F4E78;border-radius:6px;padding:4px 9px;font-size:11px;font-weight:700}
 .impdrop{border:2px dashed #cfe0f2;border-radius:13px;background:#f8fbff;padding:22px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;transition:all .15s ease}
 .impdrop.drag{border-color:#2A6FDB;background:#eaf2fe}
@@ -4075,8 +4079,8 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ trackToastHas }}" hint-placeholder-val=""><div class="tracktoast"><span class="tticon">👁</span><span>{{ trackToast }}</span></div></sc-if>
 <sc-if value="{{ cloudToastHas }}" hint-placeholder-val=""><div class="cloudtoast"><span class="clic">☁✓</span><span>{{ cloudToast }}</span></div></sc-if>
 <sc-if value="{{ recalcToastHas }}" hint-placeholder-val=""><div class="recalctoast"><span class="rclic">⚙</span><span>{{ recalcToast }}</span></div></sc-if>
-<sc-if value="{{ impOpen }}" hint-placeholder-val=""><div class="dlmapbg" onClick="{{ impClose }}"></div><div class="dlmap impmodal">
-<div class="dlmaph">{{ impTitle }}</div>
+<sc-if value="{{ impOpen }}" hint-placeholder-val=""><div class="dlmapbg" onClick="{{ impClose }}"></div><div class="dlmap impmodal {{ impFullCls }}">
+<div class="dlmaph impmaph"><span>{{ impTitle }}</span><button class="impmaxbtn" onClick="{{ impToggleFull }}" title="{{ impFullTitle }}">{{ impFullIcon }} {{ impFullTitle }}</button></div>
 <div class="dlmaps">{{ impHint }}</div>
 <div class="{{ impDragCls }}" onDrop="{{ onImpDrop }}" onDragOver="{{ onImpDragOver }}" onDragLeave="{{ onImpDragLeave }}">
 <div class="impdropic">📎</div><div class="impdropt">Перетащите файлы сюда или</div>
@@ -10548,6 +10552,7 @@ class Component extends DCLogic {
   impTargetHint(t) { return ({ sales: 'Реализация ГП: распознаются клиент, продукт, объём (кг), цена. Каждая строка → отгрузка в реестре продаж.', receipts: 'Накладные/приходы: распознаются наименование сырья, артикул, количество, цена. Строки → позиции поступления, склад обновится.', purchases: 'Спецификации/счета: поставщик, сырьё, кол-во, цена. Строки → заявки закупки.', ved: 'Бросьте ВЕСЬ пакет: коммерческий инвойс, таможенная декларация (ТД/ДТ), поручение экспедитору, счёт перевозчика. ИИ определит тип каждого документа и соберёт полную Landed Cost.', payreq: 'Счета / УПД на оплату (PDF, Excel): ядро распознаёт поставщика, № и дату счёта, НДС и построчную номенклатуру. Отметьте позиции к оплате, задайте частичные суммы — оригинал счёта вложится в заявку и открывается из реестра.', logi: 'Поручение/счёт экспедитору: маршрут, перевозчик, фрахт. Файлы → строки монитора логистики.' })[t] || ''; }
   impOpen(target) { this.setState({ imp: { target, title: this.impTargetTitle(target), hint: this.impTargetHint(target), files: [], busy: false, committed: false } }); }
   impClose() { this.setState({ imp: null }); }
+  impToggleFull() { const imp = this.state.imp; if (!imp) return; this.setState({ imp: { ...imp, max: !imp.max } }); }
   // Распознать тип документа ВЭД по имени файла / содержимому
   impVedDocType(name, headers) {
     const s = this.dlNorm(name + ' ' + (headers || []).join(' '));
@@ -10848,6 +10853,8 @@ class Component extends DCLogic {
       onImpDragLeave: (e) => { e.preventDefault(); this.setState({ impDrag: false }); },
       impDragCls: S.impDrag ? 'impdrop drag' : 'impdrop',
       impCommit: () => this.impCommit(), impClose: () => this.impClose(),
+      impFullCls: imp.max ? 'impfull' : '', impToggleFull: () => this.impToggleFull(),
+      impFullTitle: imp.max ? 'Свернуть окно' : 'На весь экран', impFullIcon: imp.max ? '🗗' : '⛶',
     };
   }
   writeReceipts(next) {
