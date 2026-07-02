@@ -1980,6 +1980,13 @@ a.wordmark:hover{opacity:.6}
 .mneg{color:#c0322b}
 .t30grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:6px}
 .t30cell{border:1px solid #e7e4e0;border-radius:10px;padding:8px;background:#fff;min-height:62px}
+.splitmodal{max-width:560px}
+.splitpresets{display:flex;gap:7px;margin:10px 0 6px;flex-wrap:wrap}
+.splitsum{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;font-size:13px;color:#25324a}
+.splitsum b{color:#1F4E78}
+.splitok{color:#1a6b3f;font-weight:700}
+.splitwarn{color:#9a5b12;font-weight:700}
+.splitover{color:#c0322b;font-weight:700}
 .t30cell.off{background:#fdf4ec}
 .t30h{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-bottom:5px}
 .t30d{font-size:11.5px;font-weight:700;color:#56534f}
@@ -2202,7 +2209,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
 <sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
-<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-02 · r15</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
+<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-02 · r17</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava" title="{{ u.tip }}" onContextMenu="{{ u.onCtx }}">{{ u.avatar }}<i class="ondot"></i><sc-if value="{{ u.hasStars }}" hint-placeholder-val=""><span class="onstars" title="KPI {{ u.starsLabel }}">{{ u.starsLabel }}</span></sc-if></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div><button class="ratebtn onrate" onClick="{{ goRating }}"><span>🏆</span> Рейтинг по задачам</button></div></sc-if>
@@ -3483,11 +3490,20 @@ window.dispatchEvent(new Event('fbready'));
 <div class="dlmapfoot"><sc-if value="{{ prDetailCanPayFull }}" hint-placeholder-val=""><button class="btn dark" onClick="{{ prDetailPayFull }}">✓ Оплачено полностью</button></sc-if><sc-if value="{{ prDetailCanEdit }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailEdit }}">✎ Корректировать</button></sc-if><sc-if value="{{ prDetailCanSoftDel }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailSoftDel }}">🗑 На удаление</button></sc-if><sc-if value="{{ prDetailIsTrash }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailRestore }}">Восстановить</button></sc-if><button class="btn" onClick="{{ prDetailClose }}">Закрыть</button></div>
 </div></sc-if>
 <div class="card"><div class="sec">Казначейский календарь · БДДС на 30 дней</div>
-<div class="toolbar"><div class="field"><span class="lbl">Остаток на счетах сегодня, ₽</span><input class="inp num w120" type="number" value="{{ cashStart }}" onInput="{{ onCashStart }}"></div><button class="btn" onClick="{{ trResetPlan }}">Сбросить переносы</button><button class="btn" onClick="{{ exportBdds }}"><span>↓</span> Excel (CSV)</button><button class="btn dark" onClick="{{ printBdds }}"><span>🖨</span> Печать / PDF</button></div>
+<div class="toolbar"><div class="field"><span class="lbl">Остаток на счетах сегодня, ₽</span><input class="inp num w120" type="number" value="{{ cashStart }}" onInput="{{ onCashStart }}"></div><button class="btn" onClick="{{ trResetPlan }}">Сбросить переносы</button><button class="btn" onClick="{{ exportBddsXlsx }}"><span>↓</span> Excel</button><button class="btn" onClick="{{ exportBdds }}"><span>↓</span> CSV</button><button class="btn dark" onClick="{{ printBdds }}"><span>🖨</span> Печать / PDF</button></div>
 <div class="kpis"><div class="kpi"><div class="kl">Платежи 30 дн., ₽</div><div class="kv mono">{{ trTotalOut }}</div></div><div class="kpi {{ trMinCls }}"><div class="kl">Мин. остаток (риск разрыва)</div><div class="kv mono">{{ trMinBal }}</div></div><sc-if value="{{ trHasOverdue }}" hint-placeholder-val=""><div class="kpi kpiBad"><div class="kl">Просрочено, ₽</div><div class="kv mono">{{ trOverdue }}</div></div></sc-if></div>
-<div class="t30grid"><sc-for list="{{ trDays }}" as="d" hint-placeholder-count="10"><div class="t30cell {{ d.off }}"><div class="t30h"><span class="t30d">{{ d.day }} {{ d.wd }}</span><span class="t30b {{ d.gap }}">{{ d.bal }} ₽</span></div><sc-if value="{{ d.hasInc }}" hint-placeholder-val=""><div class="t30inc">приход {{ d.inc }} ₽</div></sc-if><sc-if value="{{ d.gap }}" hint-placeholder-val=""><div class="t30risk">⛔ Критический риск разрыва · −{{ d.risk }} ₽</div></sc-if><sc-if value="{{ d.hasItems }}" hint-placeholder-val=""><div class="t30items"><sc-for list="{{ d.items }}" as="p" hint-placeholder-count="1"><div class="t30pay {{ p.over }}"><div class="t30pt"><b>{{ p.amount }} ₽</b> {{ p.supplier }} · {{ p.material }}</div><div class="t30act"><button class="tlink" onClick="{{ p.startMove }}">перенести</button><sc-if value="{{ p.isSplit }}" hint-placeholder-val="x"><button class="tlink" onClick="{{ p.split }}">разбить 30/40/30</button></sc-if><sc-if value="{{ p.isSplit }}" hint-placeholder-val=""><button class="tlink" onClick="{{ p.unsplit }}">объединить</button></sc-if></div><sc-if value="{{ p.moveOpen }}" hint-placeholder-val=""><input class="inp" type="date" value="{{ p.moveVal }}" onInput="{{ p.onMove }}"></sc-if></div></sc-for></div></sc-if></div></sc-for></div>
-<div class="hint">Остаток на конец дня пересчитывается на лету с учётом ожидаемых приходов от клиентов (по отсрочкам контрагентов). Красный остаток и метка «Критический риск разрыва» — кассовый разрыв с глубиной дефицита. «Разбить 30/40/30» дробит счёт на аванс/перед отгрузкой/постоплату (0/+15/+30 дн.), «перенести» сдвигает дату платежа.</div>
+<div class="t30grid"><sc-for list="{{ trDays }}" as="d" hint-placeholder-count="10"><div class="t30cell {{ d.off }}"><div class="t30h"><span class="t30d">{{ d.day }} {{ d.wd }}</span><span class="t30b {{ d.gap }}">{{ d.bal }} ₽</span></div><sc-if value="{{ d.hasInc }}" hint-placeholder-val=""><div class="t30inc">приход {{ d.inc }} ₽</div></sc-if><sc-if value="{{ d.gap }}" hint-placeholder-val=""><div class="t30risk">⛔ Критический риск разрыва · −{{ d.risk }} ₽</div></sc-if><sc-if value="{{ d.hasItems }}" hint-placeholder-val=""><div class="t30items"><sc-for list="{{ d.items }}" as="p" hint-placeholder-count="1"><div class="t30pay {{ p.over }}"><div class="t30pt"><b>{{ p.amount }} ₽</b> {{ p.supplier }} · {{ p.material }}</div><div class="t30act"><button class="tlink" onClick="{{ p.startMove }}">перенести</button><button class="tlink" onClick="{{ p.openSplit }}">разбить</button><sc-if value="{{ p.hasSplit }}" hint-placeholder-val=""><button class="tlink" onClick="{{ p.unsplit }}">объединить</button></sc-if><sc-if value="{{ p.noPayFile }}" hint-placeholder-val="{{ true }}"><label class="tlink">📎 прикрепить счёт<input type="file" accept=".pdf,.xlsx,.xls,.csv" style="display:none" onChange="{{ p.onAttachPayFile }}"></label></sc-if><sc-if value="{{ p.hasPayFile }}" hint-placeholder-val=""><button class="tlink" onClick="{{ p.openPayFile }}">📄 счёт</button><button class="tlink del" onClick="{{ p.detachPayFile }}">✕</button></sc-if></div><sc-if value="{{ p.moveOpen }}" hint-placeholder-val=""><input class="inp" type="date" value="{{ p.moveVal }}" onInput="{{ p.onMove }}"></sc-if></div></sc-for></div></sc-if></div></sc-for></div>
+<div class="hint">Остаток на конец дня пересчитывается на лету с учётом ожидаемых приходов от клиентов (по отсрочкам контрагентов). Красный остаток и метка «Критический риск разрыва» — кассовый разрыв с глубиной дефицита. «Разбить» открывает окно дробления счёта на транши с выбором дат и сумм, «перенести» сдвигает дату платежа.</div>
 </div>
+<sc-if value="{{ splitOpen }}" hint-placeholder-val=""><div class="dlmapbg" onClick="{{ splitCancel }}"></div><div class="dlmap splitmodal">
+<div class="dlmaph">Разбить платёж на транши</div>
+<div class="dlmaps">{{ splitSupplier }}<sc-if value="{{ splitMaterial }}" hint-placeholder-val=""> · {{ splitMaterial }}</sc-if> · всего к оплате: <b>{{ splitDue }} ₽</b></div>
+<div class="splitpresets"><button class="btn xs" onClick="{{ splitAddPart }}">+ транш</button><button class="btn xs" onClick="{{ splitDistribute }}">Поровну</button><button class="btn xs" onClick="{{ splitAutoLast }}">Остаток в последний</button></div>
+<div class="scroll"><table class="rectbl"><thead><tr><th class="l">№</th><th class="l">Дата платежа</th><th>Сумма транша, ₽</th><th></th></tr></thead><tbody><sc-for list="{{ splitRows }}" as="s" hint-placeholder-count="3"><tr><td class="l mono">{{ s.idx }}</td><td><input class="inp w150" type="date" value="{{ s.date }}" onInput="{{ s.onDate }}"></td><td><input class="inp num w150" type="number" value="{{ s.amount }}" onInput="{{ s.onAmount }}"></td><td><sc-if value="{{ s.canDel }}" hint-placeholder-val=""><button class="tlink del" onClick="{{ s.del }}">✕</button></sc-if></td></tr></sc-for></tbody></table></div>
+<div class="splitsum"><span>Распределено: <b>{{ splitSum }} ₽</b></span><span class="{{ splitDiffCls }}">{{ splitDiffLabel }}<sc-if value="{{ splitNotBalanced }}" hint-placeholder-val=""> · {{ splitDiff }} ₽</sc-if></span></div>
+<sc-if value="{{ splitHasErr }}" hint-placeholder-val=""><div class="banner err">{{ splitErr }}</div></sc-if>
+<div class="dlmapfoot"><button class="btn dark" onClick="{{ splitSave }}">Сохранить разбивку</button><button class="btn" onClick="{{ splitCancel }}">Отмена</button></div>
+</div></sc-if>
 </sc-if>
 
 <sc-if value="{{ isSales }}" hint-placeholder-val="">
@@ -3995,6 +4011,12 @@ class Component extends DCLogic {
     try { logistics = JSON.parse(this.lsGet('logistics') || '[]'); if (!Array.isArray(logistics)) logistics = []; } catch (e) {}
     let payreqs = [];
     try { payreqs = JSON.parse(this.lsGet('payreqs') || '[]'); if (!Array.isArray(payreqs)) payreqs = []; } catch (e) {}
+    let paySplits = {};
+    try { paySplits = JSON.parse(this.lsGet('paysplits') || '{}') || {}; } catch (e) {}
+    let payMoves = {};
+    try { payMoves = JSON.parse(this.lsGet('paymoves') || '{}') || {}; } catch (e) {}
+    let payFiles = {};
+    try { payFiles = JSON.parse(this.lsGet('payfiles') || '{}') || {}; } catch (e) {}
     let emailCfg = {};
     try { emailCfg = JSON.parse(this.lsGet('emailcfg') || '{}') || {}; } catch (e) {}
     let tasksSeenAt = 0;
@@ -4013,7 +4035,7 @@ class Component extends DCLogic {
     let mailRobotCfg = {};
     try { mailRobotCfg = JSON.parse(this.lsGet('mailrobot') || '{}') || {}; } catch (e) {}
     this.setState({ mailRobotCfg, mailRobotEdit: { inbox1: mailRobotCfg.inbox1 || '', inbox2: mailRobotCfg.inbox2 || '', imapHost: mailRobotCfg.imapHost || '', pollMin: mailRobotCfg.pollMin || 5, proxyUrl: mailRobotCfg.proxyUrl || '', enabled: !!mailRobotCfg.enabled } });
-    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, tasksSeenAt, chatSeenAt, recalcLog, autoRecalc, securityLog, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '', taskTemplateId: emailCfg.taskTemplateId || '', notifyTasks: !!emailCfg.notifyTasks, appUrl: emailCfg.appUrl || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
+    this.setState({ users, currentUser, welcomePhoto, chat, tasks, cparties, receipts, sales, logistics, payreqs, paySplits, payMoves, payFiles, tasksSeenAt, chatSeenAt, recalcLog, autoRecalc, securityLog, emailCfg, emailEdit: { serviceId: emailCfg.serviceId || '', templateId: emailCfg.templateId || '', publicKey: emailCfg.publicKey || '', fromName: emailCfg.fromName || '', taskTemplateId: emailCfg.taskTemplateId || '', notifyTasks: !!emailCfg.notifyTasks, appUrl: emailCfg.appUrl || '' }, tgLink, tgEdit: tgLink, tgToken: tgBot.token || '', tgChatId: tgBot.chatId || '', tgFwd: !!tgBot.fwd, tgEditToken: tgBot.token || '', tgEditChatId: tgBot.chatId || '' });
     // Двухфазный экран входа: фаза 1 (загрузка) → фаза 2 (логотип слева + кнопка «Войти»)
     this._loaderT1 = setTimeout(() => this.setState({ loaderPhase: 'p2' }), 3400);
     // Слоган под логотипом перепечатывается каждые 10 c (remount по tick → анимация проигрывается заново)
@@ -9807,12 +9829,16 @@ class Component extends DCLogic {
       const out = items.reduce((s, x) => s + x.amount, 0); totalOut += out; bal += inc - out; if (bal < minBal) minBal = bal;
       const wd = d.getDay();
       days.push({ key: ds, day: d.getDate(), wd: WD[wd], off: (wd === 0 || wd === 6) ? 'off' : '', isToday: i === 0, out: out > 0 ? this.fmt(out) : '', inc: inc > 0 ? ('+' + this.fmt(inc)) : '', hasInc: inc > 0, bal: this.fmt(bal), gap: bal < 0 ? 'gap' : '', risk: bal < 0 ? this.fmt(-bal) : '', hasItems: items.length > 0,
-        items: items.map(x => ({ key: x.id + '_' + x.part + (x.over ? 'o' : ''), supplier: x.supplier, material: x.material, amount: this.fmt(x.amount), over: x.over ? 'over' : '', isSplit: x.part >= 0,
+        items: items.map(x => ({ key: x.id + '_' + x.part + (x.over ? 'o' : ''), supplier: x.supplier, material: x.material, amount: this.fmt(x.amount), over: x.over ? 'over' : '', isSplit: x.part >= 0, hasSplit: !!(splits[x.id] && splits[x.id].length),
           moveOpen: S.payMoveEdit === (x.id + '_' + x.part), moveVal: x.date,
-          onMove: (e) => { const v = e.target.value; const m = { ...(this.state.payMoves || {}) }; m[x.id] = v; set({ payMoves: m, payMoveEdit: '' }); },
+          onMove: (e) => { const v = e.target.value; const m = { ...(this.state.payMoves || {}) }; m[x.id] = v; try { this.lsSet('paymoves', JSON.stringify(m)); } catch (er) {} set({ payMoves: m, payMoveEdit: '' }); },
           startMove: () => set({ payMoveEdit: (this.state.payMoveEdit === (x.id + '_' + x.part)) ? '' : (x.id + '_' + x.part) }),
-          split: () => { const due = x.due; const sp = {}; const base = x.date; const d15 = this.ymd(new Date(this.parseISO(base).getTime() + 15 * 86400000)); const d30 = this.ymd(new Date(this.parseISO(base).getTime() + 30 * 86400000)); const next = { ...(this.state.paySplits || {}) }; next[x.id] = [{ date: base, amount: this.excelRound(due * 0.3, 2) }, { date: d15, amount: this.excelRound(due * 0.4, 2) }, { date: d30, amount: this.excelRound(due * 0.3, 2) }]; set({ paySplits: next }); },
-          unsplit: () => { const next = { ...(this.state.paySplits || {}) }; delete next[x.id]; set({ paySplits: next }); },
+          openSplit: () => this.openSplitDialog(x),
+          unsplit: () => { const next = { ...(this.state.paySplits || {}) }; delete next[x.id]; try { this.lsSet('paysplits', JSON.stringify(next)); } catch (e) {} set({ paySplits: next }); },
+          hasPayFile: !!((S.payFiles || {})[x.id] && (S.payFiles || {})[x.id].id), noPayFile: !((S.payFiles || {})[x.id] && (S.payFiles || {})[x.id].id), payFileName: ((S.payFiles || {})[x.id] || {}).name || '',
+          openPayFile: () => this.faOpen(((this.state.payFiles || {})[x.id] || {}).id),
+          onAttachPayFile: (e) => this.attachPayFile(x.id, e.target.files && e.target.files[0], e),
+          detachPayFile: () => this.detachPayFile(x.id),
         })),
       });
     }
@@ -9820,11 +9846,122 @@ class Component extends DCLogic {
       isTreas30: true, cashStart: S.cashStart || 0, onCashStart: (e) => set({ cashStart: e.target.value }),
       trDays: days, trOverdue: this.fmt(overdueSum), trHasOverdue: overdueSum > 0,
       trTotalOut: this.fmt(totalOut), trMinBal: this.fmt(minBal), trMinCls: minBal < 0 ? 'mneg' : 'mpos', trGap: minBal < 0,
-      trResetPlan: () => set({ payMoves: {}, paySplits: {}, payMoveEdit: '' }),
+      trResetPlan: () => { try { this.lsSet('paymoves', '{}'); this.lsSet('paysplits', '{}'); } catch (e) {} set({ payMoves: {}, paySplits: {}, payMoveEdit: '' }); },
       exportBdds: () => { const rows = []; for (const dd of days) { if (!dd.hasItems) { rows.push([dd.key, dd.day + ' ' + dd.wd, '', '', '', dd.bal]); continue; } for (const it of dd.items) rows.push([dd.key, dd.day + ' ' + dd.wd, it.supplier, it.material, it.amount, dd.bal]); } this.downloadCsv('bdds-30-dney.csv', ['Дата', 'День', 'Получатель', 'Сырьё', 'Сумма ₽', 'Остаток на конец дня ₽'], rows); },
-      printBdds: () => { try { document.body.classList.add('pbdds'); setTimeout(() => { window.print(); setTimeout(() => document.body.classList.remove('pbdds'), 400); }, 60); } catch (e) {} },
+      exportBddsXlsx: () => this.exportBddsExcel(days, { totalOut, minBal, overdueSum, cashStart: Number(S.cashStart) || 0 }),
+      printBdds: () => this.printBddsDoc(days, { totalOut, minBal, overdueSum, cashStart: Number(S.cashStart) || 0 }),
+      ...this.splitDialogVals(),
     };
   }
+  // ===== Диалог разбиения платежа на транши (даты + суммы) =====
+  openSplitDialog(x) {
+    const existing = (this.state.paySplits || {})[x.id];
+    const base = x.date || this.ymd(new Date());
+    let parts;
+    if (Array.isArray(existing) && existing.length) parts = existing.map(p => ({ date: p.date || base, amount: Math.round(Number(p.amount) || 0) }));
+    else { const due = Math.round(x.due || 0); const d15 = this.ymd(new Date(this.parseISO(base).getTime() + 15 * 86400000)); const d30 = this.ymd(new Date(this.parseISO(base).getTime() + 30 * 86400000)); parts = [{ date: base, amount: this.excelRound(due * 0.3, 0) }, { date: d15, amount: this.excelRound(due * 0.4, 0) }, { date: d30, amount: due - this.excelRound(due * 0.3, 0) - this.excelRound(due * 0.4, 0) }]; }
+    this.setState({ paySplitDlg: { id: x.id, supplier: x.supplier || '—', material: x.material || '', base, due: Math.round(x.due || 0), parts }, payMoveEdit: '' });
+  }
+  splitSetPart(i, key, val) {
+    const d = this.state.paySplitDlg; if (!d) return;
+    let parts = d.parts.map((p, idx) => idx === i ? { ...p, [key]: (key === 'amount' ? this.impNum(val) : val) } : p);
+    // авто-остаток: при правке суммы любого транша (кроме последнего) последний абсорбирует остаток → «остаток уменьшается поэтапно»
+    if (key === 'amount' && d.parts.length > 1 && i !== d.parts.length - 1) {
+      const before = parts.slice(0, -1).reduce((s, p) => s + (Number(p.amount) || 0), 0);
+      const rem = Math.max(0, Math.round(d.due - before));
+      parts = parts.map((p, idx) => idx === parts.length - 1 ? { ...p, amount: rem } : p);
+    }
+    this.setState({ paySplitDlg: { ...d, parts }, paySplitErr: '' });
+  }
+  splitAddPart() { const d = this.state.paySplitDlg; if (!d) return; const last = d.parts[d.parts.length - 1] || { date: d.base, amount: 0 }; const nd = this.ymd(new Date(this.parseISO(last.date || d.base).getTime() + 15 * 86400000)); const sum = d.parts.reduce((s, p) => s + (Number(p.amount) || 0), 0); const rem = Math.max(0, d.due - sum); this.setState({ paySplitDlg: { ...d, parts: [...d.parts, { date: nd, amount: rem }] } }); }
+  splitDelPart(i) { const d = this.state.paySplitDlg; if (!d || d.parts.length <= 1) return; this.setState({ paySplitDlg: { ...d, parts: d.parts.filter((_, idx) => idx !== i) } }); }
+  splitDistribute() { const d = this.state.paySplitDlg; if (!d) return; const n = d.parts.length; if (!n) return; const each = Math.floor(d.due / n); const parts = d.parts.map((p, i) => ({ ...p, amount: i === n - 1 ? (d.due - each * (n - 1)) : each })); this.setState({ paySplitDlg: { ...d, parts } }); }
+  splitAutoLast() { const d = this.state.paySplitDlg; if (!d || d.parts.length < 1) return; const n = d.parts.length; const before = d.parts.slice(0, n - 1).reduce((s, p) => s + (Number(p.amount) || 0), 0); const parts = d.parts.map((p, i) => i === n - 1 ? { ...p, amount: Math.max(0, d.due - before) } : p); this.setState({ paySplitDlg: { ...d, parts } }); }
+  saveSplitDialog() {
+    const d = this.state.paySplitDlg; if (!d) return;
+    const parts = d.parts.filter(p => (Number(p.amount) || 0) > 0 && p.date).map(p => ({ date: p.date, amount: Math.round(Number(p.amount) || 0) })).sort((a, b) => (a.date < b.date ? -1 : 1));
+    if (!parts.length) { this.setState({ paySplitErr: 'Добавьте хотя бы один транш с суммой и датой.' }); return; }
+    const next = { ...(this.state.paySplits || {}) };
+    if (parts.length === 1) delete next[d.id]; else next[d.id] = parts;
+    try { this.lsSet('paysplits', JSON.stringify(next)); } catch (e) {}
+    this.setState({ paySplits: next, paySplitDlg: null, paySplitErr: '' });
+    this.postSystemNote('📅 Платёж «' + d.supplier + '» разбит на ' + parts.length + ' транш(а/ей): ' + parts.map(p => this.dmFull(p.date) + ' — ' + this.fmt(p.amount) + ' ₽').join('; '), this.state.currentUser ? this.state.currentUser.name : '—');
+  }
+  splitDialogVals() {
+    const d = this.state.paySplitDlg;
+    if (!d) return { splitOpen: false };
+    const sum = d.parts.reduce((s, p) => s + (Number(p.amount) || 0), 0);
+    const diff = d.due - sum;
+    const rows = d.parts.map((p, i) => ({ idx: i + 1, date: p.date || '', amount: p.amount || 0, onDate: (e) => this.splitSetPart(i, 'date', e.target.value), onAmount: (e) => this.splitSetPart(i, 'amount', e.target.value), del: () => this.splitDelPart(i), canDel: d.parts.length > 1 }));
+    return {
+      splitOpen: true, splitSupplier: d.supplier, splitMaterial: d.material, splitDue: this.fmt(d.due),
+      splitRows: rows, splitSum: this.fmt(Math.round(sum)), splitDiff: this.fmt(Math.round(Math.abs(diff))),
+      splitBalanced: Math.abs(diff) < 1, splitNotBalanced: Math.abs(diff) >= 1,
+      splitDiffLabel: diff > 0 ? 'не распределено' : (diff < 0 ? 'превышение суммы' : 'распределено полностью'),
+      splitDiffCls: Math.abs(diff) < 1 ? 'splitok' : (diff < 0 ? 'splitover' : 'splitwarn'),
+      splitAddPart: () => this.splitAddPart(), splitDistribute: () => this.splitDistribute(), splitAutoLast: () => this.splitAutoLast(),
+      splitSave: () => this.saveSplitDialog(), splitCancel: () => this.setState({ paySplitDlg: null, paySplitErr: '' }),
+      splitErr: this.state.paySplitErr || '', splitHasErr: !!this.state.paySplitErr,
+    };
+  }
+  // Печать БДДС в отдельном чистом окне (надёжный PDF через «Печать → Сохранить как PDF»)
+  printBddsDoc(days, kpi) {
+    const co = this.co ? this.co().name : 'Shtark';
+    const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    let rows = '';
+    for (const dd of days) {
+      if (!dd.hasItems) { rows += '<tr class="d"><td>' + esc(dd.day + ' ' + dd.wd) + '</td><td></td><td></td><td class="r">—</td><td class="r' + (dd.gap ? ' g' : '') + '">' + esc(dd.bal) + ' ₽</td></tr>'; continue; }
+      dd.items.forEach((it, idx) => { rows += '<tr' + (it.over ? ' class="od"' : '') + '><td>' + (idx === 0 ? esc(dd.day + ' ' + dd.wd) : '') + '</td><td>' + esc(it.supplier) + '</td><td>' + esc(it.material) + '</td><td class="r">' + esc(it.amount) + ' ₽</td><td class="r' + (dd.gap ? ' g' : '') + '">' + (idx === 0 ? esc(dd.bal) + ' ₽' : '') + '</td></tr>'; });
+    }
+    const gen = new Date().toLocaleString('ru-RU');
+    const html = '<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>БДДС · 30 дней · ' + esc(co) + '</title><style>'
+      + '*{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#1a1a1a;margin:26px}h1{font-size:19px;margin:0 0 3px;color:#1F4E78}.sub{color:#666;font-size:12px;margin-bottom:14px}'
+      + '.kpi{display:flex;gap:26px;margin:10px 0 16px;flex-wrap:wrap}.kpi div{font-size:12px;color:#555}.kpi b{display:block;font-size:16px;color:#1F4E78;margin-top:2px}.kpi .neg{color:#c0322b}'
+      + 'table{width:100%;border-collapse:collapse;font-size:12px}th{background:#1F4E78;color:#fff;padding:7px 9px;text-align:left;font-weight:700}td{padding:6px 9px;border-bottom:1px solid #e2e2e2}.r{text-align:right;font-variant-numeric:tabular-nums}tr.d td{background:#f6f8fb;color:#666}tr.od td{background:#fdecea}.g{color:#c0322b;font-weight:700}'
+      + '@media print{body{margin:12mm}th{-webkit-print-color-adjust:exact;print-color-adjust:exact}}'
+      + '</style></head><body><h1>БДДС · платёжный календарь на 30 дней</h1><div class="sub">' + esc(co) + ' · сформировано ' + esc(gen) + '</div>'
+      + '<div class="kpi"><div>Остаток на счетах сегодня<b>' + this.fmt(kpi.cashStart) + ' ₽</b></div><div>Платежи за 30 дней<b>' + this.fmt(kpi.totalOut) + ' ₽</b></div><div>Мин. остаток (риск разрыва)<b class="' + (kpi.minBal < 0 ? 'neg' : '') + '">' + this.fmt(kpi.minBal) + ' ₽</b></div>' + (kpi.overdueSum > 0 ? '<div>Просрочено<b class="neg">' + this.fmt(kpi.overdueSum) + ' ₽</b></div>' : '') + '</div>'
+      + '<table><thead><tr><th>Дата</th><th>Получатель</th><th>Назначение / сырьё</th><th class="r">Сумма</th><th class="r">Остаток на конец дня</th></tr></thead><tbody>' + rows + '</tbody></table>'
+      + '<script>window.onload=function(){setTimeout(function(){window.print();},350);};<\/script></body></html>';
+    try {
+      const w = window.open('', '_blank');
+      if (!w) { this.pushRecalcToast && this.pushRecalcToast('⚠ Разрешите всплывающие окна для печати БДДС'); return; }
+      w.document.open(); w.document.write(html); w.document.close(); w.focus();
+    } catch (e) { this.pushRecalcToast && this.pushRecalcToast('Не удалось открыть окно печати'); }
+  }
+  // Экспорт БДДС в Excel (.xlsx, стиль Steel Blue/Navy, формулы SUM)
+  exportBddsExcel(days, kpi) {
+    if (!window.XLSX) { this.pushRecalcToast && this.pushRecalcToast('Библиотека Excel не загрузилась'); return; }
+    const XLSX = window.XLSX;
+    const headers = ['Дата', 'День', 'Получатель', 'Назначение / сырьё', 'Сумма платежа', 'Остаток на конец дня'];
+    const types = ['code', 'text', 'text', 'text', 'money', 'moneyu'];
+    const rows = [];
+    const num = (s) => this.impNum(s);
+    for (const dd of days) {
+      if (!dd.hasItems) { rows.push([this.dmFull(dd.key), dd.wd, '', '', 0, num(dd.bal)]); continue; }
+      dd.items.forEach((it, idx) => rows.push([idx === 0 ? this.dmFull(dd.key) : '', idx === 0 ? dd.wd : '', it.supplier, it.material, num(it.amount), idx === 0 ? num(dd.bal) : '']));
+    }
+    const total = ['ИТОГО платежей', '', '', '', rows.reduce((s, r) => s + (Number(r[4]) || 0), 0), ''];
+    const co = this.co ? this.co().name : 'Shtark';
+    const wb = XLSX.utils.book_new();
+    const ws = this.mgXlSheet('БДДС · 30 дней · ' + co, headers, types, rows, total);
+    XLSX.utils.book_append_sheet(wb, ws, 'БДДС 30 дней');
+    try { XLSX.writeFile(wb, 'bdds-30-dney.xlsx'); } catch (e) { this.pushRecalcToast && this.pushRecalcToast('Не удалось сохранить файл'); }
+  }
+  // Прикрепить файл счёта (PDF/Excel) к платежу в БДДС
+  async attachPayFile(id, file, ev) {
+    if (ev && ev.target) ev.target.value = '';
+    if (!id || !file) return;
+    try {
+      const fid = await this.archiveFile(file, { category: 'payment', category_label: 'Счёт к платежу (БДДС)', source: 'bdds_attach' });
+      if (!fid) { this.pushRecalcToast && this.pushRecalcToast('Не удалось сохранить файл'); return; }
+      const next = { ...(this.state.payFiles || {}) }; next[id] = { id: fid, name: file.name || 'Счёт' };
+      try { this.lsSet('payfiles', JSON.stringify(next)); } catch (e) {}
+      this.setState({ payFiles: next });
+      this.pushRecalcToast && this.pushRecalcToast('📎 Счёт прикреплён: ' + (file.name || ''));
+    } catch (e) { this.pushRecalcToast && this.pushRecalcToast('Ошибка вложения: ' + (e.message || e)); }
+  }
+  detachPayFile(id) { const next = { ...(this.state.payFiles || {}) }; delete next[id]; try { this.lsSet('payfiles', JSON.stringify(next)); } catch (e) {} this.setState({ payFiles: next }); }
   // ===== Продажи и дистрибуция ГП =====
   emptySale() { const prods = (this.data && this.data.products) ? this.data.products.map(p => p.name || p) : []; return { id: '', no: '', date: this.ymd(new Date()), client: '', product: prods[0] || '', qty: '', price: '', currency: 'RUB', rate: 1 }; }
   writeSales(next) {
