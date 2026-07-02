@@ -722,6 +722,7 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .btn.imp{background:#eef4fb;border:1px solid #cfe0f2;color:#1F4E78;font-weight:600}
 .btn.imp:hover{background:#e3eefb}
 .impmodal{max-width:720px}
+.impchip{display:inline-block;background:#eef4fb;border:1px solid #cfe0f2;color:#1F4E78;border-radius:6px;padding:4px 9px;font-size:11px;font-weight:700}
 .impdrop{border:2px dashed #cfe0f2;border-radius:13px;background:#f8fbff;padding:22px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;transition:all .15s ease}
 .impdrop.drag{border-color:#2A6FDB;background:#eaf2fe}
 .impdropic{font-size:30px}
@@ -782,6 +783,11 @@ tr.prlmuted .nm{text-decoration:line-through}
 .prdetgrid span{font-size:10.5px;color:#8a8782}
 .prdetgrid b{font-size:15px;font-family:'IBM Plex Mono',monospace;color:#1a2b3c}
 .prdetgrid b.bad{color:#c0322b}
+.prpaybox{margin:10px 0;border:1px solid #dbe6f5;border-radius:11px;background:#f7faff;padding:12px 14px;display:flex;flex-direction:column;gap:9px}
+.prpayrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.prpaylbl{font-size:11.5px;font-weight:800;color:#1F4E78;min-width:150px}
+.prpaylbl small{font-weight:600;color:#8a8782}
+.prstatussel{font-size:11.5px;font-weight:700;max-width:180px}
 .prdrill{border:none;background:none;color:#1F4E78;font-weight:700;cursor:pointer;font-size:12px;padding:0;text-decoration:underline}
 .impsumc{font-size:12px;text-align:right;color:#1F4E78;font-weight:600}
 .imptblfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;background:#fafafa;border-top:1px solid #f0ece6;flex-wrap:wrap}
@@ -2005,9 +2011,31 @@ a.wordmark:hover{opacity:.6}
 .baltotrow{margin-top:8px;font-size:14px;color:#25324a}
 .baltotrow b{color:#1F4E78;font-size:17px}
 .cppl{display:flex;flex-direction:column;gap:7px}
-.cpplrow{display:flex;gap:8px;align-items:center}
-.cpplrow .inp{flex:1}
-.cpplrow .w120{flex:0 0 120px}
+.cpplrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cpplrow .inp{flex:1;min-width:120px}
+.cpplrow .w120{flex:0 0 120px;min-width:100px}
+.cpplhd{display:none}
+.cpvat{display:inline-flex;align-items:center;gap:5px;border:1px solid #cfd8e6;background:#fff;color:#56534f;border-radius:7px;padding:5px 9px;cursor:pointer;font-size:11px;font-weight:700;white-space:nowrap}
+.cpvat .prchkbox{width:13px;height:13px;border:1.5px solid #b8c2d0;border-radius:3px;display:inline-block}
+.cpvat.on{background:#eef4fb;border-color:#1F4E78;color:#1F4E78}
+.cpvat.on .prchkbox{background:#1F4E78;border-color:#1F4E78;position:relative}
+.cpvat.on .prchkbox::after{content:'✓';color:#fff;font-size:10px;font-weight:800;position:absolute;top:-2px;left:1px}
+.cpplmeta{font-size:11px;color:#8a8782;min-width:110px;display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cptrend{font-weight:800;font-size:11px}
+.cptrend.up{color:#c0322b}.cptrend.down{color:#1a6b3f}.cptrend.flat{color:#8a8782}
+.cpdynwrap{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.cpdynline{display:grid;grid-template-columns:96px 1fr 120px 120px;gap:10px;align-items:center;font-size:12px}
+.cpdynline .cpdyndate{color:#56534f;font-family:'IBM Plex Mono',monospace;font-size:11px}
+.cpdynbarwrap{background:#eef2f7;border-radius:5px;height:20px;position:relative;overflow:hidden}
+.cpdynbar{height:100%;background:#1F4E78;border-radius:5px;min-width:4px;display:flex;align-items:center;padding-left:7px;color:#fff;font-size:10.5px;font-weight:700;font-family:'IBM Plex Mono',monospace;white-space:nowrap}
+.cpdynbar.up{background:#c0322b}.cpdynbar.down{background:#1a6b3f}
+.cpdelta{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#8a8782}
+.cpdelta.up{color:#c0322b}.cpdelta.down{color:#1a6b3f}.cpdelta.flat{color:#8a8782}
+.cpdynsum{font-weight:800}.cpdynsum.up{color:#c0322b}.cpdynsum.down{color:#1a6b3f}.cpdynsum.flat{color:#8a8782}
+.cpdynkpis{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 10px}
+.cpdynkpi{border:1px solid #e6eaf0;border-radius:9px;padding:7px 12px;background:#fbfcfe}
+.cpdynkpi .k{font-size:10px;color:#8a8782;text-transform:uppercase;letter-spacing:.03em}
+.cpdynkpi .v{font-size:15px;font-weight:800;color:#1a2b3c;font-family:'IBM Plex Mono',monospace}
 .rectbl .inp{padding:6px 8px}
 .rectbl .w120{width:100px}
 .rectbl .w90{width:78px}
@@ -2250,7 +2278,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
 <sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
-<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-02 · r21</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
+<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-02 · r22</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava" title="{{ u.tip }}" onContextMenu="{{ u.onCtx }}">{{ u.avatar }}<i class="ondot"></i><sc-if value="{{ u.hasStars }}" hint-placeholder-val=""><span class="onstars" title="KPI {{ u.starsLabel }}">{{ u.starsLabel }}</span></sc-if></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div><button class="ratebtn onrate" onClick="{{ goRating }}"><span>🏆</span> Рейтинг по задачам</button></div></sc-if>
@@ -3498,7 +3526,7 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ prIsRub }}" hint-placeholder-val="x"><div class="fg"><label>Курс начисления (для курс. разниц)</label><input class="inp num" type="number" value="{{ prRateAccrual }}" onInput="{{ onPrRateAccrual }}"></div></sc-if>
 <div class="fg"><label>Дата документа</label><input class="inp" type="date" value="{{ prDate }}" onInput="{{ onPrDate }}"></div>
 <div class="fg"><label>Вид оплаты</label><select class="sel" value="{{ prPayType }}" onChange="{{ onPrPayType }}"><sc-for list="{{ prPayTypeOpts }}" as="t" hint-placeholder-count="4"><option value="{{ t.v }}">{{ t.label }}</option></sc-for></select></div>
-<div class="fg"><label>Контрольный срок оплаты</label><input class="inp" type="date" value="{{ prDueDate }}" onInput="{{ onPrDueDate }}"></div>
+<div class="fg"><label>Контрольный срок оплаты</label><input class="inp" type="date" value="{{ prDueDate }}" onInput="{{ onPrDueDate }}"><div class="prcpinfo">🗓 {{ prDueAuto }}<sc-if value="{{ prDueIsManual }}" hint-placeholder-val=""> · задан вручную · <button class="tlink" onClick="{{ prDueReset }}">пересчитать по условиям</button></sc-if></div></div>
 <sc-if value="{{ prShowPartial }}" hint-placeholder-val=""><div class="fg"><label>Предоплата, %</label><input class="inp num" type="number" value="{{ prPrepayPct }}" onInput="{{ onPrPrepayPct }}"></div></sc-if>
 <sc-if value="{{ prShowTerm }}" hint-placeholder-val=""><div class="fg"><label>Отсрочка, дней</label><input class="inp num" type="number" value="{{ prTermDays }}" onInput="{{ onPrTermDays }}"></div></sc-if>
 <div class="fg"><label>Согласующий</label><select class="sel" value="{{ prApprover }}" onChange="{{ onPrApprover }}"><option value="">— выберите —</option><sc-for list="{{ prApproverOpts }}" as="u" hint-placeholder-count="3"><option value="{{ u.v }}">{{ u.label }}</option></sc-for></select></div>
@@ -3518,7 +3546,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="prflt"><div class="field"><span class="lbl">Период с</span><input class="inp" type="date" value="{{ prFltFrom }}" onInput="{{ onPrFltFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp" type="date" value="{{ prFltTo }}" onInput="{{ onPrFltTo }}"></div><div class="field grow"><span class="lbl">Поставщик</span><input class="inp" value="{{ prFltSup }}" onInput="{{ onPrFltSup }}" placeholder="фильтр по названию…"></div><div class="field"><span class="lbl">Статус</span><select class="sel" value="{{ prFltStatus }}" onChange="{{ onPrFltStatus }}"><sc-for list="{{ prStatusOpts }}" as="o" hint-placeholder-count="4"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></div><sc-if value="{{ prFltActive }}" hint-placeholder-val=""><button class="btn" onClick="{{ prFltReset }}">Сбросить фильтр</button></sc-if></div>
 <sc-if value="{{ prEmpty }}" hint-placeholder-val=""><div class="hint">Заявок по заданным условиям нет.</div></sc-if>
 <div class="scroll"><table><thead><tr><th class="l">Тип</th><th class="l">Контрагент</th><th class="l">Счёт №</th><th>Сумма ₽</th><th class="l">Оплата</th><th class="l">План. дата</th><th class="l">Статус</th><th class="l">Действия</th></tr></thead>
-<tbody><sc-for list="{{ prRows }}" as="p" hint-placeholder-count="2"><tr class="{{ p.rowCls }}"><td class="l"><span class="{{ p.dirCls }}">{{ p.dir }}</span></td><td class="l nm"><button class="prdrill" onClick="{{ p.open }}">{{ p.supplier }}</button></td><td class="l mono">{{ p.invNo }} <sc-if value="{{ p.hasFile }}" hint-placeholder-val=""><button class="prfile" onClick="{{ p.openFile }}">📄 счёт</button></sc-if></td><td class="mono">{{ p.amount }}</td><td class="l"><span class="{{ p.barCls }}"><i style="width:{{ p.pctW }}"></i></span> <span class="mono">{{ p.pctW }}</span></td><td class="l">{{ p.planned }}</td><td class="l"><span class="tcstatus {{ p.statusCls }}">{{ p.status }}</span></td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ p.open }}">Открыть</button><button class="ulink" onClick="{{ p.edit }}">✎</button><sc-if value="{{ p.canSend }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.send }}">На согл.</button></sc-if><sc-if value="{{ p.canApprove }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.approve }}">Согл.</button><button class="ulink del" onClick="{{ p.reject }}">Откл.</button></sc-if><sc-if value="{{ p.canPay }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.pay }}">Оплачено</button></sc-if><sc-if value="{{ p.canSoftDel }}" hint-placeholder-val=""><button class="ulink del" onClick="{{ p.softDel }}">На удаление</button></sc-if><sc-if value="{{ p.isTrash }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.restore }}">Восстановить</button></sc-if><sc-if value="{{ p.canRemove }}" hint-placeholder-val=""><button class="ulink del" onClick="{{ p.remove }}">×</button></sc-if></div></td></tr></sc-for></tbody></table></div>
+<tbody><sc-for list="{{ prRows }}" as="p" hint-placeholder-count="2"><tr class="{{ p.rowCls }}"><td class="l"><span class="{{ p.dirCls }}">{{ p.dir }}</span></td><td class="l nm"><button class="prdrill" onClick="{{ p.open }}">{{ p.supplier }}</button></td><td class="l mono">{{ p.invNo }} <sc-if value="{{ p.hasFile }}" hint-placeholder-val=""><button class="prfile" onClick="{{ p.openFile }}">📄 счёт</button></sc-if></td><td class="mono">{{ p.amount }}</td><td class="l"><span class="{{ p.barCls }}"><i style="width:{{ p.pctW }}"></i></span> <span class="mono">{{ p.pctW }}</span></td><td class="l">{{ p.planned }}</td><td class="l"><sc-if value="{{ p.canStatus }}" hint-placeholder-val="{{ true }}"><select class="sel prstatussel" value="{{ p.statusSel }}" onChange="{{ p.onStatus }}"><sc-for list="{{ p.statusOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></sc-if><sc-if value="{{ p.canStatus }}" hint-placeholder-val="x"><span class="tcstatus {{ p.statusCls }}">{{ p.statusLabel }}</span></sc-if></td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ p.open }}">Открыть</button><button class="ulink" onClick="{{ p.edit }}">✎</button><sc-if value="{{ p.canSend }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.send }}">На согл.</button></sc-if><sc-if value="{{ p.canSoftDel }}" hint-placeholder-val=""><button class="ulink del" onClick="{{ p.softDel }}">На удаление</button></sc-if><sc-if value="{{ p.isTrash }}" hint-placeholder-val=""><button class="ulink" onClick="{{ p.restore }}">Восстановить</button></sc-if><sc-if value="{{ p.canRemove }}" hint-placeholder-val=""><button class="ulink del" onClick="{{ p.remove }}">×</button></sc-if></div></td></tr></sc-for></tbody></table></div>
 <div class="hint">Итого по фильтру: заявок на <b>{{ prSumTotal }} ₽</b> · к доплате <b>{{ prSumRemain }} ₽</b>. Красным выделены просроченные. «Открыть» / клик по поставщику — карточка заявки с номенклатурой, вложенным счётом и графиком оплат. «На удаление» помечает заявку без физического удаления (её можно восстановить).</div>
 </div>
 <sc-if value="{{ prDetailOpen }}" hint-placeholder-val=""><div class="dlmapbg" onClick="{{ prDetailClose }}"></div><div class="dlmap impmodal">
@@ -3529,6 +3557,7 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ prDetailHasLines }}" hint-placeholder-val=""><div class="sec" style="font-size:13px;margin-top:10px">Номенклатура счёта</div><div class="scroll"><table class="rectbl"><thead><tr><th class="l">Наименование</th><th>Кол-во</th><th>Цена</th><th>К оплате ₽</th></tr></thead><tbody><sc-for list="{{ prDetailLines }}" as="l" hint-placeholder-count="2"><tr class="{{ l.rowCls }}"><td class="l nm">{{ l.name }}</td><td class="mono">{{ l.qty }}</td><td class="mono">{{ l.price }}</td><td class="mono">{{ l.pay }}</td></tr></sc-for></tbody></table></div></sc-if>
 <sc-if value="{{ prDetailHasSched }}" hint-placeholder-val=""><div class="sec" style="font-size:13px;margin-top:10px">График оплат · отметьте фактические платежи</div><div class="scroll"><table class="rectbl"><thead><tr><th></th><th class="l">Дата</th><th>Сумма ₽</th><th class="l">Назначение</th></tr></thead><tbody><sc-for list="{{ prDetailSched }}" as="s" hint-placeholder-count="2"><tr><td><button class="{{ s.payCls }}" onClick="{{ s.toggle }}"></button></td><td class="l">{{ s.date }}</td><td class="mono">{{ s.amount }}</td><td class="l">{{ s.kind }}</td></tr></sc-for></tbody></table></div></sc-if>
 <div class="dlmaps">Инициатор: {{ prDetailInitiator }} · Согласующий: {{ prDetailApprover }}</div>
+<sc-if value="{{ prDetailCanStatus }}" hint-placeholder-val=""><div class="prpaybox"><div class="prpayrow"><span class="prpaylbl">Статус согласования</span><select class="sel" value="{{ prDetailStatusSel }}" onChange="{{ onPrDetailStatus }}"><sc-for list="{{ prDetailStatusOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></div><sc-if value="{{ prDetailCanPay }}" hint-placeholder-val=""><div class="prpayrow"><span class="prpaylbl">Внести оплату, ₽ <small>(остаток {{ prPayRemainHint }} ₽)</small></span><input class="inp num w150" type="number" value="{{ prPayInput }}" onInput="{{ onPrPayInput }}" placeholder="сумма платежа"><button class="btn dark" onClick="{{ prDetailAddPay }}">💸 Записать оплату</button></div><sc-if value="{{ prPayHasErr }}" hint-placeholder-val=""><div class="banner err">{{ prPayErr }}</div></sc-if><div class="hint">Оплата полностью или частями. Остаток к оплате и статус («К оплате» → «Частично оплачено» → «Оплачено») пересчитываются автоматически.</div></sc-if></div></sc-if>
 <div class="dlmapfoot"><sc-if value="{{ prDetailCanPayFull }}" hint-placeholder-val=""><button class="btn dark" onClick="{{ prDetailPayFull }}">✓ Оплачено полностью</button></sc-if><sc-if value="{{ prDetailCanEdit }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailEdit }}">✎ Корректировать</button></sc-if><sc-if value="{{ prDetailCanSoftDel }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailSoftDel }}">🗑 На удаление</button></sc-if><sc-if value="{{ prDetailIsTrash }}" hint-placeholder-val=""><button class="btn" onClick="{{ prDetailRestore }}">Восстановить</button></sc-if><button class="btn" onClick="{{ prDetailClose }}">Закрыть</button></div>
 </div></sc-if>
 <div class="card"><div class="sec">💰 Остатки на начало дня</div>
@@ -3637,8 +3666,11 @@ window.dispatchEvent(new Event('fbready'));
 <div class="fg"><label>Корр. счёт</label><input class="inp" value="{{ cdCorr }}" onInput="{{ onCdCorr }}" placeholder="30101810400000000225"></div>
 <div class="fg"><label>Расчётный счёт</label><input class="inp" value="{{ cdAcc }}" onInput="{{ onCdAcc }}" placeholder="40702810..."></div>
 </div>
-<div class="sec2cp">Прайс-лист · что и по какой цене покупаем</div>
-<div class="cppl"><sc-for list="{{ cpPriceRows }}" as="p" hint-placeholder-count="2"><div class="cpplrow"><input class="inp" value="{{ p.material }}" onInput="{{ p.onMat }}" placeholder="Наименование сырья"><input class="inp num w120" type="number" value="{{ p.price }}" onInput="{{ p.onPrice }}" placeholder="Цена"><button class="tlink del" onClick="{{ p.del }}">✕</button></div></sc-for></div>
+<div class="sec2cp">Прайс-лист · номенклатура из справочника, цены с НДС</div>
+<div class="unote">Позиции подбираются из справочника номенклатуры по <b>наименованию</b> или <b>артикулу</b> (либо вводится новая номенклатура). Цена указывается <b>с НДС</b>. При изменении цены автоматически фиксируются дата ввода и история — динамика показана ниже в блоке «Динамика цен на сырьё».</div>
+<datalist id="cpNomNames"><sc-for list="{{ cpNomNameOpts }}" as="n" hint-placeholder-count="0"><option value="{{ n }}"></option></sc-for></datalist>
+<datalist id="cpNomArts"><sc-for list="{{ cpNomArtOpts }}" as="a" hint-placeholder-count="0"><option value="{{ a }}"></option></sc-for></datalist>
+<div class="cppl"><sc-for list="{{ cpPriceRows }}" as="p" hint-placeholder-count="2"><div class="cpplrow"><input class="inp" list="cpNomNames" value="{{ p.material }}" onInput="{{ p.onMat }}" placeholder="Наименование сырья (справочник или новое)"><input class="inp w120" list="cpNomArts" value="{{ p.article }}" onInput="{{ p.onArt }}" placeholder="артикул"><input class="inp num w120" type="number" value="{{ p.price }}" onInput="{{ p.onPrice }}" placeholder="Цена ₽"><button class="{{ p.vatCls }}" onClick="{{ p.toggleVat }}"><span class="prchkbox"></span>с НДС</button><span class="cpplmeta"><sc-if value="{{ p.hasDate }}" hint-placeholder-val="">от {{ p.priceDate }}</sc-if><sc-if value="{{ p.hasTrend }}" hint-placeholder-val=""><span class="{{ p.trendCls }}">{{ p.trendArrow }} {{ p.trendPct }}</span></sc-if><span>{{ p.histN }}</span></span><button class="tlink del" onClick="{{ p.del }}">✕</button></div></sc-for></div>
 <div class="genrow"><button class="btn" onClick="{{ addPrice }}">+ позиция прайса</button></div>
 <div class="secrow"><div class="sec2cp">📄 Договоры · {{ cpContractCount }}</div><button class="btn" onClick="{{ cpAddContract }}">+ Добавить договор</button></div>
 <sc-if value="{{ cpHasContracts }}" hint-placeholder-val=""><div class="scroll"><table class="rectbl"><thead><tr><th class="l">№ договора</th><th class="l">Дата</th><th class="l">Валюта</th><th class="l">Условия оплаты</th><th class="l">Условия поставки</th><th class="l">Срок</th><th class="l"></th></tr></thead><tbody><sc-for list="{{ cpContractRows }}" as="ct" hint-placeholder-count="1"><tr><td class="l nm">{{ ct.no }}</td><td class="l">{{ ct.date }}</td><td class="l mono">{{ ct.curSym }}</td><td class="l">{{ ct.payTerms }}</td><td class="l">{{ ct.deliveryTerms }}</td><td class="l">{{ ct.validTill }}</td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ ct.edit }}">Изменить</button><button class="ulink del" onClick="{{ ct.del }}">Удалить</button></div></td></tr></sc-for></tbody></table></div></sc-if>
@@ -3646,11 +3678,34 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ cpHasErr }}" hint-placeholder-val=""><div class="banner err">{{ cpErr }}</div></sc-if>
 <div class="uactions"><button class="btn dark" onClick="{{ saveCp }}">Сохранить контрагента</button><sc-if value="{{ cpHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelCp }}">Отмена</button></sc-if></div>
 </div>
-<div class="card"><div class="sec">Контрагенты · {{ cpCount }}</div>
-<sc-if value="{{ cpEmpty }}" hint-placeholder-val=""><div class="hint">Пока нет контрагентов. Добавьте первого через форму выше.</div></sc-if>
+<div class="card"><div class="secrow"><div class="sec">Контрагенты · {{ cpCount }}</div><div class="genrow"><label class="btn imp"><span>📥</span> Загрузить справочник (Excel)<input type="file" accept=".xlsx,.xls,.csv" style="display:none" onChange="{{ onCpImportFile }}"></label></div></div>
+<div class="unote">Кнопка «Загрузить справочник» читает выгрузку контрагентов из 1С (Excel/CSV). Система <b>автоматически распознаёт колонки</b> (Контрагент, ИНН, КПП, Юр/Физ, Страна, ОКПО, адрес, доп. информация) и заполняет карточки. Дубли определяются по ИНН/названию — существующие обновляются, новые добавляются.</div>
+<sc-if value="{{ cpImpHasDone }}" hint-placeholder-val=""><div class="banner ok">✓ {{ cpImpDone }}</div></sc-if>
+<sc-if value="{{ cpImpHasErr }}" hint-placeholder-val=""><div class="banner err">{{ cpImpErr }}</div></sc-if>
+<sc-if value="{{ cpImpBusy }}" hint-placeholder-val=""><div class="hint">Чтение файла и распознавание колонок…</div></sc-if>
+<sc-if value="{{ cpEmpty }}" hint-placeholder-val=""><div class="hint">Пока нет контрагентов. Добавьте первого через форму выше или загрузите справочник из Excel.</div></sc-if>
 <div class="scroll"><table><thead><tr><th class="l">Название</th><th class="l">ИНН</th><th class="l">Условия</th><th>Лимит</th><th class="l">Контакты</th><th>Прайс</th><th class="l">Действия</th></tr></thead>
 <tbody><sc-for list="{{ cpRows }}" as="c" hint-placeholder-count="2"><tr><td class="l nm">{{ c.name }}</td><td class="l mono">{{ c.inn }}</td><td class="l">{{ c.terms }}</td><td class="mono">{{ c.limit }}</td><td class="l">{{ c.contacts }}</td><td class="mono">{{ c.priceCount }}</td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ c.edit }}">Изменить</button><button class="ulink del" onClick="{{ c.remove }}">Удалить</button></div></td></tr></sc-for></tbody></table></div>
 </div>
+<div class="card"><div class="sec">📈 Динамика цен на сырьё · как менялись цены при вводе прайса</div>
+<div class="unote">История цен собирается из прайс-листов контрагентов (при каждом изменении цены) и журнала поступлений. Выберите номенклатуру, чтобы увидеть, как росла или снижалась цена во времени — по всем поставщикам.</div>
+<div class="toolbar"><div class="field grow"><span class="lbl">Номенклатура</span><select class="sel" value="{{ cpDynMat }}" onChange="{{ onCpDynMat }}"><option value="">— выберите сырьё —</option><sc-for list="{{ cpDynMatOpts }}" as="m" hint-placeholder-count="3"><option value="{{ m.v }}">{{ m.label }}</option></sc-for></select></div></div>
+<sc-if value="{{ cpDynHas }}" hint-placeholder-val="">
+<div class="cpdynkpis"><div class="cpdynkpi"><div class="k">Первая цена</div><div class="v">{{ cpDynFirst }} ₽</div></div><div class="cpdynkpi"><div class="k">Последняя</div><div class="v">{{ cpDynLast }} ₽</div></div><div class="cpdynkpi"><div class="k">Мин / Макс</div><div class="v">{{ cpDynMinV }} / {{ cpDynMaxV }}</div></div><div class="cpdynkpi"><div class="k">Изменение</div><div class="v {{ cpDynChangeCls }}">{{ cpDynChange }}</div></div><div class="cpdynkpi"><div class="k">Точек</div><div class="v">{{ cpDynCount }}</div></div></div>
+<div class="cpdynwrap"><sc-for list="{{ cpDynRows }}" as="r" hint-placeholder-count="4"><div class="cpdynline"><span class="cpdyndate">{{ r.date }}</span><div class="cpdynbarwrap"><div class="{{ r.barCls }}" style="width:{{ r.barW }}">{{ r.price }} ₽</div></div><span class="hint">{{ r.cp }} · {{ r.vat }} · {{ r.src }}</span><span class="{{ r.deltaCls }}">{{ r.delta }}</span></div></sc-for></div>
+</sc-if>
+<sc-if value="{{ cpDynHas }}" hint-placeholder-val="x"><div class="hint">По этой номенклатуре ещё нет истории цен. История появляется при вводе/изменении цены в прайс-листе контрагента и при проведении поступлений ТМЦ.</div></sc-if>
+</div>
+<sc-if value="{{ cpImportOpen }}" hint-placeholder-val=""><div class="dlmapbg" onClick="{{ cpImpCancel }}"></div><div class="dlmap impmodal">
+<div class="dlmaph">📥 Импорт справочника контрагентов</div>
+<div class="dlmaps">Файл: <b>{{ cpImpFileName }}</b> · распознано записей: <b>{{ cpImpTotal }}</b> · новых: <b>{{ cpImpAddN }}</b>, обновление: <b>{{ cpImpUpdN }}</b></div>
+<div class="sec2cp">Распознанные колонки (система обучена читать этот формат)</div>
+<div class="genrow"><sc-for list="{{ cpImpCols }}" as="c" hint-placeholder-count="3"><span class="impchip">{{ c.col }} → {{ c.field }}</span></sc-for></div>
+<div class="sec2cp">Предпросмотр · первые записи</div>
+<div class="scroll"><table class="rectbl"><thead><tr><th class="l">Название</th><th class="l">ИНН</th><th class="l">КПП</th><th class="l">Юр/Физ</th><th class="l">Страна</th></tr></thead><tbody><sc-for list="{{ cpImpPreview }}" as="r" hint-placeholder-count="4"><tr><td class="l nm">{{ r.name }}</td><td class="l mono">{{ r.inn }}</td><td class="l mono">{{ r.kpp }}</td><td class="l">{{ r.type }}</td><td class="l">{{ r.country }}</td></tr></sc-for></tbody></table></div>
+<sc-if value="{{ cpImpHasErr }}" hint-placeholder-val=""><div class="banner err">{{ cpImpErr }}</div></sc-if>
+<div class="dlmapfoot"><button class="btn dark" onClick="{{ cpImpConfirm }}">✓ Импортировать в справочник</button><button class="btn" onClick="{{ cpImpCancel }}">Отмена</button></div>
+</div></sc-if>
 <sc-if value="{{ contractOpen }}" hint-placeholder-val=""><div class="dlmapbg" onClick="{{ cancelContract }}"></div><div class="dlmap splitmodal">
 <div class="dlmaph">{{ contractTitle }}</div>
 <div class="dlmaps">Контрагент: <b>{{ contractCpName }}</b></div>
@@ -8889,6 +8944,7 @@ class Component extends DCLogic {
   buildIndex() {
     const d = this.data;
     this.vat = 0.22;
+    this._cpNomCache = null;
     this.rawByName = new Map(d.raw_materials.map(m => [this.norm(m.name), m]));
     this.semiByName = new Map(d.semi_products.map(s => [this.norm(s.name), s]));
     this.recByOwner = new Map();
@@ -9634,18 +9690,20 @@ class Component extends DCLogic {
       const cs = cp.contracts || [];
       if (cs.length === 1) this._applyContract(d, cs[0]);
     } else { d.cpId = ''; d.contractId = ''; }
+    this.prRecomputeDue(d);
     this.setState({ prDraft: d, prErr: '' });
   }
   _applyContract(d, c) {
     if (!c) return; d.contractId = c.id; d.contractNo = c.no;
     if (c.currency && c.currency !== d.currency) { d.currency = c.currency; d.rate = this.cbRate(c.currency); d.rateAccrual = this.cbRate(c.currency); }
     if (c.payTerms && !d.purpose) d.purpose = 'По договору № ' + c.no + ' · ' + c.payTerms;
+    this.prRecomputeDue(d);
   }
   prPickContract(ctId) {
     const d = { ...(this.state.prDraft || this.emptyPayReq()) };
     const cp = (this.state.cparties || []).find(x => x.id === d.cpId);
     const c = cp && (cp.contracts || []).find(x => x.id === ctId);
-    if (c) this._applyContract(d, c); else d.contractId = '';
+    if (c) this._applyContract(d, c); else { d.contractId = ''; this.prRecomputeDue(d); }
     this.setState({ prDraft: d, prErr: '' });
   }
   emptyPayReq() { const cu = this.state.currentUser; return { id: '', direction: 'out', initiator: cu ? cu.name : '', initiatorId: cu ? cu.id : '', approverId: '', supplier: '', currency: 'RUB', rateMode: 'cb', rate: 0, rateAccrual: 0, amountCur: '', amount: '', date: this.ymd(new Date()), dueDate: this.ymd(new Date()), payType: 'full', prepayPct: 50, termDays: 0, schedule: [], purpose: '', status: 'Черновик', track: true, lines: [], fileRef: null, invNo: '', invDate: '', invTotal: 0, vatRate: 22, paidAmount: 0 }; }
@@ -9840,6 +9898,84 @@ class Component extends DCLogic {
   }
   prSoftDelete(id) { const pr = (this.state.payreqs || []).find(x => x.id === id); if (!pr) return; this.writePayreqs((this.state.payreqs || []).map(x => x.id === id ? { ...x, status: 'К удалению' } : x)); this.postSystemNote('🗑 Заявка на оплату «' + (pr.supplier || '') + '» помечена НА УДАЛЕНИЕ.', this.state.currentUser ? this.state.currentUser.name : '—'); }
   prRestore(id) { this.writePayreqs((this.state.payreqs || []).map(x => x.id === id ? { ...x, status: 'Черновик' } : x)); }
+  // ── Статус для согласующего: выпадающий список «На согласовании / К оплате / Оплачено» ──
+  // Отображаемая метка статуса (внутренние значения остаются прежними для совместимости данных)
+  prStatusLabel(s) { return ({ 'Согласован': 'К оплате', 'Оплачен': 'Оплачено', 'Частично оплачен': 'Частично оплачено' })[s] || s || '—'; }
+  // Опции выпадающего списка статуса, доступные согласующему
+  prStatusSelOpts(pr) {
+    const cur = pr.status;
+    const out = ['На согласовании', 'К оплате', 'Оплачено'];
+    if (cur === 'Частично оплачен') out.splice(2, 0, 'Частично оплачено');
+    if (cur === 'Отклонён' && out.indexOf('Отклонён') < 0) out.push('Отклонён');
+    return out;
+  }
+  // Смена статуса из выпадающего списка. КЛЮЧЕВОЕ: «К оплате» НЕ трогает оплату
+  // (исправление бага, когда «согласован» сразу переходил в «оплачен»).
+  prSetStatusByLabel(id, label) {
+    const pr = (this.state.payreqs || []).find(x => x.id === id); if (!pr) return;
+    if (label === this.prStatusLabel(pr.status)) return; // без изменений
+    if (label === 'Оплачено') { this.prPayFull(id); return; }
+    if (label === 'Отклонён') { this.setPayReqStatus(id, 'Отклонён'); return; }
+    if (label === 'К оплате') {
+      // согласование заявки — только смена статуса, оплаченная сумма не меняется
+      this.writePayreqs((this.state.payreqs || []).map(x => x.id === id ? { ...x, status: 'Согласован' } : x));
+      this.prStatusNote(pr, 'Согласован'); return;
+    }
+    if (label === 'На согласовании') {
+      this.writePayreqs((this.state.payreqs || []).map(x => x.id === id ? { ...x, status: 'На согласовании' } : x));
+      this.prStatusNote(pr, 'На согласовании'); return;
+    }
+  }
+  prStatusNote(pr, status) {
+    const cu = this.state.currentUser, who = cu ? cu.name : '—';
+    this.postSystemNote('🧾 Платёж «' + pr.supplier + '» (' + this.fmt(pr.amount) + ' ₽) → «' + this.prStatusLabel(status) + '» (' + who + ')', who);
+    const aya = '🤖 АЯ: статус платежа «' + pr.supplier + '» изменён на «' + this.prStatusLabel(status) + '». Инициатор: ' + (pr.initiator || '—') + ', согласующий: ' + this.prApproverName(pr.approverId) + '.';
+    this.postSystemNote(aya, 'АЯ'); this.pushTrackToast && this.pushTrackToast(aya);
+    try { this.secLog('PAYREQ_STATUS', { detail: '«' + pr.supplier + '» → ' + this.prStatusLabel(status) }); } catch (e) {}
+    if (pr.track) this.triggerAiWorkflowNotification('Заявка на платёж', 'status', { no: pr.no || pr.id.slice(-4), initiator: pr.initiator, approverId: pr.approverId, status: this.prStatusLabel(status) });
+  }
+  // Внести фактическую оплату (полностью или частями) → уменьшает остаток к оплате и меняет статус
+  prAddPayment(id, rawAmt) {
+    const pr = (this.state.payreqs || []).find(x => x.id === id); if (!pr) return;
+    const amount = Number(pr.amount) || 0;
+    const add = Math.round(this.impNum(rawAmt)); if (!(add > 0)) { this.setState({ prPayErr: 'Укажите сумму оплаты (> 0)' }); return; }
+    const prevPaid = Math.max(0, Number(pr.paidAmount) || 0);
+    const paid = Math.min(amount, prevPaid + add);
+    const delta = paid - prevPaid;
+    let status = pr.status;
+    if (paid >= amount - 1) status = 'Оплачен'; else if (paid > 0) status = 'Частично оплачен';
+    const pays = (pr.payments || []).slice(); pays.push({ date: this.ymd(new Date()), amount: Math.round(delta) });
+    this.writePayreqs((this.state.payreqs || []).map(x => x.id === id ? { ...x, paidAmount: Math.round(paid), status, payments: pays } : x));
+    this.setState({ prPayInput: '', prPayErr: '' });
+    const cu = this.state.currentUser, who = cu ? cu.name : '—';
+    this.postSystemNote('💸 Оплата по заявке «' + pr.supplier + '»: ' + this.fmt(Math.round(delta)) + ' ₽. Оплачено ' + this.fmt(Math.round(paid)) + ' из ' + this.fmt(amount) + ' ₽, остаток ' + this.fmt(Math.max(0, amount - paid)) + ' ₽ · статус «' + this.prStatusLabel(status) + '».', who);
+    try { this.secLog('PAYREQ_PAYMENT', { detail: '«' + pr.supplier + '» +' + this.fmt(Math.round(delta)) + ' ₽ (итого ' + this.fmt(Math.round(paid)) + ')' }); } catch (e) {}
+    if (pr.track) this.triggerAiWorkflowNotification('Заявка на платёж', 'status', { no: pr.no || pr.id.slice(-4), initiator: pr.initiator, approverId: pr.approverId, status: this.prStatusLabel(status) });
+  }
+  // ── Контрольный срок оплаты: авторасчёт из условий оплаты (договор → карточка КА) ──
+  prTermsForDraft(d) {
+    d = d || {};
+    const raw = (d.supplier || '').split(' · ИНН ')[0].trim();
+    const cp = (this.state.cparties || []).find(x => x.id === d.cpId) || (this.state.cparties || []).find(c => this.norm(c.name) === this.norm(raw) || (c.inn && d.inn && String(c.inn) === String(d.inn)));
+    const parseDays = (t) => { const m = String(t || '').match(/(\d+)\s*(?:кал\.?\s*)?дн/i); if (m) return +m[1]; if (/предоплат|аванс|по факту|100\s*%/i.test(String(t || ''))) return 0; return null; };
+    if (cp) {
+      const c = (cp.contracts || []).find(x => x.id === d.contractId);
+      const fromContract = c ? parseDays(c.payTerms) : null;
+      if (fromContract != null) return { days: fromContract, src: 'договор № ' + (c.no || '') };
+      if (Number(cp.terms) > 0) return { days: Number(cp.terms), src: 'карточка контрагента' };
+      if (cp.terms === 0 || cp.terms === '0') return { days: 0, src: 'карточка контрагента (предоплата)' };
+    }
+    if (Number(d.termDays) > 0) return { days: Number(d.termDays), src: 'заявка' };
+    return { days: 0, src: '' };
+  }
+  prAutoDue(d) {
+    const base = (d && d.date) || this.ymd(new Date());
+    const { days } = this.prTermsForDraft(d);
+    const x = this.parseISO(base) || new Date(); const dt = new Date(x); dt.setDate(dt.getDate() + (Number(days) || 0));
+    return this.ymd(dt);
+  }
+  // Пересчёт контрольного срока, если пользователь не задал его вручную
+  prRecomputeDue(d) { if (!d) return d; if (d.dueManual) return d; d.dueDate = this.prAutoDue(d); const t = this.prTermsForDraft(d); d.termDays = t.days; return d; }
   // Задолженность перед поставщиком: непогашенные заявки + просрочка + перечень
   supplierDebt(name, excludeId) {
     const nm = this.norm(name || ''); const rows = []; let total = 0, overdue = 0;
@@ -9868,7 +10004,7 @@ class Component extends DCLogic {
     const sched = (pr.schedule || []).map((s, i) => ({ date: this.dmFull(s.date), amount: this.fmt(Math.round(s.amount || 0)), kind: s.kind || 'Оплата', paid: !!s.paid, payCls: s.paid ? 'prpaid on' : 'prpaid', toggle: () => this.prMarkPart(pr.id, i) }));
     const rem = this.prRemain(pr);
     return {
-      prDetailOpen: true, prDetailSupplier: pr.supplier || '—', prDetailStatus: pr.status, prDetailStatusCls: stCls[pr.status] || 'st-new',
+      prDetailOpen: true, prDetailSupplier: pr.supplier || '—', prDetailStatus: this.prStatusLabel(pr.status), prDetailStatusCls: stCls[pr.status] || 'st-new',
       prDetailInv: pr.invNo ? ('Счёт № ' + pr.invNo) : '', prDetailDate: this.dmFull(pr.invDate || pr.date),
       prDetailAmount: this.fmt(Math.round(pr.amount || 0)), prDetailPaid: this.fmt(Math.round(pr.paidAmount || 0)), prDetailRemain: this.fmt(Math.round(rem)), prDetailPct: this.prPaidPct(pr) + '%', prDetailRemainCls: (rem > 0 && this.prOverdue(pr)) ? 'bad' : '',
       prDetailPurpose: pr.purpose || '', prDetailInitiator: pr.initiator || '—', prDetailApprover: this.prApproverName(pr.approverId), prDetailPlanned: this.dmFull(this.prPlanned(pr)),
@@ -9877,6 +10013,8 @@ class Component extends DCLogic {
       prDetailHasFile: !!(pr.fileRef && pr.fileRef.id), prDetailFileName: pr.fileRef ? pr.fileRef.name : '', prDetailOpenFile: () => this.faOpen(pr.fileRef && pr.fileRef.id),
       prDetailCanEdit: (isInit || isAdmin) && pr.status !== 'Оплачен', prDetailEdit: () => set({ prDraft: { ...pr, amountCur: pr.amountCur || pr.amount }, prDetailId: '' }),
       prDetailCanPayFull: (isInit || isApprover || isAdmin) && rem > 0 && pr.status !== 'К удалению', prDetailPayFull: () => this.prPayFull(pr.id),
+      prDetailCanPay: (isInit || isApprover || isAdmin) && rem > 0 && pr.status !== 'К удалению' && pr.status !== 'Черновик', prPayInput: S.prPayInput || '', onPrPayInput: (e) => set({ prPayInput: e.target.value, prPayErr: '' }), prDetailAddPay: () => this.prAddPayment(pr.id, S.prPayInput), prPayErr: S.prPayErr || '', prPayHasErr: !!S.prPayErr, prPayRemainHint: this.fmt(Math.round(rem)),
+      prDetailCanStatus: (isApprover || isAdmin || isInit) && ['На согласовании', 'Согласован', 'Частично оплачен', 'Оплачен'].indexOf(pr.status) >= 0, prDetailStatusSel: this.prStatusLabel(pr.status), prDetailStatusOpts: this.prStatusSelOpts(pr).map(v => ({ v, label: v })), onPrDetailStatus: (e) => this.prSetStatusByLabel(pr.id, e.target.value),
       prDetailCanSoftDel: (isInit || isAdmin) && pr.status !== 'К удалению' && pr.status !== 'Оплачен', prDetailSoftDel: () => this.prSoftDelete(pr.id),
       prDetailIsTrash: pr.status === 'К удалению', prDetailRestore: () => this.prRestore(pr.id),
       prDetailClose: () => set({ prDetailId: '' }),
@@ -9913,8 +10051,10 @@ class Component extends DCLogic {
       const fx = this.prFxDiff(pr);
       const curLbl = (pr.currency && pr.currency !== 'RUB') ? (this.fmt(pr.amountCur) + ' ' + this.curSym(pr.currency) + ' · ' + (Number(pr.rate) || 0).toFixed(2) + ' ₽') : '';
       const payTypeLbl = ({ full: 'Полная', prepay: 'Предоплата', postpay: 'Постоплата', partial: 'Частичная', custom: 'График' })[pr.payType] || '—';
-      return { id: pr.id, dir: pr.direction === 'in' ? '↘ приход' : '↗ оплата', dirCls: pr.direction === 'in' ? 'prdir in' : 'prdir out', supplier: pr.supplier || '—', amount: this.fmt(pr.amount), curLbl, hasCur: !!curLbl, payTypeLbl, parts: (pr.schedule || []).length, date: this.dmFull(pr.date), purpose: pr.purpose || '', initiator: pr.initiator || '—', approver: this.prApproverName(pr.approverId), status: pr.status, statusCls: stCls[pr.status] || 'st-new', track: !!pr.track, trackCls: pr.track ? 'prchk on' : 'prchk', toggleTrack: () => this.togglePayReqTrack(pr.id),
+      return { id: pr.id, dir: pr.direction === 'in' ? '↘ приход' : '↗ оплата', dirCls: pr.direction === 'in' ? 'prdir in' : 'prdir out', supplier: pr.supplier || '—', amount: this.fmt(pr.amount), curLbl, hasCur: !!curLbl, payTypeLbl, parts: (pr.schedule || []).length, date: this.dmFull(pr.date), purpose: pr.purpose || '', initiator: pr.initiator || '—', approver: this.prApproverName(pr.approverId), status: pr.status, statusLabel: this.prStatusLabel(pr.status), statusCls: stCls[pr.status] || 'st-new', track: !!pr.track, trackCls: pr.track ? 'prchk on' : 'prchk', toggleTrack: () => this.togglePayReqTrack(pr.id),
         fx: fx ? ((fx > 0 ? '+' : '') + this.fmt(Math.round(fx)) + ' ₽') : '', hasFx: Math.abs(fx) >= 1, fxCls: fx > 0 ? 'prfx loss' : 'prfx gain',
+        canStatus: (isApprover || isAdmin || isInit) && ['На согласовании', 'Согласован', 'Частично оплачен', 'Оплачен'].indexOf(pr.status) >= 0,
+        statusSel: this.prStatusLabel(pr.status), statusOpts: this.prStatusSelOpts(pr).map(v => ({ v, label: v })), onStatus: (e) => this.prSetStatusByLabel(pr.id, e.target.value),
         canApprove: (isApprover || isAdmin) && pr.status === 'На согласовании', approve: () => this.setPayReqStatus(pr.id, 'Согласован'), reject: () => this.setPayReqStatus(pr.id, 'Отклонён'),
         canPay: (isApprover || isAdmin || isInit) && pr.status === 'Согласован', pay: () => this.setPayReqStatus(pr.id, 'Оплачен'),
         canSend: isInit && pr.status === 'Черновик', send: () => this.setPayReqStatus(pr.id, 'На согласовании'),
@@ -9943,7 +10083,7 @@ class Component extends DCLogic {
       prDraftHasFile: !!(d.fileRef && d.fileRef.id), prDraftFileName: d.fileRef ? d.fileRef.name : '', prDraftOpenFile: () => this.faOpen(d.fileRef && d.fileRef.id),
       prDir: d.direction || 'out', prDirOutCls: (d.direction || 'out') === 'out' ? 'segon' : 'seg', prDirInCls: d.direction === 'in' ? 'segon' : 'seg',
       setPrDirOut: () => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), direction: 'out' } }), setPrDirIn: () => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), direction: 'in' } }),
-      prSupplier: d.supplier || '', onPrSupplier: (e) => this.prPickSupplier(e.target.value), prDate: d.date || '', onPrDate: upd('date'), prPurpose: d.purpose || '', onPrPurpose: upd('purpose'),
+      prSupplier: d.supplier || '', onPrSupplier: (e) => this.prPickSupplier(e.target.value), prDate: d.date || '', onPrDate: (e) => { const nd = { ...(this.state.prDraft || this.emptyPayReq()), date: e.target.value }; this.prRecomputeDue(nd); set({ prDraft: nd, prErr: '' }); }, prPurpose: d.purpose || '', onPrPurpose: upd('purpose'),
       prSupplierOpts: (S.cparties || []).slice().sort((a, b) => (a.name || '').localeCompare(b.name || '', 'ru')).map(c => ({ label: c.name + (c.inn ? ' · ИНН ' + c.inn : '') })),
       prCpMatched: !!d.cpId, prCpUnmatched: !d.cpId && !!(d.supplier && d.supplier.trim().length > 1), prCpBank: d.bank ? (d.bank + (d.account ? ' · р/с ' + d.account : '')) : '', prCpBik: d.bik || '', prCpInn: d.inn || '',
       prContractOpts: (function () { const cp = (S.cparties || []).find(x => x.id === d.cpId); const cs = cp ? (cp.contracts || []) : []; return [{ v: '', label: cs.length ? '— выберите договор —' : 'нет договоров' }].concat(cs.map(c => ({ v: c.id, label: '№ ' + c.no + (c.date ? ' от ' + this.dmFull(c.date) : '') + ' · ' + (c.currency || 'RUB') }))); }).call(this),
@@ -9956,7 +10096,10 @@ class Component extends DCLogic {
       prRate: d.rate || effRate || '', onPrRate: upd('rate'), prRateAccrual: d.rateAccrual || '', onPrRateAccrual: upd('rateAccrual'),
       prAmountRub: this.fmt(Math.round(this.prAmountRub(d))), prCbRate: this.cbRate(cur).toFixed(4),
       prPayType: d.payType || 'full', onPrPayType: (e) => { const t = e.target.value; set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), payType: t, schedule: [] }, prErr: '' }); }, prPayTypeOpts: [['full', 'Полная оплата'], ['prepay', 'Предоплата 100%'], ['postpay', 'Постоплата / отсрочка'], ['partial', 'Частичная предоплата']].map(x => ({ v: x[0], label: x[1] })),
-      prDueDate: d.dueDate || '', onPrDueDate: upd('dueDate'), prPrepayPct: d.prepayPct || 50, onPrPrepayPct: upd('prepayPct'), prTermDays: d.termDays || 0, onPrTermDays: upd('termDays'),
+      prDueDate: d.dueDate || '', onPrDueDate: (e) => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), dueDate: e.target.value, dueManual: true }, prErr: '' }),
+      prDueAuto: (function () { const t = this.prTermsForDraft(d); return t.src ? ('авто: ' + (t.days > 0 ? t.days + ' дн. от даты документа' : 'предоплата') + ' · ' + t.src) : 'нет условий оплаты в карточке — задайте вручную'; }).call(this),
+      prDueIsManual: !!d.dueManual, prDueReset: () => { const nd = { ...(this.state.prDraft || this.emptyPayReq()), dueManual: false }; this.prRecomputeDue(nd); set({ prDraft: nd }); },
+      prPrepayPct: d.prepayPct || 50, onPrPrepayPct: upd('prepayPct'), prTermDays: d.termDays || 0, onPrTermDays: upd('termDays'),
       prShowPartial: (d.payType === 'partial'), prShowTerm: (d.payType === 'postpay' || d.payType === 'partial'),
       prSchedule: schedRows, prScheduleAdd: () => this.prScheduleAdd(), prSchedSum: this.fmt(Math.round(schedSum)),
       prApprover: d.approverId || '', onPrApprover: upd('approverId'), prApproverOpts: users.map(u => ({ v: u.id, label: u.name })),
@@ -9967,7 +10110,7 @@ class Component extends DCLogic {
       prFltFrom: fFrom, onPrFltFrom: (e) => set({ prFltFrom: e.target.value }),
       prFltTo: fTo, onPrFltTo: (e) => set({ prFltTo: e.target.value }),
       prFltSup: S.prFltSup || '', onPrFltSup: (e) => set({ prFltSup: e.target.value }),
-      prFltStatus: fStatus, onPrFltStatus: (e) => set({ prFltStatus: e.target.value }), prStatusOpts: ['', 'Черновик', 'На согласовании', 'Согласован', 'Частично оплачен', 'Оплачен', 'Отклонён', 'К удалению'].map(v => ({ v, label: v || 'Все статусы' })),
+      prFltStatus: fStatus, onPrFltStatus: (e) => set({ prFltStatus: e.target.value }), prStatusOpts: ['', 'Черновик', 'На согласовании', 'Согласован', 'Частично оплачен', 'Оплачен', 'Отклонён', 'К удалению'].map(v => ({ v, label: v ? this.prStatusLabel(v) : 'Все статусы' })),
       prFltReset: () => set({ prFltFrom: '', prFltTo: '', prFltSup: '', prFltStatus: '' }), prFltActive: !!(fFrom || fTo || fSup || fStatus),
       prSumTotal: this.fmt(Math.round(filtered.reduce((s, p) => s + (Number(p.amount) || 0), 0))),
       prSumRemain: this.fmt(Math.round(filtered.reduce((s, p) => s + this.prRemain(p), 0))),
@@ -10941,6 +11084,43 @@ class Component extends DCLogic {
   // ===== Справочник контрагентов =====
   emptyCp() { return { id: '', name: '', inn: '', kpp: '', terms: '', limit: '', contacts: '', bik: '', bank: '', corrAcc: '', account: '', address: '', priceList: [], contracts: [] }; }
   emptyContract() { return { id: '', no: '', date: '', currency: 'RUB', payTerms: '', deliveryTerms: '', validTill: '', note: '' }; }
+  // ── Справочник номенклатуры для подбора позиций прайса (по артикулу / наименованию / выбором) ──
+  cpNomList() {
+    if (this._cpNomCache) return this._cpNomCache;
+    const out = [], seen = new Set();
+    const add = (name, article, unit) => { const k = this.norm(name); if (name && !seen.has(k)) { seen.add(k); out.push({ name: String(name), article: article ? String(article) : '', unit: unit || '' }); } };
+    try { if (this.catalog && Array.isArray(this.catalog.raw)) this.catalog.raw.forEach(r => add(r.name || (Array.isArray(r) ? r[0] : ''), r.article, r.unit)); } catch (e) {}
+    try { if (this.data && Array.isArray(this.data.semi_products)) this.data.semi_products.forEach(s => add(s.name, s.article, s.unit)); } catch (e) {}
+    try { if (this.data && Array.isArray(this.data.products)) this.data.products.forEach(p => add(p.name, p.article, p.unit)); } catch (e) {}
+    out.sort((a, b) => a.name.localeCompare(b.name, 'ru'));
+    this._cpNomCache = out; return out;
+  }
+  cpNomByName(name) { const k = this.norm(name); return this.cpNomList().find(n => this.norm(n.name) === k) || null; }
+  cpNomByArticle(art) { const a = String(art || '').trim().toLowerCase(); if (!a) return null; return this.cpNomList().find(n => String(n.article || '').trim().toLowerCase() === a) || null; }
+  // Динамика цен по сырью: точки из прайс-листов (истории правок) + журнала поступлений всех контрагентов
+  cpPriceSeries(material) {
+    const km = this.norm(material || ''); if (!km) return [];
+    const pts = [];
+    for (const cp of (this.state.cparties || [])) {
+      for (const p of (cp.priceList || [])) {
+        if (this.norm(p.material) !== km) continue;
+        const hist = Array.isArray(p.history) && p.history.length ? p.history : (p.price > 0 ? [{ date: p.priceDate || cp.createdAt && this.ymd(new Date(cp.createdAt)) || '', price: p.price, vat: p.vat !== false }] : []);
+        hist.forEach(h => { if (Number(h.price) > 0) pts.push({ date: h.date || '', price: Number(h.price), vat: h.vat !== false, cp: cp.name, src: 'прайс' }); });
+      }
+      for (const h of (cp.history || [])) { if (this.norm(h.material) === km && Number(h.price) > 0) pts.push({ date: h.date || '', price: Number(h.price), vat: true, cp: cp.name, src: 'поступление' }); }
+    }
+    pts.sort((a, b) => String(a.date).localeCompare(String(b.date)));
+    return pts;
+  }
+  // Список всех наименований сырья, по которым есть история цен (для селектора динамики)
+  cpPricedMaterials() {
+    const seen = new Set(), out = [];
+    for (const cp of (this.state.cparties || [])) {
+      for (const p of (cp.priceList || [])) { const m = (p.material || '').trim(); if (m && !seen.has(this.norm(m))) { seen.add(this.norm(m)); out.push(m); } }
+      for (const h of (cp.history || [])) { const m = (h.material || '').trim(); if (m && !seen.has(this.norm(m))) { seen.add(this.norm(m)); out.push(m); } }
+    }
+    return out.sort((a, b) => a.localeCompare(b, 'ru'));
+  }
   writeCparties(next) {
     this.setState({ cparties: next });
     try { this.lsSet('cparties', JSON.stringify(next)); } catch (e) {}
@@ -10950,7 +11130,26 @@ class Component extends DCLogic {
     const S = this.state, d = S.cpDraft || this.emptyCp();
     const name = (d.name || '').trim();
     if (!name) { this.setState({ cpErr: 'Введите название контрагента' }); return; }
-    const pl = (d.priceList || []).filter(p => (p.material || '').trim()).map(p => ({ material: (p.material || '').trim(), price: Number(p.price) || 0 }));
+    // Прайс-лист: сохраняем номенклатуру (наименование + артикул), цену (с НДС / без), дату ввода и историю изменений
+    const today = this.ymd(new Date());
+    const oldCp = (S.cparties || []).find(x => x.id === d.id);
+    const oldByKey = {}; (oldCp && oldCp.priceList || []).forEach(p => { oldByKey[this.norm(p.material)] = p; });
+    let priceChanges = 0;
+    const pl = (d.priceList || []).filter(p => (p.material || '').trim()).map(p => {
+      const material = (p.material || '').trim(); const article = (p.article || '').trim();
+      const price = Number(p.price) || 0; const vat = p.vat !== false; const unit = (p.unit || '').trim();
+      const old = oldByKey[this.norm(material)];
+      let history = Array.isArray(p.history) ? p.history.slice() : (old && Array.isArray(old.history) ? old.history.slice() : []);
+      let priceDate = p.priceDate || (old && old.priceDate) || '';
+      const oldPrice = old ? (Number(old.price) || 0) : null;
+      const last = history.length ? Number(history[history.length - 1].price) || 0 : null;
+      if (price > 0 && (oldPrice == null || Math.abs(price - oldPrice) > 0.009)) {
+        if (last == null || Math.abs(last - price) > 0.009) history.push({ date: today, price, vat });
+        priceDate = today; priceChanges++;
+      } else if (price > 0 && !history.length) { history.push({ date: priceDate || today, price, vat }); if (!priceDate) priceDate = today; }
+      history = history.slice(-60);
+      return { material, article, price, vat, unit, priceDate, history };
+    });
     const inn = (d.inn || '').trim();
     // Контроль уникальности по ИНН: запрет дублей контрагента с тем же ИНН
     if (inn) { const dup = (S.cparties || []).find(x => x.id !== d.id && String(x.inn || '').trim() === inn); if (dup) { this.setState({ cpErr: 'Контрагент с ИНН ' + inn + ' уже есть: «' + dup.name + '». Дубль по ИНН запрещён.' }); return; } }
@@ -10960,7 +11159,8 @@ class Component extends DCLogic {
     const list = d.id ? (S.cparties || []).map(x => x.id === d.id ? cp : x) : [cp, ...(S.cparties || [])];
     this.writeCparties(list);
     this.setState({ cpDraft: null, cpErr: '', cpSaved: name });
-    this.pushRecalcToast && this.pushRecalcToast('✓ Контрагент сохранён: ' + name);
+    this.pushRecalcToast && this.pushRecalcToast('✓ Контрагент сохранён: ' + name + (priceChanges ? (' · зафиксировано изменений цен: ' + priceChanges) : ''));
+    if (priceChanges) { try { this.postSystemNote('💹 Прайс контрагента «' + name + '»: зафиксировано изменение цен по ' + priceChanges + ' позиц. (дата ввода ' + this.dmFull(today) + ', цены с НДС). История доступна в блоке «Динамика цен».', this.state.currentUser ? this.state.currentUser.name : '—'); } catch (e) {} try { this.secLog('CPARTY_PRICE_CHANGE', { detail: '«' + name + '»: изменений цен ' + priceChanges }); } catch (e) {} }
     setTimeout(() => this.setState({ cpSaved: '' }), 2500);
   }
   // Сохранить договор в карточке контрагента (диалог)
@@ -10988,6 +11188,117 @@ class Component extends DCLogic {
     this.writeCparties(list);
     if (this.state.cpDraft && this.state.cpDraft.id === cpId) this.setState({ cpDraft: { ...this.state.cpDraft, contracts: (this.state.cpDraft.contracts || []).filter(c => c.id !== ctId) } });
   }
+  // ── Импорт справочника контрагентов из Excel (обучаемое распознавание колонок 1С) ──
+  // Ключевые слова → системное поле. Порядок важен: сначала более специфичные.
+  cpImportFieldMap() {
+    return [
+      { field: 'inn', kw: ['инн'], not: ['контрагент'] },
+      { field: 'kpp', kw: ['кпп'] },
+      { field: 'okpo', kw: ['окпо'] },
+      { field: 'type', kw: ['юридическое физическое', 'юр/физлицо', 'юр/физ', 'вид контрагента'] },
+      { field: 'country', kw: ['страна'] },
+      { field: 'shortName', kw: ['сокращен', 'краткое наимен'] },
+      { field: 'address', kw: ['адрес'] },
+      { field: 'phone', kw: ['телефон', 'контакт'] },
+      { field: 'email', kw: ['e-mail', 'email', 'почта'] },
+      { field: 'terms', kw: ['отсрочк', 'условия оплат', 'срок оплат'] },
+      { field: 'note', kw: ['дополнительная информация', 'комментарий', 'примечан'] },
+      { field: 'name', kw: ['контрагент', 'наименование', 'название', 'партнер'] },
+    ];
+  }
+  // Распознать строку заголовков → карта {colIndex: field}. Возвращает {map, headerRow, score}
+  cpDetectColumns(aoa) {
+    const fm = this.cpImportFieldMap();
+    let best = { map: {}, headerRow: -1, score: 0 };
+    const scan = Math.min(aoa.length, 20);
+    for (let r = 0; r < scan; r++) {
+      const row = aoa[r] || []; const map = {}; let score = 0; const used = new Set();
+      for (let c = 0; c < row.length; c++) {
+        const t = String(row[c] == null ? '' : row[c]).toLowerCase().trim(); if (!t) continue;
+        for (const f of fm) {
+          if (used.has(f.field)) continue;
+          if (f.not && f.not.some(n => t.includes(n))) continue;
+          if (f.kw.some(k => t.includes(k))) { map[c] = f.field; used.add(f.field); score++; break; }
+        }
+      }
+      if (map && used.has('name') && score > best.score) best = { map, headerRow: r, score };
+    }
+    return best;
+  }
+  cpImportSkipName(nm) { return /^(параметры|тип объекта|имя объекта|имя таблицы|выводить|наше предприятие|розничный покупатель|^итог)/i.test(String(nm || '').trim()); }
+  async importCpFile(file) {
+    if (!file) return;
+    this.setState({ cpImpBusy: true, cpImpErr: '' });
+    try {
+      if (!/\.(xlsx|xls|csv)$/i.test(file.name || '')) throw new Error('Нужен файл Excel (.xlsx / .xls) или .csv');
+      const aoa = await this.mgReadFile(file);
+      if (!aoa || !aoa.length) throw new Error('Файл пуст или не читается.');
+      const det = this.cpDetectColumns(aoa);
+      if (det.headerRow < 0) throw new Error('Не удалось распознать колонку «Контрагент/Наименование». Проверьте, что это выгрузка справочника контрагентов.');
+      const map = det.map; const nameCol = Number(Object.keys(map).find(c => map[c] === 'name'));
+      const rows = [];
+      for (let r = det.headerRow + 1; r < aoa.length; r++) {
+        const row = aoa[r] || []; const nm = String(row[nameCol] == null ? '' : row[nameCol]).trim();
+        if (!nm || this.cpImportSkipName(nm)) continue;
+        const rec = { name: nm };
+        for (const c in map) { const f = map[c]; if (f === 'name') continue; const v = row[c] == null ? '' : String(row[c]).trim(); if (v) rec[f] = v; }
+        rows.push(rec);
+      }
+      // дедуп по ИНН/имени внутри файла
+      const seen = new Set(), uniq = [];
+      for (const rec of rows) { const k = (rec.inn && String(rec.inn).replace(/\D/g, '')) || this.norm(rec.name); if (seen.has(k)) continue; seen.add(k); uniq.push(rec); }
+      // сколько новых / обновление
+      const existing = this.state.cparties || [];
+      let addN = 0, updN = 0;
+      for (const rec of uniq) { const dup = existing.find(x => (rec.inn && String(x.inn || '').replace(/\D/g, '') === String(rec.inn).replace(/\D/g, '')) || this.norm(x.name) === this.norm(rec.name)); if (dup) updN++; else addN++; }
+      const cols = Object.keys(map).map(c => ({ col: this.colLetter(Number(c)), field: this.cpFieldLabel(map[c]) }));
+      this.setState({ cpImpBusy: false, cpImp: { fileName: file.name, rows: uniq, map, cols, addN, updN, total: uniq.length }, cpImpErr: '' });
+      // Обучение: сохранить распознанную карту как правило для повторных загрузок (замкнутый цикл, без внешнего API)
+      try { this.lsSet('cparties_import_map', JSON.stringify({ headers: aoa[det.headerRow], map, ts: Date.now() })); } catch (e) {}
+      try { this.secLog('AI_FALLBACK_LEARN', { file: file.name, category: 'Контрагенты', learned: cols.length, ms: 0, provider: 'внутреннее ядро' }); } catch (e) {}
+    } catch (e) { this.setState({ cpImpBusy: false, cpImpErr: 'Не удалось прочитать файл: ' + (e.message || e) }); }
+  }
+  colLetter(n) { let s = ''; n = n + 1; while (n > 0) { const m = (n - 1) % 26; s = String.fromCharCode(65 + m) + s; n = Math.floor((n - 1) / 26); } return s; }
+  cpFieldLabel(f) { return ({ name: 'Название', shortName: 'Сокр. наимен.', inn: 'ИНН', kpp: 'КПП', okpo: 'ОКПО', type: 'Юр/Физ', country: 'Страна', address: 'Адрес', phone: 'Телефон', email: 'E-mail', terms: 'Отсрочка/условия', note: 'Доп. информация' })[f] || f; }
+  cpImportConfirm() {
+    const imp = this.state.cpImp; if (!imp || !imp.rows.length) return;
+    const parseDays = (t) => { const m = String(t || '').match(/(\d+)\s*(?:кал\.?\s*)?дн/i); if (m) return +m[1]; if (/предоплат|аванс|по факту/i.test(String(t || ''))) return 0; return 0; };
+    let list = (this.state.cparties || []).slice();
+    let addN = 0, updN = 0;
+    for (const rec of imp.rows) {
+      const innDig = rec.inn ? String(rec.inn).replace(/\D/g, '') : '';
+      const idx = list.findIndex(x => (innDig && String(x.inn || '').replace(/\D/g, '') === innDig) || this.norm(x.name) === this.norm(rec.name));
+      const contacts = [rec.phone, rec.email].filter(Boolean).join(' · ');
+      const base = { name: rec.name.slice(0, 160), inn: (rec.inn || '').toString().trim(), kpp: (rec.kpp || '').toString().trim(),
+        okpo: (rec.okpo || '').toString().trim(), cpType: rec.type || '', country: rec.country || '', shortName: rec.shortName || '',
+        address: (rec.address || '').toString().trim(), note: rec.note || '' };
+      if (idx >= 0) {
+        const ex = list[idx];
+        list[idx] = { ...ex, ...base, contacts: ex.contacts || contacts, terms: ex.terms || parseDays(rec.terms), priceList: ex.priceList || [], contracts: ex.contracts || [], roles: Array.from(new Set([...(ex.roles || []), 'supplier'])) };
+        updN++;
+      } else {
+        list.unshift({ id: 'cp_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), ...base, terms: parseDays(rec.terms), limit: 0, contacts, bik: '', bank: '', corrAcc: '', account: '', priceList: [], contracts: [], history: [], roles: ['supplier'], createdAt: Date.now() });
+        addN++;
+      }
+    }
+    this.writeCparties(list);
+    this.setState({ cpImp: null, cpImpErr: '', cpImpDone: 'Импортировано из «' + imp.fileName + '»: добавлено ' + addN + ', обновлено ' + updN + '.' });
+    try { this.apBeep(); } catch (e) {}
+    try { this.postSystemNote('📥 Импорт справочника контрагентов «' + imp.fileName + '»: добавлено ' + addN + ', обновлено ' + updN + ' (всего в базе: ' + list.length + '). Система распознала колонки автоматически.', this.state.currentUser ? this.state.currentUser.name : '—'); } catch (e) {}
+    try { this.secLog('CPARTIES_IMPORT', { detail: '«' + imp.fileName + '»: +' + addN + ', обновлено ' + updN }); } catch (e) {}
+    setTimeout(() => this.setState({ cpImpDone: '' }), 6000);
+  }
+  cpImportVals() {
+    const S = this.state, set = (p) => this.setState(p);
+    const imp = S.cpImp;
+    return {
+      onCpImportFile: (e) => { const f = e.target.files && e.target.files[0]; if (f) this.importCpFile(f); e.target.value = ''; },
+      cpImpBusy: !!S.cpImpBusy, cpImpErr: S.cpImpErr || '', cpImpHasErr: !!S.cpImpErr, cpImpDone: S.cpImpDone || '', cpImpHasDone: !!S.cpImpDone,
+      cpImpFileName: imp ? imp.fileName : '', cpImpTotal: imp ? String(imp.total) : '0', cpImpAddN: imp ? String(imp.addN) : '0', cpImpUpdN: imp ? String(imp.updN) : '0',
+      cpImpCols: imp ? imp.cols : [], cpImpPreview: imp ? imp.rows.slice(0, 8).map(r => ({ name: r.name, inn: r.inn || '—', kpp: r.kpp || '', type: r.type || '', country: r.country || '' })) : [],
+      cpImpConfirm: () => this.cpImportConfirm(), cpImpCancel: () => set({ cpImp: null, cpImpErr: '' }),
+    };
+  }
   buildCparties() {
     const S = this.state, set = (p) => this.setState(p);
     const d = S.cpDraft, dd = d || {};
@@ -10997,8 +11308,31 @@ class Component extends DCLogic {
       edit: () => set({ cpDraft: { ...c, priceList: (c.priceList || []).slice() }, cpErr: '' }),
       remove: () => this.askDelete('контрагента «' + (c.name || '') + '»', () => this.writeCparties((this.state.cparties || []).filter(x => x.id !== c.id))),
     }));
-    const plSet = (i, k, v) => { const pl = ((this.state.cpDraft || {}).priceList || []).slice(); pl[i] = { ...pl[i], [k]: v }; set({ cpDraft: { ...this.state.cpDraft, priceList: pl } }); };
-    const plRows = (dd.priceList || []).map((p, i) => ({ material: p.material || '', price: p.price || '', onMat: (e) => plSet(i, 'material', e.target.value), onPrice: (e) => plSet(i, 'price', e.target.value), del: () => set({ cpDraft: { ...this.state.cpDraft, priceList: (this.state.cpDraft.priceList || []).filter((_, j) => j !== i) } }) }));
+    const plSet = (i, patch) => { const pl = ((this.state.cpDraft || {}).priceList || []).slice(); pl[i] = { ...pl[i], ...patch }; set({ cpDraft: { ...this.state.cpDraft, priceList: pl } }); };
+    const onPlMat = (i, v) => { const patch = { material: v }; const nom = this.cpNomByName(v); if (nom) { if (nom.article && !((dd.priceList || [])[i] || {}).article) patch.article = nom.article; if (nom.unit && !((dd.priceList || [])[i] || {}).unit) patch.unit = nom.unit; } plSet(i, patch); };
+    const onPlArt = (i, v) => { const patch = { article: v }; const nom = this.cpNomByArticle(v); if (nom && !((dd.priceList || [])[i] || {}).material) patch.material = nom.name; plSet(i, patch); };
+    const trendOf = (p) => { const h = Array.isArray(p.history) ? p.history.filter(x => Number(x.price) > 0) : []; if (h.length < 2) return { cls: '', arrow: '', pct: '' }; const prev = Number(h[h.length - 2].price) || 0, cur = Number(h[h.length - 1].price) || 0; if (!prev) return { cls: '', arrow: '', pct: '' }; const dp = (cur - prev) / prev * 100; if (Math.abs(dp) < 0.05) return { cls: 'flat', arrow: '=', pct: '0%' }; return dp > 0 ? { cls: 'up', arrow: '▲', pct: '+' + dp.toFixed(1) + '%' } : { cls: 'down', arrow: '▼', pct: dp.toFixed(1) + '%' }; };
+    const plRows = (dd.priceList || []).map((p, i) => { const t = trendOf(p); const hc = Array.isArray(p.history) ? p.history.length : 0; return {
+      material: p.material || '', article: p.article || '', price: p.price || '', vat: p.vat !== false, vatCls: p.vat !== false ? 'cpvat on' : 'cpvat',
+      priceDate: p.priceDate ? this.dmFull(p.priceDate) : '', hasDate: !!p.priceDate, trendCls: 'cptrend ' + (t.cls || ''), trendArrow: t.arrow, trendPct: t.pct, hasTrend: !!t.arrow, histN: hc > 1 ? (hc + ' зап.') : '',
+      onMat: (e) => onPlMat(i, e.target.value), onArt: (e) => onPlArt(i, e.target.value), onPrice: (e) => plSet(i, { price: e.target.value }),
+      toggleVat: () => plSet(i, { vat: !(p.vat !== false) }),
+      del: () => set({ cpDraft: { ...this.state.cpDraft, priceList: (this.state.cpDraft.priceList || []).filter((_, j) => j !== i) } }) }; });
+    const nomList = this.cpNomList();
+    const cpNomNameOpts = nomList.map(n => n.name);
+    const cpNomArtOpts = nomList.filter(n => n.article).map(n => n.article);
+    // ── Динамика цен на сырьё (по всем контрагентам) ──
+    const pricedMats = this.cpPricedMaterials();
+    const dynMat = S.cpDynMat || (dd.priceList && dd.priceList[0] && dd.priceList[0].material) || pricedMats[0] || '';
+    const series = this.cpPriceSeries(dynMat);
+    const dynMax = series.reduce((m, x) => Math.max(m, x.price), 0) || 1;
+    const dynMin = series.length ? series.reduce((m, x) => Math.min(m, x.price), series[0].price) : 0;
+    const dynRows = series.map((x, i) => { const prev = i > 0 ? series[i - 1].price : null; const dp = (prev && prev > 0) ? (x.price - prev) / prev * 100 : null; return {
+      date: x.date ? this.dmFull(x.date) : '—', cp: x.cp, price: this.fmt(x.price, 2), vat: x.vat ? 'с НДС' : 'без НДС', src: x.src,
+      barW: Math.max(4, Math.round(x.price / dynMax * 100)) + '%', barCls: 'cpdynbar' + (dp == null ? '' : (dp > 0.05 ? ' up' : (dp < -0.05 ? ' down' : ''))),
+      delta: dp == null ? '' : (dp > 0.05 ? '▲ +' + dp.toFixed(1) + '%' : (dp < -0.05 ? '▼ ' + dp.toFixed(1) + '%' : '= 0%')), deltaCls: dp == null ? 'cpdelta' : (dp > 0.05 ? 'cpdelta up' : (dp < -0.05 ? 'cpdelta down' : 'cpdelta flat')) }; });
+    const dynFirst = series.length ? series[0].price : 0, dynLast = series.length ? series[series.length - 1].price : 0;
+    const dynChange = (dynFirst > 0 && series.length > 1) ? ((dynLast - dynFirst) / dynFirst * 100) : 0;
     const CUR = { RUB: '₽', EUR: '€', USD: '$', CNY: '¥' };
     const contractRows = (dd.contracts || []).map(c => ({ id: c.id, no: c.no || '—', date: c.date ? this.dmFull(c.date) : '', currency: c.currency || 'RUB', curSym: CUR[c.currency || 'RUB'] || c.currency, payTerms: c.payTerms || '—', deliveryTerms: c.deliveryTerms || '—', validTill: c.validTill ? ('до ' + this.dmFull(c.validTill)) : '', edit: () => this.openContractDlg(dd.id, c), del: () => this.delContract(dd.id, c.id) }));
     const cd = S.contractDlg, cdd = cd || {};
@@ -11010,7 +11344,16 @@ class Component extends DCLogic {
       cdName: dd.name || '', onCdName: upd('name'), cdInn: dd.inn || '', onCdInn: upd('inn'), cdKpp: dd.kpp || '', onCdKpp: upd('kpp'),
       cdTerms: dd.terms || '', onCdTerms: upd('terms'), cdLimit: dd.limit || '', onCdLimit: upd('limit'), cdContacts: dd.contacts || '', onCdContacts: upd('contacts'),
       cdBik: dd.bik || '', onCdBik: upd('bik'), cdBank: dd.bank || '', onCdBank: upd('bank'), cdCorr: dd.corrAcc || '', onCdCorr: upd('corrAcc'), cdAcc: dd.account || '', onCdAcc: upd('account'), cdAddress: dd.address || '', onCdAddress: upd('address'),
-      cpPriceRows: plRows, addPrice: () => set({ cpDraft: { ...(this.state.cpDraft || this.emptyCp()), priceList: [...(((this.state.cpDraft || {}).priceList) || []), { material: '', price: '' }] } }),
+      cpPriceRows: plRows, addPrice: () => set({ cpDraft: { ...(this.state.cpDraft || this.emptyCp()), priceList: [...(((this.state.cpDraft || {}).priceList) || []), { material: '', article: '', price: '', vat: true }] } }),
+      cpNomNameOpts, cpNomArtOpts,
+      // Импорт справочника контрагентов из Excel
+      cpImportOpen: !!S.cpImp, ...this.cpImportVals(),
+      // Динамика цен на сырьё
+      cpDynMat: dynMat, onCpDynMat: (e) => set({ cpDynMat: e.target.value }), cpDynMatOpts: pricedMats.map(m => ({ v: m, label: m })),
+      cpDynHas: series.length > 0, cpDynEmpty: series.length === 0, cpDynRows: dynRows, cpDynCount: String(series.length),
+      cpDynFirst: this.fmt(dynFirst, 2), cpDynLast: this.fmt(dynLast, 2), cpDynMinV: this.fmt(dynMin, 2), cpDynMaxV: this.fmt(dynMax, 2),
+      cpDynChange: (series.length > 1 ? ((dynChange > 0.05 ? '▲ +' : (dynChange < -0.05 ? '▼ ' : '= ')) + dynChange.toFixed(1) + '%') : '—'),
+      cpDynChangeCls: 'cpdynsum ' + (dynChange > 0.05 ? 'up' : (dynChange < -0.05 ? 'down' : 'flat')),
       cpContractRows: contractRows, cpHasContracts: contractRows.length > 0, cpContractCount: String(contractRows.length),
       cpAddContract: () => { if (!dd.id) { set({ cpErr: 'Сначала сохраните контрагента, затем добавляйте договоры.' }); return; } this.openContractDlg(dd.id, null); },
       saveCp: () => this.saveCp(), cancelCp: () => set({ cpDraft: null, cpErr: '' }), cpErr: S.cpErr || '', cpHasErr: !!S.cpErr,
