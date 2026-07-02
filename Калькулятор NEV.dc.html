@@ -1969,6 +1969,10 @@ a.wordmark:hover{opacity:.6}
 .gsfoot{padding:9px 12px 5px;border-top:1px solid #eef0f2;margin-top:5px;font-size:11px;color:#9a9793;text-align:center}
 .docsgrid{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
 .sec2cp{font-family:'Montserrat',sans-serif;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#56534f;margin:14px 0 8px}
+.secrow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:14px 0 8px}
+.secrow .sec,.secrow .sec2cp{margin:0}
+.prcpinfo{font-size:11.5px;color:#1a6b3f;margin-top:5px;font-weight:600}
+.prcpinfo.warn{color:#9a5b12}
 .cppl{display:flex;flex-direction:column;gap:7px}
 .cpplrow{display:flex;gap:8px;align-items:center}
 .cpplrow .inp{flex:1}
@@ -2215,7 +2219,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="sbfoot"><span class="schip"><span class="sava">{{ userInitial }}</span><span class="sname">{{ userName }}</span><span class="{{ userRoleCls }}">{{ userRoleLabel }}</span></span></div>
 </aside>
 <sc-if value="{{ sbCollapsed }}" hint-placeholder-val=""><button class="sbreopen" onClick="{{ toggleSb }}" title="Развернуть меню">›</button></sc-if>
-<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-02 · r18</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
+<div class="topbar"><div class="tbl"><div class="eyebrow">Корпоративный портал · производство и закупки <span class="buildtag">сборка 2026-07-02 · r19</span></div><div class="h1"><a class="brandlink" href="{{ coSite }}" target="_blank" rel="noopener" title="{{ coSiteTitle }}">{{ coName }} <span style="color:#e10000">Flow</span></a><button class="compassbtn" onClick="{{ openCompass }}" title="Компас — полная карта навигации"><span class="compassic">🧭</span> Компас</button></div></div><div class="gsearch"><span class="gsic">⌕</span><input class="gsinp" value="{{ gsearch }}" onInput="{{ onGsearch }}" placeholder="Поиск по всему приложению: раздел, отчёт, контрагент, ИНН, сырьё, продукт, заявка, задача, сотрудник…"><sc-if value="{{ gsOpen }}" hint-placeholder-val=""><div class="gsdrop"><sc-if value="{{ gsEmpty }}" hint-placeholder-val=""><div class="gsempty">По запросу «{{ gsQuery }}» ничего не найдено</div></sc-if><sc-for list="{{ gsGroups }}" as="g" hint-placeholder-count="2"><div class="gsgrp"><div class="gsgh">{{ g.cat }}<span class="gsgn">{{ g.count }}</span></div><sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2"><button class="gsrow" onClick="{{ r.go }}"><span class="gsri">{{ r.icon }}</span><span class="gsrt"><span class="gsrl">{{ r.label }}</span><span class="gsrs">{{ r.sub }}</span></span></button></sc-for></div></sc-for><sc-if value="{{ gsHasResults }}" hint-placeholder-val=""><div class="gsfoot">Найдено: {{ gsCount }} · показано {{ gsShown }}</div></sc-if></div></sc-if></div></div>
 <div class="raterow"><div class="rates"><span class="rttl">ЦБ РФ</span><sc-for list="{{ ratesItems }}" as="r" hint-placeholder-count="4"><div class="ritem"><span class="rsym">{{ r.sym }}</span><span class="rcode">{{ r.code }}</span><span class="rval">{{ r.val }}</span><span class="rrub">₽</span><span class="{{ r.cls }}">{{ r.arrow }}</span></div></sc-for><sc-if value="{{ ratesDate }}" hint-placeholder-val="x"><span class="rsrc">на {{ ratesDate }}</span></sc-if><sc-if value="{{ ratesErr }}" hint-placeholder-val="x"><span class="rsrc">{{ ratesErr }}</span></sc-if><span class="clocks"><sc-for list="{{ clocks }}" as="c" hint-placeholder-count="3"><span class="clk"><b>{{ c.t }}</b><i>{{ c.label }}</i></span></sc-for></span></div><button class="sout soutbig" onClick="{{ logout }}">Выйти<span class="soutarr">→</span></button></div>
 <div class="hotkeys"><button class="hk" onClick="{{ hkOneC }}" title="Импорт из 1С"><span class="hkic">📥</span></button><button class="hk" onClick="{{ hkRecipe }}" title="Калькулятор рецептур"><span class="hkic">⚖️</span></button><button class="hk" onClick="{{ hkBdds }}" title="БДДС / Казначейство"><span class="hkic">💸</span></button><button class="hk" onClick="{{ hkAudit }}" title="Глубокий AI-аудит АЯ"><span class="hkic">✦</span></button><button class="hk" onClick="{{ hkProc }}" title="План закупок"><span class="hkic">🗂</span><sc-if value="{{ hkProcHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkProcN }}</span></sc-if></button><button class="hk" onClick="{{ hkNewBuy }}" title="Новая заявка на закупку"><span class="hkic">🧾</span></button><button class="hk" onClick="{{ hkPay }}" title="Заявки на платёж"><span class="hkic">💰</span><sc-if value="{{ hkPayHas }}" hint-placeholder-val=""><span class="hkbadge">{{ hkPayN }}</span></sc-if></button><button class="hk" onClick="{{ hkTasks }}" title="Задачи"><span class="hkic">📋</span><sc-if value="{{ hkTaskHas }}" hint-placeholder-val=""><span class="hkbadge crit">{{ hkTaskN }}</span></sc-if></button></div>
 <sc-if value="{{ hasOnline }}" hint-placeholder-val="{{ true }}"><div class="online"><div class="onhd"><span class="onttl">Сейчас в программе</span><span class="cmyku"></span></div><div class="onlist"><sc-for list="{{ onlineUsers }}" as="u" hint-placeholder-count="0"><div class="onuser"><div class="onava" title="{{ u.tip }}" onContextMenu="{{ u.onCtx }}">{{ u.avatar }}<i class="ondot"></i><sc-if value="{{ u.hasStars }}" hint-placeholder-val=""><span class="onstars" title="KPI {{ u.starsLabel }}">{{ u.starsLabel }}</span></sc-if></div><div class="onname">{{ u.name }}</div><div class="onstat">в сети</div></div></sc-for></div><button class="ratebtn onrate" onClick="{{ goRating }}"><span>🏆</span> Рейтинг по задачам</button></div></sc-if>
@@ -3453,7 +3457,8 @@ window.dispatchEvent(new Event('fbready'));
 <div class="card"><div class="sec">Добавить платёж · заявка на согласование</div>
 <div class="genrow"><span class="seg {{ prDirOutCls }}" onClick="{{ setPrDirOut }}">↗ Оплата поставщику</span><span class="seg {{ prDirInCls }}" onClick="{{ setPrDirIn }}">↘ Поступление от клиента</span></div>
 <div class="uform">
-<div class="fg"><label>Контрагент</label><input class="inp" value="{{ prSupplier }}" onInput="{{ onPrSupplier }}" placeholder="ООО «ХимПоставка»"></div>
+<div class="fg"><label>Контрагент</label><input class="inp" list="prCpList" value="{{ prSupplier }}" onInput="{{ onPrSupplier }}" placeholder="Начните вводить название или ИНН"><datalist id="prCpList"><sc-for list="{{ prSupplierOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o.label }}"></option></sc-for></datalist><sc-if value="{{ prCpMatched }}" hint-placeholder-val=""><div class="prcpinfo">✓ Из справочника · ИНН {{ prCpInn }}<sc-if value="{{ prCpBank }}" hint-placeholder-val=""> · {{ prCpBank }} · БИК {{ prCpBik }}</sc-if></div></sc-if><sc-if value="{{ prCpUnmatched }}" hint-placeholder-val=""><div class="prcpinfo warn">Не из справочника. <button class="tlink" onClick="{{ prRegisterCp }}">Зарегистрировать контрагента →</button></div></sc-if></div>
+<sc-if value="{{ prShowContracts }}" hint-placeholder-val=""><div class="fg"><label>Договор</label><select class="sel" value="{{ prContractId }}" onChange="{{ onPrContract }}"><sc-for list="{{ prContractOpts }}" as="o" hint-placeholder-count="1"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select><sc-if value="{{ prContractInfo }}" hint-placeholder-val=""><div class="prcpinfo">{{ prContractInfo }}</div></sc-if></div></sc-if>
 <div class="fg"><label>Валюта</label><select class="sel" value="{{ prCurrency }}" onChange="{{ onPrCurrency }}"><sc-for list="{{ prCurOpts }}" as="c" hint-placeholder-count="4"><option value="{{ c.v }}">{{ c.label }}</option></sc-for></select></div>
 <sc-if value="{{ prIsRub }}" hint-placeholder-val="{{ true }}"><div class="fg"><label>Сумма, ₽</label><input class="inp num" type="number" value="{{ prAmount }}" onInput="{{ onPrAmount }}"></div></sc-if>
 <sc-if value="{{ prIsRub }}" hint-placeholder-val="x"><div class="fg"><label>Сумма в валюте</label><input class="inp num" type="number" value="{{ prCurAmount }}" onInput="{{ onPrCurAmount }}"></div></sc-if>
@@ -3568,7 +3573,7 @@ window.dispatchEvent(new Event('fbready'));
 </sc-if>
 
 <sc-if value="{{ isCparties }}" hint-placeholder-val="">
-<div class="card"><div class="sec">{{ cpFormTitle }}</div>
+<div class="card"><div class="secrow"><div class="sec">{{ cpFormTitle }}</div><sc-if value="{{ cpIsEdit }}" hint-placeholder-val=""><button class="btn" onClick="{{ cpNewBtn }}">+ Новый контрагент</button></sc-if></div>
 <div class="uform">
 <div class="fg"><label>Название контрагента</label><input class="inp" value="{{ cdName }}" onInput="{{ onCdName }}" placeholder="ООО «ХимПоставка»"></div>
 <div class="fg"><label>ИНН</label><input class="inp" value="{{ cdInn }}" onInput="{{ onCdInn }}" placeholder="7707083893"></div>
@@ -3576,10 +3581,21 @@ window.dispatchEvent(new Event('fbready'));
 <div class="fg"><label>Отсрочка платежа, дней</label><input class="inp num" type="number" value="{{ cdTerms }}" onInput="{{ onCdTerms }}" placeholder="0 = предоплата"></div>
 <div class="fg"><label>Лимит дебиторки, ₽</label><input class="inp num" type="number" value="{{ cdLimit }}" onInput="{{ onCdLimit }}" placeholder="0"></div>
 <div class="fg full"><label>Контакты</label><input class="inp" value="{{ cdContacts }}" onInput="{{ onCdContacts }}" placeholder="Менеджер, телефон, e-mail"></div>
+<div class="fg full"><label>Юридический адрес</label><input class="inp" value="{{ cdAddress }}" onInput="{{ onCdAddress }}" placeholder="Индекс, город, улица"></div>
+</div>
+<div class="sec2cp">🏦 Банковские реквизиты</div>
+<div class="uform">
+<div class="fg"><label>БИК банка</label><input class="inp" value="{{ cdBik }}" onInput="{{ onCdBik }}" placeholder="044525225"></div>
+<div class="fg full"><label>Банк</label><input class="inp" value="{{ cdBank }}" onInput="{{ onCdBank }}" placeholder="ПАО Сбербанк, г. Москва"></div>
+<div class="fg"><label>Корр. счёт</label><input class="inp" value="{{ cdCorr }}" onInput="{{ onCdCorr }}" placeholder="30101810400000000225"></div>
+<div class="fg"><label>Расчётный счёт</label><input class="inp" value="{{ cdAcc }}" onInput="{{ onCdAcc }}" placeholder="40702810..."></div>
 </div>
 <div class="sec2cp">Прайс-лист · что и по какой цене покупаем</div>
 <div class="cppl"><sc-for list="{{ cpPriceRows }}" as="p" hint-placeholder-count="2"><div class="cpplrow"><input class="inp" value="{{ p.material }}" onInput="{{ p.onMat }}" placeholder="Наименование сырья"><input class="inp num w120" type="number" value="{{ p.price }}" onInput="{{ p.onPrice }}" placeholder="Цена"><button class="tlink del" onClick="{{ p.del }}">✕</button></div></sc-for></div>
 <div class="genrow"><button class="btn" onClick="{{ addPrice }}">+ позиция прайса</button></div>
+<div class="secrow"><div class="sec2cp">📄 Договоры · {{ cpContractCount }}</div><button class="btn" onClick="{{ cpAddContract }}">+ Добавить договор</button></div>
+<sc-if value="{{ cpHasContracts }}" hint-placeholder-val=""><div class="scroll"><table class="rectbl"><thead><tr><th class="l">№ договора</th><th class="l">Дата</th><th class="l">Валюта</th><th class="l">Условия оплаты</th><th class="l">Условия поставки</th><th class="l">Срок</th><th class="l"></th></tr></thead><tbody><sc-for list="{{ cpContractRows }}" as="ct" hint-placeholder-count="1"><tr><td class="l nm">{{ ct.no }}</td><td class="l">{{ ct.date }}</td><td class="l mono">{{ ct.curSym }}</td><td class="l">{{ ct.payTerms }}</td><td class="l">{{ ct.deliveryTerms }}</td><td class="l">{{ ct.validTill }}</td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ ct.edit }}">Изменить</button><button class="ulink del" onClick="{{ ct.del }}">Удалить</button></div></td></tr></sc-for></tbody></table></div></sc-if>
+<sc-if value="{{ cpHasContracts }}" hint-placeholder-val="x"><div class="hint">Договоров пока нет. У одного контрагента может быть несколько договоров (с разной валютой и условиями). Сохраните контрагента и добавьте договор.</div></sc-if>
 <sc-if value="{{ cpHasErr }}" hint-placeholder-val=""><div class="banner err">{{ cpErr }}</div></sc-if>
 <div class="uactions"><button class="btn dark" onClick="{{ saveCp }}">Сохранить контрагента</button><sc-if value="{{ cpHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelCp }}">Отмена</button></sc-if></div>
 </div>
@@ -3588,6 +3604,21 @@ window.dispatchEvent(new Event('fbready'));
 <div class="scroll"><table><thead><tr><th class="l">Название</th><th class="l">ИНН</th><th class="l">Условия</th><th>Лимит</th><th class="l">Контакты</th><th>Прайс</th><th class="l">Действия</th></tr></thead>
 <tbody><sc-for list="{{ cpRows }}" as="c" hint-placeholder-count="2"><tr><td class="l nm">{{ c.name }}</td><td class="l mono">{{ c.inn }}</td><td class="l">{{ c.terms }}</td><td class="mono">{{ c.limit }}</td><td class="l">{{ c.contacts }}</td><td class="mono">{{ c.priceCount }}</td><td class="l"><div class="urowact"><button class="ulink" onClick="{{ c.edit }}">Изменить</button><button class="ulink del" onClick="{{ c.remove }}">Удалить</button></div></td></tr></sc-for></tbody></table></div>
 </div>
+<sc-if value="{{ contractOpen }}" hint-placeholder-val=""><div class="dlmapbg" onClick="{{ cancelContract }}"></div><div class="dlmap splitmodal">
+<div class="dlmaph">{{ contractTitle }}</div>
+<div class="dlmaps">Контрагент: <b>{{ contractCpName }}</b></div>
+<div class="uform">
+<div class="fg"><label>Номер договора</label><input class="inp" value="{{ ctNo }}" onInput="{{ onCtNo }}" placeholder="№ 2026-14"></div>
+<div class="fg"><label>Дата договора</label><input class="inp" type="date" value="{{ ctDate }}" onInput="{{ onCtDate }}"></div>
+<div class="fg"><label>Валюта платежа</label><select class="sel" value="{{ ctCurrency }}" onChange="{{ onCtCurrency }}"><sc-for list="{{ ctCurOpts }}" as="o" hint-placeholder-count="4"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select></div>
+<div class="fg"><label>Действует до</label><input class="inp" type="date" value="{{ ctValid }}" onInput="{{ onCtValid }}"></div>
+<div class="fg full"><label>Условия оплаты</label><input class="inp" value="{{ ctPayTerms }}" onInput="{{ onCtPayTerms }}" placeholder="Отсрочка 30 дн. / 50% аванс"></div>
+<div class="fg full"><label>Условия поставки</label><input class="inp" value="{{ ctDelivery }}" onInput="{{ onCtDelivery }}" placeholder="Самовывоз / DAP склад / FCA"></div>
+<div class="fg full"><label>Примечание</label><input class="inp" value="{{ ctNote }}" onInput="{{ onCtNote }}" placeholder="Доп. условия"></div>
+</div>
+<sc-if value="{{ contractHasErr }}" hint-placeholder-val=""><div class="banner err">{{ contractErr }}</div></sc-if>
+<div class="dlmapfoot"><button class="btn dark" onClick="{{ saveContract }}">Сохранить договор</button><button class="btn" onClick="{{ cancelContract }}">Отмена</button></div>
+</div></sc-if>
 </sc-if>
 
 <sc-if value="{{ isUsers }}" hint-placeholder-val="">
@@ -9480,6 +9511,30 @@ class Component extends DCLogic {
     };
   }
   // ===== Заявки на платёж (согласование) =====
+  // Автоподстановка контрагента из справочника (по названию/ИНН) → банк, реквизиты, договор, валюта, условия оплаты
+  prPickSupplier(val) {
+    const d = { ...(this.state.prDraft || this.emptyPayReq()), supplier: val };
+    const raw = (val || '').split(' · ИНН ')[0].trim();
+    const cp = (this.state.cparties || []).find(c => this.norm(c.name) === this.norm(raw) || (c.inn && val.includes(c.inn)));
+    if (cp) {
+      d.supplier = cp.name; d.cpId = cp.id; d.inn = cp.inn || ''; d.bik = cp.bik || ''; d.bank = cp.bank || ''; d.corrAcc = cp.corrAcc || ''; d.account = cp.account || '';
+      const cs = cp.contracts || [];
+      if (cs.length === 1) this._applyContract(d, cs[0]);
+    } else { d.cpId = ''; d.contractId = ''; }
+    this.setState({ prDraft: d, prErr: '' });
+  }
+  _applyContract(d, c) {
+    if (!c) return; d.contractId = c.id; d.contractNo = c.no;
+    if (c.currency && c.currency !== d.currency) { d.currency = c.currency; d.rate = this.cbRate(c.currency); d.rateAccrual = this.cbRate(c.currency); }
+    if (c.payTerms && !d.purpose) d.purpose = 'По договору № ' + c.no + ' · ' + c.payTerms;
+  }
+  prPickContract(ctId) {
+    const d = { ...(this.state.prDraft || this.emptyPayReq()) };
+    const cp = (this.state.cparties || []).find(x => x.id === d.cpId);
+    const c = cp && (cp.contracts || []).find(x => x.id === ctId);
+    if (c) this._applyContract(d, c); else d.contractId = '';
+    this.setState({ prDraft: d, prErr: '' });
+  }
   emptyPayReq() { const cu = this.state.currentUser; return { id: '', direction: 'out', initiator: cu ? cu.name : '', initiatorId: cu ? cu.id : '', approverId: '', supplier: '', currency: 'RUB', rateMode: 'cb', rate: 0, rateAccrual: 0, amountCur: '', amount: '', date: this.ymd(new Date()), dueDate: this.ymd(new Date()), payType: 'full', prepayPct: 50, termDays: 0, schedule: [], purpose: '', status: 'Черновик', track: true, lines: [], fileRef: null, invNo: '', invDate: '', invTotal: 0, vatRate: 22, paidAmount: 0 }; }
   // Курс ЦБ для валюты (₽ за единицу)
   cbRate(cur) { if (!cur || cur === 'RUB') return 1; const S = this.state; if (cur === 'EUR') { const e = S.rates && S.rates.EUR && S.rates.EUR.val; return e || Number(S.rate) || 0; } const r = S.rates && S.rates[cur]; return (r && r.val) || 0; }
@@ -9775,7 +9830,13 @@ class Component extends DCLogic {
       prDraftHasFile: !!(d.fileRef && d.fileRef.id), prDraftFileName: d.fileRef ? d.fileRef.name : '', prDraftOpenFile: () => this.faOpen(d.fileRef && d.fileRef.id),
       prDir: d.direction || 'out', prDirOutCls: (d.direction || 'out') === 'out' ? 'segon' : 'seg', prDirInCls: d.direction === 'in' ? 'segon' : 'seg',
       setPrDirOut: () => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), direction: 'out' } }), setPrDirIn: () => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), direction: 'in' } }),
-      prSupplier: d.supplier || '', onPrSupplier: upd('supplier'), prDate: d.date || '', onPrDate: upd('date'), prPurpose: d.purpose || '', onPrPurpose: upd('purpose'),
+      prSupplier: d.supplier || '', onPrSupplier: (e) => this.prPickSupplier(e.target.value), prDate: d.date || '', onPrDate: upd('date'), prPurpose: d.purpose || '', onPrPurpose: upd('purpose'),
+      prSupplierOpts: (S.cparties || []).slice().sort((a, b) => (a.name || '').localeCompare(b.name || '', 'ru')).map(c => ({ label: c.name + (c.inn ? ' · ИНН ' + c.inn : '') })),
+      prCpMatched: !!d.cpId, prCpUnmatched: !d.cpId && !!(d.supplier && d.supplier.trim().length > 1), prCpBank: d.bank ? (d.bank + (d.account ? ' · р/с ' + d.account : '')) : '', prCpBik: d.bik || '', prCpInn: d.inn || '',
+      prContractOpts: (function () { const cp = (S.cparties || []).find(x => x.id === d.cpId); const cs = cp ? (cp.contracts || []) : []; return [{ v: '', label: cs.length ? '— выберите договор —' : 'нет договоров' }].concat(cs.map(c => ({ v: c.id, label: '№ ' + c.no + (c.date ? ' от ' + this.dmFull(c.date) : '') + ' · ' + (c.currency || 'RUB') }))); }).call(this),
+      prContractId: d.contractId || '', onPrContract: (e) => this.prPickContract(e.target.value), prShowContracts: !!d.cpId,
+      prContractInfo: (function () { const cp = (S.cparties || []).find(x => x.id === d.cpId); const c = cp && (cp.contracts || []).find(x => x.id === d.contractId); return c ? ('Оплата: ' + (c.payTerms || '—') + ' · Поставка: ' + (c.deliveryTerms || '—')) : ''; }).call(this),
+      prRegisterCp: () => this.setState({ tab: 'cparties', cpDraft: { ...this.emptyCp(), name: (this.state.prDraft || {}).supplier || '' }, navOpen: false }),
       prCurrency: cur, onPrCurrency: (e) => { const c = e.target.value; set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), currency: c, rate: this.cbRate(c), rateAccrual: this.cbRate(c) }, prErr: '' }); }, prCurOpts: ['RUB', 'EUR', 'USD', 'CNY'].map(c => ({ v: c, label: c + ' ' + this.curSym(c) })),
       prIsRub: isRub, prCurAmount: d.amountCur || '', onPrCurAmount: upd('amountCur'), prAmount: d.amount || '', onPrAmount: upd('amount'),
       prRateMode: d.rateMode || 'cb', onPrRateMode: (e) => set({ prDraft: { ...(this.state.prDraft || this.emptyPayReq()), rateMode: e.target.value, rate: e.target.value === 'cb' ? this.cbRate(cur) : (this.state.prDraft || {}).rate || this.cbRate(cur) }, prErr: '' }), prRateModeOpts: [['cb', 'Курс ЦБ'], ['fixed', 'Фиксированный'], ['manual', 'Ручной']].map(x => ({ v: x[0], label: x[1] })),
@@ -10579,7 +10640,8 @@ class Component extends DCLogic {
     return { gsOpen: true, searchResults: top, gsEmpty: top.length === 0, gsGroups, gsHasResults: top.length > 0, gsCount: String(res.length), gsShown: String(top.length), gsQuery: raw };
   }
   // ===== Справочник контрагентов =====
-  emptyCp() { return { id: '', name: '', inn: '', kpp: '', terms: '', limit: '', contacts: '', priceList: [] }; }
+  emptyCp() { return { id: '', name: '', inn: '', kpp: '', terms: '', limit: '', contacts: '', bik: '', bank: '', corrAcc: '', account: '', address: '', priceList: [], contracts: [] }; }
+  emptyContract() { return { id: '', no: '', date: '', currency: 'RUB', payTerms: '', deliveryTerms: '', validTill: '', note: '' }; }
   writeCparties(next) {
     this.setState({ cparties: next });
     try { this.lsSet('cparties', JSON.stringify(next)); } catch (e) {}
@@ -10593,10 +10655,39 @@ class Component extends DCLogic {
     const inn = (d.inn || '').trim();
     // Контроль уникальности по ИНН: запрет дублей контрагента с тем же ИНН
     if (inn) { const dup = (S.cparties || []).find(x => x.id !== d.id && String(x.inn || '').trim() === inn); if (dup) { this.setState({ cpErr: 'Контрагент с ИНН ' + inn + ' уже есть: «' + dup.name + '». Дубль по ИНН запрещён.' }); return; } }
-    const cp = { id: d.id || ('cp_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), name: name.slice(0, 160), inn, kpp: (d.kpp || '').trim(), terms: Number(d.terms) || 0, limit: Number(d.limit) || 0, contacts: (d.contacts || '').trim(), priceList: pl, history: d.history || [], roles: d.roles || [], createdAt: d.createdAt || Date.now() };
+    const cp = { id: d.id || ('cp_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), name: name.slice(0, 160), inn, kpp: (d.kpp || '').trim(), terms: Number(d.terms) || 0, limit: Number(d.limit) || 0, contacts: (d.contacts || '').trim(),
+      bik: (d.bik || '').trim(), bank: (d.bank || '').trim(), corrAcc: (d.corrAcc || '').trim(), account: (d.account || '').trim(), address: (d.address || '').trim(),
+      priceList: pl, contracts: Array.isArray(d.contracts) ? d.contracts : [], history: d.history || [], roles: d.roles || [], createdAt: d.createdAt || Date.now() };
     const list = d.id ? (S.cparties || []).map(x => x.id === d.id ? cp : x) : [cp, ...(S.cparties || [])];
     this.writeCparties(list);
-    this.setState({ cpDraft: null, cpErr: '' });
+    this.setState({ cpDraft: null, cpErr: '', cpSaved: name });
+    this.pushRecalcToast && this.pushRecalcToast('✓ Контрагент сохранён: ' + name);
+    setTimeout(() => this.setState({ cpSaved: '' }), 2500);
+  }
+  // Сохранить договор в карточке контрагента (диалог)
+  saveContract() {
+    const S = this.state, cd = S.contractDlg; if (!cd) return;
+    const no = (cd.no || '').trim();
+    if (!no) { this.setState({ contractErr: 'Укажите номер договора' }); return; }
+    const cp = (S.cparties || []).find(x => x.id === cd.cpId); if (!cp) { this.setState({ contractDlg: null }); return; }
+    const c = { id: cd.id || ('ct_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), no: no, date: cd.date || '', currency: cd.currency || 'RUB', payTerms: (cd.payTerms || '').trim(), deliveryTerms: (cd.deliveryTerms || '').trim(), validTill: cd.validTill || '', note: (cd.note || '').trim() };
+    const contracts = cd.id ? (cp.contracts || []).map(x => x.id === cd.id ? c : x) : [...(cp.contracts || []), c];
+    const list = (S.cparties || []).map(x => x.id === cp.id ? { ...x, contracts } : x);
+    this.writeCparties(list);
+    // если открыта карточка контрагента — синхронизировать черновик
+    const patch = { contractDlg: null, contractErr: '' };
+    if (this.state.cpDraft && this.state.cpDraft.id === cp.id) patch.cpDraft = { ...this.state.cpDraft, contracts };
+    this.setState(patch);
+    this.pushRecalcToast && this.pushRecalcToast('✓ Договор № ' + no + ' сохранён для «' + cp.name + '»');
+  }
+  openContractDlg(cpId, contract) {
+    const cp = (this.state.cparties || []).find(x => x.id === cpId);
+    this.setState({ contractDlg: { cpId, cpName: cp ? cp.name : '', ...(contract || this.emptyContract()) }, contractErr: '' });
+  }
+  delContract(cpId, ctId) {
+    const list = (this.state.cparties || []).map(x => x.id === cpId ? { ...x, contracts: (x.contracts || []).filter(c => c.id !== ctId) } : x);
+    this.writeCparties(list);
+    if (this.state.cpDraft && this.state.cpDraft.id === cpId) this.setState({ cpDraft: { ...this.state.cpDraft, contracts: (this.state.cpDraft.contracts || []).filter(c => c.id !== ctId) } });
   }
   buildCparties() {
     const S = this.state, set = (p) => this.setState(p);
@@ -10609,13 +10700,27 @@ class Component extends DCLogic {
     }));
     const plSet = (i, k, v) => { const pl = ((this.state.cpDraft || {}).priceList || []).slice(); pl[i] = { ...pl[i], [k]: v }; set({ cpDraft: { ...this.state.cpDraft, priceList: pl } }); };
     const plRows = (dd.priceList || []).map((p, i) => ({ material: p.material || '', price: p.price || '', onMat: (e) => plSet(i, 'material', e.target.value), onPrice: (e) => plSet(i, 'price', e.target.value), del: () => set({ cpDraft: { ...this.state.cpDraft, priceList: (this.state.cpDraft.priceList || []).filter((_, j) => j !== i) } }) }));
+    const CUR = { RUB: '₽', EUR: '€', USD: '$', CNY: '¥' };
+    const contractRows = (dd.contracts || []).map(c => ({ id: c.id, no: c.no || '—', date: c.date ? this.dmFull(c.date) : '', currency: c.currency || 'RUB', curSym: CUR[c.currency || 'RUB'] || c.currency, payTerms: c.payTerms || '—', deliveryTerms: c.deliveryTerms || '—', validTill: c.validTill ? ('до ' + this.dmFull(c.validTill)) : '', edit: () => this.openContractDlg(dd.id, c), del: () => this.delContract(dd.id, c.id) }));
+    const cd = S.contractDlg, cdd = cd || {};
+    const cupd = (k) => (e) => set({ contractDlg: { ...(this.state.contractDlg || {}), [k]: e.target.value }, contractErr: '' });
     return {
       isCparties: true, cpRows: rows, cpEmpty: rows.length === 0, cpCount: String(rows.length),
       cpFormTitle: (d && d.id) ? 'Изменить контрагента' : 'Новый контрагент', cpHasDraft: !!d, cpIsEdit: !!(d && d.id),
+      cpNewBtn: () => set({ cpDraft: this.emptyCp(), cpErr: '' }),
       cdName: dd.name || '', onCdName: upd('name'), cdInn: dd.inn || '', onCdInn: upd('inn'), cdKpp: dd.kpp || '', onCdKpp: upd('kpp'),
       cdTerms: dd.terms || '', onCdTerms: upd('terms'), cdLimit: dd.limit || '', onCdLimit: upd('limit'), cdContacts: dd.contacts || '', onCdContacts: upd('contacts'),
+      cdBik: dd.bik || '', onCdBik: upd('bik'), cdBank: dd.bank || '', onCdBank: upd('bank'), cdCorr: dd.corrAcc || '', onCdCorr: upd('corrAcc'), cdAcc: dd.account || '', onCdAcc: upd('account'), cdAddress: dd.address || '', onCdAddress: upd('address'),
       cpPriceRows: plRows, addPrice: () => set({ cpDraft: { ...(this.state.cpDraft || this.emptyCp()), priceList: [...(((this.state.cpDraft || {}).priceList) || []), { material: '', price: '' }] } }),
+      cpContractRows: contractRows, cpHasContracts: contractRows.length > 0, cpContractCount: String(contractRows.length),
+      cpAddContract: () => { if (!dd.id) { set({ cpErr: 'Сначала сохраните контрагента, затем добавляйте договоры.' }); return; } this.openContractDlg(dd.id, null); },
       saveCp: () => this.saveCp(), cancelCp: () => set({ cpDraft: null, cpErr: '' }), cpErr: S.cpErr || '', cpHasErr: !!S.cpErr,
+      // диалог договора
+      contractOpen: !!cd, contractTitle: (cd && cd.id) ? 'Изменить договор' : 'Новый договор', contractCpName: cdd.cpName || '',
+      ctNo: cdd.no || '', onCtNo: cupd('no'), ctDate: cdd.date || '', onCtDate: cupd('date'),
+      ctCurrency: cdd.currency || 'RUB', onCtCurrency: cupd('currency'), ctCurOpts: [['RUB', '₽ Рубль'], ['EUR', '€ Евро'], ['USD', '$ Доллар'], ['CNY', '¥ Юань']].map(o => ({ v: o[0], label: o[1] })),
+      ctPayTerms: cdd.payTerms || '', onCtPayTerms: cupd('payTerms'), ctDelivery: cdd.deliveryTerms || '', onCtDelivery: cupd('deliveryTerms'), ctValid: cdd.validTill || '', onCtValid: cupd('validTill'), ctNote: cdd.note || '', onCtNote: cupd('note'),
+      saveContract: () => this.saveContract(), cancelContract: () => set({ contractDlg: null, contractErr: '' }), contractErr: S.contractErr || '', contractHasErr: !!S.contractErr,
     };
   }
   // ===== Модуль «Документы»: печатные формы на фирменном бланке =====
