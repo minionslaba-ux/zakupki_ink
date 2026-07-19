@@ -5100,8 +5100,28 @@ class Component extends DCLogic {
     await this.ctIdbPut(id, tree);
     this.ctArchSaveIndex(idx); try { this.lsSet('ctarch_cur', id); } catch (e) {}
     this.ctTree = tree; this._ctActiveId = id; this._ctAggCache = null;
+    // Дождаться выгрузки в облако (а не «выстрелил и забыл») — иначе при быстрой загрузке нескольких
+    // периодов подряд более ранние выгрузки могут не успеть завершиться и останутся только на этом
+    // устройстве. Если push не удался (сеть/гонка блокировки области) — период останется без метки
+    // synced и будет автоматически довыгружен через ctResyncLocal() при следующем подключении к облаку.
     if (this.state.cloudConnected && !this.areaHeldByOther('costtree')) {
-      this.dsPush('ct:' + pk.key, 'costtree', { fileName: tree.fileName || '', period: tree.period || '', key: pk.key, y: pk.y, m: pk.m, batchN: tree.batches.length, cur: tree.cur || '€', at: Date.now() }, tree);
+      const ok = await this.dsPush('ct:' + pk.key, 'costtree', { fileName: tree.fileName || '', period: tree.period || '', key: pk.key, y: pk.y, m: pk.m, batchN: tree.batches.length, cur: tree.cur || '€', at: Date.now() }, tree);
+      if (ok) { const idx2 = this.ctArchIndex(); const e2 = idx2.find(x => x.id === id); if (e2) { e2.synced = true; this.ctArchSaveIndex(idx2); } }
+    }
+  }
+  // Самолечение: локальные периоды, ни разу не подтверждённые облаком (например, push молча не удался
+  // при быстрой загрузке нескольких файлов подряд), довыгружаются при каждом успешном подключении —
+  // иначе они остаются видны только на устройстве, где были загружены.
+  async ctResyncLocal() {
+    if (!this.state.cloudConnected || this.areaHeldByOther('costtree')) return;
+    const idx = this.ctArchIndex();
+    for (const e of idx) {
+      if (e.cloud || e.synced) continue;
+      try {
+        const t = await this.ctArchGetTree(e); if (!t || !t.batches || !t.batches.length) continue;
+        const ok = await this.dsPush('ct:' + e.key, 'costtree', { fileName: e.fileName || '', period: e.period || '', key: e.key, y: e.y, m: e.m, batchN: e.batchN || t.batches.length, cur: e.cur || t.cur || '€', at: e.uploadedAt || Date.now() }, t);
+        if (ok) { const idx2 = this.ctArchIndex(); const e2 = idx2.find(x => x.id === e.id); if (e2) { e2.synced = true; this.ctArchSaveIndex(idx2); } }
+      } catch (err) {}
     }
   }
   async ctSelectArch(id) { const e = this.ctArchIndex().find(x => x.id === id); if (!e) return; const t = await this.ctArchGetTree(e); if (t) { this.ctTree = t; this._ctActiveId = id; this._ctAggCache = null; try { this.lsSet('ctarch_cur', id); } catch (_) {} this.setState({ ctGenerated: false, ctExpanded: {} }); } }
@@ -7922,6 +7942,11 @@ class Component extends DCLogic {
       this.setState({ cloudConnected: true, cloudStatus: 'Онлайн' });
       this.startPresence();
       try { this.xStartListeners(); } catch (e) {}
+      // Довыгрузить периоды «Дерева себестоимости», которые остались только на этом устройстве
+      // (например, push молча не удался при быстрой загрузке нескольких файлов подряд) — иначе они
+      // невидимы на других устройствах/сессиях. Небольшая задержка — дать начальному onSnapshot
+      // применить реестр блокировок/датасетов, прежде чем решать, что довыгружать.
+      setTimeout(() => { try { this.ctResyncLocal(); } catch (e) {} }, 1500);
     } catch (e) { this.setState({ cloudErr: 'Не удалось подключиться: ' + e.message, cloudStatus: '' }); }
   }
 
