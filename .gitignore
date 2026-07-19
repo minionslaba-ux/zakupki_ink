@@ -1,0 +1,29 @@
+# --- Секреты и ключи: НИКОГДА не коммитить ---
+.env
+.env.*
+*.env
+serviceAccount*.json
+firebase-adminsdk*.json
+*-service-account*.json
+secrets.json
+**/secrets/**
+
+# Ключи AI / OCR провайдеров
+*anthropic*key*
+*openai*key*
+*deepseek*key*
+*ocr*key*
+api-keys.*
+
+# --- Боевые данные (живут в localStorage / IndexedDB / облаке, не в репозитории) ---
+data/
+backups/
+*.dump
+*.sqlite
+
+# --- Системное ---
+.DS_Store
+Thumbs.db
+node_modules/
+*.log
+.cache/
