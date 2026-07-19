@@ -373,6 +373,8 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .tctbl .nm{font-weight:600;color:#1a1916;white-space:normal;max-width:280px;display:inline-block}
 .tcsec{color:#8a8782;font-size:11.5px;white-space:nowrap}
 .tcrow.tcfix{background:#fbfaf8}
+.tcrow.tcsub .nm,.tcrow.tcsub .tcsec{color:#a29e97}
+.tcrow.tcsub td.l:first-child .nm,.tcrow.tcsub td.l:first-child input.tcname{padding-left:14px}
 .tcfact{font-weight:700;color:#2A6FDB}
 .tcin{width:78px;text-align:right;border:1px solid #d8d5d0;border-radius:6px;padding:5px 7px;font-size:12.5px;background:#fff;color:#1a1916}
 .tcin:focus{outline:none;border-color:#2A6FDB;box-shadow:0 0 0 2px rgba(42,111,219,.15)}
@@ -5953,7 +5955,9 @@ class Component extends DCLogic {
       const qty = isMain ? this.tcNum(c.weight) / sumW : this.tcNum(c.qty);
       const price = this.tcNum(c.priceEur);
       const eurVat = qty * price * (1 + vat), rubVat = eurVat * rE;
-      sumEurVat += eurVat;
+      // excludeFromSum — для строк-раскладки полупродукта до сырья: показываем цену/сумму СПРАВОЧНО,
+      // но не прибавляем повторно к итогу — его стоимость уже учтена в строке самого полупродукта.
+      if (!c.excludeFromSum) sumEurVat += eurVat;
       const editP = c.editablePrice !== false;
       const nameEd = !!c.nameEditable;
       return {
@@ -5968,7 +5972,7 @@ class Component extends DCLogic {
         priceInput: price.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 4 }),
         priceEditable: editP, priceStatic: !editP, priceReadS: this.tcEur(price),
         eurVatS: eurVat ? this.tcEur(eurVat) : '—', rubVatS: rubVat ? this.tcRub(rubVat) : '—',
-        rowCls: isMain ? 'tcrow' : 'tcrow tcfix', deletable: c.deletable !== false,
+        rowCls: isMain ? 'tcrow' : (c.excludeFromSum ? 'tcrow tcfix tcsub' : 'tcrow tcfix'), deletable: c.deletable !== false,
         onName: c.onName || (() => {}), onPct: (e) => { const t = e.target.value; this.setState({ efText: t }); (c.onPct || (() => {}))(e); }, onPrice: c.onPrice || (() => {}), onDel: c.onDel || (() => {})
       };
     });
@@ -6051,9 +6055,10 @@ class Component extends DCLogic {
     const s = this.tcset || (this.tcset = this.tcLiveDefaults());
     const owner = this.norm(name);
     const lines = this.recipeLinesFor(name);
-    const comps = lines.map((ln) => {
+    const comps = [];
+    for (const ln of lines) {
       const semi = this.isSemi(ln.component);
-      return {
+      comps.push({
         name: ln.component, section: semi ? 'Полупродукт' : 'Сырьё', unit: 'кг', kind: 'main',
         weight: ln.pct, basePct: ln.pct, priceEur: this.tcEffPrice(ln.component),
         pctInput: (this.tcNum(ln.pct) * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }),
@@ -6062,8 +6067,25 @@ class Component extends DCLogic {
         onPct: (e) => { const v = e.target.value.trim(); const num = Math.min(100, Math.max(0, Math.round(this.tcNum(v) * 100) / 100)); if (ln.added) { set(st => { const arr = (st.added[owner] || []).slice(); if (arr[ln.ai]) arr[ln.ai] = { ...arr[ln.ai], pct: num }; return { added: { ...st.added, [owner]: arr } }; }); } else { set(st => { const pk = { ...st.pct }; if (v === '') delete pk[owner + '|' + ln.idx]; else pk[owner + '|' + ln.idx] = num; return { pct: pk }; }); } },
         onPrice: semi ? null : (e) => { const val = e.target.value; set(st => ({ prices: { ...st.prices, [this.norm(ln.component)]: val } })); },
         onDel: ln.added ? () => { set(st => { const arr = (st.added[owner] || []).slice(); arr.splice(ln.ai, 1); return { added: { ...st.added, [owner]: arr } }; }); } : null
-      };
-    });
+      });
+      // Полупродукт раскладывается до первоначального сырья (рекурсивно, через все вложенные полупродукты) —
+      // справочные строки сразу под ним; цена каждой строки редактируется прямо здесь и пишется в общий
+      // реестр цен (state.prices), как и обычное сырьё. В итог себестоимости НЕ прибавляются повторно
+      // (excludeFromSum) — их стоимость уже учтена в строке самого полупродукта (this.tcEffPrice выше).
+      if (semi) {
+        const acc = {}; this.explodeRaw(ln.component, ln.pct, acc, new Set());
+        const rawNames = Object.keys(acc).sort((a, b) => acc[b] - acc[a]);
+        for (const rn of rawNames) {
+          const q = acc[rn];
+          comps.push({
+            name: rn, section: '↳ сырьё из «' + ln.component + '»', unit: 'кг', kind: 'sub',
+            qty: q, priceEur: this.tcEffPrice(rn), excludeFromSum: true,
+            nameEditable: false, editablePrice: true, deletable: false,
+            onPrice: (e) => { const val = e.target.value; set(st => ({ prices: { ...st.prices, [this.norm(rn)]: val } })); }
+          });
+        }
+      }
+    }
     const rowsV = this.tcRowsVals(comps, s);
     const setField = this.tcMakeSetField(s, () => this.saveTcset());
     const result = Object.assign({
@@ -6090,7 +6112,8 @@ class Component extends DCLogic {
       const eurVat = qty * price * (1 + vat);
       return [i + 1, c.name || '', c.section || '', r4(qty), r2(price), r2(eurVat), r2(eurVat * rE)];
     });
-    const sumEurVat = xlRows.reduce((a, r) => a + r[5], 0);
+    // excludeFromSum (строки-раскладка полупродукта до сырья) — справочные, не прибавляются к итогу повторно
+    const sumEurVat = xlRows.reduce((a, r, i) => a + (comps[i].excludeFromSum ? 0 : r[5]), 0);
     const xlTotal = ['ИТОГО', '', '', '', '', r2(sumEurVat), r2(sumEurVat * rE)];
     const cols = [{ l: '№' }, { l: 'Компонент' }, { l: 'Раздел' }, { l: 'Кол-во/кг', r: true }, { l: 'Цена €/ед.', r: true }, { l: '€/кг с НДС', r: true }, { l: '₽/кг с НДС', r: true }];
     const cell = (v, r, tot) => ({ v, r, tot });
