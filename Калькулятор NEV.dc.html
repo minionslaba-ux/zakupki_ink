@@ -6336,12 +6336,20 @@ class Component extends DCLogic {
     }
     // продукты (пополнение справочника ГП)
     for (const k in o.products) { const p = o.products[k]; if (!this.data.products.some(x => this.norm(x.name) === k)) this.data.products.push({ name: p.name, article: p.article || '', type: p.type || '', client: '', userAdded: true }); }
-    // рецептуры: обновить % содержания / добавить строки
-    const recByKey = new Map(); this.data.recipes.forEach(r => { if (r.component) recByKey.set(this.norm(r.product) + '|||' + this.norm(r.component), r); });
-    for (const key in o.recipes) {
-      const it = o.recipes[key]; const ex = recByKey.get(key);
-      if (ex) { if (it.pct != null) ex.pct_base = it.pct; }
-      else { const cnt = this.data.recipes.filter(r => this.norm(r.product) === this.norm(it.product)).length; this.data.recipes.push({ product: it.product, component: it.component, pct_base: it.pct || 0, idx: cnt + 1, userAdded: true }); }
+    // рецептуры: для каждого продукта из актуализации ПОЛНОСТЬЮ замещаем состав данными последнего загруженного файла
+    // (не мержим построчно — иначе остаются устаревшие компоненты, убранные в новом файле)
+    const overlayByProd = new Map();
+    for (const key in o.recipes) { const it = o.recipes[key]; if (!it || !it.product || !it.component) continue; const pk = this.norm(it.product); if (!overlayByProd.has(pk)) overlayByProd.set(pk, []); overlayByProd.get(pk).push(it); }
+    if (overlayByProd.size) {
+      const nameByPk = new Map();
+      this.data.recipes.forEach(r => { const pk = this.norm(r.product); if (overlayByProd.has(pk) && !nameByPk.has(pk)) nameByPk.set(pk, r.product); });
+      // выкидываем прежние строки актуализируемых продуктов и пересобираем их состав заново
+      this.data.recipes = this.data.recipes.filter(r => !overlayByProd.has(this.norm(r.product)));
+      for (const [pk, list] of overlayByProd) {
+        const pname = nameByPk.get(pk) || (list[0] && list[0].product) || '';
+        let idx = 1;
+        for (const it of list) this.data.recipes.push({ product: pname, component: it.component, pct_base: it.pct || 0, idx: idx++, actualized: true, userAdded: true });
+      }
     }
     this.buildIndex(); this._dvCat = null; this._memo = new Map();
   }
@@ -6382,13 +6390,27 @@ class Component extends DCLogic {
     this._tcc.prices[k] = Object.assign({}, obj, { periodKey: periodKey || (ex && ex.periodKey) || '' });
     return true;
   }
-  // Слияние одной строки рецептуры — та же логика приоритета периода.
-  tccMergeRecipeEntry(product, component, pct, periodKey, rep) {
-    const key = this.norm(product) + '|||' + this.norm(component);
-    const ex = this._tcc.recipes[key];
-    if (ex && ex.periodKey && periodKey && !this.tccPeriodNotOlder(periodKey, ex.periodKey)) { if (rep) rep.skippedOld = (rep.skippedOld || 0) + 1; return false; }
-    this._tcc.recipes[key] = { product, component, pct, periodKey: periodKey || (ex && ex.periodKey) || '' };
-    return true;
+  // Слияние набора строк рецептуры одной "порции" данных (одного файла/дерева), сгруппированных по продукту.
+  // Для каждого продукта: если по нему уже есть данные за более поздний период — пропускаем весь продукт
+  // целиком (устаревший файл не может частично подмешаться); иначе ПОЛНОСТЬЮ замещаем состав продукта —
+  // так устаревшие компоненты, убранные в новом файле, не остаются висеть в системе.
+  // statusMap — общий на весь сеанс актуализации кэш решений «продукт+период», чтобы при мульти-файловой
+  // загрузке не перетирать уже применённые в этом же сеансе строки повторной проверкой.
+  tccMergeRecipeSet(items, periodKey, rep, statusMap) {
+    let applied = 0;
+    const byProd = new Map();
+    for (const r of (items || [])) { if (!r || !r.product || !r.component) continue; const pk = this.norm(r.product); if (!pk) continue; if (!byProd.has(pk)) byProd.set(pk, []); byProd.get(pk).push(r); }
+    for (const [pk, lines] of byProd) {
+      const statusKey = pk + '@@' + (periodKey || '');
+      if (!statusMap.has(statusKey)) {
+        const blocked = Object.keys(this._tcc.recipes).some(rk => { const ex = this._tcc.recipes[rk]; return this.norm(ex.product) === pk && ex.periodKey && periodKey && !this.tccPeriodNotOlder(periodKey, ex.periodKey); });
+        if (!blocked) { for (const rk in this._tcc.recipes) { if (this.norm(this._tcc.recipes[rk].product) === pk) delete this._tcc.recipes[rk]; } }
+        statusMap.set(statusKey, !blocked);
+      }
+      if (!statusMap.get(statusKey)) { if (rep) rep.skippedOld = (rep.skippedOld || 0) + lines.length; continue; }
+      for (const r of lines) { const key = pk + '|||' + this.norm(r.component); this._tcc.recipes[key] = { product: r.product, component: r.component, pct: r.pct, periodKey: periodKey || '' }; applied++; }
+    }
+    return applied;
   }
   // Распознать колонки и извлечь дельты. sheets: aoa | [aoa,...]; kind: 'tree' | 'output' | 'auto'
   tccExtract(sheets, kind) {
@@ -6515,13 +6537,13 @@ class Component extends DCLogic {
     const d = this.tccTreeDeltas(tree);
     const periodKey = this.ctPeriodKey(tree).key;
     const rep = { skippedOld: 0 };
-    let np = 0, nr = 0, nnew = 0;
+    let np = 0, nnew = 0;
     for (const p of d.prices) {
       const k = this.norm(p.name); if (!k) continue;
       const wasKnown = this.rawByName && this.rawByName.has(k); const existed = !!this._tcc.prices[k];
       if (this.tccMergePriceEntry(p.name, { name: p.name, price: p.price, gross: p.price, vat: 0, article: '', unit: p.unit || 'кг', cat: '' }, periodKey, rep)) { if (!wasKnown && !existed) nnew++; np++; }
     }
-    for (const r of d.recipes) { if (this.tccMergeRecipeEntry(r.product, r.component, r.pct, periodKey, rep)) nr++; }
+    const nr = this.tccMergeRecipeSet(d.recipes, periodKey, rep, new Map());
     for (const p of d.products) { const k = this.norm(p.name); if (!k) continue; if (!this._tcc.products[k] && !(this.data && (this.data.products || []).some(x => this.norm(x.name) === k))) this._tcc.products[k] = { name: p.name, type: '', article: '' }; }
     this._tcc.date = Date.now();
     this._tcc.summary = 'Обновлено из «' + source + '»: цен ' + np + ', строк рецептур ' + nr + ', новой номенклатуры ' + nnew + (rep.skippedOld ? ' · пропущено (в системе данные новее) ' + rep.skippedOld : '');
@@ -6608,6 +6630,7 @@ class Component extends DCLogic {
     const netOf = (price, rowVatPct) => { const v = (rowVatPct == null) ? defVat : rowVatPct; return v > 0 ? price / (1 + v) : price; };
     const rep = { files: 0, prices: 0, recipes: 0, newRaw: 0, newProd: 0, outputs: 0, skippedOld: 0, kinds: [], errors: [], aiUsed: 0, anomalies: [], vatRate: defVat, vatMode: (S.acVatMode === 'net' ? 'net' : 'gross') };
     const treesToArchive = [];
+    const _recipeStatus = new Map(); // «продукт+период» → уже применён/пропущен в этом сеансе актуализации (несколько файлов)
     for (const it of items) {
       try {
         const sheets = await this.tccReadSheets(it.file);
@@ -6640,7 +6663,7 @@ class Component extends DCLogic {
           const wasKnown = this.rawByName && this.rawByName.has(k); const existed = !!this._tcc.prices[k];
           if (this.tccMergePriceEntry(p.name, { name: p.name, price: net, gross: p.price, vat: (p.vatPct != null ? p.vatPct : defVat), article: p.article || '', unit: p.unit || 'кг', cat: p.cat || '' }, d.periodKey, rep)) { if (!wasKnown && !existed) rep.newRaw++; rep.prices++; }
         }
-        for (const r of d.recipes) { if (this.tccMergeRecipeEntry(r.product, r.component, r.pct, d.periodKey, rep)) rep.recipes++; }
+        rep.recipes += this.tccMergeRecipeSet(d.recipes, d.periodKey, rep, _recipeStatus);
         for (const p of d.products) { const k = this.norm(p.name); if (!k) continue; if (!this._tcc.products[k] && !(this.data && (this.data.products || []).some(x => this.norm(x.name) === k))) rep.newProd++; this._tcc.products[k] = { name: p.name, type: p.type || '', article: p.article || '' }; }
         for (const o of d.outputs) { this._tcc.outputs.push(o); rep.outputs++; }
         (d.unparsed || []).slice(0, 40).forEach(u => rep.anomalies.push({ file: it.file.name, text: u }));
