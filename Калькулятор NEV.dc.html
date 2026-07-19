@@ -2810,7 +2810,7 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 <sc-if value="{{ acConfirmOpen }}" hint-placeholder-val=""><div class="modalbg"><div class="modal"><div class="modalhd"><h3>Актуализировать данные?</h3></div><div class="modalbd"><div class="npmodtext">Из загруженных файлов ({{ acFileCount }}) будут обновлены: стоимость сырья, состав рецептур и % содержания компонентов; новая номенклатура и продукты попадут в справочники. Действие затрагивает все расчёты блока.</div></div><div class="modalft"><button class="btn" onClick="{{ acCancel }}">Отменить</button><button class="btn dark" onClick="{{ acRun }}">Актуализировать</button></div></div></div></sc-if>
 <sc-if value="{{ acBusyOpen }}" hint-placeholder-val=""><div class="modalbg"><div class="modal"><div class="modalhd"><h3>Обработка…</h3></div><div class="modalbd"><div class="npmodtext">Вычислительное ядро разбирает файлы, обновляет рецептуры и цены, выполняет самопроверку…</div></div></div></div></sc-if>
-<sc-if value="{{ acDoneOpen }}" hint-placeholder-val=""><div class="modalbg"><div class="modal mailmodal"><div class="modalhd"><h3>✓ Данные актуализированы</h3></div><div class="modalbd"><div class="acrepgrid"><div class="acrepc"><div class="acrepv mono">{{ acRepPrices }}</div><div class="acrepl">цен сырья</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepRecipes }}</div><div class="acrepl">строк рецептур</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepNewRaw }}</div><div class="acrepl">новой номенклатуры</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepNewProd }}</div><div class="acrepl">продуктов</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepOutputs }}</div><div class="acrepl">записей выпуска</div></div></div><sc-if value="{{ acRepKinds }}" hint-placeholder-val=""><div class="hint">{{ acRepKinds }}</div></sc-if><sc-if value="{{ acRepVatNote }}" hint-placeholder-val=""><div class="banner ok">🧮 {{ acRepVatNote }}</div></sc-if><sc-if value="{{ acRepAiUsed }}" hint-placeholder-val=""><div class="hint">🤖 Внешний ИИ разобрал файлов: {{ acRepAi }}</div></sc-if><div class="fsec">Самопроверка вычислительного ядра</div><sc-if value="{{ acCheckOk }}" hint-placeholder-val=""><div class="banner ok">Расхождений не обнаружено. {{ acCheckStats }}</div></sc-if><sc-for list="{{ acCheckIssues }}" as="c" hint-placeholder-count="0"><div class="{{ c.cls }}">⚠ {{ c.text }}</div></sc-for><sc-if value="{{ acHasAnomalies }}" hint-placeholder-val=""><div class="fsec">Аномалии — не удалось распознать ({{ acAnomalyCount }}) · внесите вручную</div><div class="acanomwrap"><sc-for list="{{ acAnomalies }}" as="a" hint-placeholder-count="0"><div class="acanom">{{ a.text }}</div></sc-for></div><div class="acmanrow"><button class="btn" onClick="{{ acGoManual }}">➕ Ввести продукт вручную</button><button class="btn" onClick="{{ acGoNomfix }}">✏️ Корректировка номенклатуры</button></div></sc-if><div class="fsec">Перепроверка расчётов внешним ИИ</div><div class="acairow"><button class="btn dark" onClick="{{ acVerifyAi }}" disabled="{{ acAiBusy }}"><span>✦</span> Проверить расчёты ИИ</button><sc-if value="{{ acAiBusy }}" hint-placeholder-val=""><span class="hint">Проверка…</span></sc-if></div><sc-if value="{{ acHasAiVerdict }}" hint-placeholder-val=""><div class="acaiverdict">{{ acAiVerdict }}</div></sc-if><sc-if value="{{ acRepHasErr }}" hint-placeholder-val=""><div class="banner err">Не удалось прочитать: {{ acRepErrors }}</div></sc-if></div><div class="modalft"><button class="btn dark" onClick="{{ acCloseDone }}">Готово</button></div></div></div></sc-if>
+<sc-if value="{{ acDoneOpen }}" hint-placeholder-val=""><div class="modalbg"><div class="modal mailmodal"><div class="modalhd"><h3>✓ Данные актуализированы</h3></div><div class="modalbd"><div class="acrepgrid"><div class="acrepc"><div class="acrepv mono">{{ acRepPrices }}</div><div class="acrepl">цен сырья</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepRecipes }}</div><div class="acrepl">строк рецептур</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepNewRaw }}</div><div class="acrepl">новой номенклатуры</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepNewProd }}</div><div class="acrepl">продуктов</div></div><div class="acrepc"><div class="acrepv mono">{{ acRepOutputs }}</div><div class="acrepl">записей выпуска</div></div></div><sc-if value="{{ acRepKinds }}" hint-placeholder-val=""><div class="hint">{{ acRepKinds }}</div></sc-if><sc-if value="{{ acRepVatNote }}" hint-placeholder-val=""><div class="banner ok">🧮 {{ acRepVatNote }}</div></sc-if><sc-if value="{{ acRepSkippedShow }}" hint-placeholder-val=""><div class="banner warn">⚠ Пропущено {{ acRepSkipped }} позиц. — в системе уже есть данные за более поздний период (актуальность важнее порядка загрузки файлов).</div></sc-if><sc-if value="{{ acRepAiUsed }}" hint-placeholder-val=""><div class="hint">🤖 Внешний ИИ разобрал файлов: {{ acRepAi }}</div></sc-if><div class="fsec">Самопроверка вычислительного ядра</div><sc-if value="{{ acCheckOk }}" hint-placeholder-val=""><div class="banner ok">Расхождений не обнаружено. {{ acCheckStats }}</div></sc-if><sc-for list="{{ acCheckIssues }}" as="c" hint-placeholder-count="0"><div class="{{ c.cls }}">⚠ {{ c.text }}</div></sc-for><sc-if value="{{ acHasAnomalies }}" hint-placeholder-val=""><div class="fsec">Аномалии — не удалось распознать ({{ acAnomalyCount }}) · внесите вручную</div><div class="acanomwrap"><sc-for list="{{ acAnomalies }}" as="a" hint-placeholder-count="0"><div class="acanom">{{ a.text }}</div></sc-for></div><div class="acmanrow"><button class="btn" onClick="{{ acGoManual }}">➕ Ввести продукт вручную</button><button class="btn" onClick="{{ acGoNomfix }}">✏️ Корректировка номенклатуры</button></div></sc-if><div class="fsec">Перепроверка расчётов внешним ИИ</div><div class="acairow"><button class="btn dark" onClick="{{ acVerifyAi }}" disabled="{{ acAiBusy }}"><span>✦</span> Проверить расчёты ИИ</button><sc-if value="{{ acAiBusy }}" hint-placeholder-val=""><span class="hint">Проверка…</span></sc-if></div><sc-if value="{{ acHasAiVerdict }}" hint-placeholder-val=""><div class="acaiverdict">{{ acAiVerdict }}</div></sc-if><sc-if value="{{ acRepHasErr }}" hint-placeholder-val=""><div class="banner err">Не удалось прочитать: {{ acRepErrors }}</div></sc-if></div><div class="modalft"><button class="btn dark" onClick="{{ acCloseDone }}">Готово</button></div></div></div></sc-if>
 </sc-if>
 
 <sc-if value="{{ isCalc }}" hint-placeholder-val="">
@@ -6369,6 +6369,49 @@ class Component extends DCLogic {
     return best;
   }
   tccNum(v) { if (typeof v === 'number') return isFinite(v) ? v : 0; if (v == null) return 0; const n = parseFloat(String(v).replace(/\u00a0/g, '').replace(/\s/g, '').replace('%', '').replace(',', '.')); return isFinite(n) ? n : 0; }
+  // Определить период файла (YYYY-MM) по тексту шапки листа — нужно, чтобы «более актуальные» загруженные
+  // данные (дерево себестоимости / анализ выпущенной продукции) всегда побеждали более старые, независимо
+  // от порядка загрузки файлов (см. навык «Себестоимость — единый источник истины» в CLAUDE.md).
+  tccPeriodKeyFromAoa(aoa) {
+    const head = (aoa || []).slice(0, 15).map(r => (r || []).map(c => c == null ? '' : String(c)).join(' ')).join(' \n ');
+    const m = head.match(/с\s+\d{2}\.\d{2}\.\d{4}\s+по\s+(\d{2}\.\d{2}\.\d{4})/i);
+    if (m) { const d = m[1].match(/(\d{2})\.(\d{2})\.(\d{4})/); if (d) return d[3] + '-' + d[2]; }
+    return this.ctKeyFromText(head) || '';
+  }
+  // true, если период a не старше периода b. Пустой период («не удалось определить») ничего не блокирует —
+  // тогда действует прежнее правило «последний применённый обновляет».
+  tccPeriodNotOlder(a, b) { return (!a || !b) ? true : (a >= b); }
+  // Слияние одной цены сырья в актуализационный оверлей с приоритетом более актуального периода.
+  // Возвращает true, если значение применено (false — пропущено, т.к. в системе уже данные за более поздний период).
+  tccMergePriceEntry(name, obj, periodKey, rep) {
+    const k = this.norm(name); if (!k) return false;
+    const ex = this._tcc.prices[k];
+    if (ex && ex.periodKey && periodKey && !this.tccPeriodNotOlder(periodKey, ex.periodKey)) { if (rep) rep.skippedOld = (rep.skippedOld || 0) + 1; return false; }
+    this._tcc.prices[k] = Object.assign({}, obj, { periodKey: periodKey || (ex && ex.periodKey) || '' });
+    return true;
+  }
+  // Слияние набора строк рецептуры одной "порции" данных (одного файла/дерева), сгруппированных по продукту.
+  // Для каждого продукта: если по нему уже есть данные за более поздний период — пропускаем весь продукт
+  // целиком (устаревший файл не может частично подмешаться); иначе ПОЛНОСТЬЮ замещаем состав продукта —
+  // так устаревшие компоненты, убранные в новом файле, не остаются висеть в системе.
+  // statusMap — общий на весь сеанс актуализации кэш решений «продукт+период», чтобы при мульти-файловой
+  // загрузке не перетирать уже применённые в этом же сеансе строки повторной проверкой.
+  tccMergeRecipeSet(items, periodKey, rep, statusMap) {
+    let applied = 0;
+    const byProd = new Map();
+    for (const r of (items || [])) { if (!r || !r.product || !r.component) continue; const pk = this.norm(r.product); if (!pk) continue; if (!byProd.has(pk)) byProd.set(pk, []); byProd.get(pk).push(r); }
+    for (const [pk, lines] of byProd) {
+      const statusKey = pk + '@@' + (periodKey || '');
+      if (!statusMap.has(statusKey)) {
+        const blocked = Object.keys(this._tcc.recipes).some(rk => { const ex = this._tcc.recipes[rk]; return this.norm(ex.product) === pk && ex.periodKey && periodKey && !this.tccPeriodNotOlder(periodKey, ex.periodKey); });
+        if (!blocked) { for (const rk in this._tcc.recipes) { if (this.norm(this._tcc.recipes[rk].product) === pk) delete this._tcc.recipes[rk]; } }
+        statusMap.set(statusKey, !blocked);
+      }
+      if (!statusMap.get(statusKey)) { if (rep) rep.skippedOld = (rep.skippedOld || 0) + lines.length; continue; }
+      for (const r of lines) { const key = pk + '|||' + this.norm(r.component); this._tcc.recipes[key] = { product: r.product, component: r.component, pct: r.pct, periodKey: periodKey || '' }; applied++; }
+    }
+    return applied;
+  }
   // Распознать колонки и извлечь дельты. sheets: aoa | [aoa,...]; kind: 'tree' | 'output' | 'auto'
   tccExtract(sheets, kind) {
     const out = { prices: [], recipes: [], products: [], outputs: [], kind: kind, rowsTotal: 0, rowsParsed: 0, unparsed: [], hasVatCol: false, vatColPct: null, diag: '' };
@@ -6388,6 +6431,7 @@ class Component extends DCLogic {
             d.recipes.forEach(r => out.recipes.push(r));
             d.products.forEach(p => out.products.push(p));
             out.rowsTotal += d.recipes.length; out.rowsParsed += d.recipes.length;
+            out.periodKey = this.ctPeriodKey(tree).key;
             if (out.prices.length || out.recipes.length) { out.diag = 'дерево 1С: партий ' + tree.batches.length + ', продуктов ' + d.products.length; return out; }
           }
         } catch (e) { treeErr = (e && e.message) || String(e); }
@@ -6406,6 +6450,7 @@ class Component extends DCLogic {
         a.prices.forEach(p => { const nk = this.norm(p.name); if (p.price > 0 && !seenP.has(nk)) { out.prices.push({ name: p.name, price: p.price, unit: 'кг', vatPct: netByHeader ? 0 : null }); seenP.add(nk); } });
         a.recipes.forEach(r => out.recipes.push(r));
         out.rowsTotal += a.recipes.length; out.rowsParsed += a.recipes.length;
+        out.periodKey = this.tccPeriodKeyFromAoa(aoa);
         out.diag = 'СС выпущенной продукции: продуктов ' + a.products.length + (netByHeader ? ' · без НДС' : ' · с НДС');
         return out;
       }
@@ -6438,6 +6483,7 @@ class Component extends DCLogic {
     out.hasVatCol = cols.vat != null;
     const autoKind = (kind === 'auto' || !kind) ? ((cols.pct != null || (cols.name != null && cols.price != null)) ? 'tree' : (cols.qty != null ? 'output' : 'tree')) : kind;
     out.kind = autoKind;
+    out.periodKey = this.tccPeriodKeyFromAoa(aoa);
     let curProduct = '';
     for (let i = hr + 1; i < aoa.length; i++) {
       const row = aoa[i] || []; if (!row.length || !row.some(c => c != null && String(c).trim())) continue;
@@ -6489,14 +6535,19 @@ class Component extends DCLogic {
     if (!tree || !tree.batches || !tree.batches.length) return;
     this.tccLoad();
     const d = this.tccTreeDeltas(tree);
-    let np = 0, nr = 0, nnew = 0;
-    const _purgedProds = new Set();
-    for (const p of d.prices) { const k = this.norm(p.name); if (!k) continue; const wasKnown = this.rawByName && this.rawByName.has(k); if (!wasKnown && !this._tcc.prices[k]) nnew++; this._tcc.prices[k] = { name: p.name, price: p.price, gross: p.price, vat: 0, article: '', unit: p.unit || 'кг', cat: '' }; np++; }
-    for (const r of d.recipes) { const pk = this.norm(r.product); if (!pk) continue; if (!_purgedProds.has(pk)) { for (const rk in this._tcc.recipes) { if (this.norm(this._tcc.recipes[rk].product) === pk) delete this._tcc.recipes[rk]; } _purgedProds.add(pk); } const key = pk + '|||' + this.norm(r.component); this._tcc.recipes[key] = { product: r.product, component: r.component, pct: r.pct }; nr++; }
+    const periodKey = this.ctPeriodKey(tree).key;
+    const rep = { skippedOld: 0 };
+    let np = 0, nnew = 0;
+    for (const p of d.prices) {
+      const k = this.norm(p.name); if (!k) continue;
+      const wasKnown = this.rawByName && this.rawByName.has(k); const existed = !!this._tcc.prices[k];
+      if (this.tccMergePriceEntry(p.name, { name: p.name, price: p.price, gross: p.price, vat: 0, article: '', unit: p.unit || 'кг', cat: '' }, periodKey, rep)) { if (!wasKnown && !existed) nnew++; np++; }
+    }
+    const nr = this.tccMergeRecipeSet(d.recipes, periodKey, rep, new Map());
     for (const p of d.products) { const k = this.norm(p.name); if (!k) continue; if (!this._tcc.products[k] && !(this.data && (this.data.products || []).some(x => this.norm(x.name) === k))) this._tcc.products[k] = { name: p.name, type: '', article: '' }; }
     this._tcc.date = Date.now();
-    this._tcc.summary = 'Обновлено из «' + source + '»: цен ' + np + ', строк рецептур ' + nr + ', новой номенклатуры ' + nnew;
-    this._tcc.history.unshift({ date: this._tcc.date, files: [(tree.fileName || 'Дерево себестоимости') + ' · ' + source], prices: np, recipes: nr, newRaw: nnew, newProd: 0, outputs: 0, by: this.state.currentUser ? this.state.currentUser.name : '' });
+    this._tcc.summary = 'Обновлено из «' + source + '»: цен ' + np + ', строк рецептур ' + nr + ', новой номенклатуры ' + nnew + (rep.skippedOld ? ' · пропущено (в системе данные новее) ' + rep.skippedOld : '');
+    this._tcc.history.unshift({ date: this._tcc.date, files: [(tree.fileName || 'Дерево себестоимости') + ' · ' + source], prices: np, recipes: nr, newRaw: nnew, newProd: 0, outputs: 0, skippedOld: rep.skippedOld, by: this.state.currentUser ? this.state.currentUser.name : '' });
     this._tcc.history = this._tcc.history.slice(0, 50);
     this.tccSave(); this.tccApply();
     this._memo = new Map(); this._landMap = null; this._dvCat = null; this._ctAggCache = null; this._ctEffKey = null;
@@ -6577,9 +6628,9 @@ class Component extends DCLogic {
     const rawVatRate = this.tccNum(S.acVatRate);
     const defVat = (S.acVatMode === 'net') ? 0 : (rawVatRate > 1 ? rawVatRate / 100 : (rawVatRate > 0 ? rawVatRate : (this.vat || 0.2)));
     const netOf = (price, rowVatPct) => { const v = (rowVatPct == null) ? defVat : rowVatPct; return v > 0 ? price / (1 + v) : price; };
-    const rep = { files: 0, prices: 0, recipes: 0, newRaw: 0, newProd: 0, outputs: 0, kinds: [], errors: [], aiUsed: 0, anomalies: [], vatRate: defVat, vatMode: (S.acVatMode === 'net' ? 'net' : 'gross') };
+    const rep = { files: 0, prices: 0, recipes: 0, newRaw: 0, newProd: 0, outputs: 0, skippedOld: 0, kinds: [], errors: [], aiUsed: 0, anomalies: [], vatRate: defVat, vatMode: (S.acVatMode === 'net' ? 'net' : 'gross') };
     const treesToArchive = [];
-    const _purgedProds = new Set(); // продукты, чей состав уже замещён в этом сеансе актуализации (последний файл побеждает)
+    const _recipeStatus = new Map(); // «продукт+период» → уже применён/пропущен в этом сеансе актуализации (несколько файлов)
     for (const it of items) {
       try {
         const sheets = await this.tccReadSheets(it.file);
@@ -6594,7 +6645,7 @@ class Component extends DCLogic {
           if (ai && !ai.error) {
             usedAi = true; rep.aiUsed++;
             const aiVat = (ai.vat_included && ai.vat_pct) ? (ai.vat_pct > 1 ? ai.vat_pct / 100 : ai.vat_pct) : null;
-            const merge = { prices: [], recipes: d.recipes.slice(), products: d.products.slice(), outputs: d.outputs.slice(), unparsed: (ai.unparsed || []), kind: ai.kind || d.kind };
+            const merge = { prices: [], recipes: d.recipes.slice(), products: d.products.slice(), outputs: d.outputs.slice(), unparsed: (ai.unparsed || []), kind: ai.kind || d.kind, periodKey: d.periodKey || '' };
             const seenP = new Set(d.prices.map(p => this.norm(p.name)));
             d.prices.forEach(p => merge.prices.push(p));
             (ai.prices || []).forEach(p => { if (p && p.name && p.price > 0 && !seenP.has(this.norm(p.name))) { merge.prices.push({ name: p.name, price: p.price, unit: 'кг', vatPct: aiVat }); seenP.add(this.norm(p.name)); } });
@@ -6606,8 +6657,13 @@ class Component extends DCLogic {
           }
         }
         rep.kinds.push((it.file.name) + ' → ' + (d.kind === 'output' ? 'выпуск продукции' : 'дерево себестоимости') + (usedAi ? ' · внешний ИИ' : ' · ядро') + ' · уверенность ' + Math.round(conf * 100) + '%');
-        for (const p of d.prices) { const k = this.norm(p.name); if (!k) continue; const net = netOf(p.price, p.vatPct); const wasKnown = this.rawByName && this.rawByName.has(k); if (!wasKnown && !this._tcc.prices[k]) rep.newRaw++; this._tcc.prices[k] = { name: p.name, price: net, gross: p.price, vat: (p.vatPct != null ? p.vatPct : defVat), article: p.article || '', unit: p.unit || 'кг', cat: p.cat || '' }; rep.prices++; }
-        for (const r of d.recipes) { const pk = this.norm(r.product); if (!pk) continue; if (!_purgedProds.has(pk)) { for (const rk in this._tcc.recipes) { if (this.norm(this._tcc.recipes[rk].product) === pk) delete this._tcc.recipes[rk]; } _purgedProds.add(pk); } const key = pk + '|||' + this.norm(r.component); this._tcc.recipes[key] = { product: r.product, component: r.component, pct: r.pct }; rep.recipes++; }
+        for (const p of d.prices) {
+          const k = this.norm(p.name); if (!k) continue;
+          const net = netOf(p.price, p.vatPct);
+          const wasKnown = this.rawByName && this.rawByName.has(k); const existed = !!this._tcc.prices[k];
+          if (this.tccMergePriceEntry(p.name, { name: p.name, price: net, gross: p.price, vat: (p.vatPct != null ? p.vatPct : defVat), article: p.article || '', unit: p.unit || 'кг', cat: p.cat || '' }, d.periodKey, rep)) { if (!wasKnown && !existed) rep.newRaw++; rep.prices++; }
+        }
+        rep.recipes += this.tccMergeRecipeSet(d.recipes, d.periodKey, rep, _recipeStatus);
         for (const p of d.products) { const k = this.norm(p.name); if (!k) continue; if (!this._tcc.products[k] && !(this.data && (this.data.products || []).some(x => this.norm(x.name) === k))) rep.newProd++; this._tcc.products[k] = { name: p.name, type: p.type || '', article: p.article || '' }; }
         for (const o of d.outputs) { this._tcc.outputs.push(o); rep.outputs++; }
         (d.unparsed || []).slice(0, 40).forEach(u => rep.anomalies.push({ file: it.file.name, text: u }));
@@ -6617,8 +6673,8 @@ class Component extends DCLogic {
     this._tcc.outputs = this._tcc.outputs.slice(-2000);
     this._tcc.date = Date.now();
     this._tcc.vatRate = defVat;
-    this._tcc.summary = 'Обновлено: цен ' + rep.prices + ', строк рецептур ' + rep.recipes + ', новой номенклатуры ' + rep.newRaw + ', продуктов ' + rep.newProd + (rep.vatMode === 'gross' ? ' · цены приведены к без-НДС (ставка ' + Math.round(defVat * 100) + '%)' : '');
-    this._tcc.history.unshift({ date: this._tcc.date, files: items.map(i => i.file.name), prices: rep.prices, recipes: rep.recipes, newRaw: rep.newRaw, newProd: rep.newProd, outputs: rep.outputs, ai: rep.aiUsed, vat: Math.round(defVat * 100) + '%', by: this.state.currentUser ? this.state.currentUser.name : '' });
+    this._tcc.summary = 'Обновлено: цен ' + rep.prices + ', строк рецептур ' + rep.recipes + ', новой номенклатуры ' + rep.newRaw + ', продуктов ' + rep.newProd + (rep.vatMode === 'gross' ? ' · цены приведены к без-НДС (ставка ' + Math.round(defVat * 100) + '%)' : '') + (rep.skippedOld ? ' · пропущено (в системе данные новее) ' + rep.skippedOld : '');
+    this._tcc.history.unshift({ date: this._tcc.date, files: items.map(i => i.file.name), prices: rep.prices, recipes: rep.recipes, newRaw: rep.newRaw, newProd: rep.newProd, outputs: rep.outputs, skippedOld: rep.skippedOld, ai: rep.aiUsed, vat: Math.round(defVat * 100) + '%', by: this.state.currentUser ? this.state.currentUser.name : '' });
     this._tcc.history = this._tcc.history.slice(0, 50);
     this.tccSave(); this.tccApply();
     // Реверс-пропагация: дерево, загруженное в «Актуализации», попадает и в архив «Анализ себестоимости»
@@ -6683,7 +6739,7 @@ class Component extends DCLogic {
     this.tccLoad();
     const hist = (this._tcc.history || []).slice(0, 8).map(h => ({
       hDate: (function () { try { return new Date(h.date).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } })(),
-      hFiles: (h.files || []).join(', '), hStats: 'цен ' + (h.prices || 0) + ' · рецептур ' + (h.recipes || 0) + ' · нов. сырьё ' + (h.newRaw || 0) + ' · продуктов ' + (h.newProd || 0), hBy: h.by || ''
+      hFiles: (h.files || []).join(', '), hStats: 'цен ' + (h.prices || 0) + ' · рецептур ' + (h.recipes || 0) + ' · нов. сырьё ' + (h.newRaw || 0) + ' · продуктов ' + (h.newProd || 0) + (h.skippedOld ? ' · пропущено (данные новее) ' + h.skippedOld : ''), hBy: h.by || ''
     }));
     const files = Array.isArray(S.acFiles) ? S.acFiles : [];
     const rep = S.acReport;
@@ -6712,6 +6768,7 @@ class Component extends DCLogic {
       acRep: rep || {}, acRepHasErr: !!(rep && rep.errors && rep.errors.length), acRepErrors: (rep && rep.errors ? rep.errors : []).join(' · '),
       acRepPrices: rep ? String(rep.prices || 0) : '0', acRepRecipes: rep ? String(rep.recipes || 0) : '0',
       acRepNewRaw: rep ? String(rep.newRaw || 0) : '0', acRepNewProd: rep ? String(rep.newProd || 0) : '0', acRepOutputs: rep ? String(rep.outputs || 0) : '0',
+      acRepSkipped: rep ? String(rep.skippedOld || 0) : '0', acRepSkippedShow: !!(rep && rep.skippedOld),
       acRepKinds: (rep && rep.kinds ? rep.kinds : []).join(' · '),
       acCheckIssues: (rep && rep.check && rep.check.issues) ? rep.check.issues.map(x => ({ text: x.text, cls: x.lvl === 'warn' ? 'acissue warn' : 'acissue' })) : [],
       acCheckOk: !!(rep && rep.check && (!rep.check.issues || !rep.check.issues.length)),
