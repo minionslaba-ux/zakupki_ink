@@ -11341,23 +11341,34 @@ class Component extends DCLogic {
     if (!parsed || !parsed.identified_category || !Array.isArray(parsed.mapping_schema) || !parsed.mapping_schema.length) {
       return { ok: false, reason: 'invalid-json', raw: norm.summary };
     }
+    // Не доверять неуверенному ответу: низкая confidence → не засоряем постоянную ГЛОБАЛЬНУЮ матрицу
+    // (правило пишется сразу с весом 1.0 и действует для всех компаний) и не вносим данные вслепую.
+    const confidence = (typeof parsed.confidence === 'number') ? parsed.confidence : 1;
+    if (confidence < 0.55) { return { ok: false, reason: 'low-confidence', confidence }; }
     const catKey = String(parsed.identified_category).toLowerCase().trim();
     const known = cat.categories.find(c => c.key === catKey) ? catKey : 'custom';
     const catLabel = (cat.categories.find(c => c.key === known) || {}).label || 'Кастомная форма';
     // ── ДЕЙСТВИЕ 2 (критично): авто-обучение глобальной матрицы по mapping_schema ──
+    // Обучаем матрицу ТОЛЬКО заземлёнными на реальные данные парами: system_field должен быть из
+    // каталога допустимых полей, а file_column — реально присутствовать в заголовках файла. Иначе
+    // галлюцинация/опечатка ИИ навсегда осядет в глобальной матрице с максимальным весом и будет
+    // ломать распознавание похожих колонок во всех последующих файлах обеих компаний.
     const learned = []; const internalMap = {};
     for (const pair of parsed.mapping_schema) {
       const col = pair.file_column != null ? String(pair.file_column) : '';
       const sf = pair.system_field != null ? String(pair.system_field).trim() : '';
       if (!col || !sf) continue;
+      if (cat.systemFields.indexOf(sf) < 0) continue;
       // индекс колонки в файле по точному/нормализованному совпадению
       let ci = fileData.headers.indexOf(col);
       if (ci < 0) ci = fileData.headers.findIndex(h => this.dlNorm(h) === this.dlNorm(col));
+      if (ci < 0) continue;
       this.trainSemanticCore(col, sf, { global: true, silent: true, by: 'external-ai → global' });
       learned.push({ col, sf });
       const alias = cat.fieldAlias[sf];
-      if (alias && ci >= 0 && internalMap[alias] == null) internalMap[alias] = ci;
+      if (alias && internalMap[alias] == null) internalMap[alias] = ci;
     }
+    if (!learned.length) { return { ok: false, reason: 'no-grounded-columns' }; }
     // ── ДЕЙСТВИЕ 1: бесшовный приём данных + движок 24/7 + уведомление со звуком ──
     if (known !== 'custom' && this.dlBaseDefs().find(d => d.key === known)) {
       const dlBase = { ...(this.state.dlBase || {}) };
