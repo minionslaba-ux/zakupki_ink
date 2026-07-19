@@ -2684,7 +2684,7 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 <div class="sec">Рецептура · Σ массовых компонентов {{ tcSumPct }}</div>
 <div class="tctblwrap"><table class="tctbl"><thead><tr><th class="l">№</th><th class="l">Компонент</th><th class="l">Раздел</th><th>Ед.</th><th>% ввод</th><th>% факт</th><th>Кол-во/кг</th><th>Цена €/ед.</th><th>€/кг с НДС</th><th>₽/кг с НДС</th><th></th></tr></thead>
-<tbody><sc-for list="{{ tcRows }}" as="r" hint-placeholder-count="13"><tr class="{{ r.rowCls }}"><td class="l idx mono">{{ r.no }}</td><td class="l"><sc-if value="{{ r.tcNameEditable }}" hint-placeholder-val=""><input class="tcin tcname" list="{{ r.tcNameList }}" value="{{ r.tcName }}" placeholder="наименование из номенклатуры" onInput="{{ r.onName }}"></sc-if><sc-if value="{{ r.tcNameStatic }}" hint-placeholder-val="{{ true }}"><span class="nm">{{ r.tcName }}</span></sc-if></td><td class="l tcsec">{{ r.tcSection }}</td><td class="mono">{{ r.tcUnit }}</td><td><sc-if value="{{ r.isMain }}" hint-placeholder-val="{{ true }}"><input class="tcin mono" value="{{ r.pctInput }}" placeholder="{{ r.pctPlaceholder }}" onInput="{{ r.onPct }}" onFocus="{{ r.onPctFocus }}" onBlur="{{ r.onPctBlur }}"></sc-if><sc-if value="{{ r.isMain }}" hint-placeholder-val=""></sc-if></td><td class="mono tcfact">{{ r.pctFact }}</td><td class="mono">{{ r.qtyS }}</td><td><sc-if value="{{ r.priceEditable }}" hint-placeholder-val="{{ true }}"><input class="tcin mono tcprice" value="{{ r.priceInput }}" onInput="{{ r.onPrice }}"></sc-if><sc-if value="{{ r.priceStatic }}" hint-placeholder-val=""><span class="mono tcpread" title="Расчётная цена полупродукта">{{ r.priceReadS }}</span></sc-if></td><td class="mono">{{ r.eurVatS }}</td><td class="mono">{{ r.rubVatS }}</td><td><sc-if value="{{ r.deletable }}" hint-placeholder-val=""><button class="tcdel" onClick="{{ r.onDel }}" title="Удалить компонент">✕</button></sc-if></td></tr></sc-for></tbody>
+<tbody><sc-for list="{{ tcRows }}" as="r" hint-placeholder-count="13"><tr class="{{ r.rowCls }}"><td class="l idx mono">{{ r.no }}</td><td class="l"><sc-if value="{{ r.tcNameEditable }}" hint-placeholder-val=""><input class="tcin tcname" list="{{ r.tcNameList }}" value="{{ r.tcName }}" placeholder="наименование из номенклатуры" onInput="{{ r.onName }}"></sc-if><sc-if value="{{ r.tcNameStatic }}" hint-placeholder-val="{{ true }}"><span class="nm">{{ r.tcName }}</span></sc-if></td><td class="l tcsec"><sc-if value="{{ r.tcSecToggle }}" hint-placeholder-val=""><button class="tagbtn semi" onClick="{{ r.onSecToggle }}">{{ r.tcSection }} {{ r.tcSecCaret }}</button></sc-if><sc-if value="{{ r.tcSecStatic }}" hint-placeholder-val="{{ true }}">{{ r.tcSection }}</sc-if></td><td class="mono">{{ r.tcUnit }}</td><td><sc-if value="{{ r.isMain }}" hint-placeholder-val="{{ true }}"><input class="tcin mono" value="{{ r.pctInput }}" placeholder="{{ r.pctPlaceholder }}" onInput="{{ r.onPct }}" onFocus="{{ r.onPctFocus }}" onBlur="{{ r.onPctBlur }}"></sc-if><sc-if value="{{ r.isMain }}" hint-placeholder-val=""></sc-if></td><td class="mono tcfact">{{ r.pctFact }}</td><td class="mono">{{ r.qtyS }}</td><td><sc-if value="{{ r.priceEditable }}" hint-placeholder-val="{{ true }}"><input class="tcin mono tcprice" value="{{ r.priceInput }}" onInput="{{ r.onPrice }}"></sc-if><sc-if value="{{ r.priceStatic }}" hint-placeholder-val=""><span class="mono tcpread" title="Расчётная цена полупродукта">{{ r.priceReadS }}</span></sc-if></td><td class="mono">{{ r.eurVatS }}</td><td class="mono">{{ r.rubVatS }}</td><td><sc-if value="{{ r.deletable }}" hint-placeholder-val=""><button class="tcdel" onClick="{{ r.onDel }}" title="Удалить компонент">✕</button></sc-if></td></tr></sc-for></tbody>
 <tfoot><tr class="tcsum"><td class="l" colspan="4">Σ ИТОГО</td><td></td><td class="mono tcfact">{{ tcSumPct }}</td><td></td><td></td><td class="mono">{{ tcSumEurVat }}</td><td class="mono">{{ tcSumRubVat }}</td><td></td></tr></tfoot></table></div>
 <datalist id="tc-noms"><sc-for list="{{ tcNomOptions }}" as="n" hint-placeholder-count="0"><option value="{{ n }}"></option></sc-for></datalist>
 <div class="tcactions"><button class="btn ghost" onClick="{{ tcAddComp }}"><span>＋</span> Добавить компонент</button><button class="btn ghost" onClick="{{ tcReset }}" title="Сбросить настройки/правки">↺ Сбросить</button></div>
@@ -3897,7 +3897,7 @@ class Component extends DCLogic {
     aiOpen: false, aiInput: '', aiBusy: false, aiMessages: [], aiModel: 'gpt-4o-mini', aiKey: '', aiBase: '', aiModelName: '', aiKeyEdit: '', aiBaseEdit: '', aiModelEdit: '', aiCfgOpen: false,
     deepBIExternal: null, deepBIExtBusy: false, deepBIExtMsg: '', deepBIExtForce: false,
     rrHorizon: 3, rrSafetyMonths: 1, rrLeadDefault: 1, rrRun: {}, rrLead: {}, rrSafety: {}, auditSku: '',
-    turnoverDays: 90, turnoverGen: false, planfactGen: false, stressGrowth: 30, stressGen: false, calcExpanded: {}, treasuryGen: false,
+    turnoverDays: 90, turnoverGen: false, planfactGen: false, stressGrowth: 30, stressGen: false, calcExpanded: {}, tcExpanded: {}, treasuryGen: false,
     apGm2Target: 15, apFx: 0, apLogi: 0, apSales: 0, apHorizon: 45, apSim: null, apLive: false, apDrafts: [], apAlerts: [], apInvoice: null, apSecurityLog: [], apRefreshedAt: 0, securityLog: [], secSearch: '',
     prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planProduct: '', planFilter: '', planCur: 'RUB',
     ppScale: 'month', ppFrom: '', ppTo: '', ppNetStock: true, ppNetTransit: true, ppBy: 'raw', ppCur: 'RUB', ppGroup: 'none', procGen: false,
@@ -5960,8 +5960,12 @@ class Component extends DCLogic {
       if (!c.excludeFromSum) sumEurVat += eurVat;
       const editP = c.editablePrice !== false;
       const nameEd = !!c.nameEditable;
+      // Раздел-переключатель (как в «обычном калькуляторе»): клик по «Полупродукт ▸/▾» раскрывает/
+      // сворачивает раскладку сырья прямо под строкой, вместо того чтобы показывать её всегда.
+      const secToggle = !!c.sectionToggle;
       return {
         idx, no: String(idx + 1), tcName: c.name, tcSection: c.section, tcUnit: c.unit, isMain,
+        tcSecToggle: secToggle, tcSecStatic: !secToggle, tcSecCaret: c.sectionExpanded ? '▾' : '▸', onSecToggle: c.onSectionToggle || (() => {}),
         tcNameEditable: nameEd, tcNameStatic: !nameEd, tcNameList: c.nameList || '',
         pctInput: (this.state.efId === 'pct|' + idx) ? this.state.efText : (c.pctInput || ''),
         onPctFocus: () => this.setState({ efId: 'pct|' + idx, efText: c.pctInput || '' }),
@@ -6055,24 +6059,28 @@ class Component extends DCLogic {
     const s = this.tcset || (this.tcset = this.tcLiveDefaults());
     const owner = this.norm(name);
     const lines = this.recipeLinesFor(name);
+    const tcExp = this.state.tcExpanded || {};
     const comps = [];
     for (const ln of lines) {
       const semi = this.isSemi(ln.component);
+      const nk = this.norm(ln.component);
+      const expanded = semi && !!tcExp[nk];
       comps.push({
         name: ln.component, section: semi ? 'Полупродукт' : 'Сырьё', unit: 'кг', kind: 'main',
         weight: ln.pct, basePct: ln.pct, priceEur: this.tcEffPrice(ln.component),
         pctInput: (this.tcNum(ln.pct) * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }),
         nameEditable: !!ln.added, nameList: 'tc-noms', editablePrice: !semi, deletable: !!ln.added,
+        sectionToggle: semi, sectionExpanded: expanded, onSectionToggle: semi ? (() => set({ tcExpanded: { ...tcExp, [nk]: !tcExp[nk] } })) : null,
         onName: ln.added ? (e) => { const nm = e.target.value; set(st => { const arr = (st.added[owner] || []).slice(); if (arr[ln.ai]) arr[ln.ai] = { ...arr[ln.ai], component: nm }; return { added: { ...st.added, [owner]: arr } }; }); } : null,
         onPct: (e) => { const v = e.target.value.trim(); const num = Math.min(100, Math.max(0, Math.round(this.tcNum(v) * 100) / 100)); if (ln.added) { set(st => { const arr = (st.added[owner] || []).slice(); if (arr[ln.ai]) arr[ln.ai] = { ...arr[ln.ai], pct: num }; return { added: { ...st.added, [owner]: arr } }; }); } else { set(st => { const pk = { ...st.pct }; if (v === '') delete pk[owner + '|' + ln.idx]; else pk[owner + '|' + ln.idx] = num; return { pct: pk }; }); } },
         onPrice: semi ? null : (e) => { const val = e.target.value; set(st => ({ prices: { ...st.prices, [this.norm(ln.component)]: val } })); },
         onDel: ln.added ? () => { set(st => { const arr = (st.added[owner] || []).slice(); arr.splice(ln.ai, 1); return { added: { ...st.added, [owner]: arr } }; }); } : null
       });
-      // Полупродукт раскладывается до первоначального сырья (рекурсивно, через все вложенные полупродукты) —
-      // справочные строки сразу под ним; цена каждой строки редактируется прямо здесь и пишется в общий
-      // реестр цен (state.prices), как и обычное сырьё. В итог себестоимости НЕ прибавляются повторно
-      // (excludeFromSum) — их стоимость уже учтена в строке самого полупродукта (this.tcEffPrice выше).
-      if (semi) {
+      // Клик по «Полупродукт ▸» (как в «обычном калькуляторе») раскрывает раскладку до первоначального
+      // сырья (рекурсивно, через все вложенные полупродукты) прямо под строкой; цена каждой позиции
+      // редактируется здесь же и пишется в общий реестр цен (state.prices). В итог себестоимости НЕ
+      // прибавляются повторно (excludeFromSum) — их стоимость уже учтена в строке самого полупродукта.
+      if (expanded) {
         const acc = {}; this.explodeRaw(ln.component, ln.pct, acc, new Set());
         const rawNames = Object.keys(acc).sort((a, b) => acc[b] - acc[a]);
         for (const rn of rawNames) {
