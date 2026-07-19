@@ -4098,7 +4098,8 @@ class Component extends DCLogic {
       { id: 'costtree', label: 'Анализ себестоимости (дерево)', keys: [], cols: [], ds: true },
       { id: 'costko', label: 'Себестоимость · КО', keys: [], cols: [], ds: true },
       { id: 'margin', label: 'Маржинальный отчёт', keys: [], cols: [], ds: true },
-      { id: 'tcalc', label: 'Технологические карты', keys: [], cols: [], ds: true }
+      { id: 'tcalc', label: 'Технологические карты', keys: [], cols: [], ds: true },
+      { id: 'filearch', label: 'Архив загруженных файлов', keys: [], cols: [], ds: true }
     ];
   }
   _areaIndex() { if (this.__abk) return this.__abk; const m = {}; for (const a of this.cloudAreas()) { for (const k of a.keys) m['k:' + k] = a.id; for (const c of a.cols) m['c:' + c] = a.id; } this.__abk = m; return m; }
@@ -4244,6 +4245,15 @@ class Component extends DCLogic {
       else if (id === 'margin') { try { this.lsSet('margin', JSON.stringify(obj)); } catch (_) {} this.setState({ mgRevenue: obj.revenue || null, mgRevMeta: obj.revMeta || null, mgPeriod: obj.period || '', mgGm: obj.gm || null, mgKv: obj.kv || [{ name: 'Конфлекс', pct: 10 }], mgManualCost: obj.manualCost || {} }); }
       else if (id === 'tcalc') { this.tcalc = obj; try { this.lsSet('tcalc', JSON.stringify(obj)); } catch (_) {} this.setState({ tcReady: true }); }
       else if (id === 'tcset') { this.tcset = obj; try { this.lsSet('tcset', JSON.stringify(obj)); } catch (_) {} this.forceUpdate(); }
+      // Архив загруженных файлов синхронизируется ПОСЛЕ выгрузки: облако хранит срез только текущей
+      // подключённой компании (workspace = компания) — заменяем локально ТОЛЬКО этот срез, записи
+      // другой компании (из другого workspace) в localStorage не трогаем.
+      else if (id === 'filearch') {
+        const remote = Array.isArray(obj) ? obj : []; const co = this._co();
+        const other = this.faIndex().filter(x => x.company_id !== co);
+        this.faSaveIndex([...other, ...remote].sort((a, b) => (b.uploaded_at || 0) - (a.uploaded_at || 0)));
+        this.setState({ faTick: (this.state.faTick || 0) + 1 });
+      }
     } catch (err) { this._dsApplied[id] = -1; }
   }
   _dsApplyDeleted(id) {
@@ -11811,6 +11821,12 @@ class Component extends DCLogic {
   faCatCls(cat) { return 'fatag fa-' + (({ revenue: 'rev', cost: 'cost', purchases: 'pur', warehouse: 'wh', opex: 'opex', bank: 'bank', custom: 'cust' })[cat] || 'cust'); }
   faFmtSize(b) { b = Number(b) || 0; if (b < 1024) return b + ' Б'; if (b < 1048576) return (b / 1024).toFixed(1).replace('.', ',') + ' КБ'; return (b / 1048576).toFixed(2).replace('.', ',') + ' МБ'; }
   faISOWeek(d) { const dt = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())); const dn = (dt.getUTCDay() + 6) % 7; dt.setUTCDate(dt.getUTCDate() - dn + 3); const ft = new Date(Date.UTC(dt.getUTCFullYear(), 0, 4)); return 1 + Math.round(((dt - ft) / 86400000 - 3 + ((ft.getUTCDay() + 6) % 7)) / 7); }
+  // Выгрузить срез индекса ТЕКУЩЕЙ компании в облако (без бинарников — только метаданные).
+  // Иначе архив живёт лишь в localStorage/IndexedDB этого браузера и «пропадает» на других устройствах/сессиях.
+  faSyncCloud(idx) {
+    const co = this._co(); const mine = idx.filter(e => e.company_id === co);
+    this.dsQueuePush('filearch', 'filearch', () => ({ n: mine.length }), () => mine);
+  }
   // Заархивировать оригинал файла + метаданные. Привязка к ТЕКУЩЕЙ компании.
   async archiveFile(file, meta) {
     try {
@@ -11821,6 +11837,7 @@ class Component extends DCLogic {
       const entry = { id, company_id: this._co(), company_name: this.co().name, file_name: file.name || 'file', file_ext: ext, size_bytes: file.size || 0, uploaded_by: u ? u.name : '—', uploaded_by_id: u ? u.id : '', uploaded_at: Date.now(), category: meta.category || 'custom', category_label: meta.category_label || this.faCatLabel(meta.category), source: meta.source || '', rows: meta.rows || 0 };
       const idx = this.faIndex(); idx.push(entry); this.faSaveIndex(idx);
       this.setState({ faTick: (this.state.faTick || 0) + 1 });
+      this.faSyncCloud(idx);
     } catch (e) {}
   }
   async faDownload(id) {
@@ -11832,8 +11849,10 @@ class Component extends DCLogic {
   async faDelete(id) {
     if (!this.faIsAdmin()) return;
     await this.faIdbDel(id);
-    this.faSaveIndex(this.faIndex().filter(x => x.id !== id));
+    const idx = this.faIndex().filter(x => x.id !== id);
+    this.faSaveIndex(idx);
     this.setState({ faTick: (this.state.faTick || 0) + 1 });
+    this.faSyncCloud(idx);
   }
   faToggle(k) { const m = { ...(this.state.faExp || {}) }; m[k] = !m[k]; this.setState({ faExp: m }); }
   faCalShift(delta) {
