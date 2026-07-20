@@ -2673,6 +2673,22 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 </sc-if>
 
+<sc-if value="{{ isPriceDyn }}" hint-placeholder-val="">
+<div class="card">
+<div class="mgrhead"><div class="mgrtitle">Динамика цен <span class="mgrper">{{ pdCoName }}</span></div><div class="cvbar"><div class="cvgrp"><button class="{{ cvRubCls }}" onClick="{{ setCurRub }}">RUB ₽</button><button class="{{ cvEurCls }}" onClick="{{ setCurEur }}">EUR €</button></div><div class="cvgrp"><button class="{{ cvVatWithCls }}" onClick="{{ setVatWith }}">С НДС</button><button class="{{ cvVatNoCls }}" onClick="{{ setVatNo }}">Без НДС</button></div><button class="btn mgxls" onClick="{{ pdExportExcel }}">⬇ Скачать Excel</button></div></div>
+<div class="sbflt"><div class="field"><span class="lbl">Период с</span><input class="inp sbdate" type="date" value="{{ pdDateFrom }}" onChange="{{ onPdDateFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp sbdate" type="date" value="{{ pdDateTo }}" onChange="{{ onPdDateTo }}"></div><div class="field grow"><span class="lbl">🔎 Поиск наименования</span><input class="inp" value="{{ pdSearch }}" onInput="{{ onPdSearch }}" placeholder="например, диспергатор"></div><button class="btn ghost" onClick="{{ pdResetFlt }}">↺ Сброс</button></div>
+<div class="cvbar"><div class="cvgrp"><button class="{{ pdTierRawCls }}" onClick="{{ setPdTierRaw }}">Сырьё</button><button class="{{ pdTierSemiCls }}" onClick="{{ setPdTierSemi }}">Полупродукты</button><button class="{{ pdTierFinishedCls }}" onClick="{{ setPdTierFinished }}">Готовая продукция</button></div><div class="cvgrp"><button class="{{ pdSortTrendCls }}" onClick="{{ setPdSortTrend }}">По динамике</button><button class="{{ pdSortNameCls }}" onClick="{{ setPdSortName }}">По названию</button></div></div>
+<sc-if value="{{ pdHasErr }}" hint-placeholder-val=""><div class="banner err">{{ pdErr }}</div></sc-if>
+<sc-if value="{{ pdLoading }}" hint-placeholder-val=""><div class="hint">Загрузка периодов дерева себестоимости…</div></sc-if>
+<sc-if value="{{ pdEmpty }}" hint-placeholder-val=""><div class="banner warn">Нет данных для динамики цен по выбранному разрезу/периоду. Загрузите минимум 2 периода «Дерево себестоимости» во вкладке «Анализ себестоимости» (или «Актуализация данных») — тогда система покажет, как менялись цены от периода к периоду.</div></sc-if>
+<sc-if value="{{ pdHasData }}" hint-placeholder-val="">
+<div class="mgkpis"><sc-for list="{{ pdKpis }}" as="k" hint-placeholder-count="5"><div class="mgkpi mghi{{ k.hi }}"><div class="mgkk">{{ k.label }}</div><div class="mgkv">{{ k.v }}</div></div></sc-for></div>
+<div class="mgtblwrap"><table class="mgtbl"><thead><tr><th class="l">Наименование</th><sc-for list="{{ pdPeriodHead }}" as="p" hint-placeholder-count="3"><th>{{ p.label }}</th></sc-for><th>Первый</th><th>Последний</th><th>Мин</th><th>Макс</th><th>Δ</th><th>Динамика</th></tr></thead>
+<tbody><sc-for list="{{ pdItems }}" as="r" hint-placeholder-count="8"><tr><td class="l">{{ r.name }}</td><sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="3"><td class="mono {{ c.cls }}">{{ c.v }}</td></sc-for><td class="mono">{{ r.firstS }}</td><td class="mono">{{ r.lastS }}</td><td class="mono">{{ r.minS }}</td><td class="mono">{{ r.maxS }}</td><td class="mono">{{ r.deltaS }}</td><td class="mono {{ r.trendCls }}">{{ r.deltaPctS }}</td></tr></sc-for></tbody></table></div>
+</sc-if>
+</div>
+</sc-if>
+
 <sc-if value="{{ isTCalc }}" hint-placeholder-val="{{ true }}">
 <sc-if value="{{ tcEmpty }}" hint-placeholder-val=""><div class="card"><div class="tcempty">Данные калькулятора технолога не загружены.</div></div></sc-if>
 <sc-if value="{{ tcReady }}" hint-placeholder-val="{{ true }}">
@@ -3897,6 +3913,7 @@ class Component extends DCLogic {
     aiOpen: false, aiInput: '', aiBusy: false, aiMessages: [], aiModel: 'gpt-4o-mini', aiKey: '', aiBase: '', aiModelName: '', aiKeyEdit: '', aiBaseEdit: '', aiModelEdit: '', aiCfgOpen: false,
     deepBIExternal: null, deepBIExtBusy: false, deepBIExtMsg: '', deepBIExtForce: false,
     rrHorizon: 3, rrSafetyMonths: 1, rrLeadDefault: 1, rrRun: {}, rrLead: {}, rrSafety: {}, auditSku: '',
+    pdDateFrom: '', pdDateTo: '', pdTier: 'raw', pdSearch: '', pdSort: 'trend', pdErr: '',
     turnoverDays: 90, turnoverGen: false, planfactGen: false, stressGrowth: 30, stressGen: false, calcExpanded: {}, tcExpanded: {}, treasuryGen: false,
     apGm2Target: 15, apFx: 0, apLogi: 0, apSales: 0, apHorizon: 45, apSim: null, apLive: false, apDrafts: [], apAlerts: [], apInvoice: null, apSecurityLog: [], apRefreshedAt: 0, securityLog: [], secSearch: '',
     prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planProduct: '', planFilter: '', planCur: 'RUB',
@@ -5214,6 +5231,164 @@ class Component extends DCLogic {
     const mats = {}; for (const M of mat.values()) { const pr = M.prices; mats[M.name] = { name: M.name, cat: M.cat, unit: M.unit, wavg: M.totq ? M.tot / M.totq : 0, min: pr.length ? Math.min(...pr) : 0, max: pr.length ? Math.max(...pr) : 0, totq: M.totq, tot: M.tot, isPack: pack.test((M.name || '') + ' ' + (M.cat || '')) }; }
     const prods = {}; let packTot = 0, outTot = 0; for (const P of prod.values()) { prods[P.product] = { product: P.product, unit: P.out ? P.cost / P.out : 0, rawPerKg: P.out ? P.raw / P.out : 0, otherPerKg: P.out ? P.other / P.out : 0, packPerKg: P.out ? P.pack / P.out : 0, out: P.out, cost: P.cost }; packTot += P.pack; outTot += P.out; }
     return { key: key || (tree && tree.period) || '', period: (tree && tree.period) || key || '', cur: (tree && tree.cur) || '€', mats, prods, packPerKgAll: outTot ? packTot / outTot : 0, tree };
+  }
+  // ===================== ДИНАМИКА ЦЕН (Финансы) =====================
+  // Единый источник — архив «Анализ себестоимости» (та же СС, что и везде в системе, см. навык
+  // «Себестоимость — ядро управленческой отчётности»): не считаем цены заново, а разворачиваем во
+  // времени уже накопленные периоды дерева. Сырьё/полупродукты — из состава партий (mats), полупродукты
+  // (когда сами выпускались) и готовая продукция — из выпуска (prods); полупродукт = совпадение имени
+  // с this.data.semi_products (справочник «Калькулятора»).
+  async pdLoadPeriods() {
+    this._pdLoading = true;
+    const idx = this.ctArchIndex().slice().sort((a, b) => String(a.key || '').localeCompare(String(b.key || '')));
+    const periods = [];
+    for (const e of idx) {
+      const t = await this.ctArchGetTree(e);
+      if (t && t.batches && t.batches.length) periods.push(this.ctPeriodAgg(t, e.key || e.period || ''));
+    }
+    this._pdPeriods = periods; this._pdLoadedCo = this._co(); this._pdLoading = false;
+    this.forceUpdate();
+  }
+  pdMonthLabel(ym) {
+    const MON = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+    const a = String(ym || '').split('-'); return (MON[(+a[1]) - 1] || '?') + ' ' + (a[0] || '');
+  }
+  // Серия наименование×период по трём разрезам, приведённая к RUB тем же способом, что и ctCostByMarka
+  // (курс тек. ЦБ, если дерево в €). Возвращает periodKeys в диапазоне + элементы, сгруппированные по тиру.
+  pdItemsForRange(fromKey, toKey) {
+    const R = this.cbRate('EUR') || Number(this.state.rate) || 0;
+    let periods = (this._pdPeriods || []).slice();
+    if (fromKey) periods = periods.filter(p => (p.key || '') >= fromKey);
+    if (toKey) periods = periods.filter(p => (p.key || '') <= toKey);
+    periods.sort((a, b) => String(a.key || '').localeCompare(String(b.key || '')));
+    const periodKeys = periods.map(p => p.key);
+    const isSemiName = (n) => !!(this.semiByName && this.semiByName.has(this.norm(n)));
+    const items = new Map();
+    for (const per of periods) {
+      const rub = (v) => per.cur === '₽' ? v : v * R;
+      for (const name in per.mats) {
+        const M = per.mats[name];
+        if (M.cat !== 'Сырьё' || !M.wavg) continue;
+        const tier = isSemiName(name) ? 'semi' : 'raw';
+        const k = tier + '|' + name;
+        if (!items.has(k)) items.set(k, { name, tier, pts: new Map() });
+        const it = items.get(k); if (!it.pts.has(per.key)) it.pts.set(per.key, rub(M.wavg));
+      }
+      for (const name in per.prods) {
+        const P = per.prods[name];
+        if (!P.unit) continue;
+        const tier = isSemiName(name) ? 'semi' : 'finished';
+        const k = tier + '|' + name;
+        if (!items.has(k)) items.set(k, { name, tier, pts: new Map() });
+        items.get(k).pts.set(per.key, rub(P.unit)); // выпуск — приоритетнее цены потребления как источник цены самого полупродукта
+      }
+    }
+    const byTier = { raw: [], semi: [], finished: [] };
+    for (const it of items.values()) {
+      const pts = periodKeys.filter(k => it.pts.has(k)).map(k => ({ key: k, rub: it.pts.get(k) }));
+      if (!pts.length) continue;
+      const first = pts[0].rub, last = pts[pts.length - 1].rub;
+      const min = Math.min(...pts.map(p => p.rub)), max = Math.max(...pts.map(p => p.rub));
+      const deltaPct = first ? (last - first) / first * 100 : 0;
+      (byTier[it.tier] || byTier.raw).push({ name: it.name, pts, first, last, min, max, deltaPct, count: pts.length });
+    }
+    return { periodKeys, byTier };
+  }
+  buildPriceDyn(rate) {
+    const S = this.state;
+    const co = this._co();
+    if (this._pdLoadedCo !== co) { this._pdPeriods = null; this._pdLoadedCo = null; }
+    const R = this.cbRate('EUR') || rate || 0;
+    const cval = (rub) => this.cvVal(rub, R);
+    const fmtUnit = (v) => (Number(v) || 0).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + this.cvUnitSuffix();
+    const tierCls = (id) => (S.pdTier || 'raw') === id ? 'cvseg on' : 'cvseg';
+    const base = {
+      pdCoName: this.co().name,
+      pdDateFrom: S.pdDateFrom || '', pdDateTo: S.pdDateTo || '',
+      onPdDateFrom: (e) => this.setState({ pdDateFrom: e.target.value }),
+      onPdDateTo: (e) => this.setState({ pdDateTo: e.target.value }),
+      pdSearch: S.pdSearch || '', onPdSearch: (e) => this.setState({ pdSearch: e.target.value }),
+      pdResetFlt: () => this.setState({ pdDateFrom: '', pdDateTo: '', pdSearch: '' }),
+      pdTierRawCls: tierCls('raw'), pdTierSemiCls: tierCls('semi'), pdTierFinishedCls: tierCls('finished'),
+      setPdTierRaw: () => this.setState({ pdTier: 'raw' }), setPdTierSemi: () => this.setState({ pdTier: 'semi' }), setPdTierFinished: () => this.setState({ pdTier: 'finished' }),
+      pdSortTrendCls: (S.pdSort || 'trend') === 'trend' ? 'cvseg on' : 'cvseg', pdSortNameCls: S.pdSort === 'name' ? 'cvseg on' : 'cvseg',
+      setPdSortTrend: () => this.setState({ pdSort: 'trend' }), setPdSortName: () => this.setState({ pdSort: 'name' }),
+      ...this.curVatVals(),
+      pdErr: S.pdErr || '', pdHasErr: !!S.pdErr,
+      pdExportExcel: () => this.pdExportExcel(),
+      pdLoading: false, pdEmpty: false, pdHasData: false, pdPeriodsCount: 0, pdItems: [], pdPeriodHead: [], pdKpis: [],
+    };
+    if (this._pdPeriods == null) {
+      if (!this._pdLoading) this.pdLoadPeriods();
+      base.pdLoading = true;
+      return base;
+    }
+    const fromKey = S.pdDateFrom ? S.pdDateFrom.slice(0, 7) : '';
+    const toKey = S.pdDateTo ? S.pdDateTo.slice(0, 7) : '';
+    const { periodKeys, byTier } = this.pdItemsForRange(fromKey, toKey);
+    base.pdPeriodsCount = periodKeys.length;
+    if (!periodKeys.length) { base.pdEmpty = true; return base; }
+    const tier = S.pdTier || 'raw';
+    const q = this.norm(S.pdSearch || '').toLowerCase();
+    let list = (byTier[tier] || []).filter(x => !q || x.name.toLowerCase().indexOf(q) >= 0);
+    const sort = S.pdSort || 'trend';
+    list = list.slice().sort((a, b) => sort === 'name' ? a.name.localeCompare(b.name, 'ru') : (Math.abs(b.deltaPct) - Math.abs(a.deltaPct)));
+    base.pdPeriodHead = periodKeys.map(k => ({ key: k, label: this.pdMonthLabel(k) }));
+    base.pdItems = list.map(x => {
+      const ptsMap = new Map(x.pts.map(p => [p.key, cval(p.rub)]));
+      const cells = periodKeys.map(k => ptsMap.has(k) ? { v: fmtUnit(ptsMap.get(k)), cls: '' } : { v: '—', cls: 'zero' });
+      const firstC = cval(x.first), lastC = cval(x.last), minC = cval(x.min), maxC = cval(x.max);
+      const deltaC = lastC - firstC;
+      const trendCls = x.deltaPct > 0.5 ? 'tup' : (x.deltaPct < -0.5 ? 'tdown' : '');
+      return {
+        name: x.name, cells,
+        firstS: fmtUnit(firstC), lastS: fmtUnit(lastC), minS: fmtUnit(minC), maxS: fmtUnit(maxC),
+        deltaS: (deltaC >= 0 ? '+' : '') + fmtUnit(deltaC),
+        deltaPctS: (x.deltaPct >= 0 ? '+' : '') + this.fmt(x.deltaPct, 1) + '%',
+        trendCls, count: x.count,
+      };
+    });
+    base.pdHasData = base.pdItems.length > 0;
+    base.pdEmpty = !base.pdHasData;
+    const risers = list.filter(x => x.deltaPct > 0.5).length, fallers = list.filter(x => x.deltaPct < -0.5).length;
+    const avgTrend = list.length ? list.reduce((s, x) => s + x.deltaPct, 0) / list.length : 0;
+    base.pdKpis = [
+      { label: 'Позиций в разрезе', v: String(list.length), hi: '' },
+      { label: 'Периодов в диапазоне', v: String(periodKeys.length), hi: '' },
+      { label: 'Цены выросли', v: String(risers), hi: risers > fallers ? '2' : '' },
+      { label: 'Цены снизились', v: String(fallers), hi: '' },
+      { label: 'Средний тренд', v: (avgTrend >= 0 ? '+' : '') + this.fmt(avgTrend, 1) + '%', hi: '' },
+    ];
+    return base;
+  }
+  pdExportExcel() {
+    const XLSX = window.XLSX; if (!XLSX) { this.setState({ pdErr: 'Библиотека Excel не загрузилась — обновите страницу.' }); return; }
+    if (!this._pdPeriods || !this._pdPeriods.length) { this.setState({ pdErr: 'Нет загруженных периодов дерева себестоимости для экспорта.' }); return; }
+    const S = this.state; const coName = this.co().name;
+    const fromKey = S.pdDateFrom ? S.pdDateFrom.slice(0, 7) : '';
+    const toKey = S.pdDateTo ? S.pdDateTo.slice(0, 7) : '';
+    const { periodKeys, byTier } = this.pdItemsForRange(fromKey, toKey);
+    if (!periodKeys.length) { this.setState({ pdErr: 'Нет данных в выбранном диапазоне периодов.' }); return; }
+    this.setState({ pdErr: '' });
+    const R = this.cbRate('EUR') || Number(S.rate) || 0;
+    const cval = (rub) => this.cvVal(rub, R);
+    const headers = ['Наименование'].concat(periodKeys.map(k => this.pdMonthLabel(k)), ['Первый период', 'Последний период', 'Мин', 'Макс', 'Δ', 'Динамика, %']);
+    const types = ['text'].concat(periodKeys.map(() => 'moneyu'), ['moneyu', 'moneyu', 'moneyu', 'moneyu', 'moneyu', 'pct']);
+    const tierLabel = { raw: 'Сырьё', semi: 'Полупродукты', finished: 'Готовая продукция' };
+    const sheetFor = (tier) => {
+      const list = (byTier[tier] || []).slice().sort((a, b) => Math.abs(b.deltaPct) - Math.abs(a.deltaPct));
+      const rows = list.map(x => {
+        const ptsMap = new Map(x.pts.map(p => [p.key, this.excelRound(cval(p.rub), 2)]));
+        const cells = periodKeys.map(k => ptsMap.has(k) ? ptsMap.get(k) : '');
+        return [x.name].concat(cells, [this.excelRound(cval(x.first), 2), this.excelRound(cval(x.last), 2), this.excelRound(cval(x.min), 2), this.excelRound(cval(x.max), 2), this.excelRound(cval(x.last) - cval(x.first), 2), this.excelRound(x.deltaPct, 1)]);
+      });
+      return this.mgXlSheet('Динамика цен · ' + tierLabel[tier] + ' · ' + coName, headers, types, rows, null);
+    };
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, sheetFor('raw'), 'Сырьё');
+    XLSX.utils.book_append_sheet(wb, sheetFor('semi'), 'Полупродукты');
+    XLSX.utils.book_append_sheet(wb, sheetFor('finished'), 'Готовая продукция');
+    XLSX.writeFile(wb, 'Динамика цен ' + coName + ' ' + new Date().toISOString().slice(0, 10) + '.xlsx');
   }
   async ctRunAudit() {
     this.setState({ ctView: 'audit', ctGenerated: true, ctAuditBusy: true, ctErr: '' });
@@ -7111,6 +7286,7 @@ class Component extends DCLogic {
       cost: '<path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/>',
       costtree: '<path d="M12 3v6"/><circle cx="12" cy="4" r="1.6"/><path d="M6 21v-4M12 21v-6M18 21v-3"/><circle cx="6" cy="15" r="1.6"/><circle cx="12" cy="13" r="1.6"/><circle cx="18" cy="16" r="1.6"/><path d="M12 9c0 2-6 2-6 4M12 9c0 3 6 2 6 5"/>',
       margin: '<path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/>',
+      pricedyn: '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
       calc: '<rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="12" x2="9.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="15" y1="12" x2="15.01" y2="12"/><line x1="9" y1="16" x2="9.01" y2="16"/><line x1="12" y1="16" x2="12.01" y2="16"/><line x1="15" y1="16" x2="15.01" y2="16"/>',
       recipe: '<path d="M9 3h6"/><path d="M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3"/><path d="M7.5 14h9"/>',
       prod: '<path d="M3 21V9l6 4V9l6 4V6l6 3v12z"/><line x1="2.5" y1="21" x2="21.5" y2="21"/>',
@@ -7276,7 +7452,7 @@ class Component extends DCLogic {
       { label: 'Продажи', tabs: [['sales', 'Продажи ГП'], ['pnl', 'P&L и маржинальный анализ 360°'], ['prices', 'Реестр цен']] },
       { label: 'Закупки', tabs: [['proc', 'План закупок'], ['procplan', 'График закупок'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['delivery', 'Доставка · баланс снабжения'], ['cparties', 'Поставщики / Контрагенты']] },
       { label: 'Логистика и склад', tabs: [['wh', 'Склад'], ['receipts', 'Поступления ТМЦ'], ['logi', 'Логистика'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка запасов']] },
-      { label: 'Финансы', tabs: [['margin', 'Маржинальный отчёт'], ['cost', 'Себестоимость · КО'], ['costtree', 'Анализ себестоимости'], ['pay', 'Платежи'], ['treas30', 'БДДС 30 дней'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
+      { label: 'Финансы', tabs: [['margin', 'Маржинальный отчёт'], ['cost', 'Себестоимость · КО'], ['costtree', 'Анализ себестоимости'], ['pricedyn', 'Динамика цен'], ['pay', 'Платежи'], ['treas30', 'БДДС 30 дней'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
       { label: 'Настройки', tabs: [['cloud', 'Облако'], ['onec', 'Интеграция 1С']] },
     ];
   }
@@ -13955,7 +14131,7 @@ class Component extends DCLogic {
       ['proc', 'План закупок'], ['cal', 'Календарь'], ['wh', 'Склад'], ['cover', 'Сводка'],
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['delivery', 'Доставка · баланс'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['prodrep', 'Отчёты производства'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
-      ['cost', 'Себестоимость · КО'], ['margin', 'Маржинальный отчёт'], ['costtree', 'Анализ себестоимости'], ['pnl', 'P&L 360°'],
+      ['cost', 'Себестоимость · КО'], ['margin', 'Маржинальный отчёт'], ['costtree', 'Анализ себестоимости'], ['pricedyn', 'Динамика цен'], ['pnl', 'P&L 360°'],
       ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['dataload', 'Загрузка данных 1С'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['filearch', 'Архив файлов'], ['autopilot', 'ИИ-Автопилот'], ['seclog', 'Журнал безопасности'], ['home', 'Карта навигации'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
@@ -13966,7 +14142,7 @@ class Component extends DCLogic {
       { label: 'Продажи', items: ['sales', 'pnl', 'prices'], en: { pnl: 'P&L и маржа 360°' } },
       { label: 'Закупки', items: ['proc', 'procplan', 'runrate', 'audit', 'landed', 'delivery', 'cparties'], en: { procplan: 'График закупок', cparties: 'Поставщики / Контрагенты' } },
       { label: 'Логистика и склад', items: ['wh', 'receipts', 'logi', 'turnover', 'cover'], en: { cover: 'Сводка запасов' } },
-      { label: 'Финансы', items: ['margin', 'cost', 'costtree', 'pay', 'treas30', 'planfact', 'stress', 'reports'] },
+      { label: 'Финансы', items: ['margin', 'cost', 'costtree', 'pricedyn', 'pay', 'treas30', 'planfact', 'stress', 'reports'] },
       { label: 'Настройки', items: ['cloud', 'onec', 'users', 'filearch', 'autopilot', 'seclog'], en: { filearch: 'Архив загруженных файлов', autopilot: 'ИИ-Автопилот (AI Control Core)', seclog: 'Журнал безопасности' } },
     ];
     const allowed = this.allowedTabs(S.currentUser);
@@ -13997,6 +14173,7 @@ class Component extends DCLogic {
       costtree: 'Глубокий анализ дерева себестоимости из 1С: структура затрат по статьям, разброс закупочных цен на сырьё с разворотом до первоначальных партий закупки, дрейф себестоимости партий по дням и план-факт удельного расхода. Автопоиск переплат и аномалий.',
       cost: 'Отчёт фактической себестоимости по партиям выпуска ГП: курс, потери, СС за кг и за партию в EUR и RUB. Фильтр по марке и периоду, сравнение одной марки в разные периоды.',
       margin: 'Маржинальный отчёт для учредителей. Загрузите файлы из 1С по шагам — приложение посчитает выручку, себестоимость, GM2, КВ и маржу 1/2 по группам и маркам.',
+      pricedyn: 'Динамика цен: как менялись цены сырья, полупродуктов и готовой продукции от периода к периоду. Источник — архив «Анализ себестоимости» (единый источник СС). Разрезы: сырьё / полупродукты / готовая продукция, период, RUB/EUR, с НДС/без НДС.',
       tcalc: 'Калькулятор технолога: себестоимость 1 кг ГП по рецептуре в EUR/RUB с НДС и без, доставка, GM2 и наценка → цена для клиента.',
       xcalc: 'Калькулятор X: себестоимость проектных (новых) продуктов — соберите рецептуру из номенклатуры, задайте %, получите цену клиенту до запуска в производство.',
       calc: 'Себестоимость 1 кг готового продукта с развёрткой по компонентам.',
@@ -14157,7 +14334,7 @@ class Component extends DCLogic {
       mailStopProp: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
       product: S.product, rate: S.rate, loss: S.loss, recipeOwner: S.recipeOwner,
       draftComp: S.draftComp, draftPct: S.draftPct, priceFilter: S.priceFilter,
-      isCost: S.tab === 'cost', isMargin: S.tab === 'margin', isLanded: S.tab === 'landed', isDelivery: S.tab === 'delivery', isDataload: S.tab === 'dataload', isFileArch: S.tab === 'filearch', isPnl: S.tab === 'pnl',
+      isCost: S.tab === 'cost', isMargin: S.tab === 'margin', isLanded: S.tab === 'landed', isDelivery: S.tab === 'delivery', isDataload: S.tab === 'dataload', isFileArch: S.tab === 'filearch', isPnl: S.tab === 'pnl', isPriceDyn: S.tab === 'pricedyn',
       isTCalc: S.tab === 'tcalc', tcReady: !!S.tcReady, isXCalc: S.tab === 'xcalc',
       isNewProd: S.tab === 'newprod', isNomFix: S.tab === 'nomfix', isActualize: S.tab === 'actualize',
       tcActualLabel: this.tccActualLabel(),
@@ -14590,6 +14767,7 @@ class Component extends DCLogic {
     if (S.tab === 'margin') Object.assign(base, this.buildMargin());
     if (S.tab === 'pnl') Object.assign(base, this.buildPnl());
     if (S.tab === 'costtree') Object.assign(base, this.buildCostTree());
+    if (S.tab === 'pricedyn') Object.assign(base, this.buildPriceDyn(rate));
     if (S.tab === 'landed') Object.assign(base, this.buildLanded());
     if (S.tab === 'delivery') Object.assign(base, this.buildDelivery());
     if (S.tab === 'dataload') Object.assign(base, this.buildDataload());
