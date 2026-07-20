@@ -9,13 +9,15 @@
 <script>
 /*
   ШЛЮЗ ДОСТУПА (двухконтурная маскировка для GitHub Pages).
-  По умолчанию корень сайта показывает фейковый 404.
-  Реальное приложение открывается ТОЛЬКО при наличии секретного ключа в URL:
-     .../index.html?key=ВАШ_КЛЮЧ        (рекомендуется)
-     .../index.html#ВАШ_КЛЮЧ
-  Ключ задаётся в одном месте ниже (SECRET_KEY).
+  GATE_ON = false → шлюз ОТКЛЮЧЁН (согласовано с основным файлом приложения — там он тоже выключен),
+  корень сайта сразу пропускает в приложение без секретного ключа в URL. Поставьте true, чтобы вернуть
+  защиту: тогда без ключа (.../index.html?key=ВАШ_КЛЮЧ или .../index.html#ВАШ_КЛЮЧ) будет фейковый 404.
+  Пока шлюз этого файла был включён отдельно от шлюза «Калькулятор NEV.dc.html» (тот уже отключён),
+  прямая ссылка на калькулятор открывалась у всех, а короткая ссылка на корень сайта (например, с
+  телефона, где ключ в URL/закладке мог потеряться) — нет, показывая фейковый 404 вместо приложения.
 */
 (function () {
+  var GATE_ON = false;
   var SECRET_KEY = 'shtark-erp-2026';            // ← измените на свой секрет
   var APP_FILE = 'Калькулятор NEV.dc.html';      // основной файл приложения
 
@@ -27,10 +29,10 @@
   var stored = false;
   try { stored = sessionStorage.getItem('sf_access') === SECRET_KEY; } catch (e) {}
 
-  if (supplied === SECRET_KEY || stored) {
+  if (!GATE_ON || supplied === SECRET_KEY || stored) {
     // Доступ разрешён — пропускаем в приложение, ключ кладём в сессию и переносим в URL.
     try { sessionStorage.setItem('sf_access', SECRET_KEY); } catch (e) {}
-    var target = './' + encodeURIComponent(APP_FILE) + '?k=' + encodeURIComponent(SECRET_KEY);
+    var target = './' + encodeURIComponent(APP_FILE) + (GATE_ON ? ('?k=' + encodeURIComponent(SECRET_KEY)) : '');
     location.replace(target);
   } else {
     // Доступа нет — остаёмся на фейковой странице 404 (см. <body> ниже).
