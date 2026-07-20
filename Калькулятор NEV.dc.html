@@ -4267,9 +4267,13 @@ class Component extends DCLogic {
         this._tcc = (obj && typeof obj === 'object') ? obj : this._tcc;
         try { this.lsSet('tc_actual', JSON.stringify(this._tcc)); } catch (_) {}
         try { if (this.data) this.tccApply(); } catch (_) {}
-        this._memo = new Map(); this._landMap = null; this._dvCat = null;
-        this.forceUpdate();
       }
+      // Система работает как единый организм независимо от того, ОТКУДА пришли данные: локальная
+      // загрузка файла уже сбрасывает кэши и запускает каскадный пересчёт (scheduleAutoRecalc) — то же
+      // самое обязано происходить и когда данные прилетают из облака (с другого устройства/сессии),
+      // иначе маржа/P&L и т.п. молча показывают устаревшие цифры до случайного обновления страницы.
+      if (id !== 'filearch') { try { this.biInvalidateAll(); } catch (_) {} try { this.scheduleAutoRecalc('DATA_ACTUALIZATION'); } catch (_) {} }
+      this.forceUpdate();
     } catch (err) { this._dsApplied[id] = -1; }
   }
   _dsApplyDeleted(id) {
@@ -4277,6 +4281,10 @@ class Component extends DCLogic {
       const key = id.slice(3); const localId = 'cl_' + key;
       const idx = this.ctArchIndex().filter(x => !(x.cloud && x.key === key));
       this.ctArchSaveIndex(idx); this.ctIdbDel(localId);
+      // Единый организм: удалённый с другого устройства период дерева себестоимости обязан
+      // сбросить кэши и пройти по каскаду пересчёта — так же, как это уже происходит при появлении
+      // нового периода (см. _dsApplyCostTree), иначе маржа/P&L могут остаться на данных удалённого периода.
+      try { this.biInvalidateAll(); } catch (_) {} try { this.scheduleAutoRecalc('DATA_ACTUALIZATION'); } catch (_) {}
       if (this._ctActiveId === localId) { this._ctActiveId = ''; this.ctTree = null; this._ctAggCache = null; this.loadCtree(); } else this.forceUpdate();
     }
   }
@@ -4294,6 +4302,10 @@ class Component extends DCLogic {
     } else idx.push(ent);
     this.ctArchSaveIndex(idx);
     this.setState({ ctReady: true });
+    // Единый организм: новый/обновлённый период дерева себестоимости (даже пришедший из облака,
+    // с другого устройства) обязан сбросить кэши и пройти по каскаду пересчёта — иначе маржа/P&L
+    // и другие отчёты молча остаются на старых цифрах до случайного полного обновления страницы.
+    try { this.biInvalidateAll(); } catch (_) {} try { this.scheduleAutoRecalc('DATA_ACTUALIZATION'); } catch (_) {}
     if (!this._ctActiveId) this.loadCtree(); else this.forceUpdate();
   }
 
