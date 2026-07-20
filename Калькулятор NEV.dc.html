@@ -4192,6 +4192,12 @@ class Component extends DCLogic {
       this._dsReg = this._dsReg || {}; this._dsReg[dsId] = entry; this._dsApplied = this._dsApplied || {}; this._dsApplied[dsId] = entry.rev;
       if (prev && prev.dataId && prev.dataId !== dataId) this._dsDelParts(dsId, prev.dataId, prev.parts);
       this.pushCloudToast('«' + this.areaLabel(area) + '»');
+      // Область для dsPush — это не «форма, где сейчас печатает человек», а разовое фоновое сохранение
+      // блока данных (дерево себестоимости, архив файлов, актуализация, маржа и т.д.). Если её не
+      // освободить, heartbeat продлевает блокировку бессрочно — и dsSyncFromRegistry затем НАВСЕГДА
+      // пропускает чужие обновления по этой области на ЭТОМ клиенте (он «держит» её сам с собой),
+      // хотя никто прямо сейчас ничего не редактирует. Освобождаем сразу после успешной выгрузки.
+      setTimeout(() => { try { this.releaseArea(area); } catch (e) {} }, 300);
       return true;
     } catch (e) { this.setState({ cloudErr: 'Не удалось выгрузить данные в облако: ' + (e.message || e) }); return false; }
   }
