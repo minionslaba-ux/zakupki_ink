@@ -2689,6 +2689,23 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 </sc-if>
 
+<sc-if value="{{ isTransLog }}" hint-placeholder-val="">
+<div class="card">
+<div class="mgrhead"><div class="mgrtitle">Анализ транспортных расходов <span class="mgrper">{{ ttCoName }}</span></div><div class="cvbar"><div class="cvgrp"><button class="{{ cvRubCls }}" onClick="{{ setCurRub }}">RUB ₽</button><button class="{{ cvEurCls }}" onClick="{{ setCurEur }}">EUR €</button></div><div class="cvgrp"><button class="{{ cvVatWithCls }}" onClick="{{ setVatWith }}">С НДС</button><button class="{{ cvVatNoCls }}" onClick="{{ setVatNo }}">Без НДС</button></div><button class="btn mgxls" onClick="{{ ttExportExcel }}">⬇ Скачать Excel</button></div></div>
+<div class="hint">Доп. расходы (транспорт/логистика/таможня/хранение) из дерева себестоимости: на сырьё — пропорционально доле в партии; на полупродукты и готовую продукцию — прямо, на кг выпуска.</div>
+<div class="sbflt"><div class="field"><span class="lbl">Период с</span><input class="inp sbdate" type="date" value="{{ ttDateFrom }}" onChange="{{ onTtDateFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp sbdate" type="date" value="{{ ttDateTo }}" onChange="{{ onTtDateTo }}"></div><div class="field grow"><span class="lbl">🔎 Поиск наименования</span><input class="inp" value="{{ ttSearch }}" onInput="{{ onTtSearch }}" placeholder="например, транспорт"></div><button class="btn ghost" onClick="{{ ttResetFlt }}">↺ Сброс</button></div>
+<div class="cvbar"><div class="cvgrp"><button class="{{ ttTierRawCls }}" onClick="{{ setTtTierRaw }}">Сырьё</button><button class="{{ ttTierSemiCls }}" onClick="{{ setTtTierSemi }}">Полупродукты</button><button class="{{ ttTierFinishedCls }}" onClick="{{ setTtTierFinished }}">Готовая продукция</button></div><div class="cvgrp"><button class="{{ ttSortTrendCls }}" onClick="{{ setTtSortTrend }}">По динамике</button><button class="{{ ttSortNameCls }}" onClick="{{ setTtSortName }}">По названию</button></div></div>
+<sc-if value="{{ ttHasErr }}" hint-placeholder-val=""><div class="banner err">{{ ttErr }}</div></sc-if>
+<sc-if value="{{ ttLoading }}" hint-placeholder-val=""><div class="hint">Загрузка периодов дерева себестоимости…</div></sc-if>
+<sc-if value="{{ ttEmpty }}" hint-placeholder-val=""><div class="banner warn">Нет данных по транспортным расходам для выбранного разреза/периода. Загрузите минимум 2 периода «Дерево себестоимости» во вкладке «Анализ себестоимости» (или «Актуализация данных») — тогда система покажет, как менялись транспортные расходы от периода к периоду.</div></sc-if>
+<sc-if value="{{ ttHasData }}" hint-placeholder-val="">
+<div class="mgkpis"><sc-for list="{{ ttKpis }}" as="k" hint-placeholder-count="6"><div class="mgkpi mghi{{ k.hi }}"><div class="mgkk">{{ k.label }}</div><div class="mgkv">{{ k.v }}</div></div></sc-for></div>
+<div class="mgtblwrap"><table class="mgtbl"><thead><tr><th class="l">Наименование</th><sc-for list="{{ ttPeriodHead }}" as="p" hint-placeholder-count="3"><th>{{ p.label }}</th></sc-for><th>Первый</th><th>Последний</th><th>Мин</th><th>Макс</th><th>Δ</th><th>Динамика</th></tr></thead>
+<tbody><sc-for list="{{ ttItems }}" as="r" hint-placeholder-count="8"><tr><td class="l">{{ r.name }}</td><sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="3"><td class="mono {{ c.cls }}">{{ c.v }}</td></sc-for><td class="mono">{{ r.firstS }}</td><td class="mono">{{ r.lastS }}</td><td class="mono">{{ r.minS }}</td><td class="mono">{{ r.maxS }}</td><td class="mono">{{ r.deltaS }}</td><td class="mono {{ r.trendCls }}">{{ r.deltaPctS }}</td></tr></sc-for></tbody></table></div>
+</sc-if>
+</div>
+</sc-if>
+
 <sc-if value="{{ isTCalc }}" hint-placeholder-val="{{ true }}">
 <sc-if value="{{ tcEmpty }}" hint-placeholder-val=""><div class="card"><div class="tcempty">Данные калькулятора технолога не загружены.</div></div></sc-if>
 <sc-if value="{{ tcReady }}" hint-placeholder-val="{{ true }}">
@@ -3914,6 +3931,7 @@ class Component extends DCLogic {
     deepBIExternal: null, deepBIExtBusy: false, deepBIExtMsg: '', deepBIExtForce: false,
     rrHorizon: 3, rrSafetyMonths: 1, rrLeadDefault: 1, rrRun: {}, rrLead: {}, rrSafety: {}, auditSku: '',
     pdDateFrom: '', pdDateTo: '', pdTier: 'raw', pdSearch: '', pdSort: 'trend', pdErr: '',
+    ttDateFrom: '', ttDateTo: '', ttTier: 'raw', ttSearch: '', ttSort: 'trend', ttErr: '',
     turnoverDays: 90, turnoverGen: false, planfactGen: false, stressGrowth: 30, stressGen: false, calcExpanded: {}, tcExpanded: {}, treasuryGen: false,
     apGm2Target: 15, apFx: 0, apLogi: 0, apSales: 0, apHorizon: 45, apSim: null, apLive: false, apDrafts: [], apAlerts: [], apInvoice: null, apSecurityLog: [], apRefreshedAt: 0, securityLog: [], secSearch: '',
     prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planProduct: '', planFilter: '', planCur: 'RUB',
@@ -4988,15 +5006,22 @@ class Component extends DCLogic {
     for (const b of batches) for (const c of b.comps) {
       totalCost += c.summa; catSum[c.cat] = (catSum[c.cat] || 0) + c.summa;
       if (c.cat === 'Доп. расходы') continue;
-      if (!mat.has(c.name)) mat.set(c.name, { name: c.name, cat: c.cat, unit: c.unit, lots: [], tot: 0, totq: 0, dopTot: 0, noPrice: 0 });
+      if (!mat.has(c.name)) mat.set(c.name, { name: c.name, cat: c.cat, unit: c.unit, lots: [], tot: 0, totq: 0, totP: 0, totqP: 0, dopTot: 0, noPrice: 0, unpriced: 0 });
       const M = mat.get(c.name); M.tot += c.summa; M.totq += c.qty; M.dopTot += c.dop || 0;
+      // Средневзвешенная цена должна считаться ТОЛЬКО по «прайсируемым» лотам (есть и кол-во, и сумма).
+      // Лот с кол-вом без суммы (либо суммой без кол-ва) не имеет определённой цены за единицу — раньше
+      // такие лоты всё равно попадали в totq/tot, что искажало wavg: занижало (кол-во без суммы «разбавляет»
+      // знаменатель) или завышало (сумма без кол-ва «раздувает» числитель) цену ВСЕХ ОСТАЛЬНЫХ лотов этой
+      // позиции — отсюда явные аномалии «нулевая себестоимость» / «аномально высокая цена» в отчёте.
+      const priceable = c.qty > 0 && c.summa > 0;
+      if (priceable) { M.totP += c.summa; M.totqP += c.qty; } else { M.unpriced += (c.summa || 0); }
       if (c.qty && !c.summa) M.noPrice++;
-      M.lots.push({ date: c.lotDate, party: c.party, qty: c.qty, sum: c.summa, price: c.price, dop: c.dop || 0 });
+      M.lots.push({ date: c.lotDate, party: c.party, qty: c.qty, sum: c.summa, price: c.price, dop: c.dop || 0, priceable });
     }
     const materials = [...mat.values()].map(M => {
       const pr = M.lots.filter(l => l.price > 0).map(l => l.price);
       const min = pr.length ? Math.min(...pr) : 0, max = pr.length ? Math.max(...pr) : 0;
-      const wavg = M.totq ? M.tot / M.totq : 0;
+      const wavg = M.totqP ? M.totP / M.totqP : 0;
       const spread = min ? (max - min) / min * 100 : 0;
       const lots = M.lots.slice().sort((a, b) => this.ctDateVal(b.date) - this.ctDateVal(a.date));
       const oldest = lots.length ? Math.min(...lots.filter(l => l.date).map(l => this.ctDateVal(l.date))) : 0;
@@ -5039,6 +5064,7 @@ class Component extends DCLogic {
       if (M.spread > 30 && M.tot > 50) anomalies.push({ type: 'spread', level: M.spread > 100 ? 'crit' : 'warn', name: M.name, text: 'Разброс закупочных цен ' + M.spread.toFixed(0) + '% (' + this.ctU(M.min, cur) + ' → ' + this.ctU(M.max, cur) + ')', val: M.spread });
       if (M.dopTot < -1) anomalies.push({ type: 'dop', level: 'warn', name: M.name, text: 'Отрицательные доп.расходы ' + this.ctMoney(M.dopTot, cur) + ' (корректировка транспорта)', val: -M.dopTot });
       if (M.noPrice > 0) anomalies.push({ type: 'noprice', level: 'crit', name: M.name, text: M.noPrice + ' партий без цены (списано в 0)', val: 999 });
+      if (M.unpriced > 0 && M.tot > 0) { const upct = M.unpriced / M.tot * 100; if (upct > 5) anomalies.push({ type: 'unpriced', level: upct > 25 ? 'crit' : 'warn', name: M.name, text: this.ctMoney(M.unpriced, cur) + ' (' + upct.toFixed(0) + '% суммы позиции) исключено из расчёта средней цены — лоты без пары «количество/сумма», не искажают ' + this.ctU(M.wavg, cur) + '/ед., но требуют проверки исходных данных 1С', val: upct }); }
     }
     anomalies.sort((a, b) => (a.level === b.level ? b.val - a.val : (a.level === 'crit' ? -1 : 1)));
     const out = { cur, totalCost, materials, catTotals, products, planfact, anomalies, batchN: batches.length, prodN: products.length, matN: materials.length, allBatchN: tree.batches.length, filtered: !!(dF || dT || pf || bf) };
@@ -5221,16 +5247,58 @@ class Component extends DCLogic {
         if (isPack) pk += s;
         if (isDop) other += s; else raw += s;
         if (!isDop) {
-          if (!mat.has(c.name)) mat.set(c.name, { name: c.name, cat: c.cat, unit: c.unit, tot: 0, totq: 0, prices: [] });
-          const M = mat.get(c.name); M.tot += s; M.totq += (Number(c.qty) || 0); if (Number(c.price) > 0) M.prices.push(Number(c.price));
+          if (!mat.has(c.name)) mat.set(c.name, { name: c.name, cat: c.cat, unit: c.unit, tot: 0, totq: 0, totP: 0, totqP: 0, prices: [] });
+          const M = mat.get(c.name); M.tot += s; M.totq += (Number(c.qty) || 0);
+          // Тот же принцип, что и в ctAgg(): в wavg включаем только лоты с одновременно валидными qty и summa,
+          // иначе средняя цена искажается («нулевая себестоимость» / «аномально высокая цена»).
+          const qn = Number(c.qty) || 0;
+          if (qn > 0 && s > 0) { M.totP += s; M.totqP += qn; }
+          if (Number(c.price) > 0) M.prices.push(Number(c.price));
         }
       }
       if (!prod.has(b.product)) prod.set(b.product, { product: b.product, cost: 0, raw: 0, other: 0, pack: 0, out: 0 });
       const P = prod.get(b.product); P.cost += cost; P.raw += raw; P.other += other; P.pack += pk; P.out += (Number(b.outQty) || 0);
     }
-    const mats = {}; for (const M of mat.values()) { const pr = M.prices; mats[M.name] = { name: M.name, cat: M.cat, unit: M.unit, wavg: M.totq ? M.tot / M.totq : 0, min: pr.length ? Math.min(...pr) : 0, max: pr.length ? Math.max(...pr) : 0, totq: M.totq, tot: M.tot, isPack: pack.test((M.name || '') + ' ' + (M.cat || '')) }; }
+    const mats = {}; for (const M of mat.values()) { const pr = M.prices; mats[M.name] = { name: M.name, cat: M.cat, unit: M.unit, wavg: M.totqP ? M.totP / M.totqP : 0, min: pr.length ? Math.min(...pr) : 0, max: pr.length ? Math.max(...pr) : 0, totq: M.totq, tot: M.tot, isPack: pack.test((M.name || '') + ' ' + (M.cat || '')) }; }
     const prods = {}; let packTot = 0, outTot = 0; for (const P of prod.values()) { prods[P.product] = { product: P.product, unit: P.out ? P.cost / P.out : 0, rawPerKg: P.out ? P.raw / P.out : 0, otherPerKg: P.out ? P.other / P.out : 0, packPerKg: P.out ? P.pack / P.out : 0, out: P.out, cost: P.cost }; packTot += P.pack; outTot += P.out; }
     return { key: key || (tree && tree.period) || '', period: (tree && tree.period) || key || '', cur: (tree && tree.cur) || '€', mats, prods, packPerKgAll: outTot ? packTot / outTot : 0, tree };
+  }
+  // Аллокация «Доп. расходов» (транспорт/логистика/таможня/хранение — см. ctCat) по трём разрезам за период:
+  // на выпуск (полупродукты/готовая продукция) — ПРЯМО, партия несёт свои доп.расходы, делим на кг выпуска;
+  // на сырьё — ПРОПОРЦИОНАЛЬНО доле сырья в сумме партии (доп.расходы партии не разнесены на сырьё в 1С
+  // явно, поэтому распределяем как в Landed Cost: пропорционально стоимости компонента в партии).
+  ctTransportAgg(tree, key) {
+    const batches = (tree && tree.batches) || [];
+    const rawT = new Map(), outT = new Map();
+    for (const b of batches) {
+      let other = 0, rawSum = 0; const rawComps = [];
+      for (const c of b.comps) {
+        const s = Number(c.summa) || 0;
+        if (c.cat === 'Доп. расходы') { other += s; continue; }
+        if (c.cat === 'Сырьё') { rawSum += s; rawComps.push(c); }
+      }
+      if (other > 0 && b.outQty) {
+        if (!outT.has(b.product)) outT.set(b.product, { name: b.product, tot: 0, totq: 0 });
+        const O = outT.get(b.product); O.tot += other; O.totq += (Number(b.outQty) || 0);
+      }
+      if (other > 0 && rawSum > 0) {
+        for (const c of rawComps) {
+          const s = Number(c.summa) || 0, q = Number(c.qty) || 0;
+          if (!(s > 0 && q > 0)) continue; // тот же принцип «priceable», что и в ctAgg/ctPeriodAgg
+          const alloc = other * (s / rawSum);
+          if (!rawT.has(c.name)) rawT.set(c.name, { name: c.name, unit: c.unit, tot: 0, totq: 0 });
+          const R = rawT.get(c.name); R.tot += alloc; R.totq += q;
+        }
+      }
+    }
+    const isSemiName = (n) => !!(this.semiByName && this.semiByName.has(this.norm(n)));
+    const raw = {}; for (const R of rawT.values()) raw[R.name] = { name: R.name, unit: R.unit, wavg: R.totq ? R.tot / R.totq : 0, tot: R.tot, totq: R.totq };
+    const semi = {}, finished = {};
+    for (const O of outT.values()) {
+      const rec = { name: O.name, wavg: O.totq ? O.tot / O.totq : 0, tot: O.tot, totq: O.totq };
+      (isSemiName(O.name) ? semi : finished)[O.name] = rec;
+    }
+    return { key: key || (tree && tree.period) || '', period: (tree && tree.period) || key || '', cur: (tree && tree.cur) || '€', raw, semi, finished };
   }
   // ===================== ДИНАМИКА ЦЕН (Финансы) =====================
   // Единый источник — архив «Анализ себестоимости» (та же СС, что и везде в системе, см. навык
@@ -5389,6 +5457,149 @@ class Component extends DCLogic {
     XLSX.utils.book_append_sheet(wb, sheetFor('semi'), 'Полупродукты');
     XLSX.utils.book_append_sheet(wb, sheetFor('finished'), 'Готовая продукция');
     XLSX.writeFile(wb, 'Динамика цен ' + coName + ' ' + new Date().toISOString().slice(0, 10) + '.xlsx');
+  }
+  // ===================== АНАЛИЗ ТРАНСПОРТНЫХ РАСХОДОВ (Финансы) =====================
+  // Тот же принцип единого источника, что и в «Динамике цен»: архив «Анализ себестоимости», без
+  // повторного счёта. В отличие от цены сырья/выпуска, здесь берём именно «Доп. расходы» (транспорт,
+  // логистика, таможня, хранение — см. ctCat/ctTransportAgg) и разворачиваем во времени по периодам.
+  async ttLoadPeriods() {
+    this._ttLoading = true;
+    const idx = this.ctArchIndex().slice().sort((a, b) => String(a.key || '').localeCompare(String(b.key || '')));
+    const periods = [];
+    for (const e of idx) {
+      const t = await this.ctArchGetTree(e);
+      if (t && t.batches && t.batches.length) periods.push(this.ctTransportAgg(t, e.key || e.period || ''));
+    }
+    this._ttPeriods = periods; this._ttLoadedCo = this._co(); this._ttLoading = false;
+    this.forceUpdate();
+  }
+  ttItemsForRange(fromKey, toKey) {
+    const R = this.cbRate('EUR') || Number(this.state.rate) || 0;
+    let periods = (this._ttPeriods || []).slice();
+    if (fromKey) periods = periods.filter(p => (p.key || '') >= fromKey);
+    if (toKey) periods = periods.filter(p => (p.key || '') <= toKey);
+    periods.sort((a, b) => String(a.key || '').localeCompare(String(b.key || '')));
+    const periodKeys = periods.map(p => p.key);
+    const byTier = { raw: [], semi: [], finished: [] };
+    for (const tier of ['raw', 'semi', 'finished']) {
+      const items = new Map();
+      for (const per of periods) {
+        const rub = (v) => per.cur === '₽' ? v : v * R;
+        const src = per[tier] || {};
+        for (const name in src) {
+          const it = src[name]; if (!it.wavg) continue;
+          if (!items.has(name)) items.set(name, { name, pts: new Map() });
+          items.get(name).pts.set(per.key, rub(it.wavg));
+        }
+      }
+      for (const it of items.values()) {
+        const pts = periodKeys.filter(k => it.pts.has(k)).map(k => ({ key: k, rub: it.pts.get(k) }));
+        if (!pts.length) continue;
+        const first = pts[0].rub, last = pts[pts.length - 1].rub;
+        const min = Math.min(...pts.map(p => p.rub)), max = Math.max(...pts.map(p => p.rub));
+        const deltaPct = first ? (last - first) / first * 100 : 0;
+        byTier[tier].push({ name: it.name, pts, first, last, min, max, deltaPct, count: pts.length });
+      }
+    }
+    return { periodKeys, byTier };
+  }
+  buildTransport(rate) {
+    const S = this.state;
+    const co = this._co();
+    if (this._ttLoadedCo !== co) { this._ttPeriods = null; this._ttLoadedCo = null; }
+    const R = this.cbRate('EUR') || rate || 0;
+    const cval = (rub) => this.cvVal(rub, R);
+    const fmtUnit = (v) => (Number(v) || 0).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + this.cvUnitSuffix();
+    const tierCls = (id) => (S.ttTier || 'raw') === id ? 'cvseg on' : 'cvseg';
+    const base = {
+      ttCoName: this.co().name,
+      ttDateFrom: S.ttDateFrom || '', ttDateTo: S.ttDateTo || '',
+      onTtDateFrom: (e) => this.setState({ ttDateFrom: e.target.value }),
+      onTtDateTo: (e) => this.setState({ ttDateTo: e.target.value }),
+      ttSearch: S.ttSearch || '', onTtSearch: (e) => this.setState({ ttSearch: e.target.value }),
+      ttResetFlt: () => this.setState({ ttDateFrom: '', ttDateTo: '', ttSearch: '' }),
+      ttTierRawCls: tierCls('raw'), ttTierSemiCls: tierCls('semi'), ttTierFinishedCls: tierCls('finished'),
+      setTtTierRaw: () => this.setState({ ttTier: 'raw' }), setTtTierSemi: () => this.setState({ ttTier: 'semi' }), setTtTierFinished: () => this.setState({ ttTier: 'finished' }),
+      ttSortTrendCls: (S.ttSort || 'trend') === 'trend' ? 'cvseg on' : 'cvseg', ttSortNameCls: S.ttSort === 'name' ? 'cvseg on' : 'cvseg',
+      setTtSortTrend: () => this.setState({ ttSort: 'trend' }), setTtSortName: () => this.setState({ ttSort: 'name' }),
+      ...this.curVatVals(),
+      ttErr: S.ttErr || '', ttHasErr: !!S.ttErr,
+      ttExportExcel: () => this.ttExportExcel(),
+      ttLoading: false, ttEmpty: false, ttHasData: false, ttPeriodsCount: 0, ttItems: [], ttPeriodHead: [], ttKpis: [],
+    };
+    if (this._ttPeriods == null) {
+      if (!this._ttLoading) this.ttLoadPeriods();
+      base.ttLoading = true;
+      return base;
+    }
+    const fromKey = S.ttDateFrom ? S.ttDateFrom.slice(0, 7) : '';
+    const toKey = S.ttDateTo ? S.ttDateTo.slice(0, 7) : '';
+    const { periodKeys, byTier } = this.ttItemsForRange(fromKey, toKey);
+    base.ttPeriodsCount = periodKeys.length;
+    if (!periodKeys.length) { base.ttEmpty = true; return base; }
+    const tier = S.ttTier || 'raw';
+    const q = this.norm(S.ttSearch || '').toLowerCase();
+    let list = (byTier[tier] || []).filter(x => !q || x.name.toLowerCase().indexOf(q) >= 0);
+    const sort = S.ttSort || 'trend';
+    list = list.slice().sort((a, b) => sort === 'name' ? a.name.localeCompare(b.name, 'ru') : (Math.abs(b.deltaPct) - Math.abs(a.deltaPct)));
+    base.ttPeriodHead = periodKeys.map(k => ({ key: k, label: this.pdMonthLabel(k) }));
+    base.ttItems = list.map(x => {
+      const ptsMap = new Map(x.pts.map(p => [p.key, cval(p.rub)]));
+      const cells = periodKeys.map(k => ptsMap.has(k) ? { v: fmtUnit(ptsMap.get(k)), cls: '' } : { v: '—', cls: 'zero' });
+      const firstC = cval(x.first), lastC = cval(x.last), minC = cval(x.min), maxC = cval(x.max);
+      const deltaC = lastC - firstC;
+      const trendCls = x.deltaPct > 0.5 ? 'tup' : (x.deltaPct < -0.5 ? 'tdown' : '');
+      return {
+        name: x.name, cells,
+        firstS: fmtUnit(firstC), lastS: fmtUnit(lastC), minS: fmtUnit(minC), maxS: fmtUnit(maxC),
+        deltaS: (deltaC >= 0 ? '+' : '') + fmtUnit(deltaC),
+        deltaPctS: (x.deltaPct >= 0 ? '+' : '') + this.fmt(x.deltaPct, 1) + '%',
+        trendCls, count: x.count,
+      };
+    });
+    base.ttHasData = base.ttItems.length > 0;
+    base.ttEmpty = !base.ttHasData;
+    const risers = list.filter(x => x.deltaPct > 0.5).length, fallers = list.filter(x => x.deltaPct < -0.5).length;
+    const avgTrend = list.length ? list.reduce((s, x) => s + x.deltaPct, 0) / list.length : 0;
+    const totalNow = list.reduce((s, x) => s + cval(x.last), 0);
+    base.ttKpis = [
+      { label: 'Позиций в разрезе', v: String(list.length), hi: '' },
+      { label: 'Периодов в диапазоне', v: String(periodKeys.length), hi: '' },
+      { label: 'Расходы выросли', v: String(risers), hi: risers > fallers ? '2' : '' },
+      { label: 'Расходы снизились', v: String(fallers), hi: '' },
+      { label: 'Средний тренд', v: (avgTrend >= 0 ? '+' : '') + this.fmt(avgTrend, 1) + '%', hi: '' },
+      { label: 'Σ транспорт/ед. (посл. период)', v: fmtUnit(totalNow), hi: '' },
+    ];
+    return base;
+  }
+  ttExportExcel() {
+    const XLSX = window.XLSX; if (!XLSX) { this.setState({ ttErr: 'Библиотека Excel не загрузилась — обновите страницу.' }); return; }
+    if (!this._ttPeriods || !this._ttPeriods.length) { this.setState({ ttErr: 'Нет загруженных периодов дерева себестоимости для экспорта.' }); return; }
+    const S = this.state; const coName = this.co().name;
+    const fromKey = S.ttDateFrom ? S.ttDateFrom.slice(0, 7) : '';
+    const toKey = S.ttDateTo ? S.ttDateTo.slice(0, 7) : '';
+    const { periodKeys, byTier } = this.ttItemsForRange(fromKey, toKey);
+    if (!periodKeys.length) { this.setState({ ttErr: 'Нет данных в выбранном диапазоне периодов.' }); return; }
+    this.setState({ ttErr: '' });
+    const R = this.cbRate('EUR') || Number(S.rate) || 0;
+    const cval = (rub) => this.cvVal(rub, R);
+    const headers = ['Наименование'].concat(periodKeys.map(k => this.pdMonthLabel(k)), ['Первый период', 'Последний период', 'Мин', 'Макс', 'Δ', 'Динамика, %']);
+    const types = ['text'].concat(periodKeys.map(() => 'moneyu'), ['moneyu', 'moneyu', 'moneyu', 'moneyu', 'moneyu', 'pct']);
+    const tierLabel = { raw: 'Сырьё', semi: 'Полупродукты', finished: 'Готовая продукция' };
+    const sheetFor = (tier) => {
+      const list = (byTier[tier] || []).slice().sort((a, b) => Math.abs(b.deltaPct) - Math.abs(a.deltaPct));
+      const rows = list.map(x => {
+        const ptsMap = new Map(x.pts.map(p => [p.key, this.excelRound(cval(p.rub), 2)]));
+        const cells = periodKeys.map(k => ptsMap.has(k) ? ptsMap.get(k) : '');
+        return [x.name].concat(cells, [this.excelRound(cval(x.first), 2), this.excelRound(cval(x.last), 2), this.excelRound(cval(x.min), 2), this.excelRound(cval(x.max), 2), this.excelRound(cval(x.last) - cval(x.first), 2), this.excelRound(x.deltaPct, 1)]);
+      });
+      return this.mgXlSheet('Транспортные расходы · ' + tierLabel[tier] + ' · ' + coName, headers, types, rows, null);
+    };
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, sheetFor('raw'), 'Сырьё');
+    XLSX.utils.book_append_sheet(wb, sheetFor('semi'), 'Полупродукты');
+    XLSX.utils.book_append_sheet(wb, sheetFor('finished'), 'Готовая продукция');
+    XLSX.writeFile(wb, 'Транспортные расходы ' + coName + ' ' + new Date().toISOString().slice(0, 10) + '.xlsx');
   }
   async ctRunAudit() {
     this.setState({ ctView: 'audit', ctGenerated: true, ctAuditBusy: true, ctErr: '' });
@@ -7287,6 +7498,7 @@ class Component extends DCLogic {
       costtree: '<path d="M12 3v6"/><circle cx="12" cy="4" r="1.6"/><path d="M6 21v-4M12 21v-6M18 21v-3"/><circle cx="6" cy="15" r="1.6"/><circle cx="12" cy="13" r="1.6"/><circle cx="18" cy="16" r="1.6"/><path d="M12 9c0 2-6 2-6 4M12 9c0 3 6 2 6 5"/>',
       margin: '<path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/>',
       pricedyn: '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
+      translog: '<rect x="1" y="7" width="13" height="10" rx="1"/><path d="M14 10h4l3 3v4h-7z"/><circle cx="5.5" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/><line x1="4" y1="11" x2="9" y2="11"/>',
       calc: '<rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="12" x2="9.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="15" y1="12" x2="15.01" y2="12"/><line x1="9" y1="16" x2="9.01" y2="16"/><line x1="12" y1="16" x2="12.01" y2="16"/><line x1="15" y1="16" x2="15.01" y2="16"/>',
       recipe: '<path d="M9 3h6"/><path d="M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3"/><path d="M7.5 14h9"/>',
       prod: '<path d="M3 21V9l6 4V9l6 4V6l6 3v12z"/><line x1="2.5" y1="21" x2="21.5" y2="21"/>',
@@ -7452,7 +7664,7 @@ class Component extends DCLogic {
       { label: 'Продажи', tabs: [['sales', 'Продажи ГП'], ['pnl', 'P&L и маржинальный анализ 360°'], ['prices', 'Реестр цен']] },
       { label: 'Закупки', tabs: [['proc', 'План закупок'], ['procplan', 'График закупок'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['delivery', 'Доставка · баланс снабжения'], ['cparties', 'Поставщики / Контрагенты']] },
       { label: 'Логистика и склад', tabs: [['wh', 'Склад'], ['receipts', 'Поступления ТМЦ'], ['logi', 'Логистика'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка запасов']] },
-      { label: 'Финансы', tabs: [['margin', 'Маржинальный отчёт'], ['cost', 'Себестоимость · КО'], ['costtree', 'Анализ себестоимости'], ['pricedyn', 'Динамика цен'], ['pay', 'Платежи'], ['treas30', 'БДДС 30 дней'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
+      { label: 'Финансы', tabs: [['margin', 'Маржинальный отчёт'], ['cost', 'Себестоимость · КО'], ['costtree', 'Анализ себестоимости'], ['pricedyn', 'Динамика цен'], ['translog', 'Анализ транспортных расходов'], ['pay', 'Платежи'], ['treas30', 'БДДС 30 дней'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
       { label: 'Настройки', tabs: [['cloud', 'Облако'], ['onec', 'Интеграция 1С']] },
     ];
   }
@@ -14131,7 +14343,7 @@ class Component extends DCLogic {
       ['proc', 'План закупок'], ['cal', 'Календарь'], ['wh', 'Склад'], ['cover', 'Сводка'],
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['delivery', 'Доставка · баланс'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['prodrep', 'Отчёты производства'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
-      ['cost', 'Себестоимость · КО'], ['margin', 'Маржинальный отчёт'], ['costtree', 'Анализ себестоимости'], ['pricedyn', 'Динамика цен'], ['pnl', 'P&L 360°'],
+      ['cost', 'Себестоимость · КО'], ['margin', 'Маржинальный отчёт'], ['costtree', 'Анализ себестоимости'], ['pricedyn', 'Динамика цен'], ['translog', 'Анализ транспортных расходов'], ['pnl', 'P&L 360°'],
       ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['dataload', 'Загрузка данных 1С'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['filearch', 'Архив файлов'], ['autopilot', 'ИИ-Автопилот'], ['seclog', 'Журнал безопасности'], ['home', 'Карта навигации'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
@@ -14142,7 +14354,7 @@ class Component extends DCLogic {
       { label: 'Продажи', items: ['sales', 'pnl', 'prices'], en: { pnl: 'P&L и маржа 360°' } },
       { label: 'Закупки', items: ['proc', 'procplan', 'runrate', 'audit', 'landed', 'delivery', 'cparties'], en: { procplan: 'График закупок', cparties: 'Поставщики / Контрагенты' } },
       { label: 'Логистика и склад', items: ['wh', 'receipts', 'logi', 'turnover', 'cover'], en: { cover: 'Сводка запасов' } },
-      { label: 'Финансы', items: ['margin', 'cost', 'costtree', 'pricedyn', 'pay', 'treas30', 'planfact', 'stress', 'reports'] },
+      { label: 'Финансы', items: ['margin', 'cost', 'costtree', 'pricedyn', 'translog', 'pay', 'treas30', 'planfact', 'stress', 'reports'] },
       { label: 'Настройки', items: ['cloud', 'onec', 'users', 'filearch', 'autopilot', 'seclog'], en: { filearch: 'Архив загруженных файлов', autopilot: 'ИИ-Автопилот (AI Control Core)', seclog: 'Журнал безопасности' } },
     ];
     const allowed = this.allowedTabs(S.currentUser);
@@ -14174,6 +14386,7 @@ class Component extends DCLogic {
       cost: 'Отчёт фактической себестоимости по партиям выпуска ГП: курс, потери, СС за кг и за партию в EUR и RUB. Фильтр по марке и периоду, сравнение одной марки в разные периоды.',
       margin: 'Маржинальный отчёт для учредителей. Загрузите файлы из 1С по шагам — приложение посчитает выручку, себестоимость, GM2, КВ и маржу 1/2 по группам и маркам.',
       pricedyn: 'Динамика цен: как менялись цены сырья, полупродуктов и готовой продукции от периода к периоду. Источник — архив «Анализ себестоимости» (единый источник СС). Разрезы: сырьё / полупродукты / готовая продукция, период, RUB/EUR, с НДС/без НДС.',
+      translog: 'Анализ транспортных расходов: динамика доп.расходов (транспорт/логистика/таможня/хранение) из дерева себестоимости — на сырьё (пропорционально доле в партии), на полупродукты и готовую продукцию (прямо, на кг выпуска). Разрезы, период, RUB/EUR, с НДС/без НДС — как в «Динамике цен».',
       tcalc: 'Калькулятор технолога: себестоимость 1 кг ГП по рецептуре в EUR/RUB с НДС и без, доставка, GM2 и наценка → цена для клиента.',
       xcalc: 'Калькулятор X: себестоимость проектных (новых) продуктов — соберите рецептуру из номенклатуры, задайте %, получите цену клиенту до запуска в производство.',
       calc: 'Себестоимость 1 кг готового продукта с развёрткой по компонентам.',
@@ -14334,7 +14547,7 @@ class Component extends DCLogic {
       mailStopProp: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
       product: S.product, rate: S.rate, loss: S.loss, recipeOwner: S.recipeOwner,
       draftComp: S.draftComp, draftPct: S.draftPct, priceFilter: S.priceFilter,
-      isCost: S.tab === 'cost', isMargin: S.tab === 'margin', isLanded: S.tab === 'landed', isDelivery: S.tab === 'delivery', isDataload: S.tab === 'dataload', isFileArch: S.tab === 'filearch', isPnl: S.tab === 'pnl', isPriceDyn: S.tab === 'pricedyn',
+      isCost: S.tab === 'cost', isMargin: S.tab === 'margin', isLanded: S.tab === 'landed', isDelivery: S.tab === 'delivery', isDataload: S.tab === 'dataload', isFileArch: S.tab === 'filearch', isPnl: S.tab === 'pnl', isPriceDyn: S.tab === 'pricedyn', isTransLog: S.tab === 'translog',
       isTCalc: S.tab === 'tcalc', tcReady: !!S.tcReady, isXCalc: S.tab === 'xcalc',
       isNewProd: S.tab === 'newprod', isNomFix: S.tab === 'nomfix', isActualize: S.tab === 'actualize',
       tcActualLabel: this.tccActualLabel(),
@@ -14768,6 +14981,7 @@ class Component extends DCLogic {
     if (S.tab === 'pnl') Object.assign(base, this.buildPnl());
     if (S.tab === 'costtree') Object.assign(base, this.buildCostTree());
     if (S.tab === 'pricedyn') Object.assign(base, this.buildPriceDyn(rate));
+    if (S.tab === 'translog') Object.assign(base, this.buildTransport(rate));
     if (S.tab === 'landed') Object.assign(base, this.buildLanded());
     if (S.tab === 'delivery') Object.assign(base, this.buildDelivery());
     if (S.tab === 'dataload') Object.assign(base, this.buildDataload());
