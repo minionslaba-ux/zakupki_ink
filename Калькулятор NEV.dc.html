@@ -2725,10 +2725,12 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ dqHasMargin }}" hint-placeholder-val="">
 <div class="banner warn">{{ dqMargin.text }}<div style="margin-top:8px"><button class="btn" onClick="{{ dqMargin.apply }}">Очистить маржинальный отчёт</button></div></div>
 </sc-if>
+<sc-if value="{{ dqHasSections }}" hint-placeholder-val=""><div class="dlmapfoot"><button class="btn ghost" onClick="{{ dqSelectAllTop }}">☑ Отметить всё везде</button><button class="btn ghost" onClick="{{ dqClearAllTop }}">☐ Снять все отметки</button></div></sc-if>
 <sc-for list="{{ dqSections }}" as="sec" hint-placeholder-count="2">
-<div class="sec">{{ sec.label }} · найдено {{ sec.count }}</div>
+<div class="sec">{{ sec.label }} · найдено {{ sec.count }} · {{ sec.selLabel }}</div>
+<div class="dlmapfoot"><button class="btn ghost" onClick="{{ sec.selectAll }}">☑ Отметить все в разделе</button><button class="btn ghost" onClick="{{ sec.clearAll }}">☐ Снять отметки в разделе</button></div>
 <div class="dqlist"><sc-for list="{{ sec.rows }}" as="r" hint-placeholder-count="3"><label class="dqrow"><input type="checkbox" checked="{{ r.checked }}" onChange="{{ r.toggle }}"><span class="dqname">{{ r.name }}</span><span class="dqsub">{{ r.sub }}</span></label></sc-for></div>
-<button class="btn ghost" onClick="{{ sec.apply }}">Удалить отмеченные</button>
+<button class="btn dark" onClick="{{ sec.apply }}">🗑 Удалить отмеченные</button>
 </sc-for>
 </sc-if>
 </div>
@@ -12457,6 +12459,21 @@ class Component extends DCLogic {
   dqIsSel(section, id) { return !!(this.state.dqSel || {})[this.dqSelKey(section, id)]; }
   dqToggle(section, id) { this.setState(s => ({ dqSel: { ...(s.dqSel || {}), [this.dqSelKey(section, id)]: !s.dqSel || !s.dqSel[this.dqSelKey(section, id)] } })); }
   dqSelIds(section, all) { const sel = this.state.dqSel || {}; return all.filter(x => sel[this.dqSelKey(section, x.id || x._key)]).map(x => x.id || x._key); }
+  // Массовая отметка — по одной позиции неудобно и долго, когда найдено много записей.
+  dqSelectAll(section, items, val) {
+    this.setState(s => { const sel = { ...(s.dqSel || {}) }; for (const x of items) sel[this.dqSelKey(section, x.id || x._key)] = val; return { dqSel: sel }; });
+  }
+  dqSelectAllEverywhere(val) {
+    const R = this.state.dqResult || {};
+    this.setState(s => {
+      const sel = { ...(s.dqSel || {}) };
+      const mark = (section, items) => { for (const x of items) sel[this.dqSelKey(section, x.id || x._key)] = val; };
+      mark('fileArch', R.fileArch || []); mark('purchases', R.purchases || []); mark('cparties', R.cparties || []);
+      mark('sales', R.sales || []); mark('receipts', R.receipts || []); mark('sebest', R.sebest || []);
+      mark('ctPeriods', this.state.dqCtPeriods || []);
+      return { dqSel: sel };
+    });
+  }
   dqApplyPurchases() {
     const ids = this.dqSelIds('purchases', (this.state.dqResult || {}).purchases || []); if (!ids.length) return;
     const next = (this.state.purchases || []).filter(p => ids.indexOf(p.id) < 0);
@@ -12516,10 +12533,14 @@ class Component extends DCLogic {
     if (!isAdmin) return base;
     const R = S.dqResult || { fileArch: [], purchases: [], cparties: [], sales: [], receipts: [], sebest: [], margin: null };
     const ctPeriods = S.dqCtPeriods || [];
-    const section = (id, items, nameFn, subFn) => ({
-      id, count: items.length, hasItems: items.length > 0,
-      rows: items.map(x => ({ key: x.id || x._key, checked: this.dqIsSel(id, x.id || x._key), toggle: () => this.dqToggle(id, x.id || x._key), name: nameFn(x), sub: subFn ? subFn(x) : '' })),
-    });
+    const section = (id, items, nameFn, subFn) => {
+      const selN = items.filter(x => this.dqIsSel(id, x.id || x._key)).length;
+      return {
+        id, count: items.length, hasItems: items.length > 0, selN, selLabel: 'отмечено ' + selN + ' из ' + items.length,
+        rows: items.map(x => ({ key: x.id || x._key, checked: this.dqIsSel(id, x.id || x._key), toggle: () => this.dqToggle(id, x.id || x._key), name: nameFn(x), sub: subFn ? subFn(x) : '' })),
+        selectAll: () => this.dqSelectAll(id, items, true), clearAll: () => this.dqSelectAll(id, items, false),
+      };
+    };
     const secs = [
       { ...section('fileArch', R.fileArch, e => e.file_name, e => this.faFmtSize(e.size_bytes) + ' · ' + (e.category_label || '')), label: 'Архив загруженных файлов', apply: () => this.dqApplyFileArch() },
       { ...section('purchases', R.purchases, p => p.material || '—', p => 'поставщик: ' + (p.supplier || '—') + ' · № ' + (p.no || '—')), label: 'Закупки', apply: () => this.dqApplyPurchases() },
@@ -12533,6 +12554,8 @@ class Component extends DCLogic {
     base.dqMargin = R.margin ? { text: 'Загруженный маржинальный отчёт похож на данные ' + base.dqOtherName + ' (' + R.margin.hit + ' из ' + R.margin.total + ' строк) — рекомендуется очистить и перезагрузить корректный файл для ' + base.dqCoName + '.', apply: () => this.dqApplyMargin() } : null;
     base.dqHasMargin = !!base.dqMargin;
     base.dqAllClean = S.dqScanned && !base.dqHasSections && !base.dqHasMargin;
+    base.dqSelectAllTop = () => this.dqSelectAllEverywhere(true);
+    base.dqClearAllTop = () => this.dqSelectAllEverywhere(false);
     return base;
   }
   faCalShift(delta) {
