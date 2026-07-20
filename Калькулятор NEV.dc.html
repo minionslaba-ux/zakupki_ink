@@ -708,6 +708,11 @@ tbody tr.ctsub td{background:#faf9f7;border-top:1px dashed #e7e4e0;font-size:12.
 .dlmapsample{margin-top:12px;border:1px solid #eee;border-radius:8px;padding:8px 10px;font-size:11px;color:#8a8782;font-family:'IBM Plex Mono',monospace;overflow:auto;white-space:nowrap}
 .dlmapfoot{display:flex;gap:10px;align-items:center;margin-top:16px;flex-wrap:wrap}
 .dlmapchk{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#56534f}
+.dqlist{display:flex;flex-direction:column;gap:2px;margin:8px 0 10px;border:1px solid #eee;border-radius:9px;overflow:hidden}
+.dqrow{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid #f0eeea;font-size:13px;cursor:pointer}
+.dqrow:last-child{border-bottom:none}
+.dqname{font-weight:600;color:#1a1916}
+.dqsub{color:#9a9793;font-size:12px;margin-left:auto;white-space:nowrap}
 .dlplace{max-width:680px}
 .dlplsugg{margin:2px 0 12px;background:#eef4fb;border:1px solid #d2e0f1;border-radius:9px;padding:9px 12px;font-size:13px;color:#1F4E78}
 .dlplsugg b{font-weight:800}
@@ -2707,6 +2712,28 @@ window.dispatchEvent(new Event('fbready'));
 </div>
 </sc-if>
 
+<sc-if value="{{ isDqClean }}" hint-placeholder-val="">
+<div class="card">
+<div class="sec">Чистота данных компании · {{ dqCoName }}</div>
+<sc-if value="{{ dqNoAccess }}" hint-placeholder-val=""><div class="hint">Доступно только администратору.</div></sc-if>
+<sc-if value="{{ dqIsAdmin }}" hint-placeholder-val="">
+<div class="hint">Ищет записи, похожие на данные «{{ dqOtherName }}», внутри компании «{{ dqCoName }}» — по товарной специализации компаний (см. CLAUDE.md) и по точным дубликатам в архиве файлов. Ничего не удаляется автоматически: отметьте нужные строки и подтвердите удаление отдельно по каждому разделу.</div>
+<button class="btn dark" onClick="{{ dqRunScan }}">🔍 Запустить проверку</button>
+<sc-if value="{{ dqBusy }}" hint-placeholder-val=""><div class="hint">Проверка периодов дерева себестоимости…</div></sc-if>
+<sc-if value="{{ dqHasMsg }}" hint-placeholder-val=""><div class="banner ok">{{ dqMsg }}</div></sc-if>
+<sc-if value="{{ dqAllClean }}" hint-placeholder-val=""><div class="banner ok">Проверка завершена — данных другой компании не найдено.</div></sc-if>
+<sc-if value="{{ dqHasMargin }}" hint-placeholder-val="">
+<div class="banner warn">{{ dqMargin.text }}<div style="margin-top:8px"><button class="btn" onClick="{{ dqMargin.apply }}">Очистить маржинальный отчёт</button></div></div>
+</sc-if>
+<sc-for list="{{ dqSections }}" as="sec" hint-placeholder-count="2">
+<div class="sec">{{ sec.label }} · найдено {{ sec.count }}</div>
+<div class="dqlist"><sc-for list="{{ sec.rows }}" as="r" hint-placeholder-count="3"><label class="dqrow"><input type="checkbox" checked="{{ r.checked }}" onChange="{{ r.toggle }}"><span class="dqname">{{ r.name }}</span><span class="dqsub">{{ r.sub }}</span></label></sc-for></div>
+<button class="btn ghost" onClick="{{ sec.apply }}">Удалить отмеченные</button>
+</sc-for>
+</sc-if>
+</div>
+</sc-if>
+
 <sc-if value="{{ isTCalc }}" hint-placeholder-val="{{ true }}">
 <sc-if value="{{ tcEmpty }}" hint-placeholder-val=""><div class="card"><div class="tcempty">Данные калькулятора технолога не загружены.</div></div></sc-if>
 <sc-if value="{{ tcReady }}" hint-placeholder-val="{{ true }}">
@@ -3933,6 +3960,7 @@ class Component extends DCLogic {
     rrHorizon: 3, rrSafetyMonths: 1, rrLeadDefault: 1, rrRun: {}, rrLead: {}, rrSafety: {}, auditSku: '',
     pdDateFrom: '', pdDateTo: '', pdTier: 'raw', pdSearch: '', pdSort: 'trend', pdErr: '',
     ttDateFrom: '', ttDateTo: '', ttTier: 'raw', ttSearch: '', ttSort: 'trend', ttErr: '',
+    dqResult: null, dqCtPeriods: [], dqSel: {}, dqScanned: false, dqBusy: false, dqMsg: '',
     turnoverDays: 90, turnoverGen: false, planfactGen: false, stressGrowth: 30, stressGen: false, calcExpanded: {}, tcExpanded: {}, treasuryGen: false,
     apGm2Target: 15, apFx: 0, apLogi: 0, apSales: 0, apHorizon: 45, apSim: null, apLive: false, apDrafts: [], apAlerts: [], apInvoice: null, apSecurityLog: [], apRefreshedAt: 0, securityLog: [], secSearch: '',
     prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planProduct: '', planFilter: '', planCur: 'RUB',
@@ -7520,6 +7548,7 @@ class Component extends DCLogic {
       margin: '<path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/>',
       pricedyn: '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
       translog: '<rect x="1" y="7" width="13" height="10" rx="1"/><path d="M14 10h4l3 3v4h-7z"/><circle cx="5.5" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/><line x1="4" y1="11" x2="9" y2="11"/>',
+      dqclean: '<path d="M4 4h16v5H4z"/><path d="M6 9v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9"/><path d="M9 13l2 2 4-4"/>',
       calc: '<rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="12" x2="9.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="15" y1="12" x2="15.01" y2="12"/><line x1="9" y1="16" x2="9.01" y2="16"/><line x1="12" y1="16" x2="12.01" y2="16"/><line x1="15" y1="16" x2="15.01" y2="16"/>',
       recipe: '<path d="M9 3h6"/><path d="M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3"/><path d="M7.5 14h9"/>',
       prod: '<path d="M3 21V9l6 4V9l6 4V6l6 3v12z"/><line x1="2.5" y1="21" x2="21.5" y2="21"/>',
@@ -7709,7 +7738,7 @@ class Component extends DCLogic {
     if (!user) return [];
     const co = this._co();
     const all = this.allTabIds().filter(id => this.tabInCompany(id, co));
-    if (user.role === 'admin') return ['home'].concat(all, ['users', 'filearch', 'autopilot', 'seclog']);
+    if (user.role === 'admin') return ['home'].concat(all, ['users', 'filearch', 'autopilot', 'seclog', 'dqclean']);
     const perms = Array.isArray(user.perms) ? user.perms : all;
     // Новые разделы доступны по умолчанию всем (добавлены позже — их нет в старых perms)
     const always = ['tcalc', 'xcalc', 'calc', 'newprod', 'actualize', 'nomfix', 'prodplan', 'procplan', 'onec', 'tasks', 'docs', 'cparties', 'receipts', 'sales', 'treas30', 'logi', 'prodrep', 'costtree'];
@@ -8366,6 +8395,10 @@ class Component extends DCLogic {
     catch (e) { this.setState({ cloudErr: 'Не удалось разобрать конфиг. Вставьте объект firebaseConfig целиком, с фигурными скобками.' }); return; }
     if (!cfg || !cfg.projectId) { this.setState({ cloudErr: 'В конфиге нет projectId — проверьте, что скопировали весь объект.' }); return; }
     this.setState({ cloudErr: '', cloudStatus: 'Подключение…' });
+    // На случай повторного/параллельного вызова (напр. автоподключение почти одновременно со сменой
+    // компании) — всегда отписываемся от ПРЕЖНЕГО listener'а перед созданием нового. Иначе он остаётся
+    // жить и молча продолжает применять данные своей (уже не активной) рабочей области поверх текущей.
+    if (this._unsub) { try { this._unsub(); } catch (e) {} this._unsub = null; }
     try {
       this._app = fb.initializeApp(cfg, 'inkflow-' + Date.now());
       // long-polling: обходит блокировку WebChannel в строгих сетях / через VPN ("client is offline")
@@ -8399,6 +8432,14 @@ class Component extends DCLogic {
   }
 
   onRemote(snap) {
+    // Защита от утечки данных между компаниями: если активная компания сменилась быстрее, чем
+    // переподключилось облако (устаревший/ещё не отписанный listener от ПРЕЖНЕЙ компании доставил
+    // очередной снапшот), НЕ применяем его — он относится к ЧУЖОЙ рабочей области, а не к компании,
+    // активной сейчас. Без этой проверки onRemote слепо писал chat/tasks/purchases/sales/... (через
+    // colApply и d.state) и весь реестр datasets (dsSyncFromRegistry → filearch/costtree/actualize/…)
+    // в состояние и localStorage ТЕКУЩЕЙ (уже переключённой) компании — так данные одной компании
+    // оказывались в другой.
+    if (this._connectedWs && this._connectedWs !== this.coWsId(this._co())) return;
     const d = snap.exists() ? (snap.data() || {}) : {};
     const now = Date.now();
     const rawLocks = d.locks || {};
@@ -12354,6 +12395,146 @@ class Component extends DCLogic {
     this.faSyncCloud(idx);
   }
   faToggle(k) { const m = { ...(this.state.faExp || {}) }; m[k] = !m[k]; this.setState({ faExp: m }); }
+  // ===================== ЧИСТОТА ДАННЫХ КОМПАНИИ (поиск утечек между ИНК/Кемикалз) =====================
+  // Причина утечки (найдена и исправлена отдельно, см. onRemote/cloudConnect): при смене компании
+  // облачный listener мог на короткое время остаться привязан к рабочей области ПРЕЖНЕЙ компании и
+  // применить её данные под ключами УЖЕ переключённой. Этот раздел — инструмент РУЧНОЙ проверки и
+  // подтверждённой очистки уже попавших не туда записей: он никогда не удаляет данные без явного
+  // выбора администратором конкретных строк. Эвристика — по товарной специализации компаний (см.
+  // CLAUDE.md): ШТАРК ИНК — краски/лаки/чернила/бренд Starkbond; ШТАРК КЕМИКАЛЗ — клеи/ПУ-системы/
+  // резиновая крошка. Это ПОДСКАЗКА для проверки, не основание для автоматического удаления.
+  dqOtherCoRe(co) {
+    // JS-regex \b/\w не понимают кириллицу (считают её «не словом»), поэтому границы слов не используем —
+    // это подсказка для РУЧНОЙ проверки (редкое ложное совпадение не страшно, ничего не удаляется
+    // автоматически), а не точное совпадение.
+    if (co === 'chem') return /starkbond|чернил|краск|лак/i;
+    if (co === 'ink') return /клеев|клея|клей|пу[- ]систем|резинов.*крошк/i;
+    return null;
+  }
+  dqOtherCoLabel(co) { return co === 'chem' ? 'ШТАРК ИНК' : (co === 'ink' ? 'ШТАРК КЕМИКАЛЗ' : '—'); }
+  dqScan() {
+    const co = this._co(); const re = this.dqOtherCoRe(co);
+    const out = { fileArch: [], purchases: [], cparties: [], sales: [], receipts: [], sebest: [], margin: null };
+    if (!re) return out;
+    const S = this.state;
+    // Архив файлов: запись текущей компании — точный дубликат (имя + размер) записи ДРУГОЙ компании
+    const fa = this.faIndex();
+    const otherKeySet = new Set(fa.filter(e => e.company_id && e.company_id !== co).map(e => (e.file_name || '') + '|' + (e.size_bytes || 0)));
+    for (const e of fa) { if (e.company_id === co && otherKeySet.has((e.file_name || '') + '|' + (e.size_bytes || 0))) out.fileArch.push(e); }
+    for (const p of (S.purchases || [])) { if (re.test(p.material || '') || re.test(p.supplier || '')) out.purchases.push(p); }
+    for (const c of (S.cparties || [])) { if (re.test(c.name || '')) out.cparties.push(c); }
+    for (const s of (S.sales || [])) { if (re.test(s.product || '') || re.test(s.client || '')) out.sales.push(s); }
+    for (const r of (S.receipts || [])) { const lines = r.lines || []; if (re.test(r.supplier || '') || lines.some(l => re.test(l.material || ''))) out.receipts.push(r); }
+    const sbRecs = (this.sebest && this.sebest.records) || [];
+    sbRecs.forEach((r, i) => { if (re.test(r.product || '')) out.sebest.push({ ...r, _idx: i, _key: 'sb' + i }); });
+    const mgRows = Array.isArray(S.mgRevenue) ? S.mgRevenue : [];
+    if (mgRows.length) { const hit = mgRows.filter(r => re.test((r.nomen || '') + ' ' + (r.group || '') + ' ' + (r.marka || ''))).length; if (hit > mgRows.length * 0.3) out.margin = { hit, total: mgRows.length }; }
+    return out;
+  }
+  // Периоды дерева себестоимости проверяются отдельно (асинхронно — нужно скачать каждое дерево из
+  // IndexedDB/облака) и по факту, а не по имени файла: доля партий, чей продукт похож на ДРУГУЮ компанию.
+  async dqScanCtPeriods() {
+    const co = this._co(); const re = this.dqOtherCoRe(co); if (!re) return [];
+    const idx = this.ctArchIndex(); const out = [];
+    for (const e of idx) {
+      const t = await this.ctArchGetTree(e); if (!t || !Array.isArray(t.batches) || !t.batches.length) continue;
+      const hit = t.batches.filter(b => re.test(b.product || '')).length;
+      if (hit > t.batches.length * 0.5) out.push({ id: e.id, fileName: e.fileName, period: e.period || e.key, batchN: t.batches.length, hit });
+    }
+    return out;
+  }
+  // Не трогает dqMsg — используется и по кнопке «Запустить проверку» (см. buildDataQuality, там msg
+  // сбрасывается отдельно), и для авто-обновления списка после удаления (dqAfterApply), где сообщение
+  // об удалении должно остаться видимым.
+  dqRunScan() {
+    this.setState({ dqBusy: true });
+    const sync = this.dqScan();
+    this.dqScanCtPeriods().then(ctPeriods => {
+      this.setState({ dqResult: sync, dqCtPeriods: ctPeriods, dqSel: {}, dqScanned: true, dqBusy: false });
+    });
+  }
+  dqSelKey(section, id) { return section + ':' + id; }
+  dqIsSel(section, id) { return !!(this.state.dqSel || {})[this.dqSelKey(section, id)]; }
+  dqToggle(section, id) { this.setState(s => ({ dqSel: { ...(s.dqSel || {}), [this.dqSelKey(section, id)]: !s.dqSel || !s.dqSel[this.dqSelKey(section, id)] } })); }
+  dqSelIds(section, all) { const sel = this.state.dqSel || {}; return all.filter(x => sel[this.dqSelKey(section, x.id || x._key)]).map(x => x.id || x._key); }
+  dqApplyPurchases() {
+    const ids = this.dqSelIds('purchases', (this.state.dqResult || {}).purchases || []); if (!ids.length) return;
+    const next = (this.state.purchases || []).filter(p => ids.indexOf(p.id) < 0);
+    this.setState({ purchases: next }); try { this.lsSet('purchases', JSON.stringify(next)); } catch (e) {}
+    this.dqAfterApply('Закупки', ids.length);
+  }
+  dqApplyCparties() {
+    const ids = this.dqSelIds('cparties', (this.state.dqResult || {}).cparties || []); if (!ids.length) return;
+    this.writeCparties((this.state.cparties || []).filter(c => ids.indexOf(c.id) < 0));
+    this.dqAfterApply('Контрагенты', ids.length);
+  }
+  dqApplySales() {
+    const ids = this.dqSelIds('sales', (this.state.dqResult || {}).sales || []); if (!ids.length) return;
+    this.writeSales((this.state.sales || []).filter(s => ids.indexOf(s.id) < 0));
+    this.dqAfterApply('Продажи ГП', ids.length);
+  }
+  dqApplyReceipts() {
+    const ids = this.dqSelIds('receipts', (this.state.dqResult || {}).receipts || []); if (!ids.length) return;
+    this.writeReceipts((this.state.receipts || []).filter(r => ids.indexOf(r.id) < 0));
+    this.dqAfterApply('Поступления ТМЦ', ids.length);
+  }
+  dqApplySebest() {
+    const items = (this.state.dqResult || {}).sebest || [];
+    const idxs = items.filter(x => this.dqIsSel('sebest', x._key)).map(x => x._idx);
+    if (!idxs.length) return;
+    const idxSet = new Set(idxs);
+    this.sbMut(d => { d.records = d.records.filter((r, i) => !idxSet.has(i)); });
+    this.dqAfterApply('Себестоимость КО', idxs.length);
+  }
+  dqApplyMargin() {
+    if (!(this.state.dqResult || {}).margin) return;
+    this.mgClear();
+    this.dqAfterApply('Маржинальный отчёт', 1);
+  }
+  dqApplyFileArch() {
+    const ids = this.dqSelIds('fileArch', (this.state.dqResult || {}).fileArch || []); if (!ids.length) return;
+    (async () => { for (const id of ids) await this.faDelete(id); this.dqAfterApply('Архив файлов', ids.length); })();
+  }
+  dqApplyCtPeriods() {
+    const ids = this.dqSelIds('ctPeriods', this.state.dqCtPeriods || []); if (!ids.length) return;
+    (async () => { for (const id of ids) await this.ctDeleteArch(id); this.dqAfterApply('Анализ себестоимости — периоды', ids.length); })();
+  }
+  dqAfterApply(label, n) {
+    try { this.biInvalidateAll(); } catch (e) {} try { this.scheduleAutoRecalc('DATA_ACTUALIZATION'); } catch (e) {}
+    try { this.secLog('DATA_CLEANUP', { detail: '«' + label + '» — удалено записей другой компании: ' + n + ' (компания: ' + this.co().name + ')' }); } catch (e) {}
+    this.setState({ dqMsg: '«' + label + '»: удалено записей — ' + n + '.' });
+    this.dqRunScan();
+  }
+  buildDataQuality() {
+    const S = this.state;
+    const isAdmin = !!(S.currentUser && S.currentUser.role === 'admin');
+    const base = {
+      dqCoName: this.co().name, dqOtherName: this.dqOtherCoLabel(this._co()),
+      dqIsAdmin: isAdmin, dqNoAccess: !isAdmin, dqBusy: !!S.dqBusy, dqMsg: S.dqMsg || '', dqHasMsg: !!S.dqMsg,
+      dqRunScan: () => { this.setState({ dqMsg: '' }); this.dqRunScan(); }, dqScanned: !!S.dqScanned,
+    };
+    if (!isAdmin) return base;
+    const R = S.dqResult || { fileArch: [], purchases: [], cparties: [], sales: [], receipts: [], sebest: [], margin: null };
+    const ctPeriods = S.dqCtPeriods || [];
+    const section = (id, items, nameFn, subFn) => ({
+      id, count: items.length, hasItems: items.length > 0,
+      rows: items.map(x => ({ key: x.id || x._key, checked: this.dqIsSel(id, x.id || x._key), toggle: () => this.dqToggle(id, x.id || x._key), name: nameFn(x), sub: subFn ? subFn(x) : '' })),
+    });
+    const secs = [
+      { ...section('fileArch', R.fileArch, e => e.file_name, e => this.faFmtSize(e.size_bytes) + ' · ' + (e.category_label || '')), label: 'Архив загруженных файлов', apply: () => this.dqApplyFileArch() },
+      { ...section('purchases', R.purchases, p => p.material || '—', p => 'поставщик: ' + (p.supplier || '—') + ' · № ' + (p.no || '—')), label: 'Закупки', apply: () => this.dqApplyPurchases() },
+      { ...section('cparties', R.cparties, c => c.name || '—', c => c.inn ? ('ИНН ' + c.inn) : ''), label: 'Контрагенты', apply: () => this.dqApplyCparties() },
+      { ...section('sales', R.sales, s => s.product || '—', s => 'клиент: ' + (s.client || '—')), label: 'Продажи ГП', apply: () => this.dqApplySales() },
+      { ...section('receipts', R.receipts, r => r.supplier || '—', r => (r.lines || []).length + ' позиц.'), label: 'Поступления ТМЦ', apply: () => this.dqApplyReceipts() },
+      { ...section('sebest', R.sebest, r => r.product || '—', r => 'партия № ' + (r.batch || '—')), label: 'Себестоимость КО', apply: () => this.dqApplySebest() },
+      { ...section('ctPeriods', ctPeriods, e => (e.fileName || 'Дерево себестоимости'), e => (e.period || '') + ' · подозрительных партий ' + e.hit + '/' + e.batchN), label: 'Анализ себестоимости — периоды', apply: () => this.dqApplyCtPeriods() },
+    ].filter(s => s.hasItems);
+    base.dqSections = secs; base.dqHasSections = secs.length > 0;
+    base.dqMargin = R.margin ? { text: 'Загруженный маржинальный отчёт похож на данные ' + base.dqOtherName + ' (' + R.margin.hit + ' из ' + R.margin.total + ' строк) — рекомендуется очистить и перезагрузить корректный файл для ' + base.dqCoName + '.', apply: () => this.dqApplyMargin() } : null;
+    base.dqHasMargin = !!base.dqMargin;
+    base.dqAllClean = S.dqScanned && !base.dqHasSections && !base.dqHasMargin;
+    return base;
+  }
   faCalShift(delta) {
     let y = this.state.faCalY, m = this.state.faCalM + delta;
     while (m < 0) { m += 12; y--; } while (m > 11) { m -= 12; y++; }
@@ -14375,7 +14556,7 @@ class Component extends DCLogic {
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['delivery', 'Доставка · баланс'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['prodrep', 'Отчёты производства'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
       ['cost', 'Себестоимость · КО'], ['margin', 'Маржинальный отчёт'], ['costtree', 'Анализ себестоимости'], ['pricedyn', 'Динамика цен'], ['translog', 'Анализ транспортных расходов'], ['pnl', 'P&L 360°'],
-      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['dataload', 'Загрузка данных 1С'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['filearch', 'Архив файлов'], ['autopilot', 'ИИ-Автопилот'], ['seclog', 'Журнал безопасности'], ['home', 'Карта навигации'],
+      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['dataload', 'Загрузка данных 1С'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['filearch', 'Архив файлов'], ['autopilot', 'ИИ-Автопилот'], ['seclog', 'Журнал безопасности'], ['dqclean', 'Чистота данных'], ['home', 'Карта навигации'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
     const tabGroups = [
@@ -14386,7 +14567,7 @@ class Component extends DCLogic {
       { label: 'Закупки', items: ['proc', 'procplan', 'runrate', 'audit', 'landed', 'delivery', 'cparties'], en: { procplan: 'График закупок', cparties: 'Поставщики / Контрагенты' } },
       { label: 'Логистика и склад', items: ['wh', 'receipts', 'logi', 'turnover', 'cover'], en: { cover: 'Сводка запасов' } },
       { label: 'Финансы', items: ['margin', 'cost', 'costtree', 'pricedyn', 'translog', 'pay', 'treas30', 'planfact', 'stress', 'reports'] },
-      { label: 'Настройки', items: ['cloud', 'onec', 'users', 'filearch', 'autopilot', 'seclog'], en: { filearch: 'Архив загруженных файлов', autopilot: 'ИИ-Автопилот (AI Control Core)', seclog: 'Журнал безопасности' } },
+      { label: 'Настройки', items: ['cloud', 'onec', 'users', 'filearch', 'autopilot', 'seclog', 'dqclean'], en: { filearch: 'Архив загруженных файлов', autopilot: 'ИИ-Автопилот (AI Control Core)', seclog: 'Журнал безопасности', dqclean: 'Чистота данных компании' } },
     ];
     const allowed = this.allowedTabs(S.currentUser);
     const allowSet = new Set(allowed);
@@ -14418,6 +14599,7 @@ class Component extends DCLogic {
       margin: 'Маржинальный отчёт для учредителей. Загрузите файлы из 1С по шагам — приложение посчитает выручку, себестоимость, GM2, КВ и маржу 1/2 по группам и маркам.',
       pricedyn: 'Динамика цен: как менялись цены сырья, полупродуктов и готовой продукции от периода к периоду. Источник — архив «Анализ себестоимости» (единый источник СС). Разрезы: сырьё / полупродукты / готовая продукция, период, RUB/EUR, с НДС/без НДС.',
       translog: 'Анализ транспортных расходов: динамика доп.расходов (транспорт/логистика/таможня/хранение) из дерева себестоимости — на сырьё (пропорционально доле в партии), на полупродукты и готовую продукцию (прямо, на кг выпуска). Разрезы, период, RUB/EUR, с НДС/без НДС — как в «Динамике цен».',
+      dqclean: 'Чистота данных компании (только админ): поиск записей другой компании, попавших в текущую по сбою облачной синхронизации (найдены и удалены точно, при подтверждении). Проверяет архив файлов, закупки, контрагентов, продажи, поступления, себестоимость КО, маржу и периоды дерева себестоимости.',
       tcalc: 'Калькулятор технолога: себестоимость 1 кг ГП по рецептуре в EUR/RUB с НДС и без, доставка, GM2 и наценка → цена для клиента.',
       xcalc: 'Калькулятор X: себестоимость проектных (новых) продуктов — соберите рецептуру из номенклатуры, задайте %, получите цену клиенту до запуска в производство.',
       calc: 'Себестоимость 1 кг готового продукта с развёрткой по компонентам.',
@@ -14578,7 +14760,7 @@ class Component extends DCLogic {
       mailStopProp: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
       product: S.product, rate: S.rate, loss: S.loss, recipeOwner: S.recipeOwner,
       draftComp: S.draftComp, draftPct: S.draftPct, priceFilter: S.priceFilter,
-      isCost: S.tab === 'cost', isMargin: S.tab === 'margin', isLanded: S.tab === 'landed', isDelivery: S.tab === 'delivery', isDataload: S.tab === 'dataload', isFileArch: S.tab === 'filearch', isPnl: S.tab === 'pnl', isPriceDyn: S.tab === 'pricedyn', isTransLog: S.tab === 'translog',
+      isCost: S.tab === 'cost', isMargin: S.tab === 'margin', isLanded: S.tab === 'landed', isDelivery: S.tab === 'delivery', isDataload: S.tab === 'dataload', isFileArch: S.tab === 'filearch', isPnl: S.tab === 'pnl', isPriceDyn: S.tab === 'pricedyn', isTransLog: S.tab === 'translog', isDqClean: S.tab === 'dqclean',
       isTCalc: S.tab === 'tcalc', tcReady: !!S.tcReady, isXCalc: S.tab === 'xcalc',
       isNewProd: S.tab === 'newprod', isNomFix: S.tab === 'nomfix', isActualize: S.tab === 'actualize',
       tcActualLabel: this.tccActualLabel(),
@@ -15019,6 +15201,7 @@ class Component extends DCLogic {
     if (S.tab === 'filearch') Object.assign(base, this.buildFileArch());
     if (S.tab === 'autopilot') Object.assign(base, this.buildAutopilot());
     if (S.tab === 'seclog') Object.assign(base, this.buildSecLog());
+    if (S.tab === 'dqclean') Object.assign(base, this.buildDataQuality());
     if (S.tab === 'tcalc') Object.assign(base, this.buildTCalc(rate));
     if (S.tab === 'xcalc') Object.assign(base, this.buildXCalc(rate));
     if (S.tab === 'newprod') Object.assign(base, this.buildNewProd());
