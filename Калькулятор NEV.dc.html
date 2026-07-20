@@ -2676,6 +2676,7 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ isPriceDyn }}" hint-placeholder-val="">
 <div class="card">
 <div class="mgrhead"><div class="mgrtitle">Динамика цен <span class="mgrper">{{ pdCoName }}</span></div><div class="cvbar"><div class="cvgrp"><button class="{{ cvRubCls }}" onClick="{{ setCurRub }}">RUB ₽</button><button class="{{ cvEurCls }}" onClick="{{ setCurEur }}">EUR €</button></div><div class="cvgrp"><button class="{{ cvVatWithCls }}" onClick="{{ setVatWith }}">С НДС</button><button class="{{ cvVatNoCls }}" onClick="{{ setVatNo }}">Без НДС</button></div><button class="btn mgxls" onClick="{{ pdExportExcel }}">⬇ Скачать Excel</button></div></div>
+<div class="hint">Абсолютные суммы во всех периодах пересчитаны по ТЕКУЩЕМУ курсу ЦБ (история курса на дату каждого периода не хранится) — так же, как и в остальных отчётах СС. На % динамику от периода к периоду курс не влияет.</div>
 <div class="sbflt"><div class="field"><span class="lbl">Период с</span><input class="inp sbdate" type="date" value="{{ pdDateFrom }}" onChange="{{ onPdDateFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp sbdate" type="date" value="{{ pdDateTo }}" onChange="{{ onPdDateTo }}"></div><div class="field grow"><span class="lbl">🔎 Поиск наименования</span><input class="inp" value="{{ pdSearch }}" onInput="{{ onPdSearch }}" placeholder="например, диспергатор"></div><button class="btn ghost" onClick="{{ pdResetFlt }}">↺ Сброс</button></div>
 <div class="cvbar"><div class="cvgrp"><button class="{{ pdTierRawCls }}" onClick="{{ setPdTierRaw }}">Сырьё</button><button class="{{ pdTierSemiCls }}" onClick="{{ setPdTierSemi }}">Полупродукты</button><button class="{{ pdTierFinishedCls }}" onClick="{{ setPdTierFinished }}">Готовая продукция</button></div><div class="cvgrp"><button class="{{ pdSortTrendCls }}" onClick="{{ setPdSortTrend }}">По динамике</button><button class="{{ pdSortNameCls }}" onClick="{{ setPdSortName }}">По названию</button></div></div>
 <sc-if value="{{ pdHasErr }}" hint-placeholder-val=""><div class="banner err">{{ pdErr }}</div></sc-if>
@@ -2692,7 +2693,7 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ isTransLog }}" hint-placeholder-val="">
 <div class="card">
 <div class="mgrhead"><div class="mgrtitle">Анализ транспортных расходов <span class="mgrper">{{ ttCoName }}</span></div><div class="cvbar"><div class="cvgrp"><button class="{{ cvRubCls }}" onClick="{{ setCurRub }}">RUB ₽</button><button class="{{ cvEurCls }}" onClick="{{ setCurEur }}">EUR €</button></div><div class="cvgrp"><button class="{{ cvVatWithCls }}" onClick="{{ setVatWith }}">С НДС</button><button class="{{ cvVatNoCls }}" onClick="{{ setVatNo }}">Без НДС</button></div><button class="btn mgxls" onClick="{{ ttExportExcel }}">⬇ Скачать Excel</button></div></div>
-<div class="hint">Доп. расходы (транспорт/логистика/таможня/хранение) из дерева себестоимости: на сырьё — пропорционально доле в партии; на полупродукты и готовую продукцию — прямо, на кг выпуска.</div>
+<div class="hint">Доп. расходы (транспорт/логистика/таможня/хранение) из дерева себестоимости: на сырьё — пропорционально доле в партии; на полупродукты и готовую продукцию — прямо, на кг выпуска. Абсолютные суммы пересчитаны по текущему курсу ЦБ (история курса по периодам не хранится) — на % динамику курс не влияет.</div>
 <div class="sbflt"><div class="field"><span class="lbl">Период с</span><input class="inp sbdate" type="date" value="{{ ttDateFrom }}" onChange="{{ onTtDateFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp sbdate" type="date" value="{{ ttDateTo }}" onChange="{{ onTtDateTo }}"></div><div class="field grow"><span class="lbl">🔎 Поиск наименования</span><input class="inp" value="{{ ttSearch }}" onInput="{{ onTtSearch }}" placeholder="например, транспорт"></div><button class="btn ghost" onClick="{{ ttResetFlt }}">↺ Сброс</button></div>
 <div class="cvbar"><div class="cvgrp"><button class="{{ ttTierRawCls }}" onClick="{{ setTtTierRaw }}">Сырьё</button><button class="{{ ttTierSemiCls }}" onClick="{{ setTtTierSemi }}">Полупродукты</button><button class="{{ ttTierFinishedCls }}" onClick="{{ setTtTierFinished }}">Готовая продукция</button></div><div class="cvgrp"><button class="{{ ttSortTrendCls }}" onClick="{{ setTtSortTrend }}">По динамике</button><button class="{{ ttSortNameCls }}" onClick="{{ setTtSortName }}">По названию</button></div></div>
 <sc-if value="{{ ttHasErr }}" hint-placeholder-val=""><div class="banner err">{{ ttErr }}</div></sc-if>
@@ -4507,14 +4508,21 @@ class Component extends DCLogic {
   // FIFO-списание: средневзвешенная ₽/кг сырья + маркер «[FIFO] от ДД.ММ.ГГГГ»
   fifoUnitCost(materialKey, needKg) {
     const lots = this.fifoLots(materialKey); if (!lots.length) return { unit: 0, marker: '' };
+    // Резервная цена для лотов без цены (unit<=0 — обычно цена ещё не внесена в приход) — средневзвешенная
+    // по остальным прайсированным лотам материала. Без этого лот без цены «списывался» как бесплатный и
+    // занижал средневзвешенную FIFO-себестоимость (тот же класс бага, что и в Анализ себестоимости —
+    // см. ctAgg/ctPeriodAgg). Порядок и объём списания (FIFO-хронология) не меняются — только цена.
+    const priced = lots.filter(l => l.unit > 0);
+    const fallbackUnit = priced.length ? priced.reduce((a, l) => a + l.unit * l.qty, 0) / priced.reduce((a, l) => a + l.qty, 0) : 0;
     let remaining = needKg > 0 ? needKg : 1, spent = 0, taken = 0, firstDate = '';
     for (const lot of lots) {
       if (remaining <= 1e-9) break;
       const take = Math.min(lot.qty, remaining);
-      spent += take * lot.unit; taken += take; remaining -= take;
+      const u = lot.unit > 0 ? lot.unit : fallbackUnit;
+      spent += take * u; taken += take; remaining -= take;
       if (!firstDate) firstDate = lot.date;
     }
-    if (remaining > 1e-9) { const last = lots[lots.length - 1].unit; spent += remaining * last; taken += remaining; }
+    if (remaining > 1e-9) { const last = lots[lots.length - 1]; const u = last.unit > 0 ? last.unit : fallbackUnit; spent += remaining * u; taken += remaining; }
     return { unit: taken ? spent / taken : 0, marker: firstDate ? ('[FIFO] Списание по приходу от ' + this.dmFull(firstDate)) : '' };
   }
   // FIFO-себестоимость ₽/кг по марке ГП (по рецептуре + хронологии приходов сырья)
@@ -4540,7 +4548,15 @@ class Component extends DCLogic {
   ctCostByMarka(rate) {
     const out = {}; const t = this.ctTree; if (!t || !Array.isArray(t.batches)) return out;
     const isRub = (t.cur === '₽'); const acc = {};
-    for (const b of this.ctEffBatches()) { if (!b.outQty) continue; const cost = b.comps.reduce((s, c) => s + (c.summa || 0), 0); const k = this.mgKey(this.sbMarka(b.product)); if (!k) continue; if (!acc[k]) acc[k] = { cost: 0, w: 0 }; acc[k].cost += cost; acc[k].w += b.outQty; }
+    for (const b of this.ctEffBatches()) {
+      if (!b.outQty) continue;
+      const cost = b.comps.reduce((s, c) => s + (c.summa || 0), 0);
+      // Партия без стоимости (сумма компонентов = 0, обычно пропуск цены в 1С) не должна разбавлять
+      // средневзвешенную СС марки — иначе её outQty занижает СС всех остальных, корректно оценённых
+      // партий той же марки (тот же класс бага, что и в ctAgg/ctPeriodAgg — см. Анализ себестоимости).
+      if (!(cost > 0)) continue;
+      const k = this.mgKey(this.sbMarka(b.product)); if (!k) continue; if (!acc[k]) acc[k] = { cost: 0, w: 0 }; acc[k].cost += cost; acc[k].w += b.outQty;
+    }
     for (const k in acc) { const perKg = acc[k].w ? acc[k].cost / acc[k].w : 0; out[k] = isRub ? perKg : perKg * (Number(rate) || 0); }
     return out;
   }
@@ -4794,8 +4810,8 @@ class Component extends DCLogic {
     const sum = (f) => calc.reduce((a, x) => a + f(x.c), 0);
     const totW = sum(c => c.weight), totCons = sum(c => c.consumed), totLossKg = sum(c => c.lossKg);
     const totEur = sum(c => c.batchEur), totRub = sum(c => c.batchRub);
-    const wAvgKgRub = totW ? calc.reduce((a, x) => a + x.c.kgRub * x.c.weight, 0) / totW : 0;
-    const wAvgEur = totW ? calc.reduce((a, x) => a + x.c.factEur * x.c.weight, 0) / totW : 0;
+    const wAvgKgRub = this.sbWavgKg(calc.map(x => x.c));
+    const wAvgEur = this.sbWavgEur(calc.map(x => x.c));
     const avgLoss = calc.length ? calc.reduce((a, x) => a + x.c.lossPct, 0) / calc.length : 0;
     const gmap = new Map();
     for (const x of calc) { const p = this.sbPeriodOf(x.r); if (!p) continue; if (!gmap.has(p)) gmap.set(p, []); gmap.get(p).push(x); }
@@ -6080,6 +6096,11 @@ class Component extends DCLogic {
     const factEur = rate ? kgRub / rate : 0;
     return { weight, consumed, rate, batchEur, lossKg, lossPct, batchRub, kgRub, factEur };
   }
+  // Средневзвешенная СС — ТОЛЬКО по «прайсируемым» партиям (kgRub>0, т.е. есть и вес, и цена/курс).
+  // Иначе партия без цены (курс/€ ещё не заполнены в 1С) добавляет вес в знаменатель без числителя и
+  // занижает среднюю СС всех остальных партий — тот же класс бага, что уже исправлен в ctAgg/ctPeriodAgg.
+  sbWavgKg(cs) { let w = 0, s = 0; for (const c of cs) if (c.kgRub > 0) { w += c.weight; s += c.kgRub * c.weight; } return w ? s / w : 0; }
+  sbWavgEur(cs) { let w = 0, s = 0; for (const c of cs) if (c.kgRub > 0) { w += c.weight; s += c.factEur * c.weight; } return w ? s / w : 0; }
   // ===== Импорт отчёта «Себестоимость ШК» (выгрузка 1С по партиям, формат КО) =====
   // Поиск колонки по обязательным подстрокам (все must должны входить) с исключениями (ни одна excl).
   sbCol(H, must, excl) { for (let i = 0; i < H.length; i++) { const h = H[i]; if (excl && excl.some(s => h.indexOf(s) >= 0)) continue; if (must.every(s => h.indexOf(s) >= 0)) return i; } return -1; }
@@ -6178,7 +6199,7 @@ class Component extends DCLogic {
     const rows = calc.map(({ r, c }) => [r.batch || '', r.release || r.transfer || '', r.product || '', num(c.weight), num(c.consumed), num(c.lossKg), num(c.lossPct, 1), num(c.rate, 4), num(c.batchEur), num(c.kgRub), num(c.factEur), num(c.batchEur), num(c.batchRub), r.note || '']);
     const sum = (f) => calc.reduce((a, x) => a + f(x.c), 0);
     const totW = sum(c => c.weight);
-    const wAvgKg = totW ? calc.reduce((a, x) => a + x.c.kgRub * x.c.weight, 0) / totW : 0;
+    const wAvgKg = this.sbWavgKg(calc.map(x => x.c));
     rows.push(['ИТОГО', '', '', num(totW), num(sum(c => c.consumed)), num(sum(c => c.lossKg)), '', '', num(sum(c => c.batchEur)), num(wAvgKg), '', num(sum(c => c.batchEur)), num(sum(c => c.batchRub)), '']);
     const esc = (v) => { const s = String(v == null ? '' : v); return /[";\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
     const csv = [headers, ...rows].map(r => r.map(esc).join(';')).join('\r\n');
@@ -6224,7 +6245,7 @@ class Component extends DCLogic {
     });
     const calc = filtered.map(({ r }) => this.sbCalc(r));
     const totWeight = calc.reduce((a, c) => a + c.weight, 0), totEur = calc.reduce((a, c) => a + c.batchEur, 0), totRub = calc.reduce((a, c) => a + c.batchRub, 0);
-    const wAvgKgRub = totWeight ? calc.reduce((a, c) => a + c.kgRub * c.weight, 0) / totWeight : 0;
+    const wAvgKgRub = this.sbWavgKg(calc);
     const avgLoss = calc.length ? calc.reduce((a, c) => a + c.lossPct, 0) / calc.length : 0;
     // Свод средней себестоимости по месяцам (помесячная группировка)
     const groupsMap = new Map();
@@ -6235,7 +6256,7 @@ class Component extends DCLogic {
       const w = cs.reduce((a, c) => a + c.weight, 0);
       const eur = cs.reduce((a, c) => a + c.batchEur, 0);
       const rub = cs.reduce((a, c) => a + c.batchRub, 0);
-      const avgKg = w ? cs.reduce((a, c) => a + c.kgRub * c.weight, 0) / w : 0;
+      const avgKg = this.sbWavgKg(cs);
       const avgLossP = cs.length ? cs.reduce((a, c) => a + c.lossPct, 0) / cs.length : 0;
       const expanded = !!S.sbExpanded[p];
       return {
@@ -11030,7 +11051,11 @@ class Component extends DCLogic {
       const extraPlanPU = qO ? extraPlan / qO : 0;
       const landedPlanFlex = (ved ? pP * qR * rP : pP * qR) + extraPlanPU * qR;
       const dirKey = (r.country || '—') + ' → склад';
-      if (qR > 0) { if (!dir[dirKey]) dir[dirKey] = { sum: 0, qty: 0 }; dir[dirKey].sum += logiF; dir[dirKey].qty += qR; }
+      // В норму направления попадают только партии с уже заполненной фактической логистикой (logiF>0) —
+      // иначе партия «в пути»/без выставленного счёта за перевозку добавляет qR в знаменатель без
+      // числителя, занижает среднюю по направлению и создаёт ложные аномалии «переплата» у остальных
+      // партий (тот же класс бага, что и в Анализ себестоимости, см. ctAgg/ctPeriodAgg).
+      if (qR > 0 && logiF > 0) { if (!dir[dirKey]) dir[dirKey] = { sum: 0, qty: 0 }; dir[dirKey].sum += logiF; dir[dirKey].qty += qR; }
       const onTime = (r.dateFact && r.datePlan) ? (new Date(r.dateFact) <= new Date(r.datePlan)) : (r.dateFact ? true : null);
       const inFull = qO ? qR >= qO - 1e-6 : null;
       const delivered = /принято|получено|склад|закрыт/i.test(r.status || '') || !!r.dateFact;
@@ -14115,13 +14140,18 @@ class Component extends DCLogic {
   buildPlanFact(rate) {
     const S = this.state;
     const { acc: need } = this.rawNeed(S.orders);
-    const actQty = new Map(), actCost = new Map(), nameByK = new Map();
+    const actQty = new Map(), actQtyPriced = new Map(), actCost = new Map(), nameByK = new Map();
     for (const p of S.purchases) {
       if (p.status === 'отменено') continue;
       const nm = (p.material || '').trim(); if (!nm) continue;
       const k = this.norm(nm); nameByK.set(k, nm);
       const q = Number(p.qty) || 0, pr = (Number(p.priceEur) || 0) * ((Number(p.curRate) || 0) || rate);
-      actQty.set(k, (actQty.get(k) || 0) + q); actCost.set(k, (actCost.get(k) || 0) + q * pr);
+      actQty.set(k, (actQty.get(k) || 0) + q);
+      // Объём факта (actQty) считаем по ВСЕМ закупкам — количество пришло независимо от того, внесена ли
+      // цена. А вот в среднюю ФАКТИЧЕСКУЮ цену (actPrice ниже) включаем только заявки с ценой>0 —
+      // иначе заявка без цены (ещё не согласована) занижает actPrice всех остальных позиций материала
+      // (тот же класс бага, что и в ctAgg/ctPeriodAgg — см. Анализ себестоимости).
+      if (pr > 0) { actQtyPriced.set(k, (actQtyPriced.get(k) || 0) + q); actCost.set(k, (actCost.get(k) || 0) + q * pr); }
     }
     const universe = new Map();
     for (const nm of Object.keys(need)) universe.set(this.norm(nm), nm);
@@ -14133,7 +14163,8 @@ class Component extends DCLogic {
       const actVol = actQty.get(k) || 0;
       if (planVol <= 0 && actVol <= 0) continue;
       const planPrice = this.excelRound(this.rawPrice(name) * rate, 2);
-      const actPrice = actVol > 0 ? this.excelRound(actCost.get(k) / actVol, 2) : planPrice;
+      const actVolPriced = actQtyPriced.get(k) || 0;
+      const actPrice = actVolPriced > 0 ? this.excelRound(actCost.get(k) / actVolPriced, 2) : planPrice;
       const volKg = actVol - planVol;
       const volPct = planVol > 0 ? volKg / planVol * 100 : (actVol > 0 ? 100 : 0);
       const priceDiff = actPrice - planPrice;
