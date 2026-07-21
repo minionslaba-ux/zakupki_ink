@@ -9321,9 +9321,20 @@ class Component extends DCLogic {
     this.rawByName = new Map(d.raw_materials.map(m => [this.norm(m.name), m]));
     this.semiByName = new Map(d.semi_products.map(s => [this.norm(s.name), s]));
     this.recByOwner = new Map();
+    // Дедупликация состава по (продукт, idx): в исходных данных рецептура может быть продублирована
+    // под несколькими клиентскими тегами (client '—' / 'ГОТЕК' / 'АФ' — клиент здесь НЕ участвует в
+    // группировке), и без дедупликации строки складывались, удваивая состав (Σ долей 200% → двойная
+    // себестоимость). Оставляем ПЕРВОЕ вхождение каждого idx — для точных дублей это эквивалентно
+    // одной копии, для разных клиентских вариантов детерминированно берётся первый вариант из файла.
+    this._recDupDropped = 0;
+    const seenIdx = new Map();
     for (const r of d.recipes) {
       if (!r.component) continue;
       const k = this.norm(r.product);
+      if (!seenIdx.has(k)) seenIdx.set(k, new Set());
+      const s = seenIdx.get(k);
+      if (s.has(r.idx)) { this._recDupDropped++; continue; }
+      s.add(r.idx);
       if (!this.recByOwner.has(k)) this.recByOwner.set(k, []);
       this.recByOwner.get(k).push(r);
     }
