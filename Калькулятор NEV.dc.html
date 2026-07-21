@@ -4380,7 +4380,7 @@ class Component extends DCLogic {
   userCompanies(u) { const a = (u && Array.isArray(u.companies)) ? u.companies.filter(c => this.coCfg()[c]) : []; return a.length ? a : ['ink', 'chem']; }
 
   // localStorage с разделением по компаниям (INK = legacy-ключи, остальные — со своим префиксом)
-  lsGlobal() { return { users_v1: 1, session_v1: 1, sf_token: 1, welcome_photo: 1, emailcfg: 1, aicfg: 1, cloud_v1: 1, daily_motiv: 1, active_co: 1 }; }
+  lsGlobal() { return { users_v1: 1, users_del_v1: 1, session_v1: 1, sf_token: 1, welcome_photo: 1, emailcfg: 1, aicfg: 1, cloud_v1: 1, daily_motiv: 1, active_co: 1 }; }
   lsKey(name) { return (this.lsGlobal()[name] ? 'inkflow_' : (this._co() === 'ink' ? 'inkflow_' : this._co() + '_')) + name; }
   lsGet(name) { try { return localStorage.getItem(this.lsKey(name)); } catch (e) { return null; } }
   lsSet(name, val) { try { localStorage.setItem(this.lsKey(name), val); } catch (e) {} }
@@ -7660,10 +7660,19 @@ class Component extends DCLogic {
           const cloud = Array.isArray(d.list) ? d.list : [];
           let local = []; try { local = JSON.parse(this.lsGet('users_v1') || '[]'); } catch (e) {}
           if (!Array.isArray(local)) local = [];
+          // Надгробия удалённых: объединяем локальные и облачные отметки — они СИЛЬНЕЕ объединения
+          // списков ниже. Без них удаление пользователя было невозможно в принципе: объединение
+          // «локальные ∪ облачные» воскрешало удалённую учётку из любого устаревшего списка (задержка
+          // облака или копия на другом устройстве) и заливало её обратно в облако.
+          const tombs = { ...this.userTombs() };
+          const cloudDel = (d.deleted && typeof d.deleted === 'object') ? d.deleted : {};
+          for (const tid in cloudDel) if (cloudDel[tid]) tombs[tid] = cloudDel[tid];
+          this.userTombsSave(tombs);
           // Объединяем локальных и облачных по id (облако приоритетнее для существующих) — чтобы ничьи учётки не пропали
           const byId = {};
           for (const u of local) if (u && u.id) byId[u.id] = u;
           for (const u of cloud) if (u && u.id) byId[u.id] = u;
+          for (const tid in tombs) delete byId[tid];
           const merged = this.ensureAdmin(Object.values(byId));
           const patch = { users: merged };
           if (this.state.currentUser) { const me = merged.find(u => u.id === this.state.currentUser.id); if (me) patch.currentUser = me; }
@@ -7675,7 +7684,13 @@ class Component extends DCLogic {
     };
     if (window.__FB) start(); else window.addEventListener('fbready', start, { once: true });
   }
-  pushUsers(list) { if (this._usersRef && this._usersFb) { try { this._usersFb.setDoc(this._usersRef, { list }, { merge: true }).catch(() => {}); } catch (e) {} } }
+  // Надгробия удалённых пользователей (id → метка времени удаления). Хранятся глобально
+  // (users_del_v1) и в облачном документе users (поле deleted) — см. initSharedUsers/deleteUser.
+  userTombs() { try { const m = JSON.parse(this.lsGet('users_del_v1') || '{}'); return (m && typeof m === 'object' && !Array.isArray(m)) ? m : {}; } catch (e) { return {}; } }
+  userTombsSave(m) { try { this.lsSet('users_del_v1', JSON.stringify(m)); } catch (e) {} }
+  // Защита от воскрешения: в облако никогда не выгружаем учётки с надгробием (даже если они
+  // просочились в list из устаревшего состояния другого устройства).
+  pushUsers(list) { if (this._usersRef && this._usersFb) { try { const tombs = this.userTombs(); const clean = (list || []).filter(u => u && u.id && !tombs[u.id]); this._usersFb.setDoc(this._usersRef, { list: clean }, { merge: true }).catch(() => {}); } catch (e) {} } }
   saveUsers(users) { this.setState({ users }); try { this.lsSet('users_v1', JSON.stringify(users)); } catch (e) {} this.pushUsers(users); }
   // Чтение фото пользователя из файла → квадрат 256px, JPEG (компактно для облака)
   readAvatarFile(file, cb) {
@@ -8065,8 +8080,17 @@ class Component extends DCLogic {
     const users = this.state.users || []; const u = users.find(x => x.id === id); if (!u) return;
     if (this.state.currentUser && id === this.state.currentUser.id) { this.setState({ userErr: 'Нельзя удалить пользователя, под которым вы вошли.' }); return; }
     if (u.role === 'admin' && this.countAdmins() <= 1) { this.setState({ userErr: 'Нельзя удалить единственного администратора.' }); return; }
+    // Встроенную учётку «admin» надгробием помечать нельзя: ensureAdmin() пересоздаёт её с тем же id,
+    // и надгробие зациклило бы удаление/пересоздание.
+    if ((u.login || '').toLowerCase() === 'admin') { this.setState({ userErr: 'Встроенную учётную запись администратора удалить нельзя — её можно только отключить.' }); return; }
+    // Надгробие — ДО saveUsers: без него слияние «локальные ∪ облачные» в initSharedUsers воскрешало
+    // удалённую учётку из устаревшего облачного списка или с другого устройства (баг «пользователь
+    // не удаляется»). Метка пишется локально и в облачный документ users (поле deleted).
+    const tombs = { ...this.userTombs() }; tombs[id] = Date.now(); this.userTombsSave(tombs);
+    if (this._usersRef && this._usersFb) { try { this._usersFb.setDoc(this._usersRef, { deleted: { [id]: tombs[id] } }, { merge: true }).catch(() => {}); } catch (e) {} }
     this.saveUsers(users.filter(x => x.id !== id));
     if (this.state.userDraft && this.state.userDraft.id === id) this.setState({ userDraft: null });
+    try { this.secLog('USER_DELETED', { detail: 'Удалён пользователь «' + (u.name || u.login || id) + '» (' + this.roleName(u.role) + ')' }); } catch (e) {}
   }
   toggleUser(id) {
     const users = this.state.users || []; const u = users.find(x => x.id === id); if (!u) return;
