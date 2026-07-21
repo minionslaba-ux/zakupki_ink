@@ -3523,6 +3523,7 @@ window.dispatchEvent(new Event('fbready'));
 <div class="fg"><label>Цена за кг</label><input class="inp num" type="number" value="{{ slPrice }}" onInput="{{ onSlPrice }}"></div>
 <div class="fg"><label>Валюта</label><select class="sel" value="{{ slCurrency }}" onChange="{{ onSlCurrency }}"><sc-for list="{{ slCurOpts }}" as="c" hint-placeholder-count="4"><option value="{{ c.v }}">{{ c.label }}</option></sc-for></select></div>
 <div class="fg"><label>Курс к ₽</label><input class="inp num" type="number" value="{{ slRate }}" onInput="{{ onSlRate }}"></div>
+<div class="fg"><label>Менеджер</label><input class="inp" list="sl-mgrs" value="{{ slManager }}" onInput="{{ onSlManager }}" placeholder="кто продал"><datalist id="sl-mgrs"><sc-for list="{{ slManagerOpts }}" as="m" hint-placeholder-count="2"><option value="{{ m }}"></option></sc-for></datalist></div>
 </div>
 <sc-if value="{{ slHasErr }}" hint-placeholder-val=""><div class="banner err">{{ slErr }}</div></sc-if>
 <div class="uactions"><button class="btn dark" onClick="{{ saveSale }}">Записать отгрузку</button><button class="btn imp" onClick="{{ impOpenSales }}">📎 Загрузить из файла и распознать</button><sc-if value="{{ slHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelSale }}">Отмена</button></sc-if></div>
@@ -3534,6 +3535,48 @@ window.dispatchEvent(new Event('fbready'));
 <tbody><sc-for list="{{ saleRows }}" as="s" hint-placeholder-count="2"><tr><td class="l mono">{{ s.no }}</td><td class="l mono">{{ s.date }}</td><td class="l nm">{{ s.client }}</td><td class="l">{{ s.product }}</td><td class="mono">{{ s.qty }}</td><td class="mono">{{ s.rev }}</td><td class="mono">{{ s.revNoVat }}</td><td class="mono">{{ s.cost }}</td><td class="mono">{{ s.transp }}</td><td class="mono {{ s.mcls }}">{{ s.margin }}</td><td class="mono {{ s.mcls }}">{{ s.mpct }}</td><td class="l"><button class="ulink del" onClick="{{ s.remove }}">×</button></td></tr></sc-for></tbody>
 <tfoot><tr class="tfoot"><td class="l">ИТОГО</td><td></td><td></td><td></td><td></td><td></td><td class="mono">{{ sumRev }}</td><td class="mono">{{ sumCost }}</td><td class="mono">{{ sumTr }}</td><td class="mono {{ sumMcls }}">{{ sumMar }}</td><td class="mono {{ sumMcls }}">{{ sumMpct }}</td><td></td></tr></tfoot></table></div>
 <div class="hint">Чистая маржа очищена от НДС 22%: Выручка_без_НДС (= с НДС ÷ 1.22) − Себестоимость рецептуры с логистикой (без НДС) − Транспорт_без_НДС. «Грязная» выручка (с НДС) показана отдельной колонкой.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSalesPlan }}" hint-placeholder-val="">
+<div class="card"><div class="sec">План продаж · строка плана</div>
+<div class="cvbar"><span class="cvlbl">Гранулярность</span><div class="cvgrp"><button class="{{ spScaleMonthCls }}" onClick="{{ setSpScaleMonth }}">Помесячно</button><button class="{{ spScaleWeekCls }}" onClick="{{ setSpScaleWeek }}">Понедельно</button><button class="{{ spScaleDayCls }}" onClick="{{ setSpScaleDay }}">По дням</button></div></div>
+<div class="uform">
+<sc-if value="{{ spIsMonth }}" hint-placeholder-val=""><div class="fg"><label>{{ spPeriodHint }}</label><input class="inp" type="month" value="{{ spDate }}" onInput="{{ onSpDate }}"></div></sc-if>
+<sc-if value="{{ spIsDate }}" hint-placeholder-val=""><div class="fg"><label>{{ spPeriodHint }}</label><input class="inp" type="date" value="{{ spDate }}" onInput="{{ onSpDate }}"></div></sc-if>
+<div class="fg"><label>Клиент (новый создастся автоматически)</label><input class="inp" list="sp-clients" value="{{ spClient }}" onInput="{{ onSpClient }}" placeholder="из справочника или новый"><datalist id="sp-clients"><sc-for list="{{ spClientOpts }}" as="c" hint-placeholder-count="2"><option value="{{ c }}"></option></sc-for></datalist></div>
+<div class="fg full"><label>Продукт (ГП)</label><select class="sel" value="{{ spProduct }}" onChange="{{ onSpProduct }}"><sc-for list="{{ spProdOpts }}" as="p" hint-placeholder-count="3"><option value="{{ p.v }}">{{ p.label }}</option></sc-for></select></div>
+<div class="fg"><label>План, кг</label><input class="inp num" type="number" value="{{ spQty }}" onInput="{{ onSpQty }}"></div>
+<div class="fg"><label>Плановая цена, ₽/кг</label><input class="inp num" type="number" value="{{ spPrice }}" onInput="{{ onSpPrice }}"></div>
+<div class="fg"><label>Менеджер</label><input class="inp" list="sp-mgrs" value="{{ spManager }}" onInput="{{ onSpManager }}" placeholder="ответственный"><datalist id="sp-mgrs"><sc-for list="{{ spManagerOpts }}" as="m" hint-placeholder-count="2"><option value="{{ m }}"></option></sc-for></datalist></div>
+</div>
+<sc-if value="{{ spHasErr }}" hint-placeholder-val=""><div class="banner err">{{ spErr }}</div></sc-if>
+<sc-if value="{{ spHasMsg }}" hint-placeholder-val=""><div class="banner ok">{{ spMsg }}</div></sc-if>
+<div class="uactions"><button class="btn dark" onClick="{{ saveSp }}">Записать в план</button><sc-if value="{{ spHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelSp }}">Отмена</button></sc-if></div>
+</div>
+<div class="card"><div class="sec">Строки плана продаж · {{ spCount }}</div>
+<div class="mgkpis"><sc-for list="{{ spKpis }}" as="k" hint-placeholder-count="4"><div class="mgkpi mghi{{ k.hi }}"><div class="mgkk">{{ k.label }}</div><div class="mgkv">{{ k.v }}</div></div></sc-for></div>
+<sc-if value="{{ spEmpty }}" hint-placeholder-val=""><div class="hint">План пуст. Добавьте первую строку через форму выше — гранулярность любая: месяц, неделя или день.</div></sc-if>
+<div class="scroll"><table><thead><tr><th class="l">Период</th><th class="l">Клиент</th><th class="l">Продукт</th><th class="l">Менеджер</th><th>Кг</th><th>Цена ₽/кг</th><th>Σ ₽</th><th class="l"></th></tr></thead>
+<tbody><sc-for list="{{ spRows }}" as="r" hint-placeholder-count="3"><tr><td class="l mono">{{ r.period }}</td><td class="l nm">{{ r.client }}</td><td class="l">{{ r.product }}</td><td class="l">{{ r.manager }}</td><td class="mono">{{ r.qty }}</td><td class="mono">{{ r.price }}</td><td class="mono">{{ r.sum }}</td><td class="l"><button class="ulink" onClick="{{ r.edit }}">✎</button> <button class="ulink del" onClick="{{ r.remove }}">×</button></td></tr></sc-for></tbody></table></div>
+</div>
+<div class="card"><div class="sec">→ План производства на основе плана продаж</div>
+<div class="hint">Объёмы плана продаж сворачиваются по продукту и месяцу (недели/дни — в свой месяц) и переносятся в «Производство → График производства». Если все строки продукта за месяц введены понедельно/по дням — недельная детализация сохраняется в плане производства. Продукты и месяцы, которых нет в плане продаж, не затрагиваются.</div>
+<div class="cvbar"><span class="cvlbl">Режим</span><div class="cvgrp"><button class="{{ spModeReplaceCls }}" onClick="{{ setSpModeReplace }}">Заменить значения</button><button class="{{ spModeAddCls }}" onClick="{{ setSpModeAdd }}">Добавить к текущим</button></div><button class="btn dark" onClick="{{ spToProdPlan }}">⚙ Сформировать план производства</button><button class="btn ghost" onClick="{{ spGoProdPlan }}">Открыть график производства →</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSalesRep }}" hint-placeholder-val="">
+<div class="card">
+<div class="mgrhead"><div class="mgrtitle">Отчёт по продажам <span class="mgrper">{{ srCoName }}</span></div><div class="cvbar"><div class="cvgrp"><button class="{{ cvRubCls }}" onClick="{{ setCurRub }}">RUB ₽</button><button class="{{ cvEurCls }}" onClick="{{ setCurEur }}">EUR €</button></div><button class="btn mgxls" onClick="{{ srExportExcel }}">⬇ Скачать Excel (все разрезы)</button></div></div>
+<div class="sbflt"><div class="field"><span class="lbl">Период с</span><input class="inp sbdate" type="date" value="{{ srFrom }}" onChange="{{ onSrFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp sbdate" type="date" value="{{ srTo }}" onChange="{{ onSrTo }}"></div><button class="btn ghost" onClick="{{ srResetFlt }}">↺ Сброс</button></div>
+<div class="cvbar"><span class="cvlbl">Разрез</span><div class="cvgrp"><button class="{{ srDimGroupCls }}" onClick="{{ setSrDimGroup }}">Группы</button><button class="{{ srDimNomenCls }}" onClick="{{ setSrDimNomen }}">Номенклатура</button><button class="{{ srDimClientCls }}" onClick="{{ setSrDimClient }}">Клиенты</button><button class="{{ srDimManagerCls }}" onClick="{{ setSrDimManager }}">Менеджеры</button><button class="{{ srDimMonthCls }}" onClick="{{ setSrDimMonth }}">Месяцы</button></div></div>
+<sc-if value="{{ srEmpty }}" hint-placeholder-val=""><div class="banner warn">Нет отгрузок за выбранный период. Отчёт строится по журналу «Продажи ГП» — запишите отгрузки или снимите фильтр дат.</div></sc-if>
+<sc-if value="{{ srHasData }}" hint-placeholder-val="">
+<div class="mgtblwrap"><table class="mgtbl"><thead><tr><th class="l">{{ srDimLabel }}</th><th>Отгрузок</th><th>Кг</th><th>Выручка с НДС</th><th>Выручка без НДС</th><th>Ср. цена/кг</th><th>Доля</th><th class="l">·</th></tr></thead>
+<tbody><sc-for list="{{ srRows }}" as="r" hint-placeholder-count="6"><tr><td class="l nm">{{ r.name }}</td><td class="mono">{{ r.n }}</td><td class="mono">{{ r.qty }}</td><td class="mono">{{ r.rev }}</td><td class="mono">{{ r.revNoVat }}</td><td class="mono">{{ r.avg }}</td><td class="mono">{{ r.share }}</td><td class="l"><div class="sbtrack"><div class="sbbar" style="{{ r.barStyle }}"></div></div></td></tr></sc-for></tbody>
+<tfoot><tr class="tfoot"><td class="l">ИТОГО · {{ srCount }} отгрузок</td><td></td><td class="mono">{{ srTotQty }}</td><td class="mono">{{ srTotRev }}</td><td class="mono">{{ srTotRevNoVat }}</td><td></td><td></td><td></td></tr></tfoot></table></div>
+</sc-if>
 </div>
 </sc-if>
 
@@ -3963,6 +4006,8 @@ class Component extends DCLogic {
     pdDateFrom: '', pdDateTo: '', pdTier: 'raw', pdSearch: '', pdSort: 'trend', pdErr: '',
     ttDateFrom: '', ttDateTo: '', ttTier: 'raw', ttSearch: '', ttSort: 'trend', ttErr: '',
     dqResult: null, dqCtPeriods: [], dqSel: {}, dqScanned: false, dqBusy: false, dqMsg: '',
+    salesPlan: [], spScale: 'month', spDraft: null, spErr: '', spMsg: '', spProdMode: 'replace',
+    srDim: 'group', srFrom: '', srTo: '',
     turnoverDays: 90, turnoverGen: false, planfactGen: false, stressGrowth: 30, stressGen: false, calcExpanded: {}, tcExpanded: {}, treasuryGen: false,
     apGm2Target: 15, apFx: 0, apLogi: 0, apSales: 0, apHorizon: 45, apSim: null, apLive: false, apDrafts: [], apAlerts: [], apInvoice: null, apSecurityLog: [], apRefreshedAt: 0, securityLog: [], secSearch: '',
     prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planProduct: '', planFilter: '', planCur: 'RUB',
@@ -4155,7 +4200,7 @@ class Component extends DCLogic {
     return [
       { id: 'warehouse', label: 'Склад и запасы', keys: ['stock', 'extra', 'whFilled', 'stockUpdatedAt'], cols: [] },
       { id: 'orders', label: 'Заявки клиентов', keys: ['orders'], cols: [] },
-      { id: 'sales', label: 'Продажи ГП', keys: [], cols: ['sales'] },
+      { id: 'sales', label: 'Продажи ГП', keys: [], cols: ['sales', 'salesPlan'] },
       { id: 'purchases', label: 'Закупки и планирование', keys: ['purchases', 'planFrom', 'planTo', 'prodPlan', 'planHorizon', 'planStart', 'planExpand', 'planCur', 'ppScale', 'ppFrom', 'ppTo', 'ppNetStock', 'ppNetTransit', 'ppBy', 'ppCur', 'ppGroup', 'rrHorizon', 'rrSafetyMonths', 'rrLeadDefault', 'rrRun', 'rrLead', 'rrSafety', 'turnoverDays', 'stressGrowth', 'oneCUrl', 'oneCMatch', 'oneCAuto', 'oneCLastAt', 'oneCLog', 'lcData', 'lcMeta'], cols: [] },
       { id: 'prices', label: 'Цены и рецептуры', keys: ['prices', 'pct', 'added', 'rate', 'loss', 'recipeOwner'], cols: [] },
       { id: 'payments', label: 'Платежи (казначейство)', keys: [], cols: ['payreqs'] },
@@ -4395,7 +4440,7 @@ class Component extends DCLogic {
     this._activeCo = co;
     this.lsSet('active_co', co);
     const J = (n, d) => { try { const v = this.lsGet(n); const p = v ? JSON.parse(v) : d; return (p == null) ? d : p; } catch (e) { return d; } };
-    const slices = { chat: J('chat', []), tasks: J('tasks', []), cparties: J('cparties', []), receipts: J('receipts', []), sales: J('sales', []), logistics: J('logistics', []), payreqs: J('payreqs', []), tasksSeenAt: (Number(this.lsGet('tasks_seen')) || 0), tgLink: (this.lsGet('tg') || '') };
+    const slices = { chat: J('chat', []), tasks: J('tasks', []), cparties: J('cparties', []), receipts: J('receipts', []), sales: J('sales', []), salesPlan: J('salesplan', []), logistics: J('logistics', []), payreqs: J('payreqs', []), tasksSeenAt: (Number(this.lsGet('tasks_seen')) || 0), tgLink: (this.lsGet('tg') || '') };
     let st = this.companyBlank();
     try { const r = this.lsGet('state_v1'); if (r) { const saved = JSON.parse(r); for (const k of Component.PERSIST) if (saved[k] !== undefined) st[k] = saved[k]; } } catch (e) {}
     if (Array.isArray(st.orders)) st.orders = st.orders.map(o => ({ status: 'Принята', ...o }));
@@ -7584,6 +7629,8 @@ class Component extends DCLogic {
       cparties: '<path d="M3 7h18v13H3z"/><path d="M3 7l3-4h12l3 4"/><line x1="3" y1="12" x2="21" y2="12"/><circle cx="12" cy="16" r="1.4"/>',
       receipts: '<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4"/><line x1="12" y1="11" x2="12" y2="21"/><path d="M8 4.5l8 3.5"/>',
       sales: '<path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/><path d="M19 7v4h-4"/>',
+      salesplan: '<rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/><path d="M7 15l3-3 2 2 4-4"/>',
+      salesrep: '<path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><path d="M9 15l2-2 2 2 3-4"/><line x1="9" y1="18" x2="15" y2="18"/>',
       treas30: '<rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/><path d="M12 12v5"/><path d="M10 14h4"/>',
       logi: '<rect x="1" y="7" width="13" height="10" rx="1"/><path d="M14 10h4l3 3v4h-7z"/><circle cx="5.5" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/>',
       users: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 6.4M21.5 20a6 6 0 0 0-3.5-5.5"/>',
@@ -7728,7 +7775,7 @@ class Component extends DCLogic {
       { label: 'Задачи', tabs: [['tasks', 'Задачи'], ['docs', 'Документы'], ['cal', 'Календарь'], ['dataload', 'Загрузка данных 1С (защищённая)']] },
       { label: 'Производство', tabs: [['prod', 'План производства'], ['prodplan', 'График производства'], ['recipe', 'Рецептуры'], ['catalog', 'Каталоги'], ['prodrep', 'Отчёты производства']] },
       { label: 'Технология и расчёт себестоимости', tabs: [['calc', 'Калькулятор'], ['tcalc', 'Калькулятор технолога'], ['xcalc', 'Калькулятор X · проекты'], ['newprod', 'Ввод нового продукта'], ['actualize', 'Актуализация данных'], ['nomfix', 'Корректировка номенклатуры']] },
-      { label: 'Продажи', tabs: [['sales', 'Продажи ГП'], ['pnl', 'P&L и маржинальный анализ 360°'], ['prices', 'Реестр цен']] },
+      { label: 'Продажи', tabs: [['sales', 'Продажи ГП'], ['salesplan', 'План продаж'], ['salesrep', 'Отчёт по продажам'], ['pnl', 'P&L и маржинальный анализ 360°'], ['prices', 'Реестр цен']] },
       { label: 'Закупки', tabs: [['proc', 'План закупок'], ['procplan', 'График закупок'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['delivery', 'Доставка · баланс снабжения'], ['cparties', 'Поставщики / Контрагенты']] },
       { label: 'Логистика и склад', tabs: [['wh', 'Склад'], ['receipts', 'Поступления ТМЦ'], ['logi', 'Логистика'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка запасов']] },
       { label: 'Финансы', tabs: [['margin', 'Маржинальный отчёт'], ['cost', 'Себестоимость · КО'], ['costtree', 'Анализ себестоимости'], ['pricedyn', 'Динамика цен'], ['translog', 'Анализ транспортных расходов'], ['pay', 'Платежи'], ['treas30', 'БДДС 30 дней'], ['planfact', 'План-факт'], ['stress', 'Стресс-тест'], ['reports', 'Отчёты']] },
@@ -8477,7 +8524,7 @@ class Component extends DCLogic {
     const patch = { cloudConnected: true, cloudErr: '', cloudStatus: 'Онлайн', cloudHistory: d.history || [], cloudPresence: d.presence || {}, cloudLocks: valid, cloudMyAreas: [...mine], cloudRole: mine.size ? 'editor' : (othersN ? 'viewer' : 'idle') };
     // Топ-уровневые коллекции: применяем, если эту область не держу я (chat — всегда, без замка)
     const colApply = (col, key) => { if (!Array.isArray(d[col])) return; const ar = this.areaOfCol(col); if (ar && mine.has(ar)) return; patch[col] = d[col]; try { this.lsSet(key, JSON.stringify(d[col])); } catch (e) {} };
-    colApply('chat', 'chat'); colApply('tasks', 'tasks'); colApply('cparties', 'cparties'); colApply('receipts', 'receipts'); colApply('sales', 'sales'); colApply('logistics', 'logistics'); colApply('payreqs', 'payreqs'); colApply('chatRooms', 'chatrooms');
+    colApply('chat', 'chat'); colApply('tasks', 'tasks'); colApply('cparties', 'cparties'); colApply('receipts', 'receipts'); colApply('sales', 'sales'); colApply('salesPlan', 'salesplan'); colApply('logistics', 'logistics'); colApply('payreqs', 'payreqs'); colApply('chatRooms', 'chatrooms');
     if (d.emailCfg && typeof d.emailCfg === 'object') { patch.emailCfg = d.emailCfg; try { this.lsSet('emailcfg', JSON.stringify(d.emailCfg)); } catch (e) {} }
     if (typeof d.tgLink === 'string') patch.tgLink = d.tgLink;
     if (d.tgBot && typeof d.tgBot === 'object') { patch.tgToken = d.tgBot.token || ''; patch.tgChatId = d.tgBot.chatId || ''; patch.tgFwd = !!d.tgBot.fwd; }
@@ -10223,7 +10270,7 @@ class Component extends DCLogic {
     };
   }
   // ===== Продажи и дистрибуция ГП =====
-  emptySale() { const prods = (this.data && this.data.products) ? this.data.products.map(p => p.name || p) : []; return { id: '', no: '', date: this.ymd(new Date()), client: '', product: prods[0] || '', qty: '', price: '', currency: 'RUB', rate: 1 }; }
+  emptySale() { const prods = (this.data && this.data.products) ? this.data.products.map(p => p.name || p) : []; return { id: '', no: '', date: this.ymd(new Date()), client: '', product: prods[0] || '', qty: '', price: '', currency: 'RUB', rate: 1, manager: '' }; }
   writeSales(next) {
     this.setState({ sales: next });
     try { this.lsSet('sales', JSON.stringify(next)); } catch (e) {}
@@ -10234,7 +10281,7 @@ class Component extends DCLogic {
     const client = (d.client || '').trim();
     if (!client) { this.setState({ saleErr: 'Укажите клиента' }); return; }
     if (!(Number(d.qty) > 0)) { this.setState({ saleErr: 'Укажите объём (кг)' }); return; }
-    const sale = { id: d.id || ('sl_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), no: (d.no || '').trim(), date: d.date || this.ymd(new Date()), client, product: d.product || '', qty: Number(d.qty) || 0, price: Number(d.price) || 0, currency: d.currency || 'RUB', rate: Number(d.rate) || 1, createdAt: d.createdAt || Date.now() };
+    const sale = { id: d.id || ('sl_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), no: (d.no || '').trim(), date: d.date || this.ymd(new Date()), client, product: d.product || '', qty: Number(d.qty) || 0, price: Number(d.price) || 0, currency: d.currency || 'RUB', rate: Number(d.rate) || 1, manager: (d.manager || '').trim(), createdAt: d.createdAt || Date.now() };
     this.writeSales([sale, ...(S.sales || []).filter(x => x.id !== sale.id)]);
     this.setState({ saleDraft: null, saleErr: '' });
     setTimeout(() => this.triggerGlobalRecalculation('NEW_SALES'), 60);
@@ -10270,12 +10317,238 @@ class Component extends DCLogic {
       slQty: d.qty || '', onSlQty: upd('qty'), slPrice: d.price || '', onSlPrice: upd('price'),
       slCurrency: d.currency || 'RUB', onSlCurrency: (e) => set({ saleDraft: { ...(this.state.saleDraft || this.emptySale()), currency: e.target.value, rate: e.target.value === 'EUR' ? eurRate : (e.target.value === 'RUB' ? 1 : (this.state.saleDraft || {}).rate || 1) }, saleErr: '' }), slCurOpts: ['RUB', 'USD', 'EUR', 'CNY'].map(c => ({ v: c, label: c })),
       slRate: d.rate != null ? d.rate : 1, onSlRate: upd('rate'),
+      slManager: d.manager || '', onSlManager: upd('manager'), slManagerOpts: (S.users || []).filter(u => u.active).map(u => u.name),
       saveSale: () => this.saveSale(), cancelSale: () => set({ saleDraft: null, saleErr: '' }), slHasDraft: isDraft, slErr: S.saleErr || '', slHasErr: !!S.saleErr,
       salesTransport: S.salesTransport || 0, onSalesTransport: (e) => set({ salesTransport: e.target.value }),
       transWeightCls: mode === 'weight' ? 'tmbtn on' : 'tmbtn', transValueCls: mode === 'value' ? 'tmbtn on' : 'tmbtn', setTransWeight: () => set({ salesTransMode: 'weight' }), setTransValue: () => set({ salesTransMode: 'value' }),
       saleRows: rows, salesEmpty: rows.length === 0, salesCount: String(rows.length),
       sumRev: this.fmt(tRev), sumCost: this.fmt(tCost), sumTr: this.fmt(tTr), sumMar: this.fmt(tMar), sumMpct: this.fmt(tRev ? tMar / tRev * 100 : 0, 1) + '%', sumMcls: tMar >= 0 ? 'mpos' : 'mneg',
     };
+  }
+  // ===================== ПЛАН ПРОДАЖ (помесячно / понедельно / по дням) =====================
+  // Каждая строка плана хранит дату (YYYY-MM-DD) + масштаб ввода (month/week/day): месяц — 1-е число
+  // месяца, неделя — понедельник недели, день — сама дата. Так строки любого масштаба однозначно
+  // сворачиваются в месяц (date.slice(0,7)) для передачи в план производства.
+  writeSalesPlan(next) {
+    this.setState({ salesPlan: next });
+    try { this.lsSet('salesplan', JSON.stringify(next)); } catch (e) {}
+    if (this.state.cloudConnected && this._docRef && window.__FB) { try { window.__FB.setDoc(this._docRef, { salesPlan: next }, { merge: true }).catch(() => {}); } catch (e) {} }
+  }
+  emptySp() { const prods = (this.data && this.data.products) ? this.data.products.map(p => p.name || p) : []; return { id: '', date: this.ymd(new Date()), client: '', product: prods[0] || '', qty: '', price: '', manager: '' }; }
+  // Понедельник ISO-недели, в которую попадает дата
+  spMonday(dstr) {
+    const d = new Date(dstr + 'T12:00:00'); if (isNaN(d)) return dstr;
+    const dow = (d.getDay() + 6) % 7; d.setDate(d.getDate() - dow);
+    return this.ymd(d);
+  }
+  spPeriodLabel(row) {
+    const d = row.date || '';
+    if (row.scale === 'month') { const [y, m] = d.split('-'); return (this.ctMon()[+m] || m) + ' ' + y; }
+    if (row.scale === 'week') { const [y, m, dd] = d.split('-'); return 'нед. с ' + dd + '.' + m + '.' + y; }
+    return this.dmFull(d);
+  }
+  saveSp() {
+    const S = this.state, d = S.spDraft || this.emptySp();
+    const client = (d.client || '').trim();
+    if (!client) { this.setState({ spErr: 'Укажите клиента' }); return; }
+    if (!d.product) { this.setState({ spErr: 'Укажите продукт' }); return; }
+    if (!(Number(d.qty) > 0)) { this.setState({ spErr: 'Укажите плановый объём (кг)' }); return; }
+    if (!d.date) { this.setState({ spErr: 'Укажите период' }); return; }
+    const scale = S.spScale || 'month';
+    // Нормализация даты по масштабу: месяц → 1-е число, неделя → понедельник, день → как есть
+    let date = d.date;
+    if (scale === 'month') date = date.slice(0, 7) + '-01';
+    else if (scale === 'week') date = this.spMonday(date);
+    // Клиент: если его нет в справочнике контрагентов — создаём автоматически
+    let msg = '';
+    const known = (S.cparties || []).some(c => this.norm(c.name) === this.norm(client));
+    if (!known) {
+      const cp = { ...this.emptyCp(), id: 'cp_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), name: client, createdAt: Date.now() };
+      this.writeCparties([...(S.cparties || []), cp]);
+      msg = 'Клиент «' + client + '» создан в справочнике контрагентов. ';
+    }
+    const row = { id: d.id || ('sp_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)), scale, date, client, product: d.product, qty: Number(d.qty) || 0, price: Number(d.price) || 0, manager: (d.manager || '').trim(), createdAt: d.createdAt || Date.now() };
+    this.writeSalesPlan([row, ...(S.salesPlan || []).filter(x => x.id !== row.id)]);
+    this.setState({ spDraft: null, spErr: '', spMsg: msg + 'Строка плана записана: ' + row.product + ' · ' + this.fmt(row.qty, 0) + ' кг · ' + this.spPeriodLabel(row) + '.' });
+  }
+  // ---- Формирование плана производства из плана продаж ----
+  // Алгоритм (продуман под структуру prodPlan «продукт → {YYYY-MM | YYYY-MM#неделя: кг}», где
+  // недельные ячейки, если заданы, ИМЕЮТ ПРИОРИТЕТ над месячной — см. effMonthKg):
+  // 1. Все строки плана продаж сворачиваются по продукту × месяцу (неделя/день → свой месяц).
+  // 2. Если ВСЕ строки продукта за месяц введены понедельно/по дням — объёмы раскладываются по
+  //    недельным ячейкам плана производства (сохраняем детализацию). Иначе пишется месячная ячейка.
+  // 3. Режим «Заменить»: значения затронутых месяцев перезаписываются (недельные ячейки месяца
+  //    предварительно очищаются, чтобы не перекрывали новую месячную цифру). Режим «Добавить»:
+  //    новый объём прибавляется к эффективному текущему (учитывая недельные ячейки), итог пишется
+  //    в ту же структуру. Продукты и месяцы, которых нет в плане продаж, НЕ трогаются.
+  spToProdPlan() {
+    const S = this.state;
+    const rows = S.salesPlan || [];
+    if (!rows.length) { this.setState({ spErr: 'План продаж пуст — нечего переносить в производство.' }); return; }
+    const mode = S.spProdMode || 'replace';
+    // product → month → { total, weekly: {weekKey: qty}, allDetailed: bool }
+    const agg = new Map();
+    for (const r of rows) {
+      const q = Number(r.qty) || 0; if (!(q > 0) || !r.product || !r.date) continue;
+      const month = r.date.slice(0, 7);
+      if (!agg.has(r.product)) agg.set(r.product, new Map());
+      const pm = agg.get(r.product);
+      if (!pm.has(month)) pm.set(month, { total: 0, weekly: {}, allDetailed: true });
+      const M = pm.get(month);
+      M.total += q;
+      if (r.scale === 'week' || r.scale === 'day') {
+        const day = Number(r.date.slice(8, 10)) || 1;
+        const chunk = this.weekChunksOf(month).find(c => day >= c.d0 && day <= c.d1);
+        if (chunk) M.weekly[chunk.key] = (M.weekly[chunk.key] || 0) + q;
+      } else M.allDetailed = false;
+    }
+    if (!agg.size) { this.setState({ spErr: 'В плане продаж нет строк с объёмом — нечего переносить.' }); return; }
+    const plan = { ...(S.prodPlan || {}) };
+    let nProd = 0, nMonth = 0;
+    for (const [product, pm] of agg) {
+      const row = { ...(plan[product] || {}) }; nProd++;
+      for (const [month, M] of pm) {
+        nMonth++;
+        const prevEff = this.effMonthKg(product, month);
+        const chunks = this.weekChunksOf(month);
+        if (M.allDetailed && Object.keys(M.weekly).length) {
+          // раскладка по неделям: месячную ячейку убираем (недели приоритетнее и точнее)
+          if (mode === 'replace') { for (const c of chunks) delete row[c.key]; delete row[month]; for (const wk in M.weekly) row[wk] = M.weekly[wk]; }
+          else { delete row[month]; for (const wk in M.weekly) row[wk] = (Number(row[wk]) || 0) + M.weekly[wk]; }
+        } else {
+          // месячная цифра: недельные ячейки месяца очищаем — иначе они перекроют новое значение
+          for (const c of chunks) delete row[c.key];
+          row[month] = mode === 'replace' ? M.total : prevEff + M.total;
+        }
+      }
+      plan[product] = row;
+    }
+    this.setState({ prodPlan: plan, spErr: '', spMsg: 'План производства обновлён из плана продаж (' + (mode === 'replace' ? 'замена' : 'добавление') + '): продуктов — ' + nProd + ', месяцев — ' + nMonth + '. Откройте «Производство → График производства».' });
+    try { this.postSystemNote('📈 План производства сформирован из плана продаж (' + (mode === 'replace' ? 'режим «Заменить»' : 'режим «Добавить»') + '): продуктов ' + nProd + ', месяцев ' + nMonth + '.', S.currentUser ? S.currentUser.name : 'Система'); } catch (e) {}
+    try { this.scheduleAutoRecalc('PROD_PLAN_FROM_SALES'); } catch (e) {}
+  }
+  buildSalesPlan() {
+    const S = this.state, set = (p) => this.setState(p);
+    const d = S.spDraft || this.emptySp();
+    const upd = (k) => (e) => set({ spDraft: { ...(this.state.spDraft || this.emptySp()), [k]: e.target.value }, spErr: '', spMsg: '' });
+    const scale = S.spScale || 'month';
+    const prods = (this.data && this.data.products) ? this.data.products.map(p => p.name || p) : [];
+    const rows = (S.salesPlan || []).slice().sort((a, b) => (a.date || '').localeCompare(b.date || '') || (a.product || '').localeCompare(b.product || '', 'ru'));
+    let totQty = 0, totRev = 0; const clientsSet = new Set();
+    const list = rows.map(r => {
+      const q = Number(r.qty) || 0, sum = q * (Number(r.price) || 0);
+      totQty += q; totRev += sum; if (r.client) clientsSet.add(this.norm(r.client));
+      return {
+        id: r.id, period: this.spPeriodLabel(r), client: r.client || '—', product: r.product || '—', manager: r.manager || '—',
+        qty: this.fmt(q, 0), price: r.price ? this.fmt(Number(r.price), 2) : '—', sum: sum ? this.fmt(sum, 0) : '—',
+        edit: () => set({ spDraft: { ...r, date: r.scale === 'month' ? r.date.slice(0, 7) : r.date }, spScale: r.scale, spErr: '', spMsg: '' }),
+        remove: () => this.askDelete('строку плана «' + (r.product || '') + ' · ' + this.spPeriodLabel(r) + '»', () => this.writeSalesPlan((this.state.salesPlan || []).filter(x => x.id !== r.id))),
+      };
+    });
+    const scCls = (id) => scale === id ? 'cvseg on' : 'cvseg';
+    return {
+      isSalesPlan: true,
+      spScaleMonthCls: scCls('month'), spScaleWeekCls: scCls('week'), spScaleDayCls: scCls('day'),
+      setSpScaleMonth: () => set({ spScale: 'month', spDraft: null }), setSpScaleWeek: () => set({ spScale: 'week', spDraft: null }), setSpScaleDay: () => set({ spScale: 'day', spDraft: null }),
+      spIsMonth: scale === 'month', spIsDate: scale !== 'month',
+      spPeriodHint: scale === 'month' ? 'Месяц плана' : (scale === 'week' ? 'Любой день недели (свернётся к понедельнику)' : 'День плана'),
+      spDate: scale === 'month' ? (d.date || '').slice(0, 7) : (d.date || ''), onSpDate: upd('date'),
+      spClient: d.client || '', onSpClient: upd('client'), spClientOpts: (S.cparties || []).map(c => c.name).filter(Boolean),
+      spProduct: d.product || '', onSpProduct: upd('product'), spProdOpts: prods.map(p => ({ v: p, label: p })),
+      spQty: d.qty || '', onSpQty: upd('qty'), spPrice: d.price || '', onSpPrice: upd('price'),
+      spManager: d.manager || '', onSpManager: upd('manager'), spManagerOpts: (S.users || []).filter(u => u.active).map(u => u.name),
+      saveSp: () => this.saveSp(), cancelSp: () => set({ spDraft: null, spErr: '', spMsg: '' }), spHasDraft: !!S.spDraft,
+      spErr: S.spErr || '', spHasErr: !!S.spErr, spMsg: S.spMsg || '', spHasMsg: !!S.spMsg,
+      spRows: list, spEmpty: list.length === 0, spCount: String(list.length),
+      spKpis: [
+        { label: 'Строк плана', v: String(list.length), hi: '' },
+        { label: 'Σ план, кг', v: this.fmt(totQty, 0), hi: '' },
+        { label: 'Σ план выручки, ₽', v: this.fmt(totRev, 0), hi: '2' },
+        { label: 'Клиентов', v: String(clientsSet.size), hi: '' },
+      ],
+      spModeReplaceCls: (S.spProdMode || 'replace') === 'replace' ? 'cvseg on' : 'cvseg', spModeAddCls: S.spProdMode === 'add' ? 'cvseg on' : 'cvseg',
+      setSpModeReplace: () => set({ spProdMode: 'replace' }), setSpModeAdd: () => set({ spProdMode: 'add' }),
+      spToProdPlan: () => this.spToProdPlan(),
+      spGoProdPlan: () => set({ tab: 'prodplan', navOpen: false }),
+    };
+  }
+  // ===================== ОТЧЁТ ПО ПРОДАЖАМ (разрезы: группа/номенклатура/клиент/менеджер/месяц) =====================
+  srGroupOf(product) {
+    const k = this.norm(product);
+    const p = ((this.data && this.data.products) || []).find(x => this.norm(x.name) === k);
+    return (p && (p.kind || p.type)) || this.sbMarka(product) || '—';
+  }
+  buildSalesReport() {
+    const S = this.state, set = (p) => this.setState(p);
+    const dim = S.srDim || 'group';
+    const dF = (S.srFrom || '').trim(), dT = (S.srTo || '').trim();
+    const R = this.cbRate('EUR') || Number(S.rate) || 0;
+    const eur = S.curMode === 'EUR';
+    const mv = (rub) => (eur && R ? rub / R : rub).toLocaleString('ru-RU', { maximumFractionDigits: eur ? 2 : 0 }) + ' ' + (eur ? '€' : '₽');
+    const sales = (S.sales || []).filter(s => {
+      const sd = s.date || '';
+      if (dF && sd && sd < dF) return false;
+      if (dT && sd && sd > dT) return false;
+      return true;
+    });
+    const MON = this.ctMon();
+    const keyOf = (s) => {
+      if (dim === 'group') return this.srGroupOf(s.product);
+      if (dim === 'nomen') return s.product || '—';
+      if (dim === 'client') return s.client || '—';
+      if (dim === 'manager') return s.manager || '—';
+      const m = (s.date || '').slice(0, 7); const [y, mm] = m.split('-'); return m ? ((MON[+mm] || mm) + ' ' + y) : '—';
+    };
+    const vk = 1 + this.vat;
+    const acc = new Map();
+    let totQ = 0, totRev = 0;
+    for (const s of sales) {
+      const q = Number(s.qty) || 0, rev = q * (Number(s.price) || 0) * (Number(s.rate) || 1);
+      const k = keyOf(s);
+      if (!acc.has(k)) acc.set(k, { q: 0, rev: 0, n: 0 });
+      const a = acc.get(k); a.q += q; a.rev += rev; a.n++;
+      totQ += q; totRev += rev;
+    }
+    const rows = [...acc.entries()].sort((a, b) => b[1].rev - a[1].rev).map(([k, a]) => ({
+      name: k, n: String(a.n), qty: this.fmt(a.q, 0),
+      rev: mv(a.rev), revNoVat: mv(a.rev / vk),
+      avg: a.q ? (mv(a.rev / a.q)) + '/кг' : '—',
+      share: totRev ? this.fmt(a.rev / totRev * 100, 1) + '%' : '—',
+      barStyle: { width: Math.max(2, totRev ? a.rev / totRev * 100 : 0) + '%' },
+    }));
+    const dimCls = (id) => dim === id ? 'cvseg on' : 'cvseg';
+    return {
+      isSalesRep: true,
+      ...this.curVatVals(),
+      srDimGroupCls: dimCls('group'), srDimNomenCls: dimCls('nomen'), srDimClientCls: dimCls('client'), srDimManagerCls: dimCls('manager'), srDimMonthCls: dimCls('month'),
+      setSrDimGroup: () => set({ srDim: 'group' }), setSrDimNomen: () => set({ srDim: 'nomen' }), setSrDimClient: () => set({ srDim: 'client' }), setSrDimManager: () => set({ srDim: 'manager' }), setSrDimMonth: () => set({ srDim: 'month' }),
+      srDimLabel: ({ group: 'Группа', nomen: 'Номенклатура', client: 'Клиент', manager: 'Менеджер', month: 'Месяц' })[dim],
+      srFrom: S.srFrom || '', srTo: S.srTo || '', onSrFrom: (e) => set({ srFrom: e.target.value }), onSrTo: (e) => set({ srTo: e.target.value }),
+      srResetFlt: () => set({ srFrom: '', srTo: '' }),
+      srRows: rows, srEmpty: rows.length === 0, srHasData: rows.length > 0,
+      srTotQty: this.fmt(totQ, 0), srTotRev: mv(totRev), srTotRevNoVat: mv(totRev / vk), srCount: String(sales.length),
+      srCoName: this.co().name,
+      srExportExcel: () => this.srExportExcel(),
+    };
+  }
+  srExportExcel() {
+    const XLSX = window.XLSX; if (!XLSX) return;
+    const S = this.state;
+    const dims = [['group', 'По группам'], ['nomen', 'По номенклатуре'], ['client', 'По клиентам'], ['manager', 'По менеджерам'], ['month', 'По месяцам']];
+    const wb = XLSX.utils.book_new();
+    const headers = ['Разрез', 'Отгрузок', 'Кг', 'Выручка с НДС', 'Выручка без НДС', 'Ср. цена/кг', 'Доля, %'];
+    const types = ['text', 'num', 'num', 'money', 'money', 'moneyu', 'pct'];
+    const vk = 1 + this.vat;
+    for (const [dimId, label] of dims) {
+      const raw = (S.sales || []);
+      const acc = new Map(); let totRev = 0;
+      const keyOfDim = (s) => { const MON = this.ctMon(); if (dimId === 'group') return this.srGroupOf(s.product); if (dimId === 'nomen') return s.product || '—'; if (dimId === 'client') return s.client || '—'; if (dimId === 'manager') return s.manager || '—'; const m = (s.date || '').slice(0, 7); const [y, mm] = m.split('-'); return m ? ((MON[+mm] || mm) + ' ' + y) : '—'; };
+      for (const s of raw) { const q = Number(s.qty) || 0, rev = q * (Number(s.price) || 0) * (Number(s.rate) || 1); const k = keyOfDim(s); if (!acc.has(k)) acc.set(k, { q: 0, rev: 0, n: 0 }); const a = acc.get(k); a.q += q; a.rev += rev; a.n++; totRev += rev; }
+      const nrows = [...acc.entries()].sort((a, b) => b[1].rev - a[1].rev).map(([k, a]) => [k, a.n, this.excelRound(a.q, 0), this.excelRound(a.rev, 0), this.excelRound(a.rev / vk, 0), a.q ? this.excelRound(a.rev / a.q, 2) : 0, totRev ? this.excelRound(a.rev / totRev * 100, 1) : 0]);
+      const tot = ['ИТОГО', nrows.reduce((s2, r) => s2 + r[1], 0), 0, 0, 0, '', ''];
+      XLSX.utils.book_append_sheet(wb, this.mgXlSheet('Отчёт по продажам · ' + label + ' · ' + this.co().name, headers, types, nrows, tot), label.slice(0, 28));
+    }
+    XLSX.writeFile(wb, 'Отчёт по продажам ' + this.co().name + ' ' + new Date().toISOString().slice(0, 10) + '.xlsx');
   }
   // ===== Поступление ТМЦ на склад =====
   emptyReceipt() { return { id: '', no: '', date: this.ymd(new Date()), supplier: '', inn: '', currency: 'RUB', rate: 1, market: 'Внутренний', lines: [{ material: '', article: '', qty: '', price: '' }] }; }
@@ -14603,14 +14876,14 @@ class Component extends DCLogic {
       ['reports', 'Отчёты'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['delivery', 'Доставка · баланс'],
       ['turnover', 'Оборачиваемость'], ['planfact', 'План-факт'], ['prodrep', 'Отчёты производства'], ['stress', 'Стресс-тест'], ['pay', 'Платежи'],
       ['cost', 'Себестоимость · КО'], ['margin', 'Маржинальный отчёт'], ['costtree', 'Анализ себестоимости'], ['pricedyn', 'Динамика цен'], ['translog', 'Анализ транспортных расходов'], ['pnl', 'P&L 360°'],
-      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['dataload', 'Загрузка данных 1С'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['filearch', 'Архив файлов'], ['autopilot', 'ИИ-Автопилот'], ['seclog', 'Журнал безопасности'], ['dqclean', 'Чистота данных'], ['home', 'Карта навигации'],
+      ['prices', 'Реестр цен'], ['catalog', 'Каталоги'], ['tasks', 'Задачи'], ['docs', 'Документы'], ['dataload', 'Загрузка данных 1С'], ['cparties', 'Контрагенты'], ['receipts', 'Поступления ТМЦ'], ['sales', 'Продажи ГП'], ['salesplan', 'План продаж'], ['salesrep', 'Отчёт по продажам'], ['treas30', 'БДДС 30 дней'], ['logi', 'Логистика'], ['cloud', 'Облако'], ['onec', 'Интеграция 1С'], ['users', 'Пользователи'], ['filearch', 'Архив файлов'], ['autopilot', 'ИИ-Автопилот'], ['seclog', 'Журнал безопасности'], ['dqclean', 'Чистота данных'], ['home', 'Карта навигации'],
     ];
     const tabLabels = Object.fromEntries(tabsDef);
     const tabGroups = [
       { label: 'Задачи', items: ['tasks', 'docs', 'cal', 'dataload'], en: { dataload: 'Загрузка данных 1С' } },
       { label: 'Производство', items: ['prod', 'prodplan', 'recipe', 'catalog', 'prodrep'], en: { prodplan: 'График производства' } },
       { label: 'Технология и расчёт себестоимости', items: ['calc', 'tcalc', 'xcalc', 'newprod', 'actualize', 'nomfix'], en: { tcalc: 'Калькулятор технолога', xcalc: 'Калькулятор X · проекты' } },
-      { label: 'Продажи', items: ['sales', 'pnl', 'prices'], en: { pnl: 'P&L и маржа 360°' } },
+      { label: 'Продажи', items: ['sales', 'salesplan', 'salesrep', 'pnl', 'prices'], en: { pnl: 'P&L и маржа 360°' } },
       { label: 'Закупки', items: ['proc', 'procplan', 'runrate', 'audit', 'landed', 'delivery', 'cparties'], en: { procplan: 'График закупок', cparties: 'Поставщики / Контрагенты' } },
       { label: 'Логистика и склад', items: ['wh', 'receipts', 'logi', 'turnover', 'cover'], en: { cover: 'Сводка запасов' } },
       { label: 'Финансы', items: ['margin', 'cost', 'costtree', 'pricedyn', 'translog', 'pay', 'treas30', 'planfact', 'stress', 'reports'] },
@@ -14647,6 +14920,8 @@ class Component extends DCLogic {
       pricedyn: 'Динамика цен: как менялись цены сырья, полупродуктов и готовой продукции от периода к периоду. Источник — архив «Анализ себестоимости» (единый источник СС). Разрезы: сырьё / полупродукты / готовая продукция, период, RUB/EUR, с НДС/без НДС.',
       translog: 'Анализ транспортных расходов: динамика доп.расходов (транспорт/логистика/таможня/хранение) из дерева себестоимости — на сырьё (пропорционально доле в партии), на полупродукты и готовую продукцию (прямо, на кг выпуска). Разрезы, период, RUB/EUR, с НДС/без НДС — как в «Динамике цен».',
       dqclean: 'Чистота данных компании (только админ): поиск записей другой компании, попавших в текущую по сбою облачной синхронизации (найдены и удалены точно, при подтверждении). Проверяет архив файлов, закупки, контрагентов, продажи, поступления, себестоимость КО, маржу и периоды дерева себестоимости.',
+      salesplan: 'План продаж: помесячно, понедельно или по дням — клиент (с автосозданием в справочнике контрагентов), продукт, объём, цена, менеджер. Одной кнопкой формирует план производства (режимы «Заменить»/«Добавить», недельная детализация сохраняется).',
+      salesrep: 'Отчёт по продажам в разрезах: группы аналитического учёта, номенклатура, клиенты, менеджеры, месяцы. Объём, выручка с НДС и без, средняя цена, доля. Фильтр по периоду, RUB/EUR, экспорт в Excel всеми разрезами сразу.',
       tcalc: 'Калькулятор технолога: себестоимость 1 кг ГП по рецептуре в EUR/RUB с НДС и без, доставка, GM2 и наценка → цена для клиента.',
       xcalc: 'Калькулятор X: себестоимость проектных (новых) продуктов — соберите рецептуру из номенклатуры, задайте %, получите цену клиенту до запуска в производство.',
       calc: 'Себестоимость 1 кг готового продукта с развёрткой по компонентам.',
@@ -14807,7 +15082,7 @@ class Component extends DCLogic {
       mailStopProp: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
       product: S.product, rate: S.rate, loss: S.loss, recipeOwner: S.recipeOwner,
       draftComp: S.draftComp, draftPct: S.draftPct, priceFilter: S.priceFilter,
-      isCost: S.tab === 'cost', isMargin: S.tab === 'margin', isLanded: S.tab === 'landed', isDelivery: S.tab === 'delivery', isDataload: S.tab === 'dataload', isFileArch: S.tab === 'filearch', isPnl: S.tab === 'pnl', isPriceDyn: S.tab === 'pricedyn', isTransLog: S.tab === 'translog', isDqClean: S.tab === 'dqclean',
+      isCost: S.tab === 'cost', isMargin: S.tab === 'margin', isLanded: S.tab === 'landed', isDelivery: S.tab === 'delivery', isDataload: S.tab === 'dataload', isFileArch: S.tab === 'filearch', isPnl: S.tab === 'pnl', isPriceDyn: S.tab === 'pricedyn', isTransLog: S.tab === 'translog', isDqClean: S.tab === 'dqclean', isSalesPlan: S.tab === 'salesplan', isSalesRep: S.tab === 'salesrep',
       isTCalc: S.tab === 'tcalc', tcReady: !!S.tcReady, isXCalc: S.tab === 'xcalc',
       isNewProd: S.tab === 'newprod', isNomFix: S.tab === 'nomfix', isActualize: S.tab === 'actualize',
       tcActualLabel: this.tccActualLabel(),
@@ -15234,6 +15509,8 @@ class Component extends DCLogic {
     if (S.tab === 'cparties') Object.assign(base, this.buildCparties());
     if (S.tab === 'receipts') Object.assign(base, this.buildReceipts());
     if (S.tab === 'sales') Object.assign(base, this.buildSales());
+    if (S.tab === 'salesplan') Object.assign(base, this.buildSalesPlan());
+    if (S.tab === 'salesrep') Object.assign(base, this.buildSalesReport());
     if (S.tab === 'treas30') { Object.assign(base, this.buildTreasury30()); Object.assign(base, this.payReqVals()); }
     if (S.tab === 'logi') Object.assign(base, this.buildLogistics());
     if (S.tab === 'cost') Object.assign(base, this.buildSebest());
