@@ -6913,6 +6913,22 @@ class Component extends DCLogic {
     // (не мержим построчно — иначе остаются устаревшие компоненты, убранные в новом файле)
     const overlayByProd = new Map();
     for (const key in o.recipes) { const it = o.recipes[key]; if (!it || !it.product || !it.component) continue; const pk = this.norm(it.product); if (!overlayByProd.has(pk)) overlayByProd.set(pk, []); overlayByProd.get(pk).push(it); }
+    // Самолечение повреждённых ранее рецептур: если в оверлей уже попал неполный состав (Σ долей < 50%,
+    // типично 1 строка из партии-доработки — баг «в рецептуре одна позиция вместо двух»), а в базовых
+    // данных есть настоящая рецептура продукта — оверлей этого продукта отбрасываем и вычищаем из
+    // tc_actual, базовый состав остаётся. Разовая чистка на каждом устройстве, дальше не мешает.
+    let healed = 0;
+    const basePks = new Set(this.data.recipes.map(r => this.norm(r.product)));
+    for (const [pk, list] of [...overlayByProd.entries()]) {
+      if (!this.tccRecipeSetPlausible(list) && basePks.has(pk)) {
+        overlayByProd.delete(pk); healed++;
+        for (const rk in o.recipes) { if (this.norm(o.recipes[rk].product) === pk) delete o.recipes[rk]; }
+      }
+    }
+    if (healed) {
+      try { this.lsSet('tc_actual', JSON.stringify(o)); } catch (e) {}
+      if (!this._tccHealedLogged) { this._tccHealedLogged = true; try { this.secLog('RECIPE_SELF_HEAL', { detail: 'Восстановлены базовые рецептуры, ранее ошибочно замещённые неполным составом из партий-доработок: продуктов — ' + healed + '.' }); } catch (e) {} }
+    }
     if (overlayByProd.size) {
       const nameByPk = new Map();
       this.data.recipes.forEach(r => { const pk = this.norm(r.product); if (overlayByProd.has(pk) && !nameByPk.has(pk)) nameByPk.set(pk, r.product); });
@@ -6969,11 +6985,19 @@ class Component extends DCLogic {
   // так устаревшие компоненты, убранные в новом файле, не остаются висеть в системе.
   // statusMap — общий на весь сеанс актуализации кэш решений «продукт+период», чтобы при мульти-файловой
   // загрузке не перетирать уже применённые в этом же сеансе строки повторной проверкой.
+  // Порог правдоподобия ПОЛНОГО состава: Σ долей компонентов ≥ 50% массы выпуска. Партия-доработка
+  // (в дереве 1С: к готовой основе добавили одну присадку 0,5–5%) даёт «состав» из 1-2 строк с
+  // крошечной Σ — это НЕ рецептура, и замещать ею настоящий состав продукта нельзя (баг «в рецептуре
+  // осталась одна позиция»). Настоящие рецептуры суммируются к ~100% (±потери), порог 50% безопасен.
+  tccRecipeSetPlausible(lines) { const s = (lines || []).reduce((a, r) => a + (Number(r.pct) || 0), 0); return s >= 0.5; }
   tccMergeRecipeSet(items, periodKey, rep, statusMap) {
     let applied = 0;
     const byProd = new Map();
     for (const r of (items || [])) { if (!r || !r.product || !r.component) continue; const pk = this.norm(r.product); if (!pk) continue; if (!byProd.has(pk)) byProd.set(pk, []); byProd.get(pk).push(r); }
     for (const [pk, lines] of byProd) {
+      // Неполный состав (партия-доработка/частичные данные) не может замещать рецептуру — пропускаем
+      // ДО каких-либо удалений существующих строк продукта.
+      if (!this.tccRecipeSetPlausible(lines)) { if (rep) rep.skippedPartial = (rep.skippedPartial || 0) + lines.length; continue; }
       const statusKey = pk + '@@' + (periodKey || '');
       if (!statusMap.has(statusKey)) {
         const blocked = Object.keys(this._tcc.recipes).some(rk => { const ex = this._tcc.recipes[rk]; return this.norm(ex.product) === pk && ex.periodKey && periodKey && !this.tccPeriodNotOlder(periodKey, ex.periodKey); });
@@ -7119,7 +7143,7 @@ class Component extends DCLogic {
     const nr = this.tccMergeRecipeSet(d.recipes, periodKey, rep, new Map());
     for (const p of d.products) { const k = this.norm(p.name); if (!k) continue; if (!this._tcc.products[k] && !(this.data && (this.data.products || []).some(x => this.norm(x.name) === k))) this._tcc.products[k] = { name: p.name, type: '', article: '' }; }
     this._tcc.date = Date.now();
-    this._tcc.summary = 'Обновлено из «' + source + '»: цен ' + np + ', строк рецептур ' + nr + ', новой номенклатуры ' + nnew + (rep.skippedOld ? ' · пропущено (в системе данные новее) ' + rep.skippedOld : '');
+    this._tcc.summary = 'Обновлено из «' + source + '»: цен ' + np + ', строк рецептур ' + nr + ', новой номенклатуры ' + nnew + (rep.skippedOld ? ' · пропущено (в системе данные новее) ' + rep.skippedOld : '') + (rep.skippedPartial ? ' · пропущено неполных составов (партии-доработки) ' + rep.skippedPartial : '');
     this._tcc.history.unshift({ date: this._tcc.date, files: [(tree.fileName || 'Дерево себестоимости') + ' · ' + source], prices: np, recipes: nr, newRaw: nnew, newProd: 0, outputs: 0, skippedOld: rep.skippedOld, by: this.state.currentUser ? this.state.currentUser.name : '' });
     this._tcc.history = this._tcc.history.slice(0, 50);
     this.tccSave(); this.tccApply();
