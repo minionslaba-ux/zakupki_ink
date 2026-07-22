@@ -2081,6 +2081,17 @@ tbody tr.crit td{background:#fdf2f2}
 .tagbtn{appearance:none;border:none;font:inherit;cursor:pointer;font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;margin-left:8px;vertical-align:1px;display:inline-flex;align-items:center;gap:4px}
 .tagbtn.semi{background:#d6effa;color:#0080b0}
 .tagbtn.semi:hover{background:#b2e1f5}
+.tagbtn.raw{background:#eef1f4;color:#5b6675}
+.tagbtn.ref{background:#e7e0f7;color:#5b3fa0}
+.tagbtn.ref:hover{background:#d6c9f0}
+.npchip{appearance:none;border:1px solid #c3cede;background:#fff;color:#56534f;font:inherit;font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:9px;cursor:pointer}
+.npchip.on{background:#5b3fa0;border-color:#5b3fa0;color:#fff}
+.reanalog{font-size:11px;color:#7a8aa0;font-style:italic}
+.recost{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#e7e4e0;border-radius:11px;overflow:hidden;margin:12px 0}
+.recell{background:#fff;padding:12px 14px;text-align:center}
+.recell.accent{background:#f0ecfa}
+.recl{font-size:11px;color:#8a8782;text-transform:uppercase;letter-spacing:.03em}
+.recv{font-size:17px;font-weight:700;color:#1a1916;margin-top:3px}
 tbody tr.subrow td{background:#faf9f7;border-top:1px dashed #e7e4e0}
 .subrow .nm{font-weight:400;color:#56534f}
 .ind1{padding-left:28px!important}
@@ -2823,6 +2834,37 @@ window.dispatchEvent(new Event('fbready'));
 </sc-if>
 </sc-if>
 
+<sc-if value="{{ isRefCalc }}" hint-placeholder-val="">
+<sc-if value="{{ reEmpty }}" hint-placeholder-val=""><div class="card"><div class="tcempty">Эталонные рецептуры для этой компании не заданы. Добавьте эталонный продукт во вкладке «Ввод нового продукта».</div></div></sc-if>
+<sc-if value="{{ reHasData }}" hint-placeholder-val="{{ true }}">
+<div class="card tccard">
+<div class="actualtag">📐 Эталонный калькулятор · {{ reCoName }} · рецептуры не актуализируются</div>
+<div class="tctop">
+<div class="field grow"><span class="lbl">📐 Эталонный продукт · выбор из {{ reProductCount }}</span><select class="sel" value="{{ reProduct }}" onChange="{{ onReProduct }}"><sc-for list="{{ reProductOptions }}" as="opt" hint-placeholder-count="1"><option value="{{ opt.value }}">{{ opt.label }}</option></sc-for></select></div>
+<div class="field"><span class="lbl">🔎 Поиск</span><input class="inp" value="{{ reSearch }}" onInput="{{ onReSearch }}" placeholder="фильтр по названию"></div>
+<div class="tcrates"><span class="tcrate"><span class="tcrk">EUR / ₽</span><span class="tcrv mono">{{ reRateEur }}</span></span></div>
+</div>
+<div class="sec">{{ reKindLabel }} · Σ компонентов <span class="{{ reSumPctWarn }}">{{ reSumPct }}</span></div>
+<div class="tctblwrap"><table class="tctbl"><thead><tr><th class="l">Компонент</th><th class="l">Раздел</th><th>% ввод</th><th>Цена €/ед.</th><th>€/кг</th><th class="l">Аналоги</th></tr></thead>
+<tbody><sc-for list="{{ reRows }}" as="r" hint-placeholder-count="6"><tr class="{{ r.rowCls }}"><td class="l" style="{{ r.indent }}"><span class="nm">{{ r.name }}</span></td><td class="l"><sc-if value="{{ r.canToggle }}" hint-placeholder-val=""><button class="{{ r.sectCls }}" onClick="{{ r.onToggle }}">{{ r.sect }}</button></sc-if><sc-if value="{{ r.noToggle }}" hint-placeholder-val="{{ true }}"><span class="{{ r.sectCls }}">{{ r.sect }}</span></sc-if></td><td class="mono">{{ r.pct }}</td><td class="mono">{{ r.priceEur }}</td><td class="mono">{{ r.costEur }}</td><td class="l"><sc-if value="{{ r.hasAnalog }}" hint-placeholder-val=""><span class="reanalog">{{ r.analog }}</span></sc-if></td></tr></sc-for></tbody></table></div>
+<div class="recost">
+<div class="recell"><div class="recl">€/кг без НДС</div><div class="recv mono">{{ reCostEurNet }}</div></div>
+<div class="recell"><div class="recl">€/кг с НДС</div><div class="recv mono">{{ reCostEurVat }}</div></div>
+<div class="recell accent"><div class="recl">₽/кг без НДС</div><div class="recv mono">{{ reCostRubNet }}</div></div>
+<div class="recell accent"><div class="recl">₽/кг с НДС</div><div class="recv mono">{{ reCostRubVat }}</div></div>
+</div>
+<div class="tcactions"><button class="btn dark" onClick="{{ reGoNew }}"><span>＋</span> Добавить эталонный продукт</button></div>
+<div class="hint">{{ reNote }}</div>
+</div>
+<div class="card">
+<div class="sec">Разложение до первоначального сырья · на 1 кг продукта (с учётом аналогов)</div>
+<sc-if value="{{ reRawEmpty }}" hint-placeholder-val=""><div class="hint">Нет разложения — проверьте состав рецептуры.</div></sc-if>
+<div class="tctblwrap"><table class="tctbl"><thead><tr><th class="l">Сырьё</th><th>Норма, %</th><th>Цена €/ед.</th><th>€/кг</th><th class="l">Аналоги</th></tr></thead>
+<tbody><sc-for list="{{ reRawRows }}" as="r" hint-placeholder-count="6"><tr><td class="l"><span class="nm">{{ r.name }}</span></td><td class="mono">{{ r.pct }}</td><td class="mono">{{ r.priceEur }}</td><td class="mono">{{ r.costEur }}</td><td class="l"><sc-if value="{{ r.hasAnalog }}" hint-placeholder-val=""><span class="reanalog">{{ r.analog }}</span></sc-if></td></tr></sc-for></tbody></table></div>
+</div>
+</sc-if>
+</sc-if>
+
 <sc-if value="{{ isNewProd }}" hint-placeholder-val="">
 <div class="card npcard">
 <div class="nphead"><div><div class="nptitle">Ввод нового продукта в производство</div><div class="npsub">Компания: {{ npCompany }} · пошаговый мастер с расчётом себестоимости</div></div></div>
@@ -2831,6 +2873,7 @@ window.dispatchEvent(new Event('fbready'));
 </sc-if>
 <sc-if value="{{ npIsForm }}" hint-placeholder-val="">
 <div class="npform-head"><div class="npfh-item"><span class="npfh-l">Артикул</span><span class="npfh-v mono">{{ npArticle }}</span></div><div class="npfh-item"><span class="npfh-l">Название</span><span class="npfh-v">{{ npName }}</span></div><div class="npfh-item"><span class="npfh-l">Вид продукта</span><span class="npfh-v">{{ npType }}</span></div><div class="npfh-item"><span class="npfh-l">Каталог</span><span class="npfh-v">{{ npKindLabel }}</span></div></div>
+<div class="nprow2"><button class="{{ npToRefCls }}" onClick="{{ npToggleRef }}">📐 Эталонный продукт</button><span class="hint">Эталонные продукты попадают в «Калькулятор эталон», не актуализируются автозагрузками и используются в планировании производства.</span></div>
 <div class="sec">Состав продукта · подбор компонентов из каталогов сырья, полуфабрикатов и продукции</div>
 <div class="tctblwrap"><table class="tctbl"><thead><tr><th class="l">№</th><th class="l">Компонент</th><th>% содержания</th><th>Цена €/кг</th><th>€/кг вклад</th><th></th></tr></thead>
 <tbody><sc-for list="{{ npCompRows }}" as="r" hint-placeholder-count="2"><tr class="tcrow"><td class="l idx mono">{{ r.no }}</td><td class="l"><input class="tcin tcname" list="np-picks" value="{{ r.npcName }}" placeholder="выберите из каталога или впишите" onInput="{{ r.onNpcName }}"></td><td><input class="tcin mono" value="{{ r.npcPct }}" placeholder="0" onInput="{{ r.onNpcPct }}"></td><td><input class="tcin mono tcprice" value="{{ r.npcPrice }}" placeholder="0" onInput="{{ r.onNpcPrice }}"></td><td class="mono">{{ r.npcCost }}</td><td><button class="tcdel" onClick="{{ r.onNpcDel }}" title="Удалить">✕</button></td></tr></sc-for></tbody>
@@ -4008,6 +4051,7 @@ class Component extends DCLogic {
     dqResult: null, dqCtPeriods: [], dqSel: {}, dqScanned: false, dqBusy: false, dqMsg: '',
     salesPlan: [], spScale: 'month', spDraft: null, spErr: '', spMsg: '', spProdMode: 'replace',
     srDim: 'group', srFrom: '', srTo: '',
+    reProduct: '', reExpanded: {}, reSearch: '', npToRef: false,
     turnoverDays: 90, turnoverGen: false, planfactGen: false, stressGrowth: 30, stressGen: false, calcExpanded: {}, tcExpanded: {}, treasuryGen: false,
     apGm2Target: 15, apFx: 0, apLogi: 0, apSales: 0, apHorizon: 45, apSim: null, apLive: false, apDrafts: [], apAlerts: [], apInvoice: null, apSecurityLog: [], apRefreshedAt: 0, securityLog: [], secSearch: '',
     prodPlan: {}, planHorizon: 12, planStart: '', planExpand: {}, planProduct: '', planFilter: '', planCur: 'RUB',
@@ -4213,7 +4257,8 @@ class Component extends DCLogic {
       { id: 'margin', label: 'Маржинальный отчёт', keys: [], cols: [], ds: true },
       { id: 'tcalc', label: 'Технологические карты', keys: [], cols: [], ds: true },
       { id: 'filearch', label: 'Архив загруженных файлов', keys: [], cols: [], ds: true },
-      { id: 'actualize', label: 'Актуализация данных', keys: [], cols: [], ds: true }
+      { id: 'actualize', label: 'Актуализация данных', keys: [], cols: [], ds: true },
+      { id: 'refuser', label: 'Эталонные рецептуры (польз.)', keys: [], cols: [], ds: true }
     ];
   }
   _areaIndex() { if (this.__abk) return this.__abk; const m = {}; for (const a of this.cloudAreas()) { for (const k of a.keys) m['k:' + k] = a.id; for (const c of a.cols) m['c:' + c] = a.id; } this.__abk = m; return m; }
@@ -4379,6 +4424,12 @@ class Component extends DCLogic {
         try { this.lsSet('tc_actual', JSON.stringify(this._tcc)); } catch (_) {}
         try { if (this.data) this.tccApply(); } catch (_) {}
       }
+      else if (id === 'refuser') {
+        this._refUser = Array.isArray(obj) ? obj : [];
+        try { this.lsSet('ref_user', JSON.stringify(this._refUser)); } catch (_) {}
+        this._refMapCache = null; this._protSet = null;
+        try { if (this.data) { this.buildIndex(); this._memo = new Map(); } } catch (_) {}
+      }
       // Система работает как единый организм независимо от того, ОТКУДА пришли данные: локальная
       // загрузка файла уже сбрасывает кэши и запускает каскадный пересчёт (scheduleAutoRecalc) — то же
       // самое обязано происходить и когда данные прилетают из облака (с другого устройства/сессии),
@@ -4452,8 +4503,10 @@ class Component extends DCLogic {
   loadCompanyData(co) {
     const cfg = this.coCfg()[co] || this.coCfg().ink;
     this.setState({ ready: false, catReady: false });
+    // Сброс кэшей эталонных рецептур при смене компании (данные и ref_user — company-scoped)
+    this._refUser = null; this._refMapCache = null; this._protSet = null;
     fetch(cfg.data).then(r => r.json()).then(d => {
-      this.data = d; this.buildIndex(); this._landMap = null;
+      this.data = d; this._refUser = null; this._refMapCache = null; this._protSet = null; this.buildIndex(); this._landMap = null;
       const prods = (d.products || []).map(p => p.name);
       const owners = [...prods, ...((d.semi_products || []).map(s => s.name))];
       const patch = { ready: true };
@@ -6751,6 +6804,21 @@ class Component extends DCLogic {
     const lossF = loss > 0 ? 1 / (1 - loss / 100) : 1;
     const costEur = comps.reduce((a, c) => a + (c.pct / 100) * c.priceEur, 0) * lossF;
     const prod = { id: this.uid(), co: this._co(), name, article, type, comps, loss, priceEur: costEur, createdAt: Date.now(), createdBy: S.currentUser ? S.currentUser.name : '' };
+    // Эталонный продукт: сохраняем в защищённый эталонный store (не актуализируется), НЕ в обычный оверлей.
+    if (S.npToRef) {
+      const refComps = comps.map(c => ({ component: c.name, pct: (this.tcNum(c.pct) || 0) / 100 }));
+      this.refUserLoad();
+      this._refUser = (this._refUser || []).filter(x => this.norm(x.product) !== this.norm(name));
+      this._refUser.push({ product: name, kind: this.npKindOf(type) === 'semi' ? 'ПП' : 'ГП', comps: refComps, article, userAdded: true, createdAt: Date.now() });
+      this.refUserSave();
+      try { this.apBeep(); } catch (e) {}
+      try { this.postSystemNote('📐 Эталонный продукт «' + name + '» добавлен в эталонный калькулятор (не актуализируется).', S.currentUser ? S.currentUser.name : 'Технолог'); } catch (e) {}
+      try { this.secLog('NEW_REF_PRODUCT', { detail: 'Эталонный продукт «' + name + '», компонентов: ' + comps.length }); } catch (e) {}
+      try { if (this.data) { this.buildIndex(); this._memo = new Map(); } } catch (e) {}
+      try { this.scheduleAutoRecalc('NEW_PRODUCT'); } catch (e) {}
+      this.setState({ npStep: 'done', npLastName: name + ' (эталон)', npLastType: type, npLastCat: 'Эталонный калькулятор', npXId: prod.id, npToRef: false });
+      return;
+    }
     // 1) оверлей пользовательских продуктов (переживает деплой)
     this.loadUserProducts(); this._userProds.push(prod); this.saveUserProducts();
     // 2) сразу доступен в Калькуляторе X для расчёта себестоимости
@@ -6795,6 +6863,7 @@ class Component extends DCLogic {
       npShowName: step === 'name', npIsForm: step === 'form', npShowConfirm: step === 'confirm', npShowDone: step === 'done',
       npArticle: S.npArticle || '', npName: S.npName || '', npType: type, npErr: S.npErr || '', npHasErr: !!S.npErr,
       npCompany: this.co().name, npKindLabel: kind === 'semi' ? 'Полуфабрикат' : 'Готовая продукция',
+      npToRef: !!S.npToRef, npToggleRef: () => set({ npToRef: !S.npToRef }), npToRefCls: S.npToRef ? 'npchip on' : 'npchip',
       npTypeOptions: types.map(t => ({ value: t, label: t })),
       npPickList: this.npPickOptions(),
       npCompRows: compRows, npHasComps: comps.length > 0,
@@ -6913,21 +6982,25 @@ class Component extends DCLogic {
     // (не мержим построчно — иначе остаются устаревшие компоненты, убранные в новом файле)
     const overlayByProd = new Map();
     for (const key in o.recipes) { const it = o.recipes[key]; if (!it || !it.product || !it.component) continue; const pk = this.norm(it.product); if (!overlayByProd.has(pk)) overlayByProd.set(pk, []); overlayByProd.get(pk).push(it); }
-    // Самолечение повреждённых ранее рецептур: если в оверлей уже попал неполный состав (Σ долей < 50%,
-    // типично 1 строка из партии-доработки — баг «в рецептуре одна позиция вместо двух»), а в базовых
-    // данных есть настоящая рецептура продукта — оверлей этого продукта отбрасываем и вычищаем из
-    // tc_actual, базовый состав остаётся. Разовая чистка на каждом устройстве, дальше не мешает.
+    // Самолечение повреждённых рецептур + защита эталонных:
+    //  (1) неполный состав (Σ долей < 50%, типично 1 строка из партии-доработки) при наличии базовой
+    //      рецептуры — отбрасываем оверлей (баг «в рецептуре одна позиция вместо двух»);
+    //  (2) ЗАЩИЩЁННЫЕ рецептуры (эталонные + data.protected_recipes) НИКОГДА не актуализируются —
+    //      любой их оверлей отбрасываем и вычищаем из tc_actual (эталон авторитетен: Technical extender
+    //      LAM, Лак Extender НЦ-90/90S, EXTENDER 35 AF и все продукты из эталонного файла).
     let healed = 0;
     const basePks = new Set(this.data.recipes.map(r => this.norm(r.product)));
     for (const [pk, list] of [...overlayByProd.entries()]) {
-      if (!this.tccRecipeSetPlausible(list) && basePks.has(pk)) {
+      const protectedRec = this.isProtectedRecipe(pk);
+      const partial = !this.tccRecipeSetPlausible(list) && basePks.has(pk);
+      if (protectedRec || partial) {
         overlayByProd.delete(pk); healed++;
         for (const rk in o.recipes) { if (this.norm(o.recipes[rk].product) === pk) delete o.recipes[rk]; }
       }
     }
     if (healed) {
       try { this.lsSet('tc_actual', JSON.stringify(o)); } catch (e) {}
-      if (!this._tccHealedLogged) { this._tccHealedLogged = true; try { this.secLog('RECIPE_SELF_HEAL', { detail: 'Восстановлены базовые рецептуры, ранее ошибочно замещённые неполным составом из партий-доработок: продуктов — ' + healed + '.' }); } catch (e) {} }
+      if (!this._tccHealedLogged) { this._tccHealedLogged = true; try { this.secLog('RECIPE_SELF_HEAL', { detail: 'Восстановлены базовые/эталонные рецептуры, ошибочно замещённые актуализацией: продуктов — ' + healed + '.' }); } catch (e) {} }
     }
     if (overlayByProd.size) {
       const nameByPk = new Map();
@@ -6995,6 +7068,8 @@ class Component extends DCLogic {
     const byProd = new Map();
     for (const r of (items || [])) { if (!r || !r.product || !r.component) continue; const pk = this.norm(r.product); if (!pk) continue; if (!byProd.has(pk)) byProd.set(pk, []); byProd.get(pk).push(r); }
     for (const [pk, lines] of byProd) {
+      // Защищённые (эталонные + protected_recipes) рецептуры не актуализируются вовсе — эталон авторитетен.
+      if (this.isProtectedRecipe(pk)) { if (rep) rep.skippedProtected = (rep.skippedProtected || 0) + lines.length; continue; }
       // Неполный состав (партия-доработка/частичные данные) не может замещать рецептуру — пропускаем
       // ДО каких-либо удалений существующих строк продукта.
       if (!this.tccRecipeSetPlausible(lines)) { if (rep) rep.skippedPartial = (rep.skippedPartial || 0) + lines.length; continue; }
@@ -7610,6 +7685,7 @@ class Component extends DCLogic {
     if (this._iconCache[id]) return this._iconCache[id];
     const P = {
       tcalc: '<rect x="4" y="2" width="16" height="20" rx="2"/><rect x="7" y="5" width="10" height="4" rx="1"/><line x1="8" y1="13" x2="8.01" y2="13"/><line x1="12" y1="13" x2="12.01" y2="13"/><line x1="16" y1="13" x2="16.01" y2="13"/><line x1="8" y1="17" x2="8.01" y2="17"/><line x1="12" y1="17" x2="12.01" y2="17"/><line x1="16" y1="17" x2="16.01" y2="17"/>',
+      retalon: '<path d="M12 2l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z"/>',
       xcalc: '<path d="M7 7l10 10M17 7L7 17"/><rect x="3" y="3" width="18" height="18" rx="3"/>',
       newprod: '<circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>',
       nomfix: '<path d="M4 20h4L18.5 9.5a2 2 0 0 0-2.8-2.8L5 17z"/><line x1="14" y1="7" x2="17" y2="10"/><line x1="4" y1="20" x2="4" y2="16"/>',
@@ -7798,7 +7874,7 @@ class Component extends DCLogic {
     return [
       { label: 'Задачи', tabs: [['tasks', 'Задачи'], ['docs', 'Документы'], ['cal', 'Календарь'], ['dataload', 'Загрузка данных 1С (защищённая)']] },
       { label: 'Производство', tabs: [['prod', 'План производства'], ['prodplan', 'График производства'], ['recipe', 'Рецептуры'], ['catalog', 'Каталоги'], ['prodrep', 'Отчёты производства']] },
-      { label: 'Технология и расчёт себестоимости', tabs: [['calc', 'Калькулятор'], ['tcalc', 'Калькулятор технолога'], ['xcalc', 'Калькулятор X · проекты'], ['newprod', 'Ввод нового продукта'], ['actualize', 'Актуализация данных'], ['nomfix', 'Корректировка номенклатуры']] },
+      { label: 'Технология и расчёт себестоимости', tabs: [['calc', 'Калькулятор'], ['tcalc', 'Калькулятор технолога'], ['retalon', 'Калькулятор эталон'], ['xcalc', 'Калькулятор X · проекты'], ['newprod', 'Ввод нового продукта'], ['actualize', 'Актуализация данных'], ['nomfix', 'Корректировка номенклатуры']] },
       { label: 'Продажи', tabs: [['sales', 'Продажи ГП'], ['salesplan', 'План продаж'], ['salesrep', 'Отчёт по продажам'], ['pnl', 'P&L и маржинальный анализ 360°'], ['prices', 'Реестр цен']] },
       { label: 'Закупки', tabs: [['proc', 'План закупок'], ['procplan', 'График закупок'], ['runrate', 'Run Rate'], ['audit', 'Аудит цен'], ['landed', 'Landed Cost · ВЭД'], ['delivery', 'Доставка · баланс снабжения'], ['cparties', 'Поставщики / Контрагенты']] },
       { label: 'Логистика и склад', tabs: [['wh', 'Склад'], ['receipts', 'Поступления ТМЦ'], ['logi', 'Логистика'], ['turnover', 'Оборачиваемость'], ['cover', 'Сводка запасов']] },
@@ -9358,12 +9434,180 @@ class Component extends DCLogic {
 
   isSemi(n) { return this.semiByName.has(this.norm(n)); }
 
-  rawPrice(n) {
+  // ===== Аналоги сырья =====
+  // Имя компонента может нести аналоги в скобках: «TCA-IAM20 (аналог Титан АП 100/Титан АП 130 Д)».
+  // Возвращает базовое имя и список взаимозаменяемых аналогов (разделители / , ; или «или»).
+  analogInfo(name) {
+    const s = String(name || '');
+    const m = s.match(/\(\s*аналог[:\s.]*([^)]*)\)/i);
+    if (!m) return { base: s.trim(), analogs: [] };
+    const base = s.slice(0, m.index).trim();
+    const analogs = m[1].split(/[\/,;]|\bили\b/i).map(x => x.trim()).filter(Boolean);
+    return { base, analogs };
+  }
+  // Прямая цена сырья по точному имени/ключу (без аналогового фолбэка) — €/ед.
+  rawPriceExact(n) {
     const k = this.norm(n);
     const ov = this.state.prices[k];
     if (ov != null && ov !== '' && Number(ov) > 0) return Number(ov);
     const m = this.rawByName.get(k);
     return m ? (m.price_eur || 0) : 0;
+  }
+  rawPrice(n) {
+    let p = this.rawPriceExact(n);
+    if (p > 0) return p;
+    // Аналоговый фолбэк: если у самого сырья цены нет — берём цену первого аналога с ценой.
+    const a = this.analogInfo(n);
+    if (a.analogs.length || a.base !== String(n || '').trim()) {
+      for (const c of [a.base, ...a.analogs]) { p = this.rawPriceExact(c); if (p > 0) return p; }
+    }
+    return 0;
+  }
+  // Остаток сырья с учётом взаимозаменяемых аналогов (склад/потребности): база + аналоги суммируются.
+  analogStock(n) {
+    const st = this.state.stock || {};
+    const a = this.analogInfo(n);
+    let s = 0; const seen = new Set();
+    for (const c of [a.base, ...a.analogs]) { const k = this.norm(c); if (seen.has(k)) continue; seen.add(k); s += Number(st[k]) || 0; }
+    return s;
+  }
+  // ===== Эталонные (reference) рецептуры =====
+  // Источник — INK-файл данных (data.ref_recipes, из эталонного Excel) + пользовательские добавления
+  // (ref_user, company-scoped, синхронизируется в облако). Эти рецептуры НЕ актуализируются.
+  refBase() { return (this.data && Array.isArray(this.data.ref_recipes)) ? this.data.ref_recipes : []; }
+  refUserLoad() {
+    if (Array.isArray(this._refUser)) return this._refUser;
+    try { const r = this.lsGet('ref_user'); const a = r ? JSON.parse(r) : []; this._refUser = Array.isArray(a) ? a : []; } catch (e) { this._refUser = []; }
+    return this._refUser;
+  }
+  refUserSave() {
+    try { this.lsSet('ref_user', JSON.stringify(this._refUser || [])); } catch (e) {}
+    this._refMapCache = null; this._protSet = null;
+    try { this.dsQueuePush('refuser', 'refuser', () => ({ n: (this._refUser || []).length }), () => this._refUser || []); } catch (e) {}
+  }
+  // Map norm(product) -> { name, kind, comps:[{component,pct}] }. Пользовательские продукты замещают базовые целиком.
+  refMap() {
+    if (this._refMapCache) return this._refMapCache;
+    const m = new Map();
+    for (const r of this.refBase()) {
+      if (!r || !r.product || !r.component) continue;
+      const k = this.norm(r.product);
+      if (!m.has(k)) m.set(k, { name: r.product, kind: r.kind || 'ГП', comps: [] });
+      m.get(k).comps.push({ component: r.component, pct: Number(r.pct) || 0 });
+    }
+    for (const u of this.refUserLoad()) {
+      if (!u || !u.product || !Array.isArray(u.comps)) continue;
+      m.set(this.norm(u.product), { name: u.product, kind: u.kind || 'ГП', comps: u.comps.map(c => ({ component: c.component, pct: Number(c.pct) || 0 })), userAdded: true });
+    }
+    this._refMapCache = m; return m;
+  }
+  isRefProduct(n) { return this.refMap().has(this.norm(n)); }
+  refProductNames() {
+    const arr = [...this.refMap().values()];
+    arr.sort((a, b) => (a.kind === b.kind ? a.name.localeCompare(b.name, 'ru') : (a.kind === 'ГП' ? -1 : 1)));
+    return arr.map(x => x.name);
+  }
+  // Набор защищённых от актуализации рецептур: все эталонные продукты + явный список (data.protected_recipes).
+  protectedRecipeSet() {
+    if (this._protSet) return this._protSet;
+    const s = new Set();
+    for (const k of this.refMap().keys()) s.add(k);
+    for (const n of ((this.data && this.data.protected_recipes) || [])) s.add(this.norm(n));
+    this._protSet = s; return s;
+  }
+  isProtectedRecipe(n) { return this.protectedRecipeSet().has(this.norm(n)); }
+  // €/кг эталонного продукта: разворот рецептуры до сырья (аналого-стойкие цены), полупродукты/эталон — рекурсивно.
+  refLive(name, memo, stack) {
+    const k = this.norm(name);
+    if (memo.has(k)) return memo.get(k);
+    if (stack.has(k)) return 0;
+    stack.add(k);
+    const r = this.refMap().get(k);
+    let t = 0;
+    if (r) for (const c of r.comps) t += c.pct * this.refCompPrice(c.component, memo, stack);
+    stack.delete(k);
+    const v = this.excelRound(t, 4); memo.set(k, v); return v;
+  }
+  refCompPrice(comp, memo, stack) {
+    const k = this.norm(comp);
+    if (this.refMap().has(k)) return this.refLive(comp, memo, stack);
+    if (this.isSemi(comp)) return this.liveSemi(comp, memo || new Map(), stack || new Set());
+    return this.rawPrice(comp);
+  }
+  // Тип компонента для отображения: эталонный полупродукт / полупродукт / сырьё
+  reKind(comp) {
+    const k = this.norm(comp);
+    if (this.refMap().has(k)) return { cls: 'ref', label: 'эталон' };
+    if (this.isSemi(comp)) return { cls: 'semi', label: 'полупр.' };
+    return { cls: 'raw', label: 'сырьё' };
+  }
+  // Разворот эталонной рецептуры для отображения (верхний уровень + разворачиваемые полупродукты/эталоны).
+  reRows(product, depth, stack, out) {
+    const lines = this.refMap().has(this.norm(product)) ? this.recipeLinesFor(product) : [];
+    for (const ln of lines) {
+      const comp = ln.component, k = this.norm(comp);
+      const kind = this.reKind(comp);
+      const a = this.analogInfo(comp);
+      const unit = (kind.cls === 'raw') ? this.rawPrice(comp) : this.refCompPrice(comp, this._memo || new Map(), new Set());
+      const isSub = (kind.cls === 'ref' || kind.cls === 'semi') && !stack.has(k);
+      const rk = 're:' + (this.state.reProduct || '') + '|' + stack.size + '|' + k + '|' + ln.idx;
+      const open = isSub && !!(this.state.reExpanded || {})[rk];
+      out.push({
+        key: rk, no: '', name: comp, depth, indent: { paddingLeft: (10 + depth * 16) + 'px' },
+        sectCls: 'tagbtn ' + kind.cls, sect: kind.label + (isSub ? (open ? ' ▾' : ' ▸') : ''),
+        pct: (ln.pct * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }),
+        priceEur: unit > 0 ? unit.toLocaleString('ru-RU', { maximumFractionDigits: 4 }) : '—',
+        costEur: (ln.pct * unit).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+        analog: a.analogs.length ? ('аналоги: ' + a.analogs.join(', ')) : '', hasAnalog: a.analogs.length > 0,
+        canToggle: isSub, noToggle: !isSub, rowCls: 'tcrow' + (depth ? ' tcsub' : ''),
+        onToggle: isSub ? (() => this.setState(st => ({ reExpanded: { ...(st.reExpanded || {}), [rk]: !(st.reExpanded || {})[rk] } }))) : (() => {}),
+      });
+      if (open) this.reRows(comp, depth + 1, new Set(stack).add(k), out);
+    }
+    return out;
+  }
+  buildRefCalc() {
+    const S = this.state, set = (p) => this.setState(p);
+    const names = this.refProductNames();
+    const q = this.norm(S.reSearch || '').toLowerCase();
+    const filtered = q ? names.filter(n => n.toLowerCase().indexOf(q) >= 0) : names;
+    let product = S.reProduct || '';
+    if (!product || names.indexOf(product) < 0) product = filtered[0] || names[0] || '';
+    const rE = this.cbRate('EUR') || (this.tcset && this.tcNum(this.tcset.rateEur)) || 83.6892;
+    const vat = this.vat || 0.22;
+    this._memo = new Map();
+    const rec = this.refMap().get(this.norm(product));
+    const sumPct = rec ? rec.comps.reduce((a, c) => a + (c.pct || 0), 0) : 0;
+    const costEur = product ? this.refLive(product, this._memo, new Set()) : 0; // €/кг без НДС
+    // разложение до первоначального сырья (с аналогами)
+    const rawAcc = {}; if (product) this.explodeRaw(product, 1, rawAcc, new Set());
+    const rawRows = Object.keys(rawAcc).sort((a, b) => rawAcc[b] - rawAcc[a]).map(nm => {
+      const qty = rawAcc[nm], price = this.rawPrice(nm), a = this.analogInfo(nm);
+      return { name: nm, pct: (qty * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }), priceEur: price > 0 ? price.toLocaleString('ru-RU', { maximumFractionDigits: 4 }) : '— нет цены',
+        costEur: (qty * price).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+        hasAnalog: a.analogs.length > 0, analog: a.analogs.length ? ('аналоги: ' + a.analogs.join(', ')) : '', noPrice: !(price > 0) };
+    });
+    const rows = product ? this.reRows(product, 0, new Set([this.norm(product)]), []) : [];
+    return {
+      isRefCalc: true,
+      reCoName: this.co().name,
+      reHasData: names.length > 0, reEmpty: names.length === 0,
+      reProduct: product, reProductLabel: product ? (product + ' (эталон)') : '',
+      reProductOptions: filtered.map(n => ({ value: n, label: n + ' (эталон)' })),
+      reProductCount: String(names.length),
+      onReProduct: (e) => set({ reProduct: e.target.value, reExpanded: {} }),
+      reSearch: S.reSearch || '', onReSearch: (e) => set({ reSearch: e.target.value }),
+      reKindLabel: rec ? (rec.kind === 'ПП' ? 'Полупродукт (эталон)' : 'Готовая продукция (эталон)') : '',
+      reRateEur: rE.toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 }) + ' ₽',
+      reSumPct: (sumPct * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + '%',
+      reSumPctWarn: Math.abs(sumPct - 1) > 0.02 ? 'npwarn' : '',
+      reRows: rows,
+      reRawRows: rawRows, reRawEmpty: rawRows.length === 0,
+      reCostEurNet: this.tcEur(costEur), reCostEurVat: this.tcEur(costEur * (1 + vat)),
+      reCostRubNet: this.tcRub(costEur * rE), reCostRubVat: this.tcRub(costEur * rE * (1 + vat)),
+      reGoNew: () => set({ tab: 'newprod', npToRef: true, navOpen: false }),
+      reNote: 'Эталонные рецептуры не актуализируются автозагрузками. Новые эталонные продукты добавляются во вкладке «Ввод нового продукта» (переключатель «Эталонный продукт»).',
+    };
   }
 
   semiStored(n) { const s = this.semiByName.get(this.norm(n)); return s ? (s.price_eur_stored || 0) : 0; }
@@ -9374,8 +9618,10 @@ class Component extends DCLogic {
     if (stack.has(k)) return 0;
     stack.add(k);
     let t = 0;
-    for (const ln of this.recipeLinesFor(n))
-      t += ln.pct * (this.isSemi(ln.component) ? this.liveSemi(ln.component, memo, stack) : this.rawPrice(ln.component));
+    for (const ln of this.recipeLinesFor(n)) {
+      const sub = this.isSemi(ln.component) || this.isRefProduct(ln.component);
+      t += ln.pct * (sub ? this.liveSemi(ln.component, memo, stack) : this.rawPrice(ln.component));
+    }
     stack.delete(k);
     const v = this.excelRound(t, 4); memo.set(k, v); return v;
   }
@@ -9392,10 +9638,13 @@ class Component extends DCLogic {
   }
 
   recipeLinesFor(owner) {
-    const base = (this.recByOwner.get(this.norm(owner)) || []).map(r => ({
-      idx: r.idx, component: r.component, pct: this.ovPct(owner, r.idx, r.pct_base || 0), added: false,
-    }));
-    const add = (this.state.added[this.norm(owner)] || []).map((a, i) => ({
+    const ok = this.norm(owner);
+    // Эталонная рецептура (если есть) — АВТОРИТЕТНА и не подлежит актуализации; заменяет базовый состав.
+    const ref = this.refMap().get(ok);
+    const base = ref
+      ? ref.comps.map((c, i) => ({ idx: i + 1, component: c.component, pct: this.ovPct(owner, i + 1, c.pct || 0), added: false, ref: true }))
+      : (this.recByOwner.get(ok) || []).map(r => ({ idx: r.idx, component: r.component, pct: this.ovPct(owner, r.idx, r.pct_base || 0), added: false }));
+    const add = (this.state.added[ok] || []).map((a, i) => ({
       idx: 901 + i, component: a.component, pct: Number(a.pct) / 100 || 0, added: true, ai: i,
     }));
     return base.concat(add);
@@ -9404,9 +9653,11 @@ class Component extends DCLogic {
   explodeRaw(owner, qty, acc, stack) {
     for (const ln of this.recipeLinesFor(owner)) {
       const q = qty * ln.pct;
-      if (this.isSemi(ln.component)) {
+      // Полупродукт ИЛИ эталонный продукт-компонент — разворачиваем дальше до первоначального сырья.
+      const sub = this.isSemi(ln.component) || this.isRefProduct(ln.component);
+      if (sub) {
         const k = this.norm(ln.component);
-        if (stack.has(k)) continue;
+        if (stack.has(k)) { acc[ln.component] = (acc[ln.component] || 0) + q; continue; }
         this.explodeRaw(ln.component, q, acc, new Set(stack).add(k));
       } else {
         acc[ln.component] = (acc[ln.component] || 0) + q;
@@ -14904,7 +15155,7 @@ class Component extends DCLogic {
     const set = (patch) => this.setState(patch);
 
     const tabsDef = [
-      ['tcalc', 'Калькулятор технолога'], ['xcalc', 'Калькулятор X · проекты'],
+      ['tcalc', 'Калькулятор технолога'], ['retalon', 'Калькулятор эталон'], ['xcalc', 'Калькулятор X · проекты'],
       ['calc', 'Калькулятор'], ['newprod', 'Ввод нового продукта'], ['actualize', 'Актуализация данных'], ['nomfix', 'Корректировка номенклатуры'], ['recipe', 'Рецептуры'], ['prod', 'План производства'],
       ['prodplan', 'График производства'], ['procplan', 'Закупки по графику'],
       ['proc', 'План закупок'], ['cal', 'Календарь'], ['wh', 'Склад'], ['cover', 'Сводка'],
@@ -14917,7 +15168,7 @@ class Component extends DCLogic {
     const tabGroups = [
       { label: 'Задачи', items: ['tasks', 'docs', 'cal', 'dataload'], en: { dataload: 'Загрузка данных 1С' } },
       { label: 'Производство', items: ['prod', 'prodplan', 'recipe', 'catalog', 'prodrep'], en: { prodplan: 'График производства' } },
-      { label: 'Технология и расчёт себестоимости', items: ['calc', 'tcalc', 'xcalc', 'newprod', 'actualize', 'nomfix'], en: { tcalc: 'Калькулятор технолога', xcalc: 'Калькулятор X · проекты' } },
+      { label: 'Технология и расчёт себестоимости', items: ['calc', 'tcalc', 'retalon', 'xcalc', 'newprod', 'actualize', 'nomfix'], en: { tcalc: 'Калькулятор технолога', retalon: 'Калькулятор эталон', xcalc: 'Калькулятор X · проекты' } },
       { label: 'Продажи', items: ['sales', 'salesplan', 'salesrep', 'pnl', 'prices'], en: { pnl: 'P&L и маржа 360°' } },
       { label: 'Закупки', items: ['proc', 'procplan', 'runrate', 'audit', 'landed', 'delivery', 'cparties'], en: { procplan: 'График закупок', cparties: 'Поставщики / Контрагенты' } },
       { label: 'Логистика и склад', items: ['wh', 'receipts', 'logi', 'turnover', 'cover'], en: { cover: 'Сводка запасов' } },
@@ -14958,6 +15209,7 @@ class Component extends DCLogic {
       salesplan: 'План продаж: помесячно, понедельно или по дням — клиент (с автосозданием в справочнике контрагентов), продукт, объём, цена, менеджер. Одной кнопкой формирует план производства (режимы «Заменить»/«Добавить», недельная детализация сохраняется).',
       salesrep: 'Отчёт по продажам в разрезах: группы аналитического учёта, номенклатура, клиенты, менеджеры, месяцы. Объём, выручка с НДС и без, средняя цена, доля. Фильтр по периоду, RUB/EUR, экспорт в Excel всеми разрезами сразу.',
       tcalc: 'Калькулятор технолога: себестоимость 1 кг ГП по рецептуре в EUR/RUB с НДС и без, доставка, GM2 и наценка → цена для клиента.',
+      retalon: 'Калькулятор эталон: себестоимость по ЭТАЛОННЫМ рецептурам (не актуализируются). Разворот до первоначального сырья с учётом аналогов, €/кг и ₽/кг с НДС и без. Новые эталонные продукты — через «Ввод нового продукта».',
       xcalc: 'Калькулятор X: себестоимость проектных (новых) продуктов — соберите рецептуру из номенклатуры, задайте %, получите цену клиенту до запуска в производство.',
       calc: 'Себестоимость 1 кг готового продукта с развёрткой по компонентам.',
       newprod: 'Ввод нового продукта в производство: пошаговый мастер — артикул, название, вид продукта, состав из каталогов сырья/полуфабрикатов/продукции с % содержания и % потерь. После внесения продукт попадает в каталог своего типа и участвует в расчётах.',
@@ -15118,7 +15370,7 @@ class Component extends DCLogic {
       product: S.product, rate: S.rate, loss: S.loss, recipeOwner: S.recipeOwner,
       draftComp: S.draftComp, draftPct: S.draftPct, priceFilter: S.priceFilter,
       isCost: S.tab === 'cost', isMargin: S.tab === 'margin', isLanded: S.tab === 'landed', isDelivery: S.tab === 'delivery', isDataload: S.tab === 'dataload', isFileArch: S.tab === 'filearch', isPnl: S.tab === 'pnl', isPriceDyn: S.tab === 'pricedyn', isTransLog: S.tab === 'translog', isDqClean: S.tab === 'dqclean', isSalesPlan: S.tab === 'salesplan', isSalesRep: S.tab === 'salesrep',
-      isTCalc: S.tab === 'tcalc', tcReady: !!S.tcReady, isXCalc: S.tab === 'xcalc',
+      isTCalc: S.tab === 'tcalc', tcReady: !!S.tcReady, isXCalc: S.tab === 'xcalc', isRefCalc: S.tab === 'retalon',
       isNewProd: S.tab === 'newprod', isNomFix: S.tab === 'nomfix', isActualize: S.tab === 'actualize',
       tcActualLabel: this.tccActualLabel(),
       isCalc: S.tab === 'calc', isRecipe: S.tab === 'recipe', isProduction: S.tab === 'prod',
@@ -15562,6 +15814,7 @@ class Component extends DCLogic {
     if (S.tab === 'seclog') Object.assign(base, this.buildSecLog());
     if (S.tab === 'dqclean') Object.assign(base, this.buildDataQuality());
     if (S.tab === 'tcalc') Object.assign(base, this.buildTCalc(rate));
+    if (S.tab === 'retalon') Object.assign(base, this.buildRefCalc());
     if (S.tab === 'xcalc') Object.assign(base, this.buildXCalc(rate));
     if (S.tab === 'newprod') Object.assign(base, this.buildNewProd());
     if (S.tab === 'nomfix') Object.assign(base, this.buildNomFix());
