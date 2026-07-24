@@ -2843,11 +2843,16 @@ window.dispatchEvent(new Event('fbready'));
 <div class="field grow"><span class="lbl">📐 Эталонный продукт · выбор из {{ reProductCount }}</span><select class="sel" value="{{ reProduct }}" onChange="{{ onReProduct }}"><sc-for list="{{ reProductOptions }}" as="opt" hint-placeholder-count="1"><option value="{{ opt.value }}">{{ opt.label }}</option></sc-for></select></div>
 <div class="field"><span class="lbl">🔎 Поиск</span><input class="inp" value="{{ reSearch }}" onInput="{{ onReSearch }}" placeholder="фильтр по названию"></div>
 <div class="tcrates"><span class="tcrate"><span class="tcrk">EUR / ₽</span><span class="tcrv mono">{{ reRateEur }}</span></span></div>
+<div><button class="btn mgxls" onClick="{{ reExcel }}">⬇ Excel</button><button class="btn" onClick="{{ rePrint }}">🖨 PDF</button></div>
 </div>
 <div class="sec">{{ reKindLabel }} · Σ компонентов <span class="{{ reSumPctWarn }}">{{ reSumPct }}</span></div>
 <div class="tctblwrap"><table class="tctbl"><thead><tr><th class="l">Компонент</th><th class="l">Раздел</th><th>% ввод</th><th>Цена €/ед.</th><th>€/кг</th><th class="l">Аналоги</th></tr></thead>
 <tbody><sc-for list="{{ reRows }}" as="r" hint-placeholder-count="6"><tr class="{{ r.rowCls }}"><td class="l" style="{{ r.indent }}"><span class="nm">{{ r.name }}</span></td><td class="l"><sc-if value="{{ r.canToggle }}" hint-placeholder-val=""><button class="{{ r.sectCls }}" onClick="{{ r.onToggle }}">{{ r.sect }}</button></sc-if><sc-if value="{{ r.noToggle }}" hint-placeholder-val="{{ true }}"><span class="{{ r.sectCls }}">{{ r.sect }}</span></sc-if></td><td class="mono">{{ r.pct }}</td><td class="mono">{{ r.priceEur }}</td><td class="mono">{{ r.costEur }}</td><td class="l"><sc-if value="{{ r.hasAnalog }}" hint-placeholder-val=""><span class="reanalog">{{ r.analog }}</span></sc-if></td></tr></sc-for></tbody></table></div>
-<div class="tcactions"><button class="btn dark" onClick="{{ reGoNew }}"><span>＋</span> Добавить эталонный продукт</button></div>
+<div class="sec">Добавленные компоненты <span class="hint">(сверх эталонного состава — участвуют в себестоимости и планировании)</span></div>
+<div class="tctblwrap"><table class="tctbl"><thead><tr><th class="l">Компонент</th><th>% ввод</th><th>Цена €/ед.</th><th></th></tr></thead>
+<tbody><sc-for list="{{ reAddedRows }}" as="r" hint-placeholder-count="1"><tr class="tcrow"><td class="l"><input class="tcin tcname" list="re-noms" value="{{ r.name }}" placeholder="наименование из номенклатуры" onInput="{{ r.onName }}"></td><td><input class="tcin mono" value="{{ r.pct }}" placeholder="0" onInput="{{ r.onPct }}"></td><td class="mono">{{ r.priceEur }}</td><td><button class="tcdel" onClick="{{ r.onDel }}" title="Удалить">✕</button></td></tr></sc-for></tbody></table></div>
+<datalist id="re-noms"><sc-for list="{{ reNomOptions }}" as="n" hint-placeholder-count="0"><option value="{{ n }}"></option></sc-for></datalist>
+<div class="tcactions"><button class="btn ghost" onClick="{{ reAddComp }}"><span>＋</span> Добавить компонент в рецептуру</button><button class="btn dark" onClick="{{ reGoNew }}"><span>＋</span> Добавить эталонный продукт</button></div>
 <div class="hint">{{ reNote }}</div>
 </div>
 <div class="tcgrid">
@@ -2974,7 +2979,7 @@ window.dispatchEvent(new Event('fbready'));
 
 <sc-if value="{{ isProduction }}" hint-placeholder-val="{{ true }}">
 <div class="card">
-<div class="toolbar"><div class="field"><span class="lbl">Период с</span><input class="inp" type="date" value="{{ planFrom }}" onInput="{{ onPlanFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp" type="date" value="{{ planTo }}" onInput="{{ onPlanTo }}"></div><div class="field"><span class="lbl">Потери, %</span><input class="inp num w90" type="number" value="{{ loss }}" onInput="{{ onLoss }}"></div><div class="field"><span class="lbl">Курс EUR/₽</span><input class="inp num w120" type="number" value="{{ rate }}" onInput="{{ onRate }}"></div></div>
+<div class="toolbar"><div class="field"><span class="lbl">Период с</span><input class="inp" type="date" value="{{ planFrom }}" onInput="{{ onPlanFrom }}"></div><div class="field"><span class="lbl">по</span><input class="inp" type="date" value="{{ planTo }}" onInput="{{ onPlanTo }}"></div><div class="field"><span class="lbl">Потери, %</span><input class="inp num w90" type="number" value="{{ loss }}" onInput="{{ onLoss }}"></div><div class="field"><span class="lbl">Курс EUR/₽</span><input class="inp num w120" type="number" value="{{ rate }}" onInput="{{ onRate }}"></div><button class="btn mgxls" onClick="{{ prodExcelExp }}">⬇ Excel</button><button class="btn" onClick="{{ prodPrintExp }}">🖨 PDF</button></div>
 <div class="sec">План производства за период {{ periodLabel }} · что и сколько выпускаем</div>
 <sc-for list="{{ orderCards }}" as="o" hint-placeholder-count="1"><div class="ocard"><div class="ohead"><div class="field"><span class="lbl">№ заявки</span><input class="inp w70" value="{{ o.no }}" onInput="{{ o.onNo }}"></div><div class="field"><span class="lbl">Дата</span><input class="inp" type="date" value="{{ o.date }}" onInput="{{ o.onDate }}"></div><div class="field grow"><span class="lbl">Клиент</span><input class="inp" placeholder="наименование / ФИО" value="{{ o.client }}" onInput="{{ o.onClient }}"></div><div class="field"><span class="lbl">Менеджер</span><input class="inp w150" value="{{ o.manager }}" onInput="{{ o.onManager }}"></div><div class="field"><span class="lbl">Статус заявки</span><select class="sel {{ o.statusCls }}" value="{{ o.status }}" onChange="{{ o.onStatus }}"><sc-for list="{{ clientStatusOptions }}" as="s" hint-placeholder-count="4"><option value="{{ s }}">{{ s }}</option></sc-for></select></div><span class="osub">{{ o.count }} поз. · {{ o.subtotal }} кг</span><button class="btn x" onClick="{{ o.removeOrder }}">×</button></div>
 <sc-for list="{{ o.items }}" as="it" hint-placeholder-count="1"><div class="irow"><span class="inum">{{ it.n }}</span><select class="sel grow" value="{{ it.product }}" onChange="{{ it.onProduct }}"><sc-for list="{{ productOptions }}" as="opt" hint-placeholder-count="3"><option value="{{ opt }}">{{ opt }}</option></sc-for></select><input class="inp num w120" type="number" value="{{ it.kg }}" onInput="{{ it.onKg }}"><span class="pill">кг</span><button class="btn x" onClick="{{ it.remove }}">×</button></div></sc-for>
@@ -2988,7 +2993,7 @@ window.dispatchEvent(new Event('fbready'));
 
 <sc-if value="{{ isProdPlan }}" hint-placeholder-val="{{ true }}">
 <div class="card">
-<div class="toolbar"><div class="field"><span class="lbl">Горизонт</span><select class="sel" value="{{ planHorizon }}" onChange="{{ onPlanHorizon }}"><sc-for list="{{ planHorizonOpts }}" as="h" hint-placeholder-count="4"><option value="{{ h.v }}">{{ h.label }}</option></sc-for></select></div><div class="field"><span class="lbl">Старт</span><span class="segrow"><button class="btn" onClick="{{ planStartPrev }}">◀</button><span class="pill mono">{{ planStartLabel }}</span><button class="btn" onClick="{{ planStartNext }}">▶</button><button class="btn" onClick="{{ planStartNow }}">тек. месяц</button></span></div><div class="field"><span class="lbl">Потери, %</span><input class="inp num w90" type="number" value="{{ loss }}" onInput="{{ onLoss }}"></div><div class="field"><span class="lbl">Валюта оценки</span><select class="sel" value="{{ planCur }}" onChange="{{ onPlanCur }}"><sc-for list="{{ planCurOpts }}" as="c" hint-placeholder-count="4"><option value="{{ c.v }}">{{ c.label }}</option></sc-for></select></div><div class="field grow"><span class="lbl">Фильтр продукта</span><input class="inp filter" type="text" placeholder="поиск…" value="{{ planFilter }}" onInput="{{ onPlanFilter }}"></div></div>
+<div class="toolbar"><div class="field"><span class="lbl">Горизонт</span><select class="sel" value="{{ planHorizon }}" onChange="{{ onPlanHorizon }}"><sc-for list="{{ planHorizonOpts }}" as="h" hint-placeholder-count="4"><option value="{{ h.v }}">{{ h.label }}</option></sc-for></select></div><div class="field"><span class="lbl">Старт</span><span class="segrow"><button class="btn" onClick="{{ planStartPrev }}">◀</button><span class="pill mono">{{ planStartLabel }}</span><button class="btn" onClick="{{ planStartNext }}">▶</button><button class="btn" onClick="{{ planStartNow }}">тек. месяц</button></span></div><div class="field"><span class="lbl">Потери, %</span><input class="inp num w90" type="number" value="{{ loss }}" onInput="{{ onLoss }}"></div><div class="field"><span class="lbl">Валюта оценки</span><select class="sel" value="{{ planCur }}" onChange="{{ onPlanCur }}"><sc-for list="{{ planCurOpts }}" as="c" hint-placeholder-count="4"><option value="{{ c.v }}">{{ c.label }}</option></sc-for></select></div><div class="field grow"><span class="lbl">Фильтр продукта</span><input class="inp filter" type="text" placeholder="поиск…" value="{{ planFilter }}" onInput="{{ onPlanFilter }}"></div><button class="btn mgxls" onClick="{{ ppExcel }}">⬇ Excel</button><button class="btn" onClick="{{ ppPrint }}">🖨 PDF</button></div>
 <div class="desc">Помесячный план выпуска готовой продукции, кг. Нажмите на месяц ниже, чтобы развернуть его на недели и вносить план понедельно. Этот план — источник для вкладки «Закупки по графику».</div>
 <div class="kpis"><sc-for list="{{ ppdKpis }}" as="k" hint-placeholder-count="4"><div class="kpi {{ k.cls }}"><div class="kl">{{ k.label }}</div><div class="kv mono">{{ k.value }}</div></div></sc-for></div>
 <div class="sec">Развернуть месяц на недели</div>
@@ -3613,7 +3618,7 @@ window.dispatchEvent(new Event('fbready'));
 <sc-if value="{{ spHasMsg }}" hint-placeholder-val=""><div class="banner ok">{{ spMsg }}</div></sc-if>
 <div class="uactions"><button class="btn dark" onClick="{{ saveSp }}">Записать в план</button><sc-if value="{{ spHasDraft }}" hint-placeholder-val=""><button class="btn" onClick="{{ cancelSp }}">Отмена</button></sc-if></div>
 </div>
-<div class="card"><div class="sec">Строки плана продаж · {{ spCount }}</div>
+<div class="card"><div class="mgrhead"><div class="mgrtitle">Строки плана продаж · {{ spCount }}</div><div><button class="btn mgxls" onClick="{{ spExcelExp }}">⬇ Excel</button><button class="btn" onClick="{{ spPrintExp }}">🖨 PDF</button></div></div>
 <div class="mgkpis"><sc-for list="{{ spKpis }}" as="k" hint-placeholder-count="4"><div class="mgkpi mghi{{ k.hi }}"><div class="mgkk">{{ k.label }}</div><div class="mgkv">{{ k.v }}</div></div></sc-for></div>
 <sc-if value="{{ spEmpty }}" hint-placeholder-val=""><div class="hint">План пуст. Добавьте первую строку через форму выше — гранулярность любая: месяц, неделя или день.</div></sc-if>
 <div class="scroll"><table><thead><tr><th class="l">Период</th><th class="l">Клиент</th><th class="l">Продукт</th><th class="l">Менеджер</th><th>Кг</th><th>Цена ₽/кг</th><th>Σ ₽</th><th class="l"></th></tr></thead>
@@ -6145,6 +6150,108 @@ class Component extends DCLogic {
     const href = 'mailto:?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
     try { window.location.href = href; } catch (e) { window.open(href); }
   }
+  // ===== Универсальные выгрузки: печатная форма (PDF через печать браузера) + Excel (премиум-стиль) =====
+  // sections: [{ title, headers, types[], rows[[...]], total[...]|null }]; kpis: [[label, value], ...]
+  expPrint(title, subtitle, kpis, sections) {
+    const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const fmt = (v) => typeof v === 'number' ? v.toLocaleString('ru-RU', { maximumFractionDigits: 4 }) : esc(v);
+    let body = '';
+    if (kpis && kpis.length) body += '<div class="kpis">' + kpis.map(k => '<div class="kpi"><div class="kl">' + esc(k[0]) + '</div><div class="kv">' + fmt(k[1]) + '</div></div>').join('') + '</div>';
+    for (const sh of (sections || [])) {
+      body += '<h3>' + esc(sh.title) + '</h3><table><thead><tr>' + sh.headers.map(h => '<th>' + esc(h) + '</th>').join('') + '</tr></thead><tbody>';
+      for (const row of sh.rows) body += '<tr>' + row.map((c, i) => '<td class="' + ((sh.types && sh.types[i] === 'text') ? 'l' : '') + '">' + fmt(c) + '</td>').join('') + '</tr>';
+      if (sh.total) body += '<tr class="tot">' + sh.total.map((c, i) => '<td class="' + ((sh.types && sh.types[i] === 'text') ? 'l' : '') + '">' + fmt(c) + '</td>').join('') + '</tr>';
+      body += '</tbody></table>';
+    }
+    const html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + esc(title) + '</title><style>'
+      + 'body{font-family:Arial,sans-serif;color:#1a1916;margin:28px}h1{font-size:19px;margin:0 0 2px;color:#1F4E78}.sub{color:#666;font-size:12px;margin-bottom:16px}'
+      + 'h3{font-size:14px;margin:20px 0 6px;color:#1F4E78;border-bottom:1px solid #ccc;padding-bottom:3px}'
+      + 'table{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:10px}th{background:#1F4E78;color:#fff;font-weight:bold;padding:5px 7px;text-align:right}th:first-child{text-align:left}'
+      + 'td{border:1px solid #d3d3d3;padding:4px 7px;text-align:right}td.l{text-align:left}tr.tot td{background:#D9E1F2;font-weight:bold;border-top:2px solid #1F4E78}'
+      + '.kpis{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}.kpi{border:1px solid #d3d3d3;border-radius:8px;padding:8px 14px;min-width:120px}.kl{font-size:10px;color:#666;text-transform:uppercase}.kv{font-size:16px;font-weight:bold;color:#1F4E78}'
+      + '@media print{.noprint{display:none}}</style></head><body>'
+      + '<h1>' + esc(title) + ' · ' + esc(this.co().name) + '</h1><div class="sub">' + esc(subtitle || '') + ' · сформирован ' + new Date().toLocaleString('ru-RU') + '</div>'
+      + '<button class="noprint" onclick="window.print()" style="margin-bottom:14px;padding:8px 16px;background:#1F4E78;color:#fff;border:none;border-radius:6px;cursor:pointer">🖨 Печать / Сохранить в PDF</button>'
+      + body + '</body></html>';
+    const w = window.open('', '_blank'); if (!w) { try { alert('Разрешите всплывающие окна, чтобы открыть печать.'); } catch (e) {} return; }
+    w.document.write(html); w.document.close();
+  }
+  expExcel(fileBase, sheets) {
+    const XLSX = window.XLSX; if (!XLSX) { try { alert('Библиотека Excel не загрузилась — обновите страницу.'); } catch (e) {} return; }
+    const wb = XLSX.utils.book_new();
+    let any = false;
+    for (const sh of (sheets || [])) {
+      if (!sh || !sh.rows || !sh.rows.length) continue;
+      any = true;
+      XLSX.utils.book_append_sheet(wb, this.mgXlSheet(sh.title, sh.headers, sh.types, sh.rows, sh.total || null), (sh.name || sh.title || 'Лист').slice(0, 28));
+    }
+    if (!any) { try { alert('Нет данных для выгрузки.'); } catch (e) {} return; }
+    XLSX.writeFile(wb, fileBase + ' ' + this.co().name + ' ' + new Date().toISOString().slice(0, 10) + '.xlsx');
+  }
+  // --- Экспорт: Калькулятор эталон ---
+  reExportPayload() {
+    const S = this.state; const product = S.reProduct || (this.refProductNames()[0] || '');
+    if (!product) return null;
+    const rE = this.cbRate('EUR') || (this.tcset && this.tcNum(this.tcset.rateEur)) || 83.6892; const vat = this.vat || 0.22;
+    this._memo = new Map();
+    const costEur = this.refLive(product, this._memo, new Set());
+    const loss = Math.min(99, Math.max(0, this.tcNum(S.reLoss))) / 100; const lossF = loss > 0 ? 1 / (1 - loss) : 1;
+    const costNet = costEur * lossF;
+    const recHeaders = ['Компонент', 'Раздел', '% ввод', 'Цена €/ед.', '€/кг'];
+    const recTypes = ['text', 'text', 'num1', 'eur2', 'eur'];
+    const recRows = this.recipeLinesFor(product).map(ln => {
+      const kind = this.reKind(ln.component);
+      const unit = kind.cls === 'raw' ? this.rawPrice(ln.component) : this.refCompPrice(ln.component, this._memo, new Set());
+      return [ln.component, kind.label, this.excelRound(ln.pct * 100, 2), this.excelRound(unit, 4), this.excelRound(ln.pct * unit, 4)];
+    });
+    const recTotal = ['ИТОГО', '', this.excelRound(this.recipeLinesFor(product).reduce((s, l) => s + l.pct * 100, 0), 2), '', this.excelRound(costEur, 4)];
+    const rawAcc = {}; this.explodeRaw(product, 1, rawAcc, new Set([this.norm(product)]));
+    const rawRows = Object.keys(rawAcc).sort((a, b) => rawAcc[b] - rawAcc[a]).map(nm => [nm, this.excelRound(rawAcc[nm] * 100, 2), this.excelRound(this.rawPrice(nm), 4), this.excelRound(rawAcc[nm] * this.rawPrice(nm), 4)]);
+    const kpis = [['Себестоимость €/кг без НДС', this.excelRound(costNet, 2)], ['Себестоимость ₽/кг без НДС', this.excelRound(costNet * rE, 2)], ['₽/кг с НДС', this.excelRound(costNet * (1 + vat) * rE, 2)], ['Курс ЦБ EUR/₽', this.excelRound(rE, 4)]];
+    return {
+      title: 'Калькулятор эталон · ' + product, subtitle: 'Эталонная рецептура (не актуализируется)' + (loss > 0 ? (' · тех. потери ' + (loss * 100).toFixed(1) + '%') : ''),
+      kpis, sheets: [
+        { name: 'Рецептура', title: 'Эталонная рецептура · ' + product + ' · ' + this.co().name, headers: recHeaders, types: recTypes, rows: recRows, total: recTotal },
+        { name: 'Разложение до сырья', title: 'Разложение до первоначального сырья · на 1 кг', headers: ['Сырьё', 'Норма, %', 'Цена €/ед.', '€/кг'], types: ['text', 'num1', 'eur2', 'eur'], rows: rawRows, total: ['ИТОГО', 100, '', this.excelRound(costEur, 4)] }
+      ]
+    };
+  }
+  rePrint() { const p = this.reExportPayload(); if (!p) { try { alert('Выберите эталонный продукт.'); } catch (e) {} return; } this.expPrint(p.title, p.subtitle, p.kpis, p.sheets); }
+  reExcel() { const p = this.reExportPayload(); if (!p) { try { alert('Выберите эталонный продукт.'); } catch (e) {} return; } this.expExcel('Калькулятор эталон', p.sheets); }
+  // --- Экспорт: График производства ---
+  ppExportPayload() {
+    const months = this.planMonthList(); const names = this.planProductNames();
+    if (!names.length) return null;
+    const headers = ['Продукт'].concat(months.map(m => m.label), ['Итого, кг']);
+    const types = ['text'].concat(months.map(() => 'num'), ['num']);
+    const rows = names.map(name => { let tot = 0; const cells = months.map(m => { const v = this.effMonthKg(name, m.key); tot += v; return this.excelRound(v, 0); }); return [name].concat(cells, [this.excelRound(tot, 0)]); });
+    const total = ['ИТОГО'].concat(months.map(m => this.excelRound(names.reduce((s, n) => s + this.effMonthKg(n, m.key), 0), 0)), [this.excelRound(names.reduce((s, n) => s + months.reduce((a, m) => a + this.effMonthKg(n, m.key), 0), 0), 0)]);
+    return { title: 'График производства', subtitle: 'Горизонт ' + (this.state.planHorizon || 12) + ' мес · с ' + this.pkLabel(this.planStartKey()), kpis: [['Продуктов в плане', names.length], ['Σ выпуск, кг', this.excelRound(names.reduce((s, n) => s + months.reduce((a, m) => a + this.effMonthKg(n, m.key), 0), 0), 0)]], sheets: [{ name: 'График производства', title: 'График производства · ' + this.co().name, headers, types, rows, total }] };
+  }
+  ppPrint() { const p = this.ppExportPayload(); if (!p) { try { alert('План производства пуст.'); } catch (e) {} return; } this.expPrint(p.title, p.subtitle, p.kpis, p.sheets); }
+  ppExcel() { const p = this.ppExportPayload(); if (!p) { try { alert('План производства пуст.'); } catch (e) {} return; } this.expExcel('График производства', p.sheets); }
+  // --- Экспорт: План продаж ---
+  spExportPayload() {
+    const S = this.state; const rows0 = (S.salesPlan || []).slice().sort((a, b) => (a.date || '').localeCompare(b.date || '') || (a.product || '').localeCompare(b.product || '', 'ru'));
+    if (!rows0.length) return null;
+    let totQ = 0, totRev = 0;
+    const rows = rows0.map(r => { const q = Number(r.qty) || 0, sum = q * (Number(r.price) || 0); totQ += q; totRev += sum; return [this.spPeriodLabel(r), r.client || '—', r.product || '—', r.manager || '—', this.excelRound(q, 0), this.excelRound(Number(r.price) || 0, 2), this.excelRound(sum, 0)]; });
+    const total = ['ИТОГО', '', '', '', this.excelRound(totQ, 0), '', this.excelRound(totRev, 0)];
+    return { title: 'План продаж', subtitle: 'Строк: ' + rows0.length, kpis: [['Строк плана', rows0.length], ['Σ план, кг', this.excelRound(totQ, 0)], ['Σ план выручки, ₽', this.excelRound(totRev, 0)]], sheets: [{ name: 'План продаж', title: 'План продаж · ' + this.co().name, headers: ['Период', 'Клиент', 'Продукт', 'Менеджер', 'Кг', 'Цена ₽/кг', 'Σ ₽'], types: ['text', 'text', 'text', 'text', 'num', 'moneyu', 'money'], rows, total }] };
+  }
+  spPrintExp() { const p = this.spExportPayload(); if (!p) { try { alert('План продаж пуст.'); } catch (e) {} return; } this.expPrint(p.title, p.subtitle, p.kpis, p.sheets); }
+  spExcelExp() { const p = this.spExportPayload(); if (!p) { try { alert('План продаж пуст.'); } catch (e) {} return; } this.expExcel('План продаж', p.sheets); }
+  // --- Экспорт: План производства (потребность в сырье) ---
+  prodExportPayload() {
+    const S = this.state; const { acc, totKg } = this.rawNeed(this.ordersInRange(S.planFrom, S.planTo));
+    const ent = Object.entries(acc).sort((a, b) => b[1] - a[1]);
+    if (!ent.length) return null;
+    const rows = ent.map(([name, kg]) => { const k = this.kindOf(name); const price = this.rawPrice(name); return [name, k.label, this.excelRound(kg, 3), this.excelRound(price, 4), this.excelRound(kg * price, 2)]; });
+    const total = ['ИТОГО', '', this.excelRound(ent.reduce((s, e) => s + e[1], 0), 3), '', this.excelRound(ent.reduce((s, e) => s + e[1] * this.rawPrice(e[0]), 2), 2)];
+    return { title: 'План производства · потребность в сырье', subtitle: 'Выпуск ГП: ' + this.fmt(totKg, 0) + ' кг', kpis: [['Позиций сырья', ent.length], ['Выпуск ГП, кг', this.excelRound(totKg, 0)]], sheets: [{ name: 'Потребность в сырье', title: 'Потребность в сырье (по эталонным рецептурам) · ' + this.co().name, headers: ['Сырьё / полупродукт', 'Тип', 'Потребность, кг', 'Цена €/ед.', 'Стоимость €'], types: ['text', 'code', 'num1', 'eur2', 'eur'], rows, total }] };
+  }
+  prodPrintExp() { const p = this.prodExportPayload(); if (!p) { try { alert('Нет заявок/потребности для выгрузки.'); } catch (e) {} return; } this.expPrint(p.title, p.subtitle, p.kpis, p.sheets); }
+  prodExcelExp() { const p = this.prodExportPayload(); if (!p) { try { alert('Нет заявок/потребности для выгрузки.'); } catch (e) {} return; } this.expExcel('План производства', p.sheets); }
   buildMargin() {
     const S = this.state, set = (p) => this.setState(p);
     const gm = S.mgGm || this.mgDefaultGm();
@@ -9568,7 +9675,8 @@ class Component extends DCLogic {
     if (stack.has(k)) return 0;
     stack.add(k);
     let t = 0;
-    if (r) for (const c of r.comps) t += c.pct * this.refCompPrice(c.component, memo, stack);
+    // Через recipeLinesFor — учитываются добавленные пользователем компоненты (state.added) и правки долей.
+    if (r) for (const ln of this.recipeLinesFor(r.name)) t += ln.pct * this.refCompPrice(ln.component, memo, stack);
     stack.delete(k);
     const v = this.excelRound(t, 4); memo.set(k, v); return v;
   }
@@ -9585,7 +9693,8 @@ class Component extends DCLogic {
   }
   // Разворот эталонной рецептуры для отображения (верхний уровень + разворачиваемые полупродукты/эталоны).
   reRows(product, depth, stack, out) {
-    const lines = this.refMap().has(this.norm(product)) ? this.recipeLinesFor(product) : [];
+    // Базовые (не добавленные вручную) строки состава — добавленные показываются отдельной редактируемой секцией.
+    const lines = this.refLookup(product) ? this.recipeLinesFor(product).filter(l => !l.added) : [];
     for (const ln of lines) {
       const comp = ln.component, k = this.norm(comp);
       const kind = this.reKind(comp);
@@ -9618,8 +9727,10 @@ class Component extends DCLogic {
     const rE = this.cbRate('EUR') || (this.tcset && this.tcNum(this.tcset.rateEur)) || 83.6892;
     const vat = this.vat || 0.22;
     this._memo = new Map();
-    const rec = this.refMap().get(this.norm(product));
-    const sumPct = rec ? rec.comps.reduce((a, c) => a + (c.pct || 0), 0) : 0;
+    const rec = this.refLookup(product);
+    const ok = this.norm(product);
+    const allLines = product ? this.recipeLinesFor(product) : [];
+    const sumPct = allLines.reduce((a, l) => a + (l.pct || 0), 0); // включая добавленные компоненты
     const costEur = product ? this.refLive(product, this._memo, new Set()) : 0; // €/кг без НДС
     // разложение до первоначального сырья (с аналогами)
     const rawAcc = {}; if (product) this.explodeRaw(product, 1, rawAcc, new Set());
@@ -9671,6 +9782,22 @@ class Component extends DCLogic {
       reClientEurVat: this.tcEur(clientVat), reClientRubVat: this.tcRub(clientVat * rE),
       reClientEurNet: this.tcEur(clientNet), reClientRubNet: this.tcRub(clientNet * rE),
       reGoNew: () => set({ tab: 'newprod', npToRef: true, navOpen: false }),
+      // Добавление компонентов в рецептуру эталонного продукта (сверх базового состава). Хранится в
+      // state.added[продукт] — участвует в себестоимости, разложении до сырья и планировании производства.
+      reAddedRows: ((S.added || {})[ok] || []).map((a, i) => {
+        const unit = this.reKind(a.component).cls === 'raw' ? this.rawPrice(a.component) : this.refCompPrice(a.component, this._memo, new Set());
+        return {
+          i, name: a.component || '', pct: (a.pct === 0 || a.pct) ? String(a.pct) : '',
+          priceEur: (a.component && unit > 0) ? unit.toLocaleString('ru-RU', { maximumFractionDigits: 4 }) : (a.component ? '— нет цены' : ''),
+          onName: (e) => { const nm = e.target.value; set(st => { const arr = ((st.added || {})[ok] || []).slice(); arr[i] = { ...arr[i], component: nm }; return { added: { ...(st.added || {}), [ok]: arr } }; }); },
+          onPct: (e) => { const v = e.target.value; set(st => { const arr = ((st.added || {})[ok] || []).slice(); arr[i] = { ...arr[i], pct: Math.min(100, Math.max(0, this.tcNum(v))) }; return { added: { ...(st.added || {}), [ok]: arr } }; }); },
+          onDel: () => set(st => { const arr = ((st.added || {})[ok] || []).slice(); arr.splice(i, 1); return { added: { ...(st.added || {}), [ok]: arr } }; }),
+        };
+      }),
+      reHasAdded: (((S.added || {})[ok]) || []).length > 0,
+      reAddComp: () => set(st => ({ added: { ...(st.added || {}), [ok]: [...(((st.added || {})[ok]) || []), { component: '', pct: 0 }] } })),
+      reNomOptions: this.tcNomNames ? this.tcNomNames().concat(this.refProductNames()) : [],
+      rePrint: () => this.rePrint(), reExcel: () => this.reExcel(),
       reNote: 'Эталонные рецептуры не актуализируются автозагрузками. Новые эталонные продукты добавляются во вкладке «Ввод нового продукта» (переключатель «Эталонный продукт»). Цены сырья берутся из реестра/актуализации (совпадение по названию без учёта регистра и кириллицы/латиницы).',
     };
   }
@@ -9941,7 +10068,7 @@ class Component extends DCLogic {
     const addable = allProducts.filter(n => !(S.prodPlan || {})[n]);
     const horizonOpts = [6, 12, 24, 36];
     return {
-      isProdPlan: true,
+      isProdPlan: true, ppPrint: () => this.ppPrint(), ppExcel: () => this.ppExcel(),
       planHorizon: S.planHorizon || 12, planHorizonOpts: horizonOpts.map(v => ({ v, label: v + ' мес' })),
       onPlanHorizon: (e) => set({ planHorizon: Number(e.target.value) }),
       planStartLabel: this.pkLabel(this.planStartKey()),
@@ -10798,7 +10925,7 @@ class Component extends DCLogic {
     });
     const scCls = (id) => scale === id ? 'cvseg on' : 'cvseg';
     return {
-      isSalesPlan: true,
+      isSalesPlan: true, spPrintExp: () => this.spPrintExp(), spExcelExp: () => this.spExcelExp(),
       spScaleMonthCls: scCls('month'), spScaleWeekCls: scCls('week'), spScaleDayCls: scCls('day'),
       setSpScaleMonth: () => set({ spScale: 'month', spDraft: null }), setSpScaleWeek: () => set({ spScale: 'week', spDraft: null }), setSpScaleDay: () => set({ spScale: 'day', spDraft: null }),
       spIsMonth: scale === 'month', spIsDate: scale !== 'month',
@@ -15730,6 +15857,7 @@ class Component extends DCLogic {
       base.requirement = Object.entries(acc).sort((a, b) => b[1] - a[1]).map(([name, kg]) => {
         const k = this.kindOf(name); return { name, kindCls: k.cls, kindLabel: k.label, kg: this.fmt(kg, 3) };
       });
+      base.prodPrintExp = () => this.prodPrintExp(); base.prodExcelExp = () => this.prodExcelExp();
     }
 
     // ---- План закупок: потребность к закупке + реестр заявок ----
